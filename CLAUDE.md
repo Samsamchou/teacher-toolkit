@@ -16,7 +16,8 @@
 ## 工作桌與三個家
 
 - 📋 GDrive 工作桌：`G:\我的雲端硬碟\teacher-toolkit\`
-- 🐙 GitHub repo：`Samsamchou/teacher-toolkit`（待 GitHub CLI 重新登入後建立）
+- 🐙 GitHub repo：[Samsamchou/teacher-toolkit](https://github.com/Samsamchou/teacher-toolkit)
+- 🌐 GitHub Pages：[https://samsamchou.github.io/teacher-toolkit/](https://samsamchou.github.io/teacher-toolkit/)
 - 📘 Obsidian 駕駛艙：`G:\我的雲端硬碟\secondbrain\teacher-toolkit\工作筆記.md`
 - 🔥 Firebase 專案：尚未在本次初始化中確認；不得把金鑰寫入此 repo。
 

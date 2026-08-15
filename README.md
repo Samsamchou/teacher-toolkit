@@ -8,6 +8,11 @@
 - `CLAUDE.md`：專案藍圖、資料位置與安全規則。
 - `agent.md`：Codex 專案基線。
 
+## 線上預覽 / Live site
+
+- 專案首頁 / Project home：[samsamchou.github.io/teacher-toolkit](https://samsamchou.github.io/teacher-toolkit/)
+- 座標獵人 / Coordinate Hunter：[開啟遊戲](https://samsamchou.github.io/teacher-toolkit/tools/coordinate-hunter/index.html)
+
 ## 執行座標獵人 / Run Coordinate Hunter
 
 直接開啟 `tools/coordinate-hunter/index.html`，或在專案根目錄啟動任何靜態檔案伺服器後預覽。
