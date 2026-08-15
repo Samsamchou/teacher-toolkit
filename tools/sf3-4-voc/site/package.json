@@ -1,0 +1,17 @@
+{
+  "name": "sf3-sf4-vocabulary-practice-practice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "4年級（SF3／SF4）單字練習網站",
+  "scripts": {
+    "serve": "node serve-local.js",
+    "sync:functions-config": "node scripts/sync-functions-config.cjs",
+    "validate": "node scripts/sync-functions-config.cjs && node scripts/validate-config.cjs",
+    "test:e2e": "node scripts/run-local-e2e.cjs",
+    "test:e2e:local": "node scripts/run-local-e2e.cjs tests/home-and-assets.spec.cjs tests/practice-modes.spec.cjs tests/teacher.spec.cjs",
+    "test:e2e:live": "set E2E_BASE_URL=https://sf3sf4voc.web.app&& playwright test tests/live.spec.cjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}

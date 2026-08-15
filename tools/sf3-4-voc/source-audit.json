@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-08-10T01:27:05Z",
+  "status": "passed",
+  "summary": {
+    "books": 2,
+    "topics": 8,
+    "words": 63,
+    "topicSummaries": [
+      {
+        "id": "SF3 L01",
+        "dir": "sf3-l01",
+        "words": 7
+      },
+      {
+        "id": "SF3 L02",
+        "dir": "sf3-l02",
+        "words": 7
+      },
+      {
+        "id": "SF3 L03",
+        "dir": "sf3-l03",
+        "words": 8
+      },
+      {
+        "id": "SF3 L04",
+        "dir": "sf3-l04",
+        "words": 7
+      },
+      {
+        "id": "SF4 L01",
+        "dir": "sf4-l01",
+        "words": 7
+      },
+      {
+        "id": "SF4 L02",
+        "dir": "sf4-l02",
+        "words": 8
+      },
+      {
+        "id": "SF4 L03",
+        "dir": "sf4-l03",
+        "words": 10
+      },
+      {
+        "id": "SF4 L04",
+        "dir": "sf4-l04",
+        "words": 9
+      }
+    ]
+  },
+  "warnings": []
+}

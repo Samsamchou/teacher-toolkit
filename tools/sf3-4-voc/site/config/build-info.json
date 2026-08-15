@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-08-10T01:27:06Z",
+  "sourceHash": "65ac72ded6124dffc0fa70f893aac77f2bc15d7f1a5315c9eea3fce354e88f2e",
+  "template": "C:/Users/User/.codex/skills/elementary-vocabulary-site-builder/assets/vocabulary-site-template",
+  "dryRun": false,
+  "summary": {
+    "books": 2,
+    "topics": 8,
+    "words": 63,
+    "topicSummaries": [
+      {
+        "id": "SF3 L01",
+        "dir": "sf3-l01",
+        "words": 7
+      },
+      {
+        "id": "SF3 L02",
+        "dir": "sf3-l02",
+        "words": 7
+      },
+      {
+        "id": "SF3 L03",
+        "dir": "sf3-l03",
+        "words": 8
+      },
+      {
+        "id": "SF3 L04",
+        "dir": "sf3-l04",
+        "words": 7
+      },
+      {
+        "id": "SF4 L01",
+        "dir": "sf4-l01",
+        "words": 7
+      },
+      {
+        "id": "SF4 L02",
+        "dir": "sf4-l02",
+        "words": 8
+      },
+      {
+        "id": "SF4 L03",
+        "dir": "sf4-l03",
+        "words": 10
+      },
+      {
+        "id": "SF4 L04",
+        "dir": "sf4-l04",
+        "words": 9
+      }
+    ]
+  },
+  "warnings": []
+}

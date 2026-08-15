@@ -1,0 +1,13 @@
+functions/node_modules/
+functions/site-config.generated.cjs
+node_modules/
+.npm-cache/
+.firebase/
+firebase-debug.log
+*.log
+.DS_Store
+playwright-report/
+test-results/
+audit/playwright-results/
+.env
+.env.*

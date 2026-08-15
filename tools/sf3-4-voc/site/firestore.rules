@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function teacher() {
+      return signedIn() && (request.auth.token.admin == true || request.auth.token.teacher == true);
+    }
+    match /artifacts/{appId}/public/data/{kind}/{docId} {
+      allow create: if signedIn()
+        && appId == 'sf3-sf4-vocabulary-practice'
+        && kind in ['submissions', 'stats', 'practiceResults']
+        && request.resource.data.studentId is string
+        && request.resource.data.studentId.size() >= 1
+        && request.resource.data.studentId.size() <= 32;
+      allow read, update, delete: if appId == 'sf3-sf4-vocabulary-practice' && teacher();
+    }
+  }
+}

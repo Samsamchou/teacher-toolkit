@@ -1,0 +1,977 @@
+{
+  "schemaVersion": 1,
+  "site": {
+    "siteTitle": "4年級（SF3／SF4）單字練習網站",
+    "projectName": "SF3-SF4 GRADE 4 VOCABULARY PRACTICE",
+    "appId": "sf3-sf4-vocabulary-practice",
+    "grade": 4,
+    "gradeLabel": "4年級",
+    "studentIdPlaceholder": "例如：40101",
+    "timezone": "Asia/Taipei",
+    "version": "20260810-sf3-sf4-secure-teacher-login"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyANv0ZAyRv_HP75c8b56s0NLWwMQyYlDqw",
+    "appId": "1:351311660417:web:372546105037d5eb5e9480",
+    "authDomain": "sf3sf4voc.firebaseapp.com",
+    "messagingSenderId": "351311660417",
+    "projectId": "sf3sf4voc",
+    "storageBucket": "sf3sf4voc.firebasestorage.app",
+    "region": "asia-east1"
+  },
+  "security": {
+    "maxClassSize": 25,
+    "imageMaxBytes": 320000,
+    "teacherClaim": "teacher",
+    "requireAppCheck": true,
+    "appCheckProvider": "recaptcha-enterprise",
+    "appCheckSiteKey": "6LeAzH0tAAAAAMntRKlUsUq_7oHWUAY3NN4EOjBW",
+    "teacherLoginMode": "firebase-custom-token-passcode",
+    "teacherPasscodeSecret": "teacher",
+    "teacherLoginRateLimit": {
+      "requests": 5,
+      "windowMinutes": 10
+    }
+  },
+  "teacherAccess": {
+    "mode": "firebase-custom-token-passcode",
+    "claim": "teacher",
+    "passcodePrompt": "請輸入教師通行碼"
+  },
+  "speech": {
+    "ttsVoice": "marin"
+  },
+  "recording": {},
+  "forbiddenStaleValues": [
+    "HWG7",
+    "HWG8",
+    "hwg8u01voc",
+    "6年級"
+  ],
+  "books": [
+    {
+      "id": "SF3",
+      "label": "SF3",
+      "order": 1,
+      "units": [
+        {
+          "id": "L01",
+          "label": "Lesson 1",
+          "order": 1,
+          "topicId": "SF3 L01",
+          "dir": "sf3-l01",
+          "sourceFile": "單字資料/SF3/Lesson 01.png",
+          "theme": "pink",
+          "words": [
+            {
+              "en": "father",
+              "zh": "爸爸",
+              "emoji": "👨",
+              "question": "Who's he?",
+              "answer": "He's my father.",
+              "image": "father.jpg",
+              "audio": "father.mp3",
+              "sourceImage": "單字資料/SF3/L1/01_father圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L1/01_father圖.mp3",
+                "單字資料/SF3/L1/02_father字.mp3"
+              ]
+            },
+            {
+              "en": "grandfather",
+              "zh": "祖父；爺爺",
+              "emoji": "👴",
+              "question": "Who's he?",
+              "answer": "He's my grandfather.",
+              "image": "grandfather.jpg",
+              "audio": "grandfather.mp3",
+              "sourceImage": "單字資料/SF3/L1/03_grandfather圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L1/03_grandfather圖.mp3",
+                "單字資料/SF3/L1/04_grandfather字.mp3"
+              ]
+            },
+            {
+              "en": "grandmother",
+              "zh": "祖母；奶奶",
+              "emoji": "👵",
+              "question": "Who's she?",
+              "answer": "She's my grandmother.",
+              "image": "grandmother.jpg",
+              "audio": "grandmother.mp3",
+              "sourceImage": "單字資料/SF3/L1/05_grandmother圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L1/05_grandmother圖.mp3",
+                "單字資料/SF3/L1/06_grandmother字.mp3"
+              ]
+            },
+            {
+              "en": "sister",
+              "zh": "姐姐；妹妹",
+              "emoji": "👧",
+              "question": "Who's she?",
+              "answer": "She's my sister.",
+              "image": "sister.jpg",
+              "audio": "sister.mp3",
+              "sourceImage": "單字資料/SF3/L1/07_sister圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L1/07_sister圖.mp3",
+                "單字資料/SF3/L1/08_sister字.mp3"
+              ]
+            },
+            {
+              "en": "mother",
+              "zh": "媽媽",
+              "emoji": "👩",
+              "question": "Who's she?",
+              "answer": "She's my mother.",
+              "image": "mother.jpg",
+              "audio": "mother.mp3",
+              "sourceImage": "單字資料/SF3/L1/09_mother圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L1/09_mother圖.mp3",
+                "單字資料/SF3/L1/10_mother字.mp3"
+              ]
+            },
+            {
+              "en": "brother",
+              "zh": "哥哥；弟弟",
+              "emoji": "👦",
+              "question": "Who's he?",
+              "answer": "He's my brother.",
+              "image": "brother.jpg",
+              "audio": "brother.mp3",
+              "sourceImage": "單字資料/SF3/L1/11_brother圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L1/11_brother圖.mp3",
+                "單字資料/SF3/L1/12_brother字.mp3"
+              ]
+            },
+            {
+              "en": "who",
+              "zh": "誰",
+              "emoji": "❓",
+              "question": "Who's he?",
+              "answer": "Dad is my father.",
+              "image": "who.jpg",
+              "audio": null
+            }
+          ]
+        },
+        {
+          "id": "L02",
+          "label": "Lesson 2",
+          "order": 2,
+          "topicId": "SF3 L02",
+          "dir": "sf3-l02",
+          "sourceFile": "單字資料/SF3/Lesson 02.png",
+          "theme": "cyan",
+          "words": [
+            {
+              "en": "teacher",
+              "zh": "老師",
+              "emoji": "👩‍🏫",
+              "question": "Is she a teacher?",
+              "answer": "Yes, she is. She's a teacher.",
+              "image": "teacher.jpg",
+              "audio": "teacher.mp3",
+              "sourceImage": "單字資料/SF3/L2/01_ateacher圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/01_ateacher圖.mp3",
+                "單字資料/SF3/L2/02_ateacher字.mp3"
+              ]
+            },
+            {
+              "en": "student",
+              "zh": "學生",
+              "emoji": "🧑‍🎓",
+              "question": "Is he a student?",
+              "answer": "No, he isn't. He's a cook.",
+              "image": "student.jpg",
+              "audio": "student.mp3",
+              "sourceImage": "單字資料/SF3/L2/03_astudent圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/03_astudent圖.mp3",
+                "單字資料/SF3/L2/04_astudent字.mp3"
+              ]
+            },
+            {
+              "en": "cook",
+              "zh": "廚師",
+              "emoji": "🧑‍🍳",
+              "question": "Is she a cook?",
+              "answer": "Yes, she is. She's a cook.",
+              "image": "cook.jpg",
+              "audio": "cook.mp3",
+              "sourceImage": "單字資料/SF3/L2/05_acook圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/05_acook圖.mp3",
+                "單字資料/SF3/L2/06_acook字.mp3"
+              ]
+            },
+            {
+              "en": "doctor",
+              "zh": "醫生",
+              "emoji": "🧑‍⚕️",
+              "question": "Is he a doctor?",
+              "answer": "No, he isn't. He's a teacher.",
+              "image": "doctor.jpg",
+              "audio": "doctor.mp3",
+              "sourceImage": "單字資料/SF3/L2/07_adoctor圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/07_adoctor圖.mp3",
+                "單字資料/SF3/L2/08_adoctor字.mp3"
+              ]
+            },
+            {
+              "en": "nurse",
+              "zh": "護理師；護士",
+              "emoji": "👩‍⚕️",
+              "question": "Is she a nurse?",
+              "answer": "No, she isn't. She's a doctor.",
+              "image": "nurse.jpg",
+              "audio": "nurse.mp3",
+              "sourceImage": "單字資料/SF3/L2/09_anurse圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/09_anurse圖.mp3",
+                "單字資料/SF3/L2/10_anurse字.mp3"
+              ]
+            },
+            {
+              "en": "farmer",
+              "zh": "農夫",
+              "emoji": "🧑‍🌾",
+              "question": "Is he a farmer?",
+              "answer": "Yes, he is. He's a farmer.",
+              "image": "farmer.jpg",
+              "audio": "farmer.mp3",
+              "sourceImage": "單字資料/SF3/L2/11_afarmer圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/11_afarmer圖.mp3",
+                "單字資料/SF3/L2/12_afarmer字.mp3"
+              ]
+            },
+            {
+              "en": "driver",
+              "zh": "司機",
+              "emoji": "🚗",
+              "question": "Is she a driver?",
+              "answer": "No, she isn't. She's a nurse.",
+              "image": "driver.jpg",
+              "audio": "driver.mp3",
+              "sourceImage": "單字資料/SF3/L2/11_adriver圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L2/11_adriver圖.mp3",
+                "單字資料/SF3/L2/12_adriver字.mp3"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "L03",
+          "label": "Lesson 3",
+          "order": 3,
+          "topicId": "SF3 L03",
+          "dir": "sf3-l03",
+          "sourceFile": "單字資料/SF3/Lesson 03.png",
+          "theme": "lime",
+          "words": [
+            {
+              "en": "bathroom",
+              "zh": "浴室；廁所",
+              "emoji": "🚿",
+              "question": "Where's Dad?",
+              "answer": "He's in the bathroom.",
+              "image": "bathroom.jpg",
+              "audio": "bathroom.mp3",
+              "sourceImage": "單字資料/SF3/L3/01_bathroom圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L3/01_bathroom圖.mp3",
+                "單字資料/SF3/L3/02_bathroom字.mp3"
+              ]
+            },
+            {
+              "en": "bedroom",
+              "zh": "臥室",
+              "emoji": "🛏️",
+              "question": "Where's Mom?",
+              "answer": "She's in the bedroom.",
+              "image": "bedroom.jpg",
+              "audio": "bedroom.mp3",
+              "sourceImage": "單字資料/SF3/L3/03_bedroom圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L3/03_bedroom圖.mp3",
+                "單字資料/SF3/L3/04_bedroom字.mp3"
+              ]
+            },
+            {
+              "en": "kitchen",
+              "zh": "廚房",
+              "emoji": "🍳",
+              "question": "Where's Grandpa?",
+              "answer": "He's in the kitchen.",
+              "image": "kitchen.jpg",
+              "audio": "kitchen.mp3",
+              "sourceImage": "單字資料/SF3/L3/05_kitchen圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L3/05_kitchen圖.mp3",
+                "單字資料/SF3/L3/06_kitchen字.mp3"
+              ]
+            },
+            {
+              "en": "dining room",
+              "zh": "飯廳",
+              "emoji": "🍽️",
+              "question": "Where's Wendy?",
+              "answer": "She's in the dining room.",
+              "image": "dining-room.jpg",
+              "audio": "dining-room.mp3",
+              "sourceImage": "單字資料/SF3/L3/07_diningroom圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L3/07_diningroom圖.mp3",
+                "單字資料/SF3/L3/08_diningroom字.mp3"
+              ]
+            },
+            {
+              "en": "living room",
+              "zh": "客廳",
+              "emoji": "🛋️",
+              "question": "Where's Ken?",
+              "answer": "He's in the living room.",
+              "image": "living-room.jpg",
+              "audio": "living-room.mp3",
+              "sourceImage": "單字資料/SF3/L3/09_livingroom圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L3/09_livingroom圖.mp3",
+                "單字資料/SF3/L3/10_livingroom字.mp3"
+              ]
+            },
+            {
+              "en": "yard",
+              "zh": "庭院",
+              "emoji": "🌳",
+              "question": "Where are you?",
+              "answer": "I'm in the yard.",
+              "image": "yard.jpg",
+              "audio": "yard.mp3",
+              "sourceImage": "單字資料/SF3/L3/07_ayard圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L3/07_ayard圖.mp3",
+                "單字資料/SF3/L3/08_ayard字.mp3"
+              ]
+            },
+            {
+              "en": "study",
+              "zh": "書房",
+              "emoji": "📚",
+              "question": "Where's the teacher?",
+              "answer": "She's in the study.",
+              "image": "study.jpg",
+              "audio": null
+            },
+            {
+              "en": "where",
+              "zh": "哪裡",
+              "emoji": "📍",
+              "question": "Where's the student?",
+              "answer": "He's in the bedroom.",
+              "image": "where.jpg",
+              "audio": null
+            }
+          ]
+        },
+        {
+          "id": "L04",
+          "label": "Lesson 4",
+          "order": 4,
+          "topicId": "SF3 L04",
+          "dir": "sf3-l04",
+          "sourceFile": "單字資料/SF3/Lesson 04.png",
+          "theme": "violet",
+          "words": [
+            {
+              "en": "bird",
+              "zh": "鳥",
+              "emoji": "🐦",
+              "question": "Do you have a bird?",
+              "answer": "Yes, I do. I have a bird.",
+              "image": "bird.jpg",
+              "audio": "bird.mp3",
+              "sourceImage": "單字資料/SF3/L4/01_abird圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/01_abird圖.mp3",
+                "單字資料/SF3/L4/02_abird字.mp3"
+              ]
+            },
+            {
+              "en": "rabbit",
+              "zh": "兔子",
+              "emoji": "🐇",
+              "question": "Do you have a rabbit?",
+              "answer": "No, I don't. I have a turtle.",
+              "image": "rabbit.jpg",
+              "audio": "rabbit.mp3",
+              "sourceImage": "單字資料/SF3/L4/03_arabbit圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/03_arabbit圖.mp3",
+                "單字資料/SF3/L4/04_arabbit字.mp3"
+              ]
+            },
+            {
+              "en": "turtle",
+              "zh": "烏龜",
+              "emoji": "🐢",
+              "question": "Do you have a turtle?",
+              "answer": "Yes, I do. I have a turtle.",
+              "image": "turtle.jpg",
+              "audio": "turtle.mp3",
+              "sourceImage": "單字資料/SF3/L4/05_aturtle圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/05_aturtle圖.mp3",
+                "單字資料/SF3/L4/06_aturtle字.mp3"
+              ]
+            },
+            {
+              "en": "cat",
+              "zh": "貓",
+              "emoji": "🐈",
+              "question": "Do you have a cat?",
+              "answer": "No, I don't. I have a dog.",
+              "image": "cat.jpg",
+              "audio": "cat.mp3",
+              "sourceImage": "單字資料/SF3/L4/07_acat圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/07_acat圖.mp3",
+                "單字資料/SF3/L4/08_acat字.mp3"
+              ]
+            },
+            {
+              "en": "frog",
+              "zh": "青蛙",
+              "emoji": "🐸",
+              "question": "Do you have a frog?",
+              "answer": "Yes, I do. I have a frog.",
+              "image": "frog.jpg",
+              "audio": "frog.mp3",
+              "sourceImage": "單字資料/SF3/L4/07_afrog圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/07_afrog圖.mp3",
+                "單字資料/SF3/L4/08_afrog字.mp3"
+              ]
+            },
+            {
+              "en": "dog",
+              "zh": "狗",
+              "emoji": "🐕",
+              "question": "Do you have a dog?",
+              "answer": "No, I don't. I have a fish.",
+              "image": "dog.jpg",
+              "audio": "dog.mp3",
+              "sourceImage": "單字資料/SF3/L4/09_adog圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/09_adog圖.mp3",
+                "單字資料/SF3/L4/10_adog字.mp3"
+              ]
+            },
+            {
+              "en": "fish",
+              "zh": "魚",
+              "emoji": "🐟",
+              "question": "Do you have a fish?",
+              "answer": "No, I don't. I have a bird.",
+              "image": "fish.jpg",
+              "audio": "fish.mp3",
+              "sourceImage": "單字資料/SF3/L4/11_afish圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF3/L4/11_afish圖.mp3",
+                "單字資料/SF3/L4/12_afish字.mp3"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SF4",
+      "label": "SF4",
+      "order": 2,
+      "units": [
+        {
+          "id": "L01",
+          "label": "Lesson 1",
+          "order": 1,
+          "topicId": "SF4 L01",
+          "dir": "sf4-l01",
+          "sourceFile": "單字資料/SF4/SF4 Lesson 01.png",
+          "theme": "amber",
+          "words": [
+            {
+              "en": "yo-yos",
+              "zh": "溜溜球（複數）",
+              "emoji": "🪀",
+              "question": "What are those?",
+              "answer": "They're yo-yos.",
+              "image": "yo-yos.jpg",
+              "audio": "yo-yos.mp3",
+              "sourceImage": "單字資料/SF4/L1/01_yoyos圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L1/01_yoyos圖.mp3",
+                "單字資料/SF4/L1/01_yoyos字.mp3"
+              ]
+            },
+            {
+              "en": "kites",
+              "zh": "風箏（複數）",
+              "emoji": "🪁",
+              "question": "What are these?",
+              "answer": "They're kites.",
+              "image": "kites.jpg",
+              "audio": "kites.mp3",
+              "sourceImage": "單字資料/SF4/L1/02_kites圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L1/02_kites圖.mp3",
+                "單字資料/SF4/L1/02_kites字.mp3"
+              ]
+            },
+            {
+              "en": "dolls",
+              "zh": "洋娃娃（複數）",
+              "emoji": "🪆",
+              "question": "What are those, Wendy?",
+              "answer": "They're dolls.",
+              "image": "dolls.jpg",
+              "audio": "dolls.mp3",
+              "sourceImage": "單字資料/SF4/L1/03_dolls圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L1/03_dolls圖.mp3",
+                "單字資料/SF4/L1/03_dolls字.mp3"
+              ]
+            },
+            {
+              "en": "balls",
+              "zh": "球（複數）",
+              "emoji": "⚽",
+              "question": "What are these, Ken?",
+              "answer": "They're balls.",
+              "image": "balls.jpg",
+              "audio": "balls.mp3",
+              "sourceImage": "單字資料/SF4/L1/04_balls圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L1/04_balls圖.mp3",
+                "單字資料/SF4/L1/04_balls字.mp3"
+              ]
+            },
+            {
+              "en": "robots",
+              "zh": "機器人（複數）",
+              "emoji": "🤖",
+              "question": "What are those, Dad?",
+              "answer": "They're robots.",
+              "image": "robots.jpg",
+              "audio": "robots.mp3",
+              "sourceImage": "單字資料/SF4/L1/05_robots圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L1/05_robots圖.mp3",
+                "單字資料/SF4/L1/05_robots字.mp3"
+              ]
+            },
+            {
+              "en": "these",
+              "zh": "這些",
+              "emoji": "👇",
+              "question": "What are these, Mom?",
+              "answer": "They're my yo-yos.",
+              "image": "these.jpg",
+              "audio": null
+            },
+            {
+              "en": "those",
+              "zh": "那些",
+              "emoji": "👉",
+              "question": "What are those, Grandpa?",
+              "answer": "They're your kites.",
+              "image": "those.jpg",
+              "audio": null
+            }
+          ]
+        },
+        {
+          "id": "L02",
+          "label": "Lesson 2",
+          "order": 2,
+          "topicId": "SF4 L02",
+          "dir": "sf4-l02",
+          "sourceFile": "單字資料/SF4/SF4 Lesson 02.png",
+          "theme": "fuchsia",
+          "words": [
+            {
+              "en": "box",
+              "zh": "箱子；盒子",
+              "emoji": "📦",
+              "question": "Where's the ball?",
+              "answer": "It's in the box.",
+              "image": "box.jpg",
+              "audio": "box.mp3",
+              "sourceImage": "單字資料/SF4/L2/01_box圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L2/01_box圖.mp3",
+                "單字資料/SF4/L2/01_box字.mp3"
+              ]
+            },
+            {
+              "en": "desk",
+              "zh": "書桌",
+              "emoji": "🪑",
+              "question": "Where's the yo-yo?",
+              "answer": "It's on the desk.",
+              "image": "desk.jpg",
+              "audio": "desk.mp3",
+              "sourceImage": "單字資料/SF4/L2/02_desk圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L2/02_desk圖.mp3",
+                "單字資料/SF4/L2/02_desk字.mp3"
+              ]
+            },
+            {
+              "en": "chair",
+              "zh": "椅子",
+              "emoji": "💺",
+              "question": "Where's the robot?",
+              "answer": "It's under the chair.",
+              "image": "chair.jpg",
+              "audio": "chair.mp3",
+              "sourceImage": "單字資料/SF4/L2/03_chair圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L2/03_chair圖.mp3",
+                "單字資料/SF4/L2/03_chair字.mp3"
+              ]
+            },
+            {
+              "en": "table",
+              "zh": "桌子",
+              "emoji": "🪑",
+              "question": "Where's the kite?",
+              "answer": "It's on the table.",
+              "image": "table.jpg",
+              "audio": null
+            },
+            {
+              "en": "bag",
+              "zh": "袋子",
+              "emoji": "👜",
+              "question": "Where's the doll?",
+              "answer": "It's in the bag.",
+              "image": "bag.jpg",
+              "audio": null
+            },
+            {
+              "en": "in",
+              "zh": "在……裡面",
+              "emoji": "📥",
+              "question": "Where are the yo-yos?",
+              "answer": "They're in the box.",
+              "image": "in.jpg",
+              "audio": "in.mp3",
+              "sourceImage": "單字資料/SF4/L2/04_in圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L2/04_in圖.mp3",
+                "單字資料/SF4/L2/04_in字.mp3"
+              ]
+            },
+            {
+              "en": "on",
+              "zh": "在……上面",
+              "emoji": "⬆️",
+              "question": "Where are the dolls?",
+              "answer": "They're on the table.",
+              "image": "on.jpg",
+              "audio": "on.mp3",
+              "sourceImage": "單字資料/SF4/L2/05_on圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L2/05_on圖.mp3",
+                "單字資料/SF4/L2/05_on字.mp3"
+              ]
+            },
+            {
+              "en": "under",
+              "zh": "在……下面",
+              "emoji": "⬇️",
+              "question": "Where are the balls?",
+              "answer": "They're under the desk.",
+              "image": "under.jpg",
+              "audio": "under.mp3",
+              "sourceImage": "單字資料/SF4/L2/06_under圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L2/06_under圖.mp3",
+                "單字資料/SF4/L2/06_under字.mp3"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "L03",
+          "label": "Lesson 3",
+          "order": 3,
+          "topicId": "SF4 L03",
+          "dir": "sf4-l03",
+          "sourceFile": "單字資料/SF4/SF4 Lesson 03.png",
+          "theme": "sky",
+          "words": [
+            {
+              "en": "eleven",
+              "zh": "十一",
+              "emoji": "🔢",
+              "question": "What time is it?",
+              "answer": "It's eleven o'clock.",
+              "image": "eleven.jpg",
+              "audio": "eleven.mp3",
+              "sourceImage": "單字資料/SF4/L3/01_eleven圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L3/01_eleven圖.mp3",
+                "單字資料/SF4/L3/01_eleven字.mp3"
+              ]
+            },
+            {
+              "en": "twelve",
+              "zh": "十二",
+              "emoji": "🔢",
+              "question": "What time is it, Mom?",
+              "answer": "It's twelve o'clock.",
+              "image": "twelve.jpg",
+              "audio": "twelve.mp3",
+              "sourceImage": "單字資料/SF4/L3/02_twelve圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L3/02_twelve圖.mp3",
+                "單字資料/SF4/L3/02_twelve字.mp3"
+              ]
+            },
+            {
+              "en": "twenty",
+              "zh": "二十",
+              "emoji": "🔢",
+              "question": "What time is it, Ken?",
+              "answer": "It's three twenty.",
+              "image": "twenty.jpg",
+              "audio": "twenty.mp3",
+              "sourceImage": "單字資料/SF4/L3/03_twenty圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L3/03_twenty圖.mp3",
+                "單字資料/SF4/L3/03_twenty字.mp3"
+              ]
+            },
+            {
+              "en": "thirty",
+              "zh": "三十",
+              "emoji": "🔢",
+              "question": "What time is it now?",
+              "answer": "It's seven thirty.",
+              "image": "thirty.jpg",
+              "audio": "thirty.mp3",
+              "sourceImage": "單字資料/SF4/L3/04_thirty圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L3/04_thirty圖.mp3",
+                "單字資料/SF4/L3/04_thirty字.mp3"
+              ]
+            },
+            {
+              "en": "forty",
+              "zh": "四十",
+              "emoji": "🔢",
+              "question": "What time is it, Dad?",
+              "answer": "It's six forty.",
+              "image": "forty.jpg",
+              "audio": "forty.mp3",
+              "sourceImage": "單字資料/SF4/L3/05_forty圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L3/05_forty圖.mp3",
+                "單字資料/SF4/L3/05_forty字.mp3"
+              ]
+            },
+            {
+              "en": "forty-five",
+              "zh": "45",
+              "emoji": "🕢",
+              "question": "What time is it, Wendy?",
+              "answer": "It's nine forty-five.",
+              "image": "forty-five.jpg",
+              "audio": null
+            },
+            {
+              "en": "fifty",
+              "zh": "50",
+              "emoji": "🕗",
+              "question": "What time is it, Grandpa?",
+              "answer": "It's five fifty.",
+              "image": "fifty.jpg",
+              "audio": null
+            },
+            {
+              "en": "fifty-five",
+              "zh": "五十五",
+              "emoji": "🔢",
+              "question": "What time is it, Grandma?",
+              "answer": "It's two fifty-five.",
+              "image": "fifty-five.jpg",
+              "audio": "fifty-five.mp3",
+              "sourceImage": "單字資料/SF4/L3/06_fiftyfive圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L3/06_fiftyfive圖.mp3",
+                "單字資料/SF4/L3/06_fiftyfive字.mp3"
+              ]
+            },
+            {
+              "en": "what time",
+              "zh": "幾點",
+              "emoji": "⏰",
+              "question": "What time is it, Ben?",
+              "answer": "It's four o'clock.",
+              "image": "what-time.jpg",
+              "audio": null
+            },
+            {
+              "en": "o'clock",
+              "zh": "……點鐘",
+              "emoji": "🕖",
+              "question": "What time is it, Ann?",
+              "answer": "It's eight o'clock.",
+              "image": "oclock.jpg",
+              "audio": null
+            }
+          ]
+        },
+        {
+          "id": "L04",
+          "label": "Lesson 4",
+          "order": 4,
+          "topicId": "SF4 L04",
+          "dir": "sf4-l04",
+          "sourceFile": "單字資料/SF4/SF4 Lesson 04.png",
+          "theme": "emerald",
+          "words": [
+            {
+              "en": "cake",
+              "zh": "蛋糕",
+              "emoji": "🍰",
+              "question": "Do you like cake?",
+              "answer": "No, I don't. I like ice cream.",
+              "image": "cake.jpg",
+              "audio": "cake.mp3",
+              "sourceImage": "單字資料/SF4/L4/01_cake圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/01_cake圖.mp3",
+                "單字資料/SF4/L4/01_cake字.mp3"
+              ]
+            },
+            {
+              "en": "ice cream",
+              "zh": "冰淇淋",
+              "emoji": "🍨",
+              "question": "Do you like ice cream?",
+              "answer": "Yes, I do. I like ice cream.",
+              "image": "ice-cream.jpg",
+              "audio": "ice-cream.mp3",
+              "sourceImage": "單字資料/SF4/L4/02_icecream圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/02_icecream圖.mp3",
+                "單字資料/SF4/L4/02_icecream字.mp3"
+              ]
+            },
+            {
+              "en": "rice",
+              "zh": "米飯",
+              "emoji": "🍚",
+              "question": "Do you like rice?",
+              "answer": "No, I don't. I like pizza.",
+              "image": "rice.jpg",
+              "audio": "rice.mp3",
+              "sourceImage": "單字資料/SF4/L4/02_rice圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/02_rice圖.mp3",
+                "單字資料/SF4/L4/02_rice字.mp3"
+              ]
+            },
+            {
+              "en": "milk",
+              "zh": "牛奶",
+              "emoji": "🥛",
+              "question": "Do you like milk?",
+              "answer": "Yes, I do. I like milk.",
+              "image": "milk.jpg",
+              "audio": "milk.mp3",
+              "sourceImage": "單字資料/SF4/L4/03_milk圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/03_milk圖.mp3",
+                "單字資料/SF4/L4/03_milk字.mp3"
+              ]
+            },
+            {
+              "en": "juice",
+              "zh": "果汁",
+              "emoji": "🧃",
+              "question": "Do you like juice?",
+              "answer": "No, I don't. I like tea.",
+              "image": "juice.jpg",
+              "audio": "juice.mp3",
+              "sourceImage": "單字資料/SF4/L4/04_juice圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/04_juice圖.mp3",
+                "單字資料/SF4/L4/04_juice字.mp3"
+              ]
+            },
+            {
+              "en": "tea",
+              "zh": "茶",
+              "emoji": "🍵",
+              "question": "Do you like tea?",
+              "answer": "No, I don't. I like water.",
+              "image": "tea.jpg",
+              "audio": "tea.mp3",
+              "sourceImage": "單字資料/SF4/L4/04_tea圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/04_tea圖.mp3",
+                "單字資料/SF4/L4/04_tea字.mp3"
+              ]
+            },
+            {
+              "en": "water",
+              "zh": "水",
+              "emoji": "💧",
+              "question": "Do you like water?",
+              "answer": "Yes, I do. I like water.",
+              "image": "water.jpg",
+              "audio": "water.mp3",
+              "sourceImage": "單字資料/SF4/L4/05_water圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/05_water圖.mp3",
+                "單字資料/SF4/L4/05_water字.mp3"
+              ]
+            },
+            {
+              "en": "pizza",
+              "zh": "披薩",
+              "emoji": "🍕",
+              "question": "Do you like pizza?",
+              "answer": "Yes, I do. I like pizza.",
+              "image": "pizza.jpg",
+              "audio": "pizza.mp3",
+              "sourceImage": "單字資料/SF4/L4/06_pizza圖.jpg",
+              "sourceAudio": [
+                "單字資料/SF4/L4/06_pizza圖.mp3",
+                "單字資料/SF4/L4/06_pizza字.mp3"
+              ]
+            },
+            {
+              "en": "like",
+              "zh": "喜歡",
+              "emoji": "❤️",
+              "question": "Do you like robots?",
+              "answer": "Yes, I do. I like robots.",
+              "image": "like.jpg",
+              "audio": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

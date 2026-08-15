@@ -22,6 +22,10 @@ package-lock.json
 __pycache__/
 *.pyc
 
+# Keep dependency locks for the Firebase vocabulary-site backup
+!tools/sf3-4-voc/site/package-lock.json
+!tools/sf3-4-voc/site/functions/package-lock.json
+
 # Editors and temporary logs
 .vscode/
 .idea/

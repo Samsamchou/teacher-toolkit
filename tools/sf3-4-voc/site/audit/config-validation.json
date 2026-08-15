@@ -1,0 +1,495 @@
+{
+  "generatedAt": "2026-08-10T06:15:15.529Z",
+  "status": "passed",
+  "title": "4年級（SF3／SF4）單字練習網站",
+  "projectId": "sf3sf4voc",
+  "topics": [
+    {
+      "id": "SF3 L01",
+      "words": 7
+    },
+    {
+      "id": "SF3 L02",
+      "words": 7
+    },
+    {
+      "id": "SF3 L03",
+      "words": 8
+    },
+    {
+      "id": "SF3 L04",
+      "words": 7
+    },
+    {
+      "id": "SF4 L01",
+      "words": 7
+    },
+    {
+      "id": "SF4 L02",
+      "words": 8
+    },
+    {
+      "id": "SF4 L03",
+      "words": 10
+    },
+    {
+      "id": "SF4 L04",
+      "words": 9
+    }
+  ],
+  "totals": {
+    "words": 63,
+    "images": 63,
+    "audioFiles": 51,
+    "fallbackEntries": 12
+  },
+  "imageOptimization": {
+    "dimensions": "640x640",
+    "sizeLimitBytes": 320000,
+    "totalBytes": 4034459,
+    "maximumBytes": 110002
+  },
+  "imageAssets": [
+    {
+      "path": "/images/vocabulary/sf3-l01/father.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 46911
+    },
+    {
+      "path": "/images/vocabulary/sf3-l01/grandfather.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 60759
+    },
+    {
+      "path": "/images/vocabulary/sf3-l01/grandmother.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 64741
+    },
+    {
+      "path": "/images/vocabulary/sf3-l01/sister.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 63946
+    },
+    {
+      "path": "/images/vocabulary/sf3-l01/mother.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 64977
+    },
+    {
+      "path": "/images/vocabulary/sf3-l01/brother.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 70054
+    },
+    {
+      "path": "/images/vocabulary/sf3-l01/who.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 67155
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/teacher.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 53156
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/student.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 72917
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/cook.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 66119
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/doctor.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 62088
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/nurse.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 52748
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/farmer.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 87431
+    },
+    {
+      "path": "/images/vocabulary/sf3-l02/driver.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 72892
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/bathroom.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 61788
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/bedroom.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 71229
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/kitchen.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 73701
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/dining-room.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 105989
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/living-room.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 76535
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/yard.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 110002
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/study.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 93971
+    },
+    {
+      "path": "/images/vocabulary/sf3-l03/where.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 71627
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/bird.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 52140
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/rabbit.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 69211
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/turtle.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 74299
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/cat.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 77893
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/frog.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 67631
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/dog.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 66849
+    },
+    {
+      "path": "/images/vocabulary/sf3-l04/fish.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 64855
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/yo-yos.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 64357
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/kites.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 54661
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/dolls.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 87121
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/balls.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 68223
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/robots.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 92159
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/these.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 56841
+    },
+    {
+      "path": "/images/vocabulary/sf4-l01/those.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 82911
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/box.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 62392
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/desk.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 62713
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/chair.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 59463
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/table.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 59642
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/bag.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 73130
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/in.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 74954
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/on.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 58581
+    },
+    {
+      "path": "/images/vocabulary/sf4-l02/under.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 53182
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/eleven.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 42696
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/twelve.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 43991
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/twenty.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 40967
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/thirty.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 40346
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/forty.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 40287
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/forty-five.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 49321
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/fifty.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 49958
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/fifty-five.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 48036
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/what-time.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 71273
+    },
+    {
+      "path": "/images/vocabulary/sf4-l03/oclock.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 59281
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/cake.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 60176
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/ice-cream.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 58489
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/rice.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 44084
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/milk.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 34246
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/juice.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 39231
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/tea.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 46994
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/water.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 40162
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/pizza.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 90598
+    },
+    {
+      "path": "/images/vocabulary/sf4-l04/like.jpg",
+      "height": 640,
+      "width": 640,
+      "progressive": true,
+      "bytes": 80379
+    }
+  ]
+}

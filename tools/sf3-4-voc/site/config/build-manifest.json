@@ -1,0 +1,18 @@
+{
+  "manifestVersion": 1,
+  "updatedAt": "2026-08-10T03:49:41Z",
+  "sourceHash": "2944c647bdc02eff612d5dd1ce0a8b578f2c43be3147a427bc6e43842ac5bad2",
+  "sourceConfirmed": true,
+  "sourceConfirmation": {
+    "confirmedBy": "user",
+    "confirmedAt": "2026-08-10T01:27:05Z",
+    "evidence": "使用者已確認單字內容可繼續建置，並明確指定教師後台採用單一通行碼登入。"
+  },
+  "deployConfirmed": true,
+  "deployConfirmation": {
+    "confirmedBy": "user",
+    "confirmedAt": "2026-08-10T01:27:05Z",
+    "evidence": "使用者明確確認部署到 Firebase 專案 sf3sf4voc，並同意啟用相關服務與可能產生的用量費用。"
+  },
+  "assets": {}
+}

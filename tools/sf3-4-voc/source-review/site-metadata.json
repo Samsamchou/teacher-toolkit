@@ -1,0 +1,37 @@
+{
+  "site": {
+    "siteTitle": "4年級（SF3／SF4）單字練習網站",
+    "projectName": "SF3-SF4 GRADE 4 VOCABULARY PRACTICE",
+    "appId": "sf3-sf4-vocabulary-practice",
+    "grade": 4,
+    "gradeLabel": "4年級",
+    "studentIdPlaceholder": "例如：40101",
+    "timezone": "Asia/Taipei",
+    "version": "20260809-sf3-sf4-source-review"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyANv0ZAyRv_HP75c8b56s0NLWwMQyYlDqw",
+    "appId": "1:351311660417:web:372546105037d5eb5e9480",
+    "authDomain": "sf3sf4voc.firebaseapp.com",
+    "messagingSenderId": "351311660417",
+    "projectId": "sf3sf4voc",
+    "storageBucket": "sf3sf4voc.firebasestorage.app",
+    "region": "asia-east1"
+  },
+  "security": {
+    "maxClassSize": 25,
+    "imageMaxBytes": 320000,
+    "teacherClaim": "teacher",
+    "requireAppCheck": true
+  },
+  "speech": {
+    "ttsVoice": "marin"
+  },
+  "recording": {},
+  "forbiddenStaleValues": [
+    "HWG7",
+    "HWG8",
+    "hwg8u01voc",
+    "6年級"
+  ]
+}

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>單字練習網站</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/tesseract.js@5.0.3/dist/tesseract.min.js"></script>
+  <script src="/site-config.js"></script>
+  <script>document.title = window.SITE_CONFIG.siteTitle;</script>
+  <script type="module">
+    const siteConfig = window.SITE_CONFIG;
+    const config = siteConfig.firebase;
+    window.APP_ID = siteConfig.appId;
+    const keys = siteConfig.localStorageKeys;
+    window.dateKey = (stamp=Date.now()) => new Intl.DateTimeFormat("en-CA",{timeZone:siteConfig.timezone,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(stamp));
+    let collectionFn,addDocFn,getDocsFn,queryFn,whereFn,writeBatchFn,signInAnonymouslyFn,signInWithCustomTokenFn,signOutFn,getIdTokenResultFn,getAppCheckTokenFn;
+    const firebaseInitPromise=(async()=>{try{
+      const localPreview=["localhost","127.0.0.1"].includes(location.hostname)&&new URLSearchParams(location.search).get("live")!=="1";
+      if(siteConfig.security?.dryRun||localPreview){console.info("Local preview mode: Firebase network access is disabled.");return false}
+      const [{initializeApp},authModule,firestoreModule,appCheckModule]=await Promise.all([
+        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"),
+        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"),
+        import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app-check.js")
+      ]);
+      ({signInAnonymously:signInAnonymouslyFn,signInWithCustomToken:signInWithCustomTokenFn,signOut:signOutFn,getIdTokenResult:getIdTokenResultFn}=authModule);
+      ({collection:collectionFn,addDoc:addDocFn,getDocs:getDocsFn,query:queryFn,where:whereFn,writeBatch:writeBatchFn}=firestoreModule);
+      window.firebaseApp=initializeApp(config);
+      if(siteConfig.security?.requireAppCheck){
+        if(!siteConfig.security.appCheckSiteKey)throw new Error("App Check 網站金鑰尚未設定");
+        window.appCheck=appCheckModule.initializeAppCheck(window.firebaseApp,{provider:new appCheckModule.ReCaptchaEnterpriseProvider(siteConfig.security.appCheckSiteKey),isTokenAutoRefreshEnabled:true});
+        getAppCheckTokenFn=appCheckModule.getToken;
+      }
+      window.auth=authModule.getAuth(window.firebaseApp);window.db=firestoreModule.getFirestore(window.firebaseApp);if(!window.auth.currentUser)await signInAnonymouslyFn(window.auth);return true;
+    }catch(e){console.warn("Firebase init failed; using this device only.",e);return false;}})();
+    window.firebaseReadyPromise=firebaseInitPromise;
+    window.appCheckHeaders=async()=>{await firebaseInitPromise;if(!siteConfig.security?.requireAppCheck)return{};if(!window.appCheck||!getAppCheckTokenFn)throw new Error("App Check 尚未就緒");const result=await getAppCheckTokenFn(window.appCheck,false);return{"X-Firebase-AppCheck":result.token}};
+    window.ensureAnonymous=async()=>{await firebaseInitPromise;if(window.auth&&!window.auth.currentUser)await signInAnonymouslyFn(window.auth)};
+    window.teacherSignIn=async(passcode)=>{
+      await firebaseInitPromise;
+      if(!window.auth)throw new Error("Firebase 驗證尚未就緒");
+      if(!String(passcode||"").trim())throw new Error("請輸入教師通行碼");
+      const headers={"Content-Type":"application/json",...(await window.appCheckHeaders())};
+      const response=await fetch(siteConfig.functionUrls.teacherLogin,{method:"POST",headers,body:JSON.stringify({passcode:String(passcode)})});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok||!data.token)throw new Error(data.error||"教師登入失敗");
+      const credential=await signInWithCustomTokenFn(window.auth,data.token);
+      const token=await getIdTokenResultFn(credential.user,true);
+      const claim=siteConfig.teacherAccess.claim;
+      if(token.claims.admin!==true&&token.claims[claim]!==true){await signOutFn(window.auth);await signInAnonymouslyFn(window.auth);throw new Error("此帳號沒有教師權限");}
+      return true;
+    };
+    window.signOutTeacher=async()=>{await firebaseInitPromise;if(window.auth?.currentUser&&!window.auth.currentUser.isAnonymous)await signOutFn(window.auth);if(window.auth&&!window.auth.currentUser)await signInAnonymouslyFn(window.auth)};
+    const ref = (kind) => collectionFn(window.db,"artifacts",window.APP_ID,"public","data",kind);
+    window.saveData = async (kind,payload) => {
+      const item={...payload,timestamp:payload.timestamp||Date.now(),dateKey:payload.dateKey||window.dateKey()};
+      await firebaseInitPromise;
+      if(window.db&&window.auth?.currentUser){try{await addDocFn(ref(kind),item);return {...item,__persistence:"firestore"};}catch(e){console.warn("Firestore save fallback",e);}}
+      const rows=JSON.parse(localStorage.getItem(keys[kind])||"[]"); rows.push(item); localStorage.setItem(keys[kind],JSON.stringify(rows)); return item;
+    };
+    window.fetchData = async (kind) => {
+      await firebaseInitPromise;
+      if(window.db){try{const s=await getDocsFn(ref(kind));return s.docs.map(d=>({id:d.id,...d.data()}));}catch(e){console.warn("Firestore read fallback",e);}}
+      return JSON.parse(localStorage.getItem(keys[kind])||"[]");
+    };
+    window.deleteTeacherData = async ({studentId,dateKey,category=null}) => {
+      await firebaseInitPromise;
+      const matches=row=>row.studentId===studentId&&(row.dateKey||window.dateKey(row.timestamp))===dateKey&&(category===null||row.category===category);
+      let localDeleted=0;
+      for(const [kind,key] of Object.entries(keys)){const rows=JSON.parse(localStorage.getItem(key)||"[]"),kept=rows.filter(row=>!matches(row));localDeleted+=rows.length-kept.length;if(rows.length!==kept.length)localStorage.setItem(key,JSON.stringify(kept));}
+      let firestoreDeleted=0;
+      if(window.db&&window.auth?.currentUser){const refs=[];for(const kind of Object.keys(keys)){const snapshot=await getDocsFn(queryFn(ref(kind),whereFn("studentId","==",studentId)));snapshot.forEach(doc=>{if(matches(doc.data()))refs.push(doc.ref)});}for(let i=0;i<refs.length;i+=450){const batch=writeBatchFn(window.db);refs.slice(i,i+450).forEach(docRef=>batch.delete(docRef));await batch.commit();}firestoreDeleted=refs.length;}
+      return {deleted:firestoreDeleted||localDeleted,firestoreDeleted,localDeleted};
+    };
+    window.transcribe = async (payload) => {
+      const headers={"Content-Type":"application/json",...(await window.appCheckHeaders())};
+      const r=await fetch(siteConfig.functionUrls.transcribeSpeech,{method:"POST",headers,body:JSON.stringify(payload)});
+      const data=await r.json().catch(()=>({})); if(!r.ok||!data.ok)throw new Error(data.debugCode?`${data.error}（${data.debugCode}）`:data.error||"語音辨識失敗"); return data;
+    };
+    const TTS_VERSION=siteConfig.version;
+    const ttsCache=new Map();
+    const synthesizedAudioCache=new Map();
+    const escapeSsml=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[ch]));
+    const allWords=siteConfig.topics.flatMap(topic=>topic.words);
+    const wordConfigFor=text=>allWords.find(word=>word.en===text)||null;
+    const wordSpeechText=text=>String(wordConfigFor(text)?.speechAliases?.[0]||text).replace(/[.?!\s]+$/g,"").trim()+".";
+    window.wordSpeechText=wordSpeechText;
+    const ssmlFor=(text,speechType)=>{const kind=speechType==="sentence"?"sentence":"word";if(kind==="word"){const alias=wordConfigFor(text)?.speechAliases?.[0],written=escapeSsml(text),spoken=escapeSsml(wordSpeechText(text).slice(0,-1)),content=alias?'<sub alias="'+spoken+'">'+written+'</sub>.':spoken+".";return `<speak><prosody rate="${Math.round(siteConfig.speech.wordSpeed*100)}%">${content}</prosody></speak>`}let content=escapeSsml(text);if(!/[.!?]$/.test(text.trim()))content+=".";content=content.replace(/([?!])\s+/g,'$1<break time="450ms"/>')+'<break time="650ms"/>';return `<speak><prosody rate="${Math.round(siteConfig.speech.sentenceSpeed*100)}%">${content}</prosody></speak>`};
+    window.speechUrl = (text,speechType="word") => {
+      const clean=String(text||"").trim(); if(!clean)throw new Error("No speech text.");
+      const kind=speechType==="sentence"?"sentence":"word",cacheKey=TTS_VERSION+":"+kind+":"+clean;
+      if(ttsCache.has(cacheKey))return ttsCache.get(cacheKey);
+      let url;
+      const wordConfig=kind==="word"?wordConfigFor(clean):null;
+      if(kind==="word"&&wordConfig?.audio)url=wordConfig.audio+"?v="+encodeURIComponent(TTS_VERSION);
+      else{const ssml=ssmlFor(clean,kind),params=new URLSearchParams({text:clean,speechType:kind,ssml,version:TTS_VERSION});url=siteConfig.functionUrls.synthesizeSpeech+"?"+params.toString()}
+      ttsCache.set(cacheKey,url);return url;
+    };
+    window.loadSpeechAudio=async(text,speechType="word")=>{
+      const url=window.speechUrl(text,speechType);
+      if(!url.startsWith(siteConfig.functionUrls.synthesizeSpeech))return url;
+      if(!(await firebaseInitPromise))return url;
+      if(synthesizedAudioCache.has(url))return synthesizedAudioCache.get(url);
+      const task=(async()=>{const headers=await window.appCheckHeaders();const response=await fetch(url,{headers});if(!response.ok){const data=await response.json().catch(()=>({}));throw new Error(data.error||"語音合成失敗")}return URL.createObjectURL(await response.blob())})();
+      synthesizedAudioCache.set(url,task);
+      try{return await task}catch(error){synthesizedAudioCache.delete(url);throw error}
+    };
+    window.addEventListener("pagehide",()=>{for(const task of synthesizedAudioCache.values())Promise.resolve(task).then(url=>URL.revokeObjectURL(url)).catch(()=>{})},{once:true});
+    window.synthesizeSpeech = async (text,speechType="word") => window.loadSpeechAudio(text,speechType);
+    window.dispatchEvent(new Event("firebase-ready"));
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@500;700;900&display=swap');
+    *{box-sizing:border-box}body{margin:0;font-family:Fredoka,'Noto Sans TC',sans-serif;background:linear-gradient(135deg,#a7f3d0 0%,#fde047 52%,#fbcfe8 100%);background-attachment:fixed;color:#26324a;overscroll-behavior:none}
+    button{touch-action:manipulation}.btn{box-shadow:0 9px 0 rgba(0,0,0,.18);transition:.15s transform,.15s box-shadow}.btn:active{transform:translateY(8px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
+    .glass{background:rgba(255,255,255,.68);backdrop-filter:blur(14px);border:3px solid rgba(255,255,255,.82);box-shadow:0 18px 55px rgba(58,53,120,.18)}
+    .topic-selected{outline:8px solid white;transform:translateY(-5px) scale(1.03)} canvas{touch-action:none;background:#fff;border-radius:2rem}
+    .vocab-image{width:min(58vw,340px);height:auto;aspect-ratio:1/1;object-fit:contain;background:#f8fbff;border-radius:2rem;border:8px solid rgba(255,255,255,.95);box-shadow:0 16px 35px rgba(31,41,55,.22)}
+    .vocab-learning-row{width:100%;max-width:1040px;display:grid;grid-template-columns:minmax(280px,1fr) minmax(300px,.9fr);align-items:center;gap:clamp(2rem,6vw,5rem)}
+    .vocab-visual{display:flex;align-items:center;justify-content:center}
+    .vocab-audio-panel{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:1.4rem;width:100%}
+    .vocab-audio-panel .btn{width:100%;min-height:86px;font-size:clamp(1.5rem,2.4vw,2.15rem)}
+    .example-sentence{width:100%;max-width:1050px;font-size:clamp(2.15rem,4.3vw,3.8rem);line-height:1.35;font-weight:900;color:#374151;margin:2.5rem auto 0;text-wrap:balance}
+    @media(max-width:767px){.vocab-learning-row{grid-template-columns:1fr;gap:1.25rem}.vocab-audio-panel{max-width:520px;margin:0 auto}.vocab-audio-panel .btn{min-height:72px}.example-sentence{font-size:clamp(1.9rem,8vw,2.8rem);margin-top:2rem}}
+    @keyframes float{50%{transform:translateY(-12px)}}.float{animation:float 2.4s ease-in-out infinite}
+    @keyframes slot-roll{0%{transform:translateY(-18%) scale(.82);filter:blur(3px)}50%{transform:translateY(18%) scale(1.12);filter:blur(1px)}100%{transform:translateY(-18%) scale(.82);filter:blur(3px)}}
+    @keyframes slot-stop{0%{transform:scale(.7) rotate(-8deg)}65%{transform:scale(1.24) rotate(4deg)}100%{transform:scale(1) rotate(0)}}
+    @keyframes score-pop{0%{opacity:0;transform:translateY(18px) scale(.55)}70%{opacity:1;transform:translateY(-8px) scale(1.18)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    .slot-window{overflow:hidden;perspective:700px}.slot-reel{display:inline-flex;align-items:center;justify-content:center;min-width:1.15em;will-change:transform,filter}.slot-reel.spinning{animation:slot-roll .16s linear infinite}.slot-reel.stopped{animation:slot-stop .38s ease-out}.slot-win{animation:score-pop .55s ease-out}
+    @keyframes celebration-float{0%{opacity:0;transform:translate3d(-50%,18vh,0) scale(.35) rotateX(70deg) rotateY(0)}14%{opacity:1}70%{opacity:1;transform:translate3d(calc(-50% + var(--drift)),calc(-72vh - var(--rise)),120px) scale(1.2) rotateX(0) rotateY(var(--tilt))}100%{opacity:0;transform:translate3d(calc(-50% + var(--drift)),calc(-128vh - var(--rise)),220px) scale(.75) rotateX(-35deg) rotateY(var(--tilt))}}
+    @keyframes celebration-banner{0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotateX(65deg)}55%{opacity:1;transform:translate(-50%,-50%) scale(1.18) rotateX(-8deg)}100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotateX(0)}}
+    .celebration-layer{position:fixed;inset:0;z-index:80;pointer-events:none;overflow:hidden;perspective:900px;background:radial-gradient(circle at center,rgba(255,255,255,.22),transparent 58%)}.celebration-item{position:absolute;left:var(--x);bottom:-12vh;font-size:clamp(3.2rem,9vw,7rem);filter:drop-shadow(0 14px 10px rgba(60,35,120,.28));text-shadow:0 5px 0 rgba(255,255,255,.7);animation:celebration-float 2.7s cubic-bezier(.18,.72,.2,1) var(--delay) both;will-change:transform,opacity}.celebration-banner{position:absolute;left:50%;top:42%;width:min(88vw,680px);padding:1.2rem 1.5rem;border:8px solid rgba(255,255,255,.92);border-radius:2.2rem;background:linear-gradient(135deg,#f472b6,#facc15,#34d399);box-shadow:0 24px 60px rgba(76,29,149,.35),inset 0 -10px 0 rgba(0,0,0,.12);color:white;font-size:clamp(2.2rem,7vw,5.2rem);font-weight:900;text-align:center;text-shadow:0 5px 0 rgba(88,28,135,.35);animation:celebration-banner .65s cubic-bezier(.2,.9,.25,1.25) both;transform-style:preserve-3d}
+    @keyframes try-again-pop{0%{opacity:0;transform:scale(.45) rotate(-7deg)}55%{opacity:1;transform:scale(1.14) rotate(3deg)}78%{transform:scale(.96) rotate(-1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+    @keyframes spelling-shake{0%,100%{transform:translateX(0)}18%{transform:translateX(-18px) rotate(-2deg)}36%{transform:translateX(16px) rotate(2deg)}54%{transform:translateX(-12px) rotate(-1deg)}72%{transform:translateX(9px) rotate(1deg)}}
+    .try-again-banner{width:min(92%,680px);margin:0 auto 1.5rem;padding:1rem 1.4rem;border:6px solid white;border-radius:2rem;background:linear-gradient(135deg,#fb7185,#f97316,#facc15);box-shadow:0 14px 0 rgba(190,24,93,.22),0 24px 45px rgba(124,45,18,.22);color:white;text-align:center;animation:try-again-pop .58s cubic-bezier(.2,.9,.25,1.25) both}.try-again-banner strong{display:block;font-size:clamp(2.4rem,7vw,4.8rem);line-height:1;text-shadow:0 5px 0 rgba(124,45,18,.28)}.try-again-banner span{display:block;margin-top:.55rem;font-size:clamp(1.1rem,3vw,1.65rem);font-weight:900}.spelling-answer-wrong{animation:spelling-shake .58s ease-in-out}
+  </style>
+</head>
+<body><div id="root"></div>
+<script type="text/babel">
+const {useEffect,useMemo,useRef,useState}=React;
+const SITE_CONFIG=window.SITE_CONFIG;
+const TOPICS_TOP=SITE_CONFIG.topicRows.top;
+const TOPICS_BOTTOM=SITE_CONFIG.topicRows.bottom;
+const COLORS=SITE_CONFIG.topics.map(topic=>topic.display.classes);
+const MODE_NAMES={1:"看圖學單字",2:"中英配對",3:"聽音錄音",4:"手寫練習",5:"聽音拼字"};
+const lettersOnly=s=>String(s||"").replace(/[^A-Za-z]/g,"");
+const cleanLetters=s=>lettersOnly(s).toLowerCase();
+const spellingTarget=s=>lettersOnly(s);
+const shuffleLetters=letters=>{const items=[...letters];for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]]}return items};
+const requiredUppercasePositions=s=>[...spellingTarget(s)].map((letter,index)=>/[A-Z]/.test(letter)?index:-1).filter(index=>index>=0);
+const needsCapitalization=s=>requiredUppercasePositions(s).length>0;
+const hasRequiredCapitalization=(written,target)=>requiredUppercasePositions(target).every(index=>written[index]===spellingTarget(target)[index]);
+const capitalizationHint=s=>{const target=spellingTarget(s),positions=requiredUppercasePositions(target),letters=positions.map(index=>target[index]);return positions.length===1&&positions[0]===0?`專有名詞提醒：第一個字母 ${letters[0]} 一定要大寫。`:`大小寫提醒：${letters.join("、")} 一定要大寫。`};
+const rowsFor=topic=>(SITE_CONFIG.vocabulary[topic]||[]).map(word=>({...word,sentence:word.example,category:topic}));
+let activeAudio=null;
+let speechRequestId=0;
+const browserSpeak=(text,speechType="word",onEnded,onError)=>{try{speechSynthesis.cancel();const spokenText=speechType==="word"&&window.wordSpeechText?window.wordSpeechText(text):text;const u=new SpeechSynthesisUtterance(spokenText);u.lang="en-US";u.rate=speechType==="sentence"?SITE_CONFIG.speech.sentenceSpeed:SITE_CONFIG.speech.wordSpeed;if(onEnded)u.onend=onEnded;if(onError)u.onerror=onError;const voices=speechSynthesis.getVoices(),preferred=voices.find(v=>/en-US/i.test(v.lang)&&/(Natural|Neural|Google US English|Samantha|Ava|Aria|Jenny)/i.test(v.name))||voices.find(v=>/en-US/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));if(preferred)u.voice=preferred;speechSynthesis.speak(u)}catch(error){if(onError)onError(error)}};
+const isTouchDevice=(navigator.maxTouchPoints||0)>1||/Android|iPad|iPhone|iPod/i.test(navigator.userAgent);
+const speak=async(text,speechType="word",onEnded,onError)=>{const requestId=++speechRequestId;speechSynthesis.cancel();if(activeAudio){activeAudio.onended=null;activeAudio.onerror=null;activeAudio.pause();activeAudio=null}let fallbackStarted=false;const reportError=error=>{console.warn("Speech playback failed",error);if(onError)onError(error)};const fallbackOrReport=error=>{if(fallbackStarted||requestId!==speechRequestId)return;fallbackStarted=true;if(isTouchDevice)reportError(error);else browserSpeak(text,speechType,onEnded,reportError)};try{const url=await window.loadSpeechAudio(text,speechType);if(requestId!==speechRequestId)return;const audio=new Audio(url);activeAudio=audio;audio.preload="auto";audio.onended=()=>{if(activeAudio===audio)activeAudio=null;if(onEnded)onEnded()};audio.onerror=()=>{if(activeAudio===audio)activeAudio=null;fallbackOrReport(new Error("Audio resource could not be loaded."))};const playTask=audio.play();if(playTask&&typeof playTask.catch==="function")playTask.catch(fallbackOrReport)}catch(error){console.warn("OpenAI TTS setup failed",error);fallbackOrReport(error)}};
+
+function TeacherLoginDialog({passcode,setPasscode,busy,error,onCancel,onSubmit}){
+  return <div data-testid="teacher-login-dialog" className="fixed inset-0 z-[130] flex items-center justify-center bg-slate-900/70 p-5"><form onSubmit={onSubmit} role="dialog" aria-modal="true" aria-labelledby="teacher-login-title" className="w-full max-w-lg rounded-[2.5rem] border-8 border-white bg-white p-7 md:p-10 text-center shadow-2xl"><div className="text-6xl">🔐</div><h2 id="teacher-login-title" className="mt-3 text-3xl md:text-4xl font-black text-purple-700">教師後台登入</h2><label htmlFor="teacher-passcode" className="mt-6 block text-xl font-black text-gray-700">{SITE_CONFIG.teacherAccess.passcodePrompt}</label><input id="teacher-passcode" data-testid="teacher-passcode" type="password" inputMode="numeric" autoComplete="current-password" autoFocus maxLength="32" value={passcode} onChange={event=>setPasscode(event.target.value)} disabled={busy} className="mt-3 w-full rounded-2xl border-4 border-purple-200 p-4 text-center text-3xl font-black tracking-[.35em] outline-none focus:border-purple-500"/>{error&&<p data-testid="teacher-login-error" role="alert" className="mt-4 rounded-2xl bg-red-50 p-3 font-black text-red-700">{error}</p>}<div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2"><button type="button" onClick={onCancel} disabled={busy} className="btn rounded-2xl bg-gray-300 px-5 py-4 text-xl font-black text-gray-800">取消</button><button data-testid="teacher-login-submit" type="submit" disabled={busy||!passcode.trim()} className={`btn rounded-2xl px-5 py-4 text-xl font-black text-white ${busy||!passcode.trim()?"bg-gray-400":"bg-purple-600"}`}>{busy?"驗證中…":"進入教師後台"}</button></div></form></div>;
+}
+
+function Home({studentId,setStudentId,topic,setTopic,onStart,onTeacher}){
+  const row=(topics,offset,rowName)=><div data-testid={`topic-row-${rowName}`} className="grid gap-4 md:gap-6 w-full grid-cols-2 md:grid-cols-4 max-w-5xl">{topics.map((t,i)=><button key={t} data-testid="topic-button" data-topic={t} onClick={()=>setTopic(t)} className={`${COLORS[offset+i]} ${topic===t?"topic-selected":""} btn border-b-8 text-white rounded-[2rem] px-3 py-7 md:py-10 text-xl md:text-3xl font-black`}>{t}</button>)}</div>;
+  return <main data-page="home" className="min-h-screen p-5 md:p-10 flex flex-col items-center">
+    <div className="w-full max-w-7xl flex justify-end"><button data-testid="teacher-button" onClick={onTeacher} className="glass rounded-2xl px-5 py-3 font-black text-purple-700">教師後台</button></div>
+    <section className="glass w-full max-w-7xl rounded-[3rem] p-6 md:p-10 text-center mt-4">
+      <div className="text-6xl float">🎒</div><h1 className="text-3xl md:text-6xl font-black text-blue-700 mt-2 mb-8">{SITE_CONFIG.siteTitle}</h1>
+      <h2 className="text-2xl md:text-3xl font-black text-gray-600 mb-5">先選擇單字主題</h2>
+      <div className="flex flex-col items-center gap-5">{row(TOPICS_TOP,0,"top")}{row(TOPICS_BOTTOM,4,"bottom")}</div>
+      <div className="h-1 bg-white/80 rounded-full my-9"></div>
+      <h2 className="text-2xl md:text-3xl font-black text-gray-600 mb-4">再輸入學生學號</h2>
+      <input data-testid="student-id" value={studentId} onChange={e=>setStudentId(e.target.value)} onKeyDown={e=>e.key==="Enter"&&onStart()} placeholder={SITE_CONFIG.studentIdPlaceholder} className="w-full max-w-xl text-3xl md:text-5xl text-center p-5 border-8 border-blue-100 rounded-[2rem] outline-none font-black"/>
+      <button data-testid="start-button" onClick={onStart} className="btn mt-7 w-full max-w-xl bg-yellow-400 border-b-[10px] border-yellow-600 rounded-[2rem] py-6 text-3xl md:text-4xl font-black text-yellow-900">進入闖關</button>
+      <p className="mt-5 font-bold text-gray-500">已選主題：<span className="text-pink-600">{topic||"尚未選擇"}</span></p>
+    </section>
+  </main>
+}
+
+function ModeMenu({topic,studentId,onBack,onPick}){
+  return <main data-page="modes" className="min-h-screen p-6 md:p-10"><div className="max-w-6xl mx-auto">
+    <button onClick={onBack} className="btn bg-white rounded-2xl px-6 py-4 font-black text-blue-700">← 返回首頁</button>
+    <div className="glass rounded-[3rem] p-8 text-center mt-7"><div className="text-xl font-bold text-gray-500">挑戰者 {studentId}</div><h1 className="text-4xl md:text-6xl font-black text-blue-700 mt-2">主題：{topic}</h1></div>
+    <div className="grid md:grid-cols-2 gap-7 mt-8">{Object.entries(MODE_NAMES).map(([n,name])=><button key={n} data-testid="mode-button" data-mode={n} onClick={()=>onPick(Number(n))} className="btn bg-pink-500 border-b-[12px] border-pink-700 text-white rounded-[3rem] py-10 text-3xl md:text-5xl font-black">{name}</button>)}</div>
+  </div></main>;
+}
+
+const CELEBRATION_ITEMS=["🎉","⭐","🏆","👏","✨","🎈","🌈","🥳","⭐","🎊","👏","🏅","✨","🎉"];
+const celebrationSound=(()=>{let ctx=null;const audio=()=>{const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!ctx)ctx=new C();if(ctx.state==="suspended")void ctx.resume();return ctx};const clap=(c,time,volume)=>{const length=Math.max(1,Math.floor(c.sampleRate*.085)),buffer=c.createBuffer(1,length,c.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/length,2);const source=c.createBufferSource(),filter=c.createBiquadFilter(),gain=c.createGain();source.buffer=buffer;filter.type="bandpass";filter.frequency.setValueAtTime(1250+Math.random()*700,time);filter.Q.value=.8;gain.gain.setValueAtTime(.0001,time);gain.gain.exponentialRampToValueAtTime(volume,time+.008);gain.gain.exponentialRampToValueAtTime(.0001,time+.085);source.connect(filter).connect(gain).connect(c.destination);source.start(time);source.stop(time+.1)};const note=(c,frequency,time)=>{const osc=c.createOscillator(),gain=c.createGain();osc.type="sine";osc.frequency.setValueAtTime(frequency,time);gain.gain.setValueAtTime(.0001,time);gain.gain.exponentialRampToValueAtTime(.06,time+.018);gain.gain.exponentialRampToValueAtTime(.0001,time+.28);osc.connect(gain).connect(c.destination);osc.start(time);osc.stop(time+.3)};return{unlock:audio,applause:()=>{const c=audio();if(!c)return;const start=c.currentTime+.035;for(let i=0;i<24;i++)clap(c,start+i*.06+(i%4)*.012,.035+(i%3)*.009);[523,659,784,1047].forEach((frequency,i)=>note(c,frequency,start+.12+i*.12))}}})();
+const spellingRetrySound=(()=>{let ctx=null;const audio=()=>{const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!ctx)ctx=new C();if(ctx.state==="suspended")void ctx.resume();return ctx};const tone=(c,frequency,time)=>{const osc=c.createOscillator(),gain=c.createGain();osc.type="triangle";osc.frequency.setValueAtTime(frequency,time);gain.gain.setValueAtTime(.0001,time);gain.gain.exponentialRampToValueAtTime(.055,time+.012);gain.gain.exponentialRampToValueAtTime(.0001,time+.2);osc.connect(gain).connect(c.destination);osc.start(time);osc.stop(time+.22)};return{play:()=>{const c=audio();if(!c)return;const start=c.currentTime+.025;[392,330,262].forEach((frequency,i)=>tone(c,frequency,start+i*.13))}}})();
+function Handwriting({word,onCorrect,setFeedback}){
+  const ref=useRef(null),drawing=useRef(false),target=spellingTarget(word),capitalizationRequired=needsCapitalization(word);
+  useEffect(()=>{const c=ref.current,ctx=c.getContext("2d");ctx.lineCap="round";ctx.lineJoin="round";ctx.lineWidth=10;ctx.strokeStyle="#172554";const pos=e=>{const r=c.getBoundingClientRect(),p=e.touches?.[0]||e;return [(p.clientX-r.left)*c.width/r.width,(p.clientY-r.top)*c.height/r.height]},start=e=>{e.preventDefault();drawing.current=true;ctx.beginPath();ctx.moveTo(...pos(e))},move=e=>{if(!drawing.current)return;e.preventDefault();ctx.lineTo(...pos(e));ctx.stroke()},stop=()=>drawing.current=false;c.addEventListener("pointerdown",start);c.addEventListener("pointermove",move);window.addEventListener("pointerup",stop);return()=>window.removeEventListener("pointerup",stop)},[]);
+  const clear=()=>ref.current.getContext("2d").clearRect(0,0,700,300);
+  const check=async()=>{celebrationSound.unlock();setFeedback("正在辨識手寫單字與大小寫…");try{const {data:{text}}=await Tesseract.recognize(ref.current,"eng"),written=lettersOnly(text),sameLetters=cleanLetters(written)===cleanLetters(target),caseCorrect=hasRequiredCapitalization(written,target);if(sameLetters&&caseCorrect){setFeedback(`🎉 辨識成功：${text.trim()}`);onCorrect(ref.current.toDataURL("image/png"));}else if(sameLetters&&!caseCorrect)setFeedback(`⚠️ 單字字母正確，但大小寫不正確。${capitalizationHint(word)} 請重新書寫。`);else setFeedback(`辨識為「${text.trim()||"空白"}」，請再寫一次。`);}catch(e){setFeedback("手寫辨識暫時失敗，請再試一次。")}};
+  return <div className="w-full max-w-3xl">{capitalizationRequired&&<div data-testid="handwriting-capitalization-hint" className="mb-5 rounded-2xl border-4 border-amber-300 bg-amber-50 p-4 text-xl md:text-2xl font-black text-amber-800">⚠️ {capitalizationHint(word)}</div>}<canvas data-testid="handwriting-canvas" ref={ref} width="700" height="300" className="w-full border-8 border-blue-100 shadow-inner"/><div className="flex gap-4 mt-5"><button onClick={clear} className="btn flex-1 bg-gray-200 rounded-2xl py-4 font-black text-2xl">清除</button><button data-testid="handwriting-submit" onClick={check} className="btn flex-1 bg-green-500 text-white rounded-2xl py-4 font-black text-2xl">送出辨識</button></div></div>
+}
+
+const releaseRecordingHardware=async session=>{if(!session)return;cancelAnimationFrame(session.rafId);session.rafId=null;if(session.stream&&!session.tracksStopped){session.tracksStopped=true;for(const track of session.stream.getTracks()){try{track.stop()}catch(error){console.warn("Microphone track cleanup failed",error)}}}if(session.context&&!session.closePromise){try{session.closePromise=Promise.resolve(session.context.close()).catch(error=>console.warn("AudioContext cleanup failed",error))}catch(error){console.warn("AudioContext cleanup failed",error);session.closePromise=Promise.resolve()}}await session.closePromise};
+const cancelRecordingSession=session=>{if(!session)return;session.cancelled=true;const recorder=session.recorder;if(recorder){recorder.ondataavailable=null;recorder.onstop=null;if(recorder.state==="recording"){try{recorder.stop()}catch(error){console.warn("MediaRecorder cleanup failed",error)}}}void releaseRecordingHardware(session)};
+
+function Practice({topic,studentId,mode,onExit,onComplete}){
+  const words=useMemo(()=>rowsFor(topic),[topic]);
+  const [idx,setIdx]=useState(0),[flipped,setFlipped]=useState(false),[frontWordHeard,setFrontWordHeard]=useState(false),[frontSentenceHeard,setFrontSentenceHeard]=useState(false),[backWordHeard,setBackWordHeard]=useState(false),[backSentenceHeard,setBackSentenceHeard]=useState(false),[passed,setPassed]=useState(false),[feedback,setFeedback]=useState(""),[recording,setRecording]=useState(false),[pool,setPool]=useState([]),[answer,setAnswer]=useState([]),[celebrating,setCelebrating]=useState(false),[tryAgain,setTryAgain]=useState(false),[retryKey,setRetryKey]=useState(0),scores=useRef({});
+  const current=words[idx],celebrationTimer=useRef(null),retryTimer=useRef(null),recordingSession=useRef(null),mounted=useRef(true);
+  useEffect(()=>{clearTimeout(retryTimer.current);setPool(shuffleLetters(spellingTarget(current.en).split("")));setAnswer([]);setTryAgain(false)},[idx]);
+  useEffect(()=>{if(!passed||mode<3)return;clearTimeout(celebrationTimer.current);setCelebrating(true);celebrationSound.applause();celebrationTimer.current=setTimeout(()=>setCelebrating(false),2800);return()=>clearTimeout(celebrationTimer.current)},[passed,mode,idx]);
+  useEffect(()=>()=>{mounted.current=false;cancelRecordingSession(recordingSession.current);recordingSession.current=null;clearTimeout(celebrationTimer.current);clearTimeout(retryTimer.current)},[]);
+  const markListened=(side,kind)=>{if(side==="front"&&kind==="word")setFrontWordHeard(true);if(side==="front"&&kind==="sentence")setFrontSentenceHeard(true);if(side==="back"&&kind==="word")setBackWordHeard(true);if(side==="back"&&kind==="sentence")setBackSentenceHeard(true);setFeedback(`✅ 已聽完${side==="front"?"正面":"背面"}${kind==="word"?"單字":"例句"}。`)};
+  const listenWord=(side,e)=>{e.stopPropagation();setFeedback("🔊 單字播放中，請聽到結束…");speak(current.en,"word",()=>markListened(side,"word"),()=>setFeedback("⚠️ 單字音訊播放失敗，請檢查網路後再按一次。"))};
+  const listenSentence=(side,e)=>{e.stopPropagation();setFeedback("🔊 例句播放中，請聽到結束…");speak(current.sentence,"sentence",()=>markListened(side,"sentence"),()=>setFeedback("⚠️ 例句音訊播放失敗，請檢查網路後再按一次。"))};
+  const finishWord=()=>{if(idx<words.length-1){setIdx(value=>value+1);setFlipped(false);setFrontWordHeard(false);setFrontSentenceHeard(false);setBackWordHeard(false);setBackSentenceHeard(false);setPassed(false);setCelebrating(false);setFeedback("");}else{const vals=Object.values(scores.current);onComplete(mode===3&&vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length):100,words.length)}};
+  const tryFlip=()=>{if(flipped)return;if(mode<=2&&!(frontWordHeard&&frontSentenceHeard))return setFeedback("⚠️ 請先在卡牌正面聽完整的單字和例句！");if(mode>=3&&!frontSentenceHeard)return setFeedback("⚠️ 請先聽完整的例句！");setFlipped(true);setFeedback(mode<=2?"✅ 卡牌已翻面，請再聽完背面的單字和例句。":"")};
+  const startRecording=async e=>{e.stopPropagation();celebrationSound.unlock();if(recording||recordingSession.current)return;const session={cancelled:false,stream:null,recorder:null,context:null,rafId:null,tracksStopped:false,closePromise:null,stopRequested:false};recordingSession.current=session;try{
+    const RecorderAudioContext=window.AudioContext||window.webkitAudioContext,stream=await navigator.mediaDevices.getUserMedia({audio:true});session.stream=stream;if(session.cancelled||!mounted.current){await releaseRecordingHardware(session);return}const rec=new MediaRecorder(stream),chunks=[],ctx=new RecorderAudioContext(),source=ctx.createMediaStreamSource(stream),analyser=ctx.createAnalyser(),samples=new Uint8Array(analyser.fftSize=1024);session.recorder=rec;session.context=ctx;source.connect(analyser);
+    let speech=false,lastVoice=Date.now(),start=Date.now();setRecording(true);setFeedback("請清楚說出單字，說完後安靜 2 秒…");
+    const stop=()=>{if(session.stopRequested||session.cancelled)return;session.stopRequested=true;cancelAnimationFrame(session.rafId);session.rafId=null;if(rec.state==="recording")rec.stop()};
+    const recordingRules=SITE_CONFIG.recording;const watch=()=>{if(session.stopRequested||session.cancelled)return;analyser.getByteTimeDomainData(samples);let sum=0;for(const x of samples){const n=(x-128)/128;sum+=n*n}const volume=Math.sqrt(sum/samples.length),now=Date.now();if(!speech&&volume>=recordingRules.voiceThreshold){speech=true;lastVoice=now;setFeedback(`已聽到聲音，說完後安靜 ${recordingRules.silenceMs/1000} 秒會自動送出…`)}else if(speech&&volume>=recordingRules.silenceThreshold)lastVoice=now;if(speech&&now-lastVoice>=recordingRules.silenceMs)return stop();if(!speech&&now-start>=recordingRules.maxWaitForSpeechMs){setFeedback("沒有偵測到聲音，請再錄一次。");return stop()}if(speech&&now-start>=recordingRules.maxRecordingMs)return stop();session.rafId=requestAnimationFrame(watch)};
+    rec.ondataavailable=x=>{if(!session.cancelled&&x.data.size)chunks.push(x.data)};rec.onstop=async()=>{await releaseRecordingHardware(session);if(session.cancelled||!mounted.current)return;if(!speech||!chunks.length){if(recordingSession.current===session)recordingSession.current=null;setRecording(false);return}setFeedback("OpenAI 正在辨識你的發音…");try{const blob=new Blob(chunks,{type:rec.mimeType||"audio/webm"}),dataUrl=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(blob)});if(session.cancelled||!mounted.current)return;const result=await window.transcribe({studentId,word:current.en,acceptedAnswers:current.speechAliases||[],zh:current.zh,sentence:current.sentence,category:topic,audioDataUrl:dataUrl,mode});if(session.cancelled||!mounted.current)return;scores.current[current.en]=Math.max(scores.current[current.en]||0,Number(result.bestScore??result.score));setFeedback(`${result.score}分｜文字稿：${result.transcript||"無"}｜${result.feedback}`);if(result.passed)setPassed(true)}catch(err){if(!session.cancelled&&mounted.current)setFeedback(err.message)}finally{if(recordingSession.current===session)recordingSession.current=null;if(!session.cancelled&&mounted.current)setRecording(false)}};
+    rec.start();session.rafId=requestAnimationFrame(watch);
+  }catch(err){const shouldReport=!session.cancelled&&mounted.current;cancelRecordingSession(session);if(recordingSession.current===session)recordingSession.current=null;if(shouldReport){setRecording(false);setFeedback("無法開啟麥克風，請確認瀏覽器權限。")}}};
+  const dismissTryAgain=()=>{clearTimeout(retryTimer.current);setTryAgain(false)};
+  const showTryAgain=()=>{clearTimeout(retryTimer.current);setRetryKey(value=>value+1);setTryAgain(true);spellingRetrySound.play();setFeedback("Try again! 再試一次！可以按退格或清除本題後繼續拼字。");retryTimer.current=setTimeout(()=>setTryAgain(false),2200)};
+  const addLetter=(c,i)=>{celebrationSound.unlock();dismissTryAgain();const next=[...answer,c],target=spellingTarget(current.en);setAnswer(next);setPool(pool.filter((_,n)=>n!==i));if(next.join("")===target){setPassed(true);setFeedback("🎉 拼對了！")}else if(next.length===target.length)showTryAgain();else setFeedback("")};
+  const removeLastLetter=e=>{e.stopPropagation();if(!answer.length)return;dismissTryAgain();const last=answer[answer.length-1];setAnswer(answer.slice(0,-1));setPool([...pool,last]);setFeedback("↩️ 已退回上一個字母，請繼續拼字。")};
+  const clearSpelling=e=>{e.stopPropagation();if(!answer.length)return;dismissTryAgain();setPool(shuffleLetters([...pool,...answer]));setAnswer([]);setFeedback("🧹 已清除本題，可以重新拼字。")};
+  const reshuffleSpelling=e=>{e.stopPropagation();if(pool.length<2)return;dismissTryAgain();setPool(shuffleLetters(pool));setFeedback("🔀 字母已重新排列。")};
+  const canNext=mode<=2?flipped&&backWordHeard&&backSentenceHeard:flipped&&frontSentenceHeard&&passed;
+  return <main className="min-h-screen p-5 md:p-8 flex flex-col items-center">{celebrating&&<div className="celebration-layer" data-testid="celebration-layer" aria-live="polite"><div className="celebration-banner">🎉 過關！太棒了！ 🎉</div>{CELEBRATION_ITEMS.map((symbol,i)=><span key={i} className="celebration-item" style={{"--x":`${7+(i*7)%88}%`,"--delay":`${(i%5)*.09}s`,"--drift":`${(i%2?1:-1)*(20+(i%4)*8)}vw`,"--rise":`${(i%3)*4}vh`,"--tilt":`${(i%2?1:-1)*(120+i*17)}deg`}}>{symbol}</span>)}</div>}<div className="w-full max-w-6xl flex justify-between items-center"><button data-testid="exit-practice" onClick={onExit} className="btn bg-white rounded-2xl px-6 py-3 font-black">離開</button><div className="glass rounded-2xl px-6 py-3 font-black text-2xl">{idx+1} / {words.length}</div></div>
+    <div data-testid="practice-card" data-flipped={flipped?"true":"false"} data-mode={mode} onClick={tryFlip} className="glass w-full max-w-6xl min-h-[610px] rounded-[3rem] mt-6 p-7 md:p-12 flex flex-col items-center justify-center text-center cursor-pointer">
+      {!flipped?<>{mode===2?<><div className="text-7xl md:text-[9rem] font-black">{current.zh}</div><div className="flex flex-wrap justify-center gap-4 mt-8"><button data-side="front" data-audio="word" onClick={e=>listenWord("front",e)} className={`btn ${frontWordHeard?"bg-green-500":"bg-blue-500"} text-white rounded-2xl px-7 py-5 text-2xl font-black`}>{frontWordHeard?"✅ 已聽完單字":"🔊 聽單字"}</button><button data-side="front" data-audio="sentence" onClick={e=>listenSentence("front",e)} className={`btn rounded-2xl px-7 py-5 text-2xl font-black ${frontSentenceHeard?"bg-green-500":"bg-pink-500"} text-white`}>{frontSentenceHeard?"✅ 已聽完例句":"🔊 聽例句"}</button></div></>:<div className="vocab-learning-row">
+        <div className="vocab-visual">{current.image?<img src={`${current.image}?v=${encodeURIComponent(SITE_CONFIG.version)}`} alt={current.en} className="vocab-image float"/>:<div className="text-[9rem] float">{current.emoji}</div>}</div>
+        <div className="vocab-audio-panel">{mode>=3&&<div><div className="text-5xl md:text-7xl font-black text-blue-700">{current.en}</div><div className="text-3xl text-gray-500 mt-2">{current.zh}</div></div>}<button data-side="front" data-audio="word" onClick={e=>listenWord("front",e)} className={`btn ${frontWordHeard?"bg-green-500":"bg-blue-500"} text-white rounded-2xl px-7 py-5 font-black`}>{frontWordHeard?"✅ 已聽完單字":"🔊 聽單字"}</button><button data-side="front" data-audio="sentence" onClick={e=>listenSentence("front",e)} className={`btn rounded-2xl px-7 py-5 font-black ${frontSentenceHeard?"bg-green-500":"bg-pink-500"} text-white`}>{frontSentenceHeard?"✅ 已聽完例句":"🔊 聽例句"}</button></div>
+      </div>}
+      {mode!==2&&<p className="example-sentence">&ldquo;{current.sentence}&rdquo;</p>}<p className={`text-xl mt-6 font-black ${mode<=2&&frontWordHeard&&frontSentenceHeard?"text-green-600":"text-gray-500"}`}>{mode<=2?(frontWordHeard&&frontSentenceHeard?"✅ 正面兩段語音都已聽完，點卡片翻面 →":"請先聽完整的「聽單字」和「聽例句」"):(frontSentenceHeard?"✅ 例句已聽完，點卡片翻面 →":"聽完例句後，點卡片翻面 →")}</p></>
+      :<div className="w-full flex flex-col items-center">{mode<=2&&<><div className="text-7xl md:text-[10rem] font-black text-blue-700">{current.en}</div><div className="example-sentence mt-8">“{current.sentence}”</div><div className="flex flex-wrap justify-center gap-4 mt-8"><button data-side="back" data-audio="word" onClick={e=>listenWord("back",e)} className={`btn ${backWordHeard?"bg-green-500":"bg-blue-500"} text-white rounded-2xl px-8 py-5 text-2xl font-black`}>{backWordHeard?"✅ 已聽完單字":"🔊 聽單字"}</button><button data-side="back" data-audio="sentence" onClick={e=>listenSentence("back",e)} className={`btn ${backSentenceHeard?"bg-green-500":"bg-pink-500"} text-white rounded-2xl px-8 py-5 text-2xl font-black`}>{backSentenceHeard?"✅ 已聽完例句":"🔊 聽例句"}</button></div><p className={`text-xl mt-6 font-black ${backWordHeard&&backSentenceHeard?"text-green-600":"text-gray-500"}`}>{backWordHeard&&backSentenceHeard?"✅ 背面兩段語音都已聽完，可以前往下一題！":"請再聽完整的單字和例句，才會出現下一題按鈕。"}</p></>}
+        {mode===3&&!passed&&<button data-testid="record-button" disabled={recording} onClick={startRecording} className={`btn w-44 h-44 rounded-full text-white text-3xl font-black ${recording?"bg-gray-400":"bg-red-500"}`}>🎤<br/>{recording?"辨識中":"錄音"}</button>}
+        {mode===4&&!passed&&<Handwriting word={current.en} setFeedback={setFeedback} onCorrect={img=>{window.saveData("submissions",{studentId,type:"handwriting",word:current.en,data:img,category:topic});setPassed(true)}}/>}
+        {mode===5&&!passed&&<>{needsCapitalization(current.en)&&<div data-testid="spelling-capitalization-hint" className="mb-6 rounded-2xl border-4 border-amber-300 bg-amber-50 p-4 text-xl md:text-2xl font-black text-amber-800">⚠️ {capitalizationHint(current.en)}</div>}{tryAgain&&<div key={retryKey} data-testid="try-again-banner" className="try-again-banner" role="alert" aria-live="assertive"><strong>Try again!</strong><span>別擔心，可以按退格或清除本題再試一次！</span></div>}<div data-testid="spelling-answer" className={`flex flex-wrap justify-center gap-3 mb-8 ${tryAgain?"spelling-answer-wrong":""}`}>{answer.map((c,i)=><div key={i} className="bg-white rounded-2xl border-b-8 border-orange-400 w-16 h-20 flex items-center justify-center text-4xl font-black">{c}</div>)}</div><div data-testid="letter-pool" className="flex flex-wrap justify-center gap-3">{pool.map((c,i)=><button key={i} onClick={e=>{e.stopPropagation();addLetter(c,i)}} className="btn bg-yellow-400 rounded-2xl w-16 h-16 text-3xl font-black">{c}</button>)}</div><div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl mt-9"><button data-testid="spelling-backspace" disabled={!answer.length} onClick={removeLastLetter} className={`btn rounded-2xl px-5 py-4 text-xl md:text-2xl font-black text-white ${answer.length?"bg-sky-500":"bg-gray-300 opacity-50"}`}>↩️ 退格</button><button data-testid="spelling-clear" disabled={!answer.length} onClick={clearSpelling} className={`btn rounded-2xl px-5 py-4 text-xl md:text-2xl font-black text-white ${answer.length?"bg-rose-500":"bg-gray-300 opacity-50"}`}>🧹 清除本題</button><button data-testid="spelling-reshuffle" disabled={pool.length<2} onClick={reshuffleSpelling} className={`btn rounded-2xl px-5 py-4 text-xl md:text-2xl font-black text-white ${pool.length>=2?"bg-violet-500":"bg-gray-300 opacity-50"}`}>🔀 重新排列</button></div></>}
+      </div>}
+      {!!feedback&&<div role="status" className="mt-8 bg-white/80 rounded-2xl p-5 text-xl md:text-3xl font-black text-green-700">{feedback}</div>}
+    </div>{canNext&&<button data-testid="next-button" onClick={finishWord} className="btn mt-7 bg-green-500 border-b-[12px] border-green-700 text-white rounded-[2.5rem] px-16 py-6 text-4xl font-black">下一題 →</button>}
+  </main>;
+}
+
+const slotSound=(()=>{let ctx=null;const audio=()=>{const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!ctx)ctx=new C();if(ctx.state==="suspended")void ctx.resume();return ctx};const tone=(frequency,duration=.08,delay=0,type="sine",volume=.055)=>{const c=audio();if(!c)return;const start=c.currentTime+delay,osc=c.createOscillator(),gain=c.createGain();osc.type=type;osc.frequency.setValueAtTime(frequency,start);gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(volume,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+duration);osc.connect(gain).connect(c.destination);osc.start(start);osc.stop(start+duration+.02)};return{unlock:audio,click:()=>{tone(220,.07,0,"square",.035);tone(440,.09,.045,"sine",.05)},tick:n=>tone(260+(n%6)*55,.045,0,"square",.025),win:points=>{const notes=points>=100?[523,659,784,1047]:points>=50?[440,554,659]:[392,494,587];notes.forEach((n,i)=>tone(n,.22,i*.11,"sine",.065))}}})();
+
+function Slot({score,onDone}){
+  const [left,setLeft]=useState(4),[reels,setReels]=useState(["❓","❓","❓"]),[rolling,setRolling]=useState([false,false,false]),[total,setTotal]=useState(0),[lastWin,setLastWin]=useState(null),[spinning,setSpinning]=useState(false),items=["🍎","🌟","💎","🔔","🍒","7️⃣"],timer=useRef(null);
+  useEffect(()=>()=>timer.current&&clearInterval(timer.current),[]);
+  const spin=()=>{if(spinning||left<=0)return;slotSound.unlock();slotSound.click();setSpinning(true);setLastWin(null);setRolling([true,true,true]);const result=[0,0,0].map(()=>items[Math.floor(Math.random()*items.length)]),stopAt=[15,20,25];let tick=0;timer.current=setInterval(()=>{tick+=1;if(tick%2===0)slotSound.tick(tick);setReels(result.map((final,i)=>tick>=stopAt[i]?final:items[Math.floor(Math.random()*items.length)]));setRolling(stopAt.map(stop=>tick<stop));if(tick>=stopAt[2]){clearInterval(timer.current);timer.current=null;const points=result[0]===result[1]&&result[1]===result[2]?100:result[0]===result[1]||result[1]===result[2]||result[0]===result[2]?50:10;setReels(result);setRolling([false,false,false]);setTotal(value=>value+points);setLeft(value=>value-1);setLastWin(points);setSpinning(false);slotSound.win(points)}},90)};
+  return <main className="min-h-screen flex items-center justify-center p-4 md:p-6"><div className="bg-yellow-400 border-[12px] md:border-[16px] border-orange-300 rounded-[3rem] md:rounded-[4rem] p-5 md:p-10 w-full max-w-3xl text-center shadow-2xl"><h1 className="text-4xl md:text-5xl font-black text-purple-700">獎勵拉霸機</h1><p className="font-black text-xl md:text-2xl mt-3">本次練習分數：{score}</p><div className="slot-window bg-white border-8 border-gray-800 rounded-[2rem] md:rounded-[3rem] p-6 md:p-8 flex justify-around text-6xl md:text-9xl my-7 md:my-9">{reels.map((x,i)=><span key={i} className={`slot-reel ${rolling[i]?"spinning":"stopped"}`}>{x}</span>)}</div>{lastWin!==null&&<div key={`${left}-${lastWin}`} className="slot-win text-3xl md:text-4xl font-black text-red-600 mb-4">+{lastWin} 分！</div>}<div className="bg-black text-green-400 rounded-2xl p-4 md:p-5 text-3xl md:text-4xl font-mono mb-6 md:mb-8">獎勵總分：{total}</div>{left>0?<button disabled={spinning} onClick={spin} className={`btn w-full text-white rounded-[2rem] py-5 md:py-6 text-3xl md:text-4xl font-black ${spinning?"bg-purple-500":"bg-red-500"}`}>{spinning?"拉霸轉動中…":`SPIN（${left}次）`}</button>:<button onClick={()=>onDone(total)} className="btn w-full bg-green-500 text-white rounded-[2rem] py-5 md:py-6 text-3xl md:text-4xl font-black">完成闖關</button>}<p className="mt-4 font-bold text-orange-900">按下 SPIN 後，三個圖案會依序停下。</p></div></main>
+}
+
+function Teacher({onBack}){
+  const [subs,setSubs]=useState([]),[results,setResults]=useState([]),[date,setDate]=useState(null),[student,setStudent]=useState(null),[topic,setTopic]=useState(null),[deleteRequest,setDeleteRequest]=useState(null),[deleting,setDeleting]=useState(false),[deleteNotice,setDeleteNotice]=useState("");
+  const load=async()=>{const [nextSubs,nextResults]=await Promise.all([window.fetchData("submissions"),window.fetchData("practiceResults")]);setSubs(nextSubs);setResults(nextResults)};useEffect(()=>{load()},[]);
+  const dates=[...new Set([...subs,...results].map(x=>x.dateKey||window.dateKey(x.timestamp)))].sort().reverse(),students=[...new Set([...subs,...results].filter(x=>(x.dateKey||window.dateKey(x.timestamp))===date).map(x=>x.studentId))].sort(),topics=[...new Set([...subs,...results].filter(x=>x.studentId===student&&(x.dateKey||window.dateKey(x.timestamp))===date).map(x=>x.category))],chosenSubs=subs.filter(x=>x.studentId===student&&(x.dateKey||window.dateKey(x.timestamp))===date&&x.category===topic),chosenResults=results.filter(x=>x.studentId===student&&(x.dateKey||window.dateKey(x.timestamp))===date&&x.category===topic);
+  const slotValue=row=>{const raw=row?.totalSlotScore??row?.slotScore;return raw===undefined||raw===null?null:Number(raw)},completedResults=chosenResults.map(row=>({...row,slotValue:slotValue(row)})).filter(row=>Number.isFinite(row.slotValue)),totalSlotPoints=completedResults.reduce((sum,row)=>sum+row.slotValue,0);
+  const requestDelete=(event,request)=>{event.preventDefault();event.stopPropagation();setDeleteNotice("");setDeleteRequest(request)};
+  const cancelDelete=()=>{if(!deleting)setDeleteRequest(null)};
+  const confirmDelete=async()=>{if(!deleteRequest||deleting)return;const request=deleteRequest;setDeleting(true);setDeleteNotice("");try{const result=await window.deleteTeacherData(request);await load();if(request.category===null&&student===request.studentId){setStudent(null);setTopic(null)}else if(student===request.studentId&&topic===request.category)setTopic(null);setDeleteRequest(null);setDeleteNotice(`✅ 已刪除 ${request.dateKey}｜學生 ${request.studentId}${request.category===null?"｜當日全部主題":`｜${request.category}`}，共 ${result.deleted} 筆資料。`)}catch(error){setDeleteRequest(null);setDeleteNotice(`❌ 刪除失敗：${error.message||"請稍後再試"}`)}finally{setDeleting(false)}};
+  const deleteTarget=deleteRequest&&(deleteRequest.category===null?`${deleteRequest.dateKey}｜學生 ${deleteRequest.studentId}｜當日全部主題`:`${deleteRequest.dateKey}｜學生 ${deleteRequest.studentId}｜${deleteRequest.category}`);
+  return <main data-page="teacher" className="min-h-screen p-5"><div className="max-w-7xl mx-auto"><div className="flex justify-between"><button onClick={onBack} className="btn bg-white rounded-2xl px-5 py-3 font-black">← 返回</button><button onClick={load} className="btn bg-purple-500 text-white rounded-2xl px-5 py-3 font-black">重新整理</button></div><div className="glass rounded-[3rem] p-6 mt-6"><h1 className="text-4xl font-black text-purple-700 mb-6">教師後台｜日期 → 學生 → 主題</h1><div className="grid md:grid-cols-3 gap-6">
+    <section><h2 className="font-black text-2xl mb-3">日期</h2>{dates.map(x=><button key={x} data-testid="teacher-date" onClick={()=>{setDate(x);setStudent(null);setTopic(null);setDeleteNotice("")}} className={`w-full p-3 mb-2 rounded-xl font-bold ${date===x?"bg-purple-500 text-white":"bg-white"}`}>{x}</button>)}</section>
+    <section><h2 className="font-black text-2xl">學生</h2><p className="text-sm font-bold text-gray-500 mb-3">在座號上按右鍵，可刪除該生當日資料</p>{students.map(x=><button key={x} data-testid="teacher-student" data-student-id={x} title="按右鍵可刪除此學生在本日的全部資料" onContextMenu={e=>requestDelete(e,{studentId:x,dateKey:date,category:null})} onClick={()=>{setStudent(x);setTopic(null);setDeleteNotice("")}} className={`w-full p-3 mb-2 rounded-xl font-bold ${student===x?"bg-blue-500 text-white":"bg-white"}`}>{x}</button>)}</section>
+    <section><h2 className="font-black text-2xl">單字主題</h2><p className="text-sm font-bold text-gray-500 mb-3">在主題上按右鍵，可只刪除此主題資料</p>{topics.map(x=><button key={x} data-testid="teacher-topic" data-topic={x} title="按右鍵可刪除此學生在本日的這個主題" onContextMenu={e=>requestDelete(e,{studentId:student,dateKey:date,category:x})} onClick={()=>{setTopic(x);setDeleteNotice("")}} className={`w-full p-3 mb-2 rounded-xl font-bold ${topic===x?"bg-pink-500 text-white":"bg-white"}`}>{x}</button>)}</section>
+  </div>{deleteNotice&&<div data-testid="delete-notice" role="status" className={`mt-5 rounded-2xl border-4 p-4 text-xl font-black ${deleteNotice.startsWith("✅")?"border-green-300 bg-green-50 text-green-700":"border-red-300 bg-red-50 text-red-700"}`}>{deleteNotice}</div>}{topic&&<div className="bg-white rounded-[2rem] p-6 mt-7"><h2 className="text-3xl font-black">{date}｜{student}｜{topic}</h2><div className="grid md:grid-cols-5 gap-3 my-5">{Object.entries(MODE_NAMES).map(([n,name])=>{const modeRows=chosenResults.filter(x=>Number(x.mode)===Number(n)),completed=modeRows.map(row=>({...row,slotValue:slotValue(row)})).filter(row=>Number.isFinite(row.slotValue)),latest=[...(completed.length?completed:modeRows)].sort((a,b)=>(b.timestamp||0)-(a.timestamp||0))[0],highestSlot=completed.length?Math.max(...completed.map(row=>row.slotValue)):null;return <div key={n} data-testid={`mode-summary-${n}`} className="bg-blue-50 rounded-2xl p-4 border-4 border-blue-100"><b className="text-lg">{name}</b><p className="text-sm font-bold text-gray-500 mt-3">練習分數</p><div data-testid={`mode-score-${n}`} className="text-3xl font-black text-blue-700">{latest?.modeScore??"—"}</div><div className="h-px bg-blue-200 my-3"></div><p className="text-sm font-bold text-gray-500">拉霸最高分</p><div data-testid={`slot-high-${n}`} className="text-3xl font-black text-orange-600">{highestSlot??"—"}</div></div>})}</div><div data-testid="slot-total" className="rounded-[2rem] p-6 mb-7 text-center text-white bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 shadow-xl"><p className="text-xl md:text-2xl font-black">本日此學生・此主題拉霸累積總分</p><div className="text-6xl md:text-7xl font-black my-2">{totalSlotPoints}</div><p className="font-bold">共 {completedResults.length} 次完成拉霸紀錄</p></div><h3 className="font-black text-2xl">錄音與手寫紀錄</h3><div className="grid md:grid-cols-2 gap-4 mt-3">{chosenSubs.map((x,i)=><div key={x.id||i} className="bg-gray-50 rounded-xl p-4"><b>{x.word}</b>｜{x.type==="audio"?`${x.score??"—"} 分`:"手寫"}{x.transcript&&<p>文字稿：{x.transcript}</p>}{x.feedback&&<p>{x.feedback}</p>}{x.type==="audio"&&x.data&&<audio controls src={x.data} className="w-full mt-2"/>}{x.type==="handwriting"&&x.data&&<img src={x.data} className="mt-2 max-h-40"/>}</div>)}</div></div>}</div></div>{deleteRequest&&<div data-testid="delete-dialog" className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-900/70 p-5" onContextMenu={e=>e.preventDefault()}><section role="dialog" aria-modal="true" aria-labelledby="delete-dialog-title" className="w-full max-w-xl rounded-[2.5rem] border-8 border-white bg-white p-7 md:p-10 text-center shadow-2xl"><div className="text-6xl">🗑️</div><h2 id="delete-dialog-title" className="mt-3 text-3xl md:text-4xl font-black text-red-600">是否刪除此資料？</h2><p data-testid="delete-target" className="mt-5 rounded-2xl bg-red-50 p-4 text-xl md:text-2xl font-black text-gray-800">{deleteTarget}</p><p className="mt-4 font-bold text-red-700">刪除後無法復原。</p><div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-4"><button data-testid="delete-no" disabled={deleting} onClick={cancelDelete} className="btn rounded-2xl bg-gray-300 px-5 py-4 text-xl font-black text-gray-800">否，回到原畫面</button><button data-testid="delete-yes" disabled={deleting} onClick={confirmDelete} className="btn rounded-2xl bg-red-500 px-5 py-4 text-xl font-black text-white">{deleting?"刪除中…":"是，刪除此資料"}</button></div></section></div>}</main>;
+}
+function App(){
+  const helpersReady=()=>typeof window.speechUrl==="function"&&typeof window.saveData==="function"&&typeof window.fetchData==="function"&&typeof window.deleteTeacherData==="function"&&typeof window.transcribe==="function"&&typeof window.teacherSignIn==="function";
+  const [ready,setReady]=useState(helpersReady),[page,setPage]=useState("home"),[studentId,setStudentId]=useState(""),[topic,setTopic]=useState(""),[mode,setMode]=useState(1),[summary,setSummary]=useState(null);
+  const [teacherDialog,setTeacherDialog]=useState(false),[teacherPasscode,setTeacherPasscode]=useState(""),[teacherBusy,setTeacherBusy]=useState(false),[teacherError,setTeacherError]=useState("");
+  useEffect(()=>{const markReady=()=>setReady(helpersReady());window.addEventListener("firebase-ready",markReady);markReady();return()=>window.removeEventListener("firebase-ready",markReady)},[]);
+  const start=()=>{if(!topic)return alert("請先選擇單字主題");if(!studentId.trim())return alert("請輸入學號");setPage("modes")};
+  const openTeacher=()=>{setTeacherPasscode("");setTeacherError("");setTeacherDialog(true)};
+  const cancelTeacher=()=>{if(teacherBusy)return;setTeacherPasscode("");setTeacherError("");setTeacherDialog(false)};
+  const submitTeacher=async event=>{event.preventDefault();if(teacherBusy||!teacherPasscode.trim())return;setTeacherBusy(true);setTeacherError("");try{if(await window.teacherSignIn(teacherPasscode)){setTeacherPasscode("");setTeacherDialog(false);setPage("teacher")}}catch(error){setTeacherError(error.message||"教師登入失敗")}finally{setTeacherBusy(false)}};
+  let content;
+  if(!ready)content=<main data-page="loading" className="min-h-screen flex items-center justify-center p-6"><section className="glass rounded-[3rem] p-10 text-center"><div className="text-7xl float">🎒</div><h1 className="mt-5 text-3xl md:text-5xl font-black text-blue-700">網站準備中…</h1><p className="mt-4 text-xl font-bold text-gray-600">正在載入練習功能，請稍候。</p></section></main>;
+  else if(page==="home")content=<Home {...{studentId,setStudentId,topic,setTopic}} onStart={start} onTeacher={openTeacher}/>;
+  else if(page==="modes")content=<ModeMenu topic={topic} studentId={studentId} onBack={()=>setPage("home")} onPick={m=>{setMode(m);setPage("practice")}}/>;
+  else if(page==="practice")content=<Practice key={topic+"-"+mode} topic={topic} studentId={studentId} mode={mode} onExit={()=>setPage("modes")} onComplete={(score,count)=>{setSummary({score,count,started:Date.now()});setPage("slot")}}/>;
+  else if(page==="slot")content=<Slot score={summary.score} onDone={async total=>{await window.saveData("practiceResults",{studentId,category:topic,mode,modeName:MODE_NAMES[mode],modeScore:summary.score,completedWords:summary.count,slotScore:total,totalSlotScore:total});setPage("modes")}}/>;
+  else if(page==="teacher")content=<Teacher onBack={async()=>{await window.signOutTeacher();setPage("home")}}/>;
+  return <>{content}{teacherDialog&&<TeacherLoginDialog passcode={teacherPasscode} setPasscode={setTeacherPasscode} busy={teacherBusy} error={teacherError} onCancel={cancelTeacher} onSubmit={submitTeacher}/>}</>;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>

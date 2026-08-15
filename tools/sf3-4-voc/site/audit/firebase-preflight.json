@@ -1,0 +1,46 @@
+{
+  "projectId": "sf3sf4voc",
+  "webAppId": "1:351311660417:web:372546105037d5eb5e9480",
+  "region": "asia-east1",
+  "storageBucket": "sf3sf4voc.firebasestorage.app",
+  "intendedHostingUrl": "https://sf3sf4voc.web.app",
+  "checkedAt": "2026-08-09T15:49:55Z",
+  "billingEnabled": true,
+  "billingPlan": "Blaze",
+  "anonymousAuthEnabled": false,
+  "teacherAuthVerified": false,
+  "teacherClaimVerified": false,
+  "firestoreReady": false,
+  "storageReady": false,
+  "hostingReady": false,
+  "functionsReady": false,
+  "openAISecretBound": false,
+  "appCheckConfigured": false,
+  "quotasReviewed": false,
+  "localE2EPassed": true,
+  "localE2E": {
+    "passed": 25,
+    "skipped": 20,
+    "failed": 0,
+    "touchAndMicrophone": "browser simulations only"
+  },
+  "assets": {
+    "vocabularyImages": 63,
+    "authoritativeMp3": 51,
+    "ttsFallbackWords": 12
+  },
+  "evidence": [
+    "Firebase console showed project sf3sf4voc on the Blaze plan.",
+    "Authentication showed Start / Get started; anonymous and teacher sign-in are not configured.",
+    "Cloud Firestore showed Create database; no database exists yet.",
+    "Storage showed Get started; the bucket service is not initialized yet.",
+    "Hosting showed Get started; the intended Hosting site has not been deployed.",
+    "Functions showed Get started; synthesizeSpeech and transcribeSpeech have not been deployed.",
+    "App Check showed Get started; enforcement is not configured.",
+    "OPENAI_API_KEY secret binding was not found through a deployed function and remains pending.",
+    "Local configuration validation and project verification both completed with zero errors.",
+    "Local Playwright E2E completed with 25 passed, 20 skipped by project/device design, and 0 failed."
+  ],
+  "deploymentApproval": false,
+  "status": "checkpoint-b-awaiting-user-approval"
+}
