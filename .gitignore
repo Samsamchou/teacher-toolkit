@@ -1,0 +1,32 @@
+# Google Drive system files
+desktop.ini
+*.tmp
+~$*
+
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+*.key
+credentials.*
+*credentials*.json
+
+# Claude Code / Codex local settings
+.claude/
+.codex/
+
+# Node.js and local environments
+node_modules/
+package-lock.json
+.venv/
+__pycache__/
+*.pyc
+
+# Editors and temporary logs
+.vscode/
+.idea/
+*.log
+
+# OS metadata
+Thumbs.db
+.DS_Store

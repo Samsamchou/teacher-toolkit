@@ -1,0 +1,17 @@
+# teacher-toolkit
+
+二水國小 3–6 年級英語教學工具總專案 / A toolkit for Grade 3–6 elementary English teaching.
+
+## 目前內容 / Current contents
+
+- `tools/coordinate-hunter/`：座標獵人純前端練習遊戲。
+- `CLAUDE.md`：專案藍圖、資料位置與安全規則。
+- `agent.md`：Codex 專案基線。
+
+## 執行座標獵人 / Run Coordinate Hunter
+
+直接開啟 `tools/coordinate-hunter/index.html`，或在專案根目錄啟動任何靜態檔案伺服器後預覽。
+
+## 安全與同步 / Safety and sync
+
+學生資料只使用座號與班級代號；不要提交 API key、token、cookies 或本機 agent 設定。Obsidian 工作筆記位於 `G:\我的雲端硬碟\secondbrain\teacher-toolkit\工作筆記.md`。
