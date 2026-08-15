@@ -1,0 +1,83 @@
+{
+  "title": "Friends meet",
+  "grade": "G4",
+  "pageCount": 7,
+  "requiredListensPerPage": 2,
+  "pages": [
+    {
+      "number": 1,
+      "image": "assets/pages/page-01.png",
+      "audio": "assets/audio/page-01.mp3",
+      "sentences": [
+        "Hello, Mia!",
+        "How are you?"
+      ],
+      "audioStart": 0.0,
+      "audioEnd": 2.505
+    },
+    {
+      "number": 2,
+      "image": "assets/pages/page-02.png",
+      "audio": "assets/audio/page-02.mp3",
+      "sentences": [
+        "Hi, Leo!",
+        "I’m fine."
+      ],
+      "audioStart": 2.505,
+      "audioEnd": 5.21
+    },
+    {
+      "number": 3,
+      "image": "assets/pages/page-03.png",
+      "audio": "assets/audio/page-03.mp3",
+      "sentences": [
+        "Oops!",
+        "Watch out, Sam!"
+      ],
+      "audioStart": 5.21,
+      "audioEnd": 7.88
+    },
+    {
+      "number": 4,
+      "image": "assets/pages/page-04.png",
+      "audio": "assets/audio/page-04.mp3",
+      "sentences": [
+        "Oh no!",
+        "I’m sorry."
+      ],
+      "audioStart": 7.88,
+      "audioEnd": 10.895
+    },
+    {
+      "number": 5,
+      "image": "assets/pages/page-05.png",
+      "audio": "assets/audio/page-05.mp3",
+      "sentences": [
+        "It is okay, Leo."
+      ],
+      "audioStart": 10.895,
+      "audioEnd": 12.875
+    },
+    {
+      "number": 6,
+      "image": "assets/pages/page-06.png",
+      "audio": "assets/audio/page-06.mp3",
+      "sentences": [
+        "We must go now."
+      ],
+      "audioStart": 12.875,
+      "audioEnd": 14.73
+    },
+    {
+      "number": 7,
+      "image": "assets/pages/page-07.png",
+      "audio": "assets/audio/page-07.mp3",
+      "sentences": [
+        "Goodbye, Sam!",
+        "See you."
+      ],
+      "audioStart": 14.73,
+      "audioEnd": 17.08
+    }
+  ]
+}

@@ -19,11 +19,15 @@
 - 🐙 GitHub repo：[Samsamchou/teacher-toolkit](https://github.com/Samsamchou/teacher-toolkit)
 - 🌐 GitHub Pages：[https://samsamchou.github.io/teacher-toolkit/](https://samsamchou.github.io/teacher-toolkit/)
 - 📘 Obsidian 駕駛艙：`G:\我的雲端硬碟\secondbrain\teacher-toolkit\工作筆記.md`
-- 🔥 Firebase 專案：尚未在本次初始化中確認；不得把金鑰寫入此 repo。
+- 🔥 電子語音繪本館：Firebase 專案 `g4-remedial-all-vocab-app` 的獨立
+  Hosting site `ershui-storybooks`；不得把金鑰寫入此 repo。
 
 ## 工具清單
 
 - `tools/coordinate-hunter/`：座標獵人，11×11 整數格點、10 個隱藏座標、60 秒計時、得分與重新開始。
+- `tools/sf3-4-voc/`：SF3–SF4 單字練習網站完整乾淨備份。
+- `tools/allstorybooks/`：電子語音繪本館完整備份；含兩本四年級學扶繪本、
+  來源 PDF／音訊、資產重建腳本、Firebase 設定與 `HANDOFF.md`。
 
 ## 工作注意事項
 

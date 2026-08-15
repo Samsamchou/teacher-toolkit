@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "g4-remedial-all-vocab-app"
+  },
+  "targets": {
+    "g4-remedial-all-vocab-app": {
+      "hosting": {
+        "storybooks": [
+          "ershui-storybooks"
+        ]
+      }
+    }
+  }
+}

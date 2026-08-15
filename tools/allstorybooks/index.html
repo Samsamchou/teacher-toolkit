@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#112b4a" />
+    <meta
+      name="description"
+      content="學生電子語音繪本館：輸入學號後選擇學扶、五年級或六年級繪本。"
+    />
+    <title>電子語音繪本館</title>
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body data-page="portal">
+    <div class="ambient ambient--one" aria-hidden="true"></div>
+    <div class="ambient ambient--two" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="site-brand" href="index.html" aria-label="電子語音繪本館首頁">
+        <span class="site-brand__mark" aria-hidden="true">✦</span>
+        <span>
+          <strong>電子語音繪本館</strong>
+          <small>Read · Listen · Grow</small>
+        </span>
+      </a>
+      <div class="site-header__tag">English Story Library</div>
+    </header>
+
+    <main class="portal-main">
+      <section class="student-panel" aria-labelledby="studentTitle">
+        <div class="student-panel__intro">
+          <p class="section-kicker">WELCOME, READER!</p>
+          <h1 id="studentTitle">今天想讀哪一本故事？</h1>
+          <p>先輸入學號，再按 Enter 開啟你的電子繪本館。</p>
+        </div>
+
+        <form class="student-form" id="studentForm" novalidate>
+          <label for="studentId">學生學號</label>
+          <div class="student-form__control">
+            <span aria-hidden="true">#</span>
+            <input
+              id="studentId"
+              name="studentId"
+              type="text"
+              inputmode="numeric"
+              autocomplete="off"
+              maxlength="5"
+              pattern="[0-9]{5}"
+              placeholder="例如：40100"
+              aria-describedby="studentHelp studentMessage"
+            />
+            <button type="submit">Enter</button>
+          </div>
+          <p id="studentHelp">請輸入 5 位數學號</p>
+          <p class="form-message" id="studentMessage" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section
+        class="grade-menu"
+        id="gradeMenu"
+        aria-labelledby="gradeMenuTitle"
+        hidden
+      >
+        <div class="grade-menu__heading">
+          <div>
+            <p class="section-kicker">CHOOSE YOUR LIBRARY</p>
+            <h2 id="gradeMenuTitle">選擇繪本分類</h2>
+          </div>
+          <p class="student-welcome" id="studentWelcome"></p>
+        </div>
+
+        <div class="grade-grid">
+          <button
+            class="grade-button grade-button--remedial"
+            type="button"
+            data-section="remedial"
+          >
+            <span class="grade-button__icon" aria-hidden="true">📖</span>
+            <span>
+              <strong>學扶</strong>
+              <small>從常用語開始閱讀</small>
+            </span>
+            <span class="grade-button__arrow" aria-hidden="true">→</span>
+          </button>
+
+          <button
+            class="grade-button grade-button--five"
+            type="button"
+            data-section="grade5"
+          >
+            <span class="grade-button__number" aria-hidden="true">5</span>
+            <span>
+              <strong>五年級</strong>
+              <small>繪本即將上架</small>
+            </span>
+            <span class="grade-button__arrow" aria-hidden="true">→</span>
+          </button>
+
+          <button
+            class="grade-button grade-button--six"
+            type="button"
+            data-section="grade6"
+          >
+            <span class="grade-button__number" aria-hidden="true">6</span>
+            <span>
+              <strong>六年級</strong>
+              <small>繪本即將上架</small>
+            </span>
+            <span class="grade-button__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <p class="section-message" id="sectionMessage" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>聽兩次 · 讀一頁 · 每天進步一點點</span>
+    </footer>
+
+    <script src="site.js"></script>
+  </body>
+</html>

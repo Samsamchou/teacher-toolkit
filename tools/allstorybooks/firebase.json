@@ -1,0 +1,45 @@
+{
+  "hosting": [
+    {
+      "target": "storybooks",
+      "public": ".",
+      "ignore": [
+        "firebase.json",
+        ".firebaserc",
+        ".gitignore",
+        "firebase-debug.log",
+        ".firebase/**",
+        ".git/**",
+        ".agents/**",
+        ".tools/**",
+        "**/node_modules/**",
+        "**/*.pdf",
+        "**/*.wav",
+        "**/*.py",
+        "**/*.ps1",
+        "**/*.md",
+        "**/*contact-sheet*.jpg"
+      ],
+      "headers": [
+        {
+          "source": "**/*.@(html|js|css|json)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(png|jpg|jpeg|mp3)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=3600"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

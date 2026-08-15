@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101943" />
+    <meta
+      name="description"
+      content="Friends meet：四年級學扶電子翻頁語音朗讀繪本"
+    />
+    <title>Friends meet｜電子語音繪本</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="電子語音繪本">
+          <span class="brand__sparkle" aria-hidden="true">✦</span>
+          <span>電子語音繪本</span>
+        </div>
+        <div class="topbar__meta" id="topbarMeta">四年級 · Friends meet</div>
+      </header>
+
+      <section class="reader" aria-label="Friends meet 電子繪本閱讀器">
+        <div class="book-stage">
+          <article class="book" id="book">
+            <div class="paper" id="paper">
+              <img
+                class="page-art"
+                id="pageArt"
+                src="assets/generated/friends-meet-cover.png"
+                alt="Mia、Leo 和 Sam 在魔法森林相遇的封面插畫"
+              />
+              <div class="page-vignette" id="pageVignette"></div>
+
+              <section class="cover-copy" id="coverCopy">
+                <p class="eyebrow">Grade 4 English Story</p>
+                <h1>Friends<br /><span>meet</span></h1>
+                <p class="cover-copy__hint">每頁完整聽兩次，箭頭就會出現！</p>
+                <button class="primary-button" id="startButton" type="button">
+                  <span aria-hidden="true">▶</span>
+                  開始閱讀
+                </button>
+              </section>
+
+              <section
+                class="completion-copy"
+                id="completionCopy"
+                aria-labelledby="completionTitle"
+                hidden
+              >
+                <p class="completion-copy__stars" aria-hidden="true">✦ ★ ✦</p>
+                <h2 id="completionTitle">閱讀完成！</h2>
+                <p>Great job! You finished <strong>Friends meet</strong>.</p>
+                <button
+                  class="primary-button primary-button--home"
+                  id="homeButton"
+                  type="button"
+                >
+                  <span aria-hidden="true">⌂</span>
+                  回到首頁
+                </button>
+              </section>
+
+              <button
+                class="sound-button"
+                id="soundButton"
+                type="button"
+                aria-label="再聽一次本頁朗讀"
+                title="再聽一次"
+                hidden
+              >
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                  <path
+                    d="M7 19h8l10-8v26l-10-8H7z"
+                    fill="currentColor"
+                  />
+                  <path
+                    class="sound-wave sound-wave--one"
+                    d="M31 18c3 3 3 9 0 12"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="3.5"
+                  />
+                  <path
+                    class="sound-wave sound-wave--two"
+                    d="M36 13c6 6 6 16 0 22"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="3.5"
+                  />
+                </svg>
+              </button>
+
+              <div
+                class="listen-progress"
+                id="listenProgress"
+                aria-live="polite"
+                hidden
+              >
+                <span class="listen-progress__label">本頁朗讀</span>
+                <span class="listen-progress__dots" aria-hidden="true">
+                  <i></i>
+                  <i></i>
+                </span>
+                <strong id="listenProgressText">0 / 2</strong>
+              </div>
+
+              <button
+                class="page-arrow page-arrow--previous"
+                id="previousButton"
+                type="button"
+                aria-label="上一頁"
+                title="上一頁"
+                hidden
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+              <button
+                class="page-arrow page-arrow--next"
+                id="nextButton"
+                type="button"
+                aria-label="下一頁"
+                title="下一頁"
+                hidden
+              >
+                <span aria-hidden="true">›</span>
+              </button>
+
+              <div
+                class="page-counter"
+                id="pageCounter"
+                aria-live="polite"
+                hidden
+              ></div>
+              <div class="celebration" id="celebration" aria-hidden="true"></div>
+            </div>
+          </article>
+        </div>
+
+        <p class="reader-status" id="readerStatus" aria-live="polite">
+          按「開始閱讀」進入故事
+        </p>
+      </section>
+
+      <audio id="pageAudio" preload="auto"></audio>
+    </main>
+
+    <noscript>請開啟 JavaScript 以閱讀這本電子繪本。</noscript>
+    <script src="app.js"></script>
+  </body>
+</html>

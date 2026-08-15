@@ -1,0 +1,129 @@
+{
+  "title": "School day",
+  "grade": "G4",
+  "pageCount": 12,
+  "requiredListensPerPage": 2,
+  "sourceAudioActualFormat": "MP3",
+  "pages": [
+    {
+      "number": 1,
+      "image": "assets/pages/page-01.png",
+      "audio": "assets/audio/page-01.mp3",
+      "sentences": [
+        "The bell rings."
+      ],
+      "audioStart": 0.3,
+      "audioEnd": 2.05
+    },
+    {
+      "number": 2,
+      "image": "assets/pages/page-02.png",
+      "audio": "assets/audio/page-02.mp3",
+      "sentences": [
+        "Are you ready?"
+      ],
+      "audioStart": 3.82,
+      "audioEnd": 5.15
+    },
+    {
+      "number": 3,
+      "image": "assets/pages/page-03.png",
+      "audio": "assets/audio/page-03.mp3",
+      "sentences": [
+        "Take out your book."
+      ],
+      "audioStart": 6.9,
+      "audioEnd": 8.63
+    },
+    {
+      "number": 4,
+      "image": "assets/pages/page-04.png",
+      "audio": "assets/audio/page-04.mp3",
+      "sentences": [
+        "Raise your hand."
+      ],
+      "audioStart": 10.4,
+      "audioEnd": 12.12
+    },
+    {
+      "number": 5,
+      "image": "assets/pages/page-05.png",
+      "audio": "assets/audio/page-05.mp3",
+      "sentences": [
+        "Put down your hand."
+      ],
+      "audioStart": 13.96,
+      "audioEnd": 15.76
+    },
+    {
+      "number": 6,
+      "image": "assets/pages/page-06.png",
+      "audio": "assets/audio/page-06.mp3",
+      "sentences": [
+        "Come here."
+      ],
+      "audioStart": 17.55,
+      "audioEnd": 18.81
+    },
+    {
+      "number": 7,
+      "image": "assets/pages/page-07.png",
+      "audio": "assets/audio/page-07.mp3",
+      "sentences": [
+        "Read this, please."
+      ],
+      "audioStart": 20.57,
+      "audioEnd": 22.84
+    },
+    {
+      "number": 8,
+      "image": "assets/pages/page-08.png",
+      "audio": "assets/audio/page-08.mp3",
+      "sentences": [
+        "Put away your book."
+      ],
+      "audioStart": 24.66,
+      "audioEnd": 26.42
+    },
+    {
+      "number": 9,
+      "image": "assets/pages/page-09.png",
+      "audio": "assets/audio/page-09.mp3",
+      "sentences": [
+        "It is break time."
+      ],
+      "audioStart": 28.18,
+      "audioEnd": 30.14
+    },
+    {
+      "number": 10,
+      "image": "assets/pages/page-10.png",
+      "audio": "assets/audio/page-10.mp3",
+      "sentences": [
+        "Let’s play."
+      ],
+      "audioStart": 31.85,
+      "audioEnd": 33.31
+    },
+    {
+      "number": 11,
+      "image": "assets/pages/page-11.png",
+      "audio": "assets/audio/page-11.mp3",
+      "sentences": [
+        "They run outside."
+      ],
+      "audioStart": 35.05,
+      "audioEnd": 36.96
+    },
+    {
+      "number": 12,
+      "image": "assets/pages/page-12.png",
+      "audio": "assets/audio/page-12.mp3",
+      "sentences": [
+        "The red ball rolls away."
+      ],
+      "audioStart": 38.73,
+      "audioEnd": 41.21
+    }
+  ]
+}
