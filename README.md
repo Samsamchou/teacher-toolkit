@@ -8,6 +8,10 @@
 - `tools/sf3-4-voc/`：SF3–SF4 單字練習網站完整備份。
 - `tools/allstorybooks/`：電子語音繪本館完整備份，收錄 `Friends meet`
   與 `School day`，每頁需完整聽兩次才會解鎖下一頁。
+- `tools/monster-in-my-mind-site/`：Monster in My Mind 正式 ChatGPT Sites
+  原始碼；學生完成 SEL 英語句子、設計 Monster，並產出固定 16:9 圖像提示詞。
+- `tools/monster-in-my-mind-legacy-vite/`：改寫前的 React／Vite 歷史原型，
+  僅供參考，不作為正式部署來源。
 - `CLAUDE.md`：專案藍圖、資料位置與安全規則。
 - `agent.md`：Codex 專案基線。
 
@@ -16,6 +20,13 @@
 - 專案首頁 / Project home：[samsamchou.github.io/teacher-toolkit](https://samsamchou.github.io/teacher-toolkit/)
 - 座標獵人 / Coordinate Hunter：[開啟遊戲](https://samsamchou.github.io/teacher-toolkit/tools/coordinate-hunter/index.html)
 - 電子語音繪本館 / Storybook Library：[開啟繪本館](https://ershui-storybooks.web.app/)
+- Monster in My Mind：[開啟私人網站](https://monster-in-my-mind.samchou.chatgpt.site/)
+
+## Monster in My Mind
+
+正式來源位於 `tools/monster-in-my-mind-site/`，使用 ChatGPT Sites 部署。第一版
+不使用付費圖像 API、不要求登入，也不儲存學生姓名、情緒或煩惱資料。舊 Vite
+原型已保留於 `tools/monster-in-my-mind-legacy-vite/`，並附有封存說明。
 
 ## 電子語音繪本館 / Storybook Library
 

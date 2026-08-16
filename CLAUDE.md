@@ -28,6 +28,11 @@
 - `tools/sf3-4-voc/`：SF3–SF4 單字練習網站完整乾淨備份。
 - `tools/allstorybooks/`：電子語音繪本館完整備份；含兩本四年級學扶繪本、
   來源 PDF／音訊、資產重建腳本、Firebase 設定與 `HANDOFF.md`。
+- `tools/monster-in-my-mind-site/`：Monster in My Mind 正式 ChatGPT Sites 原始碼；
+  國小五、六年級 English × SEL × Art × AI 四步驟網站，私人網址為
+  `https://monster-in-my-mind.samchou.chatgpt.site`。
+- `tools/monster-in-my-mind-legacy-vite/`：改寫為 ChatGPT Sites 前的 React／Vite
+  歷史原型，只供比較與復原，不從此資料夾部署或繼續開發。
 
 ## 工作注意事項
 
