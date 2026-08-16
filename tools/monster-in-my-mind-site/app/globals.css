@@ -468,6 +468,151 @@ button:disabled {
   line-height: 1.2;
 }
 
+.monster-gallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.75rem clamp(1rem, 3vw, 2.6rem) 1.55rem;
+}
+
+.monster-gallery-heading {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  width: min(100%, 31rem);
+  margin: 0 auto 0.85rem;
+  color: var(--ink);
+}
+
+.monster-gallery-heading strong {
+  font-size: 1.15rem;
+  font-weight: 950;
+}
+
+.monster-gallery-heading span {
+  color: var(--purple);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.monster-gallery-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  width: min(100%, 31rem);
+  margin: 0 auto;
+}
+
+.home-monster-card {
+  min-width: 0;
+  margin: 0;
+  padding: 0.45rem 0.4rem 0.55rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 1.15rem;
+  box-shadow: 0 0.7rem 1.35rem rgba(70, 59, 180, 0.08);
+  backdrop-filter: blur(5px);
+}
+
+.home-monster-image-wrap {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  place-items: center;
+}
+
+.home-monster-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 86%;
+  filter: drop-shadow(0 0.55rem 0.55rem rgba(70, 59, 180, 0.15));
+  user-select: none;
+}
+
+.home-monster-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  margin-top: 0.2rem;
+  line-height: 1.15;
+}
+
+.home-monster-card figcaption strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.home-monster-card figcaption span {
+  color: var(--purple);
+  font-size: 0.67rem;
+  font-weight: 800;
+}
+
+.motion-sway .home-monster-image {
+  animation: home-monster-sway 4.1s ease-in-out infinite;
+}
+
+.motion-bob .home-monster-image {
+  animation: home-monster-bob 3.5s ease-in-out infinite;
+}
+
+.motion-pulse .home-monster-image {
+  animation: home-monster-pulse 1.55s ease-in-out infinite;
+}
+
+.motion-sleepy .home-monster-image {
+  animation: home-monster-sleepy 4.8s ease-in-out infinite;
+}
+
+.motion-glow .home-monster-image {
+  animation: home-monster-glow 2.9s ease-in-out infinite;
+}
+
+.motion-jitter .home-monster-image {
+  animation: home-monster-jitter 1.7s ease-in-out infinite;
+}
+
+@keyframes home-monster-sway {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(2.5deg) translateY(-0.28rem); }
+}
+
+@keyframes home-monster-bob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-0.38rem) scale(1.015); }
+}
+
+@keyframes home-monster-pulse {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.04); }
+  58% { transform: scale(0.995); }
+}
+
+@keyframes home-monster-sleepy {
+  0%, 100% { transform: rotate(-1deg) translateY(0); }
+  50% { transform: rotate(1.5deg) translateY(-0.32rem); }
+}
+
+@keyframes home-monster-glow {
+  0%, 100% { filter: drop-shadow(0 0.55rem 0.55rem rgba(70, 59, 180, 0.15)); }
+  50% { filter: drop-shadow(0 0 0.8rem rgba(238, 145, 202, 0.75)) drop-shadow(0 0.55rem 0.55rem rgba(70, 59, 180, 0.14)); }
+}
+
+@keyframes home-monster-jitter {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  24% { transform: translate(-0.1rem, 0.08rem) rotate(-1.5deg); }
+  48% { transform: translate(0.1rem, -0.06rem) rotate(1.5deg); }
+  72% { transform: translate(-0.06rem, 0.04rem) rotate(-0.8deg); }
+}
+
 .concept-strip {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1786,6 +1931,15 @@ button:disabled {
     min-height: 350px;
   }
 
+  .monster-gallery {
+    min-height: 0;
+    padding: 1.35rem 1rem 1.4rem;
+  }
+
+  .monster-gallery-grid {
+    max-width: 35rem;
+  }
+
   .hero-monster {
     width: 13rem;
     height: 15rem;
@@ -1889,6 +2043,27 @@ button:disabled {
 
   .hero-art {
     min-height: 300px;
+  }
+
+  .monster-gallery {
+    padding: 0.9rem 0.6rem 1.1rem;
+  }
+
+  .monster-gallery-grid {
+    gap: 0.6rem;
+  }
+
+  .home-monster-card {
+    padding: 0.35rem 0.3rem 0.45rem;
+    border-radius: 0.95rem;
+  }
+
+  .home-monster-card figcaption strong {
+    font-size: 0.7rem;
+  }
+
+  .home-monster-card figcaption span {
+    font-size: 0.61rem;
   }
 
   .hero-monster {

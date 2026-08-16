@@ -2,6 +2,7 @@ import type {
   BackgroundOption,
   ChoiceOption,
   EmotionOption,
+  HomeMonsterOption,
   StyleOption,
   WorryCategory,
 } from '../types'
@@ -17,6 +18,15 @@ export const EMOTIONS: EmotionOption[] = [
   { id: 'shy', label: 'shy', zh: '害羞的', zhSentence: '很害羞', emoji: '🫣' },
   { id: 'upset', label: 'upset', zh: '心情不好的', zhSentence: '心情不好', emoji: '😣' },
   { id: 'embarrassed', label: 'embarrassed', zh: '尷尬的', zhSentence: '很尷尬', emoji: '😳' },
+]
+
+export const HOME_MONSTERS: HomeMonsterOption[] = [
+  { id: 'worried', label: 'worried', zh: '擔心', image: '/monsters/worried.png', motion: 'sway' },
+  { id: 'sad', label: 'sad', zh: '難過', image: '/monsters/sad.png', motion: 'bob' },
+  { id: 'angry', label: 'angry', zh: '生氣', image: '/monsters/angry.png', motion: 'pulse' },
+  { id: 'tired', label: 'tired', zh: '疲累', image: '/monsters/tired.png', motion: 'sleepy' },
+  { id: 'shy', label: 'shy', zh: '害羞', image: '/monsters/shy.png', motion: 'glow' },
+  { id: 'nervous', label: 'nervous', zh: '緊張', image: '/monsters/nervous.png', motion: 'jitter' },
 ]
 
 export const WORRY_CATEGORIES: WorryCategory[] = [

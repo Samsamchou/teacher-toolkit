@@ -33,6 +33,14 @@ export interface EmotionOption extends ChoiceOption {
   zhSentence: string
 }
 
+export interface HomeMonsterOption {
+  id: string
+  label: string
+  zh: string
+  image: string
+  motion: 'sway' | 'bob' | 'pulse' | 'sleepy' | 'glow' | 'jitter'
+}
+
 export interface StyleOption extends ChoiceOption {
   prompt: string
 }

@@ -8,6 +8,7 @@ import { Step2Monster } from './components/Step2Monster'
 import { Step3ArtStyle } from './components/Step3ArtStyle'
 import { Step4Prompt } from './components/Step4Prompt'
 import { StepProgress } from './components/StepProgress'
+import { HOME_MONSTERS } from './data/content'
 
 function WelcomeScreen({ onStart }: { onStart: () => void }) {
   return (
@@ -26,24 +27,27 @@ function WelcomeScreen({ onStart }: { onStart: () => void }) {
           </button>
           <p className="no-login-note">No name. No score. / 不用姓名，不評分。</p>
         </div>
-        <div className="hero-art" aria-hidden="true">
-          <div className="hero-orbit orbit-one" />
-          <div className="hero-orbit orbit-two" />
-          <div className="hero-monster">
-            <span className="hero-horn horn-left">✦</span>
-            <span className="hero-horn horn-right">✦</span>
-            <span className="hero-eye">◕ ◕</span>
-            <span className="hero-mouth">⌣</span>
-            <span className="hero-arm arm-left">⌁</span>
-            <span className="hero-arm arm-right">⌁</span>
-            <span className="hero-feet">• •</span>
+        <div className="hero-art monster-gallery" aria-label="Six feeling monsters / 六種情緒怪獸">
+          <div className="monster-gallery-heading">
+            <strong>Six feelings</strong>
+            <span>六種感受</span>
           </div>
-          <span className="art-spark spark-one">✦</span>
-          <span className="art-spark spark-two">✧</span>
-          <span className="art-spark spark-three">✦</span>
-          <div className="thought-bubble">
-            <span>💭</span>
-            <small>My worry<br />我的煩惱</small>
+          <div className="monster-gallery-grid">
+            {HOME_MONSTERS.map((monster) => (
+              <figure className={`home-monster-card motion-${monster.motion}`} key={monster.id}>
+                <div className="home-monster-image-wrap">
+                  <img
+                    className="home-monster-image"
+                    src={monster.image}
+                    alt={`${monster.label} monster / ${monster.zh}怪獸`}
+                  />
+                </div>
+                <figcaption>
+                  <strong>{monster.label}</strong>
+                  <span>{monster.zh}</span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
