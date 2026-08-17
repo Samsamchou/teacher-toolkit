@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function anonymousStudent() {
+      return signedIn() && request.auth.token.firebase.sign_in_provider == 'anonymous';
+    }
+    function teacher() {
+      return signedIn() && request.auth.token.keys().hasAll(['teacher']) && request.auth.token.teacher == true;
+    }
+    function exactKeys(data, allowed) {
+      return data.keys().hasAll(allowed) && data.keys().hasOnly(allowed);
+    }
+    function validTypeSummary(data) {
+      return data is map
+        && exactKeys(data, ['totalQuestions', 'firstAttemptCorrectCount', 'finalCorrectCount'])
+        && data.totalQuestions is int
+        && data.firstAttemptCorrectCount is int
+        && data.finalCorrectCount is int
+        && data.totalQuestions >= 0
+        && data.firstAttemptCorrectCount >= 0
+        && data.firstAttemptCorrectCount <= data.totalQuestions
+        && data.finalCorrectCount >= 0
+        && data.finalCorrectCount <= data.totalQuestions;
+    }
+    function validPracticeResult(resultId) {
+      let data = request.resource.data;
+      return exactKeys(data, [
+          'schemaVersion', 'sessionId', 'ownerUid', 'studentId', 'quizId', 'lessonId', 'lessonTitle',
+          'bookId', 'unitId', 'lessonNumber', 'startedAt', 'completedAt', 'durationSeconds', 'status',
+          'practiceScore', 'practiceMaxScore', 'finalCorrectCount', 'accuracy', 'typeA', 'typeB',
+          'slotScore', 'rewardSessions', 'answers'
+        ])
+        && data.schemaVersion == 'practice-result-v1'
+        && data.sessionId == resultId
+        && data.ownerUid == request.auth.uid
+        && data.studentId is string
+        && data.studentId.matches('^[3-6][0-9]{2}(0[1-9]|[12][0-9]|30)$')
+        && data.quizId is string && data.quizId.size() > 0 && data.quizId.size() <= 80
+        && data.lessonId is string && data.lessonId.size() > 0 && data.lessonId.size() <= 80
+        && data.lessonTitle is string && data.lessonTitle.size() <= 160
+        && data.bookId.matches('^hwg[57]$')
+        && data.unitId.matches('^(starter|u0[1-4])$')
+        && data.lessonNumber is int && data.lessonNumber >= 1 && data.lessonNumber <= 5
+        && data.startedAt is string && data.completedAt is string
+        && data.durationSeconds is int && data.durationSeconds >= 0 && data.durationSeconds <= 7200
+        && data.status == 'completed'
+        && data.practiceScore is int && data.practiceScore >= 0 && data.practiceScore <= 18
+        && data.practiceMaxScore == 18
+        && data.finalCorrectCount is int && data.finalCorrectCount >= 0 && data.finalCorrectCount <= 18
+        && data.accuracy is int && data.accuracy >= 0 && data.accuracy <= 100
+        && validTypeSummary(data.typeA) && validTypeSummary(data.typeB)
+        && data.slotScore is int && data.slotScore >= 0 && data.slotScore <= 1600
+        && data.rewardSessions is list && data.rewardSessions.size() <= 4
+        && data.answers is map && data.answers.size() <= 18;
+    }
+    function validExportEvent(eventId) {
+      let data = request.resource.data;
+      return exactKeys(data, ['schemaVersion', 'exportId', 'teacherUid', 'format', 'recordCount', 'queryLabel', 'exportedAt'])
+        && data.schemaVersion == 'practice-export-v1'
+        && data.exportId == eventId
+        && data.teacherUid == request.auth.uid
+        && (data.format == 'csv' || data.format == 'json')
+        && data.recordCount is int && data.recordCount >= 0 && data.recordCount <= 10000
+        && data.queryLabel is string && data.queryLabel.size() <= 120
+        && data.exportedAt is string;
+    }
+
+    match /practiceResults/{resultId} {
+      allow create: if anonymousStudent() && validPracticeResult(resultId);
+      // Students may retrieve only their own opaque Session ID after a retry.
+      // They can never list records or update a saved score/answer.
+      allow get: if teacher() || (anonymousStudent() && resource.data.ownerUid == request.auth.uid);
+      allow list: if teacher();
+      allow delete: if teacher();
+    }
+
+    match /exportEvents/{eventId} {
+      allow create: if teacher() && validExportEvent(eventId);
+      allow get, list: if teacher();
+      allow update, delete: if false;
+    }
+
+    // Function-owned rate-limit records must never be readable or writable by browsers.
+    match /teacherLoginAttempts/{attemptId} {
+      allow read, write: if false;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.1",
+  "revision": 2,
+  "supersedes": "HWG7-U01-L1-vocabulary-quiz.json",
+  "reviewStatus": "pending_teacher_approval",
+  "lesson": {
+    "series": "Here We Go 7",
+    "unit": "Unit 1",
+    "lesson": "Lesson 1",
+    "quizId": "hwg7-u01-l1-vocabulary",
+    "title": "Vocabulary Quiz"
+  },
+  "runtimePolicy": {
+    "reviewOptionOrder": "fixed",
+    "studentOptionOrder": "shuffle-on-each-new-attempt",
+    "optionsPerQuestion": 4,
+    "firstAnswerDeterminesPracticeScore": true,
+    "wrongAnswerMayRetry": true,
+    "celebrationOnFirstCorrectOnly": true
+  },
+  "assets": {
+    "images": {
+      "sourceRoot": "HWG7 U01/Landmark food AI pics",
+      "processingPolicy": {
+        "sourceFormat": "PNG",
+        "outputFormat": "JPG",
+        "maxWidth": 1920,
+        "maxHeight": 1080,
+        "crop": "never",
+        "stretch": "never",
+        "upscale": "never",
+        "preserveOriginalPng": true
+      },
+      "items": {
+        "Australia.png": {"sourceBytes": 2689327, "sourceSha256": "e0e8487251a6f2e5b52817f9613c70a4e63d8677c70ff4c99800aa55093dd0a6", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/australia.jpg"},
+        "India.png": {"sourceBytes": 2832618, "sourceSha256": "439caf87ff00176f7aea9f3e76845f4d8f8ba8edc2b83a1b52ecca906e4ec16e", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/india.jpg"},
+        "Japan.png": {"sourceBytes": 2594821, "sourceSha256": "1f9c2821cf39c891d501c581b637efcfa3925c608113c60baec104a60ee01638", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/japan.jpg"},
+        "Korea.png": {"sourceBytes": 2742647, "sourceSha256": "3e2d3900138a1f629951303646ddd17e6920632ce7487ed5eff40c783dc3d3b2", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/korea.jpg"},
+        "Singapore.png": {"sourceBytes": 4613875, "sourceSha256": "99cec82b56d347ea98023cee38307bcb6cd006cd0e6ef0fa8c8399b85cd8031f", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/singapore.jpg"},
+        "Spain.png": {"sourceBytes": 3706304, "sourceSha256": "ee0941e0bb4889e3d4eeee83257a3d9042abc88774b68f56251099ddec93e4e1", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/spain.jpg"},
+        "Taiwan.png": {"sourceBytes": 3330412, "sourceSha256": "3f1a6a911b33ec6cbab6db0dcb04ff7dcee4312ca3cc6e6cd25982ea0721af0d", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/taiwan.jpg"},
+        "the UK.png": {"sourceBytes": 2660868, "sourceSha256": "d3e5a91d8ea85030859e3c3745977ea3e332b2743c2d3f0b041a2e9e5b5b3f4d", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/the-uk.jpg"},
+        "the USA.png": {"sourceBytes": 2929136, "sourceSha256": "49aff5d268ca414aa441faa5556c253efe4243a0f5302071a484a0f376445d7b", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/the-usa.jpg"},
+        "Vietnam.png": {"sourceBytes": 2356646, "sourceSha256": "75948edc6765574c6f938cd5b492e692c2ecef4816f14f06be4e159d4e747a0f", "plannedWebsitePath": "/assets/hwg7-u01/landmark-food/vietnam.jpg"}
+      }
+    },
+    "audio": {
+      "sourceRoot": "Here We Go(7)單字圖卡/HWG7 U1/mp3",
+      "preserveOriginalMp3": true,
+      "displayNameOverrides": {
+        "4. Sinagapore.mp3": "Singapore"
+      },
+      "items": {
+        "1. Australia.mp3": {"sourceBytes": 23009, "sourceSha256": "0479c8a9eb2c5abdb9fa200fc3528f6958d029dcef52e632001c7b82828db5c2", "plannedWebsitePath": "/assets/hwg7-u01/audio/1-australia.mp3"},
+        "2. India.mp3": {"sourceBytes": 14813, "sourceSha256": "f7f232813ab8f344a507d103038ea5feecfe2fc6393f825a331fb2d87ba20c9b", "plannedWebsitePath": "/assets/hwg7-u01/audio/2-india.mp3"},
+        "3. Japan.mp3": {"sourceBytes": 16694, "sourceSha256": "18d3cc063bd324a5c54ada17bdfb487dc82d9ac881a05350654026e8bca6524a", "plannedWebsitePath": "/assets/hwg7-u01/audio/3-japan.mp3"},
+        "4. Sinagapore.mp3": {"sourceBytes": 18996, "sourceSha256": "1fd880d09df4698e9bbb5cd87a1eab9d4c7daf567bb81118c4751646c7bda2bd", "plannedWebsitePath": "/assets/hwg7-u01/audio/4-singapore.mp3"},
+        "5. Spain.mp3": {"sourceBytes": 19882, "sourceSha256": "5849c1e464ccfe60bc131e03d145fe392d55c6b71a44e8c42f72d2deb52eebf5", "plannedWebsitePath": "/assets/hwg7-u01/audio/5-spain.mp3"},
+        "6. Taiwan.mp3": {"sourceBytes": 16170, "sourceSha256": "efd8819103ad2669b7f3e75134426275f8cc42558653b75e5b25709ab4ebd491", "plannedWebsitePath": "/assets/hwg7-u01/audio/6-taiwan.mp3"},
+        "7. the UK.mp3": {"sourceBytes": 19352, "sourceSha256": "ce09124373e842104c24220be9ef9675102199cadeab7495d3187bb84a451144", "plannedWebsitePath": "/assets/hwg7-u01/audio/7-the-uk.mp3"},
+        "8. the USA.mp3": {"sourceBytes": 24573, "sourceSha256": "c87beb9ce45e3013c08a4b57c6ba0a5514b0cc79b120b95db347712188d85e66", "plannedWebsitePath": "/assets/hwg7-u01/audio/8-the-usa.mp3"}
+      }
+    }
+  },
+  "questionSets": [
+    {
+      "id": "type-a",
+      "label": "Type A: Look and Choose",
+      "prompt": "Look at the picture. Which country is it?",
+      "questions": [
+        {"id": "hwg7-u01-l1-a01", "assetFilename": "Australia.png", "options": ["India", "Australia", "Spain", "the USA"], "correctAnswer": "Australia", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a02", "assetFilename": "India.png", "options": ["Japan", "Vietnam", "India", "Singapore"], "correctAnswer": "India", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a03", "assetFilename": "Japan.png", "options": ["Japan", "Korea", "Taiwan", "the UK"], "correctAnswer": "Japan", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a04", "assetFilename": "Korea.png", "options": ["Japan", "Taiwan", "Vietnam", "Korea"], "correctAnswer": "Korea", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a05", "assetFilename": "Singapore.png", "options": ["India", "Singapore", "Spain", "the USA"], "correctAnswer": "Singapore", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a06", "assetFilename": "Spain.png", "options": ["Australia", "the UK", "Spain", "Vietnam"], "correctAnswer": "Spain", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a07", "assetFilename": "Taiwan.png", "options": ["Taiwan", "Japan", "Korea", "Singapore"], "correctAnswer": "Taiwan", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a08", "assetFilename": "the UK.png", "options": ["Australia", "India", "the USA", "the UK"], "correctAnswer": "the UK", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a09", "assetFilename": "the USA.png", "options": ["the UK", "the USA", "Spain", "Vietnam"], "correctAnswer": "the USA", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-a10", "assetFilename": "Vietnam.png", "options": ["India", "Japan", "Vietnam", "Singapore"], "correctAnswer": "Vietnam", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true}
+      ]
+    },
+    {
+      "id": "type-b",
+      "label": "Type B: Listen and Choose",
+      "prompt": "Listen. Which country do you hear?",
+      "questions": [
+        {"id": "hwg7-u01-l1-b01", "assetFilename": "1. Australia.mp3", "options": ["India", "Australia", "Japan", "Spain"], "correctAnswer": "Australia", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b02", "assetFilename": "2. India.mp3", "options": ["Singapore", "Taiwan", "India", "the UK"], "correctAnswer": "India", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b03", "assetFilename": "3. Japan.mp3", "options": ["Japan", "Australia", "the USA", "Taiwan"], "correctAnswer": "Japan", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b04", "assetFilename": "4. Sinagapore.mp3", "options": ["India", "the UK", "the USA", "Singapore"], "correctAnswer": "Singapore", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b05", "assetFilename": "5. Spain.mp3", "options": ["the USA", "Spain", "Japan", "Australia"], "correctAnswer": "Spain", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b06", "assetFilename": "6. Taiwan.mp3", "options": ["the UK", "India", "Taiwan", "Singapore"], "correctAnswer": "Taiwan", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b07", "assetFilename": "7. the UK.mp3", "options": ["the UK", "Japan", "Spain", "the USA"], "correctAnswer": "the UK", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg7-u01-l1-b08", "assetFilename": "8. the USA.mp3", "options": ["Australia", "India", "Taiwan", "the USA"], "correctAnswer": "the USA", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "lesson-hub-v03-2",
+  "mode": "firebase-ready",
+  "site": {
+    "title": "English Lesson Hub V03",
+    "subtitle": "Prepare once. Start Lesson. Teach with Next.",
+    "language": "zh-Hant",
+    "timezone": "Asia/Taipei"
+  },
+  "firebase": {
+    "projectId": "hwg7teaching",
+    "hostingSiteId": "lesson-hub-v03",
+    "functionsRegion": "asia-east1",
+    "status": "requires-public-web-config-and-server-passcode-deployment",
+    "teacherPasscode": {
+      "secretName": "TEACHER_RESULTS_PASSCODE",
+      "loginFunction": "teacherPasscodeLogin",
+      "logoutFunction": "teacherPasscodeLogout",
+      "rateLimit": {
+        "userMaxAttempts": 5,
+        "globalMaxAttempts": 20,
+        "windowMinutes": 15
+      }
+    },
+    "note": "Students use anonymous Firebase Auth. Teacher results use a server-side passcode Secret and an ephemeral custom-token Teacher Claim; no password, secret, or ebook session is stored by Lesson Hub."
+  },
+  "studentEntry": {
+    "mode": "student",
+    "queryFields": ["book", "unit", "lesson"],
+    "productionBaseUrl": "",
+    "localLanBaseUrl": "",
+    "description": "Teacher projection QR carries only book, unit, and lesson. A local preview must use a same-WiFi LAN address; production uses the current Hosting origin automatically."
+  },
+  "quizSource": {
+    "file": "./hwg7-u01-l1-vocabulary-quiz.json",
+    "revision": 2,
+    "sourceOfTruth": "../../question-bank/HWG7-U01-L1-vocabulary-quiz-r2.json"
+  },
+  "studentIdPolicy": {
+    "pattern": "^[3-6]\\d{2}(0[1-9]|[12]\\d|30)$",
+    "example": "60101",
+    "description": "年級 1 碼＋班級 2 碼＋座號 2 碼；座號 01–30。系統只保存匿名 Student ID，不保存姓名。"
+  },
+  "rewardConfig": {
+    "checkpoints": [0.5, 1],
+    "spinsPerCheckpoint": 4,
+    "reelTicks": [15, 20, 25],
+    "symbols": ["🍎", "🌟", "💎", "🔔", "🍒", "7️⃣"]
+  },
+  "lessonTemplate": {
+    "lessonsPerUnit": 5,
+    "titleTemplate": "{book} {unit} · Lesson {lesson}",
+    "description": "每個單元預先建立 Lesson 1–5；教師可在 Lesson Studio 調整流程、教材與步驟順序。"
+  },
+  "books": [
+    {
+      "id": "hwg5",
+      "label": "HWG5",
+      "grade": "Grade 5",
+      "units": [
+        { "id": "starter", "title": "Starter" },
+        { "id": "u01", "title": "Unit 1" },
+        { "id": "u02", "title": "Unit 2" },
+        { "id": "u03", "title": "Unit 3" },
+        { "id": "u04", "title": "Unit 4" }
+      ]
+    },
+    {
+      "id": "hwg7",
+      "label": "HWG7",
+      "grade": "Grade 6",
+      "units": [
+        { "id": "starter", "title": "Starter" },
+        { "id": "u01", "title": "Unit 1" },
+        { "id": "u02", "title": "Unit 2" },
+        { "id": "u03", "title": "Unit 3" },
+        { "id": "u04", "title": "Unit 4" }
+      ]
+    }
+  ],
+  "unitThemes": {
+    "hwg5-starter": { "name": "Coral Pop", "primary": "#f24e5d", "secondary": "#ff9f68", "soft": "#fff0ea", "ink": "#7e142a" },
+    "hwg5-u01": { "name": "Tangerine Rush", "primary": "#f06b19", "secondary": "#ffbf47", "soft": "#fff3dd", "ink": "#7a3100" },
+    "hwg5-u02": { "name": "Lemon Zing", "primary": "#bd8c00", "secondary": "#ffe14d", "soft": "#fff9cf", "ink": "#5b4300" },
+    "hwg5-u03": { "name": "Lime Pop", "primary": "#4e9c20", "secondary": "#b7ec54", "soft": "#effbd9", "ink": "#1e5e20" },
+    "hwg5-u04": { "name": "Emerald Beat", "primary": "#008b6d", "secondary": "#42d9ae", "soft": "#dffaf0", "ink": "#005844" },
+    "hwg7-starter": { "name": "Aqua Spark", "primary": "#007bba", "secondary": "#55d8ef", "soft": "#dcf8ff", "ink": "#005071" },
+    "hwg7-u01": { "name": "Electric Blue", "primary": "#2358e5", "secondary": "#2fbcff", "soft": "#e8efff", "ink": "#182f8e" },
+    "hwg7-u02": { "name": "Violet Voltage", "primary": "#7046d9", "secondary": "#b68aff", "soft": "#f0e9ff", "ink": "#40258f" },
+    "hwg7-u03": { "name": "Fuchsia Flash", "primary": "#c52f98", "secondary": "#ff8ad8", "soft": "#ffe8f8", "ink": "#7d155d" },
+    "hwg7-u04": { "name": "Pink Punch", "primary": "#e83369", "secondary": "#ff9cab", "soft": "#ffe9ef", "ink": "#8a1238" }
+  },
+  "defaultFlow": [
+    {
+      "id": "warmup",
+      "type": "warmup",
+      "title": "Warm-up",
+      "enabled": true,
+      "content": {
+        "body": "Say hello, review the lesson goal, and invite the class to get ready."
+      }
+    },
+    {
+      "id": "ebook",
+      "type": "ebook",
+      "title": "Online E-book",
+      "enabled": true,
+      "content": {
+        "displayName": "教師端電子書",
+        "url": "",
+        "teacherOnly": true,
+        "allowFullscreen": true
+      }
+    },
+    {
+      "id": "video",
+      "type": "video",
+      "title": "Teaching Video",
+      "enabled": true,
+      "content": {
+        "url": "",
+        "abRepeat": true
+      }
+    },
+    {
+      "id": "slides",
+      "type": "imageSlides",
+      "title": "Vocabulary Image Slides",
+      "enabled": true,
+      "content": {
+        "slides": [],
+        "manualOnly": true
+      }
+    },
+    {
+      "id": "practice",
+      "type": "webPractice",
+      "title": "Live Interactive Practice",
+      "enabled": true,
+      "content": {
+        "displayName": "Web Practice",
+        "url": ""
+      }
+    },
+    {
+      "id": "quiz",
+      "type": "vocabularyQuiz",
+      "title": "Vocabulary Quiz",
+      "enabled": true,
+      "content": {
+        "quizEnabled": false
+      }
+    }
+  ],
+  "contentProfiles": {
+    "placeholder": {
+      "warmup": {
+        "body": "This Lesson Card is ready for the teacher to add or replace materials in Lesson Studio."
+      }
+    },
+    "hwg7-u01-l01-live": {
+      "warmup": {
+        "body": "Today we will learn ten landmark-food countries. Listen, look, choose, and celebrate every success!"
+      },
+      "ebook": {
+        "displayName": "HWG7 第七冊電子書目錄（教師端）",
+        "url": "https://edisc3.hle.com.tw/edisc_v3/ebook_v2023.html#degree=%E5%9C%8B%E5%B0%8F&cat=%E8%8B%B1%E8%AA%9E&prd=EEC&year=115%E5%AD%B8%E5%B9%B4%E5%BA%A6&grade=%E7%AC%AC%E4%B8%83%E5%86%8A&tab=tab2",
+        "teacherOnly": true,
+        "allowFullscreen": true
+      },
+      "video": {
+        "url": "",
+        "abRepeat": true
+      },
+      "imageSlides": {
+        "slidesFromQuestionBank": true,
+        "manualOnly": true
+      },
+      "webPractice": {
+        "displayName": "Wayground Live Interactive Practice",
+        "url": "https://wayground.com/join?gc=336134"
+      },
+      "vocabularyQuiz": {
+        "quizEnabled": true,
+        "quizId": "hwg7-u01-l1-vocabulary"
+      }
+    }
+  },
+  "contentOverrides": [
+    {
+      "bookId": "hwg7",
+      "unitId": "u01",
+      "lessonNumber": 1,
+      "contentProfile": "hwg7-u01-l01-live"
+    }
+  ]
+}

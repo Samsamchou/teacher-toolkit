@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "hwg7teaching"
+  },
+  "targets": {
+    "hwg7teaching": {
+      "hosting": {
+        "lesson-hub-v03": ["lesson-hub-v03"]
+      }
+    }
+  }
+}

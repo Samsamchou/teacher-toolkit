@@ -1,0 +1,34 @@
+{
+  "name": "english-lesson-hub-v03-preview",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "sync:functions": "node scripts/sync-functions-config.mjs",
+    "validate": "node scripts/validate-site-data.mjs",
+    "verify:teacher-access": "node scripts/verify-teacher-passcode-security.mjs",
+    "teacher-access:initial-gate": "node scripts/teacher-passcode-deployment-gate.mjs --initial",
+    "teacher-access:formal-gate": "node scripts/teacher-passcode-deployment-gate.mjs --formal",
+    "test": "node --test",
+    "test:functions": "node --test functions/test/*.test.cjs",
+    "check:functions": "node --check functions/index.cjs",
+    "test:rules": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/run-firestore-rules.ps1",
+    "firebase:preflight": "node scripts/firebase-preflight.mjs",
+    "preflight": "npm run sync:functions && npm run validate && npm run verify:teacher-access && npm test && npm run test:functions && npm run check:functions && npm run build && npm run test:rules && npm run firebase:preflight"
+  },
+  "dependencies": {
+    "@fontsource/comic-relief": "^5.3.0",
+    "firebase": "^12.0.0",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.0",
+    "@rolldown/plugin-babel": "^0.2.0",
+    "@vitejs/plugin-react": "^6.0.5",
+    "vite": "^8.2.1"
+  }
+}

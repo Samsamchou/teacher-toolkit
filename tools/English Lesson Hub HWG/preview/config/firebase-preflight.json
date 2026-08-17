@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "teacher-passcode-preflight-v1",
+  "projectId": "hwg7teaching",
+  "hostingSite": "lesson-hub-v03",
+  "secret": {
+    "name": "TEACHER_RESULTS_PASSCODE",
+    "enabledVersion": "1",
+    "verifiedAt": "2026-08-17T14:45:13.3838721Z"
+  },
+  "function": {
+    "region": "asia-east1",
+    "runtimeServiceAccount": "647410433074-compute@developer.gserviceaccount.com",
+    "tokenCreatorRoleConfigured": false,
+    "iamPropagationVerified": false
+  },
+  "liveVerification": {
+    "anonymousEntryVerified": false,
+    "wrongPasscodeBlocked": false,
+    "teacherClaimVerified": false,
+    "exportDeleteVerified": false,
+    "appCheckEnforced": false
+  },
+  "notes": [
+    "No passcode value is stored in this file.",
+    "All false or null values require live evidence before formal classroom use.",
+    "Secret version 1 enabled verified from the teacher-provided Google Cloud Console screenshot; secret value was not read.",
+    "Functions list verified both deployed callables are ACTIVE, bind TEACHER_RESULTS_PASSCODE version 1, and run as 647410433074-compute@developer.gserviceaccount.com; value was not read."
+  ]
+}
