@@ -1,7 +1,30 @@
-export const STUDENT_ID_PATTERN = /^[3-6]\d{2}(0[1-9]|[12]\d|30)$/;
+export const STUDENT_ID_PATTERN = /^[3-6](0[1-9]|[1-9]\d)(0[1-9]|[12]\d|30)$/;
+
+const CLASS_LABELS = ["", "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
 
 export function validateStudentId(value) {
   return STUDENT_ID_PATTERN.test(String(value).trim());
+}
+
+export function parseStudentId(value) {
+  const studentId = String(value).trim();
+  if (!validateStudentId(studentId)) return null;
+  const grade = Number(studentId.slice(0, 1));
+  const classNumber = Number(studentId.slice(1, 3));
+  const seatNumber = Number(studentId.slice(3, 5));
+  const classLabel = CLASS_LABELS[classNumber] || String(classNumber);
+  return {
+    studentId,
+    grade,
+    classNumber,
+    classLabel,
+    seatNumber,
+    label: `${grade}年${classLabel}班${seatNumber}號`
+  };
+}
+
+export function formatStudentId(value) {
+  return parseStudentId(value)?.label || "";
 }
 
 export function shuffleOptions(options, random = Math.random) {

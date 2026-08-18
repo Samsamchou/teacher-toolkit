@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { resultsToCsv, serializePracticeResult } from "../src/lib/result-repository.js";
+import { resultsToCsv, resultsToJson, serializePracticeResult } from "../src/lib/result-repository.js";
 
 test("Firestore serializer stores anonymous Student ID but never a supplied name", () => {
   const record = serializePracticeResult({
@@ -14,9 +14,13 @@ test("Firestore serializer stores anonymous Student ID but never a supplied name
   assert.equal(record.sessionId, "session-1");
 });
 
-test("CSV export includes only the defined teacher report fields", () => {
-  const csv = resultsToCsv([{ studentId: "60101", bookId: "hwg7", unitId: "u01", lessonNumber: 1, quizId: "quiz", practiceScore: 12, practiceMaxScore: 18, accuracy: 67, finalCorrectCount: 18, slotScore: 200, completedAt: "2026-08-17", sessionId: "s1", name: "No name" }]);
+test("CSV and JSON exports include only defined teacher report fields", () => {
+  const source = [{ studentId: "60101", bookId: "hwg7", unitId: "u01", lessonNumber: 1, quizId: "quiz", practiceScore: 12, practiceMaxScore: 18, accuracy: 67, finalCorrectCount: 18, slotScore: 200, completedAt: "2026-08-17", sessionId: "s1", name: "No name", ownerUid: "anonymous-uid", answers: { private: true } }];
+  const csv = resultsToCsv(source);
+  const json = resultsToJson(source);
   assert.match(csv, /Student ID/);
   assert.match(csv, /60101/);
   assert.doesNotMatch(csv, /No name/);
+  assert.doesNotMatch(json, /No name|anonymous-uid|private/);
+  assert.match(json, /60101/);
 });

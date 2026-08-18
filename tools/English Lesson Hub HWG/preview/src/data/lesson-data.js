@@ -1,5 +1,5 @@
-import source from "../../config/site-source.json";
-import questionBank from "../../config/hwg7-u01-l1-vocabulary-quiz.json";
+import source from "../../config/site-source.json" with { type: "json" };
+import questionBank from "../../config/hwg7-u01-l1-vocabulary-quiz.json" with { type: "json" };
 
 const dateStamp = () => new Date().toISOString().slice(0, 10);
 
@@ -26,6 +26,21 @@ export function lessonId(bookId, unitId, lessonNumber) {
 
 export function unitKey(bookId, unitId) {
   return `${bookId}-${unitId}`;
+}
+
+export function lessonCountForUnit(unit) {
+  const configured = Number(unit?.lessonCount);
+  if (Number.isSafeInteger(configured) && configured > 0) return configured;
+  const fallback = Number(source.lessonTemplate?.lessonsPerUnit || 5);
+  return Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 5;
+}
+
+export function lessonCountForBook(book) {
+  return (book?.units || []).reduce((total, unit) => total + lessonCountForUnit(unit), 0);
+}
+
+export function standardLessonCount() {
+  return (source.books || []).reduce((total, book) => total + lessonCountForBook(book), 0);
 }
 
 export function themeForLesson(lesson) {
@@ -70,10 +85,10 @@ function titleFor(book, unit, lessonNumber) {
 }
 
 export function createSeedLessons() {
-  const lessonsPerUnit = Number(source.lessonTemplate?.lessonsPerUnit || 5);
+
   return (source.books || []).flatMap((book) => (
     (book.units || []).flatMap((unit) => (
-      Array.from({ length: lessonsPerUnit }, (_, index) => {
+      Array.from({ length: lessonCountForUnit(unit) }, (_, index) => {
         const lessonNumber = index + 1;
         const contentProfile = contentProfileFor(book.id, unit.id, lessonNumber);
         const base = {

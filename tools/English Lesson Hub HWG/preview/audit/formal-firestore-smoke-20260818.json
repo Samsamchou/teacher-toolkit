@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "formal-firestore-smoke-v1",
+  "date": "2026-08-18",
+  "projectId": "hwg7teaching",
+  "hostingUrl": "https://lesson-hub-v03.web.app",
+  "runtimeConfiguration": {
+    "endpoint": "/__/firebase/init.json",
+    "httpStatus": 200,
+    "projectMatches": true,
+    "requiredFieldsPresent": true,
+    "apiKeyStoredInProject": false
+  },
+  "hostingDeployment": {
+    "scope": "hosting:lesson-hub-v03",
+    "fileCount": 41,
+    "previousAsset": "/assets/index-CWoje4j2.js",
+    "releasedAsset": "/assets/index-CgcR3ydO.js"
+  },
+  "anonymousTest": {
+    "studentId": "69930",
+    "sessionId": "codex-formal-69930-1787042041070-e809edbe",
+    "anonymousCreate": true,
+    "ownerRead": true,
+    "otherAnonymousReadDenied": true,
+    "anonymousListDenied": true,
+    "cleanupStatus": "deleted-after-csv-and-json-export"
+  },
+  "teacherVerification": {
+    "wrongPasscodeBlocked": true,
+    "resultsSessionVerified": true,
+    "csvExportVerified": true,
+    "jsonExportVerified": true,
+    "testRecordDeleted": true,
+    "refreshRequiresLogin": true
+  },
+  "appCheckEnforced": false,
+  "notes": [
+    "No API key, teacher passcode, session token, anonymous UID, or Secret value is stored in this report.",
+    "Teacher verification remains pending because the in-app browser connection is unavailable and the teacher must enter the passcode personally.",
+    "Formal teacherPasscodeLogin rejected one wrong six-digit value with functions/permission-denied in a separate anonymous session; the five-attempt lockout was not triggered.",
+    "Teacher confirmation: CSV and JSON downloaded; exactly one test result deleted; refresh required a new passcode login."
+  ]
+}

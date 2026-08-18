@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "lesson-hub-v03-2",
+  "schemaVersion": "lesson-hub-v03-3",
   "mode": "firebase-ready",
   "site": {
     "title": "English Lesson Hub V03",
@@ -11,18 +11,23 @@
     "projectId": "hwg7teaching",
     "hostingSiteId": "lesson-hub-v03",
     "functionsRegion": "asia-east1",
-    "status": "requires-public-web-config-and-server-passcode-deployment",
+    "status": "requires-public-web-config-and-server-session-deployment",
     "teacherPasscode": {
       "secretName": "TEACHER_RESULTS_PASSCODE",
       "loginFunction": "teacherPasscodeLogin",
       "logoutFunction": "teacherPasscodeLogout",
+      "listFunction": "teacherResultsList",
+      "recordExportFunction": "teacherResultsRecordExport",
+      "deleteFunction": "teacherResultsDelete",
+      "sessionHours": 8,
+      "resultLimit": 5000,
       "rateLimit": {
         "userMaxAttempts": 5,
         "globalMaxAttempts": 20,
         "windowMinutes": 15
       }
     },
-    "note": "Students use anonymous Firebase Auth. Teacher results use a server-side passcode Secret and an ephemeral custom-token Teacher Claim; no password, secret, or ebook session is stored by Lesson Hub."
+    "note": "Students use anonymous Firebase Auth. Teacher Results use a server-side passcode Secret plus an opaque browser-memory session; no Google account, custom token, password, secret, or ebook session is stored by Lesson Hub."
   },
   "studentEntry": {
     "mode": "student",
@@ -33,11 +38,11 @@
   },
   "quizSource": {
     "file": "./hwg7-u01-l1-vocabulary-quiz.json",
-    "revision": 2,
-    "sourceOfTruth": "../../question-bank/HWG7-U01-L1-vocabulary-quiz-r2.json"
+    "revision": 3,
+    "sourceOfTruth": "../../question-bank/HWG7-U01-L1-vocabulary-quiz-r3.json"
   },
   "studentIdPolicy": {
-    "pattern": "^[3-6]\\d{2}(0[1-9]|[12]\\d|30)$",
+    "pattern": "^[3-6](0[1-9]|[1-9]\\d)(0[1-9]|[12]\\d|30)$",
     "example": "60101",
     "description": "年級 1 碼＋班級 2 碼＋座號 2 碼；座號 01–30。系統只保存匿名 Student ID，不保存姓名。"
   },
@@ -50,7 +55,7 @@
   "lessonTemplate": {
     "lessonsPerUnit": 5,
     "titleTemplate": "{book} {unit} · Lesson {lesson}",
-    "description": "每個單元預先建立 Lesson 1–5；教師可在 Lesson Studio 調整流程、教材與步驟順序。"
+    "description": "Starter 預先建立 Lesson 1–3；Unit 1–4 預先建立 Lesson 1–5；教師可在 Lesson Studio 調整流程、教材與步驟順序。"
   },
   "books": [
     {
@@ -58,7 +63,7 @@
       "label": "HWG5",
       "grade": "Grade 5",
       "units": [
-        { "id": "starter", "title": "Starter" },
+        { "id": "starter", "title": "Starter", "lessonCount": 3 },
         { "id": "u01", "title": "Unit 1" },
         { "id": "u02", "title": "Unit 2" },
         { "id": "u03", "title": "Unit 3" },
@@ -70,7 +75,7 @@
       "label": "HWG7",
       "grade": "Grade 6",
       "units": [
-        { "id": "starter", "title": "Starter" },
+        { "id": "starter", "title": "Starter", "lessonCount": 3 },
         { "id": "u01", "title": "Unit 1" },
         { "id": "u02", "title": "Unit 2" },
         { "id": "u03", "title": "Unit 3" },

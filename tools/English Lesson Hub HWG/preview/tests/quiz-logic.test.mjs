@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   checkpointForProgress,
+  formatStudentId,
   halfCheckpoint,
+  parseStudentId,
   scoreSpin,
   shuffleOptions,
   summarizeResponses,
@@ -14,7 +16,22 @@ test("Student ID follows grade-class-seat policy", () => {
   assert.equal(validateStudentId("69930"), true);
   assert.equal(validateStudentId("50100"), false);
   assert.equal(validateStudentId("50131"), false);
+  assert.equal(validateStudentId("50001"), false);
   assert.equal(validateStudentId("20101"), false);
+});
+
+test("Student ID decodes grade, class, and seat without adding stored identity fields", () => {
+  assert.deepEqual(parseStudentId("50101"), {
+    studentId: "50101",
+    grade: 5,
+    classNumber: 1,
+    classLabel: "甲",
+    seatNumber: 1,
+    label: "5年甲班1號"
+  });
+  assert.equal(formatStudentId("50201"), "5年乙班1號");
+  assert.equal(formatStudentId("60201"), "6年乙班1號");
+  assert.equal(formatStudentId("50001"), "");
 });
 
 test("shuffle makes a new option list without losing choices", () => {

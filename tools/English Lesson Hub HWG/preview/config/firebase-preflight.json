@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "teacher-passcode-preflight-v1",
+  "schemaVersion": "teacher-results-session-preflight-v2",
   "projectId": "hwg7teaching",
   "hostingSite": "lesson-hub-v03",
   "secret": {
@@ -10,20 +10,25 @@
   "function": {
     "region": "asia-east1",
     "runtimeServiceAccount": "647410433074-compute@developer.gserviceaccount.com",
-    "tokenCreatorRoleConfigured": false,
-    "iamPropagationVerified": false
+    "serverSessionDeploymentVerified": true,
+    "deployedAt": "2026-08-18T01:31:44.1800757Z"
   },
   "liveVerification": {
-    "anonymousEntryVerified": false,
-    "wrongPasscodeBlocked": false,
-    "teacherClaimVerified": false,
-    "exportDeleteVerified": false,
+    "anonymousEntryVerified": true,
+    "wrongPasscodeBlocked": true,
+    "resultsSessionVerified": true,
+    "exportDeleteVerified": true,
     "appCheckEnforced": false
   },
   "notes": [
     "No passcode value is stored in this file.",
-    "All false or null values require live evidence before formal classroom use.",
-    "Secret version 1 enabled verified from the teacher-provided Google Cloud Console screenshot; secret value was not read.",
-    "Functions list verified both deployed callables are ACTIVE, bind TEACHER_RESULTS_PASSCODE version 1, and run as 647410433074-compute@developer.gserviceaccount.com; value was not read."
+    "All false values require live evidence before formal classroom use.",
+    "Secret version 1 enabled was verified from the teacher-provided Google Cloud Console screenshot; the secret value was not read.",
+    "The previous custom-token deployment does not count as verification for the current server-session architecture.",
+    "App Check enforcement remains unverified and must not be described as enabled.",
+    "Server-session Results Functions deployment verified: five callable Functions in asia-east1 are Node.js 22; Firestore rules released and lesson-hub-v03 Hosting released.",
+    "Formal Hosting runtime configuration and Anonymous Auth live write verified on 2026-08-18 with test Session codex-formal-69930-1787042041070-e809edbe; cross-student get and list were denied.",
+    "Formal teacherPasscodeLogin rejected one wrong six-digit value with functions/permission-denied in a separate anonymous session; the five-attempt lockout was not triggered.",
+    "Teacher confirmed CSV and JSON downloads, deletion of exactly one filtered test result, and passcode re-entry after refresh on 2026-08-18."
   ]
 }

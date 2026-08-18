@@ -7,9 +7,6 @@ service cloud.firestore {
     function anonymousStudent() {
       return signedIn() && request.auth.token.firebase.sign_in_provider == 'anonymous';
     }
-    function teacher() {
-      return signedIn() && request.auth.token.keys().hasAll(['teacher']) && request.auth.token.teacher == true;
-    }
     function exactKeys(data, allowed) {
       return data.keys().hasAll(allowed) && data.keys().hasOnly(allowed);
     }
@@ -56,35 +53,22 @@ service cloud.firestore {
         && data.rewardSessions is list && data.rewardSessions.size() <= 4
         && data.answers is map && data.answers.size() <= 18;
     }
-    function validExportEvent(eventId) {
-      let data = request.resource.data;
-      return exactKeys(data, ['schemaVersion', 'exportId', 'teacherUid', 'format', 'recordCount', 'queryLabel', 'exportedAt'])
-        && data.schemaVersion == 'practice-export-v1'
-        && data.exportId == eventId
-        && data.teacherUid == request.auth.uid
-        && (data.format == 'csv' || data.format == 'json')
-        && data.recordCount is int && data.recordCount >= 0 && data.recordCount <= 10000
-        && data.queryLabel is string && data.queryLabel.size() <= 120
-        && data.exportedAt is string;
-    }
 
     match /practiceResults/{resultId} {
       allow create: if anonymousStudent() && validPracticeResult(resultId);
-      // Students may retrieve only their own opaque Session ID after a retry.
-      // They can never list records or update a saved score/answer.
-      allow get: if teacher() || (anonymousStudent() && resource.data.ownerUid == request.auth.uid);
-      allow list: if teacher();
-      allow delete: if teacher();
+      // Students may only re-read their own opaque Session document after a retry.
+      allow get: if anonymousStudent() && resource.data.ownerUid == request.auth.uid;
+      allow list, update, delete: if false;
     }
 
+    // Export, rate-limit, and teacher-session records are Function-owned only.
     match /exportEvents/{eventId} {
-      allow create: if teacher() && validExportEvent(eventId);
-      allow get, list: if teacher();
-      allow update, delete: if false;
+      allow read, write: if false;
     }
-
-    // Function-owned rate-limit records must never be readable or writable by browsers.
     match /teacherLoginAttempts/{attemptId} {
+      allow read, write: if false;
+    }
+    match /teacherResultSessions/{sessionId} {
       allow read, write: if false;
     }
     match /{document=**} {

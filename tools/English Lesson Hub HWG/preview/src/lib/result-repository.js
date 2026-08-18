@@ -1,24 +1,17 @@
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-  writeBatch
-} from "firebase/firestore";
-import {
+  closeTeacherResultsSession,
+  deleteTeacherResultsAfterExport,
   ensureAnonymousSession,
   firestore,
   isFirebaseConfigured,
-  signInTeacherWithPasscode,
-  signOutTeacher,
+  loadTeacherResultsFromServer,
+  openTeacherResultsSession,
+  recordTeacherResultsExport,
   teacherSession
 } from "./firebase-client.js";
 
 const RESULT_COLLECTION = "practiceResults";
-const EXPORT_COLLECTION = "exportEvents";
 
 function cleanAnswers(value) {
   if (!value || typeof value !== "object") return {};
@@ -79,8 +72,6 @@ export async function savePracticeResult(result) {
     return { storage: "firestore", result: record };
   } catch (error) {
     if (error?.code === "permission-denied") {
-      // Rules intentionally reject updates. A retry may therefore only read back the
-      // caller's own opaque Session document and treat an exact existing session as saved.
       try {
         const existing = await getDoc(doc(firestore, RESULT_COLLECTION, record.sessionId));
         if (existing.exists() && existing.data().ownerUid === user.uid && existing.data().sessionId === record.sessionId) {
@@ -96,23 +87,39 @@ export async function savePracticeResult(result) {
 }
 
 export async function unlockTeacherSession(passcode) {
-  if (!isFirebaseConfigured) return { local: true, user: null };
-  const current = await teacherSession();
-  return current || signInTeacherWithPasscode(passcode);
+  if (!isFirebaseConfigured) return { local: true };
+  return teacherSession() || openTeacherResultsSession(passcode);
 }
 
 export async function ensureTeacherSession() {
-  if (!isFirebaseConfigured) return { local: true, user: null };
-  const current = await teacherSession();
-  if (!current) throw new Error("請先輸入教師通行碼。\n");
+  if (!isFirebaseConfigured) return { local: true };
+  const current = teacherSession();
+  if (!current) throw new Error("請先輸入教師通行碼。");
   return current;
 }
 
 export async function loadTeacherResults() {
   if (!isFirebaseConfigured) return [];
   await ensureTeacherSession();
-  const snapshot = await getDocs(query(collection(firestore, RESULT_COLLECTION), orderBy("completedAt", "desc")));
-  return snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+  const response = await loadTeacherResultsFromServer();
+  return response.results;
+}
+
+function reportFields(result) {
+  return {
+    studentId: result.studentId,
+    bookId: result.bookId,
+    unitId: result.unitId,
+    lessonNumber: result.lessonNumber,
+    quizId: result.quizId,
+    practiceScore: result.practiceScore,
+    practiceMaxScore: result.practiceMaxScore,
+    accuracy: result.accuracy,
+    finalCorrectCount: result.finalCorrectCount,
+    slotScore: result.slotScore,
+    completedAt: result.completedAt,
+    sessionId: result.sessionId || result.id
+  };
 }
 
 function csvCell(value) {
@@ -122,25 +129,28 @@ function csvCell(value) {
 
 export function resultsToCsv(results) {
   const header = ["Student ID", "Book", "Unit", "Lesson", "Quiz", "Practice Score", "Max", "Accuracy", "Final Correct", "Slot Reward", "Completed At", "Session ID"];
-  const rows = (Array.isArray(results) ? results : []).map((result) => [
-    result.studentId,
-    result.bookId,
-    result.unitId,
-    result.lessonNumber,
-    result.quizId,
-    result.practiceScore,
-    result.practiceMaxScore,
-    result.accuracy,
-    result.finalCorrectCount,
-    result.slotScore,
-    result.completedAt,
-    result.sessionId || result.id
-  ].map(csvCell).join(","));
+  const rows = (Array.isArray(results) ? results : []).map((result) => {
+    const report = reportFields(result);
+    return [
+      report.studentId,
+      report.bookId,
+      report.unitId,
+      report.lessonNumber,
+      report.quizId,
+      report.practiceScore,
+      report.practiceMaxScore,
+      report.accuracy,
+      report.finalCorrectCount,
+      report.slotScore,
+      report.completedAt,
+      report.sessionId
+    ].map(csvCell).join(",");
+  });
   return [header.map(csvCell).join(","), ...rows].join("\r\n");
 }
 
 export function resultsToJson(results) {
-  return JSON.stringify(Array.isArray(results) ? results : [], null, 2);
+  return JSON.stringify((Array.isArray(results) ? results : []).map(reportFields), null, 2);
 }
 
 export function downloadExport({ filename, text, mimeType }) {
@@ -156,39 +166,21 @@ export function downloadExport({ filename, text, mimeType }) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export async function recordExportEvent({ format, count, queryLabel = "all" }) {
-  if (!isFirebaseConfigured) return { id: `local-export-${Date.now()}`, local: true };
-  const teacher = await ensureTeacherSession();
-  const exportId = `export-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  const payload = {
-    schemaVersion: "practice-export-v1",
-    exportId,
-    teacherUid: teacher.user.uid,
-    format: format === "json" ? "json" : "csv",
-    recordCount: Number(count || 0),
-    queryLabel: String(queryLabel || "all"),
-    exportedAt: new Date().toISOString()
-  };
-  await setDoc(doc(firestore, EXPORT_COLLECTION, exportId), payload);
-  return { id: exportId, ...payload };
+export async function recordExportEvent({ format, resultIds, queryLabel = "all" }) {
+  if (!isFirebaseConfigured) return { id: `local-export-${Date.now()}`, local: true, recordCount: Array.isArray(resultIds) ? resultIds.length : 0 };
+  await ensureTeacherSession();
+  const event = await recordTeacherResultsExport({ format, resultIds, queryLabel });
+  return { id: event.exportId, recordCount: event.recordCount };
 }
 
 export async function deleteResultsAfterExport({ resultIds, exportId }) {
   if (!Array.isArray(resultIds) || !resultIds.length) return 0;
   if (!isFirebaseConfigured) return resultIds.length;
   await ensureTeacherSession();
-  const exportSnapshot = await getDoc(doc(firestore, EXPORT_COLLECTION, exportId));
-  if (!exportSnapshot.exists()) throw new Error("找不到成功匯出的紀錄，已停止刪除。\n");
-  let deleted = 0;
-  for (let index = 0; index < resultIds.length; index += 400) {
-    const batch = writeBatch(firestore);
-    resultIds.slice(index, index + 400).forEach((id) => batch.delete(doc(firestore, RESULT_COLLECTION, id)));
-    await batch.commit();
-    deleted += Math.min(400, resultIds.length - index);
-  }
-  return deleted;
+  const outcome = await deleteTeacherResultsAfterExport(exportId);
+  return outcome.deleted;
 }
 
 export async function teacherSignOut() {
-  await signOutTeacher();
+  await closeTeacherResultsSession();
 }

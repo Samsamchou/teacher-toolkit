@@ -54,32 +54,26 @@ test("anonymous student can create only an owned valid record, read only that Se
   await assertFails(setDoc(doc(alice, "practiceResults/session-b"), practiceRecord("anon-someone-else", { sessionId: "session-b" })));
 });
 
-test("anonymous students cannot read each other or list results; teacher claim can read and delete", async () => {
+test("no browser identity can list, delete, or read another student's Results", async () => {
   await env.withSecurityRulesDisabled(async (context) => setDoc(doc(context.firestore(), "practiceResults/session-a"), practiceRecord("anon-alice")));
   const alice = env.authenticatedContext("anon-alice", { firebase: { sign_in_provider: "anonymous" } }).firestore();
   const bob = env.authenticatedContext("anon-bob", { firebase: { sign_in_provider: "anonymous" } }).firestore();
-  const teacher = env.authenticatedContext("teacher-1", { teacher: true, firebase: { sign_in_provider: "custom" } }).firestore();
+  const forged = env.authenticatedContext("forged-browser", { teacher: true, firebase: { sign_in_provider: "custom" } }).firestore();
   await assertSucceeds(getDoc(doc(alice, "practiceResults/session-a")));
   await assertFails(getDoc(doc(bob, "practiceResults/session-a")));
   await assertFails(getDocs(collection(alice, "practiceResults")));
-  await assertSucceeds(getDoc(doc(teacher, "practiceResults/session-a")));
-  await assertSucceeds(deleteDoc(doc(teacher, "practiceResults/session-a")));
+  await assertFails(getDocs(collection(forged, "practiceResults")));
+  await assertFails(getDoc(doc(forged, "practiceResults/session-a")));
+  await assertFails(deleteDoc(doc(forged, "practiceResults/session-a")));
 });
 
-test("only a teacher claim can record and read an export event", async () => {
-  const teacher = env.authenticatedContext("teacher-1", { teacher: true, firebase: { sign_in_provider: "custom" } }).firestore();
+test("all Function-owned Results records are denied to every browser client", async () => {
   const student = env.authenticatedContext("anon-alice", { firebase: { sign_in_provider: "anonymous" } }).firestore();
-  const event = { schemaVersion: "practice-export-v1", exportId: "export-1", teacherUid: "teacher-1", format: "csv", recordCount: 1, queryLabel: "all", exportedAt: "2026-08-17T01:00:00.000Z" };
-  await assertSucceeds(setDoc(doc(teacher, "exportEvents/export-1"), event));
-  await assertFails(getDoc(doc(student, "exportEvents/export-1")));
-  await assertFails(setDoc(doc(student, "exportEvents/export-2"), { ...event, exportId: "export-2", teacherUid: "anon-alice" }));
-  assert.ok(true);
-});
-test("all browser clients are denied access to function-owned teacher passcode rate-limit records", async () => {
-  const student = env.authenticatedContext("anon-alice", { firebase: { sign_in_provider: "anonymous" } }).firestore();
-  const teacher = env.authenticatedContext("teacher-1", { teacher: true, teacherAccess: "passcode", firebase: { sign_in_provider: "custom" } }).firestore();
-  const record = { scope: "global", attemptCount: 1 };
-  await assertFails(setDoc(doc(student, "teacherLoginAttempts/global"), record));
-  await assertFails(getDoc(doc(student, "teacherLoginAttempts/global")));
-  await assertFails(getDoc(doc(teacher, "teacherLoginAttempts/global")));
+  const forged = env.authenticatedContext("forged-browser", { teacher: true, firebase: { sign_in_provider: "custom" } }).firestore();
+  for (const path of ["teacherLoginAttempts/global", "teacherResultSessions/session-1", "exportEvents/export-1"]) {
+    const record = { scope: "test", attemptCount: 1 };
+    await assertFails(setDoc(doc(student, path), record));
+    await assertFails(getDoc(doc(student, path)));
+    await assertFails(getDoc(doc(forged, path)));
+  }
 });

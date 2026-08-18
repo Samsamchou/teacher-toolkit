@@ -1,5 +1,6 @@
 const LEGACY_EBOOK_URL_PATTERN = /^https:\/\/h5\.hle\.com\.tw\/toolbar\/release\/index\.html\?key=/i;
 const LEGACY_FLAT_LESSON_PATTERN = /^(hwg[57])-(u0[1-4])$/i;
+const REMOVED_STARTER_LESSON_PATTERN = /^hwg[57]-starter-l0[45]$/i;
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -17,6 +18,10 @@ export function normalizeLegacyLessonId(id) {
   const match = String(id || "").match(LEGACY_FLAT_LESSON_PATTERN);
   if (!match) return String(id || "");
   return `${match[1].toLowerCase()}-${match[2].toLowerCase()}-l01`;
+}
+
+export function isRemovedStarterLessonId(id) {
+  return REMOVED_STARTER_LESSON_PATTERN.test(String(id || ""));
 }
 
 function mergeCanonicalLesson(seed, stored, originalId) {
@@ -47,6 +52,7 @@ export function migrateLessonsForStructure(lessons, seedLessons) {
   for (const lesson of lessons) {
     if (!lesson || typeof lesson !== "object") continue;
     const normalizedId = normalizeLegacyLessonId(lesson.id);
+    if (isRemovedStarterLessonId(normalizedId)) continue;
     const canonical = seedById.get(normalizedId);
     if (canonical) {
       const existing = migratedById.get(normalizedId);

@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "date": "2026-08-18",
+  "questionId": "hwg7-u01-l1-b04",
+  "targetText": "Singapore",
+  "originalPreserved": {
+    "path": "Here We Go(7)單字圖卡/HWG7 U1/mp3/4. Sinagapore.mp3",
+    "bytes": 18996,
+    "sha256": "1fd880d09df4698e9bbb5cd87a1eab9d4c7daf567bb81118c4751646c7bda2bd"
+  },
+  "replacement": {
+    "path": "question-bank/generated-audio/4. Singapore TTS.mp3",
+    "websitePath": "preview/public/assets/hwg7-u01/audio/4-singapore.mp3",
+    "bytes": 27585,
+    "sha256": "44d8159ec1303f47fa4a73d304077ac0f42568ff342ee4a9973e81f3032776f2",
+    "encoder": "lameenc 1.8.1",
+    "bitRateKbps": 128,
+    "sampleRateHz": 22050,
+    "channels": 1
+  },
+  "tts": {
+    "engine": "Windows System.Speech",
+    "voice": "Microsoft Zira Desktop",
+    "culture": "en-US",
+    "rate": -1
+  },
+  "stt": {
+    "engine": "Microsoft Speech Recognizer 8.0 for Windows",
+    "grammar": "dictation",
+    "transcript": "Singapore",
+    "confidence": 0.1342,
+    "note": "Single-word dictation returned the exact target. Confidence is retained as evidence and is not described as high."
+  },
+  "sync": {
+    "questionBankRevision": 3,
+    "sourceJsonSha256": "d8ddb6af0b7ee792e6bd2d32199a2ddcce70562ad967915e0d1ffff8ee6fa312",
+    "runtimeJsonSha256": "d8ddb6af0b7ee792e6bd2d32199a2ddcce70562ad967915e0d1ffff8ee6fa312"
+  }
+}

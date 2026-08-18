@@ -1,18 +1,18 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   browserLocalPersistence,
-  browserSessionPersistence,
   getAuth,
   setPersistence,
   signInAnonymously,
-  signInWithCustomToken,
   signOut
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import siteSource from "../../config/site-source.json" with { type: "json" };
+import { hasFirebasePublicConfig, resolveFirebasePublicConfig } from "./firebase-public-config.js";
 
 const env = import.meta.env || {};
-const publicConfig = {
+const environmentConfig = {
   apiKey: env.VITE_FIREBASE_API_KEY,
   authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: env.VITE_FIREBASE_PROJECT_ID,
@@ -20,18 +20,35 @@ const publicConfig = {
   messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: env.VITE_FIREBASE_APP_ID
 };
-const functionsRegion = String(env.VITE_FIREBASE_FUNCTIONS_REGION || "asia-east1");
+const browserFetch = typeof window !== "undefined" && typeof window.fetch === "function"
+  ? window.fetch.bind(window)
+  : null;
+const resolvedPublicConfig = await resolveFirebasePublicConfig({
+  environmentConfig,
+  expectedProjectId: String(siteSource.firebase?.projectId || ""),
+  fetchImplementation: browserFetch
+});
+const publicConfig = resolvedPublicConfig.config;
+const functionsRegion = String(env.VITE_FIREBASE_FUNCTIONS_REGION || siteSource.firebase?.functionsRegion || "asia-east1");
+const teacherFunctions = Object.freeze({
+  login: "teacherPasscodeLogin",
+  logout: "teacherPasscodeLogout",
+  list: "teacherResultsList",
+  recordExport: "teacherResultsRecordExport",
+  delete: "teacherResultsDelete"
+});
 
-const requiredFields = ["apiKey", "authDomain", "projectId", "appId"];
-export const isFirebaseConfigured = requiredFields.every((field) => Boolean(String(publicConfig[field] || "").trim()));
+export const firebaseConfigSource = resolvedPublicConfig.source;
+export const isFirebaseConfigured = hasFirebasePublicConfig(publicConfig);
 
 const app = isFirebaseConfigured ? (getApps().length ? getApp() : initializeApp(publicConfig)) : null;
 export const auth = app ? getAuth(app) : null;
 export const firestore = app ? getFirestore(app) : null;
 export const functions = app ? getFunctions(app, functionsRegion) : null;
+let teacherResultsSession = null;
 
 export function firebaseStatus() {
-  if (isFirebaseConfigured) return { enabled: true, message: "Firebase connected" };
+  if (isFirebaseConfigured) return { enabled: true, message: "Firebase connected", source: firebaseConfigSource };
   return {
     enabled: false,
     message: "Firebase public web configuration is not present. This browser is using the local preview data layer."
@@ -44,18 +61,20 @@ function requireFirebase() {
 
 function teacherLoginError(error) {
   const code = String(error?.code || "");
-  if (code === "functions/permission-denied") return new Error("教師通行碼錯誤。");
+  if (code === "functions/permission-denied") return new Error("教師通行碼錯誤，或工作階段已結束。");
   if (code === "functions/resource-exhausted") return new Error("嘗試次數過多，請稍後再試。");
-  if (code === "functions/failed-precondition") return new Error("教師通行碼服務尚未完成設定。");
-  if (code === "functions/unauthenticated") return new Error("無法建立匿名驗證工作階段，請重新整理後再試。");
-  if (code === "functions/unavailable") return new Error("教師通行碼服務暫時無法連線。");
-  return error instanceof Error ? error : new Error("教師通行碼服務暫時無法使用。");
+  if (code === "functions/failed-precondition") return new Error("結果資料已變更，請重新整理後再試。");
+  if (code === "functions/unauthenticated") return new Error("無法建立匿名工作階段，請重新整理後再試。");
+  if (code === "functions/unavailable") return new Error("教師成績服務暫時無法連線。");
+  return error instanceof Error ? error : new Error("教師成績服務暫時無法使用。");
 }
 
 export async function ensureAnonymousSession() {
   requireFirebase();
   if (auth.currentUser?.isAnonymous) return auth.currentUser;
   if (auth.currentUser) await signOut(auth);
+  teacherResultsSession = null;
+  await setPersistence(auth, browserLocalPersistence);
   try {
     return (await signInAnonymously(auth)).user;
   } catch (error) {
@@ -66,47 +85,76 @@ export async function ensureAnonymousSession() {
   }
 }
 
-export async function teacherSession() {
-  requireFirebase();
-  const user = auth.currentUser;
-  if (!user || user.isAnonymous) return null;
-  const token = await user.getIdTokenResult(true);
-  return token.claims.teacher === true && token.claims.teacherAccess === "passcode" ? { user, claims: token.claims } : null;
+export function teacherSession() {
+  return teacherResultsSession;
 }
 
-export async function signInTeacherWithPasscode(passcode) {
+export async function openTeacherResultsSession(passcode) {
   requireFirebase();
   const entered = typeof passcode === "string" ? passcode : "";
   if (!/^\d{6}$/.test(entered)) throw new Error("請輸入六位數教師通行碼。");
-  await ensureAnonymousSession();
+  const anonymousUser = await ensureAnonymousSession();
   try {
-    const response = await httpsCallable(functions, "teacherPasscodeLogin")({ passcode: entered });
-    const customToken = String(response?.data?.customToken || "");
-    if (!customToken) throw new Error("教師通行碼服務沒有回傳安全工作階段。");
-    await setPersistence(auth, browserSessionPersistence);
-    const signedIn = await signInWithCustomToken(auth, customToken);
-    const token = await signedIn.user.getIdTokenResult(true);
-    if (token.claims.teacher !== true || token.claims.teacherAccess !== "passcode") {
-      await signOut(auth);
-      throw new Error("教師安全工作階段驗證失敗。");
-    }
-    return { user: signedIn.user, claims: token.claims };
+    const response = await httpsCallable(functions, teacherFunctions.login)({ passcode: entered });
+    const sessionToken = String(response?.data?.sessionToken || "");
+    if (!sessionToken) throw new Error("教師成績服務沒有建立工作階段。");
+    teacherResultsSession = { sessionToken, anonymousUid: anonymousUser.uid };
+    return teacherResultsSession;
   } catch (error) {
-    if (auth.currentUser?.isAnonymous) await setPersistence(auth, browserLocalPersistence).catch(() => undefined);
     throw teacherLoginError(error);
   }
 }
 
-export async function signOutTeacher() {
-  if (!auth?.currentUser) return;
-  const current = await teacherSession().catch(() => null);
-  if (current && functions) {
-    try {
-      await httpsCallable(functions, "teacherPasscodeLogout")({});
-    } catch {
-      // Local sign-out still removes browser access if the server cleanup is temporarily unavailable.
-    }
+async function requireTeacherResultsSession() {
+  const current = teacherResultsSession;
+  if (!current) throw new Error("請先輸入教師通行碼。");
+  const anonymousUser = await ensureAnonymousSession();
+  if (teacherResultsSession !== current || anonymousUser.uid !== current.anonymousUid) {
+    throw new Error("教師工作階段已結束，請重新輸入通行碼。");
   }
-  await signOut(auth);
-  await setPersistence(auth, browserLocalPersistence);
+  return current;
+}
+
+async function callTeacherResults(functionName, payload = {}) {
+  requireFirebase();
+  const session = await requireTeacherResultsSession();
+  try {
+    const response = await httpsCallable(functions, functionName)({ ...payload, sessionToken: session.sessionToken });
+    return response?.data || {};
+  } catch (error) {
+    throw teacherLoginError(error);
+  }
+}
+
+export async function loadTeacherResultsFromServer() {
+  const response = await callTeacherResults(teacherFunctions.list);
+  return {
+    results: Array.isArray(response.results) ? response.results : [],
+    truncated: response.truncated === true
+  };
+}
+
+export async function recordTeacherResultsExport({ format, resultIds, queryLabel }) {
+  const response = await callTeacherResults(teacherFunctions.recordExport, { format, resultIds, queryLabel });
+  const exportId = String(response.exportId || "");
+  if (!exportId) throw new Error("匯出紀錄沒有建立，已停止刪除流程。");
+  return { exportId, recordCount: Number(response.recordCount || 0) };
+}
+
+export async function deleteTeacherResultsAfterExport(exportId) {
+  const response = await callTeacherResults(teacherFunctions.delete, { exportId, confirmed: true });
+  return { deleted: Number(response.deleted || 0), alreadyDeleted: response.alreadyDeleted === true };
+}
+
+export async function closeTeacherResultsSession() {
+  const current = teacherResultsSession;
+  teacherResultsSession = null;
+  if (!current || !functions) return;
+  try {
+    const anonymousUser = await ensureAnonymousSession();
+    if (anonymousUser.uid !== current.anonymousUid) return;
+    await httpsCallable(functions, teacherFunctions.logout)({ sessionToken: current.sessionToken });
+  } catch {
+    // Clearing in-memory access is sufficient when the server is temporarily unavailable.
+  }
 }

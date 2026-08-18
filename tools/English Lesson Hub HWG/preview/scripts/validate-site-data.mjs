@@ -10,22 +10,32 @@ const bank = JSON.parse(bankText);
 const errors = [];
 const books = source.books || [];
 const units = books.flatMap((book) => book.units || []);
-const totalLessonCount = units.length * Number(source.lessonTemplate?.lessonsPerUnit || 0);
+const lessonCountForUnit = (unit) => Number(unit?.lessonCount || source.lessonTemplate?.lessonsPerUnit || 0);
+const totalLessonCount = units.reduce((total, unit) => total + lessonCountForUnit(unit), 0);
 
 if (source.mode !== "firebase-ready") errors.push("Site must be Firebase-ready.");
 const teacherPasscode = source.firebase?.teacherPasscode || {};
-if (source.firebase?.functionsRegion !== "asia-east1") errors.push("Teacher passcode Functions must use asia-east1.");
+if (source.firebase?.functionsRegion !== "asia-east1") errors.push("Teacher Results Functions must use asia-east1.");
 if (teacherPasscode.secretName !== "TEACHER_RESULTS_PASSCODE") errors.push("Teacher passcode Secret name must be configured without a value.");
-if (teacherPasscode.loginFunction !== "teacherPasscodeLogin" || teacherPasscode.logoutFunction !== "teacherPasscodeLogout") errors.push("Teacher passcode Function names must be canonical.");
+if (teacherPasscode.loginFunction !== "teacherPasscodeLogin" || teacherPasscode.logoutFunction !== "teacherPasscodeLogout" || teacherPasscode.listFunction !== "teacherResultsList" || teacherPasscode.recordExportFunction !== "teacherResultsRecordExport" || teacherPasscode.deleteFunction !== "teacherResultsDelete") errors.push("Teacher Results Function names must be canonical.");
+if (teacherPasscode.sessionHours !== 8 || teacherPasscode.resultLimit !== 5000) errors.push("Teacher Results session and record limits must remain approved values.");
 if (teacherPasscode.rateLimit?.userMaxAttempts !== 5 || teacherPasscode.rateLimit?.globalMaxAttempts !== 20 || teacherPasscode.rateLimit?.windowMinutes !== 15) errors.push("Teacher passcode rate-limit configuration must remain approved values.");
-if (books.length !== 2 || units.length !== 10 || totalLessonCount !== 50) {
-  errors.push(`Expected 2 books, 10 units, and 50 lessons; found ${books.length}, ${units.length}, ${totalLessonCount}.`);
+if (books.length !== 2 || units.length !== 10 || totalLessonCount !== 46) {
+  errors.push(`Expected 2 books, 10 units, and 46 lessons; found ${books.length}, ${units.length}, ${totalLessonCount}.`);
+}
+for (const book of books) {
+  const starter = (book.units || []).find((unit) => unit.id === "starter");
+  const nonStarterUnits = (book.units || []).filter((unit) => unit.id !== "starter");
+  const bookLessonCount = (book.units || []).reduce((total, unit) => total + lessonCountForUnit(unit), 0);
+  if (lessonCountForUnit(starter) !== 3) errors.push(`${book.id}: Starter must contain exactly 3 lessons.`);
+  if (nonStarterUnits.length !== 4 || nonStarterUnits.some((unit) => lessonCountForUnit(unit) !== 5)) errors.push(`${book.id}: Unit 1–4 must each contain 5 lessons.`);
+  if (bookLessonCount !== 23) errors.push(`${book.id}: expected 23 lessons, found ${bookLessonCount}.`);
 }
 const hwg7 = books.find((book) => book.id === "hwg7");
 if (hwg7?.grade !== "Grade 6") errors.push("HWG7 must be Grade 6.");
 if ((source.studentEntry?.queryFields || []).join(",") !== "book,unit,lesson") errors.push("Student QR must carry book, unit, and lesson only.");
 if (Object.keys(source.unitThemes || {}).length !== 10) errors.push("Each of the 10 units requires a theme.");
-if (bank.revision !== 2) errors.push(`Expected question bank revision 2, found ${bank.revision}.`);
+if (bank.revision !== source.quizSource?.revision) errors.push(`Expected question bank revision ${source.quizSource?.revision}, found ${bank.revision}.`);
 const ebookUrl = source.contentProfiles["hwg7-u01-l01-live"]?.ebook?.url || "";
 if (!ebookUrl.startsWith("https://edisc3.hle.com.tw/edisc_v3/ebook_v2023.html#")) errors.push("HWG7 U1 L1 E-book must use the stable Hanlin catalog URL.");
 if (/^https:\/\/h5\.hle\.com\.tw\/toolbar\/release\/index\.html\?key=/i.test(ebookUrl)) errors.push("HWG7 U1 L1 E-book must not store a one-time toolbar key URL.");

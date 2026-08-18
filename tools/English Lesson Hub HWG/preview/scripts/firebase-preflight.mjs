@@ -3,11 +3,13 @@ import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const readJson = async (name) => JSON.parse(await readFile(resolve(root, name), "utf8"));
-const [source, firebaseJson, firebaserc, rules] = await Promise.all([
+const [source, firebaseJson, firebaserc, rules, webClient, publicConfigHelper] = await Promise.all([
   readJson("config/site-source.json"),
   readJson("firebase.json"),
   readJson(".firebaserc"),
-  readFile(resolve(root, "firestore.rules"), "utf8")
+  readFile(resolve(root, "firestore.rules"), "utf8"),
+  readFile(resolve(root, "src/lib/firebase-client.js"), "utf8"),
+  readFile(resolve(root, "src/lib/firebase-public-config.js"), "utf8")
 ]);
 const errors = [];
 const warnings = [];
@@ -32,19 +34,26 @@ if (firebaserc.projects?.default !== projectId) errors.push(".firebaserc default
 if (hostingTarget !== "lesson-hub-v03") errors.push("Hosting site must be the dedicated lesson-hub-v03 target.");
 if (hosting.length !== 1 || hosting[0]?.target !== hostingTarget) errors.push("firebase.json must contain exactly one dedicated Hosting target.");
 if (JSON.stringify(targets?.[hostingTarget] || []) !== JSON.stringify([hostingTarget])) errors.push("Hosting target mapping must not point to the default site.");
-for (const required of ["anonymousStudent", "request.auth.token.teacher", "allow list: if teacher", "allow delete: if teacher"]) {
+for (const required of ["anonymousStudent", "allow create: if anonymousStudent()", "allow list, update, delete: if false", "match /teacherResultSessions/{sessionId}"]) {
   if (!rules.includes(required)) errors.push(`Firestore rules missing required guard: ${required}`);
 }
+if (rules.includes("request.auth.token.teacher")) errors.push("Firestore rules must not rely on a teacher claim.");
 const provided = publicConfigKeys.filter((key) => Boolean(process.env[key] || envFile[key]));
-if (provided.length && provided.length !== publicConfigKeys.length) warnings.push("Only part of the Firebase public Web App configuration is present; production build will remain local-preview mode.");
-if (!provided.length) warnings.push("Firebase public Web App configuration is not yet supplied; this preflight intentionally does not invent it.");
+const runtimeConfigSupported = webClient.includes("resolveFirebasePublicConfig") && publicConfigHelper.includes('FIREBASE_RUNTIME_CONFIG_URL = "/__/firebase/init.json"') && publicConfigHelper.includes("project-mismatch");
+if (provided.length && provided.length !== publicConfigKeys.length) warnings.push("Only part of the environment Firebase public configuration is present; the formal Hosting build will use its reserved runtime configuration instead.");
+if (provided.length !== publicConfigKeys.length && !runtimeConfigSupported) errors.push("Firebase public Web App configuration is unavailable from both the environment and the Hosting reserved runtime endpoint.");
 const report = {
   status: errors.length ? "FAIL" : "PASS",
   projectId,
   hostingSite: hostingTarget,
   defaultHostingUntouched: hosting[0]?.target === "lesson-hub-v03",
-  firestoreRuleGuards: { anonymousCreate: rules.includes("allow create: if anonymousStudent()"), crossStudentListBlocked: rules.includes("allow list: if teacher()"), teacherClaim: rules.includes("request.auth.token.teacher") },
-  publicWebConfig: provided.length === publicConfigKeys.length ? "present" : "pending",
+  firestoreRuleGuards: {
+    anonymousCreate: rules.includes("allow create: if anonymousStudent()"),
+    browserResultListBlocked: rules.includes("allow list, update, delete: if false"),
+    serverSessionRecordsBlocked: rules.includes("match /teacherResultSessions/{sessionId}") && rules.includes("allow read, write: if false"),
+    teacherClaimRemoved: !rules.includes("request.auth.token.teacher")
+  },
+  publicWebConfig: provided.length === publicConfigKeys.length ? "environment" : runtimeConfigSupported ? "hosting-runtime" : "pending",
   warnings,
   errors
 };

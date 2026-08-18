@@ -9,8 +9,11 @@ import {
   createSeedLessons,
   createStep,
   findLessonByStudentEntry,
+  lessonCountForBook,
+  lessonCountForUnit,
   questionBank,
   source,
+  standardLessonCount,
   stepTypes
 } from "./data/lesson-data.js";
 import { loadJson, saveJson } from "./lib/local-storage.js";
@@ -19,12 +22,15 @@ import {
   calculateSlotScore,
   checkpointForProgress,
   createRunId,
+  formatStudentId,
   scoreSpin,
   shuffleOptions,
   summarizeResponses,
   validateStudentId
 } from "./lib/quiz-logic.js";
 import { buildStudentEntryUrl, isLoopbackBaseUrl, parseStudentEntry, resolveStudentBaseUrl } from "./lib/student-entry.js";
+import { RAFFLE_DURATION_MS, createRafflePool, pickRaffleNumber, removeRaffleNumber } from "./lib/classroom-tools.js";
+import { projectorShortcutAction } from "./lib/projector-controls.js";
 import { firebaseStatus, isFirebaseConfigured } from "./lib/firebase-client.js";
 import {
   deleteResultsAfterExport,
@@ -38,7 +44,7 @@ import {
   savePracticeResult,
   teacherSignOut
 } from "./lib/result-repository.js";
-import { playReelStop, playRewardChime, playSlotTick, prepareSlotAudio } from "./lib/slot-audio.js";
+import { QUIZ_COMPLETION_DURATION_MS, playQuizCorrectChime, playReelStop, playRewardChime, playSlotTick, prepareQuizAudio, prepareSlotAudio, prepareTimerAlarm, startQuizCelebration, startRaffleSpin, startTimerAlarm, stopQuizCelebration, stopRaffleSpin, stopTimerAlarm } from "./lib/slot-audio.js";
 const LESSONS_STORAGE_KEY = "english-lesson-hub-v03-preview.lessons";
 const RESULTS_STORAGE_KEY = "english-lesson-hub-v03-preview.results";
 
@@ -151,7 +157,7 @@ function App() {
 
   function deleteLesson(lesson) {
     if (lesson.bookId !== "custom") {
-      setNotice("Starter 與 Unit 1–4 的 50 節預設 Lesson 會固定保留；可改用「重設 Lesson」。");
+      setNotice("Starter 與 Unit 1–4 的 46 節預設 Lesson 會固定保留；可改用「重設 Lesson」。");
       return;
     }
     if (!window.confirm(`確定刪除 ${lesson.title} 嗎？`)) return;
@@ -199,7 +205,7 @@ function App() {
     setEditingLessonId(null);
     setActiveLessonId(null);
     setScreen("studio");
-    setNotice("Preview 已回復為 10 個單元、每單元 5 節的預設結構。");
+    setNotice("Preview 已回復為 10 個單元、Starter 3 節與 Unit 1–4 各 5 節的預設結構。");
   }
 
   if (requestedStudentMode) {
@@ -265,12 +271,11 @@ function App() {
           localResults={results}
           lessons={lessons}
           onBack={() => setScreen("studio")}
-          onClearLocal={() => {
-            if (window.confirm("清除這台瀏覽器中的 Preview Results？")) {
-              setResults([]);
-              setNotice("本機 Preview Results 已清除。");
-            }
-          }}
+          onClearLocal={(resultIds) => {
+              const ids = new Set(Array.isArray(resultIds) ? resultIds : []);
+              setResults((current) => current.filter((item) => !ids.has(item.id || item.sessionId)));
+              setNotice("本機 Preview 已清除這次匯出的 Results。");
+            }}
         />
       ) : null}
     </div>
@@ -279,6 +284,7 @@ function App() {
 
 function AppHeader({ screen, mode, soundOn, onSoundChange, onStudio, onResults, onModeChange }) {
   const status = firebaseStatus();
+  if (screen === "cockpit" && mode === "teacher") return null;
   return (
     <header className="app-header">
       <div className="brand">
@@ -325,6 +331,10 @@ function TeacherStudio({
   onCloseEditor,
   onReset
 }) {
+  const [expandedUnitKey, setExpandedUnitKey] = useState(null);
+  const totalUnitCount = (source.books || []).reduce((total, book) => total + (book.units || []).length, 0);
+  const totalStandardLessons = standardLessonCount();
+
   if (editingLesson) {
     return <LessonEditor lesson={editingLesson} onSave={(lesson) => { onSave(lesson); onCloseEditor(); }} onCancel={onCloseEditor} />;
   }
@@ -335,8 +345,7 @@ function TeacherStudio({
       <section className="studio-hero">
         <div>
           <p className="eyebrow">Teacher-configurable Lesson Cockpit</p>
-          <h1>10 個單元，50 節課，隨時可調整。</h1>
-          <p>HWG5 與 HWG7 都有 Starter、Unit 1–4；每個單元先建立 Lesson 1–5。HWG7 是 Grade 6，HWG7 Unit 1 Lesson 1 已保留完整題庫與教師端電子書。</p>
+          <h1>{totalUnitCount} 個單元，{totalStandardLessons} 節課，隨時可調整。</h1>
         </div>
         <div className="hero-actions">
           <button className="primary-button" onClick={onCreate}>＋ New Custom Lesson</button>
@@ -346,17 +355,20 @@ function TeacherStudio({
 
       {(source.books || []).map((book) => (
         <section className="book-section" key={book.id}>
-          <div className="book-heading"><div><p className="eyebrow">{book.grade}</p><h2>{book.label}</h2></div><span>{book.units.length} Units · {book.units.length * source.lessonTemplate.lessonsPerUnit} Lessons</span></div>
+          <div className="book-heading"><div><p className="eyebrow">{book.grade}</p><h2>{book.label}</h2></div><span>{book.units.length} Units · {lessonCountForBook(book)} Lessons</span></div>
           {book.units.map((unit) => {
             const key = `${book.id}-${unit.id}`;
             const unitLessons = lessons.filter((lesson) => lesson.bookId === book.id && lesson.unitId === unit.id).sort((a, b) => a.lessonNumber - b.lessonNumber);
             const theme = source.unitThemes[key];
+            const lessonCount = lessonCountForUnit(unit);
+            const expanded = expandedUnitKey === key;
             return (
-              <section className="unit-section" key={key} style={themeStyle(theme)}>
-                <div className="unit-heading"><div><span className="unit-color-dot" /><p>{theme?.name || "Dopamine palette"}</p><h3>{unit.title}</h3></div><span>{unitLessons.length} / {source.lessonTemplate.lessonsPerUnit} Lessons</span></div>
-                <div className="lesson-grid" aria-label={`${book.label} ${unit.title} Lesson Cards`}>
-                  {unitLessons.map((lesson) => <LessonCard key={lesson.id} lesson={lesson} onStart={onStart} onEdit={onEdit} onDuplicate={onDuplicate} onDelete={onDelete} onResetLesson={onResetLesson} />)}
-                </div>
+              <section className={"unit-section " + (expanded ? "expanded" : "")} key={key} style={themeStyle(theme)}>
+                <button className="unit-disclosure" type="button" onClick={() => setExpandedUnitKey((current) => current === key ? null : key)} aria-expanded={expanded} aria-controls={`lesson-list-${key}`}>
+                  <span className="unit-disclosure-title"><span className="unit-color-dot" aria-hidden="true" /><span>{unit.title}</span></span>
+                  <span className="unit-disclosure-meta">{unitLessons.length} / {lessonCount} Lessons <span className="unit-disclosure-chevron" aria-hidden="true">{expanded ? "⌃" : "⌄"}</span></span>
+                </button>
+                {expanded ? <ol className="unit-lesson-list" id={`lesson-list-${key}`} aria-label={`${book.label} ${unit.title} Lessons`}>{unitLessons.map((lesson) => <LessonListRow key={lesson.id} lesson={lesson} onStart={onStart} onEdit={onEdit} onDuplicate={onDuplicate} onDelete={onDelete} onResetLesson={onResetLesson} />)}</ol> : null}
               </section>
             );
           })}
@@ -368,6 +380,28 @@ function TeacherStudio({
   );
 }
 
+function LessonListRow({ lesson, onStart, onEdit, onDuplicate, onDelete, onResetLesson }) {
+  const coreLesson = lesson.bookId !== "custom";
+  const enabledStepCount = lesson.steps.filter((step) => step.enabled).length;
+  return (
+    <li className="lesson-list-row">
+      <button className="lesson-list-edit" type="button" onClick={() => onEdit(lesson.id)} aria-label={`編輯 ${lesson.title}`}>
+        <span className="lesson-list-number">Lesson {lesson.lessonNumber}</span>
+        <span className="lesson-list-summary">{enabledStepCount} Steps</span>
+      </button>
+      <div className="lesson-list-actions">
+        <button className="lesson-list-start" type="button" onClick={() => onStart(lesson.id)} aria-label={`開始 ${lesson.title}`} data-tooltip="開始上課"><span aria-hidden="true">▶</span></button>
+        <details className="lesson-list-more">
+          <summary aria-label={`${lesson.title} 更多操作`} data-tooltip="更多操作">⋯</summary>
+          <div className="lesson-more-menu">
+            <button type="button" onClick={() => onDuplicate(lesson)}>Duplicate</button>
+            {coreLesson ? <button type="button" onClick={() => onResetLesson(lesson)}>Reset</button> : <button type="button" onClick={() => onDelete(lesson)}>Delete</button>}
+          </div>
+        </details>
+      </div>
+    </li>
+  );
+}
 function LessonCard({ lesson, onStart, onEdit, onDuplicate, onDelete, onResetLesson }) {
   const coreLesson = lesson.bookId !== "custom";
   return (
@@ -444,16 +478,16 @@ function StudentJoinPanel({ lesson }) {
   );
 }
 
-function QrCodeImage({ value }) {
+function QrCodeImage({ value, className = "student-qr", width = 260 }) {
   const [dataUrl, setDataUrl] = useState("");
   useEffect(() => {
     let active = true;
-    QRCode.toDataURL(value, { width: 260, margin: 1, errorCorrectionLevel: "M", color: { dark: "#15215c", light: "#ffffff" } })
+    QRCode.toDataURL(value, { width, margin: 1, errorCorrectionLevel: "M", color: { dark: "#15215c", light: "#ffffff" } })
       .then((url) => { if (active) setDataUrl(url); })
       .catch(() => { if (active) setDataUrl(""); });
     return () => { active = false; };
-  }, [value]);
-  return dataUrl ? <img className="student-qr" src={dataUrl} alt="學生掃碼進入 Vocabulary Quiz" /> : <div className="qr-placeholder">QR</div>;
+  }, [value, width]);
+  return dataUrl ? <img className={className} src={dataUrl} alt="學生掃碼進入 Vocabulary Quiz" /> : <div className="qr-placeholder">QR</div>;
 }
 function LessonEditor({ lesson, onSave, onCancel }) {
   const [draft, setDraft] = useState(() => clone(lesson));
@@ -660,15 +694,131 @@ function StepContentFields({ step, onChange }) {
   );
 }
 
+function downloadCanvasAsPng(canvas, filename) {
+  if (!canvas) return;
+  const triggerDownload = (url, revoke = false) => {
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    if (revoke) window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+  if (typeof canvas.toBlob === "function") {
+    canvas.toBlob((blob) => {
+      if (blob) triggerDownload(URL.createObjectURL(blob), true);
+      else triggerDownload(canvas.toDataURL("image/png"));
+    }, "image/png");
+    return;
+  }
+  triggerDownload(canvas.toDataURL("image/png"));
+}
+
+function createExternalAnnotationSnapshot({ stage, annotationCanvas, title }) {
+  const bounds = stage.getBoundingClientRect();
+  const width = Math.max(960, Math.round(bounds.width));
+  const contentHeight = Math.max(540, Math.round(bounds.height));
+  const headerHeight = 112;
+  const scale = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+  const output = document.createElement("canvas");
+  output.width = Math.round(width * scale);
+  output.height = Math.round((contentHeight + headerHeight) * scale);
+  const context = output.getContext("2d");
+  context.scale(scale, scale);
+  context.fillStyle = "#ffffff";
+  context.fillRect(0, 0, width, contentHeight + headerHeight);
+  context.fillStyle = "#f0f6ff";
+  context.fillRect(0, 0, width, headerHeight);
+  context.fillStyle = "#173d7a";
+  context.font = "700 26px Comic Relief, sans-serif";
+  context.fillText(String(title || "Lesson Hub").slice(0, 64), 30, 43);
+  context.fillStyle = "#526d97";
+  context.font = "700 15px system-ui, sans-serif";
+  context.fillText("Wayground 外部畫面未包含；此 PNG 僅保留教師畫筆標註。", 30, 76);
+  context.strokeStyle = "#d4e2f6";
+  context.strokeRect(0.5, headerHeight + 0.5, width - 1, contentHeight - 1);
+  if (annotationCanvas?.width && annotationCanvas?.height) {
+    context.drawImage(
+      annotationCanvas,
+      0,
+      0,
+      annotationCanvas.width,
+      annotationCanvas.height,
+      0,
+      headerHeight,
+      width,
+      contentHeight
+    );
+  }
+  return output;
+}
+
+function projectionFileName(lesson, step, kind) {
+  const sourceName = `${lesson.id || lesson.title || "lesson"}-${step.id || step.type || "step"}-${kind}`;
+  const safeName = sourceName.replace(/[^a-z0-9_-]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase();
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  return `lesson-hub-${safeName}-${stamp}.png`;
+}
+
 function LessonCockpit({ lesson, mode, soundOn, onModeChange, onExit, onResults, onSaveResult }) {
   const steps = lesson.steps.filter((step) => step.enabled);
   const [stepIndex, setStepIndex] = useState(0);
+  const [flowExpanded, setFlowExpanded] = useState(false);
+  const [activeTool, setActiveTool] = useState(null);
   const [annotationTool, setAnnotationTool] = useState("select");
   const [annotationColor, setAnnotationColor] = useState("#ef4444");
   const [annotationSize, setAnnotationSize] = useState(5);
   const [clearToken, setClearToken] = useState(0);
+  const [toolNotice, setToolNotice] = useState("");
+  const [exporting, setExporting] = useState(false);
+  const stageRef = useRef(null);
+  const annotationCanvasRef = useRef(null);
   const safeIndex = Math.min(stepIndex, Math.max(steps.length - 1, 0));
   const currentStep = steps[safeIndex];
+
+  useEffect(() => {
+    function closeWithEscape(event) {
+      if (event.key !== "Escape") return;
+      setActiveTool(null);
+      setAnnotationTool("select");
+    }
+    window.addEventListener("keydown", closeWithEscape);
+    return () => window.removeEventListener("keydown", closeWithEscape);
+  }, []);
+
+  useEffect(() => {
+    setActiveTool(null);
+    setAnnotationTool("select");
+    setToolNotice("");
+  }, [currentStep?.id]);
+
+  useEffect(() => {
+    if (mode !== "teacher") return undefined;
+    document.body.classList.add("projector-active");
+    return () => document.body.classList.remove("projector-active");
+  }, [mode]);
+
+  useEffect(() => {
+    if (mode !== "teacher") return undefined;
+    function isEditingControl(target) {
+      const tagName = target?.tagName?.toLowerCase();
+      return tagName === "input" || tagName === "textarea" || tagName === "select" || target?.isContentEditable;
+    }
+
+    function handleProjectorKey(event) {
+      if (isEditingControl(event.target)) return;
+      const action = projectorShortcutAction(event.key);
+      if (!action) return;
+      event.preventDefault();
+      if (action === "previous") selectStep(safeIndex - 1);
+      if (action === "next") goNext();
+      if (action === "fullscreen") toggleStageFullscreen();
+    }
+
+    window.addEventListener("keydown", handleProjectorKey);
+    return () => window.removeEventListener("keydown", handleProjectorKey);
+  }, [safeIndex, steps.length, onExit]);
 
   if (mode === "student") {
     return (
@@ -684,143 +834,255 @@ function LessonCockpit({ lesson, mode, soundOn, onModeChange, onExit, onResults,
     return <main className="empty-state"><h1>這個 Lesson 目前沒有 enabled Step。</h1><button className="primary-button" onClick={onExit}>回 Teacher Studio</button></main>;
   }
 
+  function selectStep(nextIndex) {
+    const bounded = Math.min(Math.max(nextIndex, 0), steps.length - 1);
+    if (bounded === safeIndex) return;
+    setStepIndex(bounded);
+    setActiveTool(null);
+    setAnnotationTool("select");
+    setToolNotice("");
+  }
+
   function goNext() {
-    if (safeIndex < steps.length - 1) setStepIndex(safeIndex + 1);
+    if (safeIndex < steps.length - 1) selectStep(safeIndex + 1);
     else onExit();
   }
 
+  async function toggleStageFullscreen() {
+    const stage = stageRef.current;
+    if (!stage?.requestFullscreen) {
+      setToolNotice("這個瀏覽器目前不支援教材全螢幕。");
+      return;
+    }
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen?.();
+      else await stage.requestFullscreen();
+    } catch {
+      setToolNotice("無法切換教材全螢幕；可使用外部平台的全螢幕功能。");
+    }
+  }
+
+  function toggleTool(nextTool) {
+    const willOpen = activeTool !== nextTool;
+    setActiveTool(willOpen ? nextTool : null);
+    setAnnotationTool(willOpen && nextTool === "draw" ? (annotationTool === "select" ? "pen" : annotationTool) : "select");
+    setToolNotice("");
+  }
+
+  function closeTools() {
+    setActiveTool(null);
+    setAnnotationTool("select");
+  }
+
+  async function exportProjection() {
+    const stage = stageRef.current;
+    const annotationCanvas = annotationCanvasRef.current;
+    if (!stage || exporting) return;
+    setExporting(true);
+    setToolNotice("");
+    const filename = projectionFileName(lesson, currentStep, currentStep.type === "webPractice" ? "annotation" : "projection");
+    try {
+      if (currentStep.type === "webPractice") {
+        downloadCanvasAsPng(createExternalAnnotationSnapshot({ stage, annotationCanvas, title: `${lesson.title} · ${currentStep.title}` }), filename);
+        setToolNotice("已匯出畫筆標註與課程標題；Wayground 外部畫面不會被擷取。");
+        return;
+      }
+      const module = await import("html2canvas");
+      const capture = module.default || module;
+      const screenshot = await capture(stage, {
+        backgroundColor: "#ffffff",
+        logging: false,
+        scale: Math.min(2, Math.max(1, window.devicePixelRatio || 1)),
+        useCORS: true
+      });
+      downloadCanvasAsPng(screenshot, filename);
+      setToolNotice("已匯出目前 Lesson Hub 投影畫面 PNG。");
+    } catch {
+      downloadCanvasAsPng(createExternalAnnotationSnapshot({ stage, annotationCanvas, title: `${lesson.title} · ${currentStep.title}` }), filename);
+      setToolNotice("完整畫面擷取暫時不可用，已改匯出畫筆標註與課程標題。");
+    } finally {
+      setExporting(false);
+    }
+  }
+
   return (
-    <main className="cockpit-page" style={themeStyle(lesson.theme)}>
+    <main className="cockpit-page projector-cockpit" style={themeStyle(lesson.theme)}>
       <div className="cockpit-topbar">
         <div><p className="eyebrow">{lesson.book} · {lesson.unit} · Lesson {lesson.lessonNumber}</p><h1>{lesson.title}</h1></div>
-        <div className="cockpit-mode-note">教師正在控制 Lesson Flow</div>
+        <div className="cockpit-top-actions"><div className="cockpit-mode-note">教師正在控制 Lesson Flow</div><button className="lesson-flow-toggle" onClick={() => setFlowExpanded((value) => !value)} aria-expanded={flowExpanded}>{flowExpanded ? "收合 Lesson Flow" : "展開 Lesson Flow"} <span>{safeIndex + 1} / {steps.length}</span></button></div>
       </div>
-      <nav className="progress-bar" aria-label="Lesson Progress">
-        {steps.map((step, index) => <button key={step.id} className={index === safeIndex ? "active" : ""} onClick={() => setStepIndex(index)}><span>{index + 1}</span><small>{step.title}</small></button>)}
-      </nav>
+      {flowExpanded ? <nav className="progress-bar" aria-label="Lesson Progress">{steps.map((step, index) => <button key={step.id} className={index === safeIndex ? "active" : ""} onClick={() => selectStep(index)}><span>{index + 1}</span><small>{step.title}</small></button>)}</nav> : null}
       <div className="cockpit-layout">
-        <AnnotationToolbar tool={annotationTool} color={annotationColor} size={annotationSize} onTool={setAnnotationTool} onColor={setAnnotationColor} onSize={setAnnotationSize} onClear={() => setClearToken((value) => value + 1)} />
-        <section className="lesson-stage">
-          <AnnotationCanvas enabled={annotationTool === "pen"} color={annotationColor} size={annotationSize} clearToken={clearToken} />
+        <TeacherToolRail activeTool={activeTool} onSelect={toggleTool} />
+        <ClassroomToolPopover
+          activeTool={activeTool}
+          onClose={closeTools}
+          soundOn={soundOn}
+          annotationTool={annotationTool}
+          annotationColor={annotationColor}
+          annotationSize={annotationSize}
+          onAnnotationTool={setAnnotationTool}
+          onAnnotationColor={setAnnotationColor}
+          onAnnotationSize={setAnnotationSize}
+          onClear={() => setClearToken((value) => value + 1)}
+          onExport={exportProjection}
+          exporting={exporting}
+          exportNotice={toolNotice}
+          externalPractice={currentStep.type === "webPractice"}
+        />
+        <section className="lesson-stage" ref={stageRef}>
+          <AnnotationCanvas
+            enabled={activeTool === "draw" && annotationTool !== "select"}
+            tool={annotationTool}
+            color={annotationColor}
+            size={annotationSize}
+            clearToken={clearToken}
+            pageKey={currentStep.id}
+            annotationCanvasRef={annotationCanvasRef}
+          />
           <StepRenderer step={currentStep} mode="teacher" lesson={lesson} soundOn={soundOn} onSaveResult={onSaveResult} />
         </section>
-        <ClassroomTools lesson={lesson} />
       </div>
-      <TeachingDock current={safeIndex} total={steps.length} onHome={onExit} onPrevious={() => setStepIndex(Math.max(0, safeIndex - 1))} onNext={goNext} onResults={onResults} />
+      <TeachingDock current={safeIndex} total={steps.length} onHome={onExit} onPrevious={() => selectStep(safeIndex - 1)} onNext={goNext} onResults={onResults} />
     </main>
   );
 }
-function AnnotationToolbar({ tool, color, size, onTool, onColor, onSize, onClear }) {
+
+function TeacherToolRail({ activeTool, onSelect }) {
+  const tools = [
+    { id: "raffle", icon: "🎲", label: "抽籤" },
+    { id: "timer", icon: "⏱", label: "倒數" },
+    { id: "draw", icon: "✏️", label: "畫筆" }
+  ];
   return (
-    <aside className="annotation-toolbar" aria-label="Annotation Toolbar">
-      <strong>✏️</strong>
-      <button className={tool === "select" ? "active" : ""} onClick={() => onTool("select")} title="選取">↖</button>
-      <button className={tool === "pen" ? "active" : ""} onClick={() => onTool("pen")} title="畫筆">✎</button>
-      <button onClick={onClear} title="清除畫筆">⌫</button>
-      <div className="color-dots">
-        {["#ef4444", "#2563eb", "#16a34a", "#f59e0b"].map((value) => (
-          <button
-            key={value}
-            className={color === value ? "selected" : ""}
-            style={{ background: value }}
-            onClick={() => onColor(value)}
-            aria-label={"顏色 " + value}
-          />
-        ))}
-      </div>
-      <label className="size-control">粗細
-        <input type="range" min="2" max="14" value={size} onChange={(event) => onSize(Number(event.target.value))} />
-      </label>
+    <aside className="teacher-tool-rail" aria-label="教師工具">
+      {tools.map((tool) => <button key={tool.id} type="button" className={activeTool === tool.id ? "active" : ""} onClick={() => onSelect(tool.id)} aria-label={tool.label} data-tooltip={tool.label}><span aria-hidden="true">{tool.icon}</span></button>)}
     </aside>
   );
 }
 
-function AnnotationCanvas({ enabled, color, size, clearToken }) {
-  const canvasRef = useRef(null);
-  const drawingRef = useRef(false);
-  const lastPointRef = useRef(null);
+function ClassroomToolPopover({ activeTool, onClose, soundOn, annotationTool, annotationColor, annotationSize, onAnnotationTool, onAnnotationColor, onAnnotationSize, onClear, onExport, exporting, exportNotice, externalPractice }) {
+  const title = activeTool === "raffle" ? "抽籤" : activeTool === "timer" ? "倒數" : "畫筆工具";
+  const compactDraw = activeTool === "draw";
+  return (
+    <aside className={"classroom-tool-popover " + (compactDraw ? "compact-draw-popover" : "")} aria-label="教師工具面板" aria-hidden={!activeTool}>
+      <div className={"tool-popover-heading " + (compactDraw ? "compact-tool-heading" : "")}>{!compactDraw ? <div><p className="tool-label">TEACHER TOOL</p><h2>{title}</h2></div> : null}<button type="button" onClick={onClose} aria-label="關閉工具" data-tooltip={compactDraw ? "關閉畫筆" : undefined}>×</button></div>
+      <section className="tool-panel" hidden={activeTool !== "raffle"}><ClassroomRaffle soundOn={soundOn} /></section>
+      <section className="tool-panel" hidden={activeTool !== "timer"}><ClassroomTimer soundOn={soundOn} /></section>
+      <section className="tool-panel" hidden={activeTool !== "draw"}><AnnotationToolPanel compact={compactDraw} tool={annotationTool} color={annotationColor} size={annotationSize} onTool={onAnnotationTool} onColor={onAnnotationColor} onSize={onAnnotationSize} onClear={onClear} onExport={onExport} exporting={exporting} exportNotice={exportNotice} externalPractice={externalPractice} /></section>
+    </aside>
+  );
+}
+function ClassroomRaffle({ soundOn }) {
+  const [available, setAvailable] = useState(() => createRafflePool());
+  const [history, setHistory] = useState([]);
+  const [picked, setPicked] = useState("—");
+  const [spinning, setSpinning] = useState(false);
+  const tickTimerRef = useRef(null);
+  const finishTimerRef = useRef(null);
+  const soundOnRef = useRef(soundOn);
 
-  function resizeCanvas() {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const ratio = window.devicePixelRatio || 1;
-    canvas.width = Math.max(1, Math.floor(rect.width * ratio));
-    canvas.height = Math.max(1, Math.floor(rect.height * ratio));
-    const context = canvas.getContext("2d");
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    context.lineCap = "round";
-    context.lineJoin = "round";
+  function clearSpinTimers() {
+    if (tickTimerRef.current) window.clearInterval(tickTimerRef.current);
+    if (finishTimerRef.current) window.clearTimeout(finishTimerRef.current);
+    tickTimerRef.current = null;
+    finishTimerRef.current = null;
   }
 
   useEffect(() => {
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
+    soundOnRef.current = soundOn;
+    if (!soundOn) stopRaffleSpin(false);
+  }, [soundOn]);
+
+  useEffect(() => () => {
+    clearSpinTimers();
+    stopRaffleSpin(false);
   }, []);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    context.clearRect(0, 0, canvas.width, canvas.height);
-  }, [clearToken]);
-
-  function pointFromEvent(event) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  function drawOne() {
+    if (spinning || !available.length) return;
+    const finalNumber = pickRaffleNumber(available);
+    setSpinning(true);
+    startRaffleSpin(soundOnRef.current);
+    tickTimerRef.current = window.setInterval(() => setPicked(pickRaffleNumber(available)), 78);
+    finishTimerRef.current = window.setTimeout(() => {
+      clearSpinTimers();
+      setPicked(finalNumber);
+      setAvailable((current) => removeRaffleNumber(current, finalNumber));
+      setHistory((current) => [...current, finalNumber]);
+      setSpinning(false);
+      stopRaffleSpin(soundOnRef.current);
+    }, RAFFLE_DURATION_MS);
   }
 
-  function startDrawing(event) {
-    if (!enabled) return;
-    drawingRef.current = true;
-    lastPointRef.current = pointFromEvent(event);
-    event.currentTarget.setPointerCapture(event.pointerId);
-  }
-
-  function draw(event) {
-    if (!enabled || !drawingRef.current || !lastPointRef.current) return;
-    const current = pointFromEvent(event);
-    const context = canvasRef.current.getContext("2d");
-    context.strokeStyle = color;
-    context.lineWidth = size;
-    context.beginPath();
-    context.moveTo(lastPointRef.current.x, lastPointRef.current.y);
-    context.lineTo(current.x, current.y);
-    context.stroke();
-    lastPointRef.current = current;
-  }
-
-  function stopDrawing() {
-    drawingRef.current = false;
-    lastPointRef.current = null;
+  function resetRaffle() {
+    if (spinning) return;
+    setAvailable(createRafflePool());
+    setHistory([]);
+    setPicked("—");
   }
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={"annotation-canvas " + (enabled ? "drawing" : "")}
-      onPointerDown={startDrawing}
-      onPointerMove={draw}
-      onPointerUp={stopDrawing}
-      onPointerCancel={stopDrawing}
-      aria-label="教師畫筆畫布"
-    />
+    <div className="raffle-tool">
+      <p className="raffle-status">01–30 · 剩下 {available.length} 位</p>
+      <strong className={"raffle-number " + (spinning ? "spinning" : "")} aria-live="polite">{picked}</strong>
+      <button className="primary-button full-button raffle-draw-button" onClick={drawOne} disabled={spinning || !available.length}>{spinning ? "抽選中…" : available.length ? "抽一位" : "本輪已抽完"}</button>
+      <button className="tool-secondary-button" onClick={resetRaffle} disabled={spinning}>重新開始</button>
+      {history.length ? <div className="raffle-history"><span>已抽：</span>{history.map((value, index) => <b key={`${value}-${index}`}>{value}</b>)}</div> : <p className="tool-hint">抽出的號碼本輪不會重複。</p>}
+    </div>
   );
 }
 
-function ClassroomTools({ lesson }) {
-  const gradeCode = String(lesson.grade || "Grade 6").match(/\d/)?.[0] || "6";
-  const studentIds = Array.from({ length: 6 }, (_, index) => `${gradeCode}01${String(index + 1).padStart(2, "0")}`);
-  const [picked, setPicked] = useState("Ready?");
+function ClassroomTimer({ soundOn }) {
   const [seconds, setSeconds] = useState(60);
   const [running, setRunning] = useState(false);
+  const soundOnRef = useRef(soundOn);
+  const alarmStartedRef = useRef(false);
+
+  useEffect(() => {
+    soundOnRef.current = soundOn;
+    if (!soundOn) stopTimerAlarm();
+  }, [soundOn]);
+
+  useEffect(() => () => stopTimerAlarm(), []);
+
+  function adjustTimer(change) {
+    stopTimerAlarm();
+    alarmStartedRef.current = false;
+    setSeconds((value) => Math.max(0, value + change));
+  }
+
+  function toggleTimer() {
+    if (running) {
+      setRunning(false);
+      return;
+    }
+    stopTimerAlarm();
+    alarmStartedRef.current = false;
+    if (seconds <= 0) setSeconds(60);
+    prepareTimerAlarm(soundOnRef.current);
+    setRunning(true);
+  }
+
+  function resetTimer() {
+    setRunning(false);
+    stopTimerAlarm();
+    alarmStartedRef.current = false;
+    setSeconds(60);
+  }
 
   useEffect(() => {
     if (!running) return undefined;
     const timer = window.setInterval(() => {
       setSeconds((value) => {
-        if (value <= 1) { setRunning(false); return 0; }
+        if (value <= 1) {
+          setRunning(false);
+          if (!alarmStartedRef.current) {
+            alarmStartedRef.current = true;
+            startTimerAlarm(soundOnRef.current);
+          }
+          return 0;
+        }
         return value - 1;
       });
     }, 1000);
@@ -828,12 +1090,166 @@ function ClassroomTools({ lesson }) {
   }, [running]);
 
   return (
-    <aside className="classroom-tools" aria-label="Classroom tools">
-      <section><p className="tool-label">RANDOM STUDENT</p><strong className="picked-student">{picked}</strong><button className="secondary-button full-button" onClick={() => setPicked(studentIds[Math.floor(Math.random() * studentIds.length)])}>抽一位</button></section>
-      <section><p className="tool-label">TIMER</p><strong className="timer-display">{formatClock(seconds)}</strong><div className="timer-controls"><button onClick={() => setSeconds((value) => value + 30)}>＋30</button><button onClick={() => setSeconds((value) => Math.max(0, value - 30))}>－30</button><button className="primary-mini" onClick={() => setRunning((value) => !value)}>{running ? "Pause" : "Start"}</button><button onClick={() => { setRunning(false); setSeconds(60); }}>Reset</button></div></section>
-    </aside>
+    <div className="timer-tool">
+      <strong className="timer-display">{formatClock(seconds)}</strong>
+      <div className="timer-controls"><button onClick={() => adjustTimer(30)}>＋30</button><button onClick={() => adjustTimer(-30)}>－30</button><button className="primary-mini" onClick={toggleTimer}>{running ? "Pause" : "Start"}</button><button onClick={resetTimer}>Reset</button></div>
+    </div>
   );
 }
+function AnnotationToolPanel({ compact = false, tool, color, size, onTool, onColor, onSize, onClear, onExport, exporting, exportNotice, externalPractice }) {
+  const tools = [
+    { id: "select", icon: "↖", label: "互動" },
+    { id: "pen", icon: "✎", label: "手繪" },
+    { id: "line", icon: "╱", label: "直線" },
+    { id: "rectangle", icon: "□", label: "長方形" },
+    { id: "circle", icon: "○", label: "圓形" },
+    { id: "eraser", icon: "⌫", label: "橡皮擦" }
+  ];
+  return (
+    <div className={"annotation-tool-panel " + (compact ? "compact" : "")}>
+      <div className="annotation-tool-grid" role="group" aria-label="畫筆模式">{tools.map((item) => <button key={item.id} type="button" className={tool === item.id ? "active" : ""} onClick={() => onTool(item.id)} aria-label={item.label} data-tooltip={compact ? item.label : undefined}><span aria-hidden="true">{item.icon}</span>{compact ? null : <small>{item.label}</small>}</button>)}</div>
+      <div className="annotation-settings"><div className="annotation-color-settings">{compact ? <span className="visually-hidden">顏色</span> : <p className="tool-label">COLOR</p>}<div className="color-dots">{["#ef4444", "#2563eb", "#16a34a", "#f59e0b"].map((value) => <button key={value} type="button" className={color === value ? "selected" : ""} style={{ background: value }} onClick={() => onColor(value)} aria-label={"顏色 " + value} />)}</div></div><label className="size-control">{compact ? <span className="visually-hidden">粗細</span> : "粗細"}<input type="range" min="2" max="14" value={size} onChange={(event) => onSize(Number(event.target.value))} /></label></div>
+      <div className="annotation-actions"><button className="tool-secondary-button" onClick={onClear} aria-label="清除全部" data-tooltip={compact ? "清除全部" : undefined}>{compact ? <span aria-hidden="true">⌫</span> : "清除全部"}</button><button className="primary-button" onClick={onExport} disabled={exporting} aria-label="匯出 PNG" data-tooltip={compact ? "匯出 PNG" : undefined}>{compact ? <span aria-hidden="true">{exporting ? "…" : "⇩"}</span> : exporting ? "匯出中…" : "匯出 PNG"}</button></div>
+      {compact ? null : <p className="tool-hint">{externalPractice ? "Wayground 是外部網頁；PNG 只會保留您的標註與課程標題。" : "PNG 會包含目前 Lesson Hub 畫面與教師標註。"}</p>}
+      {exportNotice ? <p className={"tool-message " + (compact ? "compact-tool-message" : "")}>{exportNotice}</p> : null}
+    </div>
+  );
+}
+function AnnotationCanvas({ enabled, tool, color, size, clearToken, pageKey, annotationCanvasRef }) {
+  const canvasRef = useRef(null);
+  const drawingRef = useRef(false);
+  const startPointRef = useRef(null);
+  const lastPointRef = useRef(null);
+  const snapshotRef = useRef(null);
+
+  function clearCanvas() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const context = canvas.getContext("2d");
+    context.save();
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.restore();
+  }
+
+  function resizeCanvas() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const bounds = canvas.getBoundingClientRect();
+    const previous = document.createElement("canvas");
+    previous.width = canvas.width;
+    previous.height = canvas.height;
+    if (previous.width && previous.height) previous.getContext("2d").drawImage(canvas, 0, 0);
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = Math.max(1, Math.floor(bounds.width * ratio));
+    canvas.height = Math.max(1, Math.floor(bounds.height * ratio));
+    const context = canvas.getContext("2d");
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    if (previous.width && previous.height) context.drawImage(previous, 0, 0, previous.width, previous.height, 0, 0, bounds.width, bounds.height);
+  }
+
+  useEffect(() => {
+    annotationCanvasRef.current = canvasRef.current;
+    resizeCanvas();
+    const canvas = canvasRef.current;
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(resizeCanvas);
+    if (canvas?.parentElement) observer?.observe(canvas.parentElement);
+    window.addEventListener("resize", resizeCanvas);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", resizeCanvas);
+      annotationCanvasRef.current = null;
+    };
+  }, [annotationCanvasRef]);
+
+  useEffect(() => {
+    clearCanvas();
+  }, [clearToken, pageKey]);
+
+  function pointFromEvent(event) {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    return { x: event.clientX - bounds.left, y: event.clientY - bounds.top };
+  }
+
+  function applyStroke(context, activeTool) {
+    context.globalCompositeOperation = activeTool === "eraser" ? "destination-out" : "source-over";
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    context.lineWidth = activeTool === "eraser" ? Math.max(12, size * 3) : size;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+  }
+
+  function drawShape(context, activeTool, start, end) {
+    context.beginPath();
+    if (activeTool === "line") {
+      context.moveTo(start.x, start.y);
+      context.lineTo(end.x, end.y);
+    } else if (activeTool === "rectangle") {
+      context.strokeRect(start.x, start.y, end.x - start.x, end.y - start.y);
+      return;
+    } else if (activeTool === "circle") {
+      const centerX = (start.x + end.x) / 2;
+      const centerY = (start.y + end.y) / 2;
+      context.ellipse(centerX, centerY, Math.abs(end.x - start.x) / 2, Math.abs(end.y - start.y) / 2, 0, 0, Math.PI * 2);
+    }
+    context.stroke();
+  }
+
+  function startDrawing(event) {
+    if (!enabled) return;
+    event.preventDefault();
+    const start = pointFromEvent(event);
+    const context = canvasRef.current.getContext("2d");
+    drawingRef.current = true;
+    startPointRef.current = start;
+    lastPointRef.current = start;
+    if (tool === "pen" || tool === "eraser") {
+      applyStroke(context, tool);
+      context.beginPath();
+      context.arc(start.x, start.y, Math.max(1, context.lineWidth / 2), 0, Math.PI * 2);
+      context.fill();
+    } else {
+      snapshotRef.current = context.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
+    }
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function draw(event) {
+    if (!enabled || !drawingRef.current || !lastPointRef.current) return;
+    event.preventDefault();
+    const current = pointFromEvent(event);
+    const context = canvasRef.current.getContext("2d");
+    if (tool === "pen" || tool === "eraser") {
+      applyStroke(context, tool);
+      context.beginPath();
+      context.moveTo(lastPointRef.current.x, lastPointRef.current.y);
+      context.lineTo(current.x, current.y);
+      context.stroke();
+      lastPointRef.current = current;
+      return;
+    }
+    if (snapshotRef.current) context.putImageData(snapshotRef.current, 0, 0);
+    applyStroke(context, tool);
+    drawShape(context, tool, startPointRef.current, current);
+    lastPointRef.current = current;
+  }
+
+  function stopDrawing(event) {
+    if (!drawingRef.current) return;
+    draw(event);
+    drawingRef.current = false;
+    startPointRef.current = null;
+    lastPointRef.current = null;
+    snapshotRef.current = null;
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+  }
+
+  return <canvas ref={canvasRef} className={"annotation-canvas " + (enabled ? "drawing" : "")} onPointerDown={startDrawing} onPointerMove={draw} onPointerUp={stopDrawing} onPointerCancel={stopDrawing} aria-label="教師畫筆畫布" />;
+}
+
 function TeachingDock({ current, total, onHome, onPrevious, onNext, onResults }) {
   const atEnd = current === total - 1;
   return (
@@ -846,7 +1262,6 @@ function TeachingDock({ current, total, onHome, onPrevious, onNext, onResults })
     </nav>
   );
 }
-
 function StepRenderer({ step, mode, lesson, soundOn, onSaveResult }) {
   if (step.type === "warmup") {
     return <ContentCard icon="👋" title={step.title}><p className="warmup-text">{step.content.body || "Add a warm-up in Lesson Studio."}</p></ContentCard>;
@@ -971,10 +1386,22 @@ function WebPracticeStep({ step }) {
   if (!step.content.url) {
     return <ContentCard icon="🌐" title={step.title}><p>尚未設定 Live Practice URL。</p></ContentCard>;
   }
+
+  async function requestPracticeFullscreen(event) {
+    const stage = event.currentTarget.closest(".lesson-stage");
+    if (!stage?.requestFullscreen) return;
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen?.();
+      else await stage.requestFullscreen();
+    } catch {
+      // The normal in-page projection layout remains available.
+    }
+  }
   return (
     <section className="embed-step">
       <div className="content-card-heading">
         <div><span className="content-icon">🌐</span><div><p className="eyebrow">External practice</p><h2>{step.content.displayName || step.title}</h2></div></div>
+        <button type="button" className="secondary-button projector-fullscreen-button" onClick={requestPracticeFullscreen}>⛶ <span>全螢幕</span></button>
         <a className="secondary-button" href={step.content.url} target="_blank" rel="noreferrer">新分頁開啟</a>
       </div>
       <iframe title={step.content.displayName || step.title} src={step.content.url} loading="lazy" />
@@ -1008,6 +1435,14 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
   const currentSet = questionSets[setIndex];
   const currentQuestion = currentSet ? currentSet.questions[questionIndex] : null;
   const shuffledOptions = useMemo(() => currentQuestion ? shuffleOptions(currentQuestion.options) : [], [currentQuestion?.id]);
+  const studentEntryUrl = useMemo(() => {
+    const baseUrl = resolveStudentBaseUrl({
+      origin: window.location.origin,
+      productionBaseUrl: source.studentEntry.productionBaseUrl,
+      localLanBaseUrl: source.studentEntry.localLanBaseUrl
+    });
+    return buildStudentEntryUrl({ baseUrl, bookId: lesson.bookId, unitId: lesson.unitId, lessonNumber: lesson.lessonNumber });
+  }, [lesson.bookId, lesson.lessonNumber, lesson.unitId]);
 
   useEffect(() => () => {
     if (celebrationTimer.current) window.clearTimeout(celebrationTimer.current);
@@ -1016,11 +1451,12 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
   function startQuiz() {
     const normalized = studentId.trim();
     if (!validateStudentId(normalized)) {
-      setGateError(`請輸入五碼 Student ID，例如 ${source.studentIdPolicy.example}；座號須為 01–30。`);
+      setGateError(`請輸入五碼學號，例如 ${source.studentIdPolicy.example}；座號須為 01–30。`);
       return;
     }
     setStudentId(normalized);
     setGateError("");
+    prepareQuizAudio(soundOn);
     setRunId(createRunId());
     setStartedAt(new Date().toISOString());
     setSetIndex(0);
@@ -1058,7 +1494,7 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
     setFeedback({ kind: "correct", message: "Great job!" });
     setLocked(true);
     setCelebrating(true);
-    playTone(soundOn, 880, 0.16);
+    playQuizCorrectChime(soundOn);
     celebrationTimer.current = window.setTimeout(() => {
       setCelebrating(false);
       setFeedback(null);
@@ -1162,26 +1598,31 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
   }
 
   if (phase === "gate") {
+    const studentIdLabel = formatStudentId(studentId);
     return (
-      <section className="quiz-shell gate-card">
-        <span className="quiz-kicker">Native Vocabulary Quiz · {isFirebaseConfigured ? "Secure Firestore" : "Local Preview"}</span>
-        <h2>Ready to play?</h2>
-        <p>輸入匿名 Student ID 後開始。不會收集姓名；正式部署後，作答資料會以匿名 Auth 與 Firestore 安全規則保護。</p>
-        <label>Student ID<input className="student-id-input" inputMode="numeric" maxLength="5" value={studentId} onChange={(event) => setStudentId(event.target.value.replace(/\D/g, ""))} placeholder={source.studentIdPolicy.example} /></label>
-        {gateError ? <p className="form-error">{gateError}</p> : null}
-        <button className="primary-button large-button" onClick={startQuiz}>Start Vocabulary Quiz</button>
-        <small>規則：第一次答案決定 Practice Score；答錯可重試，答對才會慶祝。完成後會保存作答 Session，重複送出不會覆寫分數。</small>
+      <section className={`quiz-shell gate-card ${!studentOnly && studentEntryUrl ? "teacher-quiz-gate" : ""}`}>
+        <QuizMascot />
+        {!studentOnly && studentEntryUrl ? <aside className="quiz-entry-qr"><QrCodeImage value={studentEntryUrl} className="quiz-entry-qr-image" width={180} /><strong>掃碼開始 Quiz</strong></aside> : null}
+        <div className="quiz-gate-content">
+          <span className="quiz-kicker">Vocabulary Quiz</span>
+          <h2>Ready to play?</h2>
+          <label className="student-id-field"><span>輸入學號</span><input className="student-id-input" inputMode="numeric" maxLength="5" value={studentId} onChange={(event) => setStudentId(event.target.value.replace(/\D/g, ""))} placeholder={source.studentIdPolicy.example} /></label>
+          {studentIdLabel ? <p className="student-id-preview"><strong>{studentId}</strong><span>{studentIdLabel}</span></p> : null}
+          {gateError ? <p className="form-error">{gateError}</p> : null}
+          <button className="primary-button large-button" onClick={startQuiz}>Start Vocabulary Quiz</button>
+        </div>
       </section>
     );
   }
 
   if ((phase === "complete" || phase === "save-failed") && finalResult) {
-    return <QuizResult result={finalResult} onRestart={restart} saving={saving} saveError={saveError} savedStorage={savedStorage} onRetrySave={() => persistResult(finalResult)} studentOnly={studentOnly} />;
+    return <QuizResult result={finalResult} onRestart={restart} saving={saving} saveError={saveError} savedStorage={savedStorage} onRetrySave={() => persistResult(finalResult)} soundOn={soundOn} />;
   }
 
   const completedInSet = questionIndex;
   return (
     <section className="quiz-shell">
+      <QuizMascot />
       <div className="quiz-header"><div><span className="quiz-kicker">{currentSet.label}</span><h2>{currentSet.prompt}</h2></div><div className="quiz-stats"><strong>{studentId}</strong><span>{completedInSet + 1} / {currentSet.questions.length}</span></div></div>
       <div className="quiz-progress-track"><span style={{ width: `${(completedInSet / currentSet.questions.length) * 100}%` }} /></div>
       {currentSet.id === "type-a" ? <div className="quiz-image-wrap"><img src={bank.assets.images.items[currentQuestion.assetFilename].plannedWebsitePath} alt="Look and choose country" /></div> : <AudioQuestion source={bank.assets.audio.items[currentQuestion.assetFilename].plannedWebsitePath} />}
@@ -1192,6 +1633,9 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
       {rewardDialog ? <RewardSlotMachine session={rewardDialog} rewardConfig={source.rewardConfig} soundOn={soundOn} onComplete={completeRewardSession} /> : null}
     </section>
   );
+}
+function QuizMascot() {
+  return <img className="quiz-corner-mascot" src="/assets/mascots/word-master-monster-v1.png" alt="" aria-hidden="true" />;
 }
 function AudioQuestion({ source }) {
   return (
@@ -1294,17 +1738,40 @@ function RewardSlotMachine({ session, rewardConfig, soundOn, onComplete }) {
     </div>
   );
 }
-function QuizResult({ result, onRestart, saving, saveError, savedStorage, onRetrySave }) {
+function QuizResult({ result, onRestart, saving, saveError, savedStorage, onRetrySave, soundOn }) {
   const savedMessage = savedStorage === "firestore" ? "結果已安全保存到 Firestore（僅匿名 Student ID）。" : "結果已保存到這台瀏覽器的 Preview 資料層。";
+  const studentIdLabel = formatStudentId(result.studentId);
+  const [celebrationActive, setCelebrationActive] = useState(true);
+  const celebrationEndsAt = useRef(Date.now() + QUIZ_COMPLETION_DURATION_MS);
+
+  useEffect(() => {
+    celebrationEndsAt.current = Date.now() + QUIZ_COMPLETION_DURATION_MS;
+    setCelebrationActive(true);
+    const timer = window.setTimeout(() => setCelebrationActive(false), QUIZ_COMPLETION_DURATION_MS);
+    return () => window.clearTimeout(timer);
+  }, [result.sessionId]);
+
+  useEffect(() => {
+    const remaining = Math.max(0, celebrationEndsAt.current - Date.now());
+    if (celebrationActive && remaining > 0) startQuizCelebration(soundOn, remaining);
+    else stopQuizCelebration();
+    return () => stopQuizCelebration();
+  }, [celebrationActive, result.sessionId, soundOn]);
+
+  const confetti = ["🎉", "⭐", "✨", "💛", "🟣", "🟢", "🎊", "⭐", "✨", "💙", "🩷", "🟡", "🎉", "⭐", "✨", "💚"];
   return (
-    <section className="quiz-shell result-card">
-      <span className="quiz-kicker">Quiz complete</span>
-      <h2>完成闖關！</h2>
-      <p>Student ID: <strong>{result.studentId}</strong></p>
-      <div className="result-score-grid"><div><small>Practice Score</small><strong>{result.practiceScore} / {result.practiceMaxScore}</strong><span>First-answer accuracy {result.accuracy}%</span></div><div><small>Final correct</small><strong>{result.finalCorrectCount} / {result.practiceMaxScore}</strong><span>重試後完成的題數</span></div><div><small>Slot Reward</small><strong>{result.slotScore}</strong><span>{result.rewardSessions.length} completed sessions</span></div></div>
-      <div className="type-result-row"><span>Type A: {result.typeA.firstAttemptCorrectCount} / {result.typeA.totalQuestions}</span><span>Type B: {result.typeB.firstAttemptCorrectCount} / {result.typeB.totalQuestions}</span></div>
-      {saveError ? <div className="save-error"><strong>尚未保存作答結果</strong><p>{saveError}</p><button className="primary-button" onClick={onRetrySave} disabled={saving}>{saving ? "重新保存中…" : "重新保存"}</button></div> : <p className="save-success">{savedMessage}</p>}
-      <button className="primary-button" onClick={onRestart} disabled={saving}>下一位學生</button>
+    <section className={`quiz-shell result-card quiz-complete-card ${celebrationActive ? "celebrating" : ""}`}>
+      <QuizMascot />
+      <div className="completion-confetti" aria-hidden="true">{confetti.map((symbol, index) => <span key={index} style={{ "--confetti-left": `${5 + ((index * 17) % 90)}%`, "--confetti-delay": `${-(index % 5) * 0.38}s`, "--confetti-drift": `${(index % 2 ? 1 : -1) * (24 + (index % 4) * 12)}px` }}>{symbol}</span>)}</div>
+      <div className="completion-content">
+        <span className="quiz-kicker">Quiz complete</span>
+        <h2>完成闖關！</h2>
+        <div className="completed-student-id"><span>學號</span><strong>{result.studentId}</strong>{studentIdLabel ? <small>{studentIdLabel}</small> : null}</div>
+        <div className="result-score-grid"><div><small>Practice Score</small><strong>{result.practiceScore} / {result.practiceMaxScore}</strong><span>First-answer accuracy {result.accuracy}%</span></div><div><small>Final correct</small><strong>{result.finalCorrectCount} / {result.practiceMaxScore}</strong><span>重試後完成的題數</span></div><div><small>Slot Reward</small><strong>{result.slotScore}</strong><span>{result.rewardSessions.length} completed sessions</span></div></div>
+        <div className="type-result-row"><span>Type A: {result.typeA.firstAttemptCorrectCount} / {result.typeA.totalQuestions}</span><span>Type B: {result.typeB.firstAttemptCorrectCount} / {result.typeB.totalQuestions}</span></div>
+        {saveError ? <div className="save-error"><strong>尚未保存作答結果</strong><p>{saveError}</p><button className="primary-button" onClick={onRetrySave} disabled={saving}>{saving ? "重新保存中…" : "重新保存"}</button></div> : <p className="save-success">{savedMessage}</p>}
+        <button className="primary-button" onClick={onRestart} disabled={saving}>下一位學生</button>
+      </div>
     </section>
   );
 }
@@ -1313,11 +1780,13 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
   const [lessonFilter, setLessonFilter] = useState("all");
   const [remoteResults, setRemoteResults] = useState([]);
   const [teacher, setTeacher] = useState(null);
+  const [showPasscodeForm, setShowPasscodeForm] = useState(false);
   const [passcode, setPasscode] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [lastExportId, setLastExportId] = useState("");
+  const [lastExportedIds, setLastExportedIds] = useState([]);
   const [exportFormat, setExportFormat] = useState("csv");
   const usingFirebase = isFirebaseConfigured;
   const results = usingFirebase ? remoteResults : localResults;
@@ -1327,6 +1796,11 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
     const matchesLesson = lessonFilter === "all" || result.lessonId === lessonFilter;
     return matchesQuery && matchesLesson;
   });
+
+  function resetExportEligibility() {
+    setLastExportId("");
+    setLastExportedIds([]);
+  }
 
   async function signInAndLoad(event) {
     event?.preventDefault();
@@ -1339,7 +1813,7 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
     try {
       const session = await unlockTeacherSession(passcode);
       const loaded = await loadTeacherResults();
-      setTeacher(session.user || null);
+      setTeacher(session);
       setRemoteResults(loaded);
       setMessage(`已讀取 ${loaded.length} 筆匿名作答結果。`);
     } catch (cause) {
@@ -1357,6 +1831,7 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
     try {
       const loaded = await loadTeacherResults();
       setRemoteResults(loaded);
+      resetExportEligibility();
       setMessage(`已更新 ${loaded.length} 筆匿名作答結果。`);
     } catch (cause) {
       setError(cause?.message || "無法更新結果。");
@@ -1370,41 +1845,45 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
       setError("目前沒有可匯出的結果。");
       return;
     }
+    const resultIds = filtered.map((result) => result.id || result.sessionId).filter(Boolean);
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    const text = exportFormat === "json" ? resultsToJson(filtered) : resultsToCsv(filtered);
     setLoading(true);
     setError("");
+    // Start the browser download in the button-click event before awaiting the server audit call.
+    downloadExport({ filename: `lesson-hub-results-${stamp}.${exportFormat}`, text, mimeType: exportFormat === "json" ? "application/json" : "text/csv" });
     try {
-      if (usingFirebase) await ensureTeacherSession();
-      const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-      const text = exportFormat === "json" ? resultsToJson(filtered) : resultsToCsv(filtered);
-      downloadExport({ filename: `lesson-hub-results-${stamp}.${exportFormat}`, text, mimeType: exportFormat === "json" ? "application/json" : "text/csv" });
-      const event = await recordExportEvent({ format: exportFormat, count: filtered.length, queryLabel: lessonFilter });
+      const event = await recordExportEvent({ format: exportFormat, resultIds, queryLabel: lessonFilter === "all" ? "all" : `lesson:${lessonFilter}` });
       setLastExportId(event.id);
-      setMessage(`已啟動 ${exportFormat.toUpperCase()} 匯出；現在才可刪除本次篩選的 ${filtered.length} 筆資料。`);
+      setLastExportedIds(resultIds);
+      setMessage(`已啟動 ${exportFormat.toUpperCase()} 匯出；現在才可刪除本次匯出的 ${event.recordCount || resultIds.length} 筆資料。`);
     } catch (cause) {
-      setError(cause?.message || "匯出失敗，已停止刪除流程。");
+      setError(cause?.message || "匯出檔已產生，但安全匯出紀錄失敗，因此無法刪除資料。");
+      resetExportEligibility();
     } finally {
       setLoading(false);
     }
   }
 
   async function deleteAfterExport() {
-    if (!filtered.length || !lastExportId) {
-      setError("請先完成本次結果匯出，才可刪除。\n");
+    if (!lastExportId || !lastExportedIds.length) {
+      setError("請先完成本次結果匯出，才可刪除。");
       return;
     }
-    if (!window.confirm(`已匯出 ${filtered.length} 筆結果。確定要刪除目前篩選的資料嗎？`)) return;
+    if (!window.confirm(`已匯出 ${lastExportedIds.length} 筆結果。確定要刪除這批已匯出的資料嗎？`)) return;
     setLoading(true);
     setError("");
     try {
       if (usingFirebase) {
-        const deleted = await deleteResultsAfterExport({ resultIds: filtered.map((result) => result.id || result.sessionId), exportId: lastExportId });
-        setRemoteResults((current) => current.filter((result) => !filtered.some((item) => (item.id || item.sessionId) === (result.id || result.sessionId))));
+        const deleted = await deleteResultsAfterExport({ resultIds: lastExportedIds, exportId: lastExportId });
+        const deletedIds = new Set(lastExportedIds);
+        setRemoteResults((current) => current.filter((result) => !deletedIds.has(result.id || result.sessionId)));
         setMessage(`已刪除 ${deleted} 筆已匯出結果。`);
       } else {
-        onClearLocal();
-        setMessage("已清除本機 Preview Results。正式 Firebase 刪除流程會先要求匯出。\n");
+        onClearLocal(lastExportedIds);
+        setMessage("已清除本機 Preview 中這次匯出的 Results。\n");
       }
-      setLastExportId("");
+      resetExportEligibility();
     } catch (cause) {
       setError(cause?.message || "刪除失敗，資料仍保留。\n");
     } finally {
@@ -1413,26 +1892,32 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
   }
 
   async function signOut() {
-    await teacherSignOut();
-    setTeacher(null);
-    setRemoteResults([]);
-    setLastExportId("");
-    setMessage("已關閉教師安全工作階段。");
+    setLoading(true);
+    try {
+      await teacherSignOut();
+      setTeacher(null);
+      setRemoteResults([]);
+      resetExportEligibility();
+      setShowPasscodeForm(false);
+      setMessage("已關閉 Results 工作階段。\n");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <main className="results-page">
       <div className="results-header">
-        <div><p className="eyebrow">Teacher-only results</p><h1>{usingFirebase ? "Firestore Results" : "Local Preview Results"}</h1><p>{usingFirebase ? "輸入教師通行碼後，由伺服器簽發短暫 Teacher Claim。學生無法直接讀取任何作答資料。" : "尚未加入 Firebase 公開 Web App 組態，因此只顯示這台瀏覽器的匿名 Preview Results。"}</p></div>
-        <div className="editor-actions"><button className="secondary-button" onClick={onBack}>回 Teacher Studio</button>{usingFirebase && teacher ? <button className="icon-text-button" onClick={signOut}>教師登出</button> : null}</div>
+        <div><p className="eyebrow">Teacher-only results</p><h1>{usingFirebase ? "Results" : "Local Preview Results"}</h1></div>
+        <div className="editor-actions"><button className="secondary-button" onClick={onBack}>回 Teacher Studio</button>{usingFirebase && teacher ? <button className="icon-text-button" onClick={signOut} disabled={loading}>關閉 Results</button> : null}</div>
       </div>
-      {usingFirebase && !teacher ? <section className="teacher-auth-card"><h2>教師資料庫入口</h2><p>輸入通行碼後，系統會在伺服器端驗證並建立僅限本次瀏覽器工作階段的教師權限。</p><form className="teacher-passcode-form" onSubmit={signInAndLoad}><label>教師通行碼<input type="password" inputMode="numeric" autoComplete="off" value={passcode} onChange={(event) => setPasscode(event.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="六位數" aria-label="教師通行碼" /></label><button className="primary-button large-button" type="submit" disabled={loading || !passcode}>{loading ? "驗證中…" : "開啟成績結果"}</button></form></section> : null}
+      {usingFirebase && !teacher ? <section className="teacher-auth-card"><h2>教師成績入口</h2>{!showPasscodeForm ? <><p>按下登入後，再輸入教師共用通行碼即可進入 Results。</p><div className="teacher-login-start"><button className="primary-button large-button" onClick={() => { setShowPasscodeForm(true); setError(""); }}>登入</button></div></> : <><p>請輸入教師共用通行碼。本次開啟有效；重新整理後需要再次輸入。</p><form className="teacher-passcode-form" onSubmit={signInAndLoad}><label>教師共用通行碼<input type="password" inputMode="numeric" autoComplete="off" autoFocus value={passcode} onChange={(event) => setPasscode(event.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="六位數" aria-label="教師共用通行碼" /></label><button className="primary-button large-button" type="submit" disabled={loading || !passcode}>{loading ? "驗證中…" : "開啟 Results"}</button></form></>}</section> : null}
       {message ? <p className="dashboard-message">{message}</p> : null}
       {error ? <p className="form-error">{error}</p> : null}
       {(!usingFirebase || teacher) ? <>
-        <section className="filter-row"><label>Student ID<input value={queryText} onChange={(event) => setQueryText(event.target.value)} placeholder={`例如 ${source.studentIdPolicy.example}`} /></label><label>Lesson<select value={lessonFilter} onChange={(event) => { setLessonFilter(event.target.value); setLastExportId(""); }}><option value="all">All lessons</option>{lessons.filter((lesson) => lesson.contentProfile !== "placeholder" || lesson.bookId !== "custom").map((lesson) => <option key={lesson.id} value={lesson.id}>{lesson.title}</option>)}</select></label><button className="secondary-button" onClick={refresh} disabled={!usingFirebase || loading}>重新整理</button></section>
-        <section className="export-bar"><div><strong>匯出後再刪除</strong><span>本次篩選：{filtered.length} 筆</span></div><div className="export-actions"><select value={exportFormat} onChange={(event) => setExportFormat(event.target.value)}><option value="csv">CSV</option><option value="json">JSON</option></select><button className="secondary-button" onClick={exportResults} disabled={loading || !filtered.length}>匯出</button><button className="danger-text-button" onClick={deleteAfterExport} disabled={loading || !filtered.length || !lastExportId}>刪除已匯出資料</button></div></section>
-        <section className="results-table-wrap"><table><thead><tr><th>Student ID</th><th>Lesson</th><th>Practice Score</th><th>Accuracy</th><th>Slot Reward</th><th>Type A</th><th>Type B</th><th>Time</th></tr></thead><tbody>{filtered.length ? filtered.map((result) => <tr key={result.id || result.sessionId}><td>{result.studentId}</td><td>{result.lessonTitle || result.lessonId}</td><td>{result.practiceScore} / {result.practiceMaxScore}</td><td>{result.accuracy}%</td><td>{result.slotScore}</td><td>{result.typeA?.firstAttemptCorrectCount} / {result.typeA?.totalQuestions}</td><td>{result.typeB?.firstAttemptCorrectCount} / {result.typeB?.totalQuestions}</td><td>{result.completedAt ? new Date(result.completedAt).toLocaleString("zh-TW") : "—"}</td></tr>) : <tr><td colSpan="8" className="empty-table">尚無符合條件的匿名作答結果。</td></tr>}</tbody></table></section>
+        <section className="filter-row"><label>Student ID<input value={queryText} onChange={(event) => { setQueryText(event.target.value); resetExportEligibility(); }} placeholder={`例如 ${source.studentIdPolicy.example}`} /></label><label>Lesson<select value={lessonFilter} onChange={(event) => { setLessonFilter(event.target.value); resetExportEligibility(); }}><option value="all">All lessons</option>{lessons.filter((lesson) => lesson.contentProfile !== "placeholder" || lesson.bookId !== "custom").map((lesson) => <option key={lesson.id} value={lesson.id}>{lesson.title}</option>)}</select></label><button className="secondary-button" onClick={refresh} disabled={!usingFirebase || loading}>重新整理</button></section>
+        <section className="export-bar"><div><strong>匯出後再刪除</strong><span>本次篩選：{filtered.length} 筆</span></div><div className="export-actions"><select value={exportFormat} onChange={(event) => { setExportFormat(event.target.value); resetExportEligibility(); }}><option value="csv">CSV</option><option value="json">JSON</option></select><button className="secondary-button" onClick={exportResults} disabled={loading || !filtered.length}>匯出</button><button className="danger-text-button" onClick={deleteAfterExport} disabled={loading || !lastExportId}>刪除已匯出資料</button></div></section>
+        <section className="results-table-wrap"><table><thead><tr><th>Student ID</th><th>Lesson</th><th>Practice Score</th><th>Accuracy</th><th>Slot Reward</th><th>Type A</th><th>Type B</th><th>Time</th></tr></thead><tbody>{filtered.length ? filtered.map((result) => <tr key={result.id || result.sessionId}><td><span className="results-student-id"><strong>{result.studentId}</strong><small>{formatStudentId(result.studentId)}</small></span></td><td>{result.lessonTitle || result.lessonId}</td><td>{result.practiceScore} / {result.practiceMaxScore}</td><td>{result.accuracy}%</td><td>{result.slotScore}</td><td>{result.typeA?.firstAttemptCorrectCount} / {result.typeA?.totalQuestions}</td><td>{result.typeB?.firstAttemptCorrectCount} / {result.typeB?.totalQuestions}</td><td>{result.completedAt ? new Date(result.completedAt).toLocaleString("zh-TW") : "—"}</td></tr>) : <tr><td colSpan="8" className="empty-table">尚無符合條件的匿名作答結果。</td></tr>}</tbody></table></section>
       </> : null}
     </main>
   );

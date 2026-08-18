@@ -6,6 +6,11 @@ module.exports = Object.freeze({
   "teacherPasscode": {
     "secretName": "TEACHER_RESULTS_PASSCODE",
     "loginFunction": "teacherPasscodeLogin",
-    "logoutFunction": "teacherPasscodeLogout"
+    "logoutFunction": "teacherPasscodeLogout",
+    "listFunction": "teacherResultsList",
+    "recordExportFunction": "teacherResultsRecordExport",
+    "deleteFunction": "teacherResultsDelete",
+    "sessionHours": 8,
+    "resultLimit": 5000
   }
 });
