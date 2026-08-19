@@ -115,6 +115,7 @@
 
 ## 2026-08-18 教師投影全螢幕 Lesson Flow（已發布）
 
+
 - 依已確認 RDQ 規格，教師模式隱藏 English Lesson Hub 全站橫幅，Lesson Flow 以 1920×1080／16:9 的單一瀏覽器視窗高度呈現。
 - Live Interactive Practice iframe 填滿教學舞台，新增全螢幕按鈕，並支援 F 快捷鍵；Wayground 等外部平台若自行需要捲動，保留其 iframe 內部捲軸。
 - Previous／Next 教學控制列縮為底部喚回列；游標移至底部或鍵盤 Tab 聚焦時才展開。方向鍵可切換 Lesson Flow。
@@ -151,3 +152,91 @@
 1. 在 1920×1080 投影畫面檢查直式投影片四邊完整可見。
 2. 在教師 Quiz 入口掃 QR，確認學生裝置直接開啟 HWG7 Unit 1 Lesson 1 的作答頁。
 3. 在系統「減少動態」設定下重新開啟 Quiz，確認角色不再跳動。
+
+## 2026-08-19 教師媒體重新驗證（已發布）
+
+- 教師 MP4／PDF 上傳遇到 `storage/unauthorized` 時，介面會保留已選檔案、要求重新輸入通行碼，成功後只自動重試一次。
+- 重試流程強制建立新的 Results／媒體授權工作階段；原始 Firebase 英文錯誤與 Storage 路徑不會顯示給教師。
+- 已正式發布 Hosting `lesson-hub-v03`；公開首頁回應 HTTP 200，資產為 `/assets/index-7MQDeMer.js`，並已讀回強制重新驗證、重試與中文提示標記。學生 Quiz 入口仍回應 HTTP 200。
+- 本次嘗試重新發布 Functions 時，Firebase 在載入使用者程式碼的 10 秒檢查逾時；本次修補沒有更動 Functions 原始碼，先前已發布的五個 `teacher-access` callable Functions 均仍存在於 `asia-east1`。
+- 隔離副本通過：48 項前端測試、6 項 Functions 測試、3 項 Firestore Emulator 規則測試、Firebase preflight、教師通行碼正式閘門與 Vite 正式建置。
+
+### 仍需教師實機驗收
+
+1. 在 Teacher Studio 選一個小型 MP4；若看到通行碼欄位，輸入教師通行碼後確認檔案會自動重試並上傳。
+2. 以小型 PDF 重複一次，按 Save Lesson 後確認 Lesson Flow 可開啟第一頁與全螢幕。
+3. 若仍失敗，保留新的中文提示截圖；不要貼出通行碼。
+
+## 2026-08-19 教師媒體授權確認（已發布）
+
+- `teacherPasscodeLogin` 會在建立匿名媒體授權紀錄後回傳明確的媒體授權成功資訊；Teacher Studio 只有收到此確認才顯示 MP4／PDF 選檔。
+- 尚未確認時顯示紅色「上傳授權仍未建立」提示；成功後顯示綠色「媒體上傳已解鎖，可選擇檔案。」。不再保留先選檔後自動重試的流程。
+- 已正式發布 Firebase Hosting `lesson-hub-v03` 與既有的 `teacherPasscodeLogin`（`teacher-access`、`asia-east1`）；Storage／Firestore 規則、Secret 與其他 Functions 未變更。
+- 正式首頁回應 HTTP 200，已讀回新版資產 `/assets/index-DkkEIeZg.js`，其中包含紅色授權提示與成功解鎖文字。Function 雲端狀態為 `ACTIVE`；未帶匿名 Auth 的標準 callable 請求回應 HTTP 401。
+- 隔離副本完整 preflight 通過：48 項網站測試、6 項 Functions 測試、3 項 Firestore Emulator 規則測試、正式建置、Firebase preflight 與教師通行碼正式閘門。
+
+### 仍需教師實機驗收
+
+1. 在 Teacher Studio 輸入教師通行碼；成功後確認才出現「選擇檔案」。
+2. 上傳小型 MP4，再上傳小型 PDF；兩者都應能在按 Save Lesson 後於 Lesson Flow 使用。
+3. 若出現紅色提示，請保留截圖但不要貼出通行碼。
+
+## 2026-08-19 教師媒體直接上傳與 HWG7 U1 L1 影片（已發布）
+
+- Teacher Studio 的 MP4／PDF 現在不再要求教師通行碼；正式 Firebase 站會先建立匿名 Firebase Auth，再直接顯示「選擇檔案」。Results 的六位數通行碼、伺服器端 Secret、匯出與刪除流程維持不變。
+- Firebase Storage 已發布直接匿名上傳規則：僅固定 `teacher-media/{lessonId}/{video|presentation}/{fileName}` 路徑、MP4／PDF MIME、單檔 500 MB；瀏覽器不能列出檔案。任何已知教材路徑仍須匿名 Firebase Auth 才能讀取。
+- 已以 `C:\firebase-deploy\shortsaboutsentences\outputs\HWG7 U01 Clips\08_final\final_classroom_64s_APPROVED.mp4` 正式匿名上傳至 HWG7 Unit 1 Lesson 1，雲端讀回為 20,405,839 bytes、`video/mp4`；Range 播放讀取回應 HTTP 206。
+- HWG7 Unit 1 Lesson 1 的正式範本只保存 Storage 路徑與檔案中繼資料，不保存下載憑證。Lesson Flow 會在匿名 Firebase 工作階段中即時取得播放網址；既有瀏覽器的舊下載網址會在遷移時移除。
+- 已發布 Storage 規則、Hosting `lesson-hub-v03`（最終公開資產 `/assets/index-BmaCPKcw.js`）與 `teacherPasscodeLogin`／`teacherPasscodeLogout`。兩個 Functions 均確認 `ACTIVE`；未帶匿名 Auth 的 Results callable 請求回應 HTTP 401。
+
+### 本次驗證
+
+- 隔離副本通過 49 項網站測試、Vite 正式建置與 Firebase preflight；包含直接匿名媒體上傳、500 MB／MIME／路徑限制、Results 通行碼隔離與不寫入下載憑證的測試。
+- 正式首頁回應 HTTP 200，最終 bundle 含 HWG7 U1 L1 影片路徑，且不含已發布的影片下載憑證。
+- Firebase Storage 規則已由服務端編譯並發布；指定影片已用正式匿名 Auth 建立、讀回與 Range 播放驗證。
+
+### 仍需教師實機驗收
+
+1. 在 [正式站](https://lesson-hub-v03.web.app) 開啟 Teacher Studio → HWG7 → Unit 1 → Lesson 1，確認 Teaching Video 直接出現「選擇檔案」，沒有通行碼欄位。
+2. 開啟 Lesson Flow 的 Teaching Video，確認指定影片能在實際投影瀏覽器播放；再自行上傳一個小型 MP4 與 PDF，確認兩種教材都可儲存並使用。
+
+本機瀏覽器自動化連線受 Windows sandbox helper 限制，未將實體投影瀏覽器的畫面與音訊列為已完成的視覺驗收。
+
+## 2026-08-19 Teaching Video 外置控制列（程式與測試完成，未部署）
+
+- 已確認 RDQ 規格卡：`rdq/RDQ-spec-external-video-controls-20260819.md`。
+- 所有 Teaching Video 改用外置控制列；原生影片控制列不再覆蓋已燒錄在影片底部的字幕。
+- 控制列包含播放／暫停、前後 5 秒、進度、時間、音量／靜音與全螢幕；播放時淡化、暫停時清楚顯示。
+- Space 與左右鍵只在影片畫面取得焦點時操作影片，避免干擾 Lesson Flow 快捷鍵。
+- 隔離驗證副本通過 51 項網站測試與 Vite 正式建置；未部署 Firebase Hosting。
+- 原工作副本的 `node_modules/firebase/package.json` 為 0 位元組，完整驗證改在隔離副本重建依賴後完成，未修改原專案依賴。
+- 下一步：取得教師明確部署授權後，才可發布 Hosting 並進行投影瀏覽器實機驗收。
+
+## 2026-08-19 Teaching Video 外置控制列（已部署）
+
+- 已只發布 Firebase Hosting target `lesson-hub-v03`；未發布 Functions、Firestore 規則或 Storage 規則。
+- 隔離副本完整 preflight 通過：資料驗證、51 項網站測試、6 項 Functions 測試、3 項 Firestore 規則測試、正式建置、Firebase preflight 與教師 Results 正式安全閘門。
+- Firebase 發布完成，共 42 個靜態檔案；正式網址為 <https://lesson-hub-v03.web.app>。
+- 正式首頁與 `/assets/index-pKxsUCb7.js` 均回應 HTTP 200；已讀回外置控制列、全螢幕與影片鍵盤操作標記。
+- 仍需教師在實際投影瀏覽器暫停一段有底部字幕的影片，確認字幕完整可讀及全螢幕操作符合教室需求。
+
+## 2026-08-19 Teaching Video 完整比例（程式與測試完成，未部署）
+
+- 已確認 RDQ 規格卡：`rdq/RDQ-spec-video-full-frame-20260819.md`。
+- 影片會讀取實際 `videoWidth`／`videoHeight`，並依可用舞台尺寸等比例完整置中；16:9、直式與超寬來源都不裁切，周圍保留深色留白。
+- 一般 Lesson Flow、投影模式與全螢幕都改用相同完整比例規則；外置控制列維持在影片框之外，不會覆蓋燒錄字幕。
+- 隔離測試副本通過 52 項網站測試與 Vite 正式建置；比例測試包含 16:9、直式、超寬與無效舞台尺寸。
+- 未部署 Firebase Hosting、Functions、Firestore 或 Storage 規則。
+
+### 教師現場確認（部署後）
+
+1. 暫停一段字幕位於下緣的影片，確認字幕與影片下緣均完整可見。
+2. 點選全螢幕，再確認影片完整、深色留白正常，控制列不遮住字幕。
+3. 以一支直式與一支超寬影片重複測試。
+## 2026-08-19 Teaching Video 完整比例（已部署）
+
+- 已只發布 Firebase Hosting target `lesson-hub-v03`；未發布 Functions、Firestore 規則、Storage 規則或成績資料。
+- Firebase 共發布 42 個靜態檔案，正式網址為 <https://lesson-hub-v03.web.app>。
+- 發布前隔離副本通過 52 項網站測試、Vite 正式建置、Results 正式安全閘門與 Firebase preflight。
+- 正式首頁、`/assets/index-BpWGERu-.js` 與 `/assets/index-HPtMyVgC.css` 均讀回 HTTP 200；JS 含 `ResizeObserver`，CSS 含完整比例舞台規則。
+- 仍需教師以投影瀏覽器暫停含底部字幕的影片，並在全螢幕、直式、超寬來源各確認一次實際畫面。

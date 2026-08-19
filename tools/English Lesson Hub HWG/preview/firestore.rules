@@ -71,6 +71,9 @@ service cloud.firestore {
     match /teacherResultSessions/{sessionId} {
       allow read, write: if false;
     }
+    match /teacherMediaAccess/{anonymousUid} {
+      allow read, write: if false;
+    }
     match /{document=**} {
       allow read, write: if false;
     }

@@ -158,6 +158,7 @@ export const stepTypes = [
   { value: "warmup", label: "Warm-up" },
   { value: "ebook", label: "E-book / Web Embed" },
   { value: "video", label: "Teaching Video" },
+  { value: "presentation", label: "簡報（PDF）" },
   { value: "imageSlides", label: "Image Slides" },
   { value: "webPractice", label: "Live Interactive Practice" },
   { value: "vocabularyQuiz", label: "Vocabulary Quiz" }

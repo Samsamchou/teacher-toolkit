@@ -1,0 +1,32 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function anonymousTeacherMediaUploader() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'anonymous';
+    }
+
+    function validTeacherMedia(mediaType) {
+      return (mediaType == 'video'
+          && request.resource.contentType == 'video/mp4'
+          && request.resource.size <= 524288000)
+        || (mediaType == 'presentation'
+          && request.resource.contentType == 'application/pdf'
+          && request.resource.size <= 524288000);
+    }
+
+    match /teacher-media/{lessonId}/{mediaType}/{fileName} {
+      allow get: if request.auth != null;
+      allow list: if false;
+      allow create, update: if anonymousTeacherMediaUploader()
+        && lessonId.matches('^[a-z0-9-]{3,96}$')
+        && fileName.matches('^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$')
+        && validTeacherMedia(mediaType);
+      allow delete: if anonymousTeacherMediaUploader();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -24,10 +24,54 @@ export function isRemovedStarterLessonId(id) {
   return REMOVED_STARTER_LESSON_PATTERN.test(String(id || ""));
 }
 
+function withMissingPresentationStep(seed, storedSteps) {
+  const existingSteps = Array.isArray(storedSteps) ? clone(storedSteps) : clone(seed.steps || []);
+  const presentation = (seed.steps || []).find((step) => step.type === "presentation");
+  if (!presentation || existingSteps.some((step) => step?.type === "presentation")) return existingSteps;
+  const videoIndex = existingSteps.findIndex((step) => step?.type === "video");
+  const insertAt = videoIndex >= 0 ? videoIndex + 1 : existingSteps.length;
+  existingSteps.splice(insertAt, 0, clone(presentation));
+  return existingSteps;
+}
+
+function withOfficialMediaDefaults(seedSteps, storedSteps) {
+  const seedsByType = new Map((Array.isArray(seedSteps) ? seedSteps : []).map((step) => [step?.type, step]));
+  return (Array.isArray(storedSteps) ? storedSteps : []).map((step) => {
+    if (step?.type !== "video" && step?.type !== "presentation") return step;
+    const officialMedia = seedsByType.get(step.type)?.content?.uploadedMedia;
+    const existingContent = step.content || {};
+    const hasCustomSource = Boolean(existingContent.uploadedMedia?.path || String(existingContent.url || "").trim());
+    if (!officialMedia?.path || hasCustomSource) return step;
+    return {
+      ...step,
+      content: {
+        ...existingContent,
+        uploadedMedia: clone(officialMedia)
+      }
+    };
+  });
+}
+
+function withoutStoredDownloadTokens(steps) {
+  return (Array.isArray(steps) ? steps : []).map((step) => {
+    const uploadedMedia = step?.content?.uploadedMedia;
+    if (!uploadedMedia?.path || !("downloadUrl" in uploadedMedia)) return step;
+    const { downloadUrl, ...safeMedia } = uploadedMedia;
+    return {
+      ...step,
+      content: {
+        ...step.content,
+        uploadedMedia: safeMedia
+      }
+    };
+  });
+}
+
 function mergeCanonicalLesson(seed, stored, originalId) {
+  const storedCopy = clone(stored);
   const merged = {
     ...clone(seed),
-    ...clone(stored),
+    ...storedCopy,
     id: seed.id,
     bookId: seed.bookId,
     unitId: seed.unitId,
@@ -35,6 +79,7 @@ function mergeCanonicalLesson(seed, stored, originalId) {
     lessonNumber: seed.lessonNumber,
     theme: clone(seed.theme)
   };
+  merged.steps = withoutStoredDownloadTokens(withOfficialMediaDefaults(seed.steps, withMissingPresentationStep(seed, storedCopy.steps)));
   if (originalId !== seed.id) {
     merged.migratedFromLessonId = originalId;
   }

@@ -11,6 +11,7 @@ const [source, firebaseJson, firebaserc, rules, webClient, publicConfigHelper] =
   readFile(resolve(root, "src/lib/firebase-client.js"), "utf8"),
   readFile(resolve(root, "src/lib/firebase-public-config.js"), "utf8")
 ]);
+const storageRules = await readFile(resolve(root, "storage.rules"), "utf8");
 const errors = [];
 const warnings = [];
 const publicConfigKeys = ["VITE_FIREBASE_API_KEY", "VITE_FIREBASE_AUTH_DOMAIN", "VITE_FIREBASE_PROJECT_ID", "VITE_FIREBASE_APP_ID"];
@@ -34,6 +35,10 @@ if (firebaserc.projects?.default !== projectId) errors.push(".firebaserc default
 if (hostingTarget !== "lesson-hub-v03") errors.push("Hosting site must be the dedicated lesson-hub-v03 target.");
 if (hosting.length !== 1 || hosting[0]?.target !== hostingTarget) errors.push("firebase.json must contain exactly one dedicated Hosting target.");
 if (JSON.stringify(targets?.[hostingTarget] || []) !== JSON.stringify([hostingTarget])) errors.push("Hosting target mapping must not point to the default site.");
+if (firebaseJson.storage?.rules !== "storage.rules") errors.push("firebase.json must deploy the teacher media Storage rules.");
+for (const required of ["anonymousTeacherMediaUploader", "allow list: if false", "request.resource.size <= 524288000", "request.resource.contentType == 'video/mp4'", "request.resource.contentType == 'application/pdf'"]) {
+  if (!storageRules.includes(required)) errors.push(`Storage rules missing required guard: ${required}`);
+}
 for (const required of ["anonymousStudent", "allow create: if anonymousStudent()", "allow list, update, delete: if false", "match /teacherResultSessions/{sessionId}"]) {
   if (!rules.includes(required)) errors.push(`Firestore rules missing required guard: ${required}`);
 }
@@ -52,6 +57,11 @@ const report = {
     browserResultListBlocked: rules.includes("allow list, update, delete: if false"),
     serverSessionRecordsBlocked: rules.includes("match /teacherResultSessions/{sessionId}") && rules.includes("allow read, write: if false"),
     teacherClaimRemoved: !rules.includes("request.auth.token.teacher")
+  },
+  storageRuleGuards: {
+    anonymousDirectUploadRestricted: storageRules.includes("anonymousTeacherMediaUploader") && !storageRules.includes("teacherMediaAccess"),
+    browserListBlocked: storageRules.includes("allow list: if false"),
+    maxUploadBytes: storageRules.includes("request.resource.size <= 524288000")
   },
   publicWebConfig: provided.length === publicConfigKeys.length ? "environment" : runtimeConfigSupported ? "hosting-runtime" : "pending",
   warnings,

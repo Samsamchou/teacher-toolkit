@@ -1,0 +1,38 @@
+.step-media-fields { display: grid; gap: 12px; }
+.field-help { margin: 0; color: #617696; font-size: .84rem; line-height: 1.55; }
+
+.teacher-media-upload { padding: 14px; display: grid; gap: 10px; border: 1px dashed #b8cbed; border-radius: 14px; background: #f7fbff; }
+.teacher-media-upload-heading, .teacher-media-current, .teacher-media-actions, .presentation-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.teacher-media-upload-heading { justify-content: space-between; color: #244b85; }
+.teacher-media-upload-heading span, .teacher-media-current small, .teacher-media-empty, .teacher-media-status, .teacher-media-progress { color: #637794; font-size: .82rem; }
+.teacher-media-empty, .teacher-media-status { margin: 0; }
+.teacher-media-status { padding: 8px 10px; border-radius: 9px; color: #075f44; background: #e6fff2; }
+.teacher-media-current { justify-content: flex-start; }
+.teacher-media-current span { max-width: min(100%, 420px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 800; }
+.teacher-media-actions input[type="file"] { max-width: 100%; color: #405878; }
+
+.slides-step { min-width: 0; }
+.slide-frame { min-width: 0; min-height: 430px; overflow: hidden; }
+.slide-frame img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; }
+.projector-cockpit .slide-frame { overflow: hidden; }
+.projector-cockpit .slide-frame img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; }
+
+.presentation-step { min-width: 0; }
+.presentation-step iframe { min-height: 430px; background: #f5f8fd; }
+.presentation-actions { justify-content: flex-end; }
+.presentation-placeholder { display: grid; align-content: center; gap: 18px; }
+.presentation-placeholder > p { margin: 0; color: #5d7595; font-size: 1.1rem; text-align: center; }
+.projector-cockpit .presentation-step { display: flex; flex-direction: column; gap: 6px; }
+.projector-cockpit .presentation-step iframe { min-height: 0; height: 100%; flex: 1 1 0; }
+.projector-cockpit .presentation-step .presentation-actions { gap: 5px; }
+
+@media (max-width: 720px) {
+  .teacher-media-current span { max-width: 100%; }
+  .presentation-actions { justify-content: flex-start; }
+}
+
+.quiz-corner-mascot { width: clamp(111px, 13.5vw, 186px); }
+.quiz-header { padding-right: clamp(118px, 15vw, 212px); }
+.teacher-quiz-gate .quiz-gate-content { min-height: 414px; }
+.teacher-quiz-gate .quiz-corner-mascot { top: 210px; width: clamp(103px, 10.8vw, 151px); }
+.teacher-quiz-gate .quiz-entry-qr { z-index: 6; }

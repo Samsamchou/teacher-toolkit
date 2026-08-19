@@ -89,17 +89,23 @@ export function teacherSession() {
   return teacherResultsSession;
 }
 
-export async function openTeacherResultsSession(passcode) {
+export async function openTeacherResultsSession(passcode, { replaceExisting = false } = {}) {
   requireFirebase();
   const entered = typeof passcode === "string" ? passcode : "";
   if (!/^\d{6}$/.test(entered)) throw new Error("請輸入六位數教師通行碼。");
+  const previousSession = teacherResultsSession;
   const anonymousUser = await ensureAnonymousSession();
   try {
     const response = await httpsCallable(functions, teacherFunctions.login)({ passcode: entered });
     const sessionToken = String(response?.data?.sessionToken || "");
     if (!sessionToken) throw new Error("教師成績服務沒有建立工作階段。");
-    teacherResultsSession = { sessionToken, anonymousUid: anonymousUser.uid };
-    return teacherResultsSession;
+    const nextSession = { sessionToken, anonymousUid: anonymousUser.uid };
+    teacherResultsSession = nextSession;
+    if (replaceExisting && previousSession?.anonymousUid === anonymousUser.uid) {
+      httpsCallable(functions, teacherFunctions.logout)({ sessionToken: previousSession.sessionToken })
+        .catch(() => undefined);
+    }
+    return nextSession;
   } catch (error) {
     throw teacherLoginError(error);
   }

@@ -4,6 +4,7 @@ import QRCode from "qrcode";
 import "@fontsource/comic-relief/400.css";
 import "@fontsource/comic-relief/700.css";
 import "./styles.css";
+import "./media-presentation.css";
 import {
   createLesson,
   createSeedLessons,
@@ -32,6 +33,10 @@ import { buildStudentEntryUrl, isLoopbackBaseUrl, parseStudentEntry, resolveStud
 import { RAFFLE_DURATION_MS, createRafflePool, pickRaffleNumber, removeRaffleNumber } from "./lib/classroom-tools.js";
 import { projectorShortcutAction } from "./lib/projector-controls.js";
 import { firebaseStatus, isFirebaseConfigured } from "./lib/firebase-client.js";
+import { deleteTeacherMedia, resolveTeacherMediaUrl } from "./lib/teacher-media-client.js";
+import { TeacherMediaUpload } from "./components/teacher-media-upload.jsx";
+import { PresentationStep } from "./components/presentation-step.jsx";
+import { TeachingVideoPlayer } from "./components/teaching-video-player.jsx";
 import {
   deleteResultsAfterExport,
   downloadExport,
@@ -52,7 +57,7 @@ const STEP_META = {
   warmup: { icon: "👋", label: "Warm-up" },
   ebook: { icon: "📘", label: "E-book" },
   video: { icon: "🎬", label: "Video" },
-  imageSlides: { icon: "🖼️", label: "Slides" },
+  presentation: { icon: "🖥️", label: "簡報" },
   webPractice: { icon: "🌐", label: "Practice" },
   vocabularyQuiz: { icon: "🏆", label: "Quiz" }
 };
@@ -493,6 +498,7 @@ function LessonEditor({ lesson, onSave, onCancel }) {
   const [draft, setDraft] = useState(() => clone(lesson));
   const [newStepType, setNewStepType] = useState("warmup");
   const [draggedIndex, setDraggedIndex] = useState(null);
+  const [mediaChanges, setMediaChanges] = useState({ uploads: [], cleanup: [] });
 
   useEffect(() => {
     setDraft(clone(lesson));
@@ -547,6 +553,20 @@ function LessonEditor({ lesson, onSave, onCancel }) {
       content: replacement.content
     });
   }
+  function trackMediaUpload({ newPath, previousPath }) {
+    setMediaChanges((current) => ({
+      uploads: current.uploads.includes(newPath) ? current.uploads : [...current.uploads, newPath],
+      cleanup: previousPath && !current.cleanup.includes(previousPath) ? [...current.cleanup, previousPath] : current.cleanup
+    }));
+  }
+
+  function trackMediaRemoval(path) {
+    if (!path) return;
+    setMediaChanges((current) => ({
+      ...current,
+      cleanup: current.cleanup.includes(path) ? current.cleanup : [...current.cleanup, path]
+    }));
+  }
 
   return (
     <main className="editor-page">
@@ -556,8 +576,13 @@ function LessonEditor({ lesson, onSave, onCancel }) {
           <h1>Edit Lesson Flow</h1>
         </div>
         <div className="editor-actions">
-          <button className="secondary-button" onClick={onCancel}>取消</button>
-          <button className="primary-button" onClick={() => onSave(draft)}>Save Lesson</button>
+          <button className="secondary-button" onClick={() => { const uploads = mediaChanges.uploads; onCancel(); uploads.forEach((path) => { deleteTeacherMedia(path).catch(() => undefined); }); }}>取消</button>
+          <button className="primary-button" onClick={() => {
+            onSave(draft);
+            const cleanup = mediaChanges.cleanup;
+            setMediaChanges({ uploads: [], cleanup: [] });
+            cleanup.forEach((path) => { deleteTeacherMedia(path).catch(() => undefined); });
+          }}>Save Lesson</button>
         </div>
       </div>
 
@@ -634,7 +659,10 @@ function LessonEditor({ lesson, onSave, onCancel }) {
               </div>
               <StepContentFields
                 step={step}
+                lessonId={draft.id}
                 onChange={(patch) => updateStepContent(index, patch)}
+                onTrackUpload={trackMediaUpload}
+                onTrackRemoval={trackMediaRemoval}
               />
             </article>
           ))}
@@ -644,7 +672,7 @@ function LessonEditor({ lesson, onSave, onCancel }) {
   );
 }
 
-function StepContentFields({ step, onChange }) {
+function StepContentFields({ step, lessonId, onChange, onTrackUpload, onTrackRemoval }) {
   const content = step.content || {};
   if (step.type === "warmup") {
     return (
@@ -665,9 +693,37 @@ function StepContentFields({ step, onChange }) {
   }
   if (step.type === "video") {
     return (
-      <div className="form-grid two-columns compact-fields">
-        <label>Video URL<input value={content.url || ""} onChange={(event) => onChange({ url: event.target.value })} placeholder="可貼入本機或 HTTPS 影片網址" /></label>
-        <label className="check-field"><input type="checkbox" checked={Boolean(content.abRepeat)} onChange={(event) => onChange({ abRepeat: event.target.checked })} /> 顯示 AB Repeat 控制</label>
+      <div className="step-media-fields">
+        <div className="form-grid two-columns compact-fields">
+          <label>Video URL<input value={content.url || ""} onChange={(event) => onChange({ url: event.target.value })} placeholder="可貼入 HTTPS 影片網址" /></label>
+          <label className="check-field"><input type="checkbox" checked={Boolean(content.abRepeat)} onChange={(event) => onChange({ abRepeat: event.target.checked })} /> 顯示 AB Repeat 控制</label>
+        </div>
+        <TeacherMediaUpload
+          lessonId={lessonId}
+          mediaType="video"
+          media={content.uploadedMedia}
+          onChange={onChange}
+          onTrackUpload={onTrackUpload}
+          onTrackRemoval={onTrackRemoval}
+        />
+      </div>
+    );
+  }
+  if (step.type === "presentation") {
+    return (
+      <div className="step-media-fields">
+        <div className="form-grid compact-fields">
+          <label>Display name<input value={content.displayName || ""} onChange={(event) => onChange({ displayName: event.target.value })} placeholder="例如 Unit 1 簡報" /></label>
+        </div>
+        <TeacherMediaUpload
+          lessonId={lessonId}
+          mediaType="presentation"
+          media={content.uploadedMedia}
+          onChange={onChange}
+          onTrackUpload={onTrackUpload}
+          onTrackRemoval={onTrackRemoval}
+        />
+        <p className="field-help">請先將 PowerPoint（PPT／PPTX）另存為 PDF，再上傳。Lesson Flow 會從第 1 頁開啟。</p>
       </div>
     );
   }
@@ -1294,6 +1350,9 @@ function StepRenderer({ step, mode, lesson, soundOn, onSaveResult }) {
   if (step.type === "video") {
     return <VideoStep step={step} />;
   }
+  if (step.type === "presentation") {
+    return <PresentationStep step={step} />;
+  }
   if (step.type === "imageSlides") {
     return <SlideDeck step={step} />;
   }
@@ -1318,16 +1377,33 @@ function ContentCard({ icon, title, children }) {
 function VideoStep({ step }) {
   const [pointA, setPointA] = useState("");
   const [pointB, setPointB] = useState("");
+  const uploadedPath = String(step.content?.uploadedMedia?.path || "");
+  const [uploadedUrl, setUploadedUrl] = useState("");
+  const [mediaError, setMediaError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+    setUploadedUrl("");
+    setMediaError("");
+    if (!uploadedPath) return () => { active = false; };
+    resolveTeacherMediaUrl(uploadedPath)
+      .then((url) => { if (active) setUploadedUrl(url); })
+      .catch(() => { if (active) setMediaError("影片教材暫時無法開啟，請重新整理後再試。"); });
+    return () => { active = false; };
+  }, [uploadedPath]);
+
+  const sourceUrl = uploadedPath ? uploadedUrl : step.content.url || "";
+  const emptyMessage = mediaError || (uploadedPath ? "影片教材載入中…" : "影片素材尚未設定");
   return (
     <section className="content-card video-card">
       <div className="content-card-heading"><span className="content-icon">🎬</span><h2>{step.title}</h2></div>
-      {step.content.url ? <video controls src={step.content.url}>Your browser cannot play this video.</video> : <div className="video-placeholder">影片素材尚未設定<br /><small>可在 Lesson Studio 貼入本機或 HTTPS 影片 URL。</small></div>}
+      {sourceUrl ? <TeachingVideoPlayer source={sourceUrl} title={step.title} /> : <div className="video-placeholder">{emptyMessage}<br /><small>{mediaError || uploadedPath ? "" : "可在 Lesson Studio 上傳 MP4 或貼入 HTTPS 影片網址。"}</small></div>}
       {step.content.abRepeat ? (
         <div className="ab-repeat">
           <strong>AB Repeat</strong>
           <label>A<input value={pointA} onChange={(event) => setPointA(event.target.value)} placeholder="00:10" /></label>
           <label>B<input value={pointB} onChange={(event) => setPointB(event.target.value)} placeholder="00:18" /></label>
-          <button className="secondary-button" disabled={!step.content.url}>Loop A–B</button>
+          <button className="secondary-button" disabled={!sourceUrl}>Loop A–B</button>
         </div>
       ) : null}
     </section>
@@ -1729,7 +1805,6 @@ function RewardSlotMachine({ session, rewardConfig, soundOn, onComplete }) {
       <section className="slot-machine">
         <p className="quiz-kicker">Reward Session · {session.mode.toUpperCase()} · {checkpointLabel}</p>
         <h2>🎰 Reward Slot Machine</h2>
-        <p>按下 SPIN 後，拉霸音效會從加速轉動、逐軸停止，最後播放獎勵音；完成 4 次後才能保存本次匿名作答結果。</p>
         <div className={`slot-reels ${spinning ? "spinning" : ""}`}>{reels.map((symbol, index) => <div key={index} className="reel"><small>{rewardConfig.reelTicks[index]} ticks</small><strong>{symbol}</strong></div>)}</div>
         <div className="slot-summary"><span>SPIN {spins.length} / {rewardConfig.spinsPerCheckpoint}</span><strong>Session Reward: {total}</strong></div>
         <div className="slot-history">{spins.map((spin, index) => <span key={index}>{spin.symbols.join(" ")} = {spin.score}</span>)}</div>
@@ -1768,7 +1843,7 @@ function QuizResult({ result, onRestart, saving, saveError, savedStorage, onRetr
         <h2>完成闖關！</h2>
         <div className="completed-student-id"><span>學號</span><strong>{result.studentId}</strong>{studentIdLabel ? <small>{studentIdLabel}</small> : null}</div>
         <div className="result-score-grid"><div><small>Practice Score</small><strong>{result.practiceScore} / {result.practiceMaxScore}</strong><span>First-answer accuracy {result.accuracy}%</span></div><div><small>Final correct</small><strong>{result.finalCorrectCount} / {result.practiceMaxScore}</strong><span>重試後完成的題數</span></div><div><small>Slot Reward</small><strong>{result.slotScore}</strong><span>{result.rewardSessions.length} completed sessions</span></div></div>
-        <div className="type-result-row"><span>Type A: {result.typeA.firstAttemptCorrectCount} / {result.typeA.totalQuestions}</span><span>Type B: {result.typeB.firstAttemptCorrectCount} / {result.typeB.totalQuestions}</span></div>
+        <div className="type-result-row"><span>Look and choose: {result.typeA.firstAttemptCorrectCount} / {result.typeA.totalQuestions}</span><span>Listen and choose: {result.typeB.firstAttemptCorrectCount} / {result.typeB.totalQuestions}</span></div>
         {saveError ? <div className="save-error"><strong>尚未保存作答結果</strong><p>{saveError}</p><button className="primary-button" onClick={onRetrySave} disabled={saving}>{saving ? "重新保存中…" : "重新保存"}</button></div> : <p className="save-success">{savedMessage}</p>}
         <button className="primary-button" onClick={onRestart} disabled={saving}>下一位學生</button>
       </div>
@@ -1917,7 +1992,7 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
       {(!usingFirebase || teacher) ? <>
         <section className="filter-row"><label>Student ID<input value={queryText} onChange={(event) => { setQueryText(event.target.value); resetExportEligibility(); }} placeholder={`例如 ${source.studentIdPolicy.example}`} /></label><label>Lesson<select value={lessonFilter} onChange={(event) => { setLessonFilter(event.target.value); resetExportEligibility(); }}><option value="all">All lessons</option>{lessons.filter((lesson) => lesson.contentProfile !== "placeholder" || lesson.bookId !== "custom").map((lesson) => <option key={lesson.id} value={lesson.id}>{lesson.title}</option>)}</select></label><button className="secondary-button" onClick={refresh} disabled={!usingFirebase || loading}>重新整理</button></section>
         <section className="export-bar"><div><strong>匯出後再刪除</strong><span>本次篩選：{filtered.length} 筆</span></div><div className="export-actions"><select value={exportFormat} onChange={(event) => { setExportFormat(event.target.value); resetExportEligibility(); }}><option value="csv">CSV</option><option value="json">JSON</option></select><button className="secondary-button" onClick={exportResults} disabled={loading || !filtered.length}>匯出</button><button className="danger-text-button" onClick={deleteAfterExport} disabled={loading || !lastExportId}>刪除已匯出資料</button></div></section>
-        <section className="results-table-wrap"><table><thead><tr><th>Student ID</th><th>Lesson</th><th>Practice Score</th><th>Accuracy</th><th>Slot Reward</th><th>Type A</th><th>Type B</th><th>Time</th></tr></thead><tbody>{filtered.length ? filtered.map((result) => <tr key={result.id || result.sessionId}><td><span className="results-student-id"><strong>{result.studentId}</strong><small>{formatStudentId(result.studentId)}</small></span></td><td>{result.lessonTitle || result.lessonId}</td><td>{result.practiceScore} / {result.practiceMaxScore}</td><td>{result.accuracy}%</td><td>{result.slotScore}</td><td>{result.typeA?.firstAttemptCorrectCount} / {result.typeA?.totalQuestions}</td><td>{result.typeB?.firstAttemptCorrectCount} / {result.typeB?.totalQuestions}</td><td>{result.completedAt ? new Date(result.completedAt).toLocaleString("zh-TW") : "—"}</td></tr>) : <tr><td colSpan="8" className="empty-table">尚無符合條件的匿名作答結果。</td></tr>}</tbody></table></section>
+        <section className="results-table-wrap"><table><thead><tr><th>Student ID</th><th>Lesson</th><th>Practice Score</th><th>Accuracy</th><th>Slot Reward</th><th>Look and choose</th><th>Listen and choose</th><th>Time</th></tr></thead><tbody>{filtered.length ? filtered.map((result) => <tr key={result.id || result.sessionId}><td><span className="results-student-id"><strong>{result.studentId}</strong><small>{formatStudentId(result.studentId)}</small></span></td><td>{result.lessonTitle || result.lessonId}</td><td>{result.practiceScore} / {result.practiceMaxScore}</td><td>{result.accuracy}%</td><td>{result.slotScore}</td><td>{result.typeA?.firstAttemptCorrectCount} / {result.typeA?.totalQuestions}</td><td>{result.typeB?.firstAttemptCorrectCount} / {result.typeB?.totalQuestions}</td><td>{result.completedAt ? new Date(result.completedAt).toLocaleString("zh-TW") : "—"}</td></tr>) : <tr><td colSpan="8" className="empty-table">尚無符合條件的匿名作答結果。</td></tr>}</tbody></table></section>
       </> : null}
     </main>
   );
