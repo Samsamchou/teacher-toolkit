@@ -2,7 +2,8 @@
 
 const crypto = require("node:crypto");
 const { initializeApp } = require("firebase-admin/app");
-const { getAuth } = require("firebase-admin/auth");
+const { getStorage } = require("firebase-admin/storage");
+
 const { getFirestore, Timestamp } = require("firebase-admin/firestore");
 const { defineSecret } = require("firebase-functions/params");
 const { HttpsError, onCall } = require("firebase-functions/v2/https");
@@ -24,6 +25,10 @@ const {
   normalizeSessionToken,
   sessionIdForToken
 } = require("./src/teacher-results-session.cjs");
+const {
+  buildPendingImageDeletes,
+  deletePendingTeacherImages
+} = require("./src/lesson-image-cleanup.cjs");
 
 initializeApp();
 
@@ -31,22 +36,7 @@ function firestore() {
   return getFirestore();
 }
 
-const TEACHER_MEDIA_CLAIM = "lessonHubTeacherMediaExpiresAt";
-const MEDIA_UNLOCK_COLLECTION = "teacherMediaUnlocks";
-const MEDIA_UNLOCK_DURATION_MS = 10 * 60 * 1000;
-const MEDIA_UNLOCK_TOKEN_BYTES = 32;
 
-function adminAuth() {
-  return getAuth();
-}
-
-async function updateTeacherMediaClaim(anonymousUid, expiresAtMs) {
-  const user = await adminAuth().getUser(anonymousUid);
-  const claims = { ...(user.customClaims || {}) };
-  if (expiresAtMs > 0) claims[TEACHER_MEDIA_CLAIM] = Math.floor(expiresAtMs);
-  else delete claims[TEACHER_MEDIA_CLAIM];
-  await adminAuth().setCustomUserClaims(anonymousUid, claims);
-}
 const teacherResultsPasscode = defineSecret("TEACHER_RESULTS_PASSCODE");
 const ATTEMPT_COLLECTION = "teacherLoginAttempts";
 const SESSION_COLLECTION = "teacherResultSessions";
@@ -159,55 +149,6 @@ async function requireTeacherResultsSession(request) {
 }
 
 
-function normalizeMediaUnlockToken(value) {
-  const token = typeof value === "string" ? value.trim() : "";
-  return /^[A-Za-z0-9_-]{40,128}$/.test(token) ? token : "";
-}
-
-function mediaUnlockTokenHash(token) {
-  return crypto.createHash("sha256").update(token, "utf8").digest("hex");
-}
-
-async function createTeacherMediaUnlockForSession(request) {
-  const session = await requireTeacherResultsSession(request);
-  const token = crypto.randomBytes(MEDIA_UNLOCK_TOKEN_BYTES).toString("base64url");
-  const nowMs = Date.now();
-  const expiresAt = nowMs + MEDIA_UNLOCK_DURATION_MS;
-  await firestore().collection(MEDIA_UNLOCK_COLLECTION).doc(mediaUnlockTokenHash(token)).set({
-    schemaVersion: "teacher-media-unlock-v1",
-    createdByUid: session.anonymousUid,
-    createdAt: Timestamp.fromMillis(nowMs),
-    expiresAt: Timestamp.fromMillis(expiresAt),
-    usedAt: null,
-    redeemedByUid: null
-  });
-  return { token, expiresAt };
-}
-
-async function redeemTeacherMediaUnlockForCaller(request) {
-  const anonymousUid = requireAnonymousCaller(request);
-  const token = normalizeMediaUnlockToken(request.data?.token);
-  if (!token) throw new HttpsError("permission-denied", "教師解鎖連結無效，請重新建立連結。");
-  const database = firestore();
-  const unlockRef = database.collection(MEDIA_UNLOCK_COLLECTION).doc(mediaUnlockTokenHash(token));
-  const nowMs = Date.now();
-  const unlock = await database.runTransaction(async (transaction) => {
-    const snapshot = await transaction.get(unlockRef);
-    const data = snapshot.data() || {};
-    const expiresAt = timestampMillis(data.expiresAt);
-    if (!snapshot.exists || data.schemaVersion !== "teacher-media-unlock-v1" || data.usedAt || expiresAt <= nowMs) {
-      throw new HttpsError("permission-denied", "教師解鎖連結已使用或已過期，請重新建立連結。");
-    }
-    transaction.update(unlockRef, {
-      usedAt: Timestamp.fromMillis(nowMs),
-      redeemedAt: Timestamp.fromMillis(nowMs),
-      redeemedByUid: anonymousUid
-    });
-    return { expiresAt };
-  });
-  await updateTeacherMediaClaim(anonymousUid, unlock.expiresAt);
-  return { expiresAt: unlock.expiresAt };
-}
 
 function normalizeLessonConfigVersion(value) {
   const parsed = Number(value);
@@ -259,6 +200,47 @@ async function loadLessonConfiguration() {
   return lessonConfigResponse(await reference.get());
 }
 
+async function cleanupQueuedTeacherImages(reference) {
+  const latest = await reference.get();
+  if (!latest.exists) return { deletedCount: 0, pendingCount: 0 };
+
+  const current = lessonConfigResponse(latest);
+  const queuedPaths = buildPendingImageDeletes({
+    previousLessons: [],
+    nextLessons: current.lessons,
+    existingPending: latest.data()?.pendingImageDeletes
+  });
+  if (!queuedPaths.length) return { deletedCount: 0, pendingCount: 0 };
+
+  const bucket = getStorage().bucket();
+  const cleanup = await deletePendingTeacherImages(
+    queuedPaths,
+    (path) => bucket.file(path).delete({ ignoreNotFound: true })
+  );
+  if (!cleanup.deletedPaths.length) {
+    return { deletedCount: 0, pendingCount: cleanup.failedPaths.length };
+  }
+
+  const deleted = new Set(cleanup.deletedPaths);
+  const pendingCount = await firestore().runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    if (!snapshot.exists) return 0;
+    const latestConfig = lessonConfigResponse(snapshot);
+    const latestPending = buildPendingImageDeletes({
+      previousLessons: [],
+      nextLessons: latestConfig.lessons,
+      existingPending: snapshot.data()?.pendingImageDeletes
+    });
+    const remaining = latestPending.filter((path) => !deleted.has(path));
+    transaction.set(reference, {
+      pendingImageDeletes: remaining,
+      imageCleanupUpdatedAt: Timestamp.fromMillis(Date.now())
+    }, { merge: true });
+    return remaining.length;
+  });
+  return { deletedCount: cleanup.deletedPaths.length, pendingCount };
+}
+
 async function saveLessonConfiguration(lessons, expectedVersion) {
   const normalizedLessons = normalizeLessonConfiguration(lessons);
   const requestedVersion = Number(expectedVersion);
@@ -266,21 +248,52 @@ async function saveLessonConfiguration(lessons, expectedVersion) {
     throw new HttpsError("invalid-argument", "課程版本無效，請重新載入後再試。");
   }
   const reference = firestore().collection(LESSON_CONFIG_COLLECTION).doc(LESSON_CONFIG_DOCUMENT);
-  return firestore().runTransaction(async (transaction) => {
+  const saved = await firestore().runTransaction(async (transaction) => {
     const snapshot = await transaction.get(reference);
-    const currentVersion = snapshot.exists ? normalizeLessonConfigVersion(snapshot.data()?.version) : 0;
-    if (requestedVersion !== currentVersion) {
+    const current = lessonConfigResponse(snapshot);
+    if (requestedVersion !== current.version) {
       throw new HttpsError("failed-precondition", "雲端教材已在另一台裝置更新；請重新載入後再儲存。");
     }
-    const version = currentVersion + 1;
+
+    let pendingImageDeletes = [];
+    try {
+      pendingImageDeletes = buildPendingImageDeletes({
+        previousLessons: current.lessons,
+        nextLessons: normalizedLessons,
+        existingPending: snapshot.data()?.pendingImageDeletes
+      });
+    } catch (error) {
+      if (error instanceof RangeError) {
+        throw new HttpsError("resource-exhausted", "待刪圖片過多，請分批儲存 Lesson 後再試。");
+      }
+      throw error;
+    }
+
+    const version = current.version + 1;
     transaction.set(reference, {
       schemaVersion: LESSON_CONFIG_SCHEMA,
       version,
       lessons: normalizedLessons,
+      pendingImageDeletes,
       updatedAt: Timestamp.fromMillis(Date.now())
     });
-    return { version, lessonCount: normalizedLessons.length };
+    return { version, lessonCount: normalizedLessons.length, pendingImageDeletes };
   });
+
+  let imageCleanup = { deletedCount: 0, pendingCount: saved.pendingImageDeletes.length };
+  try {
+    imageCleanup = await cleanupQueuedTeacherImages(reference);
+  } catch (error) {
+    console.warn("Teacher Image Slides cleanup will retry on the next cloud save.", {
+      code: String(error?.code || "unknown"),
+      pendingCount: saved.pendingImageDeletes.length
+    });
+  }
+  return {
+    version: saved.version,
+    lessonCount: saved.lessonCount,
+    imageCleanup
+  };
 }
 function reportString(value) {
   return typeof value === "string" ? value : "";
@@ -394,7 +407,6 @@ exports.teacherPasscodeLogout = onCall(
     try {
       const session = await requireTeacherResultsSession(request);
       await session.sessionRef.delete();
-      await updateTeacherMediaClaim(session.anonymousUid, 0);
       return { signedOut: true };
     } catch (error) {
       return functionFailure(error, "logout");
@@ -403,37 +415,6 @@ exports.teacherPasscodeLogout = onCall(
 );
 
 
-exports.teacherMediaUnlockCreate = onCall(
-  {
-    region: functionsRegion,
-    timeoutSeconds: 30,
-    memory: "256MiB",
-    maxInstances: 2
-  },
-  async (request) => {
-    try {
-      return await createTeacherMediaUnlockForSession(request);
-    } catch (error) {
-      return functionFailure(error, "media-unlock-create");
-    }
-  }
-);
-
-exports.teacherMediaUnlockRedeem = onCall(
-  {
-    region: functionsRegion,
-    timeoutSeconds: 30,
-    memory: "256MiB",
-    maxInstances: 2
-  },
-  async (request) => {
-    try {
-      return await redeemTeacherMediaUnlockForCaller(request);
-    } catch (error) {
-      return functionFailure(error, "media-unlock-redeem");
-    }
-  }
-);
 
 exports.teacherResultsList = onCall(
   {
@@ -472,7 +453,7 @@ exports.teacherLessonConfigLoad = onCall(
 exports.teacherLessonConfigSave = onCall(
   {
     region: functionsRegion,
-    timeoutSeconds: 60,
+    timeoutSeconds: 120,
     memory: "512MiB",
     maxInstances: 2
   },

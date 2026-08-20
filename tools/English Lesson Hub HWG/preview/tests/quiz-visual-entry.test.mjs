@@ -14,11 +14,14 @@ test("Vocabulary Quiz gate uses the simplified school-ID entry and teacher QR ro
   assert.doesNotMatch(mainSource, /規則：第一次答案決定 Practice Score/);
 });
 
-test("Quiz mascot asset and portrait contain rules are present", () => {
+test("Quiz mascot and fixed Image Slides containment rules are present", () => {
   assert.equal(existsSync(new URL("../public/assets/mascots/word-master-monster-v1.png", import.meta.url)), true);
   assert.match(mainSource, /word-master-monster-v1\.png/);
-  assert.match(styleSource, /\.slide-frame img \{[^}]*width: auto;[^}]*height: auto;[^}]*object-fit: contain;/);
-  assert.match(styleSource, /\.projector-cockpit \.slide-frame \{[^}]*height: auto;[^}]*overflow: visible;/);
+  assert.match(styleSource, /\.slides-step \{[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(0, 1fr\) auto;[^}]*overflow: hidden;/);
+  assert.match(styleSource, /\.slide-frame img \{[^}]*width: 100%;[^}]*height: 100%;[^}]*object-fit: scale-down;/);
+  assert.match(styleSource, /\.projector-cockpit \.slides-step \{[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(0, 1fr\) auto;[^}]*overflow: hidden;/);
+  assert.match(styleSource, /\.projector-cockpit \.slide-frame \{[^}]*height: 100%;[^}]*overflow: hidden;/);
+  assert.match(styleSource, /\.lesson-stage:fullscreen > \.slides-step \{[^}]*display: grid;[^}]*grid-template-rows: auto minmax\(0, 1fr\) auto;[^}]*overflow: hidden;/);
   assert.match(styleSource, /@keyframes quiz-mascot-bob/);
   assert.match(styleSource, /prefers-reduced-motion: reduce[\s\S]*\.quiz-corner-mascot \{ animation: none;/);
 });

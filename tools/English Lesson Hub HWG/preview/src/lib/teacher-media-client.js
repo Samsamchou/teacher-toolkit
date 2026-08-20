@@ -1,9 +1,8 @@
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { ensureAnonymousSession, ensureTeacherMediaAccess, isFirebaseConfigured } from "./firebase-client.js";
+import { ensureAnonymousSession, isFirebaseConfigured } from "./firebase-client.js";
 
 export const TEACHER_MEDIA_MAX_BYTES = 500 * 1024 * 1024;
 export const TEACHER_IMAGE_MAX_BYTES = 20 * 1024 * 1024;
-const AUTHORIZATION_CODES = new Set(["storage/unauthorized", "storage/unauthenticated"]);
 
 const MEDIA_TYPES = Object.freeze({
   video: { extensions: [".mp4"], contentTypes: ["video/mp4"], label: "MP4 影片", maxBytes: TEACHER_MEDIA_MAX_BYTES },
@@ -98,24 +97,7 @@ export async function uploadTeacherMedia({ lessonId, mediaType, file, onProgress
     contentType: config.contentType,
     customMetadata: { lessonId: safeLessonId, mediaType, originalName: encodeURIComponent(file.name) }
   };
-  if (mediaType === "image") await ensureTeacherMediaAccess();
-  try {
-    await uploadOnce({ target, file, metadata, onProgress });
-  } catch (error) {
-    if (mediaType !== "image" || !AUTHORIZATION_CODES.has(String(error?.code || ""))) throw error;
-    await ensureTeacherMediaAccess({ forceRefresh: true });
-    onProgress?.(0);
-    try {
-      await uploadOnce({ target, file, metadata, onProgress });
-    } catch (retryError) {
-      if (AUTHORIZATION_CODES.has(String(retryError?.code || ""))) {
-        const denied = new Error("Firebase Storage 規則仍拒絕圖片上傳。");
-        denied.code = "teacher-media-storage-rules-denied";
-        throw denied;
-      }
-      throw retryError;
-    }
-  }
+  await uploadOnce({ target, file, metadata, onProgress });
   return {
     kind: mediaType,
     path,
@@ -132,24 +114,10 @@ export async function resolveTeacherMediaUrl(path) {
 }
 
 export async function deleteTeacherMedia(path) {
-  const storage = await directTeacherMediaStorage();
-  const target = ref(storage, requireTeacherMediaPath(path));
-  if (!isTeacherImagePath(path)) return deleteObject(target);
-  await ensureTeacherMediaAccess();
-  try {
-    await deleteObject(target);
-  } catch (error) {
-    if (!AUTHORIZATION_CODES.has(String(error?.code || ""))) throw error;
-    await ensureTeacherMediaAccess({ forceRefresh: true });
-    try {
-      await deleteObject(target);
-    } catch (retryError) {
-      if (AUTHORIZATION_CODES.has(String(retryError?.code || ""))) {
-        const denied = new Error("Firebase Storage 規則仍拒絕圖片刪除。");
-        denied.code = "teacher-media-storage-rules-denied";
-        throw denied;
-      }
-      throw retryError;
-    }
+  const candidate = requireTeacherMediaPath(path);
+  if (isTeacherImagePath(candidate)) {
+    throw new Error("Image Slides 舊圖只會在雲端 Save Lesson 成功後由伺服器刪除；瀏覽器不直接刪除。");
   }
+  const storage = await directTeacherMediaStorage();
+  return deleteObject(ref(storage, candidate));
 }

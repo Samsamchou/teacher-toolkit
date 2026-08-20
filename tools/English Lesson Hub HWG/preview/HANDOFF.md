@@ -285,3 +285,51 @@
 3. 回到原 Lesson Editor 分頁，確認自動顯示解鎖截止時間，再選取一張小型 JPG／PNG、上傳並按 Save Lesson。
 4. 以無痕視窗或另一台筆電載入同一節 Lesson，確認圖片可讀；若要在該裝置上傳，必須另外建立並兌換新的單次連結。
 5. 以學生模式確認圖片可見，但沒有上傳、刪除或列出圖片的操作。
+
+
+## 2026-08-20 Image Slides 直接匿名上傳（已部署）
+
+- 已確認 RDQ 規格卡：`rdq/RDQ-spec-image-slides-direct-upload-20260820.md`；採用 1A／2B／3A 與建議 ①②③④⑤。
+- Image Slides 現在與既有 MP4／PDF 一樣，先建立 Firebase Anonymous Auth 後直接選檔上傳；不顯示通行碼、不開啟解鎖連結，也不依賴教師 custom claim。
+- 教師從 Lesson 移除或替換圖片時只解除課程引用，不從 Firebase Storage 刪除雲端原檔。介面會明確提示「雲端原檔保留」。
+- Storage 僅允許匿名使用者在固定 `teacher-image-slides/{lessonId}/{randomFileName}` 路徑新增 PNG／JPG／WebP，單檔上限 20 MB；不能列出、覆寫或刪除。已知路徑仍需 Anonymous Auth 才能讀取。
+- 已移除前端一次性解鎖介面、`teacherMediaUnlockCreate`／`teacherMediaUnlockRedeem` Functions、Firestore 解鎖紀錄規則與 Storage claim 檢查。教師 Results 六位數通行碼、Lesson 雲端同步、匿名 Quiz 成績與 MP4／PDF 直接上傳流程均保留。
+- 本方案接受已確認的風險：技術能力足夠的匿名使用者若自行組合合法 Storage API 請求，仍可能新增符合路徑、格式與大小限制的圖片；但不能列目錄、覆寫或刪除既有圖片。
+
+### 本次測試與正式發布
+
+- 乾淨隔離副本通過：54 項網站測試、6 項 Functions 測試、7 項 Firestore／Storage Emulator 規則測試、Functions 語法、正式 Vite 建置、教師 Results 安全檢查與 Firebase preflight。
+- 已正式發布 Hosting `lesson-hub-v03`（42 個檔案）、Functions codebase `teacher-access`、Firestore 規則與 Storage 規則；未修改或刪除匿名成績資料。
+- Functions 探測因本機 Firebase CLI 預設 10 秒限制曾逾時；以 CLI 支援的 `FUNCTIONS_DISCOVERY_TIMEOUT=60` 完成部署。正式雲端只剩 7 個 Node.js 22 Functions；兩個舊圖片解鎖 Functions 均已成功刪除。
+- 正式站 <https://lesson-hub-v03.web.app> 回應 HTTP 200；公開資產為 `/assets/index-LetM7CAn.js` 與 `/assets/index-DGKhjZ-R.css`。新版 JavaScript 含直接上傳與雲端原檔保留文字，且不含兩個舊解鎖 Function 名稱。
+- 未登入呼叫 `teacherResultsList` 仍回 HTTP 401 `UNAUTHENTICATED`，教師 Results 保護未放寬。
+- 正式 Storage 實測使用臨時 Anonymous Auth 上傳並讀回 68-byte PNG：`teacher-image-slides/smoke-test/1787236476239-b7b638ec-dd8a-4032-936f-72fc31dfcf2c.png`。覆寫、列目錄與刪除皆回 `storage/unauthorized`；測試圖片依 2B 保留，臨時匿名帳號已刪除。
+
+### 教師驗收
+
+1. 正式站強制重新整理後，進入任一 Image Slides 編輯區，確認沒有通行碼或解鎖按鈕。
+2. 直接按「加入圖片（可多選）」上傳一張 PNG／JPG／WebP，確認上傳成功後按 Save Lesson。
+3. 在無痕視窗或另一台筆電載入雲端 Lesson，確認同一張圖片能顯示；移除圖片後確認 Lesson 不再引用，但雲端原檔保留。
+
+## 2026-08-21 Image Slides 完整顯圖與 4B 舊圖清理（已部署）
+
+- 已確認 RDQ 規格卡：rdq/RDQ-spec-image-slides-full-frame-delete-20260820.md；採用 1A／2A／3A／4B 與建議 ①②③④⑤。
+- Image Slides 一般投影與全螢幕都固定為「精簡標題列／完整圖片框／精簡 Previous 與 Next」三列 Grid。圖片依實際可用框尺寸重新計算，完整置中、不裁切、不拉伸；小圖不放大。
+- 已修正投影模式較早的 Flex 規則覆蓋三列 Grid 的問題；圖片框使用明確高度與隱藏溢出，ResizeObserver、視窗縮放與全螢幕切換都會重新配適。
+- 4B 行為：按「移除」不再二次確認；移除或替換後，只有在雲端 Save Lesson 成功時，受保護的 teacherLessonConfigSave Function 才刪除不再被任何 Lesson 引用的 teacher-image-slides/ 舊圖。
+- 匿名瀏覽器仍不能列出、覆寫或刪除 Storage 圖片。伺服器只接受嚴格合法的 Image Slides 路徑；暫時性刪除失敗會保留待刪清單，於下次雲端 Save Lesson 自動重試。
+- 本節取代前一節「Image Slides 直接匿名上傳」中「移除／替換後雲端原檔保留」的舊行為；直接匿名新增圖片仍維持不變。
+
+### 本次測試與正式發布
+
+- 完整 preflight 通過：63 項 Node 測試（Functions 10 項另行重跑）、7 項 Firestore／Storage Emulator 規則測試、Functions 語法、安全檢查、Firebase preflight 與 Vite 正式建置。
+- Headless Chrome 實際驗收通過 1366×768 與 1920×1080；兩種解析度的一般及全螢幕共 4 種畫面都沒有 Lesson Hub 額外上下捲動。720×1080 直式圖四邊皆位於圖片框內，比例不變且未放大。
+- 已正式部署 Functions codebase teacher-access 的 7 個 Node.js 22 callable Functions，以及 Hosting target lesson-hub-v03；本次未重部署或放寬 Firestore／Storage 規則，也未修改匿名成績。
+- 正式站為 <https://lesson-hub-v03.web.app>；首頁及新版 /assets/index-A318an8o.js、/assets/index-hZ3rqFMC.css 均回應 HTTP 200。線上 JS 含尺寸重算與 Save 後伺服器刪圖提示；線上 CSS 含 object-fit: scale-down。
+- 未登入呼叫 teacherLessonConfigSave 回 HTTP 401，證實伺服器刪圖流程仍受教師工作階段保護。
+
+### 教師實機驗收
+
+1. 在正式站強制重新整理，開啟任一含直式圖片的 Image Slides，於一般及全螢幕確認圖片最底部文字完整。
+2. 在 Teacher Studio 替換或移除一張圖片並按 Save Lesson；應顯示雲端儲存成功及舊圖清理結果。
+3. 另一台筆電載入雲端最新版，確認 Lesson 不再引用舊圖；如需確認 Storage 實體物件已刪除，可由教師本人至 Firebase Console 檢查。

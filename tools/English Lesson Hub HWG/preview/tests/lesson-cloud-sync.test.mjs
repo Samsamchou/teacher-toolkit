@@ -19,16 +19,27 @@ test("Teacher Studio sync requires the existing passcode session and stores a ve
   assert.ok(clientSource.includes("teacherLessonConfigSave"));
   assert.ok(functionSource.includes("LESSON_CONFIG_COLLECTION"));
   assert.ok(functionSource.includes("teacherLessonConfigs"));
-  assert.ok(functionSource.includes("requestedVersion !== currentVersion"));
+  assert.ok(functionSource.includes("requestedVersion !== current.version"));
   assert.ok(functionSource.includes("requireTeacherResultsSession(request)"));
   assert.match(ruleSource, /match \/teacherLessonConfigs\/\{configId\} \{\s*allow read, write: if false;/);
 });
 
-test("Image Slides keep native image size while fitting inside a non-clipping projector frame", () => {
+test("Image Slides keep every edge visible in normal and fullscreen projector layouts", () => {
   assert.match(mainSource, /function SlideDeck\(/);
   assert.ok(mainSource.includes("TeacherImageSlidesUpload"));
   assert.ok(mainSource.includes("slideAssets"));
   assert.ok(mainSource.includes("resolveTeacherMediaUrl"));
-  assert.match(mainSource, /<img src=\{current\.src\}/);
+  assert.ok(mainSource.includes("fitImageInsideFrame"));
+  assert.ok(mainSource.includes("ResizeObserver"));
+  assert.ok(mainSource.includes('document.addEventListener("fullscreenchange", updateFit)'));
+  assert.match(mainSource, /<img[\s\S]*src=\{current\.src\}[\s\S]*style=\{imageStyle\}/);
   assert.equal(mainSource.includes("object-fit: cover"), false);
+});
+
+test("cloud Save Lesson schedules protected deletion of removed or replaced Image Slides", () => {
+  assert.ok(functionSource.includes("buildPendingImageDeletes"));
+  assert.ok(functionSource.includes("deletePendingTeacherImages"));
+  assert.ok(functionSource.includes("pendingImageDeletes"));
+  assert.ok(functionSource.includes("getStorage"));
+  assert.ok(functionSource.includes("imageCleanup"));
 });

@@ -74,7 +74,7 @@ test("Studio and Lesson Flow wire uploaded MP4/PDF media, Image Slides, first-pa
     assert.ok(mainSource.includes(marker), "missing " + marker);
   }
   assert.equal(mainSource.includes("按下 SPIN 後，拉霸音效會從加速轉動"), false);
-  assert.match(mediaCss, /\.slide-frame img \{ width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain;/);
+  assert.match(mediaCss, /\.slide-frame img \{ width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: scale-down;/);
   assert.match(mediaCss, /\.teacher-image-slides-upload \{/);
   assert.match(mediaCss, /\.teacher-quiz-gate \.quiz-corner-mascot \{ top: 210px; width: clamp\(103px, 10.8vw, 151px\); \}/);
   assert.ok(presentationSource.includes("直接選擇檔案上傳"));

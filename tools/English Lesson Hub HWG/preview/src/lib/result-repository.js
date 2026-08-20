@@ -1,7 +1,6 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
   closeTeacherResultsSession,
-  createTeacherMediaUnlockLink,
   deleteTeacherResultsAfterExport,
   ensureAnonymousSession,
   firestore,
@@ -93,12 +92,6 @@ export async function unlockTeacherSession(passcode, { replaceExisting = false }
   if (!isFirebaseConfigured) return { local: true };
   return (!replaceExisting && teacherSession()) || openTeacherResultsSession(passcode, { replaceExisting });
 }
-export async function createTeacherMediaUnlock() {
-  if (!isFirebaseConfigured) throw new Error("本機 Preview 不會建立教師解鎖連結；請使用 Firebase 正式站。");
-  await ensureTeacherSession();
-  return createTeacherMediaUnlockLink();
-}
-
 
 export async function ensureTeacherSession() {
   if (!isFirebaseConfigured) return { local: true };
