@@ -35,7 +35,11 @@ const teacherFunctions = Object.freeze({
   logout: "teacherPasscodeLogout",
   list: "teacherResultsList",
   recordExport: "teacherResultsRecordExport",
-  delete: "teacherResultsDelete"
+  delete: "teacherResultsDelete",
+  lessonConfigLoad: "teacherLessonConfigLoad",
+  lessonConfigSave: "teacherLessonConfigSave",
+  mediaUnlockCreate: "teacherMediaUnlockCreate",
+  mediaUnlockRedeem: "teacherMediaUnlockRedeem"
 });
 
 export const firebaseConfigSource = resolvedPublicConfig.source;
@@ -46,6 +50,27 @@ export const auth = app ? getAuth(app) : null;
 export const firestore = app ? getFirestore(app) : null;
 export const functions = app ? getFunctions(app, functionsRegion) : null;
 let teacherResultsSession = null;
+let teacherMediaAccessExpiresAt = 0;
+const teacherMediaAccessListeners = new Set();
+const TEACHER_MEDIA_CLAIM = "lessonHubTeacherMediaExpiresAt";
+
+function publishTeacherMediaAccess(expiresAt) {
+  teacherMediaAccessExpiresAt = Number.isSafeInteger(Number(expiresAt)) ? Number(expiresAt) : 0;
+  const snapshot = teacherMediaAccessSnapshot();
+  teacherMediaAccessListeners.forEach((listener) => listener(snapshot));
+}
+
+export function teacherMediaAccessSnapshot() {
+  const expiresAt = teacherMediaAccessExpiresAt;
+  return { active: expiresAt > Date.now(), expiresAt };
+}
+
+export function subscribeTeacherMediaAccess(listener) {
+  if (typeof listener !== "function") return () => undefined;
+  teacherMediaAccessListeners.add(listener);
+  listener(teacherMediaAccessSnapshot());
+  return () => teacherMediaAccessListeners.delete(listener);
+}
 
 export function firebaseStatus() {
   if (isFirebaseConfigured) return { enabled: true, message: "Firebase connected", source: firebaseConfigSource };
@@ -61,16 +86,33 @@ function requireFirebase() {
 
 function teacherLoginError(error) {
   const code = String(error?.code || "");
-  if (code === "functions/permission-denied") return new Error("教師通行碼錯誤，或工作階段已結束。");
-  if (code === "functions/resource-exhausted") return new Error("嘗試次數過多，請稍後再試。");
-  if (code === "functions/failed-precondition") return new Error("結果資料已變更，請重新整理後再試。");
-  if (code === "functions/unauthenticated") return new Error("無法建立匿名工作階段，請重新整理後再試。");
-  if (code === "functions/unavailable") return new Error("教師成績服務暫時無法連線。");
-  return error instanceof Error ? error : new Error("教師成績服務暫時無法使用。");
+  let message = "教師服務暫時無法使用。";
+  if (code === "functions/permission-denied") message = "教師通行碼錯誤，或工作階段已結束。";
+  else if (code === "functions/resource-exhausted") message = "嘗試次數過多，請稍後再試。";
+  else if (code === "functions/failed-precondition") message = String(error?.message || "資料已變更，請重新載入後再試。");
+  else if (code === "functions/unauthenticated") message = "無法建立匿名工作階段，請重新整理後再試。";
+  else if (code === "functions/unavailable") message = "教師服務暫時無法連線。";
+  else if (error instanceof Error && error.message) message = error.message;
+  const normalized = new Error(message);
+  normalized.code = code;
+  return normalized;
+}
+
+function teacherMediaUnlockError(error) {
+  const code = String(error?.code || "");
+  let message = "教師解鎖連結暫時無法使用，請重新建立連結。";
+  if (code === "functions/permission-denied") message = "教師解鎖連結已使用、已過期或無效，請回 Results 重新建立連結。";
+  else if (code === "functions/unauthenticated") message = "無法建立匿名工作階段，請重新整理後再試。";
+  else if (code === "functions/unavailable") message = "教師解鎖服務暫時無法連線，請稍後再試。";
+  else if (error instanceof Error && error.message) message = error.message;
+  const normalized = new Error(message);
+  normalized.code = code;
+  return normalized;
 }
 
 export async function ensureAnonymousSession() {
   requireFirebase();
+  if (typeof auth.authStateReady === "function") await auth.authStateReady();
   if (auth.currentUser?.isAnonymous) return auth.currentUser;
   if (auth.currentUser) await signOut(auth);
   teacherResultsSession = null;
@@ -140,6 +182,87 @@ export async function loadTeacherResultsFromServer() {
   };
 }
 
+export async function loadTeacherLessonConfigFromServer() {
+  const response = await callTeacherResults(teacherFunctions.lessonConfigLoad);
+  return {
+    exists: response.exists === true,
+    version: Number.isSafeInteger(Number(response.version)) ? Number(response.version) : 0,
+    lessons: Array.isArray(response.lessons) ? response.lessons : []
+  };
+}
+
+export async function saveTeacherLessonConfigToServer({ lessons, expectedVersion }) {
+  const response = await callTeacherResults(teacherFunctions.lessonConfigSave, { lessons, expectedVersion });
+  const version = Number(response.version);
+  if (!Number.isSafeInteger(version) || version < 1) throw new Error("雲端教材沒有回傳有效版本，已停止保存。");
+  return { version, lessonCount: Number(response.lessonCount || 0) };
+}
+
+
+export async function createTeacherMediaUnlockLink() {
+  const response = await callTeacherResults(teacherFunctions.mediaUnlockCreate);
+  const token = String(response.token || "");
+  const expiresAt = Number(response.expiresAt || 0);
+  if (!token || !expiresAt) throw new Error("教師解鎖連結沒有建立，請重新整理後再試。");
+  if (typeof window === "undefined") throw new Error("目前環境無法建立教師解鎖連結。");
+  const link = new URL(window.location.href);
+  link.search = "";
+  link.hash = "";
+  link.searchParams.set("teacherMediaUnlock", token);
+  return { url: link.toString(), expiresAt };
+}
+
+export async function redeemTeacherMediaUnlock(token) {
+  requireFirebase();
+  const cleanToken = typeof token === "string" ? token.trim() : "";
+  if (!/^[A-Za-z0-9_-]{40,128}$/.test(cleanToken)) {
+    const error = new Error("教師解鎖連結格式無效，請重新建立連結。");
+    error.code = "teacher-media-unlock-invalid";
+    throw error;
+  }
+  const anonymousUser = await ensureAnonymousSession();
+  try {
+    const response = await httpsCallable(functions, teacherFunctions.mediaUnlockRedeem)({ token: cleanToken });
+    const expiresAt = Number(response?.data?.expiresAt || 0);
+    if (!Number.isSafeInteger(expiresAt) || expiresAt <= Date.now()) throw new Error("教師解鎖連結已過期，請重新建立連結。");
+    await anonymousUser.getIdToken(true);
+    publishTeacherMediaAccess(expiresAt);
+    return { expiresAt };
+  } catch (error) {
+    throw teacherMediaUnlockError(error);
+  }
+}
+
+export async function ensureTeacherMediaAccess({ forceRefresh = false } = {}) {
+  requireFirebase();
+  const cached = teacherMediaAccessSnapshot();
+  if (!forceRefresh && cached.active) return cached;
+  const anonymousUser = await ensureAnonymousSession();
+  let observedExpiresAt = cached.expiresAt;
+  const readClaim = async (refreshToken) => {
+    const result = await anonymousUser.getIdTokenResult(refreshToken);
+    const expiresAt = Number(result?.claims?.[TEACHER_MEDIA_CLAIM] || 0);
+    if (Number.isSafeInteger(expiresAt) && expiresAt > observedExpiresAt) observedExpiresAt = expiresAt;
+    if (Number.isSafeInteger(expiresAt) && expiresAt > Date.now()) {
+      publishTeacherMediaAccess(expiresAt);
+      return { active: true, expiresAt };
+    }
+    return null;
+  };
+  const current = await readClaim(forceRefresh);
+  if (current) return current;
+  if (!forceRefresh) {
+    const refreshed = await readClaim(true);
+    if (refreshed) return refreshed;
+  }
+  publishTeacherMediaAccess(observedExpiresAt);
+  const expired = observedExpiresAt > 0 && observedExpiresAt <= Date.now();
+  const error = new Error(expired
+    ? "圖片上傳解鎖已過期。請到 Results 重新建立一次性教師解鎖連結。"
+    : "圖片上傳尚未解鎖。請到 Results 建立並開啟一次性教師解鎖連結。");
+  error.code = expired ? "teacher-media-unlock-expired" : "teacher-media-unlock-required";
+  throw error;
+}
 export async function recordTeacherResultsExport({ format, resultIds, queryLabel }) {
   const response = await callTeacherResults(teacherFunctions.recordExport, { format, resultIds, queryLabel });
   const exportId = String(response.exportId || "");
@@ -155,6 +278,7 @@ export async function deleteTeacherResultsAfterExport(exportId) {
 export async function closeTeacherResultsSession() {
   const current = teacherResultsSession;
   teacherResultsSession = null;
+  publishTeacherMediaAccess(0);
   if (!current || !functions) return;
   try {
     const anonymousUser = await ensureAnonymousSession();

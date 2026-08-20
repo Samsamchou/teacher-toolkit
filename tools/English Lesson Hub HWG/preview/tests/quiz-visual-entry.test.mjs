@@ -17,8 +17,8 @@ test("Vocabulary Quiz gate uses the simplified school-ID entry and teacher QR ro
 test("Quiz mascot asset and portrait contain rules are present", () => {
   assert.equal(existsSync(new URL("../public/assets/mascots/word-master-monster-v1.png", import.meta.url)), true);
   assert.match(mainSource, /word-master-monster-v1\.png/);
-  assert.match(styleSource, /\.slide-frame img \{[^}]*object-fit: contain;/);
-  assert.match(styleSource, /\.projector-cockpit \.slide-frame \{[^}]*height: 0;/);
+  assert.match(styleSource, /\.slide-frame img \{[^}]*width: auto;[^}]*height: auto;[^}]*object-fit: contain;/);
+  assert.match(styleSource, /\.projector-cockpit \.slide-frame \{[^}]*height: auto;[^}]*overflow: visible;/);
   assert.match(styleSource, /@keyframes quiz-mascot-bob/);
   assert.match(styleSource, /prefers-reduced-motion: reduce[\s\S]*\.quiz-corner-mascot \{ animation: none;/);
 });

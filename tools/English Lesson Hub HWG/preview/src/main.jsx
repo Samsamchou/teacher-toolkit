@@ -32,26 +32,35 @@ import {
 import { buildStudentEntryUrl, isLoopbackBaseUrl, parseStudentEntry, resolveStudentBaseUrl } from "./lib/student-entry.js";
 import { RAFFLE_DURATION_MS, createRafflePool, pickRaffleNumber, removeRaffleNumber } from "./lib/classroom-tools.js";
 import { projectorShortcutAction } from "./lib/projector-controls.js";
-import { firebaseStatus, isFirebaseConfigured } from "./lib/firebase-client.js";
+import {
+  firebaseStatus,
+  isFirebaseConfigured,
+  redeemTeacherMediaUnlock
+} from "./lib/firebase-client.js";
 import { deleteTeacherMedia, resolveTeacherMediaUrl } from "./lib/teacher-media-client.js";
 import { TeacherMediaUpload } from "./components/teacher-media-upload.jsx";
+import { TeacherImageSlidesUpload } from "./components/teacher-image-slides-upload.jsx";
 import { PresentationStep } from "./components/presentation-step.jsx";
 import { TeachingVideoPlayer } from "./components/teaching-video-player.jsx";
 import {
+  createTeacherMediaUnlock,
   deleteResultsAfterExport,
   downloadExport,
   ensureTeacherSession,
   unlockTeacherSession,
   loadTeacherResults,
+  loadTeacherLessonConfig,
   recordExportEvent,
   resultsToCsv,
   resultsToJson,
   savePracticeResult,
+  saveTeacherLessonConfig,
   teacherSignOut
 } from "./lib/result-repository.js";
 import { QUIZ_COMPLETION_DURATION_MS, playQuizCorrectChime, playReelStop, playRewardChime, playSlotTick, prepareQuizAudio, prepareSlotAudio, prepareTimerAlarm, startQuizCelebration, startRaffleSpin, startTimerAlarm, stopQuizCelebration, stopRaffleSpin, stopTimerAlarm } from "./lib/slot-audio.js";
 const LESSONS_STORAGE_KEY = "english-lesson-hub-v03-preview.lessons";
 const RESULTS_STORAGE_KEY = "english-lesson-hub-v03-preview.results";
+const CLOUD_LESSON_DEFAULT = Object.freeze({ status: "locked", version: 0, busy: false, conflict: false });
 
 const STEP_META = {
   warmup: { icon: "👋", label: "Warm-up" },
@@ -99,8 +108,12 @@ function playTone(enabled, frequency = 680, duration = 0.1) {
 
 function App() {
   const seedLessons = useMemo(() => createSeedLessons(), []);
+  const queryParameters = useMemo(() => new URLSearchParams(window.location.search), []);
   const studentEntry = useMemo(() => parseStudentEntry(window.location.search), []);
-  const requestedStudentMode = useMemo(() => new URLSearchParams(window.location.search).get("mode") === "student", []);
+  const requestedStudentMode = queryParameters.get("mode") === "student";
+  const requestedTeacherScreen = queryParameters.get("screen");
+  const mediaUnlockRequested = queryParameters.get("mediaUnlock") === "1";
+  const mediaUnlockToken = queryParameters.get("teacherMediaUnlock") || "";
   const [lessons, setLessons] = useState(() => {
     const storedLessons = loadJson(LESSONS_STORAGE_KEY, seedLessons);
     return migrateLessonState(storedLessons, seedLessons);
@@ -109,7 +122,8 @@ function App() {
     const storedResults = loadJson(RESULTS_STORAGE_KEY, []);
     return migrateResultsForStructure(storedResults, seedLessons);
   });
-  const [screen, setScreen] = useState("studio");
+  const [cloudLessons, setCloudLessons] = useState(() => ({ ...CLOUD_LESSON_DEFAULT, status: isFirebaseConfigured ? "locked" : "local" }));
+  const [screen, setScreen] = useState(() => requestedTeacherScreen === "results" ? "results" : "studio");
   const [editingLessonId, setEditingLessonId] = useState(null);
   const [activeLessonId, setActiveLessonId] = useState(null);
   const [mode, setMode] = useState("teacher");
@@ -130,16 +144,128 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [notice]);
 
+  useEffect(() => {
+    if (!mediaUnlockToken || requestedStudentMode) return undefined;
+    let active = true;
+    setNotice("正在啟用 Image Slides 圖片上傳…");
+    redeemTeacherMediaUnlock(mediaUnlockToken)
+      .then(({ expiresAt }) => {
+        if (!active) return;
+        const expiry = new Date(expiresAt).toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" });
+        setNotice(`Image Slides 圖片上傳已解鎖，可使用至 ${expiry}。`);
+      })
+      .catch((cause) => {
+        if (active) setNotice(cause?.message || "教師解鎖連結無法使用，請回 Results 重新建立。");
+      })
+      .finally(() => {
+        if (typeof window === "undefined") return;
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete("teacherMediaUnlock");
+        window.history.replaceState({}, "", `${cleanUrl.pathname}${cleanUrl.search}${cleanUrl.hash}`);
+      });
+    return () => {
+      active = false;
+    };
+  }, [mediaUnlockToken, requestedStudentMode]);
+
   const activeLesson = lessons.find((lesson) => lesson.id === activeLessonId) || null;
   const editingLesson = lessons.find((lesson) => lesson.id === editingLessonId) || null;
   const directStudentLesson = findLessonByStudentEntry(seedLessons, studentEntry);
 
-  function saveLesson(nextLesson) {
+  async function persistLessonState(nextLessons, successMessage) {
+    const normalizedLessons = migrateLessonState(nextLessons, seedLessons);
+    if (!isFirebaseConfigured) {
+      setLessons(normalizedLessons);
+      setNotice(`${successMessage}（本機 Preview）。`);
+      return true;
+    }
+    if (cloudLessons.status !== "ready") {
+      setLessons(normalizedLessons);
+      setNotice(`${successMessage} 已暫存於這台瀏覽器；請先解鎖雲端教材，才能同步至其他筆電。`);
+      return true;
+    }
+    setCloudLessons((current) => ({ ...current, busy: true, conflict: false }));
+    try {
+      const saved = await saveTeacherLessonConfig({ lessons: normalizedLessons, expectedVersion: cloudLessons.version });
+      setLessons(normalizedLessons);
+      setCloudLessons({ status: "ready", version: saved.version, busy: false, conflict: false });
+      setNotice(`${successMessage} 已儲存至雲端。`);
+      return true;
+    } catch (error) {
+      const conflict = error?.code === "functions/failed-precondition";
+      setCloudLessons((current) => ({ ...current, busy: false, conflict }));
+      setNotice(conflict ? "雲端教材已在另一台裝置更新；請先載入雲端最新版，再重新儲存。" : `雲端教材未儲存：${error?.message || "請檢查網路後再試。"}`);
+      return false;
+    }
+  }
+
+  async function unlockCloudLessons(passcode) {
+    if (!isFirebaseConfigured) {
+      setNotice("本機 Preview 沒有 Firebase 雲端教材服務。請使用正式網站。 ");
+      return false;
+    }
+    setCloudLessons((current) => ({ ...current, busy: true, conflict: false }));
+    try {
+      await unlockTeacherSession(passcode, { replaceExisting: true });
+      const remote = await loadTeacherLessonConfig();
+      if (remote.exists) {
+        const loadedLessons = migrateLessonState(remote.lessons, seedLessons);
+        setLessons(loadedLessons);
+        setCloudLessons({ status: "ready", version: remote.version, busy: false, conflict: false });
+        setNotice(`已載入雲端教材：${loadedLessons.length} 節 Lesson。`);
+        return true;
+      }
+      setCloudLessons({ status: "needs-import", version: 0, busy: false, conflict: false });
+      setNotice("雲端教材尚未建立。請在保有最新 Lesson 的電腦確認匯入，避免預設內容覆蓋既有調整。 ");
+      return true;
+    } catch (error) {
+      setCloudLessons((current) => ({ ...current, busy: false }));
+      setNotice(`雲端教材尚未解鎖：${error?.message || "請重新輸入通行碼。"}`);
+      return false;
+    }
+  }
+
+  async function importCurrentLessons() {
+    if (cloudLessons.status !== "needs-import") return false;
+    const initialLessons = migrateLessonState(lessons, seedLessons);
+    setCloudLessons((current) => ({ ...current, busy: true, conflict: false }));
+    try {
+      const imported = await saveTeacherLessonConfig({ lessons: initialLessons, expectedVersion: 0 });
+      setLessons(initialLessons);
+      setCloudLessons({ status: "ready", version: imported.version, busy: false, conflict: false });
+      setNotice(`已將目前 ${initialLessons.length} 節 Lesson 匯入雲端；包含本機已調整的 Steps。`);
+      return true;
+    } catch (error) {
+      const conflict = error?.code === "functions/failed-precondition";
+      setCloudLessons((current) => ({ ...current, busy: false, conflict }));
+      setNotice(conflict ? "另一台裝置已建立雲端教材；請載入雲端最新版。" : `雲端教材未匯入：${error?.message || "請檢查網路後再試。"}`);
+      return false;
+    }
+  }
+  async function reloadCloudLessons() {
+    if (cloudLessons.status !== "ready") return false;
+    setCloudLessons((current) => ({ ...current, busy: true, conflict: false }));
+    try {
+      const remote = await loadTeacherLessonConfig();
+      if (!remote.exists) throw new Error("雲端教材尚未建立。");
+      const loadedLessons = migrateLessonState(remote.lessons, seedLessons);
+      setLessons(loadedLessons);
+      setCloudLessons({ status: "ready", version: remote.version, busy: false, conflict: false });
+      setNotice(`已載入雲端最新版：${loadedLessons.length} 節 Lesson。`);
+      return true;
+    } catch (error) {
+      setCloudLessons((current) => ({ ...current, busy: false }));
+      setNotice(`無法載入雲端教材：${error?.message || "請檢查網路後再試。"}`);
+      return false;
+    }
+  }
+
+  async function saveLesson(nextLesson) {
     const saved = { ...clone(nextLesson), lastModified: dateStamp() };
-    setLessons((current) => current.map((lesson) => (lesson.id === saved.id ? saved : lesson)).concat(
-      current.some((lesson) => lesson.id === saved.id) ? [] : [saved]
-    ));
-    setNotice("Lesson 已儲存；學生 QR 永遠只會開啟該節的 Vocabulary Quiz。");
+    const nextLessons = lessons.map((lesson) => (lesson.id === saved.id ? saved : lesson)).concat(
+      lessons.some((lesson) => lesson.id === saved.id) ? [] : [saved]
+    );
+    return persistLessonState(nextLessons, "Lesson 已儲存");
   }
 
   function startLesson(lessonId) {
@@ -148,7 +274,7 @@ function App() {
     setScreen("cockpit");
   }
 
-  function duplicateLesson(lesson) {
+  async function duplicateLesson(lesson) {
     const duplicate = clone(lesson);
     duplicate.id = `${lesson.id}-copy-${Date.now()}`;
     duplicate.title = `${lesson.title} Copy`;
@@ -156,34 +282,30 @@ function App() {
     duplicate.unitId = "custom";
     duplicate.unitKey = "custom";
     duplicate.lastModified = dateStamp();
-    setLessons((current) => [...current, duplicate]);
-    setNotice("已建立可自由調整的 Lesson 副本。");
+    return persistLessonState([...lessons, duplicate], "已建立可自由調整的 Lesson 副本");
   }
 
-  function deleteLesson(lesson) {
+  async function deleteLesson(lesson) {
     if (lesson.bookId !== "custom") {
       setNotice("Starter 與 Unit 1–4 的 46 節預設 Lesson 會固定保留；可改用「重設 Lesson」。");
-      return;
+      return false;
     }
-    if (!window.confirm(`確定刪除 ${lesson.title} 嗎？`)) return;
-    setLessons((current) => current.filter((item) => item.id !== lesson.id));
-    setNotice("自訂 Lesson 已刪除。");
+    if (!window.confirm(`確定刪除 ${lesson.title} 嗎？`)) return false;
+    return persistLessonState(lessons.filter((item) => item.id !== lesson.id), "自訂 Lesson 已刪除");
   }
 
-  function resetLesson(lesson) {
+  async function resetLesson(lesson) {
     const seed = seedLessons.find((item) => item.id === lesson.id);
-    if (!seed) return;
-    if (!window.confirm(`重設 ${lesson.title} 為目前範本？已調整的 Step 會被取代。`)) return;
-    setLessons((current) => current.map((item) => (item.id === lesson.id ? clone(seed) : item)));
-    setNotice("Lesson 已重設為目前範本。");
+    if (!seed) return false;
+    if (!window.confirm(`重設 ${lesson.title} 為目前範本？已調整的 Step 會被取代。`)) return false;
+    return persistLessonState(lessons.map((item) => (item.id === lesson.id ? clone(seed) : item)), "Lesson 已重設為目前範本");
   }
 
-  function createAndEditLesson() {
+  async function createAndEditLesson() {
     const lesson = createLesson();
-    setLessons((current) => [...current, lesson]);
-    setEditingLessonId(lesson.id);
+    const saved = await persistLessonState([...lessons, lesson], "已建立新的 Custom Lesson");
+    if (saved) setEditingLessonId(lesson.id);
   }
-
   async function saveQuizResult(result) {
     const outcome = await savePracticeResult(result);
     if (outcome.storage === "local") {
@@ -202,6 +324,10 @@ function App() {
   }
 
   function resetPreview() {
+    if (cloudLessons.status === "ready" || cloudLessons.status === "needs-import") {
+      setNotice("雲端教材已啟用；為避免覆蓋跨裝置設定，請先完成匯入或載入雲端最新版，不使用本機重設。 ");
+      return;
+    }
     if (!window.confirm("重設本機 Lesson 與本機 Preview Results？原始題庫與素材不會受影響。")) return;
     window.localStorage.removeItem(LESSONS_STORAGE_KEY);
     window.localStorage.removeItem(RESULTS_STORAGE_KEY);
@@ -253,6 +379,10 @@ function App() {
           onSave={saveLesson}
           onCloseEditor={() => setEditingLessonId(null)}
           onReset={resetPreview}
+          cloudLessons={cloudLessons}
+          onUnlockCloud={unlockCloudLessons}
+          onReloadCloud={reloadCloudLessons}
+          onImportCloud={importCurrentLessons}
         />
       ) : null}
 
@@ -275,6 +405,7 @@ function App() {
         <ResultsDashboard
           localResults={results}
           lessons={lessons}
+          mediaUnlockRequested={mediaUnlockRequested}
           onBack={() => setScreen("studio")}
           onClearLocal={(resultIds) => {
               const ids = new Set(Array.isArray(resultIds) ? resultIds : []);
@@ -334,14 +465,18 @@ function TeacherStudio({
   onCreate,
   onSave,
   onCloseEditor,
-  onReset
+  onReset,
+  cloudLessons,
+  onUnlockCloud,
+  onReloadCloud,
+  onImportCloud
 }) {
   const [expandedUnitKey, setExpandedUnitKey] = useState(null);
   const totalUnitCount = (source.books || []).reduce((total, book) => total + (book.units || []).length, 0);
   const totalStandardLessons = standardLessonCount();
 
   if (editingLesson) {
-    return <LessonEditor lesson={editingLesson} onSave={(lesson) => { onSave(lesson); onCloseEditor(); }} onCancel={onCloseEditor} />;
+    return <LessonEditor lesson={editingLesson} onSave={async (lesson) => { const saved = await onSave(lesson); if (saved) onCloseEditor(); return saved; }} onCancel={onCloseEditor} />;
   }
 
   const customLessons = lessons.filter((lesson) => lesson.bookId === "custom");
@@ -353,8 +488,9 @@ function TeacherStudio({
           <h1>{totalUnitCount} 個單元，{totalStandardLessons} 節課，隨時可調整。</h1>
         </div>
         <div className="hero-actions">
-          <button className="primary-button" onClick={onCreate}>＋ New Custom Lesson</button>
-          <button className="secondary-button" onClick={onReset}>重設本機 Preview</button>
+          <CloudLessonSync cloudLessons={cloudLessons} onUnlock={onUnlockCloud} onReload={onReloadCloud} onImport={onImportCloud} />
+          <button className="primary-button" onClick={onCreate} disabled={cloudLessons.busy}>＋ New Custom Lesson</button>
+          <button className="secondary-button" onClick={onReset} disabled={cloudLessons.status === "ready" || cloudLessons.status === "needs-import" || cloudLessons.busy}>重設本機 Preview</button>
         </div>
       </section>
 
@@ -385,6 +521,28 @@ function TeacherStudio({
   );
 }
 
+function CloudLessonSync({ cloudLessons, onUnlock, onReload, onImport }) {
+  const [showPasscode, setShowPasscode] = useState(false);
+  const [passcode, setPasscode] = useState("");
+
+  async function submit(event) {
+    event.preventDefault();
+    const unlocked = await onUnlock(passcode);
+    if (unlocked) {
+      setPasscode("");
+      setShowPasscode(false);
+    }
+  }
+
+  if (!isFirebaseConfigured) return <div className="cloud-lesson-sync local"><strong>雲端教材</strong><span>本機 Preview</span></div>;
+  if (cloudLessons.status === "needs-import") {
+    return <div className="cloud-lesson-sync needs-import"><div><strong>雲端教材尚未建立</strong><span>請確認此電腦顯示最新 Lesson，再匯入雲端。</span></div><button className="primary-button" type="button" onClick={onImport} disabled={cloudLessons.busy}>{cloudLessons.busy ? "匯入中…" : "匯入目前 Lesson 至雲端"}</button></div>;
+  }
+  if (cloudLessons.status === "ready") {
+    return <div className="cloud-lesson-sync ready"><div><strong>雲端教材已連線</strong><span>版本 {cloudLessons.version} · 跨筆電同步</span></div><button className="secondary-button" type="button" onClick={onReload} disabled={cloudLessons.busy}>{cloudLessons.busy ? "同步中…" : "載入雲端最新版"}</button>{cloudLessons.conflict ? <p className="form-error">另一台裝置已有新版，請先載入雲端最新版。</p> : null}</div>;
+  }
+  return <div className="cloud-lesson-sync locked"><div><strong>雲端教材尚未解鎖</strong><span>輸入教師通行碼後，同步所有 Lesson。</span></div>{showPasscode ? <form className="cloud-lesson-unlock" onSubmit={submit}><input type="password" inputMode="numeric" autoComplete="off" value={passcode} onChange={(event) => setPasscode(event.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="六位數" aria-label="教師通行碼" autoFocus /><button className="primary-button" type="submit" disabled={cloudLessons.busy || passcode.length !== 6}>{cloudLessons.busy ? "連線中…" : "解鎖並同步"}</button></form> : <button className="secondary-button" type="button" onClick={() => setShowPasscode(true)}>啟用雲端教材</button>}</div>;
+}
 function LessonListRow({ lesson, onStart, onEdit, onDuplicate, onDelete, onResetLesson }) {
   const coreLesson = lesson.bookId !== "custom";
   const enabledStepCount = lesson.steps.filter((step) => step.enabled).length;
@@ -499,6 +657,8 @@ function LessonEditor({ lesson, onSave, onCancel }) {
   const [newStepType, setNewStepType] = useState("warmup");
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [mediaChanges, setMediaChanges] = useState({ uploads: [], cleanup: [] });
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     setDraft(clone(lesson));
@@ -568,6 +728,25 @@ function LessonEditor({ lesson, onSave, onCancel }) {
     }));
   }
 
+
+  async function saveDraft() {
+    setSaving(true);
+    setSaveError("");
+    try {
+      const saved = await onSave(draft);
+      if (!saved) {
+        setSaveError("Lesson 尚未保存。請依上方提示處理後再試。");
+        return;
+      }
+      const cleanup = mediaChanges.cleanup;
+      setMediaChanges({ uploads: [], cleanup: [] });
+      cleanup.forEach((path) => { deleteTeacherMedia(path).catch(() => undefined); });
+    } catch (error) {
+      setSaveError(error?.message || "Lesson 尚未保存，請稍後再試。");
+    } finally {
+      setSaving(false);
+    }
+  }
   return (
     <main className="editor-page">
       <div className="editor-title-row">
@@ -577,15 +756,11 @@ function LessonEditor({ lesson, onSave, onCancel }) {
         </div>
         <div className="editor-actions">
           <button className="secondary-button" onClick={() => { const uploads = mediaChanges.uploads; onCancel(); uploads.forEach((path) => { deleteTeacherMedia(path).catch(() => undefined); }); }}>取消</button>
-          <button className="primary-button" onClick={() => {
-            onSave(draft);
-            const cleanup = mediaChanges.cleanup;
-            setMediaChanges({ uploads: [], cleanup: [] });
-            cleanup.forEach((path) => { deleteTeacherMedia(path).catch(() => undefined); });
-          }}>Save Lesson</button>
+          <button className="primary-button" onClick={saveDraft} disabled={saving}>{saving ? "儲存中…" : "Save Lesson"}</button>
         </div>
       </div>
 
+      {saveError ? <p className="form-error">{saveError}</p> : null}
       <section className="editor-card lesson-details">
         <h2>Lesson details</h2>
         <div className="form-grid three-columns">
@@ -729,12 +904,14 @@ function StepContentFields({ step, lessonId, onChange, onTrackUpload, onTrackRem
   }
   if (step.type === "imageSlides") {
     return (
-      <label className="full-width">Slides（每行一個圖片網址或路徑）
-        <textarea
-          value={(content.slides || []).join("\n")}
-          onChange={(event) => onChange({ slides: event.target.value.split("\n").map((value) => value.trim()).filter(Boolean), slidesFromQuestionBank: false })}
-        />
-      </label>
+      <TeacherImageSlidesUpload
+        lessonId={lessonId}
+        slides={content.slides || []}
+        slideAssets={content.slideAssets || []}
+        onChange={onChange}
+        onTrackUpload={onTrackUpload}
+        onTrackRemoval={onTrackRemoval}
+      />
     );
   }
   if (step.type === "webPractice") {
@@ -1411,31 +1588,63 @@ function VideoStep({ step }) {
 }
 
 function SlideDeck({ step }) {
-  const slides = step.content.slides || [];
+  const legacySlides = Array.isArray(step.content.slides) ? step.content.slides : [];
+  const storedAssets = Array.isArray(step.content.slideAssets) ? step.content.slideAssets : [];
+  const assets = storedAssets.length
+    ? storedAssets
+    : legacySlides.map((source) => ({ kind: "legacy", source }));
+  const assetSignature = assets.map((asset) => (
+    asset?.kind === "image" ? "image:" + (asset.path || "") : "legacy:" + (asset?.source || "")
+  )).join("|");
   const [slideIndex, setSlideIndex] = useState(0);
+  const [resolvedSlides, setResolvedSlides] = useState([]);
   const pointerStart = useRef(null);
 
   useEffect(() => {
     setSlideIndex(0);
-  }, [slides.join("|")]);
+  }, [assetSignature]);
 
-  if (!slides.length) {
-    return <ContentCard icon="🖼️" title={step.title}><p>尚未設定圖片。可在 Lesson Studio 逐行貼上圖片路徑，並拖曳 Step 調整教學流程。</p></ContentCard>;
+  useEffect(() => {
+    let active = true;
+    setResolvedSlides([]);
+    const resolveSlides = async () => {
+      const nextSlides = await Promise.all(assets.map(async (asset) => {
+        if (asset?.kind !== "image") {
+          const source = String(asset?.source || "");
+          const localPath = /^[A-Za-z]:[\\/]|^\\\\/.test(source);
+          return { src: localPath ? "" : source, error: localPath && Boolean(source) };
+        }
+        try {
+          return { src: await resolveTeacherMediaUrl(asset.path), name: asset.name || "" };
+        } catch {
+          return { src: "", error: true, name: asset.name || "" };
+        }
+      }));
+      if (active) setResolvedSlides(nextSlides);
+    };
+    resolveSlides();
+    return () => { active = false; };
+  }, [assetSignature]);
+
+  if (!assets.length) {
+    return <ContentCard icon="🖼️" title={step.title}><p>尚未設定圖片。請在 Lesson Studio 逐張選取圖片上傳；既有本機路徑也需要重新選取。</p></ContentCard>;
   }
 
   function next() {
-    setSlideIndex((index) => Math.min(slides.length - 1, index + 1));
+    setSlideIndex((index) => Math.min(assets.length - 1, index + 1));
   }
 
   function previous() {
     setSlideIndex((index) => Math.max(0, index - 1));
   }
 
+  const current = resolvedSlides[slideIndex];
+
   return (
     <section className="slides-step">
       <div className="content-card-heading">
         <div><span className="content-icon">🖼️</span><div><p className="eyebrow">Manual slide controls only</p><h2>{step.title}</h2></div></div>
-        <span className="slide-count">{slideIndex + 1} / {slides.length}</span>
+        <span className="slide-count">{slideIndex + 1} / {assets.length}</span>
       </div>
       <div
         className="slide-frame"
@@ -1448,11 +1657,17 @@ function SlideDeck({ step }) {
           pointerStart.current = null;
         }}
       >
-        <img src={slides[slideIndex]} alt={"Vocabulary slide " + (slideIndex + 1)} />
+        {current?.src ? (
+          <img src={current.src} alt={"Vocabulary slide " + (slideIndex + 1)} />
+        ) : current?.error ? (
+          <div className="slide-missing">圖片載入失敗，請回 Teacher Studio 重新選取圖片。</div>
+        ) : (
+          <div className="slide-loading">圖片載入中…</div>
+        )}
       </div>
       <div className="slide-controls">
         <button className="secondary-button" onClick={previous} disabled={slideIndex === 0}>← Previous slide</button>
-        <button className="primary-button" onClick={next} disabled={slideIndex === slides.length - 1}>Next slide →</button>
+        <button className="primary-button" onClick={next} disabled={slideIndex === assets.length - 1}>Next slide →</button>
       </div>
     </section>
   );
@@ -1850,7 +2065,7 @@ function QuizResult({ result, onRestart, saving, saveError, savedStorage, onRetr
     </section>
   );
 }
-function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
+function ResultsDashboard({ localResults, lessons, mediaUnlockRequested, onBack, onClearLocal }) {
   const [queryText, setQueryText] = useState("");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [remoteResults, setRemoteResults] = useState([]);
@@ -1863,6 +2078,8 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
   const [lastExportId, setLastExportId] = useState("");
   const [lastExportedIds, setLastExportedIds] = useState([]);
   const [exportFormat, setExportFormat] = useState("csv");
+  const [mediaUnlock, setMediaUnlock] = useState({ url: "", expiresAt: 0 });
+  const [mediaUnlockBusy, setMediaUnlockBusy] = useState(false);
   const usingFirebase = isFirebaseConfigured;
   const results = usingFirebase ? remoteResults : localResults;
 
@@ -1888,14 +2105,50 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
     try {
       const session = await unlockTeacherSession(passcode);
       const loaded = await loadTeacherResults();
+      let createdUnlock = null;
       setTeacher(session);
       setRemoteResults(loaded);
-      setMessage(`已讀取 ${loaded.length} 筆匿名作答結果。`);
+      if (mediaUnlockRequested) {
+        try {
+          createdUnlock = await createTeacherMediaUnlock();
+          setMediaUnlock(createdUnlock);
+        } catch (unlockError) {
+          setError(unlockError?.message || "一次性 Image Slides 解鎖連結建立失敗。");
+        }
+      }
+      setMessage(createdUnlock
+        ? `已讀取 ${loaded.length} 筆匿名作答結果，並建立一次性 Image Slides 解鎖連結。`
+        : `已讀取 ${loaded.length} 筆匿名作答結果。`);
     } catch (cause) {
       setError(cause?.message || "教師通行碼或讀取結果失敗。");
     } finally {
       setPasscode("");
       setLoading(false);
+    }
+  }
+
+  async function buildMediaUnlockLink() {
+    setMediaUnlockBusy(true);
+    setError("");
+    try {
+      const created = await createTeacherMediaUnlock();
+      setMediaUnlock(created);
+      setMessage("一次性 Image Slides 解鎖連結已建立；請在 10 分鐘內開啟，且只能使用一次。");
+    } catch (cause) {
+      setError(cause?.message || "一次性 Image Slides 解鎖連結建立失敗。");
+    } finally {
+      setMediaUnlockBusy(false);
+    }
+  }
+
+  async function copyMediaUnlockLink() {
+    if (!mediaUnlock.url) return;
+    try {
+      await navigator.clipboard.writeText(mediaUnlock.url);
+      setMessage("一次性 Image Slides 解鎖連結已複製。請在 10 分鐘內開啟。");
+      setError("");
+    } catch {
+      setError("瀏覽器無法自動複製。請直接按「在此分頁啟用圖片上傳」。");
     }
   }
 
@@ -1972,6 +2225,7 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
       await teacherSignOut();
       setTeacher(null);
       setRemoteResults([]);
+      setMediaUnlock({ url: "", expiresAt: 0 });
       resetExportEligibility();
       setShowPasscodeForm(false);
       setMessage("已關閉 Results 工作階段。\n");
@@ -1986,9 +2240,30 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
         <div><p className="eyebrow">Teacher-only results</p><h1>{usingFirebase ? "Results" : "Local Preview Results"}</h1></div>
         <div className="editor-actions"><button className="secondary-button" onClick={onBack}>回 Teacher Studio</button>{usingFirebase && teacher ? <button className="icon-text-button" onClick={signOut} disabled={loading}>關閉 Results</button> : null}</div>
       </div>
+      {mediaUnlockRequested && !teacher ? <p className="dashboard-message">登入後會建立一次性 Image Slides 解鎖連結；Image Slides 本身不會顯示通行碼。</p> : null}
       {usingFirebase && !teacher ? <section className="teacher-auth-card"><h2>教師成績入口</h2>{!showPasscodeForm ? <><p>按下登入後，再輸入教師共用通行碼即可進入 Results。</p><div className="teacher-login-start"><button className="primary-button large-button" onClick={() => { setShowPasscodeForm(true); setError(""); }}>登入</button></div></> : <><p>請輸入教師共用通行碼。本次開啟有效；重新整理後需要再次輸入。</p><form className="teacher-passcode-form" onSubmit={signInAndLoad}><label>教師共用通行碼<input type="password" inputMode="numeric" autoComplete="off" autoFocus value={passcode} onChange={(event) => setPasscode(event.target.value.replace(/\D/g, "").slice(0, 6))} placeholder="六位數" aria-label="教師共用通行碼" /></label><button className="primary-button large-button" type="submit" disabled={loading || !passcode}>{loading ? "驗證中…" : "開啟 Results"}</button></form></>}</section> : null}
       {message ? <p className="dashboard-message">{message}</p> : null}
       {error ? <p className="form-error">{error}</p> : null}
+      {usingFirebase && teacher ? (
+        <section className="media-unlock-card">
+          <div>
+            <strong>Image Slides 圖片上傳</strong>
+            <span>建立 10 分鐘、一次有效的教師解鎖連結；學生仍只有圖片讀取權限。</span>
+          </div>
+          {!mediaUnlock.url ? (
+            <button className="primary-button" type="button" onClick={buildMediaUnlockLink} disabled={mediaUnlockBusy}>
+              {mediaUnlockBusy ? "建立中…" : "建立一次性解鎖連結"}
+            </button>
+          ) : (
+            <div className="media-unlock-actions">
+              <span>請於 {new Date(mediaUnlock.expiresAt).toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" })} 前開啟；開啟一次後即失效。</span>
+              <a className="primary-button" href={mediaUnlock.url}>在此分頁啟用圖片上傳</a>
+              <button className="secondary-button" type="button" onClick={copyMediaUnlockLink}>複製一次性連結</button>
+              <button className="secondary-button" type="button" onClick={buildMediaUnlockLink} disabled={mediaUnlockBusy}>{mediaUnlockBusy ? "建立中…" : "重新建立"}</button>
+            </div>
+          )}
+        </section>
+      ) : null}
       {(!usingFirebase || teacher) ? <>
         <section className="filter-row"><label>Student ID<input value={queryText} onChange={(event) => { setQueryText(event.target.value); resetExportEligibility(); }} placeholder={`例如 ${source.studentIdPolicy.example}`} /></label><label>Lesson<select value={lessonFilter} onChange={(event) => { setLessonFilter(event.target.value); resetExportEligibility(); }}><option value="all">All lessons</option>{lessons.filter((lesson) => lesson.contentProfile !== "placeholder" || lesson.bookId !== "custom").map((lesson) => <option key={lesson.id} value={lesson.id}>{lesson.title}</option>)}</select></label><button className="secondary-button" onClick={refresh} disabled={!usingFirebase || loading}>重新整理</button></section>
         <section className="export-bar"><div><strong>匯出後再刪除</strong><span>本次篩選：{filtered.length} 筆</span></div><div className="export-actions"><select value={exportFormat} onChange={(event) => { setExportFormat(event.target.value); resetExportEligibility(); }}><option value="csv">CSV</option><option value="json">JSON</option></select><button className="secondary-button" onClick={exportResults} disabled={loading || !filtered.length}>匯出</button><button className="danger-text-button" onClick={deleteAfterExport} disabled={loading || !lastExportId}>刪除已匯出資料</button></div></section>

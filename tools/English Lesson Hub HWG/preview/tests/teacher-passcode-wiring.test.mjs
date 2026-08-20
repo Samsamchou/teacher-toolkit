@@ -16,6 +16,9 @@ test("teacher passcode remains server-side and opens an in-memory Results sessio
   assert.ok(functionSource.includes("teacherResultsList"));
   assert.ok(functionSource.includes("teacherResultsRecordExport"));
   assert.ok(functionSource.includes("teacherResultsDelete"));
+  assert.ok(functionSource.includes("teacherLessonConfigLoad"));
+  assert.ok(functionSource.includes("teacherLessonConfigSave"));
+  assert.ok(functionSource.includes("teacherLessonConfigs"));
   assert.equal(functionSource.includes("createCustomToken"), false);
   assert.equal(webClient.includes("signInWithCustomToken"), false);
   assert.ok(webClient.includes("let teacherResultsSession = null"));
@@ -26,7 +29,7 @@ test("teacher passcode remains server-side and opens an in-memory Results sessio
 test("all Function-owned teacher records and browser-wide Results reads are inaccessible to clients", () => {
   assert.equal(rules.includes("request.auth.token.teacher"), false);
   assert.ok(rules.includes("allow list, update, delete: if false"));
-  for (const collection of ["teacherLoginAttempts", "teacherResultSessions", "exportEvents"]) {
+  for (const collection of ["teacherLoginAttempts", "teacherResultSessions", "teacherLessonConfigs", "exportEvents"]) {
     assert.ok(rules.includes(`match /${collection}/`));
   }
   assert.ok(rules.includes("allow read, write: if false"));

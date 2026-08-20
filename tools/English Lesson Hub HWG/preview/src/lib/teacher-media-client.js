@@ -1,11 +1,14 @@
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { ensureAnonymousSession, isFirebaseConfigured } from "./firebase-client.js";
+import { ensureAnonymousSession, ensureTeacherMediaAccess, isFirebaseConfigured } from "./firebase-client.js";
 
 export const TEACHER_MEDIA_MAX_BYTES = 500 * 1024 * 1024;
+export const TEACHER_IMAGE_MAX_BYTES = 20 * 1024 * 1024;
+const AUTHORIZATION_CODES = new Set(["storage/unauthorized", "storage/unauthenticated"]);
 
 const MEDIA_TYPES = Object.freeze({
-  video: { extension: ".mp4", contentType: "video/mp4", label: "MP4 影片" },
-  presentation: { extension: ".pdf", contentType: "application/pdf", label: "PDF 簡報" }
+  video: { extensions: [".mp4"], contentTypes: ["video/mp4"], label: "MP4 影片", maxBytes: TEACHER_MEDIA_MAX_BYTES },
+  presentation: { extensions: [".pdf"], contentTypes: ["application/pdf"], label: "PDF 簡報", maxBytes: TEACHER_MEDIA_MAX_BYTES },
+  image: { extensions: [".png", ".jpg", ".jpeg", ".webp"], contentTypes: ["image/png", "image/jpeg", "image/webp"], label: "圖片", maxBytes: TEACHER_IMAGE_MAX_BYTES }
 });
 
 function safePathSegment(value, fallback) {
@@ -19,12 +22,37 @@ function mediaTypeConfig(mediaType) {
   return config;
 }
 
+function fileExtension(fileName, config) {
+  const extension = String(fileName || "").toLowerCase().match(/\.[a-z0-9]+$/)?.[0] || "";
+  if (!config.extensions.includes(extension)) throw new Error(`只接受 ${config.label} 檔案。`);
+  return extension;
+}
+
+function contentTypeForFile(file, extension, config) {
+  const browserType = String(file.type || "").toLowerCase();
+  if (browserType && config.contentTypes.includes(browserType)) return browserType;
+  const byExtension = {
+    ".mp4": "video/mp4",
+    ".pdf": "application/pdf",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp"
+  };
+  const resolved = byExtension[extension];
+  if (!resolved || !config.contentTypes.includes(resolved)) throw new Error(`只接受 ${config.label} 檔案。`);
+  return resolved;
+}
+
 function requireTeacherMediaPath(path) {
   const candidate = String(path || "");
-  if (!/^teacher-media\/[a-z0-9-]{3,96}\/(video|presentation)\/[A-Za-z0-9][A-Za-z0-9._-]{0,120}$/.test(candidate)) {
-    throw new Error("教材路徑無效，已停止操作。");
-  }
-  return candidate;
+  if (/^teacher-image-slides\/[a-z0-9-]{3,96}\/[A-Za-z0-9][A-Za-z0-9._-]{0,120}$/.test(candidate)) return candidate;
+  if (/^teacher-media\/[a-z0-9-]{3,96}\/(video|presentation)\/[A-Za-z0-9][A-Za-z0-9._-]{0,120}$/.test(candidate)) return candidate;
+  throw new Error("教材路徑無效，已停止操作。");
+}
+
+function isTeacherImagePath(path) {
+  return String(path || "").startsWith("teacher-image-slides/");
 }
 
 async function directTeacherMediaStorage() {
@@ -36,29 +64,16 @@ async function directTeacherMediaStorage() {
 export function validateTeacherMediaFile(mediaType, file) {
   const config = mediaTypeConfig(mediaType);
   if (!file || typeof file.name !== "string") throw new Error(`請選擇 ${config.label} 檔案。`);
-  if (!file.name.toLowerCase().endsWith(config.extension)) throw new Error(`只接受 ${config.label} 檔案。`);
+  const extension = fileExtension(file.name, config);
+  const contentType = contentTypeForFile(file, extension, config);
   const size = Number(file.size || 0);
   if (!Number.isFinite(size) || size < 1) throw new Error("選取的檔案沒有可上傳內容。");
-  if (size > TEACHER_MEDIA_MAX_BYTES) throw new Error("單一教材檔不可超過 500 MB。");
-  return config;
+  if (size > config.maxBytes) throw new Error(`${config.label}單一檔案不可超過 ${mediaType === "image" ? "20 MB" : "500 MB"}。`);
+  return { ...config, extension, contentType };
 }
 
-export async function uploadTeacherMedia({ lessonId, mediaType, file, onProgress }) {
-  const config = validateTeacherMediaFile(mediaType, file);
-  const storage = await directTeacherMediaStorage();
-  const safeLessonId = safePathSegment(lessonId, "lesson").toLowerCase();
-  const safeName = safePathSegment(file.name.replace(new RegExp(`${config.extension}$`, "i"), ""), "media");
-  const nonce = typeof crypto?.randomUUID === "function" ? crypto.randomUUID().replaceAll("-", "").slice(0, 12) : Math.random().toString(36).slice(2, 14);
-  const path = `teacher-media/${safeLessonId}/${mediaType}/${Date.now()}-${nonce}-${safeName}${config.extension}`;
-  const target = ref(storage, path);
-  const task = uploadBytesResumable(target, file, {
-    contentType: config.contentType,
-    customMetadata: {
-      lessonId: safeLessonId,
-      mediaType,
-      originalName: encodeURIComponent(file.name)
-    }
-  });
+async function uploadOnce({ target, file, metadata, onProgress }) {
+  const task = uploadBytesResumable(target, file, metadata);
   await new Promise((resolve, reject) => {
     task.on("state_changed", (snapshot) => {
       const total = Number(snapshot.totalBytes || 0);
@@ -67,6 +82,40 @@ export async function uploadTeacherMedia({ lessonId, mediaType, file, onProgress
     }, reject, resolve);
   });
   onProgress?.(100);
+}
+
+export async function uploadTeacherMedia({ lessonId, mediaType, file, onProgress }) {
+  const config = validateTeacherMediaFile(mediaType, file);
+  const storage = await directTeacherMediaStorage();
+  const safeLessonId = safePathSegment(lessonId, "lesson").toLowerCase();
+  const safeName = safePathSegment(file.name.replace(new RegExp(`${config.extension}$`, "i"), ""), "media");
+  const nonce = typeof crypto?.randomUUID === "function" ? crypto.randomUUID().replaceAll("-", "").slice(0, 12) : Math.random().toString(36).slice(2, 14);
+  const path = mediaType === "image"
+    ? `teacher-image-slides/${safeLessonId}/${Date.now()}-${nonce}-${safeName}${config.extension}`
+    : `teacher-media/${safeLessonId}/${mediaType}/${Date.now()}-${nonce}-${safeName}${config.extension}`;
+  const target = ref(storage, path);
+  const metadata = {
+    contentType: config.contentType,
+    customMetadata: { lessonId: safeLessonId, mediaType, originalName: encodeURIComponent(file.name) }
+  };
+  if (mediaType === "image") await ensureTeacherMediaAccess();
+  try {
+    await uploadOnce({ target, file, metadata, onProgress });
+  } catch (error) {
+    if (mediaType !== "image" || !AUTHORIZATION_CODES.has(String(error?.code || ""))) throw error;
+    await ensureTeacherMediaAccess({ forceRefresh: true });
+    onProgress?.(0);
+    try {
+      await uploadOnce({ target, file, metadata, onProgress });
+    } catch (retryError) {
+      if (AUTHORIZATION_CODES.has(String(retryError?.code || ""))) {
+        const denied = new Error("Firebase Storage 規則仍拒絕圖片上傳。");
+        denied.code = "teacher-media-storage-rules-denied";
+        throw denied;
+      }
+      throw retryError;
+    }
+  }
   return {
     kind: mediaType,
     path,
@@ -84,5 +133,23 @@ export async function resolveTeacherMediaUrl(path) {
 
 export async function deleteTeacherMedia(path) {
   const storage = await directTeacherMediaStorage();
-  await deleteObject(ref(storage, requireTeacherMediaPath(path)));
+  const target = ref(storage, requireTeacherMediaPath(path));
+  if (!isTeacherImagePath(path)) return deleteObject(target);
+  await ensureTeacherMediaAccess();
+  try {
+    await deleteObject(target);
+  } catch (error) {
+    if (!AUTHORIZATION_CODES.has(String(error?.code || ""))) throw error;
+    await ensureTeacherMediaAccess({ forceRefresh: true });
+    try {
+      await deleteObject(target);
+    } catch (retryError) {
+      if (AUTHORIZATION_CODES.has(String(retryError?.code || ""))) {
+        const denied = new Error("Firebase Storage 規則仍拒絕圖片刪除。");
+        denied.code = "teacher-media-storage-rules-denied";
+        throw denied;
+      }
+      throw retryError;
+    }
+  }
 }

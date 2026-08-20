@@ -2,6 +2,7 @@
 
 const crypto = require("node:crypto");
 const { initializeApp } = require("firebase-admin/app");
+const { getAuth } = require("firebase-admin/auth");
 const { getFirestore, Timestamp } = require("firebase-admin/firestore");
 const { defineSecret } = require("firebase-functions/params");
 const { HttpsError, onCall } = require("firebase-functions/v2/https");
@@ -29,11 +30,34 @@ initializeApp();
 function firestore() {
   return getFirestore();
 }
+
+const TEACHER_MEDIA_CLAIM = "lessonHubTeacherMediaExpiresAt";
+const MEDIA_UNLOCK_COLLECTION = "teacherMediaUnlocks";
+const MEDIA_UNLOCK_DURATION_MS = 10 * 60 * 1000;
+const MEDIA_UNLOCK_TOKEN_BYTES = 32;
+
+function adminAuth() {
+  return getAuth();
+}
+
+async function updateTeacherMediaClaim(anonymousUid, expiresAtMs) {
+  const user = await adminAuth().getUser(anonymousUid);
+  const claims = { ...(user.customClaims || {}) };
+  if (expiresAtMs > 0) claims[TEACHER_MEDIA_CLAIM] = Math.floor(expiresAtMs);
+  else delete claims[TEACHER_MEDIA_CLAIM];
+  await adminAuth().setCustomUserClaims(anonymousUid, claims);
+}
 const teacherResultsPasscode = defineSecret("TEACHER_RESULTS_PASSCODE");
 const ATTEMPT_COLLECTION = "teacherLoginAttempts";
 const SESSION_COLLECTION = "teacherResultSessions";
 const RESULT_COLLECTION = "practiceResults";
 const EXPORT_COLLECTION = "exportEvents";
+const LESSON_CONFIG_COLLECTION = "teacherLessonConfigs";
+const LESSON_CONFIG_DOCUMENT = "current";
+const LESSON_CONFIG_SCHEMA = "teacher-lesson-config-v1";
+const MAX_LESSON_CONFIG_BYTES = 900000;
+const MAX_LESSON_COUNT = 160;
+const MAX_STEPS_PER_LESSON = 80;
 const GLOBAL_ATTEMPT_ID = "global";
 const ATTEMPT_RECORD_RETENTION_MS = 24 * 60 * 60 * 1000;
 const configuredSessionHours = Number(teacherPasscode.sessionHours);
@@ -134,6 +158,130 @@ async function requireTeacherResultsSession(request) {
   return { anonymousUid, sessionId, sessionRef };
 }
 
+
+function normalizeMediaUnlockToken(value) {
+  const token = typeof value === "string" ? value.trim() : "";
+  return /^[A-Za-z0-9_-]{40,128}$/.test(token) ? token : "";
+}
+
+function mediaUnlockTokenHash(token) {
+  return crypto.createHash("sha256").update(token, "utf8").digest("hex");
+}
+
+async function createTeacherMediaUnlockForSession(request) {
+  const session = await requireTeacherResultsSession(request);
+  const token = crypto.randomBytes(MEDIA_UNLOCK_TOKEN_BYTES).toString("base64url");
+  const nowMs = Date.now();
+  const expiresAt = nowMs + MEDIA_UNLOCK_DURATION_MS;
+  await firestore().collection(MEDIA_UNLOCK_COLLECTION).doc(mediaUnlockTokenHash(token)).set({
+    schemaVersion: "teacher-media-unlock-v1",
+    createdByUid: session.anonymousUid,
+    createdAt: Timestamp.fromMillis(nowMs),
+    expiresAt: Timestamp.fromMillis(expiresAt),
+    usedAt: null,
+    redeemedByUid: null
+  });
+  return { token, expiresAt };
+}
+
+async function redeemTeacherMediaUnlockForCaller(request) {
+  const anonymousUid = requireAnonymousCaller(request);
+  const token = normalizeMediaUnlockToken(request.data?.token);
+  if (!token) throw new HttpsError("permission-denied", "教師解鎖連結無效，請重新建立連結。");
+  const database = firestore();
+  const unlockRef = database.collection(MEDIA_UNLOCK_COLLECTION).doc(mediaUnlockTokenHash(token));
+  const nowMs = Date.now();
+  const unlock = await database.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(unlockRef);
+    const data = snapshot.data() || {};
+    const expiresAt = timestampMillis(data.expiresAt);
+    if (!snapshot.exists || data.schemaVersion !== "teacher-media-unlock-v1" || data.usedAt || expiresAt <= nowMs) {
+      throw new HttpsError("permission-denied", "教師解鎖連結已使用或已過期，請重新建立連結。");
+    }
+    transaction.update(unlockRef, {
+      usedAt: Timestamp.fromMillis(nowMs),
+      redeemedAt: Timestamp.fromMillis(nowMs),
+      redeemedByUid: anonymousUid
+    });
+    return { expiresAt };
+  });
+  await updateTeacherMediaClaim(anonymousUid, unlock.expiresAt);
+  return { expiresAt: unlock.expiresAt };
+}
+
+function normalizeLessonConfigVersion(value) {
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) && parsed >= 0 && parsed <= 1000000000 ? parsed : 0;
+}
+
+function normalizeLessonConfiguration(value) {
+  if (!Array.isArray(value) || value.length > MAX_LESSON_COUNT) {
+    throw new HttpsError("invalid-argument", "課程設定格式無效，請重新載入後再試。");
+  }
+  let json = "";
+  try {
+    json = JSON.stringify(value);
+  } catch {
+    throw new HttpsError("invalid-argument", "課程設定無法安全儲存，請移除不支援的內容後再試。");
+  }
+  if (!json || Buffer.byteLength(json, "utf8") > MAX_LESSON_CONFIG_BYTES) {
+    throw new HttpsError("invalid-argument", "課程設定過大，請減少教材內容後再試。");
+  }
+  const lessons = JSON.parse(json);
+  for (const lesson of lessons) {
+    if (!lesson || typeof lesson !== "object" || typeof lesson.id !== "string" || lesson.id.length < 1 || lesson.id.length > 120 || !Array.isArray(lesson.steps) || lesson.steps.length > MAX_STEPS_PER_LESSON) {
+      throw new HttpsError("invalid-argument", "課程設定格式無效，請重新載入後再試。");
+    }
+    for (const step of lesson.steps) {
+      if (!step || typeof step !== "object" || typeof step.id !== "string" || step.id.length < 1 || step.id.length > 160 || typeof step.type !== "string" || step.type.length > 80) {
+        throw new HttpsError("invalid-argument", "課程流程格式無效，請重新載入後再試。");
+      }
+    }
+  }
+  return lessons;
+}
+
+function lessonConfigResponse(snapshot) {
+  if (!snapshot.exists) return { exists: false, version: 0, lessons: [] };
+  const data = snapshot.data() || {};
+  if (data.schemaVersion !== LESSON_CONFIG_SCHEMA || !Array.isArray(data.lessons)) {
+    throw new HttpsError("failed-precondition", "雲端教材資料無法讀取，請聯絡管理者。");
+  }
+  return {
+    exists: true,
+    version: normalizeLessonConfigVersion(data.version),
+    lessons: normalizeLessonConfiguration(data.lessons)
+  };
+}
+
+async function loadLessonConfiguration() {
+  const reference = firestore().collection(LESSON_CONFIG_COLLECTION).doc(LESSON_CONFIG_DOCUMENT);
+  return lessonConfigResponse(await reference.get());
+}
+
+async function saveLessonConfiguration(lessons, expectedVersion) {
+  const normalizedLessons = normalizeLessonConfiguration(lessons);
+  const requestedVersion = Number(expectedVersion);
+  if (!Number.isSafeInteger(requestedVersion) || requestedVersion < 0) {
+    throw new HttpsError("invalid-argument", "課程版本無效，請重新載入後再試。");
+  }
+  const reference = firestore().collection(LESSON_CONFIG_COLLECTION).doc(LESSON_CONFIG_DOCUMENT);
+  return firestore().runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    const currentVersion = snapshot.exists ? normalizeLessonConfigVersion(snapshot.data()?.version) : 0;
+    if (requestedVersion !== currentVersion) {
+      throw new HttpsError("failed-precondition", "雲端教材已在另一台裝置更新；請重新載入後再儲存。");
+    }
+    const version = currentVersion + 1;
+    transaction.set(reference, {
+      schemaVersion: LESSON_CONFIG_SCHEMA,
+      version,
+      lessons: normalizedLessons,
+      updatedAt: Timestamp.fromMillis(Date.now())
+    });
+    return { version, lessonCount: normalizedLessons.length };
+  });
+}
 function reportString(value) {
   return typeof value === "string" ? value : "";
 }
@@ -246,9 +394,43 @@ exports.teacherPasscodeLogout = onCall(
     try {
       const session = await requireTeacherResultsSession(request);
       await session.sessionRef.delete();
+      await updateTeacherMediaClaim(session.anonymousUid, 0);
       return { signedOut: true };
     } catch (error) {
       return functionFailure(error, "logout");
+    }
+  }
+);
+
+
+exports.teacherMediaUnlockCreate = onCall(
+  {
+    region: functionsRegion,
+    timeoutSeconds: 30,
+    memory: "256MiB",
+    maxInstances: 2
+  },
+  async (request) => {
+    try {
+      return await createTeacherMediaUnlockForSession(request);
+    } catch (error) {
+      return functionFailure(error, "media-unlock-create");
+    }
+  }
+);
+
+exports.teacherMediaUnlockRedeem = onCall(
+  {
+    region: functionsRegion,
+    timeoutSeconds: 30,
+    memory: "256MiB",
+    maxInstances: 2
+  },
+  async (request) => {
+    try {
+      return await redeemTeacherMediaUnlockForCaller(request);
+    } catch (error) {
+      return functionFailure(error, "media-unlock-redeem");
     }
   }
 );
@@ -270,6 +452,39 @@ exports.teacherResultsList = onCall(
   }
 );
 
+exports.teacherLessonConfigLoad = onCall(
+  {
+    region: functionsRegion,
+    timeoutSeconds: 30,
+    memory: "256MiB",
+    maxInstances: 2
+  },
+  async (request) => {
+    try {
+      await requireTeacherResultsSession(request);
+      return await loadLessonConfiguration();
+    } catch (error) {
+      return functionFailure(error, "lesson-config-load");
+    }
+  }
+);
+
+exports.teacherLessonConfigSave = onCall(
+  {
+    region: functionsRegion,
+    timeoutSeconds: 60,
+    memory: "512MiB",
+    maxInstances: 2
+  },
+  async (request) => {
+    try {
+      await requireTeacherResultsSession(request);
+      return await saveLessonConfiguration(request.data?.lessons, request.data?.expectedVersion);
+    } catch (error) {
+      return functionFailure(error, "lesson-config-save");
+    }
+  }
+);
 exports.teacherResultsRecordExport = onCall(
   {
     region: functionsRegion,

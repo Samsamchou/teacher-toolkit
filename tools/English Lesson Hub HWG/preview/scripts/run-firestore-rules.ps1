@@ -16,7 +16,7 @@ if (-not $javaCommand) {
 }
 Push-Location $root
 try {
-  firebase emulators:exec --only firestore --config firebase.emulator.json --project demo-lesson-hub "node --test tests/firestore-rules.integration.mjs"
+  firebase emulators:exec --only firestore,storage --config firebase.emulator.json --project demo-lesson-hub "node --test tests/firestore-rules.integration.mjs tests/storage-rules.integration.mjs"
   if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 } finally {
   Pop-Location

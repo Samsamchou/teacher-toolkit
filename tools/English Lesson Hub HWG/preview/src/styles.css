@@ -262,8 +262,8 @@ input:focus, textarea:focus, select:focus { border-color: #1457d9; box-shadow: 0
 .ab-repeat input { width: 80px; margin: 0; padding: 7px; }
 .slides-step { display: flex; flex-direction: column; gap: 15px; }
 .slide-count { padding: 7px 10px; border-radius: 999px; color: #2e5fae; background: #eaf2ff; font-weight: 800; font-size: .85rem; }
-.slide-frame { min-width: 0; min-height: 430px; flex: 1; display: grid; place-items: center; overflow: clip; border-radius: 17px; background: radial-gradient(circle, #fff 0%, #edf5ff 78%); border: 1px solid #dce7f5; }
-.slide-frame img { display: block; width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; }
+.slide-frame { min-width: 0; min-height: 430px; flex: 1; display: grid; place-items: center; overflow: visible; border-radius: 17px; background: radial-gradient(circle, #fff 0%, #edf5ff 78%); border: 1px solid #dce7f5; }
+.slide-frame img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; }
 .slide-controls { justify-content: space-between; gap: 10px; }
 
 .classroom-tools { display: grid; align-content: start; gap: 12px; }
@@ -827,8 +827,8 @@ body.projector-active {
 .projector-cockpit .video-time { min-width: 68px; font-size: .76rem; }
 .projector-cockpit .video-volume-control input { width: 56px; }
 .projector-cockpit .slides-step { min-height: 0; }
-.projector-cockpit .slide-frame { width: 100%; height: 0; min-height: 0; flex: 1 1 0; }
-.projector-cockpit .slide-frame img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
+.projector-cockpit .slide-frame { width: 100%; height: auto; min-height: 0; flex: 1 1 auto; overflow: visible; }
+.projector-cockpit .slide-frame img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; }
 .projector-cockpit .ebook-launch-panel { padding: clamp(14px, 2vw, 28px); }
 .projector-cockpit .slide-controls { gap: 6px; }
 .projector-cockpit .slide-controls button { padding: 5px 9px; font-size: .76rem; }
@@ -844,3 +844,16 @@ body.projector-active {
 .lesson-stage:fullscreen > .slides-step,
 .lesson-stage:fullscreen > .quiz-shell { width: 100%; height: 100%; min-height: 0; border-radius: 0; }
 .lesson-stage:fullscreen .embed-step iframe { min-height: 0; flex: 1 1 0; }
+
+/* Teacher Studio cloud lesson sync */
+.cloud-lesson-sync { min-width: min(100%, 300px); display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid #cddafd; border-radius: 14px; background: rgba(255,255,255,.82); color: #314b86; }
+.cloud-lesson-sync > div { display: grid; gap: 2px; }
+.cloud-lesson-sync strong { color: #253b82; }
+.cloud-lesson-sync span { font-size: .78rem; font-weight: 700; }
+.cloud-lesson-sync.ready { border-color: #74d5b2; background: #ebfff6; }
+.cloud-lesson-sync.locked { border-style: dashed; }
+.cloud-lesson-sync.local { justify-content: center; }
+.cloud-lesson-unlock { display: flex; align-items: center; gap: 7px; }
+.cloud-lesson-unlock input { width: 94px; min-height: 38px; border: 1px solid #c7d5fb; border-radius: 10px; padding: 0 9px; font: 800 .92rem/1 var(--english-quiz-font); letter-spacing: .12em; }
+.cloud-lesson-sync .form-error { width: 100%; margin: 0; }
+@media (max-width: 760px) { .cloud-lesson-sync { width: 100%; } }

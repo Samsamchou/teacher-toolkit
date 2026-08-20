@@ -36,10 +36,10 @@ if (hostingTarget !== "lesson-hub-v03") errors.push("Hosting site must be the de
 if (hosting.length !== 1 || hosting[0]?.target !== hostingTarget) errors.push("firebase.json must contain exactly one dedicated Hosting target.");
 if (JSON.stringify(targets?.[hostingTarget] || []) !== JSON.stringify([hostingTarget])) errors.push("Hosting target mapping must not point to the default site.");
 if (firebaseJson.storage?.rules !== "storage.rules") errors.push("firebase.json must deploy the teacher media Storage rules.");
-for (const required of ["anonymousTeacherMediaUploader", "allow list: if false", "request.resource.size <= 524288000", "request.resource.contentType == 'video/mp4'", "request.resource.contentType == 'application/pdf'"]) {
+for (const required of ["anonymousTeacherMediaUploader", "teacherImageUploader", "/teacher-image-slides/", "lessonHubTeacherMediaExpiresAt", "allow list: if false", "request.resource.size <= 524288000", "request.resource.size <= 20971520", "request.resource.contentType == 'video/mp4'", "request.resource.contentType == 'application/pdf'"]) {
   if (!storageRules.includes(required)) errors.push(`Storage rules missing required guard: ${required}`);
 }
-for (const required of ["anonymousStudent", "allow create: if anonymousStudent()", "allow list, update, delete: if false", "match /teacherResultSessions/{sessionId}"]) {
+for (const required of ["anonymousStudent", "allow create: if anonymousStudent()", "allow list, update, delete: if false", "match /teacherResultSessions/{sessionId}", "match /teacherLessonConfigs/{configId}", "match /teacherMediaUnlocks/{unlockId}"]) {
   if (!rules.includes(required)) errors.push(`Firestore rules missing required guard: ${required}`);
 }
 if (rules.includes("request.auth.token.teacher")) errors.push("Firestore rules must not rely on a teacher claim.");
@@ -56,11 +56,14 @@ const report = {
     anonymousCreate: rules.includes("allow create: if anonymousStudent()"),
     browserResultListBlocked: rules.includes("allow list, update, delete: if false"),
     serverSessionRecordsBlocked: rules.includes("match /teacherResultSessions/{sessionId}") && rules.includes("allow read, write: if false"),
+    functionOwnedUnlockRecordsBlocked: rules.includes("match /teacherMediaUnlocks/{unlockId}") && rules.includes("allow read, write: if false"),
     teacherClaimRemoved: !rules.includes("request.auth.token.teacher")
   },
   storageRuleGuards: {
     anonymousDirectUploadRestricted: storageRules.includes("anonymousTeacherMediaUploader") && !storageRules.includes("teacherMediaAccess"),
     browserListBlocked: storageRules.includes("allow list: if false"),
+    imageWritesRequireShortClaim: storageRules.includes("teacherImageUploader") && storageRules.includes("lessonHubTeacherMediaExpiresAt"),
+    imageMaxUploadBytes: storageRules.includes("request.resource.size <= 20971520"),
     maxUploadBytes: storageRules.includes("request.resource.size <= 524288000")
   },
   publicWebConfig: provided.length === publicConfigKeys.length ? "environment" : runtimeConfigSupported ? "hosting-runtime" : "pending",

@@ -240,3 +240,48 @@
 - 發布前隔離副本通過 52 項網站測試、Vite 正式建置、Results 正式安全閘門與 Firebase preflight。
 - 正式首頁、`/assets/index-BpWGERu-.js` 與 `/assets/index-HPtMyVgC.css` 均讀回 HTTP 200；JS 含 `ResizeObserver`，CSS 含完整比例舞台規則。
 - 仍需教師以投影瀏覽器暫停含底部字幕的影片，並在全螢幕、直式、超寬來源各確認一次實際畫面。
+## 2026-08-20 Image Slides 與 Teacher Studio 雲端同步（已部署）
+
+- Image Slides 移除投影模式的零高度與隱藏裁切規則；圖片採原始尺寸、`object-fit: contain`、完整置中。直式、橫式與小尺寸圖片均不裁切、不拉伸，小圖不強制放大。
+- Teacher Studio 新增「雲端教材」控制：以既有六位數教師通行碼建立短期工作階段後，透過受控 Functions 讀取／保存全部 46 節預設 Lesson 與 Custom Lessons。Firestore 瀏覽器直接讀寫 `teacherLessonConfigs` 一律拒絕。
+- 第一次雲端啟用不會自動上傳：必須在保有最新設定的一般 Chrome 確認「匯入目前 Lesson 至雲端」，避免無痕視窗的預設 7 Steps 覆蓋既有 14 Steps。
+- 雲端設定含遞增版本；兩台筆電同時編輯時，舊版本儲存會被拒絕，介面要求先「載入雲端最新版」。只有 Firebase 成功回覆後才顯示已儲存至雲端；Local Storage 保留為離線備援。
+- 隔離副本已通過：54 項網站測試、6 項 Functions 測試、Functions 語法檢查、Vite 正式建置、Firestore 規則測試與 Firebase preflight。
+- 已正式發布 Hosting target `lesson-hub-v03`、Functions codebase `teacher-access` 與 Firestore 規則；未發布預設 Hosting、Storage 規則，也未修改或刪除匿名成績資料。
+- 正式網址為 <https://lesson-hub-v03.web.app>；首頁回應 HTTP 200，線上資產為 `/assets/index-CF6ZLgXV.js` 與 `/assets/index-D90zSz78.css`。
+- 雲端已列出 7 個 Node.js 22 Functions，其中 `teacherLessonConfigLoad` 與 `teacherLessonConfigSave` 為本次新建，其餘 5 個既有教師 Results／通行碼 Functions 均保留並更新成功。
+- 線上 JavaScript 已讀回雲端載入、雲端儲存、首次匯入與版本衝突保護標記；線上 CSS 已讀回 `object-fit: contain` 與 `overflow: visible` 的 Image Slides 完整顯示規則。
+- Firebase CLI 提示 asia-east1 尚未設定舊容器映像自動清理政策；本次未擅自新增或刪除 Artifact Registry 映像政策，不影響目前網站與 Functions 運作。
+
+### 部署後教師驗收順序
+
+1. 在目前一般 Chrome 確認 **HWG7 Unit 1 Lesson 1** 仍為 **14 Steps**，解鎖雲端教材後按「匯入目前 Lesson 至雲端」。
+2. 在無痕視窗輸入教師通行碼，載入雲端教材，確認同一 Lesson 為 14 Steps。
+3. 在另一台筆電重複第 2 步；再以兩台裝置製造一次版本衝突，確認舊畫面被要求重新載入。
+4. 投影環境測試直式、橫式與小尺寸 Image Slides，確認四邊完整可見且不被裁切。
+
+## 2026-08-20 Image Slides 一次性教師解鎖（已部署）
+
+- 已確認 RDQ 規格卡：`rdq/RDQ-spec-image-slides-upload-permission-20260820.md`。
+- Image Slides 不再顯示教師通行碼欄位；未解鎖時提供「開啟教師解鎖頁」與「重新檢查授權」。教師解鎖頁會在新分頁開啟，原 Lesson Editor 草稿不會因導頁消失。
+- Results 驗證教師通行碼後才可建立一次性連結。連結有效 10 分鐘且只能兌換一次；伺服器只保存權杖 SHA-256，不保存原始權杖。兌換後把短期 `lessonHubTeacherMediaExpiresAt` claim 綁定到該匿名 Auth。
+- Image Slides 圖片上傳與刪除只接受有效短期 claim；遇到授權失效會重新整理 token 並自動重試一次。學生匿名 Auth 只能讀取已知圖片路徑，不能上傳、刪除或列出圖片。
+- 已移除舊的 `teacherMediaGrant` 長時授權 Function 與前端入口，避免繞過一次性連結。MP4／PDF 既有直接匿名上傳流程未變更。
+- 錯誤提示已區分未解鎖、已過期、Storage 規則拒絕與網路中斷，且不顯示 Firebase Storage 原始路徑。
+
+### 本次驗證與正式發布
+
+- 乾淨隔離副本完整 preflight 通過：55 項網站測試、6 項 Functions 測試、7 項 Firestore／Storage Emulator 規則測試、Functions 語法、Vite 正式建置與 Firebase preflight。
+- 已正式發布 Hosting `lesson-hub-v03`、Functions codebase `teacher-access`、Firestore 規則與 Storage 規則；未修改或刪除匿名成績資料。
+- 正式站 <https://lesson-hub-v03.web.app>、JavaScript 與 CSS 資產均回應 HTTP 200；Firebase runtime project 為 `hwg7teaching`。
+- 雲端共有 9 個 Node.js 22 教師 Functions，全部為 `ACTIVE`；`teacherMediaUnlockCreate`／`teacherMediaUnlockRedeem` 已新建，舊 `teacherMediaGrant` 已刪除。
+- 未登入呼叫兩個解鎖 Functions 均回 HTTP 401 `UNAUTHENTICATED`；臨時匿名學生呼叫建立解鎖及偽造兌換均回 HTTP 403 `PERMISSION_DENIED`，測試匿名帳號隨即刪除。
+- Windows sandbox helper 仍阻擋自動瀏覽器畫面驗收；不把教師通行碼登入、實際選圖與跨裝置畫面視為已驗收。
+
+### 教師實機驗收順序
+
+1. 在正式站進入任一 Image Slides 編輯區，確認沒有通行碼欄位，且顯示「需要教師解鎖」。
+2. 按「開啟教師解鎖頁」，由教師本人登入 Results；建立並按下「在此分頁啟用圖片上傳」。
+3. 回到原 Lesson Editor 分頁，確認自動顯示解鎖截止時間，再選取一張小型 JPG／PNG、上傳並按 Save Lesson。
+4. 以無痕視窗或另一台筆電載入同一節 Lesson，確認圖片可讀；若要在該裝置上傳，必須另外建立並兌換新的單次連結。
+5. 以學生模式確認圖片可見，但沒有上傳、刪除或列出圖片的操作。

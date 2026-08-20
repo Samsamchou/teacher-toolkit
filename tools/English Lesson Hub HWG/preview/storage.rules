@@ -6,13 +6,34 @@ service firebase.storage {
         && request.auth.token.firebase.sign_in_provider == 'anonymous';
     }
 
+    function teacherImageUploader() {
+      return anonymousTeacherMediaUploader()
+        && request.auth.token.lessonHubTeacherMediaExpiresAt is int
+        && request.auth.token.lessonHubTeacherMediaExpiresAt > request.time.toMillis();
+    }
+
     function validTeacherMedia(mediaType) {
       return (mediaType == 'video'
           && request.resource.contentType == 'video/mp4'
           && request.resource.size <= 524288000)
         || (mediaType == 'presentation'
           && request.resource.contentType == 'application/pdf'
-          && request.resource.size <= 524288000);
+          && request.resource.size <= 524288000)
+        || (mediaType == 'image'
+          && (request.resource.contentType == 'image/png'
+            || request.resource.contentType == 'image/jpeg'
+            || request.resource.contentType == 'image/webp')
+          && request.resource.size <= 20971520);
+    }
+
+    match /teacher-image-slides/{lessonId}/{fileName} {
+      allow get: if anonymousTeacherMediaUploader();
+      allow list: if false;
+      allow create, update: if teacherImageUploader()
+        && lessonId.matches('^[a-z0-9-]{3,96}$')
+        && fileName.matches('^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$')
+        && validTeacherMedia('image');
+      allow delete: if teacherImageUploader();
     }
 
     match /teacher-media/{lessonId}/{mediaType}/{fileName} {

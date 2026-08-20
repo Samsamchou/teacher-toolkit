@@ -6,10 +6,11 @@ import source from "../config/site-source.json" with { type: "json" };
 import { migrateLessonState } from "../src/lib/lesson-migrations.js";
 
 const root = resolve(import.meta.dirname, "..");
-const [mainSource, mediaCss, presentationSource] = await Promise.all([
+const [mainSource, mediaCss, presentationSource, imageUploaderSource] = await Promise.all([
   readFile(resolve(root, "src/main.jsx"), "utf8"),
   readFile(resolve(root, "src/media-presentation.css"), "utf8"),
-  readFile(resolve(root, "src/components/presentation-step.jsx"), "utf8")
+  readFile(resolve(root, "src/components/presentation-step.jsx"), "utf8"),
+  readFile(resolve(root, "src/components/teacher-image-slides-upload.jsx"), "utf8")
 ]);
 
 test("default Lesson Flow places the optional PDF presentation after video", () => {
@@ -68,15 +69,17 @@ test("stored Lessons adopt an official uploaded video only when the teacher has 
   assert.equal(withoutToken[0].steps[0].content.uploadedMedia.downloadUrl, undefined);
 });
 
-test("Studio and Lesson Flow wire uploaded MP4/PDF media, first-page PDF display, and the requested labels", () => {
-  for (const marker of ["TeacherMediaUpload", "mediaType=\"video\"", "mediaType=\"presentation\"", "PresentationStep", "Look and choose", "Listen and choose"]) {
-    assert.ok(mainSource.includes(marker), `missing ${marker}`);
+test("Studio and Lesson Flow wire uploaded MP4/PDF media, Image Slides, first-page PDF display, and the requested labels", () => {
+  for (const marker of ["TeacherMediaUpload", "TeacherImageSlidesUpload", "mediaType=\"video\"", "mediaType=\"presentation\"", "PresentationStep", "Look and choose", "Listen and choose"]) {
+    assert.ok(mainSource.includes(marker), "missing " + marker);
   }
   assert.equal(mainSource.includes("按下 SPIN 後，拉霸音效會從加速轉動"), false);
   assert.match(mediaCss, /\.slide-frame img \{ width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain;/);
+  assert.match(mediaCss, /\.teacher-image-slides-upload \{/);
   assert.match(mediaCss, /\.teacher-quiz-gate \.quiz-corner-mascot \{ top: 210px; width: clamp\(103px, 10.8vw, 151px\); \}/);
   assert.ok(presentationSource.includes("直接選擇檔案上傳"));
   assert.equal(presentationSource.includes("輸入教師通行碼後上傳"), false);
   assert.ok(mainSource.includes("resolveTeacherMediaUrl"));
   assert.ok(presentationSource.includes("resolveTeacherMediaUrl"));
+  assert.ok(imageUploaderSource.includes("slideAssets"));
 });

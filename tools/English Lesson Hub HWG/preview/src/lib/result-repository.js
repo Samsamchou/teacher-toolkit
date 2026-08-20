@@ -1,13 +1,16 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
   closeTeacherResultsSession,
+  createTeacherMediaUnlockLink,
   deleteTeacherResultsAfterExport,
   ensureAnonymousSession,
   firestore,
   isFirebaseConfigured,
   loadTeacherResultsFromServer,
+  loadTeacherLessonConfigFromServer,
   openTeacherResultsSession,
   recordTeacherResultsExport,
+  saveTeacherLessonConfigToServer,
   teacherSession
 } from "./firebase-client.js";
 
@@ -86,10 +89,16 @@ export async function savePracticeResult(result) {
   }
 }
 
-export async function unlockTeacherSession(passcode) {
+export async function unlockTeacherSession(passcode, { replaceExisting = false } = {}) {
   if (!isFirebaseConfigured) return { local: true };
-  return teacherSession() || openTeacherResultsSession(passcode);
+  return (!replaceExisting && teacherSession()) || openTeacherResultsSession(passcode, { replaceExisting });
 }
+export async function createTeacherMediaUnlock() {
+  if (!isFirebaseConfigured) throw new Error("本機 Preview 不會建立教師解鎖連結；請使用 Firebase 正式站。");
+  await ensureTeacherSession();
+  return createTeacherMediaUnlockLink();
+}
+
 
 export async function ensureTeacherSession() {
   if (!isFirebaseConfigured) return { local: true };
@@ -98,6 +107,17 @@ export async function ensureTeacherSession() {
   return current;
 }
 
+export async function loadTeacherLessonConfig() {
+  if (!isFirebaseConfigured) return { exists: false, version: 0, lessons: [] };
+  await ensureTeacherSession();
+  return loadTeacherLessonConfigFromServer();
+}
+
+export async function saveTeacherLessonConfig({ lessons, expectedVersion }) {
+  if (!isFirebaseConfigured) return { local: true, version: expectedVersion || 0, lessonCount: Array.isArray(lessons) ? lessons.length : 0 };
+  await ensureTeacherSession();
+  return saveTeacherLessonConfigToServer({ lessons, expectedVersion });
+}
 export async function loadTeacherResults() {
   if (!isFirebaseConfigured) return [];
   await ensureTeacherSession();
