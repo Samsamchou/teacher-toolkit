@@ -333,3 +333,25 @@
 1. 在正式站強制重新整理，開啟任一含直式圖片的 Image Slides，於一般及全螢幕確認圖片最底部文字完整。
 2. 在 Teacher Studio 替換或移除一張圖片並按 Save Lesson；應顯示雲端儲存成功及舊圖清理結果。
 3. 另一台筆電載入雲端最新版，確認 Lesson 不再引用舊圖；如需確認 Storage 實體物件已刪除，可由教師本人至 Firebase Console 檢查。
+
+## 2026-08-21 Web Practice 公開與 Embed 連結（已部署）
+
+- 已確認 RDQ 規格卡：`rdq/RDQ-spec-web-practice-public-embed-links-20260821.md`；採用 1A／2A／3A 與建議 ①②③④⑤，並以安全替代方案取代第三方完整網頁代理及自動登入。
+- Teacher Studio 的同一欄位可接受 HTTPS 公開分享網址、Embed URL 或完整 iframe code，並即時顯示「頁內嵌入／新分頁開啟／格式有誤」與測試連結。
+- Canva 公開分享連結及未知一般 HTTPS 網址改用大型啟動卡，教師點擊後開新分頁，Lesson Hub 原分頁保留，不再先顯示失敗 iframe。
+- Canva Embed、明確 Embed URL、完整 iframe code 與既有 Wayground 網址保留頁內框架、全螢幕及新分頁備援。完整 iframe code 只擷取單一 HTTPS `src`，不執行其他 HTML、script、style 或事件屬性。
+- 教師如需登入 Canva／Wayground，只在平台官方頁面親自登入並沿用瀏覽器工作階段；Lesson Hub 不讀取、傳送或保存帳密、Cookie 或第三方登入憑證，也不代理或重新代管第三方完整網站。
+
+### 本次測試與正式發布
+
+- 乾淨隔離副本完整 preflight 通過：69 項網站測試、10 項 Functions 測試、7 項 Firestore／Storage Emulator 規則測試、Functions 語法、安全檢查、Firebase preflight 與 Vite 正式建置。
+- Headless Chrome 實際驗收 Canva 公開連結、Canva Embed 與 Wayground；1366×768、1920×1080 皆無 Lesson Hub 額外上下或左右捲動，啟動卡與 iframe 都完整位於投影範圍內。Canva Embed 的頁內框架、全螢幕與新分頁備援均通過。
+- Wayground 頁面可在框架內載入；目前既有代碼 `336134` 由 Wayground 回報「無效的遊戲代碼」，屬外部平台代碼狀態，不是 Lesson Hub 內嵌失敗。
+- 本次只部署 Firebase Hosting target `lesson-hub-v03`（42 個檔案）；未部署 Functions、Firestore／Storage 規則，也未修改匿名成績或雲端教材資料。
+- 正式站 <https://lesson-hub-v03.web.app> 回應 HTTP 200，且無 JavaScript 頁面錯誤。線上 `/assets/index-BxqlDge-.js`、`/assets/index-B1aKcEW9.css` 與 `/assets/rolldown-runtime-CbXtAM7H.js` 的 SHA-256 均與本機正式建置完全一致。
+
+### 教師實機驗收
+
+1. 正式站強制重新整理，將 `https://canva.link/6dmyzbaseejgv3s` 貼入任一 Live Interactive Practice，確認顯示「新分頁開啟」，而非拒絕連線 iframe。
+2. 若要留在 Lesson Hub 頁內互動，請從 Canva 取得官方 Embed URL 或 iframe code；貼上後確認顯示「頁內嵌入」，並測試全螢幕與新分頁備援。
+3. Wayground 若顯示「無效的遊戲代碼」，請在 Wayground 產生目前有效的加入網址後更新 Practice URL。

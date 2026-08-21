@@ -33,6 +33,7 @@ import { buildStudentEntryUrl, isLoopbackBaseUrl, parseStudentEntry, resolveStud
 import { RAFFLE_DURATION_MS, createRafflePool, pickRaffleNumber, removeRaffleNumber } from "./lib/classroom-tools.js";
 import { projectorShortcutAction } from "./lib/projector-controls.js";
 import { fitImageInsideFrame } from "./lib/image-slide-layout.js";
+import { parseWebPracticeInput } from "./lib/web-practice-link.js";
 import {
   firebaseStatus,
   isFirebaseConfigured
@@ -893,10 +894,25 @@ function StepContentFields({ step, lessonId, onChange, onTrackUpload, onTrackRem
     );
   }
   if (step.type === "webPractice") {
+    const practiceLink = parseWebPracticeInput(content.url || "");
+    const statusLabel = practiceLink.kind === "embed"
+      ? "頁內嵌入"
+      : practiceLink.kind === "external"
+        ? "新分頁開啟"
+        : practiceLink.kind === "invalid"
+          ? "連結格式有誤"
+          : "尚未設定";
     return (
-      <div className="form-grid two-columns compact-fields">
-        <label>Display name<input value={content.displayName || ""} onChange={(event) => onChange({ displayName: event.target.value })} /></label>
-        <label>Practice URL<input value={content.url || ""} onChange={(event) => onChange({ url: event.target.value })} /></label>
+      <div className="web-practice-editor">
+        <div className="form-grid two-columns compact-fields">
+          <label>Display name<input value={content.displayName || ""} onChange={(event) => onChange({ displayName: event.target.value })} /></label>
+          <label>Practice URL / Embed code<textarea value={content.url || ""} onChange={(event) => onChange({ url: event.target.value })} placeholder="貼入 HTTPS 公開網址、Embed URL 或完整 iframe code" spellCheck="false" /></label>
+        </div>
+        <div className={"web-practice-link-status " + practiceLink.kind} aria-live="polite">
+          <span>{statusLabel}</span>
+          <p>{practiceLink.message}</p>
+          {practiceLink.url ? <a className="secondary-button" href={practiceLink.url} target="_blank" rel="noopener noreferrer">測試連結</a> : null}
+        </div>
       </div>
     );
   }
@@ -1706,8 +1722,12 @@ function SlideDeck({ step }) {
 }
 
 function WebPracticeStep({ step }) {
-  if (!step.content.url) {
+  const practiceLink = parseWebPracticeInput(step.content.url || "");
+  if (practiceLink.kind === "empty") {
     return <ContentCard icon="🌐" title={step.title}><p>尚未設定 Live Practice URL。</p></ContentCard>;
+  }
+  if (practiceLink.kind === "invalid") {
+    return <ContentCard icon="🌐" title={step.content.displayName || step.title}><div className="web-practice-invalid"><strong>無法開啟這個連結</strong><p>{practiceLink.message}</p></div></ContentCard>;
   }
 
   async function requestPracticeFullscreen(event) {
@@ -1720,14 +1740,39 @@ function WebPracticeStep({ step }) {
       // The normal in-page projection layout remains available.
     }
   }
+  const title = step.content.displayName || step.title;
+  if (practiceLink.kind === "external") {
+    return (
+      <section className="embed-step web-practice-launch-step">
+        <div className="content-card-heading">
+          <div><span className="content-icon">🌐</span><div><p className="eyebrow">Public practice link</p><h2>{title}</h2></div></div>
+          <div className="web-practice-heading-actions">
+            <span className="web-practice-mode-badge external">新分頁</span>
+            <a className="secondary-button" href={practiceLink.url} target="_blank" rel="noopener noreferrer">新分頁開啟</a>
+          </div>
+        </div>
+        <div className="web-practice-launch-panel">
+          <span className="web-practice-launch-icon">↗</span>
+          <p className="eyebrow">{practiceLink.platform || "External website"}</p>
+          <h3>開啟互動網頁</h3>
+          <p>此公開連結不在 Lesson Hub 內載入，避免出現「拒絕連線」畫面。</p>
+          <a className="primary-button web-practice-launch-button" href={practiceLink.url} target="_blank" rel="noopener noreferrer">開啟 {practiceLink.platform || "互動網頁"}</a>
+          <small>如需登入，請在平台官方頁面親自登入；登入狀態由瀏覽器管理，Lesson Hub 不會讀取帳密或 Cookie。</small>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="embed-step">
       <div className="content-card-heading">
-        <div><span className="content-icon">🌐</span><div><p className="eyebrow">External practice</p><h2>{step.content.displayName || step.title}</h2></div></div>
-        <button type="button" className="secondary-button projector-fullscreen-button" onClick={requestPracticeFullscreen}>⛶ <span>全螢幕</span></button>
-        <a className="secondary-button" href={step.content.url} target="_blank" rel="noreferrer">新分頁開啟</a>
+        <div><span className="content-icon">🌐</span><div><p className="eyebrow">Embedded practice</p><h2>{title}</h2></div></div>
+        <div className="web-practice-heading-actions">
+          <span className="web-practice-mode-badge embed">頁內嵌入</span>
+          <button type="button" className="secondary-button projector-fullscreen-button" onClick={requestPracticeFullscreen}>⛶ <span>全螢幕</span></button>
+          <a className="secondary-button" href={practiceLink.url} target="_blank" rel="noopener noreferrer">新分頁開啟</a>
+        </div>
       </div>
-      <iframe title={step.content.displayName || step.title} src={step.content.url} loading="lazy" />
+      <iframe title={title} src={practiceLink.url} loading="lazy" allow="fullscreen" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
       <p className="embed-note">若平台不允許內嵌，請使用新分頁開啟。</p>
     </section>
   );
