@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HWG7 口說與打彈珠小高手</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="data/hwg7-sentence-review.js"></script>
+    <script src="js/speech-practice.js"></script>
+
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 10% 12%, rgba(255, 92, 168, 0.55) 0, rgba(255, 92, 168, 0) 24%),
+                radial-gradient(circle at 86% 10%, rgba(45, 212, 255, 0.62) 0, rgba(45, 212, 255, 0) 24%),
+                radial-gradient(circle at 82% 86%, rgba(190, 255, 52, 0.54) 0, rgba(190, 255, 52, 0) 24%),
+                linear-gradient(135deg, #fff45c 0%, #ff7ab8 32%, #63e6ff 68%, #baff39 100%);
+            font-family: "Segoe UI", "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100dvh;
+        }
+
+        button, input {
+            font: inherit;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .home-screen,
+        .game-screen,
+        .summary-screen,
+        .teacher-screen {
+            min-height: 100dvh;
+            min-height: 100svh;
+        }
+
+        .home-card,
+        .control-panel,
+        .summary-card,
+        .teacher-card {
+            background: rgba(255, 255, 255, 0.91);
+            border: 5px solid rgba(255, 244, 92, 0.95);
+            box-shadow: 10px 10px 0 rgba(255, 0, 127, 0.34), 0 18px 42px rgba(15, 23, 42, 0.18);
+        }
+
+        .home-card {
+            max-width: min(920px, calc(100vw - 32px));
+        }
+
+        .mode-grid {
+            max-width: 760px;
+        }
+
+        .mode-card {
+            min-height: 118px;
+            border-radius: 22px;
+            border-width: 4px;
+            box-shadow: 4px 5px 0 rgba(15, 23, 42, 0.13);
+        }
+
+        .mode-card.is-selected {
+            background: linear-gradient(135deg, #fff45c 0%, #ff8acb 50%, #5de7ff 100%);
+            border-color: #ffffff;
+            color: #111827;
+            transform: translateY(-2px);
+            box-shadow: 7px 8px 0 rgba(181, 0, 255, 0.28);
+        }
+
+        .mode-card.is-locked {
+            background: rgba(255, 255, 255, 0.78);
+        }
+
+        .game-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            gap: 18px;
+        }
+
+        .control-panel {
+            scrollbar-width: thin;
+            scrollbar-color: #ff5ca8 #ffe66d;
+        }
+
+        .question-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fff8d7 100%);
+            border-color: #5de7ff;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.56); }
+            70% { transform: scale(1); box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.96); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        @keyframes popup-bounce {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.14); opacity: 1; }
+            72% { transform: scale(0.95); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes try-shake {
+            0% { transform: rotate(-3deg) scale(0.75); opacity: 0; }
+            35% { transform: rotate(3deg) scale(1.12); opacity: 1; }
+            65% { transform: rotate(-2deg) scale(0.98); opacity: 1; }
+            100% { transform: rotate(0deg) scale(1); opacity: 1; }
+        }
+
+        @keyframes team-turn {
+            0%, 100% { transform: rotateX(12deg) rotateY(-16deg) translateY(0); }
+            50% { transform: rotateX(18deg) rotateY(18deg) translateY(-8px); }
+        }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .success-anim-active {
+            animation: popup-bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .try-anim-active {
+            animation: try-shake 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .speaker-active {
+            animation: pulse-ring 1.4s infinite;
+        }
+
+        .wood-board { fill: #FAEBD7; stroke: #DEB887; stroke-width: 4px; rx: 12px; }
+        .wood-wall { fill: #ffcb5c; stroke: #ff8a00; stroke-width: 2px; }
+        .wood-divider { fill: #ffcb5c; stroke: #ff8a00; stroke-width: 1.5px; }
+        .peg-outer { fill: #fef3c7; stroke: #06b6d4; stroke-width: 1px; }
+        .peg-inner { fill: #f5f5f5; }
+        .score-text { font-size: 24px; font-weight: bold; fill: #8B5A2B; font-family: sans-serif; text-anchor: middle; opacity: 0.62; }
+        .marble-pink { fill: url(#pinkGradient); filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)); }
+        .marble-blue { fill: url(#blueGradient); filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)); }
+        .marble-highlight { fill: white; opacity: 0.5; }
+        .glass-cover { fill: rgba(255, 255, 255, 0.1); stroke: rgba(255,255,255,0.4); stroke-width: 2px; pointer-events: none; rx: 10px; }
+
+        .team-icon {
+            width: 88px;
+            height: 88px;
+            border-radius: 26px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: team-turn 3.2s ease-in-out infinite;
+            box-shadow: inset -12px -14px 22px rgba(0,0,0,0.22), inset 10px 10px 16px rgba(255,255,255,0.7), 0 18px 28px rgba(31,41,55,0.22);
+        }
+
+        .team-icon::before {
+            content: "";
+            position: absolute;
+            width: 34px;
+            height: 22px;
+            border-radius: 999px;
+            top: 18px;
+            left: 20px;
+            background: rgba(255,255,255,0.78);
+            transform: rotate(-26deg);
+        }
+
+        .team-icon::after {
+            content: "";
+            position: absolute;
+            inset: 14px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.38);
+            transform: translateZ(14px);
+        }
+
+        .team-icon.pink {
+            background: radial-gradient(circle at 30% 25%, #ffd6eb 0, #ff5ca8 42%, #b50059 100%);
+        }
+
+        .team-icon.blue {
+            background: radial-gradient(circle at 30% 25%, #d4ffff 0, #21c7ff 42%, #006fb1 100%);
+        }
+
+        .result-badge {
+            animation: gentle-float 2.8s ease-in-out infinite;
+        }
+
+        .pinball-shell {
+            --board-scale: 1;
+            width: 600px;
+            height: 750px;
+            zoom: var(--board-scale);
+            transform-origin: top center;
+        }
+
+        @media (min-width: 900px) and (orientation: landscape) {
+            .game-screen {
+                display: grid !important;
+                grid-template-columns: minmax(330px, 390px) calc(600px * var(--board-scale, 0.76));
+                align-items: center;
+                justify-content: center;
+                padding: 12px 18px;
+                min-height: 100svh;
+            }
+
+            .control-panel {
+                max-height: calc(100svh - 24px);
+            }
+
+            .pinball-shell {
+                --board-scale: 0.76;
+                margin: 0;
+            }
+        }
+
+        @media (min-width: 1100px) and (orientation: landscape) {
+            .game-screen {
+                grid-template-columns: minmax(360px, 430px) calc(600px * var(--board-scale, 0.86));
+                gap: 28px;
+            }
+
+            .pinball-shell {
+                --board-scale: 0.86;
+            }
+        }
+
+        @media (min-width: 768px) and (orientation: portrait) {
+            .game-screen {
+                padding: 18px 22px;
+                justify-content: flex-start;
+            }
+
+            .control-panel {
+                max-width: min(720px, calc(100vw - 36px)) !important;
+                max-height: 44svh !important;
+            }
+
+            .pinball-shell {
+                --board-scale: 0.72;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .pinball-shell {
+                --board-scale: 0.62;
+            }
+        }
+
+        @media (min-width: 900px) and (orientation: landscape) {
+            .image-practice-screen {
+                grid-template-columns: minmax(470px, 500px) calc(600px * var(--board-scale, 0.72));
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .image-practice-screen .control-panel {
+                max-width: 500px !important;
+            }
+
+            .image-practice-screen .pinball-shell {
+                --board-scale: 0.72;
+            }
+        }
+
+        @media (min-width: 1100px) and (orientation: landscape) {
+            .image-practice-screen {
+                grid-template-columns: minmax(480px, 500px) calc(600px * var(--board-scale, 0.82));
+                gap: 24px;
+            }
+
+            .image-practice-screen .pinball-shell {
+                --board-scale: 0.82;
+            }
+        }
+
+        @media (min-width: 768px) and (orientation: portrait) {
+            .image-practice-screen .control-panel {
+                max-width: min(830px, calc(100vw - 36px)) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useCallback, useEffect, useMemo, useRef, useState } = React;
+        const { Engine, Runner, Bodies, Composite, Events, Body } = Matter;
+
+        const STORAGE_KEY = "englishListeningPinballRecords.v1";
+        const FIRESTORE_COLLECTION = "practiceRecords";
+        // 新專案尚未建立前保持空白，避免誤寫入舊 Firebase 專案。
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
+        const HWG7_PATCH_VERSION = "speech-pinball-v1";
+        const PHONICS_TOTAL_TURNS = 20;
+        const PHRASE_TOTAL_TURNS = 30;
+        const SPEECH_MODE = "hwg7SentenceReview";
+        const SLOT_SCORES = [5, 4, 3, 3, 4, 5];
+        const SLOT_CENTERS = SLOT_SCORES.map((_, index) => 60 + index * 80);
+        const BOARD_W = 600;
+        const BOARD_H = 750;
+        const LOCAL_AUDIO_DIR = "audio/";
+        const G4_PHRASE_IMAGE_DIR = "images/g4phrases/";
+        const G5_PHRASE_IMAGE_DIR = "images/g5phrases/";
+        const CORRECT_SOUND_URL = `${LOCAL_AUDIO_DIR}cute_happy_victory.mp3`;
+        const SUMMARY_SOUND_URL = `${LOCAL_AUDIO_DIR}orchestral-win.mp3`;
+        const DRIVE_AUDIO = "https://drive.usercontent.google.com/download?export=download&id=";
+        const LEGACY_DRIVE_AUDIO = "https://drive.google.com/uc?export=download&id=";
+
+        function withAudioSources(question, type) {
+            const audioNo = question.audioNo || question.id;
+            const localAudio = `${LOCAL_AUDIO_DIR}${audioNo}.mp3`;
+            const fallbackSources = question.audioId
+                ? [DRIVE_AUDIO + question.audioId, LEGACY_DRIVE_AUDIO + question.audioId]
+                : [];
+            return {
+                ...question,
+                type,
+                audioNo,
+                audioUrl: localAudio,
+                audioSources: [localAudio, ...fallbackSources]
+            };
+        }
+
+        function getModeTotalTurns(mode) {
+            return MODE_META?.[mode]?.totalTurns
+                || (mode?.endsWith("Phrases") ? PHRASE_TOTAL_TURNS : PHONICS_TOTAL_TURNS);
+        }
+
+        function getModeRoundsPerPlayer(mode) {
+            return MODE_META?.[mode]?.roundsPerPlayer || getModeTotalTurns(mode) / 2;
+        }
+
+        function makeImageOptions(id, imageDir) {
+            return [1, 2, 3].map(optionNo => ({
+                value: String(optionNo),
+                label: `(${optionNo})`,
+                image: `${imageDir}${id}.${optionNo}.webp`
+            }));
+        }
+
+        function getOptionValue(option) {
+            return typeof option === "object" ? option.value : option;
+        }
+
+        const MODE_META = {
+            hwg7SentenceReview: {
+                label: "HWG7 Sentence review 口說挑戰",
+                shortLabel: "HWG7 口說挑戰",
+                hint: "13 題中每局抽 12 題，兩位玩家各 6 回合；80 分達標。",
+                totalTurns: 12,
+                roundsPerPlayer: 6,
+                interactionType: "speech",
+                passScore: 80,
+                maxAttempts: 3
+            },
+            grade4Phonics: { label: "4年級聽辨語音(第1-3題)", shortLabel: "4年級聽辨語音", hint: "已內建 24 題，聽音檔選出缺少的字母或音組。", totalTurns: 20, roundsPerPlayer: 10 },
+            grade4Phrases: { label: "4年級常用語(第7-10題)", shortLabel: "4年級常用語", hint: "已內建 32 題圖片選項，每局隨機抽 30 題。", totalTurns: 30, roundsPerPlayer: 15 },
+            grade5Phonics: { label: "5年級聽辨語音(第1-3題)", shortLabel: "5年級聽辨語音", hint: "已內建 24 題，聽音檔選出缺少的字母或音組。", totalTurns: 20, roundsPerPlayer: 10 },
+            grade5Phrases: { label: "5年級常用語(第7-10題)", shortLabel: "5年級常用語", hint: "已內建 32 題圖片選項，每局隨機抽 30 題。", totalTurns: 30, roundsPerPlayer: 15 }
+        };
+
+        const PHONICS_QUESTIONS = [
+            { id: "2018.01", audioNo: "2018.01", audioId: "1fGF2LVLceElwYGEaoirNrW1uwRCrfPIk", stem: "__am", options: ["s", "y", "f"], correctOption: "y", correctAnswer: "Yam" },
+            { id: "2018.02", audioNo: "2018.02", audioId: "1oVeBg-I2Ttr2b0PRMORnNG2bWJQEzFLO", stem: "h__g", options: ["e", "i", "u"], correctOption: "u", correctAnswer: "Hug" },
+            { id: "2018.03", audioNo: "2018.03", audioId: "1rRZsei7sF9mHxabVJL5YtOsfIyLoIi6R", stem: "m__", options: ["ad", "an", "id"], correctOption: "ad", correctAnswer: "Mad" },
+            { id: "2019.01", audioNo: "2019.01", audioId: "1FzQnbORbUkrh37y2xrR_1E4NgmxOACbv", stem: "__ad", options: ["f", "m", "p"], correctOption: "f", correctAnswer: "Fad" },
+            { id: "2019.02", audioNo: "2019.02", audioId: "1dnPI_4oRNqaE7xypOJ4a_Bf0f_xr5dSZ", stem: "k__", options: ["om", "im", "am"], correctOption: "am", correctAnswer: "kam" },
+            { id: "2019.03", audioNo: "2019.03", audioId: "1HF9X-qe_oNfKkcchf-3jgzRgyLRtM7mu", stem: "__ug", options: ["r", "j", "m"], correctOption: "r", correctAnswer: "Rug" },
+            { id: "2020.01", audioNo: "2020.01", audioId: "1oYSpLbTQO9NCt2toP7WV1LCLdoI4WLee", stem: "__ix", options: ["f", "w", "m"], correctOption: "m", correctAnswer: "Mix" },
+            { id: "2020.02", audioNo: "2020.02", audioId: "1KiVNy2ncIMmDLDH8cBN63PimXJ8lzJDu", stem: "l__p", options: ["o", "u", "a"], correctOption: "a", correctAnswer: "Lap" },
+            { id: "2020.03", audioNo: "2020.03", audioId: "1N4C3KFvYnZyPBI6NlPcK5q5aNg3F2Tcm", stem: "y__", options: ["um", "en", "od"], correctOption: "en", correctAnswer: "Yen" },
+            { id: "2021.01", audioNo: "2021.01", audioId: "1x4K98nBS8P-GcsiZf216qobFl8bvaArd", stem: "f__b", options: ["i", "u", "a"], correctOption: "a", correctAnswer: "Fab" },
+            { id: "2021.02", audioNo: "2021.02", audioId: "1QiztcBIuUd5ouj0-6Hi9k5rz4RqSbiGx", stem: "__en", options: ["z", "s", "f"], correctOption: "z", correctAnswer: "Zen" },
+            { id: "2021.03", audioNo: "2021.03", audioId: "1n9j29WjUhBNNvTaRHyNp45z0L86uqdUr", stem: "w__", options: ["ip", "op", "ox"], correctOption: "op", correctAnswer: "wop" },
+            { id: "2022.01", audioNo: "2022.01", audioId: "13doAcLC7afbwiOkxhS127rqWHzIFqM3c", stem: "w__", options: ["at", "ed", "ud"], correctOption: "ed", correctAnswer: "Wed" },
+            { id: "2022.02", audioNo: "2022.02", audioId: "1Kr46TgOpG4toNi8v2UaOxAB_VHJRKa1q", stem: "__ap", options: ["f", "s", "c"], correctOption: "s", correctAnswer: "Sap" },
+            { id: "2022.03", audioNo: "2022.03", audioId: "1NO0IrtymuzBEzaaV_NMnufl86bYnf-PW", stem: "r__g", options: ["e", "a", "o"], correctOption: "o", correctAnswer: "Rog" },
+            { id: "2023.01", audioNo: "2023.01", audioId: "1A5VGZuSQwBwOD962EuLsQ2YCWrHkBw23", stem: "__eam", options: ["w", "r", "b"], correctOption: "r", correctAnswer: "Ream" },
+            { id: "2023.02", audioNo: "2023.02", audioId: "1zftZ7k_uh3PVIqQvNziNpB17AOuR5LZB", stem: "h__", options: ["ag", "eg", "ig"], correctOption: "ig", correctAnswer: "Hig" },
+            { id: "2023.03", audioNo: "2023.03", audioId: "1tqwkF-mB93Sq4NpRQm_Uc9oNv2-FEFx2", stem: "m__", options: ["op", "up", "ud"], correctOption: "op", correctAnswer: "Mop" },
+            { id: "2024.01", audioNo: "2024.01", audioId: "1cnCt-Rq1pVM3D4-SVz3OQuDdJNwUd1pt", stem: "n__g", options: ["o", "i", "a"], correctOption: "a", correctAnswer: "Nag" },
+            { id: "2024.02", audioNo: "2024.02", audioId: "1w9OEPE-gwW_rv4psasWjP3ALXOMKP1dy", stem: "b__", options: ["um", "im", "en"], correctOption: "um", correctAnswer: "Bum" },
+            { id: "2024.03", audioNo: "2024.03", audioId: "1RibdVajXoOdLYSCoAc3aNc4N3HGLw687", stem: "__ed", options: ["f", "y", "l"], correctOption: "y", correctAnswer: "Yed" },
+            { id: "2025.01", audioNo: "2025.01", audioId: "1HgFRu5jF3YlCA9z7EGAyX_yRfFXqlUWy", stem: "t__", options: ["am", "um", "an"], correctOption: "am", correctAnswer: "Tam" },
+            { id: "2025.02", audioNo: "2025.02", audioId: "1mXeFYh9GOuB0T8VMmifViYOfi55iHiQ5", stem: "__id", options: ["l", "z", "r"], correctOption: "l", correctAnswer: "Lid" },
+            { id: "2025.03", audioNo: "2025.03", audioId: "1bUr83Hd9p_LA5Csls2nkm5X87RUkpH1H", stem: "j__t", options: ["a", "e", "o"], correctOption: "o", correctAnswer: "Jot" }
+        ].map(q => withAudioSources(q, "grade4Phonics"));
+
+        const GRADE5_PHONICS_QUESTIONS = [
+            { id: "g52018.01", audioNo: "g52018.01", stem: "__in", options: ["f", "k", "ch"], correctOption: "ch", correctAnswer: "chin" },
+            { id: "g52018.02", audioNo: "g52018.02", stem: "__ep", options: ["sh", "st", "bl"], correctOption: "st", correctAnswer: "step" },
+            { id: "g52018.03", audioNo: "g52018.03", stem: "__at", options: ["b", "br", "bl"], correctOption: "br", correctAnswer: "brat" },
+            { id: "g52019.01", audioNo: "g52019.01", stem: "__um", options: ["ch", "sh", "th"], correctOption: "ch", correctAnswer: "chum" },
+            { id: "g52019.02", audioNo: "g52019.02", stem: "__ed", options: ["b", "r", "br"], correctOption: "br", correctAnswer: "bred" },
+            { id: "g52019.03", audioNo: "g52019.03", stem: "__id", options: ["k", "sh", "sk"], correctOption: "sk", correctAnswer: "skid" },
+            { id: "g52020.01", audioNo: "g52020.01", stem: "__ess", options: ["k", "sh", "ch"], correctOption: "ch", correctAnswer: "chess" },
+            { id: "g52020.02", audioNo: "g52020.02", stem: "__us", options: ["t", "th", "bl"], correctOption: "th", correctAnswer: "thus" },
+            { id: "g52020.03", audioNo: "g52020.03", stem: "__im", options: ["sk", "sh", "ch"], correctOption: "sk", correctAnswer: "skim" },
+            { id: "g52021.01", audioNo: "g52021.01", stem: "__um", options: ["t", "th", "sh"], correctOption: "th", correctAnswer: "thum" },
+            { id: "g52021.02", audioNo: "g52021.02", stem: "__ot", options: ["br", "bl", "b"], correctOption: "br", correctAnswer: "brot" },
+            { id: "g52021.03", audioNo: "g52021.03", stem: "__it", options: ["sk", "st", "k"], correctOption: "sk", correctAnswer: "skit" },
+            { id: "g52022.01", audioNo: "g52022.01", stem: "__ill", options: ["s", "ch", "sh"], correctOption: "ch", correctAnswer: "chill" },
+            { id: "g52022.02", audioNo: "g52022.02", stem: "__ef", options: ["th", "sh", "d"], correctOption: "th", correctAnswer: "thef" },
+            { id: "g52022.03", audioNo: "g52022.03", stem: "__eet", options: ["br", "bl", "b"], correctOption: "bl", correctAnswer: "bleet" },
+            { id: "g52023.01", audioNo: "g52023.01", stem: "__een", options: ["th", "ch", "sh"], correctOption: "sh", correctAnswer: "sheen" },
+            { id: "g52023.02", audioNo: "g52023.02", stem: "__ob", options: ["r", "br", "bl"], correctOption: "bl", correctAnswer: "blob" },
+            { id: "g52023.03", audioNo: "g52023.03", stem: "__ut", options: ["sk", "st", "sh"], correctOption: "st", correctAnswer: "stut" },
+            { id: "g52024.01", audioNo: "g52024.01", stem: "__eer", options: ["s", "th", "sh"], correctOption: "sh", correctAnswer: "sheer" },
+            { id: "g52024.02", audioNo: "g52024.02", stem: "__ock", options: ["br", "bl", "l"], correctOption: "bl", correctAnswer: "block" },
+            { id: "g52024.03", audioNo: "g52024.03", stem: "__ep", options: ["sh", "sk", "st"], correctOption: "sk", correctAnswer: "skep" },
+            { id: "g52025.01", audioNo: "g52025.01", stem: "__eel", options: ["sk", "ch", "sh"], correctOption: "sh", correctAnswer: "sheel" },
+            { id: "g52025.02", audioNo: "g52025.02", stem: "__ook", options: ["bl", "br", "r"], correctOption: "br", correctAnswer: "brook" },
+            { id: "g52025.03", audioNo: "g52025.03", stem: "__ore", options: ["th", "ch", "bl"], correctOption: "th", correctAnswer: "thore" }
+        ].map(q => withAudioSources(q, "grade5Phonics"));
+
+        const PHRASE_QUESTIONS = [
+            { id: "2018.07", audioId: "1Y41Tf8nfpgrVLieYwQm9jbt1VYgCnH7t", correctAnswer: "It's a ruler.", correctOption: "3" },
+            { id: "2018.08", audioId: "1fMy26Rjhdk7kwFKiYRyELHJ6UIBJqMFX", correctAnswer: "It's a cake.", correctOption: "1" },
+            { id: "2018.09", audioId: "1eoLG1pX445SPH2OEn4MWXaLmep8xgkBw", correctAnswer: "Is that a ruler? No, it's not. It's a marker.", correctOption: "3" },
+            { id: "2018.10", audioId: "1jp5oVHHLdMlTdThTkcSAf0e6SaT3BFON", correctAnswer: "Is that a dog? No, it's not.", correctOption: "3" },
+            { id: "2019.07", audioId: "10ix2xrhly8oFH9w23BRa2KgxuCTfkbfO", correctAnswer: "Let's play.", correctOption: "2" },
+            { id: "2019.08", audioId: "1Cm2qAqGSptsicANCmpS8deG5hcYHIEZR", correctAnswer: "Take out your book.", correctOption: "1" },
+            { id: "2019.09", audioId: "1NGP5vfL_8gusVBkExG-L_9n_Y14Urx7X", correctAnswer: "It's a banana.", correctOption: "2" },
+            { id: "2019.10", audioId: "1lZGK4xYBC5WiW9vEAzo0ftka_mtf-sF1", correctAnswer: "What color is it? It's yellow.", correctOption: "3" },
+            { id: "2020.07", audioId: "1nc_SaQZosWjKLi1SlGKO1vUpoYY5Sb8L", correctAnswer: "I'm sorry.", correctOption: "3" },
+            { id: "2020.08", audioId: "1KxFRapxBz9YNl4QIJcACUATytIZMCRFu", correctAnswer: "Put away your book.", correctOption: "2" },
+            { id: "2020.09", audioId: "1NOmMsBQzek3KqftInMZ0tcQh6Tl_OEyN", correctAnswer: "What color is it? It's white.", correctOption: "1" },
+            { id: "2020.10", audioId: "1P3c8StrMzqViMm--6gtrv3POk9QYA242", correctAnswer: "Is that a pencil? No, it's not. It's a marker.", correctOption: "3" },
+            { id: "2021.07", audioId: "1x9LvTo2ZAqJA9DmnRGBk29Lw5-bKGcO4", correctAnswer: "Come here.", correctOption: "2" },
+            { id: "2021.08", audioId: "1jNEEJNPoTUtbuEuVzyrmk5Hzvf7m6tsA", correctAnswer: "Take out your book.", correctOption: "1" },
+            { id: "2021.09", audioId: "1c_JAjjUsFjs1N99IocBXNXoYVJsHLq-I", correctAnswer: "What color is it? It's yellow.", correctOption: "3" },
+            { id: "2021.10", audioId: "1lQZJkl4Cn9jcD9e7Xuf4z6n8UYQyAMJQ", correctAnswer: "What's that? It's a bird.", correctOption: "2" },
+            { id: "2022.07", audioId: "1cG11-HToHyBH0rZ3kNtRRKyg-siJycXk", correctAnswer: "Let's play.", correctOption: "3" },
+            { id: "2022.08", audioId: "17qkzFF14AbvvGyjTT_cXswpi8rfUZv3H", correctAnswer: "Put down your hand.", correctOption: "1" },
+            { id: "2022.09", audioId: "1SS8BrxoRQq3hgua3pacRBQgdnMPJmj6J", correctAnswer: "What's this? It's milk.", correctOption: "2" },
+            { id: "2022.10", audioId: "14eDGvqbkgkJx4106Y6I4U4lbozf-_P5D", correctAnswer: "Is it a banana? No, it's not.", correctOption: "1" },
+            { id: "2023.07", audioId: "1P00kTR3iRhLc8rCAf6Yl6JC5_ySpndWW", correctAnswer: "Come here.", correctOption: "3" },
+            { id: "2023.08", audioId: "1dvxUHejA9rNuKrXFeoOpXXueR9p0vdQK", correctAnswer: "Are you ready?", correctOption: "2" },
+            { id: "2023.09", audioId: "1TLkDbDrwcxDyrnvrpeAhOvH-VxMCsSju", correctAnswer: "It's a cat.", correctOption: "2" },
+            { id: "2023.10", audioId: "14FYrCUaKSX67oWitPnp4PWjgMpog9Lx7", correctAnswer: "Is it an apple? No, it's not.", correctOption: "3" },
+            { id: "2024.07", audioId: "1kLoslxEpCUtxGYGsrvm_t2G9Y68OeAAe", correctAnswer: "See you.", correctOption: "3" },
+            { id: "2024.08", audioId: "15CD2SevSTAXM7ce8Zs-p_96Ku7U7csEq", correctAnswer: "Put away your book.", correctOption: "2" },
+            { id: "2024.09", audioId: "1xROI6FHrXcyo90HxCo4U9Z7kjYSxIvCh", correctAnswer: "What color is it? It's red.", correctOption: "2" },
+            { id: "2024.10", audioId: "1WAn4brJYN8u_5jDQq0LmLdKJM4QZyjtT", correctAnswer: "Is that a marker? No, it's not.", correctOption: "3" },
+            { id: "2025.07", audioId: "17F5dPPIAMhGdDGYna-ZAebgnTgl_Qwcy", correctAnswer: "Let's play.", correctOption: "2" },
+            { id: "2025.08", audioId: "1dEPDuM-KKQ9vdOcE5Q8wPhtxKegFvZBf", correctAnswer: "Put down your hand.", correctOption: "1" },
+            { id: "2025.09", audioId: "1GJCICb_ejAAzWcZnn02mX_mtqleeO_w9", correctAnswer: "My name is Tiger Black.", correctOption: "3" },
+            { id: "2025.10", audioId: "1BM8CzlrZVka7MMTojp7gTHVaK8Dlizha", correctAnswer: "What's that? It's a pencil.", correctOption: "3" }
+        ].map(q => withAudioSources({
+            ...q,
+            audioNo: q.id,
+            stem: "",
+            optionType: "image",
+            options: makeImageOptions(q.id, G4_PHRASE_IMAGE_DIR)
+        }, "grade4Phrases"));
+
+        const GRADE5_PHRASE_QUESTIONS = [
+            { id: "g52018.07", transcript: "Line up. Line up. Line up.", correctOption: "2" },
+            { id: "g52018.08", transcript: "He's 10 years old. He's 10 years old. He's 10 years old.", correctOption: "1" },
+            { id: "g52018.09", transcript: "Can you write? Yes, I can. Can you write? Yes, I can. Can you write? Yes, I can.", correctOption: "3" },
+            { id: "g52018.10", transcript: "It's tea. It's hot. It's tea. It's hot. It's tea. It's hot.", correctOption: "1" },
+            { id: "g52019.07", transcript: "Hurry up. Hurry up. Hurry up.", correctOption: "3" },
+            { id: "g52019.08", transcript: "Are you OK? Are you OK? Are you OK?", correctOption: "2" },
+            { id: "g52019.09", transcript: "I can sing. I can sing. I can sing.", correctOption: "1" },
+            { id: "g52019.10", transcript: "She's happy. She's happy. She's happy.", correctOption: "2" },
+            { id: "g52020.07", transcript: "That's OK. That's OK. That's OK.", correctOption: "2" },
+            { id: "g52020.08", transcript: "He can write. He can write. He can write.", correctOption: "3" },
+            { id: "g52020.09", transcript: "What do you want? I want water. What do you want? I want water. What do you want? I want water.", correctOption: "1" },
+            { id: "g52020.10", transcript: "What time is it? Ten o'clock. What time is it? Ten o'clock. What time is it? Ten o'clock.", correctOption: "3" },
+            { id: "g52021.07", transcript: "Try again. Try again. Try again.", correctOption: "1" },
+            { id: "g52021.08", transcript: "My sister is short. My sister is short. My sister is short.", correctOption: "3" },
+            { id: "g52021.09", transcript: "How old are you? I'm 10 years old. How old are you? I'm 10 years old. How old are you? I'm 10 years old.", correctOption: "1" },
+            { id: "g52021.10", transcript: "What can John do? He can swim. What can John do? He can swim. What can John do? He can swim.", correctOption: "2" },
+            { id: "g52022.07", transcript: "Sorry, I'm late. Sorry, I'm late. Sorry, I'm late.", correctOption: "3" },
+            { id: "g52022.08", transcript: "I see one bird. I see one bird. I see one bird.", correctOption: "2" },
+            { id: "g52022.09", transcript: "How old are you? I'm five. How old are you? I'm five. How old are you? I'm five.", correctOption: "1" },
+            { id: "g52022.10", transcript: "My brother can dance. My brother can dance. My brother can dance.", correctOption: "3" },
+            { id: "g52023.07", transcript: "I don't know. I don't know. I don't know.", correctOption: "3" },
+            { id: "g52023.08", transcript: "How old are you? Nine. How old are you? Nine. How old are you? Nine.", correctOption: "1" },
+            { id: "g52023.09", transcript: "What do you see? Three fish. What do you see? Three fish. What do you see? Three fish.", correctOption: "3" },
+            { id: "g52023.10", transcript: "It's rainy, but it's not cold. It's rainy, but it's not cold. It's rainy, but it's not cold.", correctOption: "1" },
+            { id: "g52024.07", transcript: "Hurry up. Hurry up. Hurry up.", correctOption: "1" },
+            { id: "g52024.08", transcript: "Key can sing. Key can sing. Key can sing.", correctOption: "3" },
+            { id: "g52024.09", transcript: "What do you see? I see two pizzas. What do you see? I see two pizzas. What do you see? I see two pizzas.", correctOption: "1" },
+            { id: "g52024.10", transcript: "What time is it? It's four o'clock. What time is it? It's four o'clock. What time is it? It's four o'clock.", correctOption: "2" },
+            { id: "g52025.07", transcript: "Line up. Line up. Line up.", correctOption: "2" },
+            { id: "g52025.08", transcript: "What time is it? It's ten. What time is it? It's ten. What time is it? It's ten.", correctOption: "1" },
+            { id: "g52025.09", transcript: "How's the weather? It's cool. How's the weather? It's cool. How's the weather? It's cool.", correctOption: "2" },
+            { id: "g52025.10", transcript: "I can swim, but I can't dance. I can swim, but I can't dance. I can swim, but I can't dance.", correctOption: "1" }
+        ].map(q => withAudioSources({
+            ...q,
+            audioNo: q.id,
+            stem: "",
+            optionType: "image",
+            options: makeImageOptions(q.id, G5_PHRASE_IMAGE_DIR),
+            correctAnswer: q.transcript
+        }, "grade5Phrases"));
+
+        const HWG7_SPEECH_QUESTIONS = (window.HWG7_SENTENCE_REVIEW_BANK || []).map(question => ({
+            ...question,
+            id: question.questionId || question.id,
+            interactionType: "speech",
+            optionType: "speech",
+            stem: question.type === "read_aloud" ? question.standardReadSentence : question.questionText,
+            imagePath: question.image?.path || question.imagePath || "",
+            imageAlt: question.image?.alt || question.imageAlt || "題目圖片（替代文字待教師確認）",
+            questionBankVersion: question.questionBankVersion || "hwg7-sr-v1-draft",
+            pronunciationTargets: [...new Set([
+                ...(question.pronunciationAnalysis?.pronunciationTargets || question.pronunciationTargets || []),
+                ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.pronunciationTargets || [])
+            ])],
+            difficultWords: [...new Set([
+                ...(question.pronunciationAnalysis?.difficultWords || question.difficultWords || []),
+                ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.difficultWords || [])
+            ].map(item => typeof item === "string" ? item : item.word).filter(Boolean))],
+            correctAnswer: question.type === "read_aloud"
+                ? question.standardReadSentence
+                : (question.acceptableAnswers?.[0]?.text || question.acceptableAnswers?.[0] || "")
+        }));
+
+        const QUESTION_BANKS = {
+            hwg7SentenceReview: HWG7_SPEECH_QUESTIONS,
+            grade4Phonics: PHONICS_QUESTIONS,
+            grade4Phrases: PHRASE_QUESTIONS,
+            grade5Phonics: GRADE5_PHONICS_QUESTIONS,
+            grade5Phrases: GRADE5_PHRASE_QUESTIONS
+        };
+
+        const chineseChar = /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/;
+
+        function sanitizeChineseName(value) {
+            return Array.from(value).filter(ch => chineseChar.test(ch)).join("").slice(0, 8);
+        }
+
+        function sanitizeStudentCode(value) {
+            return String(value || "").replace(/\D/g, "").slice(0, 5);
+        }
+
+        function shuffle(items) {
+            const arr = [...items];
+            for (let i = arr.length - 1; i > 0; i -= 1) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function pickRandom(items) {
+            return items[Math.floor(Math.random() * items.length)];
+        }
+
+        function createBalancedSlotPlan(totalTurns = PHONICS_TOTAL_TURNS) {
+            if (!Number.isInteger(totalTurns) || totalTurns <= 0 || totalTurns % 2 !== 0) {
+                throw new Error("總回合數必須是正偶數，才能讓兩位玩家回合數相同。");
+            }
+            const roundsPerPlayer = totalTurns / 2;
+            const equalScorePairs = [
+                [0, 5],
+                [1, 4],
+                [2, 3],
+                [5, 0],
+                [4, 1],
+                [3, 2]
+            ];
+            const pairedRounds = equalScorePairs.slice(0, Math.min(6, Math.max(0, roundsPerPlayer - 1)));
+
+            while (pairedRounds.length < roundsPerPlayer - 1) {
+                pairedRounds.push(pickRandom(equalScorePairs));
+            }
+
+            const pinkWinsFinal = Math.random() < 0.5;
+            const winningSlot = pickRandom([0, 5]);
+            const closeSlot = pickRandom([1, 4]);
+            pairedRounds.push(pinkWinsFinal ? [winningSlot, closeSlot] : [closeSlot, winningSlot]);
+
+            return pairedRounds.flatMap(([pinkSlot, blueSlot], roundIndex) => ([
+                { team: "pink", round: roundIndex + 1, slotIndex: pinkSlot },
+                { team: "blue", round: roundIndex + 1, slotIndex: blueSlot }
+            ]));
+        }
+
+        function prepareQuestionSet(mode) {
+            const source = QUESTION_BANKS[mode] || QUESTION_BANKS.grade4Phonics;
+            if (mode === SPEECH_MODE) {
+                const readAloud = shuffle(source.filter(question => question.type === "read_aloud")).slice(0, 6);
+                const questionAnswer = shuffle(source.filter(question => question.type === "question_answer")).slice(0, 6);
+                if (readAloud.length !== 6 || questionAnswer.length !== 6) return [];
+                return readAloud.flatMap((question, index) => [question, questionAnswer[index]]).map(question => ({
+                    ...question,
+                    acceptableAnswers: [...(question.acceptableAnswers || [])],
+                    pronunciationTargets: [...(question.pronunciationTargets || [])],
+                    difficultWords: [...(question.difficultWords || [])]
+                }));
+            }
+            const selected = shuffle(source).slice(0, getModeTotalTurns(mode));
+            if (mode.endsWith("Phrases")) {
+                const allAnswers = [...new Set(source.filter(q => q.optionType !== "image").map(q => q.correctAnswer))];
+                return selected.map(q => {
+                    if (q.optionType === "image") {
+                        return { ...q, options: q.options.map(option => ({ ...option })) };
+                    }
+                    const distractors = shuffle(allAnswers.filter(answer => answer !== q.correctAnswer)).slice(0, 2);
+                    return { ...q, options: shuffle([q.correctAnswer, ...distractors]), correctOption: q.correctAnswer };
+                });
+            }
+            return selected.map(q => ({ ...q, options: [...q.options] }));
+        }
+
+        function todayString() {
+            const now = new Date();
+            const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+            return local.toISOString().slice(0, 10);
+        }
+
+        function localDateTimeLabel(iso) {
+            const date = new Date(iso);
+            return date.toLocaleString("zh-TW", { hour12: false, month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+        }
+
+        function hasFirebaseConfig() {
+            return Boolean(
+                firebaseConfig.apiKey &&
+                firebaseConfig.projectId &&
+                !firebaseConfig.apiKey.includes("請貼上") &&
+                !firebaseConfig.projectId.includes("請貼上")
+            );
+        }
+
+        let firestoreDb = null;
+        let firebaseReadyPromise = null;
+
+        async function getFirestoreDb() {
+            if (!hasFirebaseConfig() || !window.firebase?.firestore) return null;
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            firestoreDb = firebase.firestore();
+            if (window.firebase?.auth) {
+                const auth = firebase.auth();
+                if (!auth.currentUser) {
+                    firebaseReadyPromise = firebaseReadyPromise || auth.signInAnonymously();
+                    try {
+                        await firebaseReadyPromise;
+                    } catch (error) {
+                        firebaseReadyPromise = null;
+                        throw error;
+                    }
+                }
+            }
+            return firestoreDb;
+        }
+
+        function sortRecordsNewestFirst(records) {
+            return [...records].sort((a, b) => new Date(b.playedAt).getTime() - new Date(a.playedAt).getTime());
+        }
+
+        function loadRecords() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveLocalRecord(record) {
+            try {
+                const records = loadRecords().filter(item => item.id !== record.id);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify([record, ...records].slice(0, 500)));
+            } catch (error) {
+                console.warn("無法保存本機遊戲紀錄", error);
+            }
+        }
+
+        function deleteLocalRecord(recordId) {
+            try {
+                const records = loadRecords().filter(item => item.id !== recordId);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+            } catch (error) {
+                console.warn("無法刪除本機遊戲紀錄", error);
+            }
+        }
+
+        async function saveRecord(record) {
+            saveLocalRecord({ ...record, syncStatus: "local" });
+            let db = null;
+            try {
+                db = await getFirestoreDb();
+            } catch (error) {
+                console.warn("無法登入 Firebase", error);
+                return { ok: false, status: "local", message: "Firebase 匿名登入失敗，已先保存在這台平板。請確認已啟用 Anonymous Authentication。" };
+            }
+            if (!db) {
+                return { ok: false, status: "local", message: "尚未填入 Firebase 設定，紀錄目前只保存在這台平板。" };
+            }
+
+            try {
+                await db.collection(FIRESTORE_COLLECTION).doc(record.id).set({
+                    ...record,
+                    syncStatus: "cloud",
+                    uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                saveLocalRecord({ ...record, syncStatus: "cloud" });
+                return { ok: true, status: "cloud", message: "紀錄已上傳到 Firebase。" };
+            } catch (error) {
+                console.warn("無法上傳 Firebase 紀錄", error);
+                return { ok: false, status: "local", message: "Firebase 上傳失敗，已先保存在這台平板，請確認網路與 Firestore 規則。" };
+            }
+        }
+
+        async function loadRecordsByDate(date) {
+            const localRecords = sortRecordsNewestFirst(loadRecords().filter(record => record.date === date));
+            let db = null;
+            try {
+                db = await getFirestoreDb();
+            } catch (error) {
+                console.warn("無法登入 Firebase", error);
+                return {
+                    records: localRecords,
+                    source: "local",
+                    message: "Firebase 匿名登入失敗，目前顯示這台平板的本機備援紀錄。請確認已啟用 Anonymous Authentication。"
+                };
+            }
+            if (!db) {
+                return {
+                    records: localRecords,
+                    source: "local",
+                    message: "尚未填入 Firebase 設定，目前顯示這台平板的本機紀錄。"
+                };
+            }
+
+            try {
+                const snapshot = await db.collection(FIRESTORE_COLLECTION).where("date", "==", date).get();
+                const cloudRecords = sortRecordsNewestFirst(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })));
+                return {
+                    records: cloudRecords,
+                    source: "cloud",
+                    message: "已從 Firebase 讀取全班平板的紀錄。"
+                };
+            } catch (error) {
+                console.warn("無法讀取 Firebase 紀錄", error);
+                return {
+                    records: localRecords,
+                    source: "local",
+                    message: "Firebase 讀取失敗，目前顯示這台平板的本機備援紀錄。"
+                };
+            }
+        }
+
+        async function deleteRecord(recordId) {
+            deleteLocalRecord(recordId);
+            let db = null;
+            try {
+                db = await getFirestoreDb();
+            } catch (error) {
+                console.warn("無法登入 Firebase", error);
+                return { ok: false, source: "local", message: "Firebase 匿名登入失敗，已刪除這台平板的本機紀錄。" };
+            }
+            if (!db) {
+                return { ok: true, source: "local", message: "已刪除這台平板的本機紀錄。" };
+            }
+
+            try {
+                await db.collection(FIRESTORE_COLLECTION).doc(recordId).delete();
+                return { ok: true, source: "cloud", message: "已刪除此份 Firebase 紀錄。" };
+            } catch (error) {
+                console.warn("無法刪除 Firebase 紀錄", error);
+                return { ok: false, source: "local", message: "Firebase 刪除失敗，但已刪除這台平板的本機備援紀錄。請確認 Firestore 規則已部署。" };
+            }
+        }
+
+        function playRollingAudio() {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            const duration = 6.0;
+            const bufferSize = ctx.sampleRate * duration;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const output = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i += 1) {
+                output[i] = (Math.random() * 2 - 1) * 0.08;
+            }
+            const noise = ctx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = ctx.createBiquadFilter();
+            filter.type = "lowpass";
+            filter.frequency.value = 250;
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.2);
+            gain.gain.linearRampToValueAtTime(0.8, ctx.currentTime + duration - 1);
+            gain.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            noise.start();
+
+            for (let i = 0; i < 25; i += 1) {
+                const clackTime = ctx.currentTime + 0.2 + Math.random() * 5.0;
+                const osc = ctx.createOscillator();
+                const clackGain = ctx.createGain();
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(300 + Math.random() * 400, clackTime);
+                osc.frequency.exponentialRampToValueAtTime(100, clackTime + 0.05);
+                clackGain.gain.setValueAtTime(0, clackTime);
+                clackGain.gain.linearRampToValueAtTime(0.4, clackTime + 0.01);
+                clackGain.gain.exponentialRampToValueAtTime(0.001, clackTime + 0.1);
+                osc.connect(clackGain);
+                clackGain.connect(ctx.destination);
+                osc.start(clackTime);
+                osc.stop(clackTime + 0.1);
+            }
+
+            setTimeout(() => ctx.close(), (duration + 0.4) * 1000);
+        }
+
+        function playRepeatedEffectAudio(src, repeatCount = 1, volume = 0.9) {
+            const audio = new Audio(src);
+            let remainingRepeats = repeatCount;
+            audio.preload = "auto";
+            audio.playsInline = true;
+            audio.volume = volume;
+            audio.onended = () => {
+                if (remainingRepeats <= 0) return;
+                remainingRepeats -= 1;
+                audio.currentTime = 0;
+                audio.play().catch(error => console.warn("音效重播失敗", error));
+            };
+            audio.play().catch(error => console.warn("音效播放失敗", error));
+        }
+
+        function playCorrectAnswerAudio() {
+            playRepeatedEffectAudio(CORRECT_SOUND_URL, 1, 0.86);
+        }
+
+        function playSummaryAudio() {
+            playRepeatedEffectAudio(SUMMARY_SOUND_URL, 1, 0.92);
+        }
+
+        function OverlayFeedback({ showSuccess, showTryAgain }) {
+            return (
+                <>
+                    {showSuccess && (
+                        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none px-4">
+                            <div className="success-anim-active bg-white/92 px-8 md:px-10 py-6 rounded-[28px] shadow-[0_0_30px_rgba(255,51,153,0.5)] border-4 border-yellow-400">
+                                <h1 className="text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 drop-shadow-lg text-center">
+                                    You're right!
+                                </h1>
+                            </div>
+                        </div>
+                    )}
+                    {showTryAgain && (
+                        <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none px-4">
+                            <div className="try-anim-active bg-yellow-50/96 px-8 md:px-12 py-6 rounded-[28px] shadow-[0_0_30px_rgba(250,204,21,0.52)] border-4 border-pink-400">
+                                <h1 className="text-5xl md:text-8xl font-black text-pink-600 drop-shadow-lg text-center">
+                                    Try Again
+                                </h1>
+                            </div>
+                        </div>
+                    )}
+                </>
+            );
+        }
+
+        function HomePage({ onStart, onOpenTeacher }) {
+            const [codeOne, setCodeOne] = useState("");
+            const [codeTwo, setCodeTwo] = useState("");
+            const [mode, setMode] = useState(SPEECH_MODE);
+            const selectedBankReady = (QUESTION_BANKS[mode] || []).length >= getModeTotalTurns(mode);
+            const validCodes = /^\d{5}$/.test(codeOne) && /^\d{5}$/.test(codeTwo) && codeOne !== codeTwo;
+            const canStart = validCodes && mode && selectedBankReady;
+
+            const handleStart = () => {
+                if (!canStart) return;
+                onStart([codeOne, codeTwo], mode);
+            };
+
+            return (
+                <main className="home-screen flex items-center justify-center p-4 md:p-6 relative">
+                    <button onClick={onOpenTeacher} className="absolute right-4 top-4 md:right-8 md:top-8 bg-slate-900 text-white px-4 py-2.5 rounded-lg font-black shadow-lg hover:bg-slate-700 transition-colors">
+                        <i className="fas fa-chalkboard-user mr-2"></i>教師後台
+                    </button>
+                    <section className="home-card w-full backdrop-blur-md rounded-[30px] p-6 md:p-8">
+                        <div className="text-center mb-7">
+                            <p className="text-sm md:text-base font-black text-pink-600 tracking-widest">雙人口說互動彈珠台</p>
+                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 mt-2 leading-tight">HWG7 口說與打彈珠小高手</h1>
+                            <p className="mt-3 font-bold text-slate-600">每局12題・每人6回合・80分達標</p>
+                        </div>
+                        <div className="grid gap-4 max-w-xl mx-auto md:grid-cols-2">
+                            <label className="block">
+                                <span className="block text-lg font-black text-slate-700 mb-2">第一位學生：班級＋座號</span>
+                                <input value={codeOne} onChange={event => setCodeOne(sanitizeStudentCode(event.target.value))} placeholder="例如 60101" inputMode="numeric" pattern="[0-9]*" maxLength="5" autoComplete="off" className="w-full bg-white border-4 border-pink-200 focus:border-pink-500 outline-none rounded-xl px-4 py-4 text-2xl font-black text-slate-800 shadow-inner" />
+                            </label>
+                            <label className="block">
+                                <span className="block text-lg font-black text-slate-700 mb-2">第二位學生：班級＋座號</span>
+                                <input value={codeTwo} onChange={event => setCodeTwo(sanitizeStudentCode(event.target.value))} placeholder="例如 60102" inputMode="numeric" pattern="[0-9]*" maxLength="5" autoComplete="off" className="w-full bg-white border-4 border-blue-200 focus:border-blue-500 outline-none rounded-xl px-4 py-4 text-2xl font-black text-slate-800 shadow-inner" />
+                            </label>
+                        </div>
+                        {codeOne && codeTwo && codeOne === codeTwo && <p className="text-center text-sm font-black text-red-600 mt-3">兩位玩家不可使用相同代碼。</p>}
+                        <div className="mode-grid mx-auto mt-7 grid gap-3 md:grid-cols-2">
+                            {[[SPEECH_MODE, MODE_META[SPEECH_MODE]]].map(([value, item]) => {
+                                const ready = (QUESTION_BANKS[value] || []).length >= getModeTotalTurns(value);
+                                return (
+                                    <button key={value} onClick={() => setMode(value)} className={`mode-card px-4 py-4 text-left transition-all ${mode === value ? "is-selected" : ready ? "is-ready bg-white border-slate-200 text-slate-700 hover:border-cyan-300" : "is-locked border-slate-200 text-slate-500"}`}>
+                                        <span className="block text-lg font-black">{item.label}</span>
+                                        <span className="block text-sm font-bold mt-1">{item.hint}</span>
+                                        {!ready && <span className="block text-xs font-black text-red-500 mt-2">題庫尚未完成，不能開始</span>}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                        <div className="max-w-xl mx-auto mt-8">
+                            <button onClick={handleStart} disabled={!canStart} className={`w-full rounded-xl py-4 text-2xl font-black border-4 transition-all ${canStart ? "bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 text-white border-white shadow-[6px_6px_0px_0px_rgba(15,23,42,0.24)] hover:translate-y-[-2px]" : "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"}`}>進入遊戲頁面</button>
+                            <p className="text-center text-sm font-bold text-slate-500 mt-3">只輸入五碼班級＋座號；不要輸入姓名。兩位學生共用一台裝置輪流作答。</p>
+                        </div>
+                    </section>
+                </main>
+            );
+        }
+
+        function PasswordModal({ onClose }) {
+            return (
+                <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/50 p-4">
+                    <div className="w-full max-w-md bg-white rounded-2xl border-4 border-yellow-300 p-6 shadow-2xl">
+                        <div className="flex items-start justify-between gap-4">
+                            <div>
+                                <h2 className="text-2xl font-black text-slate-900">教師後台尚未啟用</h2>
+                                <p className="text-sm font-bold text-slate-600 mt-3">本機學生試作不使用前端固定密碼。完成新 Firebase 教師身分驗證與規則後才會開放後台。</p>
+                            </div>
+                            <button type="button" onClick={onClose} className="w-10 h-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700"><i className="fas fa-xmark"></i></button>
+                        </div>
+                        <button type="button" onClick={onClose} className="w-full mt-5 bg-slate-900 text-white rounded-xl py-3 font-black hover:bg-slate-700">我知道了</button>
+                    </div>
+                </div>
+            );
+        }
+
+        function TeamScoreCard({ team, name, score }) {
+            const color = team === "pink" ? "pink" : "blue";
+            return (
+                <div className={`text-center rounded-2xl p-4 border-4 ${team === "pink" ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`}>
+                    <p className={`text-lg font-black ${team === "pink" ? "text-pink-600" : "text-blue-600"}`}>
+                        {team === "pink" ? "粉紅隊" : "藍隊"}
+                    </p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{name}</p>
+                    <p className={`text-5xl font-black mt-2 ${team === "pink" ? "text-pink-600" : "text-blue-600"}`}>{score}</p>
+                    <div className={`team-icon ${color} mx-auto mt-4 scale-75`}></div>
+                </div>
+            );
+        }
+
+        function GamePage({ config, onFinish, onHome }) {
+            const totalTurns = config.totalTurns || getModeTotalTurns(config.mode);
+            const roundsPerPlayer = config.roundsPerPlayer || getModeRoundsPerPlayer(config.mode);
+            const [scores, setScores] = useState({ pink: 0, blue: 0 });
+            const [turnIndex, setTurnIndex] = useState(0);
+            const [marbles, setMarbles] = useState([]);
+            const [isLaunchReady, setIsLaunchReady] = useState(false);
+            const [selectedOption, setSelectedOption] = useState("");
+            const [feedback, setFeedback] = useState("請先按喇叭聽音檔，再選答案。");
+            const [audioStatus, setAudioStatus] = useState("");
+            const [audioReadyForAnswer, setAudioReadyForAnswer] = useState(false);
+            const [showSuccess, setShowSuccess] = useState(false);
+            const [showTryAgain, setShowTryAgain] = useState(false);
+            const [correctLog, setCorrectLog] = useState({ pink: [], blue: [] });
+            const [attemptMap, setAttemptMap] = useState({});
+            const [finalWaiting, setFinalWaiting] = useState(false);
+            const [speechStatus, setSpeechStatus] = useState("idle");
+            const [speechMessage, setSpeechMessage] = useState("");
+            const [speechResult, setSpeechResult] = useState(null);
+            const [speechPlaybackUrl, setSpeechPlaybackUrl] = useState("");
+
+            const engineRef = useRef(null);
+            const runnerRef = useRef(null);
+            const animationRef = useRef(null);
+            const marblesStateRef = useRef([]);
+            const answersRef = useRef({ pink: [], blue: [] });
+            const scoreRef = useRef({ pink: 0, blue: 0 });
+            const launchedCountRef = useRef(0);
+            const scoredCountRef = useRef(0);
+            const slotPlanRef = useRef(null);
+            const finishedRef = useRef(false);
+            const finishRef = useRef(null);
+            const finalFallbackRef = useRef(null);
+            const audioRef = useRef(null);
+            const audioElementRef = useRef(null);
+            const speechRecorderRef = useRef(null);
+            const speechEvaluationAbortRef = useRef(null);
+            const speechHistoryRef = useRef({});
+            const speechPlaybackUrlRef = useRef("");
+            if (!slotPlanRef.current || slotPlanRef.current.length !== totalTurns) {
+                slotPlanRef.current = createBalancedSlotPlan(totalTurns);
+            }
+
+            const currentQuestion = config.questions[turnIndex] || null;
+            const currentTeam = turnIndex % 2 === 0 ? "pink" : "blue";
+            const currentPlayer = config.teams[currentTeam];
+            const currentRound = Math.floor(turnIndex / 2) + 1;
+            const modeMeta = MODE_META[config.mode];
+            const isSpeechPractice = config.mode === SPEECH_MODE;
+            const isImagePractice = isSpeechPractice || config.questions.some(q => q.optionType === "image");
+            const showQuestionStem = Boolean(currentQuestion?.stem?.trim());
+
+            const finishGame = useCallback((finalScores = scoreRef.current) => {
+                if (finishedRef.current) return;
+                finishedRef.current = true;
+                if (finalFallbackRef.current) clearTimeout(finalFallbackRef.current);
+                const playedAt = new Date();
+                const result = {
+                    id: `${playedAt.getTime()}-${Math.random().toString(16).slice(2)}`,
+                    playedAt: playedAt.toISOString(),
+                    date: todayString(),
+                    mode: config.mode,
+                    modeLabel: MODE_META[config.mode].label,
+                    students: config.students,
+                    teams: config.teams,
+                    scores: finalScores,
+                    answers: answersRef.current,
+                    questions: config.questions.map(q => ({
+                        id: q.id,
+                        type: q.type || q.optionType,
+                        stem: q.stem,
+                        imagePath: q.imagePath || "",
+                        correctAnswer: q.correctAnswer,
+                        correctOption: q.correctOption || null,
+                        rubricVersion: q.rubricVersion || null
+                    })),
+                    speechResults: isSpeechPractice ? answersRef.current : null,
+                    passScore: isSpeechPractice ? modeMeta.passScore : null,
+                    questionBankVersion: isSpeechPractice ? "hwg7-sr-v1-draft" : null
+                };
+                onFinish(result);
+            }, [config, onFinish]);
+
+            useEffect(() => {
+                finishRef.current = finishGame;
+            }, [finishGame]);
+
+            useEffect(() => {
+                const engine = Engine.create();
+                engine.world.gravity.y = 1.2;
+                engineRef.current = engine;
+
+                const staticBodies = [];
+                staticBodies.push(Bodies.rectangle(10, 375, 20, 750, { isStatic: true }));
+                staticBodies.push(Bodies.rectangle(590, 375, 20, 750, { isStatic: true }));
+                staticBodies.push(Bodies.rectangle(300, 740, 600, 20, { isStatic: true }));
+                staticBodies.push(Bodies.rectangle(300, 10, 600, 20, { isStatic: true }));
+                staticBodies.push(Bodies.rectangle(510, 465, 20, 530, { isStatic: true }));
+                staticBodies.push(Bodies.rectangle(550, 60, 150, 20, { isStatic: true, angle: Math.PI / 3.5, friction: 0, restitution: 0.2 }));
+                staticBodies.push(Bodies.rectangle(400, 25, 200, 20, { isStatic: true, angle: Math.PI / 32, friction: 0, restitution: 0.1 }));
+                staticBodies.push(Bodies.rectangle(200, 25, 200, 20, { isStatic: true, angle: -Math.PI / 32, friction: 0, restitution: 0.1 }));
+
+                for (let i = 1; i <= 5; i += 1) {
+                    const divX = 20 + i * 80;
+                    staticBodies.push(Bodies.rectangle(divX, 650, 8, 160, { isStatic: true, restitution: 0.2 }));
+                }
+
+                for (let r = 0; r < 7; r += 1) {
+                    const isEvenRow = r % 2 === 0;
+                    const cols = isEvenRow ? 5 : 6;
+                    const startX = isEvenRow ? 100 : 60;
+                    const yPos = 150 + r * 60;
+                    for (let c = 0; c < cols; c += 1) {
+                        const xPos = startX + c * 80;
+                        staticBodies.push(Bodies.circle(xPos, yPos, 6, { isStatic: true, restitution: 0.4, friction: 0.001 }));
+                    }
+                }
+
+                for (let i = 0; i < 6; i += 1) {
+                    const sensorX = 60 + i * 80;
+                    staticBodies.push(Bodies.rectangle(sensorX, 650, 70, 140, {
+                        isStatic: true,
+                        isSensor: true,
+                        label: "scoreSensor",
+                        slotIndex: i
+                    }));
+                }
+
+                Composite.add(engine.world, staticBodies);
+
+                Events.on(engine, "beforeUpdate", () => {
+                    marblesStateRef.current.forEach(m => {
+                        const body = m.body;
+                        if (body.position.x < 500 && body.position.y > 50 && body.position.y < 650 && body.targetSlot !== undefined) {
+                            const targetX = SLOT_CENTERS[body.targetSlot];
+                            const dx = targetX - body.position.x;
+                            if (body.position.y > 520 && !body.hasScored) {
+                                const laneVx = Math.max(-5.2, Math.min(5.2, dx * 0.09));
+                                const nextX = body.position.x + Math.max(-3.2, Math.min(3.2, dx * 0.08));
+                                Body.setVelocity(body, {
+                                    x: body.velocity.x * 0.35 + laneVx * 0.65,
+                                    y: Math.max(body.velocity.y, 1.8)
+                                });
+                                if (Math.abs(dx) > 10) {
+                                    Body.setPosition(body, { x: nextX, y: body.position.y });
+                                }
+                            } else if (body.position.y < 150) {
+                                let desiredVx = dx * 0.1;
+                                desiredVx = Math.max(-12, Math.min(12, desiredVx));
+                                const newVx = body.velocity.x * 0.85 + desiredVx * 0.15;
+                                let newVy = body.velocity.y;
+                                if (Math.abs(dx) > 20 && body.velocity.y > 0) newVy *= 0.7;
+                                Body.setVelocity(body, { x: newVx, y: newVy });
+                            } else {
+                                let forceX = dx * 0.000065;
+                                forceX = Math.max(-0.0032, Math.min(0.0032, forceX));
+                                let forceY = 0;
+                                if (Math.abs(body.velocity.y) < 0.3) {
+                                    forceY = 0.002;
+                                    forceX += (Math.random() - 0.5) * 0.0025;
+                                }
+                                Body.applyForce(body, body.position, { x: forceX, y: forceY });
+                            }
+                        }
+                    });
+                });
+
+                Events.on(engine, "collisionStart", event => {
+                    event.pairs.forEach(pair => {
+                        const { bodyA, bodyB } = pair;
+                        const sensor = bodyA.label === "scoreSensor" ? bodyA : (bodyB.label === "scoreSensor" ? bodyB : null);
+                        const marble = bodyA.label === "marble" ? bodyA : (bodyB.label === "marble" ? bodyB : null);
+                        if (sensor && marble && !marble.hasScored) {
+                            marble.hasScored = true;
+                            scoredCountRef.current += 1;
+                            const pts = SLOT_SCORES[sensor.slotIndex];
+                            const nextScores = {
+                                ...scoreRef.current,
+                                [marble.team]: scoreRef.current[marble.team] + pts
+                            };
+                            scoreRef.current = nextScores;
+                            setScores(nextScores);
+                            if (launchedCountRef.current >= totalTurns && scoredCountRef.current >= totalTurns) {
+                                setTimeout(() => finishRef.current && finishRef.current(nextScores), 700);
+                            }
+                        }
+                    });
+                });
+
+                const runner = Runner.create();
+                Runner.run(runner, engine);
+                runnerRef.current = runner;
+
+                const updateDOM = () => {
+                    marblesStateRef.current.forEach(m => {
+                        const circle = document.getElementById(m.id);
+                        if (circle) {
+                            circle.setAttribute("cx", m.body.position.x);
+                            circle.setAttribute("cy", m.body.position.y);
+                            const highlight = document.getElementById(`${m.id}-hl`);
+                            if (highlight) {
+                                highlight.setAttribute("cx", m.body.position.x - 4);
+                                highlight.setAttribute("cy", m.body.position.y - 4);
+                            }
+                        }
+                    });
+                    animationRef.current = requestAnimationFrame(updateDOM);
+                };
+                updateDOM();
+
+                return () => {
+                    if (finalFallbackRef.current) clearTimeout(finalFallbackRef.current);
+                    if (audioRef.current) audioRef.current.pause();
+                    speechRecorderRef.current?.cancel?.();
+                    speechRecorderRef.current = null;
+                    speechEvaluationAbortRef.current?.abort?.();
+                    speechEvaluationAbortRef.current = null;
+                    if (speechPlaybackUrlRef.current) URL.revokeObjectURL(speechPlaybackUrlRef.current);
+                    speechPlaybackUrlRef.current = "";
+                    cancelAnimationFrame(animationRef.current);
+                    Runner.stop(runner);
+                    Engine.clear(engine);
+                };
+            }, []);
+
+            useEffect(() => {
+                setSelectedOption("");
+                setAudioStatus("");
+                setAudioReadyForAnswer(false);
+                setSpeechStatus("idle");
+                setSpeechMessage("");
+                setSpeechResult(null);
+                setIsLaunchReady(false);
+                speechRecorderRef.current?.cancel?.();
+                speechRecorderRef.current = null;
+                speechEvaluationAbortRef.current?.abort?.();
+                speechEvaluationAbortRef.current = null;
+                if (speechPlaybackUrlRef.current) URL.revokeObjectURL(speechPlaybackUrlRef.current);
+                speechPlaybackUrlRef.current = "";
+                setSpeechPlaybackUrl("");
+                if (currentQuestion) {
+                    setFeedback(isSpeechPractice ? "看圖並按下錄音，完成後系統會依固定公式評分。" : "請先按喇叭聽音檔，再選答案。");
+                }
+            }, [currentQuestion?.id, isSpeechPractice]);
+
+            const playQuestionAudio = useCallback(() => {
+                if (!currentQuestion) return;
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.currentTime = 0;
+                }
+                setAudioReadyForAnswer(false);
+                const sources = currentQuestion.audioSources?.length
+                    ? currentQuestion.audioSources
+                    : [currentQuestion.audioUrl].filter(Boolean);
+
+                const playSource = sourceIndex => {
+                    if (sourceIndex >= sources.length) {
+                        setAudioStatus("音檔暫時無法播放，請確認 audio 資料夾已重新部署，或再點一次喇叭。");
+                        setFeedback("音檔還沒有完整播放，請先確認喇叭可以播放。");
+                        return;
+                    }
+
+                    const audio = audioElementRef.current || new Audio();
+                    audio.pause();
+                    audio.src = sources[sourceIndex];
+                    audio.preload = "auto";
+                    audio.playsInline = true;
+                    audioRef.current = audio;
+                    setAudioStatus(sourceIndex === 0 ? "播放中..." : "播放中...（雲端備援）");
+                    setFeedback("音檔播放中，請聽完後再選答案。");
+
+                    let movedToNextSource = false;
+                    const tryNextSource = () => {
+                        if (movedToNextSource) return;
+                        movedToNextSource = true;
+                        audio.pause();
+                        if (audioRef.current === audio) {
+                            playSource(sourceIndex + 1);
+                        }
+                    };
+
+                    audio.onended = () => {
+                        if (audioRef.current === audio) {
+                            setAudioReadyForAnswer(true);
+                            setAudioStatus("音檔播放完畢");
+                            setFeedback("音檔播放完畢，可以選答案。");
+                        }
+                    };
+                    audio.onerror = tryNextSource;
+                    audio.load();
+                    audio.play().catch(error => {
+                        if (error?.name === "NotAllowedError") {
+                            setAudioReadyForAnswer(false);
+                            setAudioStatus("瀏覽器暫時擋下播放，請再點一次喇叭。");
+                            setFeedback("請再點一次喇叭，音檔完整播放後才能選答案。");
+                            return;
+                        }
+                        tryNextSource();
+                    });
+                };
+
+                playSource(0);
+            }, [currentQuestion]);
+
+            const saveSpeechResult = (apiResult, attemptNo) => {
+                const questionId = currentQuestion.id;
+                const history = [...(speechHistoryRef.current[questionId] || []), {
+                    attemptNo,
+                    transcript: apiResult.transcript,
+                    scores: apiResult.scores,
+                    feedback: apiResult.feedback,
+                    primaryIssue: apiResult.primaryIssue,
+                    matchedAnswer: apiResult.matchedAnswer || null,
+                    valid: apiResult.valid === true
+                }];
+                speechHistoryRef.current[questionId] = history;
+                const bestAttempt = history.reduce((best, item) => !best || item.scores.total > best.scores.total ? item : best, null);
+                const passed = Boolean(apiResult.passed) && Number(apiResult.scores?.total) >= modeMeta.passScore;
+                const exhausted = attemptNo >= modeMeta.maxAttempts;
+                const status = passed ? "passed" : (exhausted ? "not_met" : "retry");
+                const entry = {
+                    id: questionId,
+                    type: currentQuestion.type,
+                    stem: currentQuestion.stem,
+                    correctAnswer: currentQuestion.correctAnswer,
+                    imagePath: currentQuestion.imagePath,
+                    transcript: apiResult.transcript,
+                    scores: apiResult.scores,
+                    bestScore: bestAttempt?.scores?.total || 0,
+                    passScore: modeMeta.passScore,
+                    status,
+                    forcedLaunch: status === "not_met",
+                    feedback: apiResult.feedback,
+                    attempts: history,
+                    rubricVersion: apiResult.rubricVersion || currentQuestion.rubricVersion,
+                    questionBankVersion: currentQuestion.questionBankVersion || "hwg7-sr-v1-draft",
+                    mode: config.mode
+                };
+                const withoutCurrent = answersRef.current[currentTeam].filter(item => item.id !== questionId);
+                answersRef.current = { ...answersRef.current, [currentTeam]: [...withoutCurrent, entry] };
+                setCorrectLog(answersRef.current);
+                setSpeechResult({ ...apiResult, attemptNo, exhausted, status, bestScore: entry.bestScore });
+                if (passed) {
+                    setFeedback(`達標！本次 ${apiResult.scores.total} 分，可以發射。`);
+                    setIsLaunchReady(true);
+                    setShowSuccess(true);
+                    playCorrectAnswerAudio();
+                    setTimeout(() => setShowSuccess(false), 1900);
+                } else if (exhausted) {
+                    setFeedback("本題三次都未達80分，已記錄為未達標；請看正確示範後發射。");
+                    setIsLaunchReady(true);
+                } else {
+                    setFeedback(`本次 ${apiResult.scores.total} 分，還可以再試 ${modeMeta.maxAttempts - attemptNo} 次。`);
+                    setShowTryAgain(true);
+                    setTimeout(() => setShowTryAgain(false), 1400);
+                }
+            };
+
+            const handleSpeechRecord = async () => {
+                if (!currentQuestion || isLaunchReady || finalWaiting || speechStatus === "evaluating" || speechStatus === "requesting") return;
+                if (speechStatus === "recording" || speechStatus === "stopping") {
+                    speechRecorderRef.current?.stop?.();
+                    return;
+                }
+                const completedAttempts = speechHistoryRef.current[currentQuestion.id]?.length || 0;
+                if (completedAttempts >= modeMeta.maxAttempts) return;
+                setSpeechResult(null);
+                setSpeechStatus("requesting");
+                setSpeechMessage("正在開啟麥克風...");
+                const controller = window.SpeechPractice.createRecorder({
+                    questionType: currentQuestion.type,
+                    onStatus: status => {
+                        setSpeechStatus(status.state);
+                        setSpeechMessage(status.message || "");
+                    },
+                    onError: error => {
+                        setSpeechStatus("idle");
+                        setSpeechMessage(error.message);
+                        setFeedback(error.message);
+                        speechRecorderRef.current = null;
+                    },
+                    onComplete: async recording => {
+                        speechRecorderRef.current = null;
+                        if (speechPlaybackUrlRef.current) URL.revokeObjectURL(speechPlaybackUrlRef.current);
+                        const playbackUrl = URL.createObjectURL(recording.blob);
+                        speechPlaybackUrlRef.current = playbackUrl;
+                        setSpeechPlaybackUrl(playbackUrl);
+                        setSpeechStatus("evaluating");
+                        setSpeechMessage("正在辨識與計算分數，不會傳送學生代碼。");
+                        const evaluationController = new AbortController();
+                        speechEvaluationAbortRef.current?.abort?.();
+                        speechEvaluationAbortRef.current = evaluationController;
+                        try {
+                            const apiResult = await window.SpeechPractice.evaluateSpeech({
+                                questionId: currentQuestion.id,
+                                blob: recording.blob,
+                                mimeType: recording.mimeType,
+                                metrics: recording.metrics,
+                                signal: evaluationController.signal
+                            });
+                            if (apiResult.valid !== true || !Number.isFinite(Number(apiResult.scores?.total))) {
+                                throw new Error("這次沒有形成可評分的英文內容，請再說一次。");
+                            }
+                            const attemptNo = (speechHistoryRef.current[currentQuestion.id]?.length || 0) + 1;
+                            setAttemptMap(previous => ({ ...previous, [currentQuestion.id]: attemptNo }));
+                            saveSpeechResult(apiResult, attemptNo);
+                            setSpeechStatus("idle");
+                            setSpeechMessage("");
+                        } catch (error) {
+                            const message = error?.name === "AbortError" ? "評測已取消。" : error.message;
+                            setSpeechStatus("idle");
+                            setSpeechMessage(message);
+                            setFeedback(`${message} 這次不計入有效次數。`);
+                        } finally {
+                            if (speechEvaluationAbortRef.current === evaluationController) {
+                                speechEvaluationAbortRef.current = null;
+                            }
+                        }
+                    }
+                });
+                speechRecorderRef.current = controller;
+                await controller.start();
+            };
+
+            const handleAnswer = option => {
+                if (!currentQuestion || isLaunchReady || finalWaiting) return;
+                if (!audioReadyForAnswer) {
+                    setFeedback("請先按喇叭，等音檔完整播放完畢後再選答案。");
+                    return;
+                }
+                setSelectedOption(option);
+                const correct = option === currentQuestion.correctOption;
+                if (correct) {
+                    const entry = {
+                        id: currentQuestion.id,
+                        stem: currentQuestion.stem,
+                        correctAnswer: currentQuestion.correctAnswer,
+                        correctOption: currentQuestion.correctOption,
+                        audioNo: currentQuestion.audioNo,
+                        mode: config.mode
+                    };
+                    answersRef.current = {
+                        ...answersRef.current,
+                        [currentTeam]: [...answersRef.current[currentTeam], entry]
+                    };
+                    setCorrectLog(answersRef.current);
+                    setFeedback("答對了，可以按發射。");
+                    setIsLaunchReady(true);
+                    setShowSuccess(true);
+                    playCorrectAnswerAudio();
+                    setTimeout(() => setShowSuccess(false), 1900);
+                } else {
+                    const nextAttempts = (attemptMap[currentQuestion.id] || 0) + 1;
+                    setAttemptMap(prev => ({ ...prev, [currentQuestion.id]: nextAttempts }));
+                    if (nextAttempts === 1) {
+                        setFeedback("Try Again，還有第二次機會。");
+                        setShowTryAgain(true);
+                        setTimeout(() => setShowTryAgain(false), 1400);
+                    } else {
+                        setFeedback(`再聽一次音檔，選到正確答案後才能發射。`);
+                    }
+                }
+            };
+
+            const handleLaunchClick = useCallback(() => {
+                if (!engineRef.current || !isLaunchReady || turnIndex >= totalTurns) return;
+                playRollingAudio();
+                const team = currentTeam;
+                const startX = 550;
+                const startY = 700;
+                const id = `marble-${Date.now()}-${turnIndex}`;
+                const plannedTurn = slotPlanRef.current?.[turnIndex] || { slotIndex: pickRandom([0, 1, 2, 3, 4, 5]) };
+                const targetSlot = plannedTurn.slotIndex;
+
+                const marbleBody = Bodies.circle(startX, startY, 12, {
+                    label: "marble",
+                    restitution: 0.4,
+                    friction: 0.001,
+                    density: 0.05
+                });
+                marbleBody.team = team;
+                marbleBody.hasScored = false;
+                marbleBody.targetSlot = targetSlot;
+                marbleBody.plannedRound = plannedTurn.round;
+                marbleBody.turnIndex = turnIndex;
+                Body.setVelocity(marbleBody, { x: 0, y: -43 });
+                Composite.add(engineRef.current.world, marbleBody);
+                marblesStateRef.current.push({ id, body: marbleBody, team });
+                setMarbles(prev => [...prev, { id, team }]);
+
+                launchedCountRef.current += 1;
+                setIsLaunchReady(false);
+                setTurnIndex(prev => prev + 1);
+                if (launchedCountRef.current >= totalTurns) {
+                    setFinalWaiting(true);
+                    setFeedback("等待最後一顆彈珠計分...");
+                    finalFallbackRef.current = setTimeout(() => {
+                        if (finishRef.current) finishRef.current(scoreRef.current);
+                    }, 12000);
+                }
+            }, [isLaunchReady, turnIndex, currentTeam, totalTurns]);
+
+            const optionButtonClass = (option, disabled, imageOption = false) => {
+                const isSelected = selectedOption === option;
+                const base = imageOption
+                    ? "image-option-button min-h-[142px] rounded-xl border-4 p-2 font-black transition-all shadow-sm flex flex-col items-center justify-center"
+                    : "min-h-[58px] rounded-xl border-4 px-4 py-3 font-black text-xl transition-all shadow-sm";
+                if (isLaunchReady && option === currentQuestion?.correctOption) {
+                    return `${base} bg-green-100 border-green-400 text-green-700`;
+                }
+                if (disabled) {
+                    return `${base} bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-70`;
+                }
+                if (isSelected && !isLaunchReady) {
+                    return `${base} bg-pink-100 border-pink-400 text-pink-700`;
+                }
+                return `${base} bg-white border-cyan-200 text-slate-800 hover:border-cyan-500 hover:bg-cyan-50`;
+            };
+
+            const answerButtonsDisabled = !audioReadyForAnswer || isLaunchReady || finalWaiting;
+
+            return (
+                <div className={`game-screen ${isImagePractice ? "image-practice-screen" : ""}`}>
+                    <OverlayFeedback showSuccess={showSuccess} showTryAgain={showTryAgain} />
+
+                    <section className={`control-panel w-full ${isImagePractice ? "max-w-[500px]" : "max-w-[430px]"} max-h-[calc(100svh-2rem)] overflow-y-auto flex flex-col gap-5 backdrop-blur-md p-5 md:p-6 rounded-[28px] relative z-10`}>
+                        <div className="flex items-center justify-between gap-3">
+                            <div>
+                                <p className="text-sm font-black text-purple-600">{modeMeta.label}</p>
+                                <h2 className="text-2xl font-black text-slate-900">第 {Math.min(currentRound, roundsPerPlayer)} 回合</h2>
+                            </div>
+                            <button onClick={onHome} className="rounded-lg bg-slate-100 px-3 py-2 font-black text-slate-700 hover:bg-slate-200">
+                                <i className="fas fa-house mr-1"></i>
+                                首頁
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <TeamScoreCard team="pink" name={config.teams.pink} score={scores.pink} />
+                            <TeamScoreCard team="blue" name={config.teams.blue} score={scores.blue} />
+                        </div>
+
+                        <div className="rounded-2xl border-4 border-purple-200 bg-purple-50 p-4 text-center">
+                            <p className="text-sm font-black text-purple-600">目前作答</p>
+                            <p className={`text-3xl font-black ${currentTeam === "pink" ? "text-pink-600" : "text-blue-600"}`}>
+                                {currentTeam === "pink" ? "粉紅隊" : "藍隊"}・{currentPlayer || "等待計分"}
+                            </p>
+                            <p className="text-sm font-bold text-slate-500 mt-1">第 {Math.min(turnIndex + 1, totalTurns)} 題 / 共 {totalTurns} 題</p>
+                        </div>
+
+                        {currentQuestion ? (
+                            <div className="question-card rounded-2xl border-4 p-4">
+                                <audio ref={audioElementRef} preload="auto" playsInline></audio>
+                                {isSpeechPractice ? (
+                                    <div className="grid gap-4">
+                                        <img src={currentQuestion.imagePath} alt={currentQuestion.imageAlt || "題目圖片（替代文字待教師確認）"} className="w-full max-h-56 object-contain rounded-xl bg-white border-4 border-cyan-100" draggable="false" />
+                                        <div className="text-center rounded-2xl bg-yellow-50 border-4 border-yellow-200 p-4">
+                                            <p className="text-sm font-black text-purple-600">{currentQuestion.type === "read_aloud" ? "Look and read" : "Read and answer"}</p>
+                                            <p className="text-2xl font-black text-slate-900 mt-2 leading-snug">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.questionText}</p>
+                                            {currentQuestion.type === "question_answer" && <p className="text-sm font-bold text-slate-600 mt-2">請先讀問句，再說出答案；短答或完整答都可依題庫得滿分。</p>}
+                                        </div>
+                                        <details className="rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-left">
+                                            <summary className="cursor-pointer font-black text-purple-700">評分公式與本題提醒</summary>
+                                            <div className="mt-2 grid gap-2 text-sm font-bold text-slate-700">
+                                                <p>{currentQuestion.type === "read_aloud" ? "總分＝準確度×40%＋完整度×35%＋流暢度×25%。" : "總分＝準確度×50%＋完整度×30%＋流暢度×20%；核心答案錯誤時最高59分。"}</p>
+                                                <p>總分達80分即達標；最多3次有效作答。錄音或系統失敗不計次數，3次未達標仍可看示範並發射。</p>
+                                                {currentQuestion.pronunciationTargets?.length > 0 && <p>本題留意：{currentQuestion.pronunciationTargets.join("、")}。評語會依題庫的發音難字與語調分析選出一項主要提醒。</p>}
+                                            </div>
+                                        </details>
+                                        <div className="grid grid-cols-2 gap-3 items-center">
+                                            <button onClick={handleSpeechRecord} disabled={isLaunchReady || finalWaiting || speechStatus === "evaluating" || speechStatus === "requesting"} className={`min-h-[64px] rounded-xl border-4 px-4 py-3 text-xl font-black text-white transition-all ${speechStatus === "recording" || speechStatus === "stopping" ? "bg-red-600 border-red-200 animate-pulse" : "bg-gradient-to-r from-pink-500 to-purple-600 border-white"} disabled:bg-slate-300 disabled:border-slate-200`}>
+                                                <i className={`fas ${speechStatus === "recording" || speechStatus === "stopping" ? "fa-stop" : "fa-microphone"} mr-2`}></i>
+                                                {speechStatus === "recording" || speechStatus === "stopping" ? "停止錄音" : "開始錄音"}
+                                            </button>
+                                            <div className="rounded-xl bg-white border-4 border-slate-100 p-3 text-center">
+                                                <p className="text-sm font-black text-slate-500">有效次數</p>
+                                                <p className="text-2xl font-black text-slate-900">{attemptMap[currentQuestion.id] || 0} / {modeMeta.maxAttempts}</p>
+                                            </div>
+                                        </div>
+                                        {speechMessage && <p className="rounded-xl bg-cyan-50 border-2 border-cyan-200 p-3 text-center font-black text-cyan-800">{speechMessage}</p>}
+                                        {speechPlaybackUrl && <audio src={speechPlaybackUrl} controls playsInline className="w-full" />}
+                                        {speechResult && (
+                                            <div className={`rounded-2xl border-4 p-4 ${speechResult.status === "passed" ? "bg-green-50 border-green-300" : "bg-orange-50 border-orange-300"}`}>
+                                                <p className="text-sm font-black text-slate-500">系統聽到</p>
+                                                <p className="font-black text-slate-900 mt-1">{speechResult.transcript}</p>
+                                                <div className="grid grid-cols-4 gap-2 mt-3 text-center">
+                                                    {[["準確", speechResult.scores.accuracy], ["完整", speechResult.scores.completeness], ["流暢", speechResult.scores.fluency], ["總分", speechResult.scores.total]].map(([label, value]) => (
+                                                        <div key={label} className="rounded-lg bg-white p-2 border border-slate-200"><p className="text-xs font-black text-slate-500">{label}</p><p className="text-xl font-black text-purple-700">{value}</p></div>
+                                                    ))}
+                                                </div>
+                                                <p className="mt-3 font-black text-slate-800">口說小提醒：{speechResult.feedback}</p>
+                                                {speechResult.status === "not_met" && speechResult.exhausted && (
+                                                    <div className="mt-3 rounded-xl bg-white border-2 border-orange-200 p-3">
+                                                        <p className="text-sm font-black text-orange-700">正確示範</p>
+                                                        <p className="text-lg font-black text-slate-900">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.acceptableAnswers.map(answer => answer.text || answer).join("／")}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className={`rounded-xl border-2 px-3 py-2 text-center font-black ${isLaunchReady ? "bg-green-50 border-green-300 text-green-700" : "bg-purple-50 border-purple-200 text-purple-700"}`}>{feedback}</div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="flex justify-center mb-4">
+                                            <button onClick={playQuestionAudio} className={`w-24 h-24 rounded-full border-4 border-white bg-gradient-to-br from-yellow-400 via-pink-500 to-cyan-500 text-white text-4xl shadow-[0_0_20px_rgba(0,184,255,0.45)] hover:scale-105 active:scale-95 transition-transform ${audioStatus.startsWith("播放中") ? "speaker-active" : ""}`} aria-label="播放題目音檔"><i className="fas fa-volume-up"></i></button>
+                                        </div>
+                                        <div className="text-center mb-4">
+                                            <p className="text-sm font-black text-slate-500">音檔編號 {currentQuestion.audioNo}</p>
+                                            {showQuestionStem && <div className="mt-2 min-h-[82px] rounded-2xl bg-yellow-50 border-4 border-yellow-200 flex items-center justify-center px-4"><p className={`${config.mode.endsWith("Phonics") ? "text-5xl" : "text-2xl"} font-black text-slate-900 leading-tight`}>{currentQuestion.stem}</p></div>}
+                                        </div>
+                                        <div className={currentQuestion.optionType === "image" ? "image-options-grid grid grid-cols-3 gap-2" : "grid gap-3"}>
+                                            {currentQuestion.options.map(option => {
+                                                const optionValue = getOptionValue(option);
+                                                const imageOption = typeof option === "object" && option.image;
+                                                return <button key={optionValue} onClick={() => handleAnswer(optionValue)} disabled={answerButtonsDisabled} className={optionButtonClass(optionValue, answerButtonsDisabled, imageOption)}>{imageOption ? <><img src={option.image} alt={`${currentQuestion.id} 選項 ${option.label}`} className="w-full aspect-square object-contain rounded-lg bg-white" draggable="false" /><span className="mt-1 text-sm text-slate-700">{option.label}</span></> : option}</button>;
+                                            })}
+                                        </div>
+                                        <div className={`mt-4 rounded-xl border-2 px-3 py-2 text-center font-black ${isLaunchReady ? "bg-green-50 border-green-300 text-green-700" : "bg-purple-50 border-purple-200 text-purple-700"}`}>{feedback}</div>
+                                        {audioStatus && <p className="text-center text-sm font-bold text-slate-500 mt-2">{audioStatus}</p>}
+                                    </>
+                                )}
+                            </div>
+                        ) : (
+
+                            <div className="rounded-2xl border-4 border-slate-200 bg-white p-6 text-center">
+                                <p className="text-2xl font-black text-slate-900">彈珠計分中</p>
+                                <p className="text-sm font-bold text-slate-500 mt-2">所有題目都已完成，等待最後分數。</p>
+                            </div>
+                        )}
+                    </section>
+
+                    <section className="pinball-shell relative shadow-[12px_12px_0px_0px_rgba(181,0,255,0.36)] rounded-[28px] overflow-hidden border-[12px] border-[#B500FF] bg-[#FFFFB3]">
+                        <svg width={BOARD_W} height={BOARD_H} xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="pinkGradient" cx="30%" cy="30%" r="70%">
+                                    <stop offset="0%" stopColor="#ff99cc" />
+                                    <stop offset="50%" stopColor="#ff007f" />
+                                    <stop offset="100%" stopColor="#99004c" />
+                                </radialGradient>
+                                <radialGradient id="blueGradient" cx="30%" cy="30%" r="70%">
+                                    <stop offset="0%" stopColor="#99ffff" />
+                                    <stop offset="50%" stopColor="#00ccff" />
+                                    <stop offset="100%" stopColor="#006699" />
+                                </radialGradient>
+                                <filter id="inner-shadow">
+                                    <feOffset dx="0" dy="5" />
+                                    <feGaussianBlur stdDeviation="3" result="offset-blur" />
+                                    <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+                                    <feFlood floodColor="#FF3399" floodOpacity="0.4" result="color" />
+                                    <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+                                    <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+                                </filter>
+                            </defs>
+
+                            <rect x="0" y="0" width={BOARD_W} height={BOARD_H} className="wood-board" />
+                            <text x="560" y="600" fill="#B500FF" fontSize="26" fontWeight="900" fontFamily="Arial" opacity="1" transform="rotate(-90 560 600)">
+                                READY GO
+                            </text>
+                            <rect x="0" y="0" width="20" height={BOARD_H} className="wood-wall" />
+                            <rect x={BOARD_W - 20} y="0" width="20" height={BOARD_H} className="wood-wall" />
+                            <rect x="0" y={BOARD_H - 20} width={BOARD_W} height="20" className="wood-wall" />
+                            <rect x="0" y="0" width={BOARD_W} height="20" className="wood-wall" />
+                            <rect x="500" y="200" width="20" height="530" className="wood-wall" rx="10" />
+                            <path d="M 580 150 Q 580 20 400 20 L 580 20 Z" fill="#FF3399" stroke="#FF99CC" strokeWidth="2" opacity="1" />
+
+                            {SLOT_SCORES.map((score, i) => (
+                                <g key={`score-${i}`}>
+                                    <rect x={20 + i * 80} y="700" width="80" height="30" fill="#FFEA00" filter="url(#inner-shadow)" />
+                                    <text x={60 + i * 80} y="724" className="score-text">{score}</text>
+                                </g>
+                            ))}
+
+                            {[1, 2, 3, 4, 5].map(i => (
+                                <rect key={`div-${i}`} x={20 + i * 80 - 4} y="570" width="8" height="160" className="wood-divider" rx="4" />
+                            ))}
+
+                            {(() => {
+                                const pegs = [];
+                                for (let r = 0; r < 7; r += 1) {
+                                    const isEven = r % 2 === 0;
+                                    const cols = isEven ? 5 : 6;
+                                    const startX = isEven ? 100 : 60;
+                                    for (let c = 0; c < cols; c += 1) {
+                                        const cx = startX + c * 80;
+                                        const cy = 150 + r * 60;
+                                        pegs.push(
+                                            <g key={`peg-${r}-${c}`}>
+                                                <circle cx={cx} cy={cy} r="7" className="peg-outer" />
+                                                <circle cx={cx - 1} cy={cy - 1} r="3" className="peg-inner" />
+                                            </g>
+                                        );
+                                    }
+                                }
+                                return pegs;
+                            })()}
+
+                            {marbles.map(m => (
+                                <g key={m.id}>
+                                    <circle id={m.id} cx="-100" cy="-100" r="12" className={m.team === "pink" ? "marble-pink" : "marble-blue"} />
+                                    <circle id={`${m.id}-hl`} cx="-100" cy="-100" r="4" className="marble-highlight" />
+                                </g>
+                            ))}
+
+                            <rect x="0" y="0" width={BOARD_W} height={BOARD_H} className="glass-cover" />
+                        </svg>
+
+                        <button
+                            onClick={handleLaunchClick}
+                            disabled={!isLaunchReady}
+                            title={isLaunchReady ? "點擊發射" : (isSpeechPractice ? "請先完成口說評測" : "請先答對題目")}
+                            style={{ position: "absolute", left: "522px", top: "650px", width: "56px", height: "56px" }}
+                            className={`rounded-full flex items-center justify-center font-black text-white shadow-xl transition-all duration-300 z-10 border-4 ${
+                                isLaunchReady
+                                    ? "bg-gradient-to-t from-red-500 to-yellow-400 border-white cursor-pointer hover:scale-110 active:scale-95 animate-bounce shadow-[0_0_15px_rgba(255,0,127,0.8)]"
+                                    : "bg-gray-300 border-gray-400 cursor-not-allowed opacity-60 grayscale"
+                            }`}
+                        >
+                            發射
+                        </button>
+                    </section>
+                </div>
+            );
+        }
+
+        function AnswerList({ items }) {
+            if (!items || items.length === 0) return <p className="text-sm font-bold text-slate-500">尚無作答紀錄。</p>;
+            return (
+                <ol className="grid gap-2">
+                    {items.map((item, index) => (
+                        <li key={`${item.id}-${index}`} className="rounded-lg bg-white/80 border border-slate-200 px-3 py-2">
+                            <div className="flex items-center justify-between gap-2">
+                                <span className="font-black text-slate-900">{item.id}</span>
+                                {Number.isFinite(item.bestScore) && <span className={`font-black ${item.status === "passed" ? "text-green-700" : "text-orange-700"}`}>{item.bestScore}分・{item.status === "passed" ? "達標" : "未達標"}</span>}
+                            </div>
+                            {item.stem && <p className="font-bold text-slate-600 mt-1">{item.stem}</p>}
+                            {item.transcript && <p className="text-sm font-bold text-slate-500 mt-1">聽到：{item.transcript}</p>}
+                            {!Number.isFinite(item.bestScore) && <p className="font-black text-green-700 mt-1">{item.correctAnswer}</p>}
+                        </li>
+                    ))}
+                </ol>
+            );
+        }
+
+        function SummaryPage({ result, onHome }) {
+            useEffect(() => {
+                playSummaryAudio();
+            }, [result.id]);
+
+            const winner =
+                result.scores.pink === result.scores.blue
+                    ? "雙方平手"
+                    : result.scores.pink > result.scores.blue
+                        ? "粉紅隊領先"
+                        : "藍隊領先";
+
+            return (
+                <main className="summary-screen p-4 md:p-6 flex items-center justify-center">
+                    <section className="summary-card w-full max-w-6xl backdrop-blur-md rounded-[28px] p-5 md:p-8">
+                        <div className="text-center mb-6">
+                            <p className="text-sm font-black text-purple-600">{result.modeLabel}</p>
+                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 mt-2">遊戲總結</h1>
+                            <p className="text-xl font-black text-yellow-700 mt-2">{winner}</p>
+                            {result.syncMessage && (
+                                <p className={`inline-block mt-3 rounded-xl border-2 px-4 py-2 text-sm font-black ${
+                                    result.syncStatus === "cloud"
+                                        ? "bg-green-50 border-green-200 text-green-700"
+                                        : result.syncStatus === "pending"
+                                            ? "bg-cyan-50 border-cyan-200 text-cyan-700"
+                                            : "bg-yellow-50 border-yellow-300 text-yellow-800"
+                                }`}>
+                                    {result.syncMessage}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-5">
+                            <div className="rounded-2xl border-4 border-pink-200 bg-pink-50 p-5">
+                                <div className="flex items-center gap-4">
+                                    <div className="team-icon pink result-badge shrink-0"></div>
+                                    <div>
+                                        <p className="text-lg font-black text-pink-600">粉紅隊</p>
+                                        <h2 className="text-3xl font-black text-slate-900">{result.teams.pink}</h2>
+                                        <p className="text-5xl font-black text-pink-600 mt-1">{result.scores.pink} 分</p>
+                                    </div>
+                                </div>
+                                <div className="mt-5">
+                                    <h3 className="text-lg font-black text-slate-900 mb-3">答對題目</h3>
+                                    <AnswerList items={result.answers.pink} />
+                                </div>
+                            </div>
+
+                            <div className="rounded-2xl border-4 border-cyan-200 bg-cyan-50 p-5">
+                                <div className="flex items-center gap-4">
+                                    <div className="team-icon blue result-badge shrink-0"></div>
+                                    <div>
+                                        <p className="text-lg font-black text-blue-600">藍隊</p>
+                                        <h2 className="text-3xl font-black text-slate-900">{result.teams.blue}</h2>
+                                        <p className="text-5xl font-black text-blue-600 mt-1">{result.scores.blue} 分</p>
+                                    </div>
+                                </div>
+                                <div className="mt-5">
+                                    <h3 className="text-lg font-black text-slate-900 mb-3">答對題目</h3>
+                                    <AnswerList items={result.answers.blue} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 text-center">
+                            <button
+                                onClick={onHome}
+                                className="rounded-xl bg-slate-900 text-white px-8 py-4 text-xl font-black shadow-lg hover:bg-slate-700"
+                            >
+                                <i className="fas fa-house mr-2"></i>
+                                回到首頁
+                            </button>
+                        </div>
+                    </section>
+                </main>
+            );
+        }
+
+        function TeacherDashboard({ onHome }) {
+            const [date, setDate] = useState(todayString());
+            const [records, setRecords] = useState([]);
+            const [selectedId, setSelectedId] = useState("");
+            const [loading, setLoading] = useState(false);
+            const [recordSource, setRecordSource] = useState("cloud");
+            const [statusMessage, setStatusMessage] = useState("");
+            const [deleteTarget, setDeleteTarget] = useState(null);
+            const [deleteBusy, setDeleteBusy] = useState(false);
+
+            const refreshRecords = useCallback(async () => {
+                setLoading(true);
+                const result = await loadRecordsByDate(date);
+                setRecords(result.records);
+                setRecordSource(result.source);
+                setStatusMessage(result.message);
+                setLoading(false);
+            }, [date]);
+
+            useEffect(() => {
+                refreshRecords();
+            }, [refreshRecords]);
+
+            const dayRecords = records.filter(record => record.date === date);
+            const selected = dayRecords.find(record => record.id === selectedId) || null;
+
+            useEffect(() => {
+                if (dayRecords.length && !dayRecords.some(record => record.id === selectedId)) {
+                    setSelectedId(dayRecords[0].id);
+                }
+                if (!dayRecords.length) setSelectedId("");
+            }, [date, records.length, selectedId]);
+
+            useEffect(() => {
+                const handleFocus = () => refreshRecords();
+                window.addEventListener("focus", handleFocus);
+                return () => window.removeEventListener("focus", handleFocus);
+            }, [refreshRecords]);
+
+            const openDeleteConfirm = (event, record) => {
+                event.preventDefault();
+                setDeleteTarget(record);
+            };
+
+            const confirmDeleteRecord = async () => {
+                if (!deleteTarget || deleteBusy) return;
+                setDeleteBusy(true);
+                const deletingId = deleteTarget.id;
+                const result = await deleteRecord(deletingId);
+                if (result.ok || recordSource === "local") {
+                    setRecords(prev => prev.filter(record => record.id !== deletingId));
+                    if (selectedId === deletingId) {
+                        setSelectedId("");
+                    }
+                } else {
+                    await refreshRecords();
+                }
+                setRecordSource(result.source);
+                setStatusMessage(result.message);
+                setDeleteBusy(false);
+                setDeleteTarget(null);
+            };
+
+            return (
+                <main className="teacher-screen p-4 md:p-6">
+                    <section className="teacher-card max-w-7xl mx-auto backdrop-blur-md rounded-[28px] p-5 md:p-8">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <p className="text-sm font-black text-purple-600">英聽與打彈珠小高手</p>
+                                <h1 className="text-4xl font-black text-slate-900">教師後台</h1>
+                            </div>
+                            <button onClick={onHome} className="rounded-xl bg-slate-900 text-white px-5 py-3 font-black hover:bg-slate-700">
+                                <i className="fas fa-house mr-2"></i>
+                                回到首頁
+                            </button>
+                        </div>
+
+                        <div className="grid lg:grid-cols-[360px_1fr] gap-5">
+                            <aside className="rounded-2xl border-4 border-slate-200 bg-slate-50 p-4">
+                                <label className="block">
+                                    <span className="block font-black text-slate-700 mb-2">選擇日期</span>
+                                    <input
+                                        type="date"
+                                        value={date}
+                                        onChange={event => setDate(event.target.value)}
+                                        className="w-full rounded-xl border-4 border-white bg-white px-4 py-3 text-lg font-black text-slate-900 outline-none focus:border-cyan-300"
+                                    />
+                                </label>
+
+                                <div className={`mt-4 rounded-xl border-2 p-3 text-sm font-black ${
+                                    recordSource === "cloud"
+                                        ? "bg-green-50 border-green-200 text-green-700"
+                                        : "bg-yellow-50 border-yellow-300 text-yellow-800"
+                                }`}>
+                                    {loading ? "正在讀取紀錄..." : statusMessage}
+                                </div>
+
+                                <button
+                                    onClick={refreshRecords}
+                                    disabled={loading}
+                                    className="mt-3 w-full rounded-xl bg-cyan-500 text-white px-4 py-3 font-black shadow hover:bg-cyan-600 disabled:bg-slate-300"
+                                >
+                                    <i className="fas fa-rotate-right mr-2"></i>
+                                    重新整理紀錄
+                                </button>
+
+                                <h2 className="text-xl font-black text-slate-900 mt-6 mb-3">學生名單</h2>
+                                <div className="grid gap-3 max-h-[620px] overflow-y-auto pr-1">
+                                    {loading ? (
+                                        <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">正在讀取此日期的遊戲紀錄...</p>
+                                    ) : dayRecords.length === 0 ? (
+                                        <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">此日期還沒有遊戲紀錄。</p>
+                                    ) : (
+                                        dayRecords.map(record => (
+                                            <button
+                                                key={record.id}
+                                                onClick={() => setSelectedId(record.id)}
+                                                onContextMenu={event => openDeleteConfirm(event, record)}
+                                                className={`rounded-xl border-4 p-4 text-left transition-all ${
+                                                    selectedId === record.id
+                                                        ? "bg-yellow-100 border-yellow-400 shadow-[4px_4px_0px_0px_rgba(236,72,153,0.24)]"
+                                                        : "bg-white border-white hover:border-cyan-300"
+                                                }`}
+                                            >
+                                                <p className="text-lg font-black text-slate-900">{record.students[0]}、{record.students[1]}</p>
+                                                <p className="text-sm font-bold text-slate-500 mt-1">{localDateTimeLabel(record.playedAt)}・{record.modeLabel}</p>
+                                            </button>
+                                        ))
+                                    )}
+                                </div>
+                            </aside>
+
+                            <section className="rounded-2xl border-4 border-slate-200 bg-white p-4 md:p-6">
+                                <h2 className="text-2xl font-black text-slate-900 mb-4">成績明細</h2>
+                                {!selected ? (
+                                    <div className="min-h-[320px] flex items-center justify-center text-center rounded-2xl bg-slate-50 border-4 border-dashed border-slate-200">
+                                        <p className="text-xl font-black text-slate-500">請點選左側學生姓名查看報告。</p>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <div className="grid md:grid-cols-2 gap-4 mb-5">
+                                            <div className="rounded-2xl bg-pink-50 border-4 border-pink-200 p-4">
+                                                <p className="text-lg font-black text-pink-600">粉紅隊</p>
+                                                <h3 className="text-3xl font-black text-slate-900">{selected.teams.pink}</h3>
+                                                <p className="text-5xl font-black text-pink-600 mt-2">{selected.scores.pink} 分</p>
+                                            </div>
+                                            <div className="rounded-2xl bg-cyan-50 border-4 border-cyan-200 p-4">
+                                                <p className="text-lg font-black text-blue-600">藍隊</p>
+                                                <h3 className="text-3xl font-black text-slate-900">{selected.teams.blue}</h3>
+                                                <p className="text-5xl font-black text-blue-600 mt-2">{selected.scores.blue} 分</p>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm font-black text-purple-600 mb-4">{selected.modeLabel}・{localDateTimeLabel(selected.playedAt)}</p>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div className="rounded-2xl bg-pink-50 border-4 border-pink-100 p-4">
+                                                <h3 className="text-xl font-black text-slate-900 mb-3">粉紅隊答對題目</h3>
+                                                <AnswerList items={selected.answers.pink} />
+                                            </div>
+                                            <div className="rounded-2xl bg-cyan-50 border-4 border-cyan-100 p-4">
+                                                <h3 className="text-xl font-black text-slate-900 mb-3">藍隊答對題目</h3>
+                                                <AnswerList items={selected.answers.blue} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </section>
+                        </div>
+                    </section>
+                    {deleteTarget && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4">
+                            <div className="w-full max-w-md rounded-[24px] border-4 border-yellow-300 bg-white p-6 text-center shadow-[0_18px_48px_rgba(15,23,42,0.28)]">
+                                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-pink-100 text-3xl text-pink-600">
+                                    <i className="fas fa-trash-can"></i>
+                                </div>
+                                <h2 className="text-3xl font-black text-slate-900">是否刪除此份資料？</h2>
+                                <p className="mt-3 text-lg font-bold text-slate-600">
+                                    {deleteTarget.students?.[0]}、{deleteTarget.students?.[1]}
+                                </p>
+                                <p className="mt-1 text-sm font-bold text-slate-500">
+                                    {localDateTimeLabel(deleteTarget.playedAt)}・{deleteTarget.modeLabel}
+                                </p>
+                                <div className="mt-6 grid grid-cols-2 gap-3">
+                                    <button
+                                        onClick={confirmDeleteRecord}
+                                        disabled={deleteBusy}
+                                        className="rounded-xl bg-red-500 px-5 py-3 text-xl font-black text-white shadow hover:bg-red-600 disabled:bg-slate-300"
+                                    >
+                                        是
+                                    </button>
+                                    <button
+                                        onClick={() => setDeleteTarget(null)}
+                                        disabled={deleteBusy}
+                                        className="rounded-xl bg-slate-100 px-5 py-3 text-xl font-black text-slate-700 shadow hover:bg-slate-200 disabled:bg-slate-200"
+                                    >
+                                        否
+                                    </button>
+                                </div>
+                                {deleteBusy && <p className="mt-3 text-sm font-black text-slate-500">正在刪除資料...</p>}
+                            </div>
+                        </div>
+                    )}
+                </main>
+            );
+        }
+
+        function App() {
+            const [view, setView] = useState("home");
+            const [showPassword, setShowPassword] = useState(false);
+            const [config, setConfig] = useState(null);
+            const [result, setResult] = useState(null);
+
+            const startGame = (students, mode) => {
+                const teams = Math.random() < 0.5
+                    ? { pink: students[0], blue: students[1] }
+                    : { pink: students[1], blue: students[0] };
+                setConfig({
+                    students,
+                    mode,
+                    teams,
+                    totalTurns: getModeTotalTurns(mode),
+                    roundsPerPlayer: getModeRoundsPerPlayer(mode),
+                    questions: prepareQuestionSet(mode)
+                });
+                setResult(null);
+                setView("game");
+            };
+
+            const finishGame = record => {
+                const pendingRecord = {
+                    ...record,
+                    syncStatus: "pending",
+                    syncMessage: "正在上傳紀錄到 Firebase..."
+                };
+                setResult(pendingRecord);
+                setView("summary");
+                saveRecord(record)
+                    .then(syncResult => {
+                        setResult(current => current?.id === record.id
+                            ? {
+                                ...current,
+                                syncStatus: syncResult.status,
+                                syncMessage: syncResult.message
+                            }
+                            : current
+                        );
+                    })
+                    .catch(error => {
+                        console.warn("紀錄處理失敗", error);
+                        setResult(current => current?.id === record.id
+                            ? {
+                                ...current,
+                                syncStatus: "local",
+                                syncMessage: "紀錄上傳發生未預期錯誤，已先保存在這台平板。"
+                            }
+                            : current
+                        );
+                    });
+            };
+
+            const goHome = () => {
+                setView("home");
+                setConfig(null);
+            };
+
+            return (
+                <>
+                    {view === "home" && (
+                        <HomePage
+                            onStart={startGame}
+                            onOpenTeacher={() => setShowPassword(true)}
+                        />
+                    )}
+                    {view === "game" && config && (
+                        <GamePage
+                            key={`${config.mode}-${config.students.join("-")}-${config.questions[0]?.id}`}
+                            config={config}
+                            onFinish={finishGame}
+                            onHome={goHome}
+                        />
+                    )}
+                    {view === "summary" && result && (
+                        <SummaryPage result={result} onHome={goHome} />
+                    )}
+                    {view === "teacher" && (
+                        <TeacherDashboard onHome={goHome} />
+                    )}
+                    {showPassword && (
+                        <PasswordModal
+                            onClose={() => setShowPassword(false)}
+                            onSuccess={() => {
+                                setShowPassword(false);
+                                setView("teacher");
+                            }}
+                        />
+                    )}
+                </>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+</body>
+</html>

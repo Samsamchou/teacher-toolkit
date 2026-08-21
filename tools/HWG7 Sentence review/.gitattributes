@@ -1,0 +1,3 @@
+# Markdown may use two trailing spaces for intentional hard line breaks.
+# Markdown 可用行尾雙空白表示刻意換行。
+*.md whitespace=-trailing-space,-blank-at-eof

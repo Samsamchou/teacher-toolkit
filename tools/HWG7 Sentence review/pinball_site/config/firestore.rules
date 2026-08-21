@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isTeacher() {
+      return signedIn() && request.auth.token.teacher == true;
+    }
+
+    // 逐字稿、分數與錄音索引只允許受信任的後端寫入。
+    match /practiceResults/{resultId} {
+      allow read: if isTeacher();
+      allow create, update, delete: if false;
+    }
+
+    // 跨裝置續作由後端只回傳必要進度，學生不能直接查整份紀錄。
+    match /practiceSessions/{sessionId} {
+      allow read: if isTeacher();
+      allow create, update, delete: if false;
+    }
+
+    // 舊站資料結構只保留教師讀取相容，不再開放匿名使用者。
+    match /practiceRecords/{recordId} {
+      allow read, delete: if isTeacher();
+      allow create, update: if false;
+    }
+
+    match /deletionAudit/{auditId} {
+      allow read: if isTeacher();
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

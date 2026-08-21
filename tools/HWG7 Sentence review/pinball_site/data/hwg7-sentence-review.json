@@ -1,0 +1,1126 @@
+{
+  "schemaVersion": "1.0.0",
+  "mode": {
+    "key": "hwg7SentenceReview",
+    "label": "HWG7 Sentence review 口說彈珠台",
+    "interactionType": "speech_assessment",
+    "questionBankVersion": "hwg7-sr-v1-draft",
+    "rubricVersion": "a1-v1"
+  },
+  "game": {
+    "bankSize": 13,
+    "playerCount": 2,
+    "questionsPerGame": 12,
+    "roundsPerPlayer": 6,
+    "selection": {
+      "method": "balanced_by_type_then_alternate",
+      "withoutReplacement": true,
+      "unusedQuestionsPerGame": 1,
+      "readAloudPerGame": 6,
+      "questionAnswerPerGame": 6,
+      "typePattern": "read_aloud_question_answer_alternating"
+    },
+    "turnOrder": "pink_blue_alternating",
+    "slotPlanPriority": "final_round_decision",
+    "passScore": 80,
+    "passOperator": ">=",
+    "maxAttempts": 3,
+    "systemFailureConsumesAttempt": false,
+    "afterMaxAttempts": {
+      "showConfirmedModelAnswer": true,
+      "resultStatus": "unmet",
+      "allowPinballLaunch": true
+    },
+    "speechInteraction": {
+      "states": [
+        "ready",
+        "recording",
+        "submitting",
+        "evaluating",
+        "retry_ready",
+        "passed",
+        "attempts_exhausted_unmet",
+        "model_answer_shown",
+        "launch_ready",
+        "launched"
+      ],
+      "attemptCounterRule": "Only a valid scored evaluation consumes one attempt.",
+      "launchGate": "score >= 80 OR validAttempts >= 3",
+      "failedEvaluationRule": "A network, recording, transcription, or evaluation system failure returns to retry_ready and does not consume an attempt."
+    }
+  },
+  "rubric": {
+    "version": "a1-v1",
+    "scoreScale": {
+      "min": 0,
+      "max": 100,
+      "passScore": 80
+    },
+    "readAloud": {
+      "textAccuracy": "100 * C / (C + S + E)",
+      "completeness": "100 * (C + S) / N",
+      "fluency": {
+        "pauseScoreWeight": 0.4,
+        "speedScoreWeight": 0.3,
+        "repetitionScoreWeight": 0.2,
+        "recordingLengthScoreWeight": 0.1
+      },
+      "totalWeights": {
+        "textAccuracy": 0.4,
+        "completeness": 0.35,
+        "fluency": 0.25
+      }
+    },
+    "questionAnswer": {
+      "answerAccuracyWeights": {
+        "coreAnswer": 0.7,
+        "sentenceStructure": 0.3
+      },
+      "accuracyWeights": {
+        "question": 0.3,
+        "answer": 0.7
+      },
+      "completenessWeights": {
+        "question": 0.3,
+        "answer": 0.7
+      },
+      "totalWeights": {
+        "accuracy": 0.5,
+        "completeness": 0.3,
+        "fluency": 0.2
+      },
+      "wrongOrMissingCoreScoreCap": 59,
+      "acceptableAnswerRule": "Every listed acceptable answer is independently eligible for full credit and uses its own content slots, structure slots, and answerWordCount."
+    },
+    "analysisUse": {
+      "pronunciationTargets": "Align once against the transcript; do not double-deduct.",
+      "difficultWords": "Use for lenient A1 pause handling and feedback, not an extra deduction.",
+      "stressToneAndLinking": "Feedback only in a1-v1 unless reliable acoustic evidence is available.",
+      "studentFeedback": "Select one primary issue and return at most two Traditional Chinese sentences."
+    }
+  },
+  "source": {
+    "authority": "teacher_confirmed_markdown",
+    "questionAnalysisFile": "../HWG7 Sentence review 13題輪替與發音語調分析.md",
+    "imageLibraryFile": "../HWG7 Sentence review 圖庫.md",
+    "reviewedOn": "2026-08-21",
+    "confirmedFacts": [
+      "The bank contains exactly 13 questions and alternates read_aloud and question_answer.",
+      "HWG7-SR-013 is exactly: She would like some salad.",
+      "Every listed short or full answer for question_answer receives full credit.",
+      "A score of 80 or higher passes every question.",
+      "After three valid attempts without passing, show the confirmed model answer, record unmet, and allow the pinball launch."
+    ]
+  },
+  "review": {
+    "status": "draft_pending_teacher_review",
+    "studentPilotAllowedAfterTechnicalQa": true,
+    "productionReviewRequired": true,
+    "pending": [
+      {
+        "key": "q005_possessive_person",
+        "status": "pending",
+        "questionId": "HWG7-SR-005",
+        "field": "standardReadSentence",
+        "currentSourceText": "They’re his caps.",
+        "issue": "請確認所有格人物是否確實為 his；目前只保留來源文字，不推測。"
+      },
+      {
+        "key": "unit_or_category",
+        "status": "pending",
+        "questionId": null,
+        "field": "unit",
+        "currentSourceText": null,
+        "issue": "13題所屬冊次、單元或分類待教師確認。"
+      },
+      {
+        "key": "image_alt_text",
+        "status": "pending",
+        "questionId": null,
+        "field": "image.alt",
+        "currentSourceText": null,
+        "issue": "13張圖片的正式替代文字待教師確認。"
+      },
+      {
+        "key": "pronunciation_teaching_alignment",
+        "status": "pending",
+        "questionId": null,
+        "field": "pronunciationAnalysis",
+        "currentSourceText": null,
+        "issue": "發音目標、難字、重音、分組與連讀是否符合課堂教法，待教師複核。"
+      }
+    ]
+  },
+  "questions": [
+    {
+      "id": "HWG7-SR-001",
+      "displayOrder": 1,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/08. cold chicken.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-001.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "She has a cold.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "has",
+          "cold"
+        ],
+        "difficultWords": [
+          {
+            "word": "has",
+            "note": "字尾要說清楚。"
+          },
+          {
+            "word": "cold",
+            "note": "尾端有連續子音，最後的 d 容易省略。"
+          }
+        ],
+        "stressWords": [
+          "COLD"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "She has a COLD."
+        ],
+        "linking": [
+          "has a"
+        ],
+        "teacherNotes": "不要因學生語速較慢而重扣；先確認 cold 是否被說成其他疾病字或完全漏念。",
+        "studentReminder": "你有把整句說出來，很棒！再把 cold 的尾音說完整。"
+      }
+    },
+    {
+      "id": "HWG7-SR-002",
+      "displayOrder": 2,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Read and answer",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/13. toothache bread.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-002.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "Does she have a toothache?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "standardReadSentence": "",
+      "acceptableAnswers": [
+        {
+          "text": "Yes, she does.",
+          "answerKind": "short",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "yes"
+          ],
+          "answerStructureSlots": [
+            "yes",
+            "she",
+            "does"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "Yes",
+              "does"
+            ],
+            "difficultWords": [
+              {
+                "word": "does",
+                "note": "母音與拼字不同，字尾要說清楚。"
+              }
+            ],
+            "stressWords": [
+              "YES",
+              "DOES"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "肯定短答，句尾降調。"
+            },
+            "chunks": [
+              "YES,",
+              "she DOES."
+            ],
+            "linking": [],
+            "studentReminder": "你回答對了！再把 does 的尾巴輕輕說完整。"
+          }
+        },
+        {
+          "text": "Yes, she has a toothache.",
+          "answerKind": "full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "yes",
+            "toothache"
+          ],
+          "answerStructureSlots": [
+            "she",
+            "has",
+            "a"
+          ],
+          "answerWordCount": 5,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "has",
+              "toothache"
+            ],
+            "difficultWords": [
+              {
+                "word": "toothache",
+                "note": "開頭 th 與字尾 k 要清楚；複合字重音落在 tooth。"
+              }
+            ],
+            "stressWords": [
+              "YES",
+              "TOOTHache"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "完整肯定答句，句尾降調。"
+            },
+            "chunks": [
+              "YES,",
+              "she has a TOOTHache."
+            ],
+            "linking": [
+              "has a"
+            ],
+            "studentReminder": "你把答案說完整了！試著把 TOOTH-ache 的前半段念清楚。"
+          }
+        }
+      ],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1"
+    },
+    {
+      "id": "HWG7-SR-003",
+      "displayOrder": 3,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/09.cough hamburger.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-003.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "She would like a hamburger.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "would",
+          "hamburger"
+        ],
+        "difficultWords": [
+          {
+            "word": "would",
+            "note": "字尾容易消失。"
+          },
+          {
+            "word": "hamburger",
+            "note": "有三個音節，主要重音在第一個音節。"
+          }
+        ],
+        "stressWords": [
+          "HAMburger"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "She would like",
+          "a HAMburger."
+        ],
+        "linking": [
+          "like a"
+        ],
+        "studentReminder": "你把想吃的食物說對了！試著把 HAM-bur-ger 的第一段念清楚。"
+      }
+    },
+    {
+      "id": "HWG7-SR-004",
+      "displayOrder": 4,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Read and answer",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/08. cold chicken.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-004.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "What would you like for dinner?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "standardReadSentence": "",
+      "acceptedContractions": [
+        {
+          "contracted": "I’d",
+          "expanded": "I would"
+        }
+      ],
+      "acceptableAnswers": [
+        {
+          "text": "I would like some chicken.",
+          "answerKind": "full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "chicken"
+          ],
+          "answerStructureSlots": [
+            "I",
+            "would",
+            "like",
+            "some"
+          ],
+          "answerWordCount": 5,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "would",
+              "chicken"
+            ],
+            "difficultWords": [
+              {
+                "word": "would",
+                "note": "字尾要保留。"
+              },
+              {
+                "word": "chicken",
+                "note": "有兩個音節，主要重音在第一個音節。"
+              }
+            ],
+            "stressWords": [
+              "CHICKen"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句，句尾降調。"
+            },
+            "chunks": [
+              "I would like",
+              "some CHICKen."
+            ],
+            "linking": [],
+            "studentReminder": "你回答得很完整！把 CHICK-en 的第一段念得更清楚。"
+          }
+        },
+        {
+          "text": "I’d like some chicken.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "chicken"
+          ],
+          "answerStructureSlots": [
+            "I’d",
+            "like",
+            "some"
+          ],
+          "answerWordCount": 4,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "I’d",
+              "chicken"
+            ],
+            "difficultWords": [
+              {
+                "word": "I’d",
+                "note": "是 I would 的縮寫，字尾聲音很短。"
+              },
+              {
+                "word": "chicken",
+                "note": "重音在第一個音節。"
+              }
+            ],
+            "stressWords": [
+              "CHICKen"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句，句尾降調。"
+            },
+            "chunks": [
+              "I’d like",
+              "some CHICKen."
+            ],
+            "linking": [],
+            "studentReminder": "你的短句很自然！記得把 I’d 說完整，再接 like。"
+          }
+        }
+      ],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1"
+    },
+    {
+      "id": "HWG7-SR-005",
+      "displayOrder": 5,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "contentReviewStatus": "pending",
+      "contentReviewIssue": "所有格人物是否確實為 his；目前保留來源文字。",
+      "image": {
+        "sourcePath": "pics/04. dream.jpeg",
+        "path": "images/hwg7-sentence-review/HWG7-SR-005.jpeg",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "They’re his caps.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "They’re",
+          "his",
+          "caps"
+        ],
+        "difficultWords": [
+          {
+            "word": "They’re",
+            "note": "開頭 th 要說清楚。"
+          },
+          {
+            "word": "caps",
+            "note": "字尾包含 p 和複數 s，兩個尾音都容易省略。"
+          }
+        ],
+        "stressWords": [
+          "CAPS"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "They’re his CAPS."
+        ],
+        "linking": [],
+        "studentReminder": "你說出是誰的帽子了！記得把 caps 最後的 s 輕輕說出來。"
+      }
+    },
+    {
+      "id": "HWG7-SR-006",
+      "displayOrder": 6,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Read and answer",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/05. ivy.jpeg",
+        "path": "images/hwg7-sentence-review/HWG7-SR-006.jpeg",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "Whose umbrella is this?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "___ her _____.",
+      "standardReadSentence": "",
+      "acceptedContractions": [
+        {
+          "contracted": "It’s",
+          "expanded": "It is"
+        }
+      ],
+      "acceptableAnswers": [
+        {
+          "text": "It’s her umbrella.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "her"
+          ],
+          "answerStructureSlots": [
+            "It’s",
+            "umbrella"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "It’s",
+              "her",
+              "umbrella"
+            ],
+            "difficultWords": [
+              {
+                "word": "It’s",
+                "note": "縮寫尾音要說清楚。"
+              },
+              {
+                "word": "umbrella",
+                "note": "有三個音節，主要重音在中間的 brel。"
+              }
+            ],
+            "stressWords": [
+              "HER",
+              "umBRELla"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句，句尾降調。"
+            },
+            "chunks": [
+              "It’s",
+              "her umBRELla."
+            ],
+            "linking": [
+              "her umbrella"
+            ],
+            "studentReminder": "你找對雨傘的主人了！試著說 um-BREL-la，中間一段最清楚。"
+          }
+        },
+        {
+          "text": "It is her umbrella.",
+          "answerKind": "full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "her"
+          ],
+          "answerStructureSlots": [
+            "It",
+            "is",
+            "umbrella"
+          ],
+          "answerWordCount": 4,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "It is",
+              "her",
+              "umbrella"
+            ],
+            "difficultWords": [
+              {
+                "word": "umbrella",
+                "note": "三個音節及中間重音要清楚。"
+              }
+            ],
+            "stressWords": [
+              "HER",
+              "umBRELla"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句，句尾降調。"
+            },
+            "chunks": [
+              "It is",
+              "her umBRELla."
+            ],
+            "linking": [
+              "It is",
+              "her umbrella"
+            ],
+            "studentReminder": "你的完整句很棒！把 her umbrella 順順連起來說。"
+          }
+        }
+      ],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1"
+    },
+    {
+      "id": "HWG7-SR-007",
+      "displayOrder": 7,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/02.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-007.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "Her eye hurts.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "eye",
+          "hurts"
+        ],
+        "difficultWords": [
+          {
+            "word": "hurts",
+            "note": "字尾有連續子音，最後的聲音容易省略。"
+          }
+        ],
+        "stressWords": [
+          "EYE",
+          "HURTS"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "Her EYE HURTS."
+        ],
+        "linking": [
+          "Her eye"
+        ],
+        "studentReminder": "你有說對不舒服的地方！再把 hurts 的尾音說完整。"
+      }
+    },
+    {
+      "id": "HWG7-SR-008",
+      "displayOrder": 8,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Read and answer",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/01.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-008.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "What’s wrong?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "His _____ _____.",
+      "standardReadSentence": "",
+      "acceptableAnswers": [
+        {
+          "text": "His nose hurts.",
+          "answerKind": "full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "nose"
+          ],
+          "answerStructureSlots": [
+            "His",
+            "hurts"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "nose",
+              "hurts"
+            ],
+            "difficultWords": [
+              {
+                "word": "nose",
+                "note": "字尾要說清楚。"
+              },
+              {
+                "word": "hurts",
+                "note": "尾端的連續子音要保留。"
+              }
+            ],
+            "stressWords": [
+              "NOSE",
+              "HURTS"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句，句尾降調。"
+            },
+            "chunks": [
+              "His NOSE HURTS."
+            ],
+            "linking": [],
+            "studentReminder": "你說對不舒服的地方了！記得把 nose 的尾巴說清楚。"
+          }
+        }
+      ],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1"
+    },
+    {
+      "id": "HWG7-SR-009",
+      "displayOrder": 9,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/11. headache soup.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-009.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "She has a headache.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "has",
+          "headache"
+        ],
+        "difficultWords": [
+          {
+            "word": "headache",
+            "note": "有兩個音節，主要重音在 head，最後有清楚的 k 尾音。"
+          }
+        ],
+        "stressWords": [
+          "HEADache"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "She has a HEADache."
+        ],
+        "linking": [
+          "has a"
+        ],
+        "studentReminder": "你把句子念完整了！試著說 HEAD-ache，第一段念清楚。"
+      }
+    },
+    {
+      "id": "HWG7-SR-010",
+      "displayOrder": 10,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Read and answer",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/03.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-010.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "What’s wrong?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "His _____ _____.",
+      "standardReadSentence": "",
+      "acceptableAnswers": [
+        {
+          "text": "His hand hurts.",
+          "answerKind": "full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "hand"
+          ],
+          "answerStructureSlots": [
+            "His",
+            "hurts"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "hand",
+              "hurts"
+            ],
+            "difficultWords": [
+              {
+                "word": "hand",
+                "note": "字尾 d 要保留。"
+              },
+              {
+                "word": "hurts",
+                "note": "尾端的連續子音要保留。"
+              }
+            ],
+            "stressWords": [
+              "HAND",
+              "HURTS"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句，句尾降調。"
+            },
+            "chunks": [
+              "His HAND HURTS."
+            ],
+            "linking": [],
+            "studentReminder": "你說對不舒服的地方了！再把 hand 最後的聲音說出來。"
+          }
+        }
+      ],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1"
+    },
+    {
+      "id": "HWG7-SR-011",
+      "displayOrder": 11,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/12. runny nose noodles.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-011.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "She would like some noodles.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "would",
+          "noodles"
+        ],
+        "difficultWords": [
+          {
+            "word": "would",
+            "note": "字尾要保留。"
+          },
+          {
+            "word": "noodles",
+            "note": "有兩個音節，主要重音在第一個音節，複數字尾要保留。"
+          }
+        ],
+        "stressWords": [
+          "NOOdles"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "She would like",
+          "some NOOdles."
+        ],
+        "linking": [],
+        "studentReminder": "你把想吃的食物說對了！記得把 noodles 最後的聲音說完整。"
+      }
+    },
+    {
+      "id": "HWG7-SR-012",
+      "displayOrder": 12,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Read and answer",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/08. cold chicken.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-012.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "Does she have a runny nose?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "standardReadSentence": "",
+      "acceptableAnswers": [
+        {
+          "text": "No, she doesn’t.",
+          "answerKind": "short",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "no"
+          ],
+          "answerStructureSlots": [
+            "no",
+            "she",
+            "doesn’t"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "No",
+              "doesn’t"
+            ],
+            "difficultWords": [
+              {
+                "word": "doesn’t",
+                "note": "有兩個音節，字尾 t 容易省略。"
+              }
+            ],
+            "stressWords": [
+              "NO",
+              "DOESn’t"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "否定短答，句尾降調。"
+            },
+            "chunks": [
+              "NO,",
+              "she DOESn’t."
+            ],
+            "linking": [],
+            "studentReminder": "你回答對了！把 doesn’t 的兩小段慢慢說清楚。"
+          }
+        },
+        {
+          "text": "No, she has a cold.",
+          "answerKind": "full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "no",
+            "cold"
+          ],
+          "answerStructureSlots": [
+            "she",
+            "has",
+            "a"
+          ],
+          "answerWordCount": 5,
+          "pronunciationAnalysis": {
+            "reviewStatus": "pending",
+            "pronunciationTargets": [
+              "No",
+              "has",
+              "cold"
+            ],
+            "difficultWords": [
+              {
+                "word": "has",
+                "note": "字尾要保留。"
+              },
+              {
+                "word": "cold",
+                "note": "尾端的連續子音與最後的 d 要清楚。"
+              }
+            ],
+            "stressWords": [
+              "NO",
+              "COLD"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "完整否定答句，句尾降調。"
+            },
+            "chunks": [
+              "NO,",
+              "she has a COLD."
+            ],
+            "linking": [
+              "has a"
+            ],
+            "studentReminder": "你有說出正確的狀況！再把 cold 的尾音說完整。"
+          }
+        }
+      ],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1"
+    },
+    {
+      "id": "HWG7-SR-013",
+      "displayOrder": 13,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": null,
+      "unitReviewStatus": "pending",
+      "image": {
+        "sourcePath": "pics/10. fever salad.png",
+        "path": "images/hwg7-sentence-review/HWG7-SR-013.png",
+        "alt": null,
+        "altReviewStatus": "pending"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "She would like some salad.",
+      "acceptableAnswers": [],
+      "passScore": 80,
+      "maxAttempts": 3,
+      "rubricVersion": "a1-v1",
+      "pronunciationAnalysis": {
+        "reviewStatus": "pending",
+        "pronunciationTargets": [
+          "would",
+          "salad"
+        ],
+        "difficultWords": [
+          {
+            "word": "would",
+            "note": "字尾要保留。"
+          },
+          {
+            "word": "salad",
+            "note": "有兩個音節，主要重音在第一個音節，最後的 d 要保留。"
+          }
+        ],
+        "stressWords": [
+          "SAlad"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句，句尾降調。"
+        },
+        "chunks": [
+          "She would like",
+          "some SAlad."
+        ],
+        "linking": [],
+        "studentReminder": "你把想吃的食物說出來了！試著把 SA-lad 的第一段念清楚。"
+      }
+    }
+  ]
+}

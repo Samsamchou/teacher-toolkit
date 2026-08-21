@@ -1,0 +1,31 @@
+# Secrets and local credentials / 秘密與本機憑證
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+credentials.*.json
+
+# Generated caches and local environments / 快取與本機環境
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.agents/
+**/.agents/
+.codex/
+**/.codex/
+.claude/
+**/.claude/
+
+*.log
+*.tmp
+*.temp
+
+# Operating system metadata / 作業系統中繼資料
+Thumbs.db
+.DS_Store
