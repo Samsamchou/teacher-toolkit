@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptsDir, "..");
 const configRoot = path.join(siteRoot, "config");
-const names = ["firebase.json", "firestore.rules", "storage.rules"];
+const names = ["firebase.json", "firestore.rules", "storage.rules", "storage-lifecycle.json"];
 
 for (const name of names) {
     const source = path.join(configRoot, name);

@@ -29,3 +29,5 @@ __pycache__/
 # Operating system metadata / 作業系統中繼資料
 Thumbs.db
 .DS_Store
+.local/
+**/.local/

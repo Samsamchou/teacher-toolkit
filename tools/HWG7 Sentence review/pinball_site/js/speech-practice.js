@@ -199,17 +199,18 @@
         return { start, stop: () => stop("已停止錄音，正在送出..."), cancel };
     }
 
-    async function evaluateSpeech({ questionId, blob, mimeType, metrics, signal }) {
+    async function evaluateSpeech({ questionId, blob, mimeType, metrics, gameSessionId, turnIndex, attemptNumber, signal }) {
         const audioBase64 = await blobToBase64(blob);
-        const response = await fetch("/api/evaluate-speech", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ questionId, mimeType, audioBase64, metrics }),
-            signal
-        });
-        const payload = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(payload.message || "口說評分暫時無法完成，請稍後再試。" );
-        return payload;
+        if (!window.HWG7AppApi?.post) throw new Error("網站 API 尚未載入，請重新整理後再試。");
+        return window.HWG7AppApi.post("/api/evaluate-speech", {
+            questionId,
+            mimeType,
+            audioBase64,
+            metrics,
+            gameSessionId,
+            turnIndex,
+            attemptNumber
+        }, { signal });
     }
 
     window.SpeechPractice = { createRecorder, evaluateSpeech, supportedMimeType };

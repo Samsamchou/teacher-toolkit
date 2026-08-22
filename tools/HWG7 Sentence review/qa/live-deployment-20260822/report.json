@@ -1,0 +1,338 @@
+{
+  "ok": true,
+  "generatedAt": "2026-08-22T08:26:57.239Z",
+  "baseUrl": "https://setencerevieworalpractice.web.app",
+  "checks": {
+    "securityHeaders": true,
+    "noSecretMarker": true,
+    "allImagesOnline": true,
+    "appCheckRequired": true,
+    "wrongOriginRejected": true,
+    "firestoreDenied": true,
+    "storageDenied": true,
+    "desktopHomeReady": true,
+    "ipadHomeReady": true,
+    "liveStartWithAppCheck": true,
+    "firstQuestionReady": true,
+    "incompleteGameAbandoned": true,
+    "noBrowserErrors": true,
+    "liveSpeechEndToEnd": true,
+    "liveFullGameCompletionAndFlip": true
+  },
+  "static": {
+    "headerChecks": {
+      "status200": true,
+      "noStore": true,
+      "cspPresent": true,
+      "cspNoObjects": true,
+      "cspRecaptchaScript": true,
+      "cspRecaptchaConnect": true,
+      "cspRecaptchaFrame": true,
+      "frameDenied": true,
+      "noSniff": true,
+      "referrerPolicy": true,
+      "microphoneSelfOnly": true
+    },
+    "htmlHasNoSecretMarker": true,
+    "imageCount": 13,
+    "images": [
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-001.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1338679,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-002.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1246170,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-003.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1270020,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-004.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1338679,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-005.jpeg",
+        "status": 200,
+        "contentType": "image/jpeg",
+        "bytes": 477528,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-006.jpeg",
+        "status": 200,
+        "contentType": "image/jpeg",
+        "bytes": 710998,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-007.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 571672,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-008.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 533168,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-009.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1254942,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-010.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 510545,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-011.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1249268,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-012.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1338679,
+        "ok": true
+      },
+      {
+        "path": "images/hwg7-sentence-review/HWG7-SR-013.png",
+        "status": 200,
+        "contentType": "image/png",
+        "bytes": 1223813,
+        "ok": true
+      }
+    ],
+    "missingAppCheck": {
+      "status": 401,
+      "code": "app_check_required"
+    },
+    "wrongOrigin": {
+      "status": 403,
+      "code": "origin_not_allowed"
+    },
+    "firestoreAnonymousStatus": 403,
+    "storageAnonymousStatus": 403
+  },
+  "browser": {
+    "engine": "Chromium headless via Chrome DevTools Protocol",
+    "limitation": "iPad Safari 使用 1024×768 橫式尺寸、觸控與 Safari User-Agent 模擬；不是實體 iPad 的 WebKit 引擎。",
+    "desktopHome": {
+      "title": "英語口說與打彈珠小高手",
+      "teacherButton": true,
+      "inputCount": 2,
+      "modeLabels": [
+        "HWG7 SR",
+        "HWG5 SR",
+        "HWG8 SR",
+        "HWG6 SR"
+      ],
+      "readyCount": 1,
+      "pendingCount": 3,
+      "startDisabled": true,
+      "horizontalOverflow": false,
+      "hasExpectedSummary": true
+    },
+    "ipadHome": {
+      "width": 1024,
+      "height": 768,
+      "horizontalOverflow": false,
+      "teacherButtonInViewport": true,
+      "inputCount": 2
+    },
+    "fullGame": {
+      "tested": true,
+      "ok": true,
+      "completedGameCount": 1,
+      "firstPhase": "a_type1_b_type2",
+      "repeatedIdempotent": true,
+      "nextPhase": "a_type2_b_type1",
+      "nextGameAbandoned": true,
+      "attemptCount": 12,
+      "recordingsStored": 12,
+      "results": [
+        {
+          "turnIndex": 0,
+          "questionId": "HWG7-SR-001",
+          "questionType": "read_aloud",
+          "transcript": "She has a cold.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 1,
+          "questionId": "HWG7-SR-002",
+          "questionType": "question_answer",
+          "transcript": "Does she have a toothache? Yes, she does.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 2,
+          "questionId": "HWG7-SR-003",
+          "questionType": "read_aloud",
+          "transcript": "She would like a hamburger.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 3,
+          "questionId": "HWG7-SR-004",
+          "questionType": "question_answer",
+          "transcript": "What would you like for dinner? I would like some chicken.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 4,
+          "questionId": "HWG7-SR-005",
+          "questionType": "read_aloud",
+          "transcript": "There his caps.",
+          "totalScore": 87,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 5,
+          "questionId": "HWG7-SR-006",
+          "questionType": "question_answer",
+          "transcript": "Whose umbrella is this? It's her umbrella.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 6,
+          "questionId": "HWG7-SR-007",
+          "questionType": "read_aloud",
+          "transcript": "Her eye hurts.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 7,
+          "questionId": "HWG7-SR-008",
+          "questionType": "question_answer",
+          "transcript": "What's wrong? His nose hurts.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 8,
+          "questionId": "HWG7-SR-009",
+          "questionType": "read_aloud",
+          "transcript": "She has a headache.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 9,
+          "questionId": "HWG7-SR-010",
+          "questionType": "question_answer",
+          "transcript": "What's wrong? His hand hurts.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 10,
+          "questionId": "HWG7-SR-011",
+          "questionType": "read_aloud",
+          "transcript": "She would like some noodles.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        },
+        {
+          "turnIndex": 11,
+          "questionId": "HWG7-SR-012",
+          "questionType": "question_answer",
+          "transcript": "Does she have a runny nose? No, she doesn't.",
+          "totalScore": 100,
+          "recordingStored": true,
+          "transcriptionModel": "gpt-4o-mini-transcribe"
+        }
+      ]
+    },
+    "speech": {
+      "tested": true,
+      "ok": true,
+      "firstTurnType": "read_aloud",
+      "transcript": "She would like some salad.",
+      "totalScore": 99,
+      "passed": true,
+      "valid": true,
+      "recordingStored": true,
+      "transcriptionModel": "gpt-4o-mini-transcribe",
+      "abandoned": true
+    },
+    "game": {
+      "width": 1024,
+      "height": 768,
+      "roundOne": true,
+      "bothStudentsVisible": true,
+      "imageLoaded": true,
+      "imageSrc": "images/hwg7-sentence-review/HWG7-SR-003.png",
+      "imageAlt": "一位女孩坐在桌前，桌上放著餐點的情境插圖。",
+      "promptVisible": true,
+      "recordButtonVisible": true,
+      "horizontalOverflow": false
+    },
+    "startResponses": [
+      {
+        "url": "https://setencerevieworalpractice.web.app/api/game/start",
+        "status": 200
+      },
+      {
+        "url": "https://setencerevieworalpractice.web.app/api/game/start",
+        "status": 200
+      }
+    ],
+    "abandonResponses": [
+      {
+        "url": "https://setencerevieworalpractice.web.app/api/game/abandon",
+        "status": 200
+      }
+    ],
+    "consoleErrors": [],
+    "logErrors": [],
+    "loadingFailures": [],
+    "screenshots": [
+      "desktop-home-1366x768.png",
+      "ipad-landscape-home-1024x768.png",
+      "ipad-landscape-game-first-question-1024x768.png"
+    ]
+  }
+}

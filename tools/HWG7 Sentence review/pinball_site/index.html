@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HWG7 口說與打彈珠小高手</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-check-compat.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="data/unit-registry.js"></script>
     <script src="data/hwg7-sentence-review.js"></script>
+    <script src="js/app-api.js"></script>
     <script src="js/speech-practice.js"></script>
 
     <style>
@@ -99,6 +101,44 @@
         .question-card {
             background: linear-gradient(180deg, #ffffff 0%, #fff8d7 100%);
             border-color: #5de7ff;
+        }
+
+        .speech-question-flow {
+            display: grid;
+            gap: 12px;
+        }
+
+        .speech-question-image-frame {
+            width: 100%;
+            height: clamp(150px, 24svh, 224px);
+            max-height: 224px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 4px solid #cffafe;
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .speech-question-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .speech-question-image-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 16px;
+            color: #155e75;
+            text-align: center;
+            background: linear-gradient(135deg, #ecfeff, #fefce8);
         }
 
         @keyframes pulse-ring {
@@ -276,6 +316,140 @@
             }
         }
 
+
+        @media (min-width: 900px) and (orientation: landscape) and (max-height: 850px) {
+            .speech-practice-panel {
+                gap: 8px !important;
+                padding: 10px 12px !important;
+            }
+
+            .speech-practice-panel .game-heading h2 {
+                font-size: 1.25rem !important;
+                line-height: 1.25;
+            }
+
+            .speech-practice-panel .team-score-grid {
+                gap: 8px !important;
+            }
+
+            .speech-practice-panel .team-score-card {
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr) auto;
+                align-items: center;
+                column-gap: 6px;
+                padding: 4px 8px !important;
+                border-width: 2px !important;
+                border-radius: 12px !important;
+            }
+
+            .speech-practice-panel .team-score-label {
+                font-size: 0.75rem !important;
+            }
+
+            .speech-practice-panel .team-score-name {
+                margin-top: 0 !important;
+                overflow: hidden;
+                font-size: 1rem !important;
+                line-height: 1.25;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .speech-practice-panel .team-score-value {
+                margin-top: 0 !important;
+                font-size: 1.5rem !important;
+                line-height: 1;
+            }
+
+            .speech-practice-panel .team-icon {
+                display: none;
+            }
+
+            .speech-current-card {
+                display: grid;
+                grid-template-columns: auto minmax(0, 1fr) auto;
+                align-items: center;
+                column-gap: 8px;
+                padding: 5px 8px !important;
+                border-width: 2px !important;
+                border-radius: 12px !important;
+            }
+
+            .speech-current-name {
+                margin-top: 0 !important;
+                overflow: hidden;
+                font-size: 1.25rem !important;
+                line-height: 1.2;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .speech-current-progress {
+                margin-top: 0 !important;
+            }
+
+            .speech-question-card {
+                padding: 8px !important;
+                border-width: 3px !important;
+            }
+
+            .speech-question-flow {
+                gap: 8px;
+            }
+
+            .speech-question-image-frame {
+                height: clamp(140px, 22svh, 176px);
+                border-width: 3px;
+            }
+
+            .speech-question-prompt {
+                padding: 8px 12px !important;
+                border-width: 3px !important;
+                border-radius: 12px !important;
+            }
+
+            .speech-question-stem {
+                margin-top: 4px !important;
+                font-size: 1.25rem !important;
+                line-height: 1.2 !important;
+            }
+
+            .speech-question-hint {
+                margin-top: 4px !important;
+                font-size: 0.75rem !important;
+                line-height: 1.25;
+            }
+
+            .speech-record-row {
+                gap: 8px !important;
+            }
+
+            .speech-record-button {
+                min-height: 56px !important;
+                padding: 8px 10px !important;
+                font-size: 1.125rem !important;
+            }
+
+            .speech-attempt-card {
+                padding: 4px 8px !important;
+                border-width: 2px !important;
+            }
+
+            .speech-attempt-value {
+                font-size: 1.25rem !important;
+                line-height: 1.1;
+            }
+
+            .speech-guidance-details {
+                padding: 6px 10px !important;
+            }
+
+            .speech-feedback {
+                padding: 5px 8px !important;
+                font-size: 0.875rem;
+            }
+        }
+
         @media (min-width: 1100px) and (orientation: landscape) {
             .image-practice-screen {
                 grid-template-columns: minmax(480px, 500px) calc(600px * var(--board-scale, 0.82));
@@ -301,21 +475,24 @@
         const { useCallback, useEffect, useMemo, useRef, useState } = React;
         const { Engine, Runner, Bodies, Composite, Events, Body } = Matter;
 
-        const STORAGE_KEY = "englishListeningPinballRecords.v1";
-        const FIRESTORE_COLLECTION = "practiceRecords";
-        // 新專案尚未建立前保持空白，避免誤寫入舊 Firebase 專案。
         const firebaseConfig = {
-            apiKey: "",
-            authDomain: "",
-            projectId: "",
-            storageBucket: "",
-            messagingSenderId: "",
-            appId: ""
+            apiKey: "AIzaSyCx9A4zsHRddKLYMMO6QQhwTYnR0SuiOic",
+            authDomain: "setencerevieworalpractice.firebaseapp.com",
+            projectId: "setencerevieworalpractice",
+            storageBucket: "setencerevieworalpractice.firebasestorage.app",
+            messagingSenderId: "688324983383",
+            appId: "1:688324983383:web:3fd6d0221c54526558c112"
         };
-        const HWG7_PATCH_VERSION = "speech-pinball-v1";
+        // Firebase App Check 使用正式網域限定的 reCAPTCHA Enterprise 公開 site key。
+        const appCheckSiteKey = "6LeEqZItAAAAAMf76jAuZSRQrcn2fWGjRQcuCQda";
+        const HWG7_PATCH_VERSION = "speech-pinball-v2-secure";
         const PHONICS_TOTAL_TURNS = 20;
         const PHRASE_TOTAL_TURNS = 30;
         const SPEECH_MODE = "hwg7SentenceReview";
+        const UNIT_REGISTRY = Object.freeze([...(window.HWG7_UNIT_REGISTRY_DOCUMENT?.units || [])]);
+        const UNIT_BY_MODE = Object.freeze(Object.fromEntries(UNIT_REGISTRY.map(unit => [unit.mode, unit])));
+        const UNIT_BY_ID = Object.freeze(Object.fromEntries(UNIT_REGISTRY.map(unit => [unit.id, unit])));
+        window.HWG7AppApi.configure({ firebaseConfig, appCheckSiteKey });
         const SLOT_SCORES = [5, 4, 3, 3, 4, 5];
         const SLOT_CENTERS = SLOT_SCORES.map((_, index) => 60 + index * 80);
         const BOARD_W = 600;
@@ -365,20 +542,23 @@
         }
 
         const MODE_META = {
-            hwg7SentenceReview: {
-                label: "HWG7 Sentence review 口說挑戰",
-                shortLabel: "HWG7 口說挑戰",
-                hint: "13 題中每局抽 12 題，兩位玩家各 6 回合；80 分達標。",
-                totalTurns: 12,
-                roundsPerPlayer: 6,
+            ...Object.fromEntries(UNIT_REGISTRY.map(unit => [unit.mode, {
+                label: unit.label,
+                shortLabel: unit.label,
+                hint: unit.hint,
+                unitId: unit.id,
+                status: unit.status,
+                totalTurns: unit.questionsPerGame || 12,
+                roundsPerPlayer: unit.roundsPerPlayer || 6,
                 interactionType: "speech",
-                passScore: 80,
-                maxAttempts: 3
-            },
-            grade4Phonics: { label: "4年級聽辨語音(第1-3題)", shortLabel: "4年級聽辨語音", hint: "已內建 24 題，聽音檔選出缺少的字母或音組。", totalTurns: 20, roundsPerPlayer: 10 },
-            grade4Phrases: { label: "4年級常用語(第7-10題)", shortLabel: "4年級常用語", hint: "已內建 32 題圖片選項，每局隨機抽 30 題。", totalTurns: 30, roundsPerPlayer: 15 },
-            grade5Phonics: { label: "5年級聽辨語音(第1-3題)", shortLabel: "5年級聽辨語音", hint: "已內建 24 題，聽音檔選出缺少的字母或音組。", totalTurns: 20, roundsPerPlayer: 10 },
-            grade5Phrases: { label: "5年級常用語(第7-10題)", shortLabel: "5年級常用語", hint: "已內建 32 題圖片選項，每局隨機抽 30 題。", totalTurns: 30, roundsPerPlayer: 15 }
+                passScore: unit.passScore || 80,
+                maxAttempts: unit.maxAttempts || 3,
+                questionBankVersion: unit.questionBankVersion || null
+            }])),
+            grade4Phonics: { label: "4年級聽辨語音(第1-3題)", shortLabel: "4年級聽辨語音", hint: "保留舊題庫，不顯示於本次首頁。", totalTurns: 20, roundsPerPlayer: 10 },
+            grade4Phrases: { label: "4年級常用語(第7-10題)", shortLabel: "4年級常用語", hint: "保留舊題庫，不顯示於本次首頁。", totalTurns: 30, roundsPerPlayer: 15 },
+            grade5Phonics: { label: "5年級聽辨語音(第1-3題)", shortLabel: "5年級聽辨語音", hint: "保留舊題庫，不顯示於本次首頁。", totalTurns: 20, roundsPerPlayer: 10 },
+            grade5Phrases: { label: "5年級常用語(第7-10題)", shortLabel: "5年級常用語", hint: "保留舊題庫，不顯示於本次首頁。", totalTurns: 30, roundsPerPlayer: 15 }
         };
 
         const PHONICS_QUESTIONS = [
@@ -526,7 +706,7 @@
             stem: question.type === "read_aloud" ? question.standardReadSentence : question.questionText,
             imagePath: question.image?.path || question.imagePath || "",
             imageAlt: question.image?.alt || question.imageAlt || "題目圖片（替代文字待教師確認）",
-            questionBankVersion: question.questionBankVersion || "hwg7-sr-v1-draft",
+            questionBankVersion: question.questionBankVersion || "hwg7-sr-v1-confirmed",
             pronunciationTargets: [...new Set([
                 ...(question.pronunciationAnalysis?.pronunciationTargets || question.pronunciationTargets || []),
                 ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.pronunciationTargets || [])
@@ -542,6 +722,9 @@
 
         const QUESTION_BANKS = {
             hwg7SentenceReview: HWG7_SPEECH_QUESTIONS,
+            hwg5SentenceReview: [],
+            hwg8SentenceReview: [],
+            hwg6SentenceReview: [],
             grade4Phonics: PHONICS_QUESTIONS,
             grade4Phrases: PHRASE_QUESTIONS,
             grade5Phonics: GRADE5_PHONICS_QUESTIONS,
@@ -601,13 +784,17 @@
             ]));
         }
 
-        function prepareQuestionSet(mode) {
-            const source = QUESTION_BANKS[mode] || QUESTION_BANKS.grade4Phonics;
+        function prepareQuestionSet(mode, firstTurnType = "read_aloud") {
+            const source = QUESTION_BANKS[mode] || [];
             if (mode === SPEECH_MODE) {
                 const readAloud = shuffle(source.filter(question => question.type === "read_aloud")).slice(0, 6);
                 const questionAnswer = shuffle(source.filter(question => question.type === "question_answer")).slice(0, 6);
                 if (readAloud.length !== 6 || questionAnswer.length !== 6) return [];
-                return readAloud.flatMap((question, index) => [question, questionAnswer[index]]).map(question => ({
+                const readFirst = firstTurnType === "read_aloud";
+                return readAloud.flatMap((readQuestion, index) => readFirst
+                    ? [readQuestion, questionAnswer[index]]
+                    : [questionAnswer[index], readQuestion]
+                ).map(question => ({
                     ...question,
                     acceptableAnswers: [...(question.acceptableAnswers || [])],
                     pronunciationTargets: [...(question.pronunciationTargets || [])],
@@ -618,16 +805,13 @@
             if (mode.endsWith("Phrases")) {
                 const allAnswers = [...new Set(source.filter(q => q.optionType !== "image").map(q => q.correctAnswer))];
                 return selected.map(q => {
-                    if (q.optionType === "image") {
-                        return { ...q, options: q.options.map(option => ({ ...option })) };
-                    }
+                    if (q.optionType === "image") return { ...q, options: q.options.map(option => ({ ...option })) };
                     const distractors = shuffle(allAnswers.filter(answer => answer !== q.correctAnswer)).slice(0, 2);
                     return { ...q, options: shuffle([q.correctAnswer, ...distractors]), correctOption: q.correctAnswer };
                 });
             }
             return selected.map(q => ({ ...q, options: [...q.options] }));
         }
-
         function todayString() {
             const now = new Date();
             const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
@@ -639,161 +823,19 @@
             return date.toLocaleString("zh-TW", { hour12: false, month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
         }
 
-        function hasFirebaseConfig() {
-            return Boolean(
-                firebaseConfig.apiKey &&
-                firebaseConfig.projectId &&
-                !firebaseConfig.apiKey.includes("請貼上") &&
-                !firebaseConfig.projectId.includes("請貼上")
-            );
-        }
-
-        let firestoreDb = null;
-        let firebaseReadyPromise = null;
-
-        async function getFirestoreDb() {
-            if (!hasFirebaseConfig() || !window.firebase?.firestore) return null;
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-            firestoreDb = firebase.firestore();
-            if (window.firebase?.auth) {
-                const auth = firebase.auth();
-                if (!auth.currentUser) {
-                    firebaseReadyPromise = firebaseReadyPromise || auth.signInAnonymously();
-                    try {
-                        await firebaseReadyPromise;
-                    } catch (error) {
-                        firebaseReadyPromise = null;
-                        throw error;
-                    }
-                }
-            }
-            return firestoreDb;
-        }
-
-        function sortRecordsNewestFirst(records) {
-            return [...records].sort((a, b) => new Date(b.playedAt).getTime() - new Date(a.playedAt).getTime());
-        }
-
-        function loadRecords() {
-            try {
-                const raw = localStorage.getItem(STORAGE_KEY);
-                return raw ? JSON.parse(raw) : [];
-            } catch (error) {
-                return [];
-            }
-        }
-
-        function saveLocalRecord(record) {
-            try {
-                const records = loadRecords().filter(item => item.id !== record.id);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify([record, ...records].slice(0, 500)));
-            } catch (error) {
-                console.warn("無法保存本機遊戲紀錄", error);
-            }
-        }
-
-        function deleteLocalRecord(recordId) {
-            try {
-                const records = loadRecords().filter(item => item.id !== recordId);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-            } catch (error) {
-                console.warn("無法刪除本機遊戲紀錄", error);
-            }
-        }
-
         async function saveRecord(record) {
-            saveLocalRecord({ ...record, syncStatus: "local" });
-            let db = null;
-            try {
-                db = await getFirestoreDb();
-            } catch (error) {
-                console.warn("無法登入 Firebase", error);
-                return { ok: false, status: "local", message: "Firebase 匿名登入失敗，已先保存在這台平板。請確認已啟用 Anonymous Authentication。" };
-            }
-            if (!db) {
-                return { ok: false, status: "local", message: "尚未填入 Firebase 設定，紀錄目前只保存在這台平板。" };
-            }
-
-            try {
-                await db.collection(FIRESTORE_COLLECTION).doc(record.id).set({
-                    ...record,
-                    syncStatus: "cloud",
-                    uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
-                saveLocalRecord({ ...record, syncStatus: "cloud" });
-                return { ok: true, status: "cloud", message: "紀錄已上傳到 Firebase。" };
-            } catch (error) {
-                console.warn("無法上傳 Firebase 紀錄", error);
-                return { ok: false, status: "local", message: "Firebase 上傳失敗，已先保存在這台平板，請確認網路與 Firestore 規則。" };
-            }
+            const result = await window.HWG7AppApi.completeGame(record.gameSessionId, {
+                scores: record.scores,
+                turnSummaries: record.turnSummaries
+            });
+            return {
+                ok: true,
+                status: "cloud",
+                message: result.flipped
+                    ? "完整遊戲已安全寫入；下一局題型已翻轉。"
+                    : "此完整遊戲先前已寫入；未重複翻轉題型。"
+            };
         }
-
-        async function loadRecordsByDate(date) {
-            const localRecords = sortRecordsNewestFirst(loadRecords().filter(record => record.date === date));
-            let db = null;
-            try {
-                db = await getFirestoreDb();
-            } catch (error) {
-                console.warn("無法登入 Firebase", error);
-                return {
-                    records: localRecords,
-                    source: "local",
-                    message: "Firebase 匿名登入失敗，目前顯示這台平板的本機備援紀錄。請確認已啟用 Anonymous Authentication。"
-                };
-            }
-            if (!db) {
-                return {
-                    records: localRecords,
-                    source: "local",
-                    message: "尚未填入 Firebase 設定，目前顯示這台平板的本機紀錄。"
-                };
-            }
-
-            try {
-                const snapshot = await db.collection(FIRESTORE_COLLECTION).where("date", "==", date).get();
-                const cloudRecords = sortRecordsNewestFirst(snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })));
-                return {
-                    records: cloudRecords,
-                    source: "cloud",
-                    message: "已從 Firebase 讀取全班平板的紀錄。"
-                };
-            } catch (error) {
-                console.warn("無法讀取 Firebase 紀錄", error);
-                return {
-                    records: localRecords,
-                    source: "local",
-                    message: "Firebase 讀取失敗，目前顯示這台平板的本機備援紀錄。"
-                };
-            }
-        }
-
-        async function deleteRecord(recordId) {
-            deleteLocalRecord(recordId);
-            let db = null;
-            try {
-                db = await getFirestoreDb();
-            } catch (error) {
-                console.warn("無法登入 Firebase", error);
-                return { ok: false, source: "local", message: "Firebase 匿名登入失敗，已刪除這台平板的本機紀錄。" };
-            }
-            if (!db) {
-                return { ok: true, source: "local", message: "已刪除這台平板的本機紀錄。" };
-            }
-
-            try {
-                await db.collection(FIRESTORE_COLLECTION).doc(recordId).delete();
-                return { ok: true, source: "cloud", message: "已刪除此份 Firebase 紀錄。" };
-            } catch (error) {
-                console.warn("無法刪除 Firebase 紀錄", error);
-                return { ok: false, source: "local", message: "Firebase 刪除失敗，但已刪除這台平板的本機備援紀錄。請確認 Firestore 規則已部署。" };
-            }
-        }
-
         function playRollingAudio() {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (!AudioContext) return;
@@ -890,14 +932,24 @@
         function HomePage({ onStart, onOpenTeacher }) {
             const [codeOne, setCodeOne] = useState("");
             const [codeTwo, setCodeTwo] = useState("");
-            const [mode, setMode] = useState(SPEECH_MODE);
-            const selectedBankReady = (QUESTION_BANKS[mode] || []).length >= getModeTotalTurns(mode);
+            const [mode, setMode] = useState(UNIT_REGISTRY.find(unit => unit.status === "ready")?.mode || "");
+            const [starting, setStarting] = useState(false);
+            const [startError, setStartError] = useState("");
+            const selectedUnit = UNIT_BY_MODE[mode] || null;
+            const selectedBankReady = selectedUnit?.status === "ready" && (QUESTION_BANKS[mode] || []).length >= getModeTotalTurns(mode);
             const validCodes = /^\d{5}$/.test(codeOne) && /^\d{5}$/.test(codeTwo) && codeOne !== codeTwo;
-            const canStart = validCodes && mode && selectedBankReady;
+            const canStart = validCodes && mode && selectedBankReady && !starting;
 
-            const handleStart = () => {
+            const handleStart = async () => {
                 if (!canStart) return;
-                onStart([codeOne, codeTwo], mode);
+                setStarting(true);
+                setStartError("");
+                try {
+                    await onStart([codeOne, codeTwo], mode);
+                } catch (error) {
+                    setStartError(error.message || "目前無法開始遊戲，請稍後再試。");
+                    setStarting(false);
+                }
             };
 
             return (
@@ -908,67 +960,106 @@
                     <section className="home-card w-full backdrop-blur-md rounded-[30px] p-6 md:p-8">
                         <div className="text-center mb-7">
                             <p className="text-sm md:text-base font-black text-pink-600 tracking-widest">雙人口說互動彈珠台</p>
-                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 mt-2 leading-tight">HWG7 口說與打彈珠小高手</h1>
+                            <h1 className="text-4xl md:text-6xl font-black text-slate-900 mt-2 leading-tight">英語口說與打彈珠小高手</h1>
                             <p className="mt-3 font-bold text-slate-600">每局12題・每人6回合・80分達標</p>
                         </div>
                         <div className="grid gap-4 max-w-xl mx-auto md:grid-cols-2">
                             <label className="block">
-                                <span className="block text-lg font-black text-slate-700 mb-2">第一位學生：班級＋座號</span>
+                                <span className="block text-lg font-black text-slate-700 mb-2">A 玩家（第一位）：班級＋座號</span>
                                 <input value={codeOne} onChange={event => setCodeOne(sanitizeStudentCode(event.target.value))} placeholder="例如 60101" inputMode="numeric" pattern="[0-9]*" maxLength="5" autoComplete="off" className="w-full bg-white border-4 border-pink-200 focus:border-pink-500 outline-none rounded-xl px-4 py-4 text-2xl font-black text-slate-800 shadow-inner" />
                             </label>
                             <label className="block">
-                                <span className="block text-lg font-black text-slate-700 mb-2">第二位學生：班級＋座號</span>
+                                <span className="block text-lg font-black text-slate-700 mb-2">B 玩家（第二位）：班級＋座號</span>
                                 <input value={codeTwo} onChange={event => setCodeTwo(sanitizeStudentCode(event.target.value))} placeholder="例如 60102" inputMode="numeric" pattern="[0-9]*" maxLength="5" autoComplete="off" className="w-full bg-white border-4 border-blue-200 focus:border-blue-500 outline-none rounded-xl px-4 py-4 text-2xl font-black text-slate-800 shadow-inner" />
                             </label>
                         </div>
                         {codeOne && codeTwo && codeOne === codeTwo && <p className="text-center text-sm font-black text-red-600 mt-3">兩位玩家不可使用相同代碼。</p>}
                         <div className="mode-grid mx-auto mt-7 grid gap-3 md:grid-cols-2">
-                            {[[SPEECH_MODE, MODE_META[SPEECH_MODE]]].map(([value, item]) => {
-                                const ready = (QUESTION_BANKS[value] || []).length >= getModeTotalTurns(value);
+                            {UNIT_REGISTRY.map(unit => {
+                                const ready = unit.status === "ready" && (QUESTION_BANKS[unit.mode] || []).length >= (unit.questionsPerGame || 12);
                                 return (
-                                    <button key={value} onClick={() => setMode(value)} className={`mode-card px-4 py-4 text-left transition-all ${mode === value ? "is-selected" : ready ? "is-ready bg-white border-slate-200 text-slate-700 hover:border-cyan-300" : "is-locked border-slate-200 text-slate-500"}`}>
-                                        <span className="block text-lg font-black">{item.label}</span>
-                                        <span className="block text-sm font-bold mt-1">{item.hint}</span>
-                                        {!ready && <span className="block text-xs font-black text-red-500 mt-2">題庫尚未完成，不能開始</span>}
+                                    <button
+                                        key={unit.id}
+                                        type="button"
+                                        disabled={!ready}
+                                        onClick={() => ready && setMode(unit.mode)}
+                                        className={`mode-card px-4 py-4 text-left transition-all ${mode === unit.mode ? "is-selected" : ready ? "is-ready bg-white border-slate-200 text-slate-700 hover:border-cyan-300" : "is-locked border-slate-200 text-slate-500 cursor-not-allowed opacity-70"}`}
+                                    >
+                                        <span className="block text-lg font-black">{unit.label}</span>
+                                        <span className="block text-sm font-bold mt-1">{ready ? unit.hint : "題庫準備中"}</span>
+                                        {!ready && <span className="block text-xs font-black text-red-500 mt-2">題庫準備中</span>}
                                     </button>
                                 );
                             })}
                         </div>
                         <div className="max-w-xl mx-auto mt-8">
-                            <button onClick={handleStart} disabled={!canStart} className={`w-full rounded-xl py-4 text-2xl font-black border-4 transition-all ${canStart ? "bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 text-white border-white shadow-[6px_6px_0px_0px_rgba(15,23,42,0.24)] hover:translate-y-[-2px]" : "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"}`}>進入遊戲頁面</button>
-                            <p className="text-center text-sm font-bold text-slate-500 mt-3">只輸入五碼班級＋座號；不要輸入姓名。兩位學生共用一台裝置輪流作答。</p>
+                            <button onClick={handleStart} disabled={!canStart} className={`w-full rounded-xl py-4 text-2xl font-black border-4 transition-all ${canStart ? "bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 text-white border-white shadow-[6px_6px_0px_0px_rgba(15,23,42,0.24)] hover:translate-y-[-2px]" : "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"}`}>{starting ? "正在安全開局..." : "進入遊戲頁面"}</button>
+                            {startError && <p role="alert" className="text-center text-sm font-black text-red-600 mt-3">{startError}</p>}
+                            <p className="text-center text-sm font-bold text-slate-500 mt-3">只輸入五碼班級＋座號；不要輸入姓名。A／B 依第一、第二個輸入位置決定。</p>
                         </div>
                     </section>
                 </main>
             );
         }
+        function PasswordModal({ onClose, onSuccess }) {
+            const [passcode, setPasscode] = useState("");
+            const [busy, setBusy] = useState(false);
+            const [errorMessage, setErrorMessage] = useState("");
 
-        function PasswordModal({ onClose }) {
+            const submit = async event => {
+                event.preventDefault();
+                if (!/^\d{6}$/.test(passcode) || busy) return;
+                setBusy(true);
+                setErrorMessage("");
+                try {
+                    await window.HWG7AppApi.teacherLogin(passcode);
+                    setPasscode("");
+                    onSuccess();
+                } catch (error) {
+                    setErrorMessage(error.message || "教師登入暫時無法完成。");
+                    setBusy(false);
+                }
+            };
+
             return (
                 <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/50 p-4">
-                    <div className="w-full max-w-md bg-white rounded-2xl border-4 border-yellow-300 p-6 shadow-2xl">
+                    <form onSubmit={submit} className="w-full max-w-md bg-white rounded-2xl border-4 border-yellow-300 p-6 shadow-2xl">
                         <div className="flex items-start justify-between gap-4">
                             <div>
-                                <h2 className="text-2xl font-black text-slate-900">教師後台尚未啟用</h2>
-                                <p className="text-sm font-bold text-slate-600 mt-3">本機學生試作不使用前端固定密碼。完成新 Firebase 教師身分驗證與規則後才會開放後台。</p>
+                                <h2 className="text-2xl font-black text-slate-900">教師後台登入</h2>
+                                <p className="text-sm font-bold text-slate-600 mt-2">請輸入六碼教師通行碼。通行碼只送到受信任後端驗證，不會寫入網頁或瀏覽器儲存空間。</p>
                             </div>
-                            <button type="button" onClick={onClose} className="w-10 h-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700"><i className="fas fa-xmark"></i></button>
+                            <button type="button" onClick={onClose} className="w-10 h-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700" aria-label="關閉"><i className="fas fa-xmark"></i></button>
                         </div>
-                        <button type="button" onClick={onClose} className="w-full mt-5 bg-slate-900 text-white rounded-xl py-3 font-black hover:bg-slate-700">我知道了</button>
-                    </div>
+                        <label className="block mt-5">
+                            <span className="block font-black text-slate-700 mb-2">六碼通行碼</span>
+                            <input
+                                type="password"
+                                inputMode="numeric"
+                                pattern="[0-9]{6}"
+                                maxLength="6"
+                                autoComplete="one-time-code"
+                                value={passcode}
+                                onChange={event => setPasscode(String(event.target.value || "").replace(/\D/g, "").slice(0, 6))}
+                                className="w-full rounded-xl border-4 border-yellow-200 px-4 py-4 text-center text-3xl font-black tracking-[0.35em] outline-none focus:border-yellow-400"
+                                autoFocus
+                            />
+                        </label>
+                        {errorMessage && <p role="alert" className="mt-3 rounded-xl bg-red-50 border-2 border-red-200 p-3 text-sm font-black text-red-700">{errorMessage}</p>}
+                        <button type="submit" disabled={!/^\d{6}$/.test(passcode) || busy} className="w-full mt-5 bg-slate-900 text-white rounded-xl py-3 font-black hover:bg-slate-700 disabled:bg-slate-300">{busy ? "正在驗證..." : "登入教師後台"}</button>
+                    </form>
                 </div>
             );
         }
-
         function TeamScoreCard({ team, name, score }) {
             const color = team === "pink" ? "pink" : "blue";
             return (
-                <div className={`text-center rounded-2xl p-4 border-4 ${team === "pink" ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`}>
-                    <p className={`text-lg font-black ${team === "pink" ? "text-pink-600" : "text-blue-600"}`}>
+                <div className={`team-score-card text-center rounded-2xl p-4 border-4 ${team === "pink" ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`}>
+                    <p className={`team-score-label text-lg font-black ${team === "pink" ? "text-pink-600" : "text-blue-600"}`}>
                         {team === "pink" ? "粉紅隊" : "藍隊"}
                     </p>
-                    <p className="text-2xl font-black text-slate-900 mt-1">{name}</p>
-                    <p className={`text-5xl font-black mt-2 ${team === "pink" ? "text-pink-600" : "text-blue-600"}`}>{score}</p>
+                    <p className="team-score-name text-2xl font-black text-slate-900 mt-1">{name}</p>
+                    <p className={`team-score-value text-5xl font-black mt-2 ${team === "pink" ? "text-pink-600" : "text-blue-600"}`}>{score}</p>
                     <div className={`team-icon ${color} mx-auto mt-4 scale-75`}></div>
                 </div>
             );
@@ -994,6 +1085,7 @@
             const [speechMessage, setSpeechMessage] = useState("");
             const [speechResult, setSpeechResult] = useState(null);
             const [speechPlaybackUrl, setSpeechPlaybackUrl] = useState("");
+            const [questionImageFailed, setQuestionImageFailed] = useState(false);
 
             const engineRef = useRef(null);
             const runnerRef = useRef(null);
@@ -1031,15 +1123,33 @@
                 finishedRef.current = true;
                 if (finalFallbackRef.current) clearTimeout(finalFallbackRef.current);
                 const playedAt = new Date();
+                const turnSummaries = config.questions.map((question, index) => {
+                    const team = index % 2 === 0 ? "pink" : "blue";
+                    const studentCode = config.teams[team];
+                    const entry = answersRef.current[team].find(item => item.id === question.id);
+                    return {
+                        turnIndex: index,
+                        questionId: question.id,
+                        studentCode,
+                        questionType: question.type,
+                        status: entry?.status || "not_met",
+                        bestScore: Number(entry?.bestScore || 0),
+                        attemptIds: (entry?.attempts || []).map(attempt => attempt.attemptId).filter(Boolean)
+                    };
+                });
                 const result = {
-                    id: `${playedAt.getTime()}-${Math.random().toString(16).slice(2)}`,
+                    id: config.gameSessionId,
+                    gameSessionId: config.gameSessionId,
                     playedAt: playedAt.toISOString(),
-                    date: todayString(),
+                    date: config.gameDate || todayString(),
+                    unitId: config.unitId,
+                    assignment: config.assignment,
                     mode: config.mode,
                     modeLabel: MODE_META[config.mode].label,
                     students: config.students,
                     teams: config.teams,
                     scores: finalScores,
+                    turnSummaries,
                     answers: answersRef.current,
                     questions: config.questions.map(q => ({
                         id: q.id,
@@ -1052,7 +1162,7 @@
                     })),
                     speechResults: isSpeechPractice ? answersRef.current : null,
                     passScore: isSpeechPractice ? modeMeta.passScore : null,
-                    questionBankVersion: isSpeechPractice ? "hwg7-sr-v1-draft" : null
+                    questionBankVersion: config.questionBankVersion || "hwg7-sr-v1-confirmed"
                 };
                 onFinish(result);
             }, [config, onFinish]);
@@ -1206,6 +1316,7 @@
                 setSpeechStatus("idle");
                 setSpeechMessage("");
                 setSpeechResult(null);
+                setQuestionImageFailed(false);
                 setIsLaunchReady(false);
                 speechRecorderRef.current?.cancel?.();
                 speechRecorderRef.current = null;
@@ -1283,6 +1394,8 @@
                 const questionId = currentQuestion.id;
                 const history = [...(speechHistoryRef.current[questionId] || []), {
                     attemptNo,
+                    attemptId: apiResult.attemptId,
+                    recordingStored: apiResult.recordingStored === true,
                     transcript: apiResult.transcript,
                     scores: apiResult.scores,
                     feedback: apiResult.feedback,
@@ -1310,7 +1423,7 @@
                     feedback: apiResult.feedback,
                     attempts: history,
                     rubricVersion: apiResult.rubricVersion || currentQuestion.rubricVersion,
-                    questionBankVersion: currentQuestion.questionBankVersion || "hwg7-sr-v1-draft",
+                    questionBankVersion: currentQuestion.questionBankVersion || "hwg7-sr-v1-confirmed",
                     mode: config.mode
                 };
                 const withoutCurrent = answersRef.current[currentTeam].filter(item => item.id !== questionId);
@@ -1341,6 +1454,7 @@
                 }
                 const completedAttempts = speechHistoryRef.current[currentQuestion.id]?.length || 0;
                 if (completedAttempts >= modeMeta.maxAttempts) return;
+                const attemptNo = completedAttempts + 1;
                 setSpeechResult(null);
                 setSpeechStatus("requesting");
                 setSpeechMessage("正在開啟麥克風...");
@@ -1373,12 +1487,14 @@
                                 blob: recording.blob,
                                 mimeType: recording.mimeType,
                                 metrics: recording.metrics,
+                                gameSessionId: config.gameSessionId,
+                                turnIndex,
+                                attemptNumber: attemptNo,
                                 signal: evaluationController.signal
                             });
                             if (apiResult.valid !== true || !Number.isFinite(Number(apiResult.scores?.total))) {
                                 throw new Error("這次沒有形成可評分的英文內容，請再說一次。");
                             }
-                            const attemptNo = (speechHistoryRef.current[currentQuestion.id]?.length || 0) + 1;
                             setAttemptMap(previous => ({ ...previous, [currentQuestion.id]: attemptNo }));
                             saveSpeechResult(apiResult, attemptNo);
                             setSpeechStatus("idle");
@@ -1497,11 +1613,11 @@
             const answerButtonsDisabled = !audioReadyForAnswer || isLaunchReady || finalWaiting;
 
             return (
-                <div className={`game-screen ${isImagePractice ? "image-practice-screen" : ""}`}>
+                <div className={`game-screen ${isImagePractice ? "image-practice-screen" : ""}`} data-layout-qa-question={config.layoutQa ? currentQuestion?.id : undefined}>
                     <OverlayFeedback showSuccess={showSuccess} showTryAgain={showTryAgain} />
 
-                    <section className={`control-panel w-full ${isImagePractice ? "max-w-[500px]" : "max-w-[430px]"} max-h-[calc(100svh-2rem)] overflow-y-auto flex flex-col gap-5 backdrop-blur-md p-5 md:p-6 rounded-[28px] relative z-10`}>
-                        <div className="flex items-center justify-between gap-3">
+                    <section className={`control-panel w-full ${isImagePractice ? "max-w-[500px]" : "max-w-[430px]"} ${isSpeechPractice ? "speech-practice-panel" : ""} max-h-[calc(100svh-2rem)] overflow-y-auto flex flex-col gap-5 backdrop-blur-md p-5 md:p-6 rounded-[28px] relative z-10`} data-testid="control-panel">
+                        <div className="game-heading flex items-center justify-between gap-3">
                             <div>
                                 <p className="text-sm font-black text-purple-600">{modeMeta.label}</p>
                                 <h2 className="text-2xl font-black text-slate-900">第 {Math.min(currentRound, roundsPerPlayer)} 回合</h2>
@@ -1512,31 +1628,51 @@
                             </button>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="team-score-grid grid grid-cols-2 gap-3">
                             <TeamScoreCard team="pink" name={config.teams.pink} score={scores.pink} />
                             <TeamScoreCard team="blue" name={config.teams.blue} score={scores.blue} />
                         </div>
 
-                        <div className="rounded-2xl border-4 border-purple-200 bg-purple-50 p-4 text-center">
+                        <div className="speech-current-card rounded-2xl border-4 border-purple-200 bg-purple-50 p-4 text-center">
                             <p className="text-sm font-black text-purple-600">目前作答</p>
-                            <p className={`text-3xl font-black ${currentTeam === "pink" ? "text-pink-600" : "text-blue-600"}`}>
+                            <p className={`speech-current-name text-3xl font-black ${currentTeam === "pink" ? "text-pink-600" : "text-blue-600"}`}>
                                 {currentTeam === "pink" ? "粉紅隊" : "藍隊"}・{currentPlayer || "等待計分"}
                             </p>
-                            <p className="text-sm font-bold text-slate-500 mt-1">第 {Math.min(turnIndex + 1, totalTurns)} 題 / 共 {totalTurns} 題</p>
+                            <p className="speech-current-progress text-sm font-bold text-slate-500 mt-1">第 {Math.min(turnIndex + 1, totalTurns)} 題 / 共 {totalTurns} 題</p>
                         </div>
 
                         {currentQuestion ? (
-                            <div className="question-card rounded-2xl border-4 p-4">
+                            <div className={`question-card rounded-2xl border-4 p-4 ${isSpeechPractice ? "speech-question-card" : ""}`} data-testid="question-card">
                                 <audio ref={audioElementRef} preload="auto" playsInline></audio>
                                 {isSpeechPractice ? (
-                                    <div className="grid gap-4">
-                                        <img src={currentQuestion.imagePath} alt={currentQuestion.imageAlt || "題目圖片（替代文字待教師確認）"} className="w-full max-h-56 object-contain rounded-xl bg-white border-4 border-cyan-100" draggable="false" />
-                                        <div className="text-center rounded-2xl bg-yellow-50 border-4 border-yellow-200 p-4">
-                                            <p className="text-sm font-black text-purple-600">{currentQuestion.type === "read_aloud" ? "Look and read" : "Read and answer"}</p>
-                                            <p className="text-2xl font-black text-slate-900 mt-2 leading-snug">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.questionText}</p>
-                                            {currentQuestion.type === "question_answer" && <p className="text-sm font-bold text-slate-600 mt-2">請先讀問句，再說出答案；短答或完整答都可依題庫得滿分。</p>}
+                                    <div className="speech-question-flow" data-question-id={currentQuestion.id}>
+                                        <div className="speech-question-image-frame" data-testid="question-image-frame">
+                                            {questionImageFailed || !currentQuestion.imagePath ? (
+                                                <div className="speech-question-image-fallback" data-testid="question-image-fallback" role="img" aria-label={currentQuestion.imageAlt || "題目圖片暫時無法載入"}>
+                                                    <i className="fas fa-image text-3xl" aria-hidden="true"></i>
+                                                    <p className="font-black">題目圖片暫時無法載入</p>
+                                                    <p className="text-sm font-bold">{currentQuestion.imageAlt || "請告訴老師協助處理。"}</p>
+                                                </div>
+                                            ) : (
+                                                <img key={currentQuestion.id} src={currentQuestion.imagePath} alt={currentQuestion.imageAlt || "題目圖片（替代文字待教師確認）"} className="speech-question-image" data-testid="question-image" onLoad={() => setQuestionImageFailed(false)} onError={() => setQuestionImageFailed(true)} draggable="false" />
+                                            )}
                                         </div>
-                                        <details className="rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-left">
+                                        <div className="speech-question-prompt text-center rounded-2xl bg-yellow-50 border-4 border-yellow-200 p-4" data-testid="question-prompt">
+                                            <p className="text-sm font-black text-purple-600">{currentQuestion.type === "read_aloud" ? "Look and read" : "Read and answer"}</p>
+                                            <p className="speech-question-stem text-2xl font-black text-slate-900 mt-2 leading-snug" data-testid="question-stem">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.questionText}</p>
+                                            {currentQuestion.type === "question_answer" && <p className="speech-question-hint text-sm font-bold text-slate-600 mt-2">請先讀問句，再說出答案；短答或完整答都可依題庫得滿分。</p>}
+                                        </div>
+                                        <div className="speech-record-row grid grid-cols-2 gap-3 items-center" data-testid="speech-record-row">
+                                            <button onClick={handleSpeechRecord} data-testid="speech-record-button" disabled={isLaunchReady || finalWaiting || speechStatus === "evaluating" || speechStatus === "requesting"} className={`speech-record-button min-h-[64px] rounded-xl border-4 px-4 py-3 text-xl font-black text-white transition-all ${speechStatus === "recording" || speechStatus === "stopping" ? "bg-red-600 border-red-200 animate-pulse" : "bg-gradient-to-r from-pink-500 to-purple-600 border-white"} disabled:bg-slate-300 disabled:border-slate-200`}>
+                                                <i className={`fas ${speechStatus === "recording" || speechStatus === "stopping" ? "fa-stop" : "fa-microphone"} mr-2`}></i>
+                                                {speechStatus === "recording" || speechStatus === "stopping" ? "停止錄音" : "開始錄音"}
+                                            </button>
+                                            <div className="speech-attempt-card rounded-xl bg-white border-4 border-slate-100 p-3 text-center">
+                                                <p className="text-sm font-black text-slate-500">有效次數</p>
+                                                <p className="speech-attempt-value text-2xl font-black text-slate-900">{attemptMap[currentQuestion.id] || 0} / {modeMeta.maxAttempts}</p>
+                                            </div>
+                                        </div>
+                                        <details className="speech-guidance-details rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-left" data-testid="speech-guidance">
                                             <summary className="cursor-pointer font-black text-purple-700">評分公式與本題提醒</summary>
                                             <div className="mt-2 grid gap-2 text-sm font-bold text-slate-700">
                                                 <p>{currentQuestion.type === "read_aloud" ? "總分＝準確度×40%＋完整度×35%＋流暢度×25%。" : "總分＝準確度×50%＋完整度×30%＋流暢度×20%；核心答案錯誤時最高59分。"}</p>
@@ -1544,16 +1680,6 @@
                                                 {currentQuestion.pronunciationTargets?.length > 0 && <p>本題留意：{currentQuestion.pronunciationTargets.join("、")}。評語會依題庫的發音難字與語調分析選出一項主要提醒。</p>}
                                             </div>
                                         </details>
-                                        <div className="grid grid-cols-2 gap-3 items-center">
-                                            <button onClick={handleSpeechRecord} disabled={isLaunchReady || finalWaiting || speechStatus === "evaluating" || speechStatus === "requesting"} className={`min-h-[64px] rounded-xl border-4 px-4 py-3 text-xl font-black text-white transition-all ${speechStatus === "recording" || speechStatus === "stopping" ? "bg-red-600 border-red-200 animate-pulse" : "bg-gradient-to-r from-pink-500 to-purple-600 border-white"} disabled:bg-slate-300 disabled:border-slate-200`}>
-                                                <i className={`fas ${speechStatus === "recording" || speechStatus === "stopping" ? "fa-stop" : "fa-microphone"} mr-2`}></i>
-                                                {speechStatus === "recording" || speechStatus === "stopping" ? "停止錄音" : "開始錄音"}
-                                            </button>
-                                            <div className="rounded-xl bg-white border-4 border-slate-100 p-3 text-center">
-                                                <p className="text-sm font-black text-slate-500">有效次數</p>
-                                                <p className="text-2xl font-black text-slate-900">{attemptMap[currentQuestion.id] || 0} / {modeMeta.maxAttempts}</p>
-                                            </div>
-                                        </div>
                                         {speechMessage && <p className="rounded-xl bg-cyan-50 border-2 border-cyan-200 p-3 text-center font-black text-cyan-800">{speechMessage}</p>}
                                         {speechPlaybackUrl && <audio src={speechPlaybackUrl} controls playsInline className="w-full" />}
                                         {speechResult && (
@@ -1574,7 +1700,7 @@
                                                 )}
                                             </div>
                                         )}
-                                        <div className={`rounded-xl border-2 px-3 py-2 text-center font-black ${isLaunchReady ? "bg-green-50 border-green-300 text-green-700" : "bg-purple-50 border-purple-200 text-purple-700"}`}>{feedback}</div>
+                                        <div className={`speech-feedback rounded-xl border-2 px-3 py-2 text-center font-black ${isLaunchReady ? "bg-green-50 border-green-300 text-green-700" : "bg-purple-50 border-purple-200 text-purple-700"}`} data-testid="speech-feedback">{feedback}</div>
                                     </div>
                                 ) : (
                                     <>
@@ -1718,7 +1844,7 @@
             );
         }
 
-        function SummaryPage({ result, onHome }) {
+        function SummaryPage({ result, onHome, onRetry }) {
             useEffect(() => {
                 playSummaryAudio();
             }, [result.id]);
@@ -1747,6 +1873,12 @@
                                 }`}>
                                     {result.syncMessage}
                                 </p>
+                            )}
+                            {result.syncStatus === "error" && onRetry && (
+                                <div className="mt-3">
+                                    <button onClick={onRetry} className="rounded-xl bg-orange-500 px-5 py-3 font-black text-white shadow hover:bg-orange-600">重新送出完整遊戲紀錄</button>
+                                    <p className="mt-2 text-xs font-bold text-slate-600">成功寫入前，下一局題型不會翻轉。</p>
+                                </div>
                             )}
                         </div>
 
@@ -1796,67 +1928,131 @@
             );
         }
 
-        function TeacherDashboard({ onHome }) {
-            const [date, setDate] = useState(todayString());
+        function TeacherDashboard({ onHome, onSessionExpired }) {
+            const today = todayString();
+            const [filters, setFilters] = useState({
+                dateFrom: today,
+                dateTo: today,
+                unitId: "",
+                classCode: "",
+                studentCode: "",
+                questionId: ""
+            });
             const [records, setRecords] = useState([]);
             const [selectedId, setSelectedId] = useState("");
             const [loading, setLoading] = useState(false);
-            const [recordSource, setRecordSource] = useState("cloud");
-            const [statusMessage, setStatusMessage] = useState("");
+            const [statusMessage, setStatusMessage] = useState("請設定條件後查詢。");
             const [deleteTarget, setDeleteTarget] = useState(null);
             const [deleteBusy, setDeleteBusy] = useState(false);
+            const [audioUrls, setAudioUrls] = useState({});
+            const [audioLoadingId, setAudioLoadingId] = useState("");
+
+            const updateFilter = (key, value) => setFilters(previous => ({ ...previous, [key]: value }));
+            const handleSessionError = error => {
+                if (error?.status === 401) {
+                    onSessionExpired();
+                    return true;
+                }
+                return false;
+            };
 
             const refreshRecords = useCallback(async () => {
                 setLoading(true);
-                const result = await loadRecordsByDate(date);
-                setRecords(result.records);
-                setRecordSource(result.source);
-                setStatusMessage(result.message);
-                setLoading(false);
-            }, [date]);
+                setStatusMessage("正在讀取受保護紀錄...");
+                try {
+                    const result = await window.HWG7AppApi.teacherAction("listResults", { filters });
+                    setRecords(result.records || []);
+                    setStatusMessage(`已讀取 ${result.count || 0} 局完整遊戲${result.truncated ? "（已達 500 筆上限，請縮小日期範圍）" : ""}。`);
+                    setSelectedId(current => (result.records || []).some(record => record.id === current) ? current : (result.records?.[0]?.id || ""));
+                } catch (error) {
+                    if (!handleSessionError(error)) setStatusMessage(error.message || "紀錄讀取失敗。");
+                } finally {
+                    setLoading(false);
+                }
+            }, [filters, onSessionExpired]);
 
             useEffect(() => {
                 refreshRecords();
-            }, [refreshRecords]);
+            }, []);
 
-            const dayRecords = records.filter(record => record.date === date);
-            const selected = dayRecords.find(record => record.id === selectedId) || null;
+            const selected = records.find(record => record.id === selectedId) || null;
+            const selectedAttempts = useMemo(() => [...(selected?.attempts || [])].sort((left, right) =>
+                left.turnIndex - right.turnIndex || left.attemptNumber - right.attemptNumber
+            ), [selected]);
+            const bestByStudent = useMemo(() => {
+                if (!selected) return {};
+                return Object.fromEntries((selected.students || []).map(studentCode => {
+                    const scores = (selected.turnSummaries || []).filter(turn => turn.studentCode === studentCode).map(turn => Number(turn.bestScore)).filter(Number.isFinite);
+                    return [studentCode, scores.length ? Math.max(...scores) : null];
+                }));
+            }, [selected]);
 
-            useEffect(() => {
-                if (dayRecords.length && !dayRecords.some(record => record.id === selectedId)) {
-                    setSelectedId(dayRecords[0].id);
+            const csvCell = value => {
+                const raw = String(value ?? "");
+                const safe = /^[=+\-@]/u.test(raw) ? `'${raw}` : raw;
+                return `"${safe.replace(/"/g, '""')}"`;
+            };
+
+            const downloadCsv = () => {
+                const header = ["日期", "單元", "學生代碼", "題目", "題型", "回合", "嘗試", "逐字稿", "準確度", "完整度", "流暢度", "總分", "是否達標", "建議"];
+                const rows = records.flatMap(record => (record.attempts || []).map(attempt => [
+                    record.date,
+                    UNIT_BY_ID[record.unitId]?.label || record.unitId,
+                    attempt.studentCode,
+                    attempt.questionId,
+                    attempt.questionType,
+                    Number(attempt.turnIndex) + 1,
+                    attempt.attemptNumber,
+                    attempt.transcript,
+                    attempt.scores?.accuracy,
+                    attempt.scores?.completeness,
+                    attempt.scores?.fluency,
+                    attempt.scores?.total,
+                    attempt.passed ? "達標" : "未達標",
+                    attempt.feedback
+                ]));
+                const csv = "\uFEFF" + [header, ...rows].map(row => row.map(csvCell).join(",")).join("\r\n");
+                const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+                const anchor = document.createElement("a");
+                anchor.href = url;
+                anchor.download = `HWG7-SR-results-${filters.dateFrom}-${filters.dateTo}.csv`;
+                document.body.appendChild(anchor);
+                anchor.click();
+                anchor.remove();
+                URL.revokeObjectURL(url);
+            };
+
+            const loadRecording = async attemptId => {
+                setAudioLoadingId(attemptId);
+                try {
+                    const result = await window.HWG7AppApi.teacherAction("recordingUrl", { attemptId });
+                    setAudioUrls(previous => ({ ...previous, [attemptId]: result.url }));
+                } catch (error) {
+                    if (!handleSessionError(error)) setStatusMessage(error.message || "錄音暫時無法播放。");
+                } finally {
+                    setAudioLoadingId("");
                 }
-                if (!dayRecords.length) setSelectedId("");
-            }, [date, records.length, selectedId]);
-
-            useEffect(() => {
-                const handleFocus = () => refreshRecords();
-                window.addEventListener("focus", handleFocus);
-                return () => window.removeEventListener("focus", handleFocus);
-            }, [refreshRecords]);
-
-            const openDeleteConfirm = (event, record) => {
-                event.preventDefault();
-                setDeleteTarget(record);
             };
 
             const confirmDeleteRecord = async () => {
                 if (!deleteTarget || deleteBusy) return;
                 setDeleteBusy(true);
-                const deletingId = deleteTarget.id;
-                const result = await deleteRecord(deletingId);
-                if (result.ok || recordSource === "local") {
-                    setRecords(prev => prev.filter(record => record.id !== deletingId));
-                    if (selectedId === deletingId) {
-                        setSelectedId("");
-                    }
-                } else {
-                    await refreshRecords();
+                try {
+                    await window.HWG7AppApi.teacherAction("softDeleteResult", { resultId: deleteTarget.id });
+                    setRecords(previous => previous.filter(record => record.id !== deleteTarget.id));
+                    setSelectedId("");
+                    setStatusMessage("已將該局標記為刪除；稽核紀錄仍保留。");
+                } catch (error) {
+                    if (!handleSessionError(error)) setStatusMessage(error.message || "軟刪除失敗。");
+                } finally {
+                    setDeleteBusy(false);
+                    setDeleteTarget(null);
                 }
-                setRecordSource(result.source);
-                setStatusMessage(result.message);
-                setDeleteBusy(false);
-                setDeleteTarget(null);
+            };
+
+            const logout = async () => {
+                try { await window.HWG7AppApi.teacherLogout(); } catch { window.HWG7AppApi.clearTeacherToken(); }
+                onHome();
             };
 
             return (
@@ -1864,237 +2060,191 @@
                     <section className="teacher-card max-w-7xl mx-auto backdrop-blur-md rounded-[28px] p-5 md:p-8">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                             <div>
-                                <p className="text-sm font-black text-purple-600">英聽與打彈珠小高手</p>
+                                <p className="text-sm font-black text-purple-600">受保護的口說評測紀錄</p>
                                 <h1 className="text-4xl font-black text-slate-900">教師後台</h1>
                             </div>
-                            <button onClick={onHome} className="rounded-xl bg-slate-900 text-white px-5 py-3 font-black hover:bg-slate-700">
-                                <i className="fas fa-house mr-2"></i>
-                                回到首頁
-                            </button>
+                            <div className="flex flex-wrap gap-2">
+                                <button onClick={logout} className="rounded-xl bg-purple-600 text-white px-5 py-3 font-black hover:bg-purple-700"><i className="fas fa-right-from-bracket mr-2"></i>登出</button>
+                                <button onClick={onHome} className="rounded-xl bg-slate-900 text-white px-5 py-3 font-black hover:bg-slate-700"><i className="fas fa-house mr-2"></i>回到首頁</button>
+                            </div>
                         </div>
 
-                        <div className="grid lg:grid-cols-[360px_1fr] gap-5">
+                        <div className="grid lg:grid-cols-[390px_1fr] gap-5">
                             <aside className="rounded-2xl border-4 border-slate-200 bg-slate-50 p-4">
-                                <label className="block">
-                                    <span className="block font-black text-slate-700 mb-2">選擇日期</span>
-                                    <input
-                                        type="date"
-                                        value={date}
-                                        onChange={event => setDate(event.target.value)}
-                                        className="w-full rounded-xl border-4 border-white bg-white px-4 py-3 text-lg font-black text-slate-900 outline-none focus:border-cyan-300"
-                                    />
-                                </label>
-
-                                <div className={`mt-4 rounded-xl border-2 p-3 text-sm font-black ${
-                                    recordSource === "cloud"
-                                        ? "bg-green-50 border-green-200 text-green-700"
-                                        : "bg-yellow-50 border-yellow-300 text-yellow-800"
-                                }`}>
-                                    {loading ? "正在讀取紀錄..." : statusMessage}
+                                <div className="grid grid-cols-2 gap-3">
+                                    <label className="block"><span className="block font-black text-slate-700 mb-1">開始日期</span><input type="date" value={filters.dateFrom} onChange={event => updateFilter("dateFrom", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
+                                    <label className="block"><span className="block font-black text-slate-700 mb-1">結束日期</span><input type="date" value={filters.dateTo} onChange={event => updateFilter("dateTo", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
                                 </div>
+                                <label className="block mt-3"><span className="block font-black text-slate-700 mb-1">單元</span><select value={filters.unitId} onChange={event => updateFilter("unitId", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black"><option value="">全部單元</option>{UNIT_REGISTRY.map(unit => <option key={unit.id} value={unit.id}>{unit.label}</option>)}</select></label>
+                                <div className="grid grid-cols-2 gap-3 mt-3">
+                                    <label className="block"><span className="block font-black text-slate-700 mb-1">班級（三碼）</span><input value={filters.classCode} onChange={event => updateFilter("classCode", String(event.target.value || "").replace(/\D/g, "").slice(0, 3))} inputMode="numeric" maxLength="3" className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
+                                    <label className="block"><span className="block font-black text-slate-700 mb-1">學生（五碼）</span><input value={filters.studentCode} onChange={event => updateFilter("studentCode", sanitizeStudentCode(event.target.value))} inputMode="numeric" maxLength="5" className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
+                                </div>
+                                <label className="block mt-3"><span className="block font-black text-slate-700 mb-1">題目</span><select value={filters.questionId} onChange={event => updateFilter("questionId", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black"><option value="">全部題目</option>{HWG7_SPEECH_QUESTIONS.map(question => <option key={question.id} value={question.id}>{question.id}・{question.type === "read_aloud" ? "題型一" : "題型二"}</option>)}</select></label>
+                                <div className="grid grid-cols-2 gap-2 mt-4">
+                                    <button onClick={refreshRecords} disabled={loading} className="rounded-xl bg-cyan-500 text-white px-4 py-3 font-black shadow hover:bg-cyan-600 disabled:bg-slate-300"><i className="fas fa-magnifying-glass mr-2"></i>{loading ? "查詢中" : "查詢"}</button>
+                                    <button onClick={downloadCsv} disabled={!records.length} className="rounded-xl bg-green-600 text-white px-4 py-3 font-black shadow hover:bg-green-700 disabled:bg-slate-300"><i className="fas fa-file-csv mr-2"></i>匯出 CSV</button>
+                                </div>
+                                <div className="mt-4 rounded-xl border-2 bg-white border-slate-200 p-3 text-sm font-black text-slate-700">{statusMessage}</div>
 
-                                <button
-                                    onClick={refreshRecords}
-                                    disabled={loading}
-                                    className="mt-3 w-full rounded-xl bg-cyan-500 text-white px-4 py-3 font-black shadow hover:bg-cyan-600 disabled:bg-slate-300"
-                                >
-                                    <i className="fas fa-rotate-right mr-2"></i>
-                                    重新整理紀錄
-                                </button>
-
-                                <h2 className="text-xl font-black text-slate-900 mt-6 mb-3">學生名單</h2>
-                                <div className="grid gap-3 max-h-[620px] overflow-y-auto pr-1">
-                                    {loading ? (
-                                        <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">正在讀取此日期的遊戲紀錄...</p>
-                                    ) : dayRecords.length === 0 ? (
-                                        <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">此日期還沒有遊戲紀錄。</p>
-                                    ) : (
-                                        dayRecords.map(record => (
-                                            <button
-                                                key={record.id}
-                                                onClick={() => setSelectedId(record.id)}
-                                                onContextMenu={event => openDeleteConfirm(event, record)}
-                                                className={`rounded-xl border-4 p-4 text-left transition-all ${
-                                                    selectedId === record.id
-                                                        ? "bg-yellow-100 border-yellow-400 shadow-[4px_4px_0px_0px_rgba(236,72,153,0.24)]"
-                                                        : "bg-white border-white hover:border-cyan-300"
-                                                }`}
-                                            >
-                                                <p className="text-lg font-black text-slate-900">{record.students[0]}、{record.students[1]}</p>
-                                                <p className="text-sm font-bold text-slate-500 mt-1">{localDateTimeLabel(record.playedAt)}・{record.modeLabel}</p>
-                                            </button>
-                                        ))
-                                    )}
+                                <h2 className="text-xl font-black text-slate-900 mt-6 mb-3">完整遊戲</h2>
+                                <div className="grid gap-3 max-h-[520px] overflow-y-auto pr-1">
+                                    {!loading && records.length === 0 ? <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">目前條件沒有完整遊戲紀錄。</p> : records.map(record => (
+                                        <button key={record.id} onClick={() => setSelectedId(record.id)} className={`rounded-xl border-4 p-4 text-left transition-all ${selectedId === record.id ? "bg-yellow-100 border-yellow-400" : "bg-white border-white hover:border-cyan-300"}`}>
+                                            <p className="text-lg font-black text-slate-900">{record.students?.join("、")}</p>
+                                            <p className="text-sm font-bold text-slate-500 mt-1">{localDateTimeLabel(record.playedAt)}・{UNIT_BY_ID[record.unitId]?.label || record.unitId}</p>
+                                        </button>
+                                    ))}
                                 </div>
                             </aside>
 
                             <section className="rounded-2xl border-4 border-slate-200 bg-white p-4 md:p-6">
-                                <h2 className="text-2xl font-black text-slate-900 mb-4">成績明細</h2>
                                 {!selected ? (
-                                    <div className="min-h-[320px] flex items-center justify-center text-center rounded-2xl bg-slate-50 border-4 border-dashed border-slate-200">
-                                        <p className="text-xl font-black text-slate-500">請點選左側學生姓名查看報告。</p>
-                                    </div>
+                                    <div className="min-h-[360px] flex items-center justify-center text-center rounded-2xl bg-slate-50 border-4 border-dashed border-slate-200"><p className="text-xl font-black text-slate-500">請點選左側完整遊戲查看報告。</p></div>
                                 ) : (
                                     <div>
-                                        <div className="grid md:grid-cols-2 gap-4 mb-5">
-                                            <div className="rounded-2xl bg-pink-50 border-4 border-pink-200 p-4">
-                                                <p className="text-lg font-black text-pink-600">粉紅隊</p>
-                                                <h3 className="text-3xl font-black text-slate-900">{selected.teams.pink}</h3>
-                                                <p className="text-5xl font-black text-pink-600 mt-2">{selected.scores.pink} 分</p>
-                                            </div>
-                                            <div className="rounded-2xl bg-cyan-50 border-4 border-cyan-200 p-4">
-                                                <p className="text-lg font-black text-blue-600">藍隊</p>
-                                                <h3 className="text-3xl font-black text-slate-900">{selected.teams.blue}</h3>
-                                                <p className="text-5xl font-black text-blue-600 mt-2">{selected.scores.blue} 分</p>
-                                            </div>
+                                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
+                                            <div><h2 className="text-2xl font-black text-slate-900">{selected.students?.join("、")}</h2><p className="text-sm font-black text-purple-600">{UNIT_BY_ID[selected.unitId]?.label || selected.unitId}・{localDateTimeLabel(selected.playedAt)}</p></div>
+                                            <button onClick={() => setDeleteTarget(selected)} className="rounded-xl bg-red-50 border-2 border-red-200 px-4 py-2 font-black text-red-700 hover:bg-red-100"><i className="fas fa-trash-can mr-2"></i>軟刪除</button>
                                         </div>
-                                        <p className="text-sm font-black text-purple-600 mb-4">{selected.modeLabel}・{localDateTimeLabel(selected.playedAt)}</p>
-                                        <div className="grid md:grid-cols-2 gap-4">
-                                            <div className="rounded-2xl bg-pink-50 border-4 border-pink-100 p-4">
-                                                <h3 className="text-xl font-black text-slate-900 mb-3">粉紅隊答對題目</h3>
-                                                <AnswerList items={selected.answers.pink} />
-                                            </div>
-                                            <div className="rounded-2xl bg-cyan-50 border-4 border-cyan-100 p-4">
-                                                <h3 className="text-xl font-black text-slate-900 mb-3">藍隊答對題目</h3>
-                                                <AnswerList items={selected.answers.blue} />
-                                            </div>
+                                        <div className="grid md:grid-cols-2 gap-4 mb-5">
+                                            {(selected.students || []).map((studentCode, index) => <div key={studentCode} className={`rounded-2xl border-4 p-4 ${index === 0 ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`}><p className="text-sm font-black text-slate-500">{index === 0 ? "A 玩家" : "B 玩家"}</p><h3 className="text-3xl font-black text-slate-900">{studentCode}</h3><p className="text-4xl font-black text-purple-700 mt-2">最佳 {bestByStudent[studentCode] ?? "—"} 分</p></div>)}
+                                        </div>
+                                        <h3 className="text-xl font-black text-slate-900 mb-3">每次口說評測</h3>
+                                        <div className="grid gap-3 max-h-[680px] overflow-y-auto pr-1">
+                                            {selectedAttempts.map(attempt => (
+                                                <article key={attempt.attemptId} className="rounded-xl border-2 border-slate-200 bg-slate-50 p-4">
+                                                    <div className="flex flex-wrap items-center justify-between gap-2"><p className="font-black text-slate-900">第 {Number(attempt.turnIndex) + 1} 回合・{attempt.questionId}・{attempt.studentCode}</p><span className={`rounded-full px-3 py-1 text-sm font-black ${attempt.passed ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>第 {attempt.attemptNumber} 次・{attempt.scores?.total ?? "—"} 分</span></div>
+                                                    <p className="mt-2 text-sm font-bold text-slate-700"><span className="font-black">逐字稿：</span>{attempt.transcript}</p>
+                                                    <p className="mt-1 text-sm font-bold text-slate-600"><span className="font-black">分項：</span>準確 {attempt.scores?.accuracy ?? "—"}／完整 {attempt.scores?.completeness ?? "—"}／流暢 {attempt.scores?.fluency ?? "—"}</p>
+                                                    <p className="mt-1 text-sm font-bold text-purple-700"><span className="font-black">建議：</span>{attempt.feedback}</p>
+                                                    {attempt.recordingAvailable && !audioUrls[attempt.attemptId] && <button onClick={() => loadRecording(attempt.attemptId)} disabled={audioLoadingId === attempt.attemptId} className="mt-3 rounded-lg bg-slate-900 px-4 py-2 text-sm font-black text-white disabled:bg-slate-300"><i className="fas fa-play mr-2"></i>{audioLoadingId === attempt.attemptId ? "取得錄音中" : "播放 30 天內錄音"}</button>}
+                                                    {audioUrls[attempt.attemptId] && <audio className="mt-3 w-full" controls preload="none" src={audioUrls[attempt.attemptId]} />}
+                                                    {!attempt.recordingAvailable && <p className="mt-2 text-xs font-bold text-slate-500">錄音已超過 30 天期限或尚不可用。</p>}
+                                                </article>
+                                            ))}
                                         </div>
                                     </div>
                                 )}
                             </section>
                         </div>
                     </section>
-                    {deleteTarget && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4">
-                            <div className="w-full max-w-md rounded-[24px] border-4 border-yellow-300 bg-white p-6 text-center shadow-[0_18px_48px_rgba(15,23,42,0.28)]">
-                                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-pink-100 text-3xl text-pink-600">
-                                    <i className="fas fa-trash-can"></i>
-                                </div>
-                                <h2 className="text-3xl font-black text-slate-900">是否刪除此份資料？</h2>
-                                <p className="mt-3 text-lg font-bold text-slate-600">
-                                    {deleteTarget.students?.[0]}、{deleteTarget.students?.[1]}
-                                </p>
-                                <p className="mt-1 text-sm font-bold text-slate-500">
-                                    {localDateTimeLabel(deleteTarget.playedAt)}・{deleteTarget.modeLabel}
-                                </p>
-                                <div className="mt-6 grid grid-cols-2 gap-3">
-                                    <button
-                                        onClick={confirmDeleteRecord}
-                                        disabled={deleteBusy}
-                                        className="rounded-xl bg-red-500 px-5 py-3 text-xl font-black text-white shadow hover:bg-red-600 disabled:bg-slate-300"
-                                    >
-                                        是
-                                    </button>
-                                    <button
-                                        onClick={() => setDeleteTarget(null)}
-                                        disabled={deleteBusy}
-                                        className="rounded-xl bg-slate-100 px-5 py-3 text-xl font-black text-slate-700 shadow hover:bg-slate-200 disabled:bg-slate-200"
-                                    >
-                                        否
-                                    </button>
-                                </div>
-                                {deleteBusy && <p className="mt-3 text-sm font-black text-slate-500">正在刪除資料...</p>}
-                            </div>
-                        </div>
-                    )}
+                    {deleteTarget && <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/45 px-4"><div className="w-full max-w-md rounded-[24px] border-4 border-yellow-300 bg-white p-6 text-center shadow-2xl"><h2 className="text-3xl font-black text-slate-900">軟刪除此份資料？</h2><p className="mt-3 font-bold text-slate-600">資料會從一般查詢隱藏，但保留稽核紀錄。</p><div className="mt-6 grid grid-cols-2 gap-3"><button onClick={confirmDeleteRecord} disabled={deleteBusy} className="rounded-xl bg-red-500 px-5 py-3 text-xl font-black text-white disabled:bg-slate-300">是</button><button onClick={() => setDeleteTarget(null)} disabled={deleteBusy} className="rounded-xl bg-slate-100 px-5 py-3 text-xl font-black text-slate-700">否</button></div></div></div>}
                 </main>
             );
         }
+        function getLocalLayoutQaConfig() {
+            const loopbackHosts = new Set(["127.0.0.1", "localhost", "::1", "[::1]"]);
+            if (!loopbackHosts.has(window.location.hostname.toLowerCase())) return null;
+            const questionId = new URLSearchParams(window.location.search).get("layoutQa");
+            if (!questionId) return null;
+            const question = (QUESTION_BANKS[SPEECH_MODE] || []).find(item => item.id === questionId);
+            if (!question) return null;
+            const unit = UNIT_BY_MODE[SPEECH_MODE];
+            return {
+                layoutQa: true,
+                gameSessionId: `layout-qa-${question.id}`,
+                gameDate: todayString(),
+                students: ["60101", "60102"],
+                unitId: unit?.id || "hwg7-sr",
+                mode: SPEECH_MODE,
+                assignment: { firstTurnType: question.type, qaOnly: true },
+                questionBankVersion: unit?.questionBankVersion || question.questionBankVersion,
+                teams: { pink: "60101", blue: "60102" },
+                totalTurns: getModeTotalTurns(SPEECH_MODE),
+                roundsPerPlayer: getModeRoundsPerPlayer(SPEECH_MODE),
+                questions: [question]
+            };
+        }
 
         function App() {
-            const [view, setView] = useState("home");
+            const [layoutQaConfig] = useState(() => getLocalLayoutQaConfig());
+            const [view, setView] = useState(layoutQaConfig ? "game" : "home");
             const [showPassword, setShowPassword] = useState(false);
-            const [config, setConfig] = useState(null);
+            const [config, setConfig] = useState(layoutQaConfig);
             const [result, setResult] = useState(null);
 
-            const startGame = (students, mode) => {
-                const teams = Math.random() < 0.5
-                    ? { pink: students[0], blue: students[1] }
-                    : { pink: students[1], blue: students[0] };
+            const startGame = async (students, mode) => {
+                const unit = UNIT_BY_MODE[mode];
+                if (!unit || unit.status !== "ready") throw new Error("這個單元題庫準備中。");
+                const session = await window.HWG7AppApi.startGame({ unitId: unit.id, students });
+                const questions = prepareQuestionSet(mode, session.assignment.firstTurnType);
+                if (questions.length !== 12) {
+                    await window.HWG7AppApi.abandonGame(session.gameSessionId).catch(() => {});
+                    throw new Error("本局沒有成功組成 12 道交替題目，請通知老師。");
+                }
                 setConfig({
+                    gameSessionId: session.gameSessionId,
+                    gameDate: session.date,
                     students,
+                    unitId: unit.id,
                     mode,
-                    teams,
+                    assignment: session.assignment,
+                    questionBankVersion: unit.questionBankVersion,
+                    teams: { pink: students[0], blue: students[1] },
                     totalTurns: getModeTotalTurns(mode),
                     roundsPerPlayer: getModeRoundsPerPlayer(mode),
-                    questions: prepareQuestionSet(mode)
+                    questions
                 });
                 setResult(null);
                 setView("game");
             };
 
+            const persistRecord = async record => {
+                setResult(current => current?.id === record.id ? { ...current, syncStatus: "pending", syncMessage: "正在安全寫入完整遊戲..." } : current);
+                try {
+                    const syncResult = await saveRecord(record);
+                    setResult(current => current?.id === record.id ? { ...current, syncStatus: syncResult.status, syncMessage: syncResult.message } : current);
+                } catch (error) {
+                    console.warn("完整遊戲交易尚未完成", { code: error?.code || "complete_failed" });
+                    setResult(current => current?.id === record.id ? {
+                        ...current,
+                        syncStatus: "error",
+                        syncMessage: `${error.message || "完整遊戲尚未寫入。"} 下一局題型尚未翻轉。`
+                    } : current);
+                }
+            };
+
             const finishGame = record => {
-                const pendingRecord = {
-                    ...record,
-                    syncStatus: "pending",
-                    syncMessage: "正在上傳紀錄到 Firebase..."
-                };
+                const pendingRecord = { ...record, syncStatus: "pending", syncMessage: "正在安全寫入完整遊戲..." };
                 setResult(pendingRecord);
                 setView("summary");
-                saveRecord(record)
-                    .then(syncResult => {
-                        setResult(current => current?.id === record.id
-                            ? {
-                                ...current,
-                                syncStatus: syncResult.status,
-                                syncMessage: syncResult.message
-                            }
-                            : current
-                        );
-                    })
-                    .catch(error => {
-                        console.warn("紀錄處理失敗", error);
-                        setResult(current => current?.id === record.id
-                            ? {
-                                ...current,
-                                syncStatus: "local",
-                                syncMessage: "紀錄上傳發生未預期錯誤，已先保存在這台平板。"
-                            }
-                            : current
-                        );
-                    });
+                persistRecord(record);
+            };
+
+            const retrySave = () => {
+                if (result && result.syncStatus === "error") persistRecord(result);
             };
 
             const goHome = () => {
+                if (view === "game" && config?.gameSessionId && !config?.layoutQa) {
+                    window.HWG7AppApi.abandonGame(config.gameSessionId).catch(() => {});
+                }
                 setView("home");
                 setConfig(null);
             };
 
+            const openTeacher = () => {
+                if (window.HWG7AppApi.hasTeacherSession()) setView("teacher");
+                else setShowPassword(true);
+            };
+
+            const sessionExpired = () => {
+                window.HWG7AppApi.clearTeacherToken();
+                setView("home");
+                setShowPassword(true);
+            };
+
             return (
                 <>
-                    {view === "home" && (
-                        <HomePage
-                            onStart={startGame}
-                            onOpenTeacher={() => setShowPassword(true)}
-                        />
-                    )}
-                    {view === "game" && config && (
-                        <GamePage
-                            key={`${config.mode}-${config.students.join("-")}-${config.questions[0]?.id}`}
-                            config={config}
-                            onFinish={finishGame}
-                            onHome={goHome}
-                        />
-                    )}
-                    {view === "summary" && result && (
-                        <SummaryPage result={result} onHome={goHome} />
-                    )}
-                    {view === "teacher" && (
-                        <TeacherDashboard onHome={goHome} />
-                    )}
-                    {showPassword && (
-                        <PasswordModal
-                            onClose={() => setShowPassword(false)}
-                            onSuccess={() => {
-                                setShowPassword(false);
-                                setView("teacher");
-                            }}
-                        />
-                    )}
+                    {view === "home" && <HomePage onStart={startGame} onOpenTeacher={openTeacher} />}
+                    {view === "game" && config && <GamePage key={config.gameSessionId} config={config} onFinish={finishGame} onHome={goHome} />}
+                    {view === "summary" && result && <SummaryPage result={result} onHome={goHome} onRetry={retrySave} />}
+                    {view === "teacher" && <TeacherDashboard onHome={goHome} onSessionExpired={sessionExpired} />}
+                    {showPassword && <PasswordModal onClose={() => setShowPassword(false)} onSuccess={() => { setShowPassword(false); setView("teacher"); }} />}
                 </>
             );
         }
-
         const root = ReactDOM.createRoot(document.getElementById("root"));
         root.render(<App />);
     </script>

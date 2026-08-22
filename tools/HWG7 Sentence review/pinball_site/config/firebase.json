@@ -5,6 +5,7 @@
       "firebase.json",
       "firestore.rules",
       "storage.rules",
+      "storage-lifecycle.json",
       "server.mjs",
       "package.json",
       "package-lock.json",
@@ -15,22 +16,44 @@
       "tests/**",
       "data/*.json",
       "data/*report*",
+      "**/*.md",
+      "**/*.log",
+      "qa/**",
+      "tmp/**",
       "**/.*",
       "**/node_modules/**"
     ],
+    "rewrites": [
+      { "source": "/api/game/start", "function": { "functionId": "startGame", "region": "asia-east1" } },
+      { "source": "/api/game/abandon", "function": { "functionId": "abandonGame", "region": "asia-east1" } },
+      { "source": "/api/evaluate-speech", "function": { "functionId": "evaluateSpeech", "region": "asia-east1" } },
+      { "source": "/api/game/complete", "function": { "functionId": "completeGame", "region": "asia-east1" } },
+      { "source": "/api/teacher/login", "function": { "functionId": "teacherLogin", "region": "asia-east1" } },
+      { "source": "/api/teacher", "function": { "functionId": "teacherApi", "region": "asia-east1" } }
+    ],
     "headers": [
+      {
+        "source": "/index.html",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0" }
+        ]
+      },
       {
         "source": "**",
         "headers": [
+          { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://www.gstatic.com https://www.google.com/recaptcha/; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob:; media-src 'self' blob: https:; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://www.google.com/recaptcha/; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'" },
           { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Frame-Options", "value": "DENY" },
           { "key": "Referrer-Policy", "value": "same-origin" },
-          { "key": "Permissions-Policy", "value": "microphone=(self)" }
+          { "key": "Permissions-Policy", "value": "camera=(), geolocation=(), microphone=(self)" }
         ]
       }
     ]
   },
   "functions": {
-    "source": "functions"
+    "source": "functions",
+    "runtime": "nodejs22",
+    "predeploy": ["node scripts/deployment-gate.mjs"]
   },
   "firestore": {
     "rules": "firestore.rules"

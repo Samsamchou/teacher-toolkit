@@ -41,6 +41,30 @@ test("rejects student identifiers and every other unexpected field", () => {
   );
 });
 
+test("accepts opaque game context but still never accepts a student identifier", () => {
+  const result = validateEvaluationBody({
+    questionId: "HWG7-SR-001",
+    mimeType: "audio/webm",
+    audioBase64: audioBase64(),
+    gameSessionId: "session_abcdefghij",
+    turnIndex: 0,
+    attemptNumber: 1,
+  }, questionIds);
+  assert.deepEqual(result.gameContext, {
+    gameSessionId: "session_abcdefghij",
+    turnIndex: 0,
+    attemptNumber: 1,
+  });
+});
+
+test("partial or out-of-range game context is rejected", () => {
+  assert.throws(() => validateEvaluationBody({
+    questionId: "HWG7-SR-001",
+    mimeType: "audio/webm",
+    audioBase64: audioBase64(),
+    gameSessionId: "session_abcdefghij",
+  }, questionIds), (error) => error.code === "invalid_turn_index");
+});
 test("rejects malformed base64", () => {
   assert.throws(
     () => validateEvaluationBody({

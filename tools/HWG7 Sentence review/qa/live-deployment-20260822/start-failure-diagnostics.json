@@ -1,0 +1,37 @@
+{
+  "error": "App Check 開局與第一題圖片載入逾時",
+  "page": {
+    "text": "教師後台\n\n雙人口說互動彈珠台\n\n英語口說與打彈珠小高手\n\n每局12題・每人6回合・80分達標\n\nA 玩家（第一位）：班級＋座號\nB 玩家（第二位）：班級＋座號\nHWG7 SR\n13 題中每局抽 12 題，兩位玩家各 6 回合；80 分達標。\nHWG5 SR\n題庫準備中\n題庫準備中\nHWG8 SR\n題庫準備中\n題庫準備中\nHWG6 SR\n題庫準備中\n題庫準備中\n正在安全開局...\n\n只輸入五碼班級＋座號；不要輸入姓名。A／B 依第一、第二個輸入位置決定。",
+    "alert": "",
+    "url": "https://setencerevieworalpractice.web.app/?liveQaIpad=1787384063323"
+  },
+  "startResponses": [],
+  "consoleErrors": [],
+  "logEntries": [
+    {
+      "level": "error",
+      "text": "Loading the script 'https://www.google.com/recaptcha/enterprise.js' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://www.gstatic.com\". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.",
+      "url": "https://www.gstatic.com/firebasejs/10.12.5/firebase-app-check-compat.js"
+    },
+    {
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 ()",
+      "url": "https://setencerevieworalpractice.web.app/favicon.ico"
+    },
+    {
+      "level": "error",
+      "text": "Loading the script 'https://www.google.com/recaptcha/enterprise.js' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://cdnjs.cloudflare.com https://www.gstatic.com\". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.",
+      "url": "https://www.gstatic.com/firebasejs/10.12.5/firebase-app-check-compat.js"
+    }
+  ],
+  "loadingFailures": [
+    {
+      "errorText": "",
+      "type": "Script"
+    },
+    {
+      "errorText": "",
+      "type": "Script"
+    }
+  ]
+}

@@ -15,11 +15,21 @@ try {
         $synthesizer.Dispose()
     }
 
+    $startBody = @{
+        unitId = "hwg7-sr"
+        students = @("00001", "00002")
+        requestId = "smoke-$([guid]::NewGuid().ToString('N'))"
+    } | ConvertTo-Json -Depth 4 -Compress
+    $session = Invoke-RestMethod -Uri "http://127.0.0.1:4173/api/game/start" -Method Post -ContentType "application/json" -Body $startBody
+
     $audioBase64 = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($testAudioPath))
     $body = @{
         questionId = "HWG7-SR-013"
         mimeType = "audio/wav"
         audioBase64 = $audioBase64
+        gameSessionId = $session.gameSessionId
+        turnIndex = 0
+        attemptNumber = 1
         metrics = @{
             speechWindowMs = 2600
             mediumPauses = 0
@@ -27,8 +37,16 @@ try {
         }
     } | ConvertTo-Json -Depth 5 -Compress
 
-    $result = Invoke-RestMethod -Uri "http://127.0.0.1:4173/api/evaluate-speech" -Method Post -ContentType "application/json" -Body $body
+    try {
+        $result = Invoke-RestMethod -Uri "http://127.0.0.1:4173/api/evaluate-speech" -Method Post -ContentType "application/json" -Body $body
+    }
+    finally {
+        $abandonBody = @{ gameSessionId = $session.gameSessionId } | ConvertTo-Json -Compress
+        Invoke-RestMethod -Uri "http://127.0.0.1:4173/api/game/abandon" -Method Post -ContentType "application/json" -Body $abandonBody | Out-Null
+    }
     [ordered]@{
+        gameSessionId = $session.gameSessionId
+        attemptId = $result.attemptId
         questionId = $result.questionId
         transcript = $result.transcript
         scores = $result.scores

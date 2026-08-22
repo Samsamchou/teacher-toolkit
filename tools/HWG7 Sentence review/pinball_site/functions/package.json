@@ -5,15 +5,16 @@
   "type": "module",
   "main": "index.mjs",
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "scripts": {
-    "check": "node --check index.mjs && node --check lib/http-validation.mjs && node --check lib/scoring.mjs",
+    "check": "node --check index.mjs && node --check lib/http-validation.mjs && node --check lib/scoring.mjs && node --check lib/app-domain.mjs && node --check lib/teacher-auth.mjs && node --check lib/usage-limits.mjs && node --check scripts/set-teacher-passcode.mjs",
     "test": "node --test test/*.test.mjs",
-    "sync-bank": "node scripts/sync-question-bank.mjs"
+    "sync-bank": "node scripts/sync-question-bank.mjs",
+    "set-teacher-passcode": "node scripts/set-teacher-passcode.mjs"
   },
   "dependencies": {
-    "firebase-admin": "^13.0.0",
-    "firebase-functions": "^6.0.0"
+    "firebase-admin": "14.3.0",
+    "firebase-functions": "7.3.2"
   }
 }

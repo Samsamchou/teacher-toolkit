@@ -15,7 +15,7 @@ const AUDIO_TYPES = Object.freeze({
   "audio/flac": { extension: "flac", container: "flac", openAiMime: "audio/flac" },
 });
 
-const BODY_FIELDS = new Set(["questionId", "mimeType", "audioBase64", "metrics"]);
+const BODY_FIELDS = new Set(["questionId", "mimeType", "audioBase64", "metrics", "gameSessionId", "turnIndex", "attemptNumber"]);
 const METRIC_LIMITS = Object.freeze({
   speechWindowMs: { maximum: 60_000, integer: false },
   speechWindowSeconds: { maximum: 60, integer: false },
@@ -138,10 +138,31 @@ export function validateEvaluationBody(body, questionIds) {
     fail(415, "audio_signature_mismatch", "錄音內容與檔案格式不一致，請重新錄音。");
   }
 
+  const contextValues = [body.gameSessionId, body.turnIndex, body.attemptNumber];
+  const hasAnyContext = contextValues.some((value) => value !== undefined);
+  let gameContext = null;
+  if (hasAnyContext) {
+    if (typeof body.gameSessionId !== "string" || !/^[A-Za-z0-9_-]{10,120}$/u.test(body.gameSessionId)) {
+      fail(400, "invalid_game_session", "遊戲工作階段格式不正確。");
+    }
+    if (!Number.isInteger(body.turnIndex) || body.turnIndex < 0 || body.turnIndex > 11) {
+      fail(400, "invalid_turn_index", "遊戲回合編號不正確。");
+    }
+    if (!Number.isInteger(body.attemptNumber) || body.attemptNumber < 1 || body.attemptNumber > 3) {
+      fail(400, "invalid_attempt_number", "作答次數不正確。");
+    }
+    gameContext = {
+      gameSessionId: body.gameSessionId,
+      turnIndex: body.turnIndex,
+      attemptNumber: body.attemptNumber,
+    };
+  }
+
   return {
     questionId: body.questionId,
     bytes,
     metrics: validateMetrics(body.metrics),
+    gameContext,
     ...media,
   };
 }

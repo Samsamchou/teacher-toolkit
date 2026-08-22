@@ -1,0 +1,2553 @@
+{
+  "ok": true,
+  "generatedAt": "2026-08-22T05:18:21.849Z",
+  "engine": "Chromium headless via Chrome DevTools Protocol",
+  "limitation": "iPad 項目使用 Safari User-Agent、觸控與 1024×768 橫式尺寸模擬；不等同實體 iPad Safari，引擎實測留待部署後。",
+  "questionCount": 13,
+  "viewportCount": 2,
+  "screenshotCount": 27,
+  "passedCount": 26,
+  "failedCount": 0,
+  "viewports": [
+    {
+      "id": "windows-chrome-1366x768",
+      "label": "Windows Chrome 1366×768",
+      "width": 1366,
+      "height": 768,
+      "deviceScaleFactor": 1,
+      "mobile": false,
+      "touch": false
+    },
+    {
+      "id": "ipad-safari-landscape-1024x768",
+      "label": "iPad Safari 橫式尺寸模擬 1024×768",
+      "width": 1024,
+      "height": 768,
+      "deviceScaleFactor": 2,
+      "mobile": true,
+      "touch": true,
+      "userAgent": "Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
+    }
+  ],
+  "results": [
+    {
+      "questionId": "HWG7-SR-001",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-001",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-001--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-002",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-002",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 647,
+          "bottom": 415.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 647,
+          "bottom": 517.47,
+          "left": 203,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 632,
+          "bottom": 482.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 421,
+          "bottom": 585.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 647,
+          "bottom": 637.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 675,
+          "bottom": 706.47,
+          "left": 175,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-002--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-003",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-003",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-003--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-004",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-004",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 647,
+          "bottom": 415.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 647,
+          "bottom": 517.47,
+          "left": 203,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 632,
+          "bottom": 482.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 421,
+          "bottom": 585.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 647,
+          "bottom": 637.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 675,
+          "bottom": 706.47,
+          "left": 175,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-004--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-005",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-005",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 2160,
+          "naturalHeight": 1730,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-005--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-006",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-006",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 647,
+          "bottom": 415.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 647,
+          "bottom": 517.47,
+          "left": 203,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 632,
+          "bottom": 482.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 421,
+          "bottom": 585.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 647,
+          "bottom": 637.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 675,
+          "bottom": 706.47,
+          "left": 175,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 2110,
+          "naturalHeight": 2841,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-006--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-007",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-007",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1457,
+          "naturalHeight": 669,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-007--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-008",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-008",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 647,
+          "bottom": 415.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 647,
+          "bottom": 517.47,
+          "left": 203,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 632,
+          "bottom": 482.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 421,
+          "bottom": 585.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 647,
+          "bottom": 637.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 675,
+          "bottom": 706.47,
+          "left": 175,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1467,
+          "naturalHeight": 660,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-008--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-009",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-009",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-009--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-010",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-010",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 647,
+          "bottom": 415.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 647,
+          "bottom": 517.47,
+          "left": 203,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 632,
+          "bottom": 482.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 421,
+          "bottom": 585.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 647,
+          "bottom": 637.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 675,
+          "bottom": 706.47,
+          "left": 175,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1465,
+          "naturalHeight": 666,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-010--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-011",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-011",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-011--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-012",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-012",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 647,
+          "bottom": 415.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 647,
+          "bottom": 517.47,
+          "left": 203,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 632,
+          "bottom": 482.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 421,
+          "bottom": 585.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 647,
+          "bottom": 637.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 675,
+          "bottom": 706.47,
+          "left": 175,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-012--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-013",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-013",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 647,
+          "bottom": 427.47,
+          "left": 203,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 647,
+          "bottom": 505.47,
+          "left": 203,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 632,
+          "bottom": 494.47,
+          "left": 218,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 421,
+          "bottom": 573.47,
+          "left": 203,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 647,
+          "bottom": 625.47,
+          "left": 203,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 675,
+          "bottom": 694.47,
+          "left": 175,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1056,
+          "naturalHeight": 992,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-013--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-001",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-001",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-001--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-002",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-002",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 509,
+          "bottom": 415.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 509,
+          "bottom": 517.47,
+          "left": 65,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 494,
+          "bottom": 482.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 283,
+          "bottom": 585.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 509,
+          "bottom": 637.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 537,
+          "bottom": 706.47,
+          "left": 37,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-002--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-003",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-003",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-003--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-004",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-004",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 509,
+          "bottom": 415.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 509,
+          "bottom": 517.47,
+          "left": 65,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 494,
+          "bottom": 482.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 283,
+          "bottom": 585.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 509,
+          "bottom": 637.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 537,
+          "bottom": 706.47,
+          "left": 37,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-004--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-005",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-005",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 2160,
+          "naturalHeight": 1730,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-005--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-006",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-006",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 509,
+          "bottom": 415.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 509,
+          "bottom": 517.47,
+          "left": 65,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 494,
+          "bottom": 482.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 283,
+          "bottom": 585.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 509,
+          "bottom": 637.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 537,
+          "bottom": 706.47,
+          "left": 37,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 2110,
+          "naturalHeight": 2841,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-006--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-007",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-007",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1457,
+          "naturalHeight": 669,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-007--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-008",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-008",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 509,
+          "bottom": 415.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 509,
+          "bottom": 517.47,
+          "left": 65,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 494,
+          "bottom": 482.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 283,
+          "bottom": 585.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 509,
+          "bottom": 637.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 537,
+          "bottom": 706.47,
+          "left": 37,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1467,
+          "naturalHeight": 660,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-008--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-009",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-009",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-009--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-010",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-010",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 509,
+          "bottom": 415.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 509,
+          "bottom": 517.47,
+          "left": 65,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 494,
+          "bottom": 482.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 283,
+          "bottom": 585.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 509,
+          "bottom": 637.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 537,
+          "bottom": 706.47,
+          "left": 37,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1465,
+          "naturalHeight": 666,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-010--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-011",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-011",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-011--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-012",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-012",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 246.52,
+          "right": 509,
+          "bottom": 415.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 423.47,
+          "right": 509,
+          "bottom": 517.47,
+          "left": 65,
+          "width": 444,
+          "height": 94
+        },
+        "stem": {
+          "top": 458.47,
+          "right": 494,
+          "bottom": 482.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 529.47,
+          "right": 283,
+          "bottom": 585.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 597.47,
+          "right": 509,
+          "bottom": 637.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 61.52,
+          "right": 537,
+          "bottom": 706.47,
+          "left": 37,
+          "width": 500,
+          "height": 644.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1248,
+          "naturalHeight": 832,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 635,
+        "panelClientHeight": 635,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-012--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG7-SR-013",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG7-SR-013",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 258.52,
+          "right": 509,
+          "bottom": 427.47,
+          "left": 65,
+          "width": 444,
+          "height": 168.95
+        },
+        "prompt": {
+          "top": 435.47,
+          "right": 509,
+          "bottom": 505.47,
+          "left": 65,
+          "width": 444,
+          "height": 70
+        },
+        "stem": {
+          "top": 470.47,
+          "right": 494,
+          "bottom": 494.47,
+          "left": 80,
+          "width": 414,
+          "height": 24
+        },
+        "recordButton": {
+          "top": 517.47,
+          "right": 283,
+          "bottom": 573.47,
+          "left": 65,
+          "width": 218,
+          "height": 56
+        },
+        "guidance": {
+          "top": 585.47,
+          "right": 509,
+          "bottom": 625.47,
+          "left": 65,
+          "width": 444,
+          "height": 40
+        },
+        "panel": {
+          "top": 73.52,
+          "right": 537,
+          "bottom": 694.47,
+          "left": 37,
+          "width": 500,
+          "height": 620.95
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1056,
+          "naturalHeight": 992,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "guidanceCollapsed": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 611,
+        "panelClientHeight": 611,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG7-SR-013--ipad-safari-landscape-1024x768.png"
+    }
+  ],
+  "missingImageFallback": {
+    "questionId": "HWG7-SR-013",
+    "viewportId": "ipad-safari-landscape-1024x768",
+    "passed": true,
+    "checks": {
+      "fallbackVisible": true,
+      "stableFrameHeight": true,
+      "stablePromptTop": true,
+      "stemAndRecordRemainVisible": true,
+      "guidanceCollapsed": true
+    },
+    "before": {
+      "frame": {
+        "top": 258.52,
+        "right": 509,
+        "bottom": 427.47,
+        "left": 65,
+        "width": 444,
+        "height": 168.95
+      },
+      "prompt": {
+        "top": 435.47,
+        "right": 509,
+        "bottom": 505.47,
+        "left": 65,
+        "width": 444,
+        "height": 70
+      }
+    },
+    "after": {
+      "frame": {
+        "top": 258.52,
+        "right": 509,
+        "bottom": 427.47,
+        "left": 65,
+        "width": 444,
+        "height": 168.95
+      },
+      "prompt": {
+        "top": 435.47,
+        "right": 509,
+        "bottom": 505.47,
+        "left": 65,
+        "width": 444,
+        "height": 70
+      }
+    },
+    "screenshot": "HWG7-SR-013--ipad-safari-landscape-1024x768--missing-image-fallback.png"
+  }
+}

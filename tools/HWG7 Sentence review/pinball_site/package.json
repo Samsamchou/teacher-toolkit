@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "node server.mjs",
     "validate": "node scripts/validate-question-bank.mjs",
+    "qa:layout": "node scripts/qa-question-image-layout.mjs",
+    "deploy:gate": "node scripts/deployment-gate.mjs",
     "test": "node --test tests/*.test.mjs"
   },
   "engines": {

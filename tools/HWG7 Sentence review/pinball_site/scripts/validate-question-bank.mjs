@@ -37,7 +37,7 @@ function countWords(text) {
 function checkAnalysis(analysis, label) {
   check(analysis && typeof analysis === "object", `${label}: 缺少 pronunciationAnalysis。`);
   if (!analysis || typeof analysis !== "object") return;
-  check(analysis.reviewStatus === "pending", `${label}: 發音分析複核必須標為 pending。`);
+  check(analysis.reviewStatus === "teacher_confirmed", `${label}: 發音分析必須標為 teacher_confirmed。`);
   check(Array.isArray(analysis.pronunciationTargets) && analysis.pronunciationTargets.length > 0, `${label}: 缺少 pronunciationTargets。`);
   check(Array.isArray(analysis.difficultWords) && analysis.difficultWords.length > 0, `${label}: 缺少 difficultWords。`);
   check(Array.isArray(analysis.stressWords) && analysis.stressWords.length > 0, `${label}: 缺少 stressWords。`);
@@ -194,7 +194,7 @@ function sampleWithoutReplacement(items, count, random) {
   return copy.slice(0, count);
 }
 
-function sampleAlternatingGame(questionItems, random) {
+function sampleAlternatingGame(questionItems, random, firstType = "read_aloud") {
   const readAloud = sampleWithoutReplacement(
     questionItems.filter((question) => question.type === "read_aloud"),
     6,
@@ -205,7 +205,10 @@ function sampleAlternatingGame(questionItems, random) {
     6,
     random
   );
-  return readAloud.flatMap((question, index) => [question, questionAnswer[index]]);
+  return readAloud.flatMap((question, index) => firstType === "read_aloud"
+    ? [question, questionAnswer[index]]
+    : [questionAnswer[index], question]
+  );
 }
 
 async function inspectImage(relativePath) {
@@ -264,7 +267,7 @@ check(bank.game?.selection?.unusedQuestionsPerGame === 1, "13題中每局抽12�
 check(bank.game?.selection?.method === "balanced_by_type_then_alternate", "抽題方式必須先依題型各抽6題，再交替排列。");
 check(bank.game?.selection?.readAloudPerGame === 6, "每局必須有6題 read_aloud。");
 check(bank.game?.selection?.questionAnswerPerGame === 6, "每局必須有6題 question_answer。");
-check(bank.game?.selection?.typePattern === "read_aloud_question_answer_alternating", "每局題型順序必須由 read_aloud 開始並嚴格交替。");
+check(bank.game?.selection?.typePattern === "assigned_player_type_alternating", "每局必須依 A/B 當局分配的起始題型嚴格交替。");
 check(bank.game?.slotPlanPriority === "final_round_decision", "6回合設定必須保留最後一回合決勝優先。 ");
 check(bank.game?.passScore === 80 && bank.game?.passOperator === ">=", "達標條件必須是 score >= 80。");
 check(bank.game?.maxAttempts === 3, "每題最多有效嘗試必須是3次。");
@@ -285,20 +288,11 @@ check(Math.abs(sum(Object.values(bank.rubric?.questionAnswer?.completenessWeight
 check(Math.abs(sum(Object.values(bank.rubric?.questionAnswer?.totalWeights ?? {})) - 1) < 1e-9, "question_answer 總分權重必須合計1。");
 check(bank.rubric?.questionAnswer?.wrongOrMissingCoreScoreCap === 59, "核心答案錯誤或未回答時的上限必須是59。");
 
-const pendingKeys = (bank.review?.pending ?? []).map((item) => item.key);
-const requiredPendingKeys = [
-  "q005_possessive_person",
-  "unit_or_category",
-  "image_alt_text",
-  "pronunciation_teaching_alignment"
-];
-check(bank.review?.status === "draft_pending_teacher_review", "題庫狀態必須保留 draft_pending_teacher_review。");
-for (const key of requiredPendingKeys) {
-  check(pendingKeys.includes(key), `待確認清單缺少 ${key}。`);
-  const item = bank.review?.pending?.find((candidate) => candidate.key === key);
-  check(item?.status === "pending", `${key} 必須標為 pending。`);
-}
-
+check(bank.review?.status === "teacher_confirmed", "題庫狀態必須是 teacher_confirmed。");
+check(Array.isArray(bank.review?.pending) && bank.review.pending.length === 0, "教師確認後 pending 清單必須為空。");
+check(Array.isArray(bank.review?.confirmed) && bank.review.confirmed.length >= 4, "教師確認依據至少要記錄四項。");
+check(bank.mode?.unitId === "hwg7-sr" && bank.mode?.label === "HWG7 SR", "單元必須精確為 hwg7-sr / HWG7 SR。");
+check(bank.mode?.questionBankVersion === "hwg7-sr-v1-confirmed", "題庫版本必須是 hwg7-sr-v1-confirmed。");
 for (let index = 0; index < questions.length; index += 1) {
   const question = questions[index];
   const authority = expected[index];
@@ -307,10 +301,10 @@ for (let index = 0; index < questions.length; index += 1) {
   check(question?.id === authority?.id, `${label}: ID 與權威順序不符。`);
   check(question?.type === authority?.type, `${label}: 題型與權威來源不符。`);
   check(question?.type === (index % 2 === 0 ? "read_aloud" : "question_answer"), `${label}: 題型1/2沒有依序交替。`);
-  check(question?.unit === null && question?.unitReviewStatus === "pending", `${label}: unit 必須保持 null/pending，不可猜測。`);
+  check(question?.unitId === "hwg7-sr" && question?.unit === "HWG7 SR" && question?.unitReviewStatus === "teacher_confirmed", `${label}: 單元確認欄位不完整。`);
   check(question?.image?.sourcePath === authority?.sourcePath, `${label}: 圖片來源路徑不符。`);
   check(question?.image?.path === authority?.imagePath, `${label}: 部署圖片路徑不符。`);
-  check(question?.image?.alt === null && question?.image?.altReviewStatus === "pending", `${label}: image.alt 必須保持 null/pending，不可猜測。`);
+  check(isNonEmptyString(question?.image?.alt) && question?.image?.altReviewStatus === "teacher_confirmed", `${label}: image.alt 必須有已確認的中性替代文字。`);
   check(question?.questionSentenceAnalysis === null, `${label}: 問句不得含發音或語調分析。`);
   check(question?.passScore === 80, `${label}: passScore 必須是80。`);
   check(question?.maxAttempts === 3, `${label}: maxAttempts 必須是3。`);
@@ -343,7 +337,7 @@ for (let index = 0; index < questions.length; index += 1) {
 
 const q005 = questions.find((question) => question.id === "HWG7-SR-005");
 check(q005?.standardReadSentence === "They’re his caps.", "HWG7-SR-005 只能保留來源句 They’re his caps.，不得改猜其他人物。");
-check(q005?.contentReviewStatus === "pending", "HWG7-SR-005 的 his 必須標記待確認。");
+check(q005?.contentReviewStatus === "teacher_confirmed" && !q005?.contentReviewIssue, "HWG7-SR-005 的 his 必須標記已確認且不得保留待確認問題。");
 const q013 = questions.find((question) => question.id === "HWG7-SR-013");
 check(q013?.standardReadSentence === "She would like some salad.", "HWG7-SR-013 必須精確為 She would like some salad.");
 
@@ -359,15 +353,17 @@ for (let index = 0; index < imageResults.length; index += 1) {
 }
 
 for (let seed = 1; seed <= 250; seed += 1) {
-  const sampled = sampleAlternatingGame(questions, mulberry32(seed));
-  const sampledIds = sampled.map((question) => question.id);
-  check(sampled.length === 12, `抽題模擬 seed=${seed}: 題數不是12。`);
-  check(new Set(sampledIds).size === sampled.length, `抽題模擬 seed=${seed}: 同局出現重複題目。`);
-  check(sampled.filter((question) => question.type === "read_aloud").length === 6, `抽題模擬 seed=${seed}: read_aloud 不是6題。`);
-  check(sampled.filter((question) => question.type === "question_answer").length === 6, `抽題模擬 seed=${seed}: question_answer 不是6題。`);
-  check(sampled.every((question, index) => question.type === (index % 2 === 0 ? "read_aloud" : "question_answer")), `抽題模擬 seed=${seed}: 題型沒有嚴格交替。`);
+  for (const firstType of ["read_aloud", "question_answer"]) {
+    const sampled = sampleAlternatingGame(questions, mulberry32(seed), firstType);
+    const sampledIds = sampled.map((question) => question.id);
+    const prefix = `抽題模擬 seed=${seed} first=${firstType}`;
+    check(sampled.length === 12, `${prefix}: 題數不是12。`);
+    check(new Set(sampledIds).size === sampled.length, `${prefix}: 同局出現重複題目。`);
+    check(sampled.filter((question) => question.type === "read_aloud").length === 6, `${prefix}: read_aloud 不是6題。`);
+    check(sampled.filter((question) => question.type === "question_answer").length === 6, `${prefix}: question_answer 不是6題。`);
+    check(sampled.every((question, index) => question.type === (index % 2 === 0 ? firstType : (firstType === "read_aloud" ? "question_answer" : "read_aloud"))), `${prefix}: 題型沒有嚴格交替。`);
+  }
 }
-
 if (shouldSyncBrowserData) {
   await mkdir(path.dirname(browserDataPath), { recursive: true });
   await writeFile(browserDataPath, makeBrowserData(questions), "utf8");
@@ -384,9 +380,6 @@ try {
   errors.push("缺少 data/hwg7-sentence-review.js；請執行 --sync-js 產生。 ");
 }
 
-if (requiredPendingKeys.every((key) => pendingKeys.includes(key))) {
-  warnings.push("仍有4類教師複核項目：his、單元／分類、圖片替代文字、發音教法對齊。 ");
-}
 
 const answerVariantCount = questions.reduce((total, question) => total + (question.acceptableAnswers?.length ?? 0), 0);
 const summary = {
@@ -411,10 +404,10 @@ const summary = {
   missingImageCount: imageResults.filter((result) => !result.exists).length,
   invalidImageSignatureCount: imageResults.filter((result) => result.exists && !result.decodableSignature).length,
   totalImageBytes,
-  sampledGamesChecked: 250,
+  sampledGamesChecked: 500,
   sampledGamesAlternating: errors.every((message) => !message.startsWith("抽題模擬")),
   browserJsSynced: browserQuestions ? JSON.stringify(browserQuestions) === JSON.stringify(questions) : false,
-  pendingReviewKeys: requiredPendingKeys,
+  pendingReviewKeys: [],
   warnings,
   errors
 };

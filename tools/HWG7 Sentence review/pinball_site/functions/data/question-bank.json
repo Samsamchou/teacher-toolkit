@@ -2,10 +2,11 @@
   "schemaVersion": "1.0.0",
   "mode": {
     "key": "hwg7SentenceReview",
-    "label": "HWG7 Sentence review 口說彈珠台",
+    "label": "HWG7 SR",
     "interactionType": "speech_assessment",
-    "questionBankVersion": "hwg7-sr-v1-draft",
-    "rubricVersion": "a1-v1"
+    "questionBankVersion": "hwg7-sr-v1-confirmed",
+    "rubricVersion": "a1-v1",
+    "unitId": "hwg7-sr"
   },
   "game": {
     "bankSize": 13,
@@ -18,7 +19,7 @@
       "unusedQuestionsPerGame": 1,
       "readAloudPerGame": 6,
       "questionAnswerPerGame": 6,
-      "typePattern": "read_aloud_question_answer_alternating"
+      "typePattern": "assigned_player_type_alternating"
     },
     "turnOrder": "pink_blue_alternating",
     "slotPlanPriority": "final_round_decision",
@@ -47,6 +48,13 @@
       "attemptCounterRule": "Only a valid scored evaluation consumes one attempt.",
       "launchGate": "score >= 80 OR validAttempts >= 3",
       "failedEvaluationRule": "A network, recording, transcription, or evaluation system failure returns to retry_ready and does not consume an attempt."
+    },
+    "assignment": {
+      "playerIdentity": "A is first homepage code; B is second homepage code",
+      "firstCompletedGame": "A=read_aloud; B=question_answer",
+      "nextCompletedGame": "A=question_answer; B=read_aloud",
+      "flipRule": "Flip only after an idempotently completed game in a Firestore transaction",
+      "persistenceKey": "unordered student pair + unit + Asia/Taipei date"
     }
   },
   "rubric": {
@@ -96,7 +104,9 @@
       "pronunciationTargets": "Align once against the transcript; do not double-deduct.",
       "difficultWords": "Use for lenient A1 pause handling and feedback, not an extra deduction.",
       "stressToneAndLinking": "Feedback only in a1-v1 unless reliable acoustic evidence is available.",
-      "studentFeedback": "Select one primary issue and return at most two Traditional Chinese sentences."
+      "studentFeedback": "Select one primary issue and return at most two Traditional Chinese sentences.",
+      "accentTolerance": "Natural reduction or an intelligible accent difference does not automatically fail a student.",
+      "toneGate": "Falling tone is a teaching model only and is never the sole pass/fail gate in a1-v1."
     }
   },
   "questions": [
@@ -105,13 +115,13 @@
       "displayOrder": 1,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/08. cold chicken.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-001.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩坐在桌前，旁邊有餐點與身體不適的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -121,7 +131,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "has",
           "cold"
@@ -142,7 +152,8 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "She has a COLD."
@@ -151,21 +162,24 @@
           "has a"
         ],
         "teacherNotes": "不要因學生語速較慢而重扣；先確認 cold 是否被說成其他疾病字或完全漏念。",
-        "studentReminder": "你有把整句說出來，很棒！再把 cold 的尾音說完整。"
-      }
+        "studentReminder": "你有把整句說出來，很棒！再把 cold 的尾音說完整。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-002",
       "displayOrder": 2,
       "type": "question_answer",
       "typeLabel": "題型 2：Read and answer",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/13. toothache bread.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-002.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩一手靠近臉頰、桌上有食物的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "Does she have a toothache?",
       "questionSentenceAnalysis": null,
@@ -186,7 +200,7 @@
           ],
           "answerWordCount": 3,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "Yes",
               "does"
@@ -204,14 +218,16 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "肯定短答，句尾降調。"
+              "note": "肯定短答，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "YES,",
               "she DOES."
             ],
             "linking": [],
-            "studentReminder": "你回答對了！再把 does 的尾巴輕輕說完整。"
+            "studentReminder": "你回答對了！再把 does 的尾巴輕輕說完整。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         },
         {
@@ -229,7 +245,7 @@
           ],
           "answerWordCount": 5,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "has",
               "toothache"
@@ -247,7 +263,8 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "完整肯定答句，句尾降調。"
+              "note": "完整肯定答句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "YES,",
@@ -256,26 +273,29 @@
             "linking": [
               "has a"
             ],
-            "studentReminder": "你把答案說完整了！試著把 TOOTH-ache 的前半段念清楚。"
+            "studentReminder": "你把答案說完整了！試著把 TOOTH-ache 的前半段念清楚。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         }
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1"
+      "rubricVersion": "a1-v1",
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-003",
       "displayOrder": 3,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/09.cough hamburger.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-003.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩坐在桌前，桌上放著餐點的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -285,7 +305,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "would",
           "hamburger"
@@ -306,7 +326,8 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "She would like",
@@ -315,21 +336,25 @@
         "linking": [
           "like a"
         ],
-        "studentReminder": "你把想吃的食物說對了！試著把 HAM-bur-ger 的第一段念清楚。"
-      }
+        "studentReminder": "你把想吃的食物說對了！試著把 HAM-bur-ger 的第一段念清楚。",
+        "naturalSpeechTolerance": "would 或 I’d 的 /d/ 可以輕輕帶過；自然弱化或口音差異不會自動判定未達標。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-004",
       "displayOrder": 4,
       "type": "question_answer",
       "typeLabel": "題型 2：Read and answer",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/08. cold chicken.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-004.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩坐在桌前，旁邊有餐點與身體不適的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "What would you like for dinner?",
       "questionSentenceAnalysis": null,
@@ -357,7 +382,7 @@
           ],
           "answerWordCount": 5,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "would",
               "chicken"
@@ -378,14 +403,17 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "陳述句，句尾降調。"
+              "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "I would like",
               "some CHICKen."
             ],
             "linking": [],
-            "studentReminder": "你回答得很完整！把 CHICK-en 的第一段念得更清楚。"
+            "studentReminder": "你回答得很完整！把 CHICK-en 的第一段念得更清楚。",
+            "naturalSpeechTolerance": "would 或 I’d 的 /d/ 可以輕輕帶過；自然弱化或口音差異不會自動判定未達標。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         },
         {
@@ -402,7 +430,7 @@
           ],
           "answerWordCount": 4,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "I’d",
               "chicken"
@@ -423,35 +451,39 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "陳述句，句尾降調。"
+              "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "I’d like",
               "some CHICKen."
             ],
             "linking": [],
-            "studentReminder": "你的短句很自然！記得把 I’d 說完整，再接 like。"
+            "studentReminder": "你的短句很自然！記得把 I’d 說完整，再接 like。",
+            "naturalSpeechTolerance": "would 或 I’d 的 /d/ 可以輕輕帶過；自然弱化或口音差異不會自動判定未達標。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         }
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1"
+      "rubricVersion": "a1-v1",
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-005",
       "displayOrder": 5,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
-      "contentReviewStatus": "pending",
-      "contentReviewIssue": "所有格人物是否確實為 his；目前保留來源文字。",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
+      "contentReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/04. dream.jpeg",
         "path": "images/hwg7-sentence-review/HWG7-SR-005.jpeg",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位人物與幾頂帽子的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -461,7 +493,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "They’re",
           "his",
@@ -474,7 +506,7 @@
           },
           {
             "word": "caps",
-            "note": "字尾包含 p 和複數 s，兩個尾音都容易省略。"
+            "note": "字尾 /ps/ 要保留：先收住 /p/，再輕輕帶出複數 /s/；自然口音差異不單獨判失敗。"
           }
         ],
         "stressWords": [
@@ -483,27 +515,31 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "They’re his CAPS."
         ],
         "linking": [],
-        "studentReminder": "你說出是誰的帽子了！記得把 caps 最後的 s 輕輕說出來。"
-      }
+        "studentReminder": "你說出是誰的帽子了！記得把 caps 最後的 s 輕輕說出來。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-006",
       "displayOrder": 6,
       "type": "question_answer",
       "typeLabel": "題型 2：Read and answer",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/05. ivy.jpeg",
         "path": "images/hwg7-sentence-review/HWG7-SR-006.jpeg",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩拿著雨傘的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "Whose umbrella is this?",
       "questionSentenceAnalysis": null,
@@ -530,7 +566,7 @@
           ],
           "answerWordCount": 3,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "It’s",
               "her",
@@ -553,7 +589,8 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "陳述句，句尾降調。"
+              "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "It’s",
@@ -562,7 +599,8 @@
             "linking": [
               "her umbrella"
             ],
-            "studentReminder": "你找對雨傘的主人了！試著說 um-BREL-la，中間一段最清楚。"
+            "studentReminder": "你找對雨傘的主人了！試著說 um-BREL-la，中間一段最清楚。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         },
         {
@@ -579,7 +617,7 @@
           ],
           "answerWordCount": 4,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "It is",
               "her",
@@ -598,7 +636,8 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "陳述句，句尾降調。"
+              "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "It is",
@@ -608,26 +647,29 @@
               "It is",
               "her umbrella"
             ],
-            "studentReminder": "你的完整句很棒！把 her umbrella 順順連起來說。"
+            "studentReminder": "你的完整句很棒！把 her umbrella 順順連起來說。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         }
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1"
+      "rubricVersion": "a1-v1",
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-007",
       "displayOrder": 7,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/02.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-007.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩一手靠近眼睛的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -637,7 +679,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "eye",
           "hurts"
@@ -655,7 +697,8 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "Her EYE HURTS."
@@ -663,21 +706,24 @@
         "linking": [
           "Her eye"
         ],
-        "studentReminder": "你有說對不舒服的地方！再把 hurts 的尾音說完整。"
-      }
+        "studentReminder": "你有說對不舒服的地方！再把 hurts 的尾音說完整。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-008",
       "displayOrder": 8,
       "type": "question_answer",
       "typeLabel": "題型 2：Read and answer",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/01.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-008.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位男孩一手靠近鼻子的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "What’s wrong?",
       "questionSentenceAnalysis": null,
@@ -698,7 +744,7 @@
           ],
           "answerWordCount": 3,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "nose",
               "hurts"
@@ -720,32 +766,36 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "陳述句，句尾降調。"
+              "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "His NOSE HURTS."
             ],
             "linking": [],
-            "studentReminder": "你說對不舒服的地方了！記得把 nose 的尾巴說清楚。"
+            "studentReminder": "你說對不舒服的地方了！記得把 nose 的尾巴說清楚。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         }
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1"
+      "rubricVersion": "a1-v1",
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-009",
       "displayOrder": 9,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/11. headache soup.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-009.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩一手扶著頭、桌上有餐點的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -755,7 +805,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "has",
           "headache"
@@ -772,7 +822,8 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "She has a HEADache."
@@ -780,21 +831,24 @@
         "linking": [
           "has a"
         ],
-        "studentReminder": "你把句子念完整了！試著說 HEAD-ache，第一段念清楚。"
-      }
+        "studentReminder": "你把句子念完整了！試著說 HEAD-ache，第一段念清楚。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-010",
       "displayOrder": 10,
       "type": "question_answer",
       "typeLabel": "題型 2：Read and answer",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/03.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-010.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位男孩伸出一隻手的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "What’s wrong?",
       "questionSentenceAnalysis": null,
@@ -815,7 +869,7 @@
           ],
           "answerWordCount": 3,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "hand",
               "hurts"
@@ -837,32 +891,36 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "陳述句，句尾降調。"
+              "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "His HAND HURTS."
             ],
             "linking": [],
-            "studentReminder": "你說對不舒服的地方了！再把 hand 最後的聲音說出來。"
+            "studentReminder": "你說對不舒服的地方了！再把 hand 最後的聲音說出來。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         }
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1"
+      "rubricVersion": "a1-v1",
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-011",
       "displayOrder": 11,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/12. runny nose noodles.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-011.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩坐在桌前，桌上放著一碗食物的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -872,7 +930,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "would",
           "noodles"
@@ -884,7 +942,7 @@
           },
           {
             "word": "noodles",
-            "note": "有兩個音節，主要重音在第一個音節，複數字尾要保留。"
+            "note": "兩個音節，主要重音在第一音節；複數字尾是 /z/，要輕輕保留。"
           }
         ],
         "stressWords": [
@@ -893,28 +951,33 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "She would like",
           "some NOOdles."
         ],
         "linking": [],
-        "studentReminder": "你把想吃的食物說對了！記得把 noodles 最後的聲音說完整。"
-      }
+        "studentReminder": "你把想吃的食物說對了！記得把 noodles 最後的聲音說完整。",
+        "naturalSpeechTolerance": "would 或 I’d 的 /d/ 可以輕輕帶過；自然弱化或口音差異不會自動判定未達標。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-012",
       "displayOrder": 12,
       "type": "question_answer",
       "typeLabel": "題型 2：Read and answer",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/08. cold chicken.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-012.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩坐在桌前，旁邊有餐點與身體不適的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "Does she have a runny nose?",
       "questionSentenceAnalysis": null,
@@ -935,7 +998,7 @@
           ],
           "answerWordCount": 3,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "No",
               "doesn’t"
@@ -953,14 +1016,16 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "否定短答，句尾降調。"
+              "note": "否定短答，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "NO,",
               "she DOESn’t."
             ],
             "linking": [],
-            "studentReminder": "你回答對了！把 doesn’t 的兩小段慢慢說清楚。"
+            "studentReminder": "你回答對了！把 doesn’t 的兩小段慢慢說清楚。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         },
         {
@@ -978,7 +1043,7 @@
           ],
           "answerWordCount": 5,
           "pronunciationAnalysis": {
-            "reviewStatus": "pending",
+            "reviewStatus": "teacher_confirmed",
             "pronunciationTargets": [
               "No",
               "has",
@@ -1001,7 +1066,8 @@
             "tone": {
               "pattern": "falling",
               "mark": "↘",
-              "note": "完整否定答句，句尾降調。"
+              "note": "完整否定答句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
             },
             "chunks": [
               "NO,",
@@ -1010,26 +1076,29 @@
             "linking": [
               "has a"
             ],
-            "studentReminder": "你有說出正確的狀況！再把 cold 的尾音說完整。"
+            "studentReminder": "你有說出正確的狀況！再把 cold 的尾音說完整。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
           }
         }
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1"
+      "rubricVersion": "a1-v1",
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     },
     {
       "id": "HWG7-SR-013",
       "displayOrder": 13,
       "type": "read_aloud",
       "typeLabel": "題型 1：Look and read",
-      "unit": null,
-      "unitReviewStatus": "pending",
+      "unit": "HWG7 SR",
+      "unitReviewStatus": "teacher_confirmed",
       "image": {
         "sourcePath": "pics/10. fever salad.png",
         "path": "images/hwg7-sentence-review/HWG7-SR-013.png",
-        "alt": null,
-        "altReviewStatus": "pending"
+        "alt": "一位女孩坐在桌前，桌上放著一盤食物的情境插圖。",
+        "altReviewStatus": "teacher_confirmed"
       },
       "questionText": "",
       "questionSentenceAnalysis": null,
@@ -1039,7 +1108,7 @@
       "maxAttempts": 3,
       "rubricVersion": "a1-v1",
       "pronunciationAnalysis": {
-        "reviewStatus": "pending",
+        "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
           "would",
           "salad"
@@ -1060,15 +1129,20 @@
         "tone": {
           "pattern": "falling",
           "mark": "↘",
-          "note": "陳述句，句尾降調。"
+          "note": "陳述句，句尾降調。 升降調只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
         },
         "chunks": [
           "She would like",
           "some SAlad."
         ],
         "linking": [],
-        "studentReminder": "你把想吃的食物說出來了！試著把 SA-lad 的第一段念清楚。"
-      }
+        "studentReminder": "你把想吃的食物說出來了！試著把 SA-lad 的第一段念清楚。",
+        "naturalSpeechTolerance": "would 或 I’d 的 /d/ 可以輕輕帶過；自然弱化或口音差異不會自動判定未達標。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "unitId": "hwg7-sr",
+      "questionBankVersion": "hwg7-sr-v1-confirmed"
     }
   ]
 }
