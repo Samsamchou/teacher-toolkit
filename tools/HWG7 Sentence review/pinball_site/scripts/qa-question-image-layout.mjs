@@ -31,6 +31,15 @@ const viewports = [
     touch: false
   },
   {
+    id: "windows-chrome-1920x1080",
+    label: "Windows Chrome 1920×1080",
+    width: 1920,
+    height: 1080,
+    deviceScaleFactor: 1,
+    mobile: false,
+    touch: false
+  },
+  {
     id: "ipad-safari-landscape-1024x768",
     label: "iPad Safari 橫式尺寸模擬 1024×768",
     width: 1024,
@@ -163,6 +172,8 @@ function layoutMetricsExpression() {
     const scaffold = document.querySelector('[data-testid="answer-scaffold"]');
     const modelAudio = document.querySelector('.speech-model-audio-button');
     const panel = document.querySelector('[data-testid="control-panel"]');
+    const pinballPanel = document.querySelector('[data-testid="pinball-panel"]');
+    const pinballShell = document.querySelector('[data-testid="pinball-shell"]');
     const qaRoot = document.querySelector('[data-layout-qa-question]');
     const rect = element => {
       if (!element) return null;
@@ -187,6 +198,10 @@ function layoutMetricsExpression() {
     const recordRect = rect(record);
     const scaffoldRect = rect(scaffold);
     const panelRect = rect(panel);
+    const pinballPanelRect = rect(pinballPanel);
+    const pinballShellRect = rect(pinballShell);
+    const gameRect = rect(qaRoot);
+    const fontSize = element => element ? Number.parseFloat(getComputedStyle(element).fontSize) : null;
     const follows = (first, second) => Boolean(
       first && second && (first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING)
     );
@@ -206,6 +221,21 @@ function layoutMetricsExpression() {
       hasScaffold: Boolean(scaffold),
       hasModelAudio: Boolean(modelAudio),
       panel: panelRect,
+      pinballPanel: pinballPanelRect,
+      pinballShell: pinballShellRect,
+      game: gameRect,
+      stemFontSize: fontSize(stem),
+      scaffoldFontSize: fontSize(scaffold),
+      columnWidthDifference: panelRect && pinballPanelRect
+        ? Number(Math.abs(panelRect.width - pinballPanelRect.width).toFixed(2))
+        : null,
+      pinballAspectRatio: pinballShellRect?.height
+        ? Number((pinballShellRect.width / pinballShellRect.height).toFixed(4))
+        : null,
+      outerGaps: panelRect && pinballPanelRect ? {
+        left: Number(panelRect.left.toFixed(2)),
+        right: Number((window.innerWidth - pinballPanelRect.right).toFixed(2))
+      } : null,
       image: image ? {
         complete: image.complete,
         naturalWidth: image.naturalWidth,
@@ -219,7 +249,7 @@ function layoutMetricsExpression() {
         && promptRect.bottom <= recordRect.top + 0.5,
       imageStemRecordInFirstViewport: within(frameRect) && within(stemRect) && within(recordRect),
       recordButtonHeightOk: Boolean(recordRect) && recordRect.height >= 55.5,
-      imageFrameHeightOk: Boolean(frameRect) && frameRect.height <= 224.5,
+      imageFrameHeightOk: Boolean(frameRect) && frameRect.height <= 300.5,
       imageContained: !image || getComputedStyle(image).objectFit === "contain",
 
       panelAtTop: Boolean(panel) && panel.scrollTop === 0,
@@ -246,6 +276,22 @@ function checksFor(metrics, expectedQuestionId) {
     scaffoldMatchesQuestion: expectedScaffold ? metrics.scaffoldText === expectedScaffold : !metrics.hasScaffold,
     panelAtTop: metrics.panelAtTop,
     noHorizontalOverflow: !metrics.horizontalOverflow,
+    equalHalfWidth: metrics.columnWidthDifference !== null && metrics.columnWidthDifference <= 2,
+    outerGapsOk: Boolean(metrics.outerGaps)
+      && metrics.outerGaps.left >= 8
+      && metrics.outerGaps.left <= 12
+      && metrics.outerGaps.right >= 8
+      && metrics.outerGaps.right <= 12,
+    stemFontSizeOk: metrics.stemFontSize >= (metrics.viewport.width <= 1100 ? 33.5 : metrics.viewport.width < 1600 ? 40.5 : 41.5),
+    scaffoldFontSizeOk: expectedScaffold
+      ? metrics.scaffoldFontSize >= (metrics.viewport.width <= 1100 ? 27.5 : metrics.viewport.width < 1600 ? 31 : 31.5)
+      : metrics.scaffoldFontSize === null,
+    pinballContained: Boolean(metrics.pinballShell)
+      && metrics.pinballShell.top >= -0.5
+      && metrics.pinballShell.left >= -0.5
+      && metrics.pinballShell.bottom <= metrics.viewport.height + 0.5
+      && metrics.pinballShell.right <= metrics.viewport.width + 0.5,
+    pinballAspectRatioOk: metrics.pinballAspectRatio >= 0.78 && metrics.pinballAspectRatio <= 0.82,
     imageLoaded: Boolean(metrics.image?.complete && metrics.image?.naturalWidth > 0 && metrics.image?.naturalHeight > 0)
   };
 }

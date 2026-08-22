@@ -275,6 +275,10 @@
             transform-origin: top center;
         }
 
+        .pinball-panel {
+            display: contents;
+        }
+
         @media (min-width: 900px) and (orientation: landscape) {
             .game-screen {
                 display: grid !important;
@@ -490,6 +494,83 @@
         @media (min-width: 768px) and (orientation: portrait) {
             .image-practice-screen .control-panel {
                 max-width: min(830px, calc(100vw - 36px)) !important;
+            }
+        }
+
+        @media (min-width: 900px) and (orientation: landscape) {
+            .game-screen.speech-game-screen {
+                width: 100vw;
+                height: 100svh;
+                min-height: 100svh;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                align-items: stretch;
+                justify-content: stretch;
+                gap: 10px;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            .speech-game-screen .control-panel {
+                width: 100%;
+                min-width: 0;
+                max-width: none !important;
+                height: 100%;
+                max-height: 100% !important;
+                gap: clamp(8px, 1.1svh, 12px) !important;
+                padding: clamp(10px, 1.4svh, 16px) !important;
+                box-sizing: border-box;
+                overscroll-behavior: contain;
+            }
+
+            .speech-game-screen .pinball-panel {
+                display: flex;
+                width: 100%;
+                min-width: 0;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+
+            .speech-game-screen .pinball-shell {
+                --board-scale: 1;
+                width: min(calc(100% - 24px), calc((100svh - 48px) * 0.8));
+                height: auto;
+                aspect-ratio: 4 / 5;
+                margin: 0;
+                zoom: 1;
+                flex: 0 1 auto;
+                box-shadow: 8px 8px 0 0 rgba(181, 0, 255, 0.36);
+            }
+
+            .speech-game-screen .pinball-shell svg {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            .speech-game-screen .speech-question-prompt > p:first-child {
+                font-size: clamp(18px, 1.5vw, 22px) !important;
+            }
+
+            .speech-game-screen .speech-question-stem {
+                font-size: clamp(34px, 3vw, 42px) !important;
+                line-height: 1.2 !important;
+                overflow-wrap: anywhere;
+            }
+
+            .speech-game-screen .answer-scaffold {
+                font-size: clamp(28px, 2.3vw, 32px) !important;
+                line-height: 1.25;
+            }
+
+            .speech-game-screen .speech-question-line {
+                flex-wrap: wrap;
+            }
+
+            .speech-game-screen .speech-question-image-frame {
+                height: clamp(176px, 24svh, 260px);
+                max-height: 260px;
             }
         }
     </style>
@@ -846,6 +927,45 @@
         function localDateTimeLabel(iso) {
             const date = new Date(iso);
             return date.toLocaleString("zh-TW", { hour12: false, month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+        }
+
+        function calculateTeacherPlayerSummary(record, studentCode, playerIndex) {
+            const scoreByTurn = new Map();
+            for (const turn of record?.turnSummaries || []) {
+                if (turn?.studentCode !== studentCode) continue;
+                const turnIndex = Number(turn.turnIndex);
+                const rawScore = turn.bestScore;
+                const bestScore = Number(rawScore);
+                if (
+                    !Number.isInteger(turnIndex)
+                    || turnIndex < 0
+                    || rawScore === null
+                    || rawScore === undefined
+                    || rawScore === ""
+                    || !Number.isFinite(bestScore)
+                    || bestScore < 0
+                    || bestScore > 100
+                ) continue;
+                scoreByTurn.set(turnIndex, bestScore);
+            }
+
+            const teamKey = playerIndex === 0 ? "pink" : playerIndex === 1 ? "blue" : "";
+            const rawMarbleScore = teamKey ? record?.scores?.[teamKey] : undefined;
+            const marbleScore = Number(rawMarbleScore);
+            const questionScores = [...scoreByTurn.values()];
+            const complete = questionScores.length === 6
+                && rawMarbleScore !== null
+                && rawMarbleScore !== undefined
+                && rawMarbleScore !== ""
+                && Number.isFinite(marbleScore);
+
+            return {
+                complete,
+                speechAverage: complete
+                    ? Math.round(questionScores.reduce((sum, score) => sum + score, 0) / 6)
+                    : null,
+                marbleScore: complete ? marbleScore : null
+            };
         }
 
         async function saveRecord(record) {
@@ -1668,7 +1788,7 @@
             const answerButtonsDisabled = !audioReadyForAnswer || isLaunchReady || finalWaiting;
 
             return (
-                <div className={`game-screen ${isImagePractice ? "image-practice-screen" : ""}`} data-layout-qa-question={config.layoutQa ? currentQuestion?.id : undefined}>
+                <div className={`game-screen ${isImagePractice ? "image-practice-screen" : ""} ${isSpeechPractice ? "speech-game-screen" : ""}`} data-layout-qa-question={config.layoutQa ? currentQuestion?.id : undefined}>
                     <OverlayFeedback showSuccess={showSuccess} showTryAgain={showTryAgain} />
 
                     <section className={`control-panel w-full ${isImagePractice ? "max-w-[500px]" : "max-w-[430px]"} ${isSpeechPractice ? "speech-practice-panel" : ""} max-h-[calc(100svh-2rem)] overflow-y-auto flex flex-col gap-5 backdrop-blur-md p-5 md:p-6 rounded-[28px] relative z-10`} data-testid="control-panel">
@@ -1787,8 +1907,9 @@
                         )}
                     </section>
 
-                    <section className="pinball-shell relative shadow-[12px_12px_0px_0px_rgba(181,0,255,0.36)] rounded-[28px] overflow-hidden border-[12px] border-[#B500FF] bg-[#FFFFB3]">
-                        <svg width={BOARD_W} height={BOARD_H} xmlns="http://www.w3.org/2000/svg">
+                    <div className="pinball-panel" data-testid="pinball-panel">
+                        <section className="pinball-shell relative shadow-[12px_12px_0px_0px_rgba(181,0,255,0.36)] rounded-[28px] overflow-hidden border-[12px] border-[#B500FF] bg-[#FFFFB3]" data-testid="pinball-shell">
+                            <svg width={BOARD_W} height={BOARD_H} viewBox={`0 0 ${BOARD_W} ${BOARD_H}`} preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <radialGradient id="pinkGradient" cx="30%" cy="30%" r="70%">
                                     <stop offset="0%" stopColor="#ff99cc" />
@@ -1865,7 +1986,7 @@
                         <button
                             onClick={handleLaunchClick}
                             disabled={!isLaunchReady}
-                            style={{ position: "absolute", left: "522px", top: "650px", width: "56px", height: "56px" }}
+                            style={{ position: "absolute", left: "87%", top: "86.6667%", width: "9.3333%", height: "auto", aspectRatio: "1 / 1", fontSize: "clamp(12px, 1.2vw, 18px)" }}
                             className={`rounded-full flex items-center justify-center font-black text-white shadow-xl transition-all duration-300 z-10 border-4 ${
                                 isLaunchReady
                                     ? "bg-gradient-to-t from-red-500 to-yellow-400 border-white cursor-pointer hover:scale-110 active:scale-95 animate-bounce shadow-[0_0_15px_rgba(255,0,127,0.8)]"
@@ -1873,8 +1994,9 @@
                             }`}
                         >
                             發射
-                        </button>
-                    </section>
+                            </button>
+                        </section>
+                    </div>
                 </div>
             );
         }
@@ -2053,13 +2175,9 @@
             const selectedAttempts = useMemo(() => [...(selected?.attempts || [])].sort((left, right) =>
                 left.turnIndex - right.turnIndex || left.attemptNumber - right.attemptNumber
             ), [selected]);
-            const bestByStudent = useMemo(() => {
-                if (!selected) return {};
-                return Object.fromEntries((selected.students || []).map(studentCode => {
-                    const scores = (selected.turnSummaries || []).filter(turn => turn.studentCode === studentCode).map(turn => Number(turn.bestScore)).filter(Number.isFinite);
-                    return [studentCode, scores.length ? Math.max(...scores) : null];
-                }));
-            }, [selected]);
+            const playerSummaries = useMemo(() => (selected?.students || []).map((studentCode, index) =>
+                calculateTeacherPlayerSummary(selected, studentCode, index)
+            ), [selected]);
 
             const csvCell = value => {
                 const raw = String(value ?? "");
@@ -2209,7 +2327,18 @@
                                             <button onClick={() => setDeleteTarget(selected)} className="rounded-xl bg-red-50 border-2 border-red-200 px-4 py-2 font-black text-red-700 hover:bg-red-100"><i className="fas fa-trash-can mr-2"></i>軟刪除</button>
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-4 mb-5">
-                                            {(selected.students || []).map((studentCode, index) => <div key={studentCode} className={`rounded-2xl border-4 p-4 ${index === 0 ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`}><p className="text-sm font-black text-slate-500">{index === 0 ? "A 玩家" : "B 玩家"}</p><h3 className="text-3xl font-black text-slate-900">{studentCode}</h3><p className="text-4xl font-black text-purple-700 mt-2">最佳 {bestByStudent[studentCode] ?? "—"} 分</p></div>)}
+                                            {(selected.students || []).map((studentCode, index) => {
+                                                const playerSummary = playerSummaries[index] || { complete: false, speechAverage: null, marbleScore: null };
+                                                return (
+                                                    <div key={studentCode} className={`rounded-2xl border-4 p-4 ${index === 0 ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`} data-testid={`teacher-player-summary-${index}`}>
+                                                        <p className="text-sm font-black text-slate-500">{index === 0 ? "A 玩家" : "B 玩家"}</p>
+                                                        <h3 className="text-3xl font-black text-slate-900">{studentCode}</h3>
+                                                        <p className="text-3xl font-black text-purple-700 mt-3" data-testid={`speech-average-${index}`}>6 題口說平均：{playerSummary.complete ? `${playerSummary.speechAverage} 分` : "—"}</p>
+                                                        <p className="text-2xl font-black text-slate-800 mt-2" data-testid={`marble-total-${index}`}>彈珠總分：{playerSummary.complete ? `${playerSummary.marbleScore} 分` : "—"}</p>
+                                                        {!playerSummary.complete && <p className="mt-2 text-sm font-black text-red-600" data-testid={`summary-incomplete-${index}`}>資料不完整</p>}
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                         <h3 className="text-xl font-black text-slate-900 mb-3">每次口說評測</h3>
                                         <div className="grid gap-3 max-h-[680px] overflow-y-auto pr-1">

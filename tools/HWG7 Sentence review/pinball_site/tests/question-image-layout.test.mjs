@@ -81,3 +81,20 @@ test("per-question layout QA route is restricted to loopback hosts", () => {
   assert.match(qaSource, /new URLSearchParams\(window\.location\.search\)\.get\("layoutQa"\)/u);
   assert.doesNotMatch(qaSource, /firebaseapp\.com|web\.app/u);
 });
+test("speech landscape uses equal half-width regions and projection-sized English", () => {
+  const wideCss = sliceBetween(
+    indexSource,
+    ".game-screen.speech-game-screen {",
+    "</style>",
+  );
+  assert.match(wideCss, /grid-template-columns:\s*minmax\(0,\s*1fr\)\s+minmax\(0,\s*1fr\)/u);
+  assert.match(wideCss, /gap:\s*10px/u);
+  assert.match(wideCss, /padding:\s*10px/u);
+  assert.match(wideCss, /\.speech-game-screen \.control-panel\s*\{[\s\S]*?max-width:\s*none !important/u);
+  assert.match(wideCss, /\.speech-game-screen \.pinball-panel\s*\{[\s\S]*?display:\s*flex/u);
+  assert.match(wideCss, /\.speech-game-screen \.speech-question-stem\s*\{[\s\S]*?font-size:\s*clamp\(34px,\s*3vw,\s*42px\)/u);
+  assert.match(wideCss, /\.speech-game-screen \.answer-scaffold\s*\{[\s\S]*?font-size:\s*clamp\(28px,\s*2\.3vw,\s*32px\)/u);
+  assert.match(indexSource, /data-testid="pinball-panel"/u);
+  assert.match(indexSource, /data-testid="pinball-shell"/u);
+  assert.match(indexSource, /preserveAspectRatio="xMidYMid meet"/u);
+});
