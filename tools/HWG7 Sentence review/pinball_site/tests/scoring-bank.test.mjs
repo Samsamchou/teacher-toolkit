@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-import { normalizeText, scoreSpeechAttempt, tokenize } from "../functions/lib/scoring.mjs";
+import { equivalentTokens, scoreSpeechAttempt, tokenize } from "../functions/lib/scoring.mjs";
 
 const bank = JSON.parse(
   readFileSync(new URL("../data/hwg7-sentence-review.json", import.meta.url), "utf8"),
@@ -21,11 +21,7 @@ test("all 13 official questions and all 10 accepted answer variants score determ
   for (const question of bank.questions) {
     if (question.type === "read_aloud") {
       const transcript = question.standardReadSentence;
-      const result = scoreSpeechAttempt({
-        question,
-        transcript,
-        metrics: healthyMetrics(transcript),
-      });
+      const result = scoreSpeechAttempt({ question, transcript, metrics: healthyMetrics(transcript) });
       assert.equal(result.scores.total, 100, question.id);
       assert.equal(result.passed, true, question.id);
       scoredCases += 1;
@@ -33,23 +29,16 @@ test("all 13 official questions and all 10 accepted answer variants score determ
     }
 
     for (const answer of question.acceptableAnswers) {
-      const transcript = `${question.questionText} ${answer.text}`;
-      const first = scoreSpeechAttempt({
-        question,
-        transcript,
-        metrics: healthyMetrics(transcript),
-      });
-      const second = scoreSpeechAttempt({
-        question,
-        transcript,
-        metrics: healthyMetrics(transcript),
-      });
+      const transcript = answer.text;
+      const first = scoreSpeechAttempt({ question, transcript, metrics: healthyMetrics(transcript) });
+      const second = scoreSpeechAttempt({ question, transcript, metrics: healthyMetrics(transcript) });
 
       assert.equal(first.scores.total, 100, `${question.id}: ${answer.text}`);
       assert.equal(first.passed, true, `${question.id}: ${answer.text}`);
       assert.equal(first.coreCorrect, true, `${question.id}: ${answer.text}`);
-      assert.equal(first.matchedAnswer.normalizedText, normalizeText(answer.text));
-      assert.equal(first.matchedAnswer.answerWordCount, answer.answerWordCount);
+      assert.equal(first.matchedAnswer.normalizedText, equivalentTokens(answer.text).join(" "));
+      assert.deepEqual(equivalentTokens(first.matchedAnswer.text), equivalentTokens(answer.text));
+      assert.deepEqual(equivalentTokens(first.segments.answer), equivalentTokens(answer.text));
       assert.deepEqual(first, second, `${question.id}: deterministic result`);
       scoredCases += 1;
     }

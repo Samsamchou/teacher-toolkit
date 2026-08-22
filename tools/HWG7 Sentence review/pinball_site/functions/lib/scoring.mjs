@@ -6,7 +6,7 @@
  * chunks, and linking are used only as feedback references.
  */
 
-export const RUBRIC_VERSION = "a1-v1";
+export const RUBRIC_VERSION = "a1-v2-answer-only";
 export const DEFAULT_PASS_SCORE = 80;
 
 export const SCORING_SCOPE = Object.freeze({
@@ -57,6 +57,76 @@ export function tokenize(value) {
   return normalized ? normalized.split(" ") : [];
 }
 
+const SIMPLE_CONTRACTIONS = Object.freeze({
+  "aren't": ["are", "not"],
+  "can't": ["can", "not"],
+  "couldn't": ["could", "not"],
+  "didn't": ["did", "not"],
+  "doesn't": ["does", "not"],
+  "don't": ["do", "not"],
+  "hadn't": ["had", "not"],
+  "hasn't": ["has", "not"],
+  "haven't": ["have", "not"],
+  "isn't": ["is", "not"],
+  "shouldn't": ["should", "not"],
+  "wasn't": ["was", "not"],
+  "weren't": ["were", "not"],
+  "won't": ["will", "not"],
+  "wouldn't": ["would", "not"],
+  "i'm": ["i", "am"],
+  "you're": ["you", "are"],
+  "we're": ["we", "are"],
+  "they're": ["they", "are"],
+  "i'd": ["i", "would"],
+  "you'd": ["you", "would"],
+  "he'd": ["he", "would"],
+  "she'd": ["she", "would"],
+  "we'd": ["we", "would"],
+  "they'd": ["they", "would"],
+  "i'll": ["i", "will"],
+  "you'll": ["you", "will"],
+  "he'll": ["he", "will"],
+  "she'll": ["she", "will"],
+  "we'll": ["we", "will"],
+  "they'll": ["they", "will"],
+  "i've": ["i", "have"],
+  "you've": ["you", "have"],
+  "we've": ["we", "have"],
+  "they've": ["they", "have"],
+  "let's": ["let", "us"],
+});
+
+const AMBIGUOUS_CONTRACTIONS = Object.freeze({
+  "he's": "he",
+  "she's": "she",
+  "it's": "it",
+  "that's": "that",
+  "what's": "what",
+  "who's": "who",
+  "where's": "where",
+  "there's": "there",
+  "here's": "here",
+  "how's": "how",
+});
+
+function targetAuxiliary(subject, targetTokens) {
+  for (let index = 0; index < targetTokens.length - 1; index += 1) {
+    if (targetTokens[index] === subject && ["is", "has"].includes(targetTokens[index + 1])) {
+      return targetTokens[index + 1];
+    }
+  }
+  return "is";
+}
+
+/** Canonical tokens used only for deterministic target-aware comparison. */
+export function equivalentTokens(value, target = "") {
+  const targetTokens = tokenize(target);
+  return tokenize(value).flatMap((token) => {
+    if (SIMPLE_CONTRACTIONS[token]) return SIMPLE_CONTRACTIONS[token];
+    const subject = AMBIGUOUS_CONTRACTIONS[token];
+    return subject ? [subject, targetAuxiliary(subject, targetTokens)] : [token];
+  });
+}
 function maximumRunLength(tokens, wanted) {
   let maximum = 0;
   let current = 0;
@@ -108,8 +178,8 @@ function separateImmediateRepetitions(expectedTokens, actualTokens) {
  * deduction and are handled by the fluency formula.
  */
 export function alignWords(expected, actual) {
-  const expectedTokens = tokenize(expected);
-  const actualTokens = tokenize(actual);
+  const expectedTokens = equivalentTokens(expected, expected);
+  const actualTokens = equivalentTokens(actual, expectedTokens);
   const { keptTokens: alignedActualTokens, keptIndices, repetitionOperations } =
     separateImmediateRepetitions(expectedTokens, actualTokens);
   const rows = expectedTokens.length + 1;
@@ -345,26 +415,19 @@ function type1Fluency(alignment, metrics) {
   };
 }
 
-function type2Fluency(questionAlignment, answerAlignment, answerWordCount, metrics) {
+function type2Fluency(answerAlignment, answerWordCount, metrics) {
   const mediumPauses = nonNegativeInteger(metrics.mediumPauses);
   const longPauses = nonNegativeInteger(metrics.longPauses);
-  const freeMediumPauses =
-    Math.ceil(questionAlignment.N / 4) + Math.ceil(answerWordCount / 3);
+  const freeMediumPauses = Math.ceil(answerWordCount / 3);
   const pauseScore = Math.max(
     50,
     100 -
       Math.max(0, mediumPauses - freeMediumPauses) * 5 -
       Math.max(0, longPauses - 1) * 8,
   );
-  const detectedRepetitions = questionAlignment.R + answerAlignment.R;
-  const wordCount = Math.max(
-    0,
-    questionAlignment.actualTokens.length +
-      answerAlignment.actualTokens.length -
-      detectedRepetitions,
-  );
-  const durationLimit =
-    3 + questionAlignment.N * 2 + (5 + answerWordCount * 2.5);
+  const detectedRepetitions = answerAlignment.R;
+  const wordCount = Math.max(0, answerAlignment.actualTokens.length - detectedRepetitions);
+  const durationLimit = 5 + answerWordCount * 2.5;
   const result = commonFluencyParts({
     metrics,
     wordCount,
@@ -378,7 +441,6 @@ function type2Fluency(questionAlignment, answerAlignment, answerWordCount, metri
     mediumPauses,
     longPauses,
     freeMediumPauses,
-    transitionPauseRule: "first_under_4_seconds_excluded_by_caller",
   };
 }
 
@@ -401,7 +463,7 @@ function toSlotArray(value) {
 
 function slotAlternatives(slot) {
   if (typeof slot === "string" || Array.isArray(slot)) {
-    const tokens = tokenize(slot);
+    const tokens = equivalentTokens(slot);
     return tokens.length ? [tokens] : [];
   }
   if (!slot || typeof slot !== "object") return [];
@@ -420,15 +482,15 @@ function slotAlternatives(slot) {
     if (rawAlternatives.every((item) => typeof item === "string")) {
       // `tokens` represents one phrase; other array aliases represent choices.
       if (Array.isArray(slot.tokens) && rawAlternatives === slot.tokens) {
-        const phrase = tokenize(rawAlternatives);
+        const phrase = equivalentTokens(rawAlternatives);
         return phrase.length ? [phrase] : [];
       }
-      return rawAlternatives.map((item) => tokenize(item)).filter((tokens) => tokens.length);
+      return rawAlternatives.map((item) => equivalentTokens(item)).filter((tokens) => tokens.length);
     }
-    return rawAlternatives.map((item) => tokenize(item)).filter((tokens) => tokens.length);
+    return rawAlternatives.map((item) => equivalentTokens(item)).filter((tokens) => tokens.length);
   }
 
-  const tokens = tokenize(rawAlternatives);
+  const tokens = equivalentTokens(rawAlternatives);
   return tokens.length ? [tokens] : [];
 }
 
@@ -506,7 +568,7 @@ function normalizeAnswerVariant(raw, index, question) {
   const text = firstString(source.text, source.answer, source.answerText, source.value);
   if (!text) throw new TypeError(`acceptableAnswers[${index}] is missing text`);
 
-  const tokens = tokenize(text);
+  const tokens = equivalentTokens(text);
   const answerWordCount = positiveNumber(
     source.answerWordCount ?? source.na ?? source.Na,
     tokens.length,
@@ -581,24 +643,18 @@ function evaluateAnswer(variant, answerTokens) {
   };
 }
 
-function compareCandidates(left, right, expectedQuestionLength) {
+function compareAnswerCandidates(left, right) {
   const leftKey = [
-    left.distance,
     left.answer.exactFullCredit ? 0 : 1,
-    -left.questionAlignment.C,
+    left.distance,
     -left.answer.alignment.C,
-    Math.abs(left.splitIndex - expectedQuestionLength),
     left.variant.sourceIndex,
-    left.splitIndex,
   ];
   const rightKey = [
-    right.distance,
     right.answer.exactFullCredit ? 0 : 1,
-    -right.questionAlignment.C,
+    right.distance,
     -right.answer.alignment.C,
-    Math.abs(right.splitIndex - expectedQuestionLength),
     right.variant.sourceIndex,
-    right.splitIndex,
   ];
 
   for (let index = 0; index < leftKey.length; index += 1) {
@@ -607,55 +663,21 @@ function compareCandidates(left, right, expectedQuestionLength) {
   return 0;
 }
 
-function chooseQuestionAnswerAlignment(questionText, variants, transcript, metrics) {
-  const questionTokens = tokenize(questionText);
-  const combinedTokens = tokenize(transcript);
-  const explicitQuestion = firstString(
-    metrics.questionTranscript,
-    metrics.segments?.question,
-  );
+function chooseQuestionAnswerAlignment(variants, transcript, metrics) {
   const explicitAnswer = firstString(metrics.answerTranscript, metrics.segments?.answer);
-  const candidates = [];
+  const answerTokens = tokenize(explicitAnswer || transcript);
+  const candidates = variants.map((variant) => {
+    const answer = evaluateAnswer(variant, answerTokens);
+    return {
+      variant,
+      answerTokens,
+      answer,
+      distance: answer.alignment.editDistance,
+      explicitAnswer: Boolean(explicitAnswer),
+    };
+  });
 
-  if (explicitQuestion || explicitAnswer) {
-    const questionSegment = tokenize(explicitQuestion);
-    const answerSegment = tokenize(explicitAnswer);
-    for (const variant of variants) {
-      const questionAlignment = alignWords(questionTokens, questionSegment);
-      const answer = evaluateAnswer(variant, answerSegment);
-      candidates.push({
-        variant,
-        questionTokens: questionSegment,
-        answerTokens: answerSegment,
-        questionAlignment,
-        answer,
-        distance: questionAlignment.editDistance + answer.alignment.editDistance,
-        splitIndex: questionSegment.length,
-        explicitSegments: true,
-      });
-    }
-  } else {
-    for (let splitIndex = 0; splitIndex <= combinedTokens.length; splitIndex += 1) {
-      const questionSegment = combinedTokens.slice(0, splitIndex);
-      const answerSegment = combinedTokens.slice(splitIndex);
-      const questionAlignment = alignWords(questionTokens, questionSegment);
-      for (const variant of variants) {
-        const answer = evaluateAnswer(variant, answerSegment);
-        candidates.push({
-          variant,
-          questionTokens: questionSegment,
-          answerTokens: answerSegment,
-          questionAlignment,
-          answer,
-          distance: questionAlignment.editDistance + answer.alignment.editDistance,
-          splitIndex,
-          explicitSegments: false,
-        });
-      }
-    }
-  }
-
-  candidates.sort((left, right) => compareCandidates(left, right, questionTokens.length));
+  candidates.sort(compareAnswerCandidates);
   return candidates[0];
 }
 
@@ -703,7 +725,7 @@ function choosePrimaryIssue({
   if (type === "question_answer" && !coreCorrect) return "wrong_core";
 
   const alignments = type === "question_answer"
-    ? [alignment.question, alignment.answer]
+    ? [alignment.answer]
     : [alignment];
   if (alignments.some((item) => item.D > 0)) return "missing_target";
   if (alignments.some((item) => item.S > 0)) return "wrong_target";
@@ -721,7 +743,7 @@ function choosePrimaryIssue({
 
 function buildFeedback({ primaryIssue, alignment, type, modelPhrase, references }) {
   const alignments = type === "question_answer"
-    ? [alignment.answer, alignment.question]
+    ? [alignment.answer]
     : [alignment];
   const deleted = alignments.map((item) => firstOperation(item, "deletion")).find(Boolean);
   const substituted = alignments.map((item) => firstOperation(item, "substitution")).find(Boolean);
@@ -787,7 +809,7 @@ export function scoreReadAloud({ question, transcript, metrics = {} }) {
   const completeness = completenessFromAlignment(alignment);
   const fluencyDetails = type1Fluency(alignment, metrics);
   const total = roundScore(
-    accuracy * 0.4 + completeness * 0.35 + fluencyDetails.fluency * 0.25,
+    accuracy * 0.5 + completeness * 0.3 + fluencyDetails.fluency * 0.2,
   );
   const passed = total >= passScore;
   const references = analysisReferences(question, null);
@@ -840,19 +862,13 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
     throw new TypeError("question_answer question must include acceptableAnswers");
   }
   const variants = rawAnswers.map((answer, index) => normalizeAnswerVariant(answer, index, question));
-  if (!normalizeText(transcript) && !firstString(metrics.questionTranscript, metrics.answerTranscript)) {
-    return invalidResult("question_answer", question, passScore);
-  }
+  const answerTranscript = firstString(metrics.answerTranscript, metrics.segments?.answer, transcript);
+  if (!normalizeText(answerTranscript)) return invalidResult("question_answer", question, passScore);
 
-  const selected = chooseQuestionAnswerAlignment(questionText, variants, transcript, metrics);
-  const questionAccuracy = accuracyFromAlignment(selected.questionAlignment);
-  const questionCompleteness = completenessFromAlignment(selected.questionAlignment);
-  const answerAccuracy = selected.answer.answerAccuracy;
-  const answerCompleteness = selected.answer.answerCompleteness;
-  const accuracy = roundScore(questionAccuracy * 0.3 + answerAccuracy * 0.7);
-  const completeness = roundScore(questionCompleteness * 0.3 + answerCompleteness * 0.7);
+  const selected = chooseQuestionAnswerAlignment(variants, transcript, metrics);
+  const accuracy = selected.answer.answerAccuracy;
+  const completeness = selected.answer.answerCompleteness;
   const fluencyDetails = type2Fluency(
-    selected.questionAlignment,
     selected.answer.alignment,
     selected.variant.answerWordCount,
     metrics,
@@ -863,12 +879,7 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
   const coreCorrect = selected.answer.coreCorrect;
   const total = coreCorrect ? uncappedTotal : Math.min(59, uncappedTotal);
   const passed = total >= passScore && coreCorrect;
-  const alignment = {
-    question: selected.questionAlignment,
-    answer: selected.answer.alignment,
-    splitIndex: selected.splitIndex,
-    explicitSegments: selected.explicitSegments,
-  };
+  const alignment = { answer: selected.answer.alignment };
   const references = analysisReferences(question, selected.variant);
   const primaryIssue = choosePrimaryIssue({
     valid: true,
@@ -888,18 +899,15 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
     exactContent: selected.answer.exactContent,
     coreCorrectness: selected.answer.coreCorrectness,
     structureCorrectness: selected.answer.structureCorrectness,
-    answerAccuracy,
-    answerCompleteness,
+    answerAccuracy: accuracy,
+    answerCompleteness: completeness,
   };
 
   return {
     rubricVersion: question.rubricVersion ?? RUBRIC_VERSION,
     type: "question_answer",
-    normalizedTranscript: normalizeText(transcript),
-    segments: {
-      question: selected.questionTokens.join(" "),
-      answer: selected.answerTokens.join(" "),
-    },
+    normalizedTranscript: normalizeText(answerTranscript),
+    segments: { answer: selected.answerTokens.join(" ") },
     scores: {
       accuracy,
       completeness,
@@ -921,10 +929,8 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
     alignment,
     matchedAnswer,
     components: {
-      questionAccuracy,
-      questionCompleteness,
-      answerAccuracy,
-      answerCompleteness,
+      answerAccuracy: accuracy,
+      answerCompleteness: completeness,
       uncappedTotal,
       coreScoreCapApplied: !coreCorrect && uncappedTotal > 59,
     },

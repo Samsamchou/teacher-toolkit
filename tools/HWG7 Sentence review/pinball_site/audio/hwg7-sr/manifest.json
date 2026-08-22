@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-22T12:36:43.543Z",
+  "disclosure": "AI-generated voice",
+  "provider": "OpenAI",
+  "model": "gpt-4o-mini-tts",
+  "voice": "marin",
+  "speed": 0.8,
+  "responseFormat": "mp3",
+  "processing": "native_tts_speed_parameter",
+  "instructions": "Speak in natural American English for a Taiwanese elementary-school learner. Use a warm, clear voice, accurate sentence stress, natural phrasing, and falling statement intonation. Do not add or omit words.",
+  "itemCount": 7,
+  "items": [
+    {
+      "questionId": "HWG7-SR-001",
+      "input": "She has a cold.",
+      "path": "audio/hwg7-sr/HWG7-SR-001.mp3",
+      "bytes": 36864,
+      "sha256": "0cd110efc2faed2ce458cdac89c84cbd885656fe4660a116f94f01e93a31f029",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG7-SR-003",
+      "input": "She would like a hamburger.",
+      "path": "audio/hwg7-sr/HWG7-SR-003.mp3",
+      "bytes": 35712,
+      "sha256": "2fadb4efe8738dad8fb6823a80f9780e52444c9082b2066217a5fafbf97066ab",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG7-SR-005",
+      "input": "They’re his caps.",
+      "path": "audio/hwg7-sr/HWG7-SR-005.mp3",
+      "bytes": 30720,
+      "sha256": "20f746e0de21544887bfd1df804cfa5a91cc9408924f040b7589a4d5db816e82",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG7-SR-007",
+      "input": "Her eye hurts.",
+      "path": "audio/hwg7-sr/HWG7-SR-007.mp3",
+      "bytes": 40704,
+      "sha256": "9185c1a2891e952f2e04e26f59ed7471c32e84ab943ea0c2257762419bf143a0",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG7-SR-009",
+      "input": "She has a headache.",
+      "path": "audio/hwg7-sr/HWG7-SR-009.mp3",
+      "bytes": 33792,
+      "sha256": "396a27cfe10951f77b49909b08e85941d789c5cf7a3bd890f4a9795c29ad6f71",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG7-SR-011",
+      "input": "She would like some noodles.",
+      "path": "audio/hwg7-sr/HWG7-SR-011.mp3",
+      "bytes": 39552,
+      "sha256": "3794b1443dbd15363db25a5afe9a03b86f91b6d7eedda77b963cfa48aef4ecc9",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG7-SR-013",
+      "input": "She would like some salad.",
+      "path": "audio/hwg7-sr/HWG7-SR-013.mp3",
+      "bytes": 47616,
+      "sha256": "6e1b0fda2f9a4c68e05a4ee7c09f8f9ef1a56c3c92b337fb760caaea05ccc32f",
+      "contentType": "audio/mpeg"
+    }
+  ]
+}

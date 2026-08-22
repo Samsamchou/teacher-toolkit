@@ -4,8 +4,8 @@
     "key": "hwg7SentenceReview",
     "label": "HWG7 SR",
     "interactionType": "speech_assessment",
-    "questionBankVersion": "hwg7-sr-v1-confirmed",
-    "rubricVersion": "a1-v1",
+    "questionBankVersion": "hwg7-sr-v2-answer-only",
+    "rubricVersion": "a1-v2-answer-only",
     "unitId": "hwg7-sr"
   },
   "game": {
@@ -19,7 +19,7 @@
       "unusedQuestionsPerGame": 1,
       "readAloudPerGame": 6,
       "questionAnswerPerGame": 6,
-      "typePattern": "assigned_player_type_alternating"
+      "typePattern": "round_pair_alternating"
     },
     "turnOrder": "pink_blue_alternating",
     "slotPlanPriority": "final_round_decision",
@@ -51,14 +51,14 @@
     },
     "assignment": {
       "playerIdentity": "A is first homepage code; B is second homepage code",
-      "firstCompletedGame": "A=read_aloud; B=question_answer",
-      "nextCompletedGame": "A=question_answer; B=read_aloud",
-      "flipRule": "Flip only after an idempotently completed game in a Firestore transaction",
+      "everyGameStart": "Round 1 A=read_aloud; B=question_answer",
+      "roundPattern": "Odd rounds A=read_aloud and B=question_answer; even rounds reverse",
+      "nextGameRule": "Every new game restarts from the same round-1 pattern",
       "persistenceKey": "unordered student pair + unit + Asia/Taipei date"
     }
   },
   "rubric": {
-    "version": "a1-v1",
+    "version": "a1-v2-answer-only",
     "scoreScale": {
       "min": 0,
       "max": 100,
@@ -74,9 +74,9 @@
         "recordingLengthScoreWeight": 0.1
       },
       "totalWeights": {
-        "textAccuracy": 0.4,
-        "completeness": 0.35,
-        "fluency": 0.25
+        "textAccuracy": 0.5,
+        "completeness": 0.3,
+        "fluency": 0.2
       }
     },
     "questionAnswer": {
@@ -85,12 +85,10 @@
         "sentenceStructure": 0.3
       },
       "accuracyWeights": {
-        "question": 0.3,
-        "answer": 0.7
+        "answer": 1
       },
       "completenessWeights": {
-        "question": 0.3,
-        "answer": 0.7
+        "answer": 1
       },
       "totalWeights": {
         "accuracy": 0.5,
@@ -98,15 +96,17 @@
         "fluency": 0.2
       },
       "wrongOrMissingCoreScoreCap": 59,
-      "acceptableAnswerRule": "Every listed acceptable answer is independently eligible for full credit and uses its own content slots, structure slots, and answerWordCount."
+      "acceptableAnswerRule": "Every listed acceptable answer is independently eligible for full credit and uses its own content slots, structure slots, and answerWordCount.",
+      "scoringInput": "answer_transcript_only",
+      "contractionEquivalence": "Target-aware contracted and expanded forms are canonicalized before scoring; the original transcript remains unchanged for display."
     },
     "analysisUse": {
       "pronunciationTargets": "Align once against the transcript; do not double-deduct.",
       "difficultWords": "Use for lenient A1 pause handling and feedback, not an extra deduction.",
-      "stressToneAndLinking": "Feedback only in a1-v1 unless reliable acoustic evidence is available.",
+      "stressToneAndLinking": "Feedback only in a1-v2-answer-only unless reliable acoustic evidence is available.",
       "studentFeedback": "Select one primary issue and return at most two Traditional Chinese sentences.",
       "accentTolerance": "Natural reduction or an intelligible accent difference does not automatically fail a student.",
-      "toneGate": "Falling tone is a teaching model only and is never the sole pass/fail gate in a1-v1."
+      "toneGate": "Falling tone is a teaching model only and is never the sole pass/fail gate in a1-v2-answer-only."
     }
   },
   "questions": [
@@ -129,7 +129,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -166,13 +166,21 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-001.mp3",
+        "disclosure": "AI 語音"
+      }
     },
     {
       "id": "HWG7-SR-002",
       "displayOrder": 2,
       "type": "question_answer",
-      "typeLabel": "題型 2：Read and answer",
+      "typeLabel": "題型 2：Look and answer",
       "unit": "HWG7 SR",
       "unitReviewStatus": "teacher_confirmed",
       "image": {
@@ -280,9 +288,9 @@
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only"
     },
     {
       "id": "HWG7-SR-003",
@@ -303,7 +311,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -341,13 +349,21 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-003.mp3",
+        "disclosure": "AI 語音"
+      }
     },
     {
       "id": "HWG7-SR-004",
       "displayOrder": 4,
       "type": "question_answer",
-      "typeLabel": "題型 2：Read and answer",
+      "typeLabel": "題型 2：Look and answer",
       "unit": "HWG7 SR",
       "unitReviewStatus": "teacher_confirmed",
       "image": {
@@ -467,9 +483,9 @@
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only"
     },
     {
       "id": "HWG7-SR-005",
@@ -491,7 +507,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -526,13 +542,27 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-005.mp3",
+        "disclosure": "AI 語音"
+      },
+      "acceptedEquivalentForms": [
+        {
+          "target": "They’re",
+          "equivalent": "They are"
+        }
+      ]
     },
     {
       "id": "HWG7-SR-006",
       "displayOrder": 6,
       "type": "question_answer",
-      "typeLabel": "題型 2：Read and answer",
+      "typeLabel": "題型 2：Look and answer",
       "unit": "HWG7 SR",
       "unitReviewStatus": "teacher_confirmed",
       "image": {
@@ -654,9 +684,9 @@
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only"
     },
     {
       "id": "HWG7-SR-007",
@@ -677,7 +707,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -710,13 +740,21 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-007.mp3",
+        "disclosure": "AI 語音"
+      }
     },
     {
       "id": "HWG7-SR-008",
       "displayOrder": 8,
       "type": "question_answer",
-      "typeLabel": "題型 2：Read and answer",
+      "typeLabel": "題型 2：Look and answer",
       "unit": "HWG7 SR",
       "unitReviewStatus": "teacher_confirmed",
       "image": {
@@ -728,7 +766,7 @@
       "questionText": "What’s wrong?",
       "questionSentenceAnalysis": null,
       "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
-      "answerPromptStructure": "His _____ _____.",
+      "answerPromptStructure": "His ______ _____.",
       "standardReadSentence": "",
       "acceptableAnswers": [
         {
@@ -780,9 +818,9 @@
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only"
     },
     {
       "id": "HWG7-SR-009",
@@ -803,7 +841,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -835,13 +873,21 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-009.mp3",
+        "disclosure": "AI 語音"
+      }
     },
     {
       "id": "HWG7-SR-010",
       "displayOrder": 10,
       "type": "question_answer",
-      "typeLabel": "題型 2：Read and answer",
+      "typeLabel": "題型 2：Look and answer",
       "unit": "HWG7 SR",
       "unitReviewStatus": "teacher_confirmed",
       "image": {
@@ -853,7 +899,7 @@
       "questionText": "What’s wrong?",
       "questionSentenceAnalysis": null,
       "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
-      "answerPromptStructure": "His _____ _____.",
+      "answerPromptStructure": "His ______ _____.",
       "standardReadSentence": "",
       "acceptableAnswers": [
         {
@@ -905,9 +951,9 @@
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only"
     },
     {
       "id": "HWG7-SR-011",
@@ -928,7 +974,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -964,13 +1010,21 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-011.mp3",
+        "disclosure": "AI 語音"
+      }
     },
     {
       "id": "HWG7-SR-012",
       "displayOrder": 12,
       "type": "question_answer",
-      "typeLabel": "題型 2：Read and answer",
+      "typeLabel": "題型 2：Look and answer",
       "unit": "HWG7 SR",
       "unitReviewStatus": "teacher_confirmed",
       "image": {
@@ -1083,9 +1137,9 @@
       ],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only"
     },
     {
       "id": "HWG7-SR-013",
@@ -1106,7 +1160,7 @@
       "acceptableAnswers": [],
       "passScore": 80,
       "maxAttempts": 3,
-      "rubricVersion": "a1-v1",
+      "rubricVersion": "a1-v2-answer-only",
       "pronunciationAnalysis": {
         "reviewStatus": "teacher_confirmed",
         "pronunciationTargets": [
@@ -1142,7 +1196,15 @@
         "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
       },
       "unitId": "hwg7-sr",
-      "questionBankVersion": "hwg7-sr-v1-confirmed"
+      "questionBankVersion": "hwg7-sr-v2-answer-only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "path": "audio/hwg7-sr/HWG7-SR-013.mp3",
+        "disclosure": "AI 語音"
+      }
     }
   ]
 }

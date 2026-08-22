@@ -19,6 +19,21 @@
     <script src="js/speech-practice.js"></script>
 
     <style>
+        @font-face {
+            font-family: "Comic Relief";
+            src: url("fonts/comic-relief/ComicRelief-Regular.ttf") format("truetype");
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Comic Relief";
+            src: url("fonts/comic-relief/ComicRelief-Bold.ttf") format("truetype");
+            font-style: normal;
+            font-weight: 700 900;
+            font-display: swap;
+        }
         :root {
             color-scheme: light;
         }
@@ -31,11 +46,11 @@
                 radial-gradient(circle at 86% 10%, rgba(45, 212, 255, 0.62) 0, rgba(45, 212, 255, 0) 24%),
                 radial-gradient(circle at 82% 86%, rgba(190, 255, 52, 0.54) 0, rgba(190, 255, 52, 0) 24%),
                 linear-gradient(135deg, #fff45c 0%, #ff7ab8 32%, #63e6ff 68%, #baff39 100%);
-            font-family: "Segoe UI", "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: "Comic Relief", "Noto Sans TC", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100dvh;
         }
 
-        button, input {
+        button, input, select, textarea {
             font: inherit;
             -webkit-tap-highlight-color: transparent;
         }
@@ -106,6 +121,21 @@
         .speech-question-flow {
             display: grid;
             gap: 12px;
+        }
+        .speech-question-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .speech-model-audio-button {
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+
+        .answer-scaffold {
+            letter-spacing: 0.08em;
         }
 
         .speech-question-image-frame {
@@ -188,7 +218,7 @@
         .wood-divider { fill: #ffcb5c; stroke: #ff8a00; stroke-width: 1.5px; }
         .peg-outer { fill: #fef3c7; stroke: #06b6d4; stroke-width: 1px; }
         .peg-inner { fill: #f5f5f5; }
-        .score-text { font-size: 24px; font-weight: bold; fill: #8B5A2B; font-family: sans-serif; text-anchor: middle; opacity: 0.62; }
+        .score-text { font-size: 24px; font-weight: bold; fill: #8B5A2B; font-family: "Comic Relief", sans-serif; text-anchor: middle; opacity: 0.62; }
         .marble-pink { fill: url(#pinkGradient); filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)); }
         .marble-blue { fill: url(#blueGradient); filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.4)); }
         .marble-highlight { fill: white; opacity: 0.5; }
@@ -438,10 +468,6 @@
             .speech-attempt-value {
                 font-size: 1.25rem !important;
                 line-height: 1.1;
-            }
-
-            .speech-guidance-details {
-                padding: 6px 10px !important;
             }
 
             .speech-feedback {
@@ -705,8 +731,8 @@
             optionType: "speech",
             stem: question.type === "read_aloud" ? question.standardReadSentence : question.questionText,
             imagePath: question.image?.path || question.imagePath || "",
-            imageAlt: question.image?.alt || question.imageAlt || "題目圖片（替代文字待教師確認）",
-            questionBankVersion: question.questionBankVersion || "hwg7-sr-v1-confirmed",
+            imageAlt: question.image?.alt || question.imageAlt || "題目圖片",
+            questionBankVersion: question.questionBankVersion || "hwg7-sr-v2-answer-only",
             pronunciationTargets: [...new Set([
                 ...(question.pronunciationAnalysis?.pronunciationTargets || question.pronunciationTargets || []),
                 ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.pronunciationTargets || [])
@@ -784,16 +810,15 @@
             ]));
         }
 
-        function prepareQuestionSet(mode, firstTurnType = "read_aloud") {
+        function prepareQuestionSet(mode) {
             const source = QUESTION_BANKS[mode] || [];
             if (mode === SPEECH_MODE) {
                 const readAloud = shuffle(source.filter(question => question.type === "read_aloud")).slice(0, 6);
                 const questionAnswer = shuffle(source.filter(question => question.type === "question_answer")).slice(0, 6);
                 if (readAloud.length !== 6 || questionAnswer.length !== 6) return [];
-                const readFirst = firstTurnType === "read_aloud";
-                return readAloud.flatMap((readQuestion, index) => readFirst
-                    ? [readQuestion, questionAnswer[index]]
-                    : [questionAnswer[index], readQuestion]
+                return readAloud.flatMap((readQuestion, roundIndex) => roundIndex % 2 === 0
+                    ? [readQuestion, questionAnswer[roundIndex]]
+                    : [questionAnswer[roundIndex], readQuestion]
                 ).map(question => ({
                     ...question,
                     acceptableAnswers: [...(question.acceptableAnswers || [])],
@@ -831,9 +856,7 @@
             return {
                 ok: true,
                 status: "cloud",
-                message: result.flipped
-                    ? "完整遊戲已安全寫入；下一局題型已翻轉。"
-                    : "此完整遊戲先前已寫入；未重複翻轉題型。"
+                message: result.idempotent ? "遊戲紀錄已存在。" : "遊戲紀錄已儲存。"
             };
         }
         function playRollingAudio() {
@@ -959,9 +982,7 @@
                     </button>
                     <section className="home-card w-full backdrop-blur-md rounded-[30px] p-6 md:p-8">
                         <div className="text-center mb-7">
-                            <p className="text-sm md:text-base font-black text-pink-600 tracking-widest">雙人口說互動彈珠台</p>
                             <h1 className="text-4xl md:text-6xl font-black text-slate-900 mt-2 leading-tight">英語口說與打彈珠小高手</h1>
-                            <p className="mt-3 font-bold text-slate-600">每局12題・每人6回合・80分達標</p>
                         </div>
                         <div className="grid gap-4 max-w-xl mx-auto md:grid-cols-2">
                             <label className="block">
@@ -986,8 +1007,7 @@
                                         className={`mode-card px-4 py-4 text-left transition-all ${mode === unit.mode ? "is-selected" : ready ? "is-ready bg-white border-slate-200 text-slate-700 hover:border-cyan-300" : "is-locked border-slate-200 text-slate-500 cursor-not-allowed opacity-70"}`}
                                     >
                                         <span className="block text-lg font-black">{unit.label}</span>
-                                        <span className="block text-sm font-bold mt-1">{ready ? unit.hint : "題庫準備中"}</span>
-                                        {!ready && <span className="block text-xs font-black text-red-500 mt-2">題庫準備中</span>}
+                                        {!ready && <span className="block text-sm font-black text-red-500 mt-2">題庫準備中</span>}
                                     </button>
                                 );
                             })}
@@ -995,7 +1015,6 @@
                         <div className="max-w-xl mx-auto mt-8">
                             <button onClick={handleStart} disabled={!canStart} className={`w-full rounded-xl py-4 text-2xl font-black border-4 transition-all ${canStart ? "bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 text-white border-white shadow-[6px_6px_0px_0px_rgba(15,23,42,0.24)] hover:translate-y-[-2px]" : "bg-gray-200 text-gray-500 border-gray-300 cursor-not-allowed"}`}>{starting ? "正在安全開局..." : "進入遊戲頁面"}</button>
                             {startError && <p role="alert" className="text-center text-sm font-black text-red-600 mt-3">{startError}</p>}
-                            <p className="text-center text-sm font-bold text-slate-500 mt-3">只輸入五碼班級＋座號；不要輸入姓名。A／B 依第一、第二個輸入位置決定。</p>
                         </div>
                     </section>
                 </main>
@@ -1027,7 +1046,7 @@
                         <div className="flex items-start justify-between gap-4">
                             <div>
                                 <h2 className="text-2xl font-black text-slate-900">教師後台登入</h2>
-                                <p className="text-sm font-bold text-slate-600 mt-2">請輸入六碼教師通行碼。通行碼只送到受信任後端驗證，不會寫入網頁或瀏覽器儲存空間。</p>
+
                             </div>
                             <button type="button" onClick={onClose} className="w-10 h-10 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700" aria-label="關閉"><i className="fas fa-xmark"></i></button>
                         </div>
@@ -1073,7 +1092,7 @@
             const [marbles, setMarbles] = useState([]);
             const [isLaunchReady, setIsLaunchReady] = useState(false);
             const [selectedOption, setSelectedOption] = useState("");
-            const [feedback, setFeedback] = useState("請先按喇叭聽音檔，再選答案。");
+            const [feedback, setFeedback] = useState("");
             const [audioStatus, setAudioStatus] = useState("");
             const [audioReadyForAnswer, setAudioReadyForAnswer] = useState(false);
             const [showSuccess, setShowSuccess] = useState(false);
@@ -1085,6 +1104,7 @@
             const [speechMessage, setSpeechMessage] = useState("");
             const [speechResult, setSpeechResult] = useState(null);
             const [speechPlaybackUrl, setSpeechPlaybackUrl] = useState("");
+            const [modelAudioStatus, setModelAudioStatus] = useState("");
             const [questionImageFailed, setQuestionImageFailed] = useState(false);
 
             const engineRef = useRef(null);
@@ -1105,6 +1125,7 @@
             const speechEvaluationAbortRef = useRef(null);
             const speechHistoryRef = useRef({});
             const speechPlaybackUrlRef = useRef("");
+            const speechModelAudioRef = useRef(null);
             if (!slotPlanRef.current || slotPlanRef.current.length !== totalTurns) {
                 slotPlanRef.current = createBalancedSlotPlan(totalTurns);
             }
@@ -1162,7 +1183,7 @@
                     })),
                     speechResults: isSpeechPractice ? answersRef.current : null,
                     passScore: isSpeechPractice ? modeMeta.passScore : null,
-                    questionBankVersion: config.questionBankVersion || "hwg7-sr-v1-confirmed"
+                    questionBankVersion: config.questionBankVersion || "hwg7-sr-v2-answer-only"
                 };
                 onFinish(result);
             }, [config, onFinish]);
@@ -1297,6 +1318,10 @@
                 return () => {
                     if (finalFallbackRef.current) clearTimeout(finalFallbackRef.current);
                     if (audioRef.current) audioRef.current.pause();
+                    if (speechModelAudioRef.current) {
+                        speechModelAudioRef.current.pause();
+                        speechModelAudioRef.current = null;
+                    }
                     speechRecorderRef.current?.cancel?.();
                     speechRecorderRef.current = null;
                     speechEvaluationAbortRef.current?.abort?.();
@@ -1316,8 +1341,13 @@
                 setSpeechStatus("idle");
                 setSpeechMessage("");
                 setSpeechResult(null);
+                setModelAudioStatus("");
                 setQuestionImageFailed(false);
                 setIsLaunchReady(false);
+                if (speechModelAudioRef.current) {
+                    speechModelAudioRef.current.pause();
+                    speechModelAudioRef.current = null;
+                }
                 speechRecorderRef.current?.cancel?.();
                 speechRecorderRef.current = null;
                 speechEvaluationAbortRef.current?.abort?.();
@@ -1326,7 +1356,7 @@
                 speechPlaybackUrlRef.current = "";
                 setSpeechPlaybackUrl("");
                 if (currentQuestion) {
-                    setFeedback(isSpeechPractice ? "看圖並按下錄音，完成後系統會依固定公式評分。" : "請先按喇叭聽音檔，再選答案。");
+                    setFeedback(isSpeechPractice ? "" : "請先按喇叭聽音檔，再選答案。");
                 }
             }, [currentQuestion?.id, isSpeechPractice]);
 
@@ -1390,6 +1420,31 @@
                 playSource(0);
             }, [currentQuestion]);
 
+            const playSpeechModelAudio = useCallback(() => {
+                const source = currentQuestion?.type === "read_aloud" ? currentQuestion.tts?.path : "";
+                if (!source) {
+                    setModelAudioStatus("示範音檔暫時無法播放。");
+                    return;
+                }
+                if (speechModelAudioRef.current) {
+                    speechModelAudioRef.current.pause();
+                    speechModelAudioRef.current.currentTime = 0;
+                }
+                const audio = new Audio(source);
+                audio.preload = "auto";
+                audio.playsInline = true;
+                audio.playbackRate = 1;
+                audio.preservesPitch = true;
+                audio.webkitPreservesPitch = true;
+                speechModelAudioRef.current = audio;
+                audio.onplaying = () => setModelAudioStatus("AI 語音播放中");
+                audio.onended = () => setModelAudioStatus("");
+                audio.onerror = () => setModelAudioStatus("示範音檔暫時無法播放。");
+                audio.play().catch(error => {
+                    setModelAudioStatus(error?.name === "NotAllowedError" ? "請再點一次 AI 語音。" : "示範音檔暫時無法播放。");
+                });
+            }, [currentQuestion]);
+
             const saveSpeechResult = (apiResult, attemptNo) => {
                 const questionId = currentQuestion.id;
                 const history = [...(speechHistoryRef.current[questionId] || []), {
@@ -1423,7 +1478,7 @@
                     feedback: apiResult.feedback,
                     attempts: history,
                     rubricVersion: apiResult.rubricVersion || currentQuestion.rubricVersion,
-                    questionBankVersion: currentQuestion.questionBankVersion || "hwg7-sr-v1-confirmed",
+                    questionBankVersion: currentQuestion.questionBankVersion || "hwg7-sr-v2-answer-only",
                     mode: config.mode
                 };
                 const withoutCurrent = answersRef.current[currentTeam].filter(item => item.id !== questionId);
@@ -1477,7 +1532,7 @@
                         speechPlaybackUrlRef.current = playbackUrl;
                         setSpeechPlaybackUrl(playbackUrl);
                         setSpeechStatus("evaluating");
-                        setSpeechMessage("正在辨識與計算分數，不會傳送學生代碼。");
+                        setSpeechMessage("評分中…");
                         const evaluationController = new AbortController();
                         speechEvaluationAbortRef.current?.abort?.();
                         speechEvaluationAbortRef.current = evaluationController;
@@ -1654,13 +1709,21 @@
                                                     <p className="text-sm font-bold">{currentQuestion.imageAlt || "請告訴老師協助處理。"}</p>
                                                 </div>
                                             ) : (
-                                                <img key={currentQuestion.id} src={currentQuestion.imagePath} alt={currentQuestion.imageAlt || "題目圖片（替代文字待教師確認）"} className="speech-question-image" data-testid="question-image" onLoad={() => setQuestionImageFailed(false)} onError={() => setQuestionImageFailed(true)} draggable="false" />
+                                                <img key={currentQuestion.id} src={currentQuestion.imagePath} alt={currentQuestion.imageAlt || "題目圖片"} className="speech-question-image" data-testid="question-image" onLoad={() => setQuestionImageFailed(false)} onError={() => setQuestionImageFailed(true)} draggable="false" />
                                             )}
                                         </div>
                                         <div className="speech-question-prompt text-center rounded-2xl bg-yellow-50 border-4 border-yellow-200 p-4" data-testid="question-prompt">
-                                            <p className="text-sm font-black text-purple-600">{currentQuestion.type === "read_aloud" ? "Look and read" : "Read and answer"}</p>
-                                            <p className="speech-question-stem text-2xl font-black text-slate-900 mt-2 leading-snug" data-testid="question-stem">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.questionText}</p>
-                                            {currentQuestion.type === "question_answer" && <p className="speech-question-hint text-sm font-bold text-slate-600 mt-2">請先讀問句，再說出答案；短答或完整答都可依題庫得滿分。</p>}
+                                            <p className="text-sm font-black text-purple-600">{currentQuestion.type === "read_aloud" ? "Look and read" : "Look and answer"}</p>
+                                            <div className="speech-question-line mt-2">
+                                                <p className="speech-question-stem text-2xl font-black text-slate-900 leading-snug" data-testid="question-stem">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.questionText}</p>
+                                                {currentQuestion.type === "read_aloud" && (
+                                                    <button type="button" onClick={playSpeechModelAudio} className={`speech-model-audio-button rounded-xl border-2 border-purple-300 bg-white px-3 py-2 text-sm font-black text-purple-700 hover:bg-purple-50 ${modelAudioStatus === "AI 語音播放中" ? "speaker-active" : ""}`} aria-label={`播放 ${currentQuestion.standardReadSentence} 的 AI 美式英語示範`}>
+                                                        <i className="fas fa-volume-high mr-1" aria-hidden="true"></i>AI 語音
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {currentQuestion.type === "question_answer" && currentQuestion.answerPromptStructure && <p className="answer-scaffold mt-2 text-xl font-black text-purple-700" data-testid="answer-scaffold">{currentQuestion.answerPromptStructure}</p>}
+                                            {currentQuestion.type === "read_aloud" && modelAudioStatus && <p className="mt-2 text-xs font-black text-purple-600" role="status">{modelAudioStatus}</p>}
                                         </div>
                                         <div className="speech-record-row grid grid-cols-2 gap-3 items-center" data-testid="speech-record-row">
                                             <button onClick={handleSpeechRecord} data-testid="speech-record-button" disabled={isLaunchReady || finalWaiting || speechStatus === "evaluating" || speechStatus === "requesting"} className={`speech-record-button min-h-[64px] rounded-xl border-4 px-4 py-3 text-xl font-black text-white transition-all ${speechStatus === "recording" || speechStatus === "stopping" ? "bg-red-600 border-red-200 animate-pulse" : "bg-gradient-to-r from-pink-500 to-purple-600 border-white"} disabled:bg-slate-300 disabled:border-slate-200`}>
@@ -1672,14 +1735,6 @@
                                                 <p className="speech-attempt-value text-2xl font-black text-slate-900">{attemptMap[currentQuestion.id] || 0} / {modeMeta.maxAttempts}</p>
                                             </div>
                                         </div>
-                                        <details className="speech-guidance-details rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-left" data-testid="speech-guidance">
-                                            <summary className="cursor-pointer font-black text-purple-700">評分公式與本題提醒</summary>
-                                            <div className="mt-2 grid gap-2 text-sm font-bold text-slate-700">
-                                                <p>{currentQuestion.type === "read_aloud" ? "總分＝準確度×40%＋完整度×35%＋流暢度×25%。" : "總分＝準確度×50%＋完整度×30%＋流暢度×20%；核心答案錯誤時最高59分。"}</p>
-                                                <p>總分達80分即達標；最多3次有效作答。錄音或系統失敗不計次數，3次未達標仍可看示範並發射。</p>
-                                                {currentQuestion.pronunciationTargets?.length > 0 && <p>本題留意：{currentQuestion.pronunciationTargets.join("、")}。評語會依題庫的發音難字與語調分析選出一項主要提醒。</p>}
-                                            </div>
-                                        </details>
                                         {speechMessage && <p className="rounded-xl bg-cyan-50 border-2 border-cyan-200 p-3 text-center font-black text-cyan-800">{speechMessage}</p>}
                                         {speechPlaybackUrl && <audio src={speechPlaybackUrl} controls playsInline className="w-full" />}
                                         {speechResult && (
@@ -1700,7 +1755,7 @@
                                                 )}
                                             </div>
                                         )}
-                                        <div className={`speech-feedback rounded-xl border-2 px-3 py-2 text-center font-black ${isLaunchReady ? "bg-green-50 border-green-300 text-green-700" : "bg-purple-50 border-purple-200 text-purple-700"}`} data-testid="speech-feedback">{feedback}</div>
+                                        {feedback && <div className={`speech-feedback rounded-xl border-2 px-3 py-2 text-center font-black ${isLaunchReady ? "bg-green-50 border-green-300 text-green-700" : "bg-purple-50 border-purple-200 text-purple-700"}`} data-testid="speech-feedback">{feedback}</div>}
                                     </div>
                                 ) : (
                                     <>
@@ -1756,7 +1811,7 @@
                             </defs>
 
                             <rect x="0" y="0" width={BOARD_W} height={BOARD_H} className="wood-board" />
-                            <text x="560" y="600" fill="#B500FF" fontSize="26" fontWeight="900" fontFamily="Arial" opacity="1" transform="rotate(-90 560 600)">
+                            <text x="560" y="600" fill="#B500FF" fontSize="26" fontWeight="900" fontFamily="Comic Relief" opacity="1" transform="rotate(-90 560 600)">
                                 READY GO
                             </text>
                             <rect x="0" y="0" width="20" height={BOARD_H} className="wood-wall" />
@@ -1810,7 +1865,6 @@
                         <button
                             onClick={handleLaunchClick}
                             disabled={!isLaunchReady}
-                            title={isLaunchReady ? "點擊發射" : (isSpeechPractice ? "請先完成口說評測" : "請先答對題目")}
                             style={{ position: "absolute", left: "522px", top: "650px", width: "56px", height: "56px" }}
                             className={`rounded-full flex items-center justify-center font-black text-white shadow-xl transition-all duration-300 z-10 border-4 ${
                                 isLaunchReady
@@ -1877,7 +1931,6 @@
                             {result.syncStatus === "error" && onRetry && (
                                 <div className="mt-3">
                                     <button onClick={onRetry} className="rounded-xl bg-orange-500 px-5 py-3 font-black text-white shadow hover:bg-orange-600">重新送出完整遊戲紀錄</button>
-                                    <p className="mt-2 text-xs font-bold text-slate-600">成功寫入前，下一局題型不會翻轉。</p>
                                 </div>
                             )}
                         </div>
@@ -1893,7 +1946,7 @@
                                     </div>
                                 </div>
                                 <div className="mt-5">
-                                    <h3 className="text-lg font-black text-slate-900 mb-3">答對題目</h3>
+                                    <h3 className="text-lg font-black text-slate-900 mb-3">作答紀錄</h3>
                                     <AnswerList items={result.answers.pink} />
                                 </div>
                             </div>
@@ -1908,7 +1961,7 @@
                                     </div>
                                 </div>
                                 <div className="mt-5">
-                                    <h3 className="text-lg font-black text-slate-900 mb-3">答對題目</h3>
+                                    <h3 className="text-lg font-black text-slate-900 mb-3">作答紀錄</h3>
                                     <AnswerList items={result.answers.blue} />
                                 </div>
                             </div>
@@ -1945,7 +1998,10 @@
             const [deleteTarget, setDeleteTarget] = useState(null);
             const [deleteBusy, setDeleteBusy] = useState(false);
             const [audioUrls, setAudioUrls] = useState({});
+            const [audioMessages, setAudioMessages] = useState({});
             const [audioLoadingId, setAudioLoadingId] = useState("");
+            const teacherAudioUrlsRef = useRef({});
+            const teacherAudioAbortRef = useRef(null);
 
             const updateFilter = (key, value) => setFilters(previous => ({ ...previous, [key]: value }));
             const handleSessionError = error => {
@@ -1955,11 +2011,20 @@
                 }
                 return false;
             };
+            const releaseTeacherAudio = useCallback(() => {
+                teacherAudioAbortRef.current?.abort?.();
+                teacherAudioAbortRef.current = null;
+                Object.values(teacherAudioUrlsRef.current).forEach(url => URL.revokeObjectURL(url));
+                teacherAudioUrlsRef.current = {};
+                setAudioUrls({});
+                setAudioMessages({});
+            }, []);
 
             const refreshRecords = useCallback(async () => {
                 setLoading(true);
                 setStatusMessage("正在讀取受保護紀錄...");
                 try {
+                    releaseTeacherAudio();
                     const result = await window.HWG7AppApi.teacherAction("listResults", { filters });
                     setRecords(result.records || []);
                     setStatusMessage(`已讀取 ${result.count || 0} 局完整遊戲${result.truncated ? "（已達 500 筆上限，請縮小日期範圍）" : ""}。`);
@@ -1969,10 +2034,19 @@
                 } finally {
                     setLoading(false);
                 }
-            }, [filters, onSessionExpired]);
+            }, [filters, onSessionExpired, releaseTeacherAudio]);
 
             useEffect(() => {
                 refreshRecords();
+            }, []);
+            useEffect(() => {
+                releaseTeacherAudio();
+            }, [selectedId, releaseTeacherAudio]);
+
+            useEffect(() => () => {
+                teacherAudioAbortRef.current?.abort?.();
+                Object.values(teacherAudioUrlsRef.current).forEach(url => URL.revokeObjectURL(url));
+                teacherAudioUrlsRef.current = {};
             }, []);
 
             const selected = records.find(record => record.id === selectedId) || null;
@@ -2023,14 +2097,41 @@
             };
 
             const loadRecording = async attemptId => {
+                teacherAudioAbortRef.current?.abort?.();
+                const controller = new AbortController();
+                teacherAudioAbortRef.current = controller;
                 setAudioLoadingId(attemptId);
+                setAudioMessages(previous => ({ ...previous, [attemptId]: "正在取得錄音…" }));
                 try {
-                    const result = await window.HWG7AppApi.teacherAction("recordingUrl", { attemptId });
-                    setAudioUrls(previous => ({ ...previous, [attemptId]: result.url }));
+                    const blob = await window.HWG7AppApi.teacherRecording(attemptId, { signal: controller.signal });
+                    const url = URL.createObjectURL(blob);
+                    const previousUrl = teacherAudioUrlsRef.current[attemptId];
+                    if (previousUrl) URL.revokeObjectURL(previousUrl);
+                    teacherAudioUrlsRef.current = { ...teacherAudioUrlsRef.current, [attemptId]: url };
+                    setAudioUrls({ ...teacherAudioUrlsRef.current });
+                    setAudioMessages(previous => ({ ...previous, [attemptId]: "錄音已載入。" }));
+                    window.setTimeout(() => {
+                        const audio = document.getElementById(`teacher-audio-${attemptId}`);
+                        if (!audio) return;
+                        audio.play().then(() => {
+                            setAudioMessages(previous => ({ ...previous, [attemptId]: "播放中。" }));
+                        }).catch(() => {
+                            setAudioMessages(previous => ({ ...previous, [attemptId]: "請點一下播放器的播放鍵。" }));
+                        });
+                    }, 0);
                 } catch (error) {
-                    if (!handleSessionError(error)) setStatusMessage(error.message || "錄音暫時無法播放。");
+                    if (error?.name === "AbortError") return;
+                    if (handleSessionError(error)) return;
+                    const message = error?.code === "recording_expired"
+                        ? "錄音已超過 30 天保存期限。"
+                        : error?.code === "recording_not_found"
+                            ? "找不到這段錄音。"
+                            : "錄音服務暫時無法提供，請稍後再試。";
+                    setAudioMessages(previous => ({ ...previous, [attemptId]: message }));
+                    setStatusMessage(message);
                 } finally {
-                    setAudioLoadingId("");
+                    if (teacherAudioAbortRef.current === controller) teacherAudioAbortRef.current = null;
+                    setAudioLoadingId(current => current === attemptId ? "" : current);
                 }
             };
 
@@ -2051,6 +2152,7 @@
             };
 
             const logout = async () => {
+                releaseTeacherAudio();
                 try { await window.HWG7AppApi.teacherLogout(); } catch { window.HWG7AppApi.clearTeacherToken(); }
                 onHome();
             };
@@ -2060,7 +2162,6 @@
                     <section className="teacher-card max-w-7xl mx-auto backdrop-blur-md rounded-[28px] p-5 md:p-8">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                             <div>
-                                <p className="text-sm font-black text-purple-600">受保護的口說評測紀錄</p>
                                 <h1 className="text-4xl font-black text-slate-900">教師後台</h1>
                             </div>
                             <div className="flex flex-wrap gap-2">
@@ -2119,7 +2220,8 @@
                                                     <p className="mt-1 text-sm font-bold text-slate-600"><span className="font-black">分項：</span>準確 {attempt.scores?.accuracy ?? "—"}／完整 {attempt.scores?.completeness ?? "—"}／流暢 {attempt.scores?.fluency ?? "—"}</p>
                                                     <p className="mt-1 text-sm font-bold text-purple-700"><span className="font-black">建議：</span>{attempt.feedback}</p>
                                                     {attempt.recordingAvailable && !audioUrls[attempt.attemptId] && <button onClick={() => loadRecording(attempt.attemptId)} disabled={audioLoadingId === attempt.attemptId} className="mt-3 rounded-lg bg-slate-900 px-4 py-2 text-sm font-black text-white disabled:bg-slate-300"><i className="fas fa-play mr-2"></i>{audioLoadingId === attempt.attemptId ? "取得錄音中" : "播放 30 天內錄音"}</button>}
-                                                    {audioUrls[attempt.attemptId] && <audio className="mt-3 w-full" controls preload="none" src={audioUrls[attempt.attemptId]} />}
+                                                    {audioUrls[attempt.attemptId] && <audio id={`teacher-audio-${attempt.attemptId}`} className="mt-3 w-full" controls autoPlay playsInline preload="metadata" controlsList="nodownload noplaybackrate noremoteplayback" disablePictureInPicture onContextMenu={event => event.preventDefault()} onPlay={() => setAudioMessages(previous => ({ ...previous, [attempt.attemptId]: "播放中。" }))} onEnded={() => setAudioMessages(previous => ({ ...previous, [attempt.attemptId]: "播放完畢。" }))} src={audioUrls[attempt.attemptId]} />}
+                                                    {audioMessages[attempt.attemptId] && <p className="mt-2 text-xs font-black text-purple-700" role="status">{audioMessages[attempt.attemptId]}</p>}
                                                     {!attempt.recordingAvailable && <p className="mt-2 text-xs font-bold text-slate-500">錄音已超過 30 天期限或尚不可用。</p>}
                                                 </article>
                                             ))}
@@ -2168,7 +2270,7 @@
                 const unit = UNIT_BY_MODE[mode];
                 if (!unit || unit.status !== "ready") throw new Error("這個單元題庫準備中。");
                 const session = await window.HWG7AppApi.startGame({ unitId: unit.id, students });
-                const questions = prepareQuestionSet(mode, session.assignment.firstTurnType);
+                const questions = prepareQuestionSet(mode);
                 if (questions.length !== 12) {
                     await window.HWG7AppApi.abandonGame(session.gameSessionId).catch(() => {});
                     throw new Error("本局沒有成功組成 12 道交替題目，請通知老師。");
@@ -2200,7 +2302,7 @@
                     setResult(current => current?.id === record.id ? {
                         ...current,
                         syncStatus: "error",
-                        syncMessage: `${error.message || "完整遊戲尚未寫入。"} 下一局題型尚未翻轉。`
+                        syncMessage: error.message || "完整遊戲尚未寫入。"
                     } : current);
                 }
             };

@@ -38,7 +38,7 @@ function compileFrontEndBank(rawBank) {
 function compilePrepareQuestionSet(questionBank, shuffle) {
   const functionSource = sliceBetween(
     indexHtml,
-    "function prepareQuestionSet(mode, firstTurnType = \"read_aloud\")",
+    "function prepareQuestionSet(mode)",
     "function todayString()"
   );
   const factory = new Function(
@@ -131,8 +131,8 @@ function compileSpeechTurnHarness() {
     stem: "She would like some salad.",
     correctAnswer: "She would like some salad.",
     imagePath: "images/hwg7-sentence-review/HWG7-SR-013.png",
-    questionBankVersion: "hwg7-sr-v1-draft",
-    rubricVersion: "a1-v1"
+    questionBankVersion: "hwg7-sr-v2-answer-only",
+    rubricVersion: "a1-v2-answer-only"
   };
   const saveSpeechResult = factory(
     currentQuestion,
@@ -164,7 +164,7 @@ function speechApiResult(total, passed = total >= 80) {
     feedback: `score ${total}`,
     primaryIssue: null,
     matchedAnswer: "She would like some salad.",
-    rubricVersion: "a1-v1"
+    rubricVersion: "a1-v2-answer-only"
   };
 }
 
@@ -183,23 +183,31 @@ test("front-end bank adapter resolves all 13 unique, non-empty image paths", asy
   }
 });
 
-test("actual prepareQuestionSet makes 12 unique questions and supports both A/B assignment phases", () => {
+test("actual prepareQuestionSet makes 12 unique questions in the fixed six-round pattern", () => {
   const adapted = compileFrontEndBank(bank);
+  const expectedTypes = [
+    "read_aloud", "question_answer",
+    "question_answer", "read_aloud",
+    "read_aloud", "question_answer",
+    "question_answer", "read_aloud",
+    "read_aloud", "question_answer",
+    "question_answer", "read_aloud"
+  ];
 
   for (let seed = 1; seed <= 250; seed += 1) {
-    for (const firstType of ["read_aloud", "question_answer"]) {
-      const prepareQuestionSet = compilePrepareQuestionSet(adapted, seededShuffle(seed));
-      const game = prepareQuestionSet("hwg7SentenceReview", firstType);
-      const ids = game.map(question => question.id);
+    const prepareQuestionSet = compilePrepareQuestionSet(adapted, seededShuffle(seed));
+    const game = prepareQuestionSet("hwg7SentenceReview");
+    const ids = game.map(question => question.id);
 
-      assert.equal(game.length, 12, `seed ${seed} ${firstType}: game length`);
-      assert.equal(new Set(ids).size, 12, `seed ${seed} ${firstType}: duplicate question`);
-      assert.equal(game.filter(question => question.type === "read_aloud").length, 6, `seed ${seed} ${firstType}: type 1 count`);
-      assert.equal(game.filter(question => question.type === "question_answer").length, 6, `seed ${seed} ${firstType}: type 2 count`);
-      game.forEach((question, index) => {
-        const expected = index % 2 === 0 ? firstType : (firstType === "read_aloud" ? "question_answer" : "read_aloud");
-        assert.equal(question.type, expected, `seed ${seed} ${firstType}: turn ${index + 1}`);
-      });
+    assert.equal(game.length, 12, `seed ${seed}: game length`);
+    assert.equal(new Set(ids).size, 12, `seed ${seed}: duplicate question`);
+    assert.equal(game.filter(question => question.type === "read_aloud").length, 6, `seed ${seed}: type 1 count`);
+    assert.equal(game.filter(question => question.type === "question_answer").length, 6, `seed ${seed}: type 2 count`);
+    assert.deepEqual(game.map(question => question.type), expectedTypes, `seed ${seed}: round pattern`);
+    for (const playerOffset of [0, 1]) {
+      const playerTypes = game.filter((_, index) => index % 2 === playerOffset).map(question => question.type);
+      assert.equal(playerTypes.filter(type => type === "read_aloud").length, 3, `seed ${seed}: player ${playerOffset} read count`);
+      assert.equal(playerTypes.filter(type => type === "question_answer").length, 3, `seed ${seed}: player ${playerOffset} answer count`);
     }
   }
 });

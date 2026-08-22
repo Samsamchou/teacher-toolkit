@@ -7,7 +7,8 @@ const functionsUrl = new URL("../functions/data/question-bank.json", import.meta
 
 const UNIT_ID = "hwg7-sr";
 const UNIT_LABEL = "HWG7 SR";
-const BANK_VERSION = "hwg7-sr-v1-confirmed";
+const BANK_VERSION = "hwg7-sr-v2-answer-only";
+const RUBRIC_VERSION = "a1-v2-answer-only";
 const CONFIRMED_ON = "2026-08-22";
 
 const imageAlts = {
@@ -49,16 +50,22 @@ const bank = JSON.parse(await readFile(bankUrl, "utf8"));
 bank.mode.unitId = UNIT_ID;
 bank.mode.label = UNIT_LABEL;
 bank.mode.questionBankVersion = BANK_VERSION;
-bank.game.selection.typePattern = "assigned_player_type_alternating";
+bank.mode.rubricVersion = RUBRIC_VERSION;
+bank.rubric.version = RUBRIC_VERSION;
+bank.game.selection.typePattern = "round_pair_alternating";
 bank.game.assignment = {
   playerIdentity: "A is first homepage code; B is second homepage code",
-  firstCompletedGame: "A=read_aloud; B=question_answer",
-  nextCompletedGame: "A=question_answer; B=read_aloud",
-  flipRule: "Flip only after an idempotently completed game in a Firestore transaction",
+  everyGameStart: "Round 1 A=read_aloud; B=question_answer",
+  roundPattern: "Odd rounds A=read_aloud and B=question_answer; even rounds reverse",
+  nextGameRule: "Every new game restarts from the same round-1 pattern",
   persistenceKey: "unordered student pair + unit + Asia/Taipei date"
 };
+bank.rubric.readAloud.totalWeights = { textAccuracy: 0.5, completeness: 0.3, fluency: 0.2 };
+bank.rubric.questionAnswer.scoringInput = "answer_transcript_only";
+bank.rubric.questionAnswer.accuracyWeights = { answer: 1 };
+bank.rubric.questionAnswer.completenessWeights = { answer: 1 };
 bank.rubric.analysisUse.accentTolerance = "Natural reduction or an intelligible accent difference does not automatically fail a student.";
-bank.rubric.analysisUse.toneGate = "Falling tone is a teaching model only and is never the sole pass/fail gate in a1-v1.";
+bank.rubric.analysisUse.toneGate = "Falling tone is a teaching model only and is never the sole pass/fail gate in a1-v2-answer-only.";
 bank.review = {
   status: "teacher_confirmed",
   confirmedOn: CONFIRMED_ON,
@@ -80,7 +87,9 @@ bank.source.confirmedFacts = [
     ...(bank.source.confirmedFacts || []),
     "HWG7-SR-005 is exactly: They’re his caps.",
     "The unit is HWG7 SR.",
-    "Question type ownership flips only after a completed game; A and B are the first and second homepage codes."
+    "Within every game, round 1 is A read_aloud and B question_answer; round 2 reverses, alternating through round 6.",
+    "Every new game restarts from the same round-1 pattern.",
+    "Question-answer items record and score only the learner answer."
   ])
 ];
 
@@ -89,6 +98,12 @@ for (const question of bank.questions) {
   question.unit = UNIT_LABEL;
   question.unitReviewStatus = "teacher_confirmed";
   question.questionBankVersion = BANK_VERSION;
+  question.rubricVersion = RUBRIC_VERSION;
+  if (question.type === "question_answer") {
+    question.typeLabel = "題型 2：Look and answer";
+  } else {
+    question.tts = { provider: "openai", model: "gpt-4o-mini-tts", voice: "marin", speed: 0.8, path: "audio/hwg7-sr/" + question.id + ".mp3", disclosure: "AI 語音" };
+  }
   question.image.alt = imageAlts[question.id];
   question.image.altReviewStatus = "teacher_confirmed";
   if (!question.image.alt) throw new Error(`Missing confirmed alt for ${question.id}`);
@@ -101,6 +116,12 @@ q5.contentReviewStatus = "teacher_confirmed";
 delete q5.contentReviewIssue;
 const caps = q5.pronunciationAnalysis.difficultWords.find(({ word }) => String(word).toLowerCase() === "caps");
 caps.note = "字尾 /ps/ 要保留：先收住 /p/，再輕輕帶出複數 /s/；自然口音差異不單獨判失敗。";
+
+const byId = new Map(bank.questions.map(question => [question.id, question]));
+byId.get("HWG7-SR-005").acceptedEquivalentForms = [{ target: "They\u2019re", equivalent: "They are" }];
+byId.get("HWG7-SR-006").answerPromptStructure = "___ her _____.";
+byId.get("HWG7-SR-008").answerPromptStructure = "His ______ _____.";
+byId.get("HWG7-SR-010").answerPromptStructure = "His ______ _____.";
 
 const q11 = bank.questions.find(({ id }) => id === "HWG7-SR-011");
 const noodles = q11.pronunciationAnalysis.difficultWords.find(({ word }) => String(word).toLowerCase() === "noodles");

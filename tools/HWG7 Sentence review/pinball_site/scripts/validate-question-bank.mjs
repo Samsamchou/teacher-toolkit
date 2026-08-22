@@ -194,7 +194,7 @@ function sampleWithoutReplacement(items, count, random) {
   return copy.slice(0, count);
 }
 
-function sampleAlternatingGame(questionItems, random, firstType = "read_aloud") {
+function sampleAlternatingGame(questionItems, random) {
   const readAloud = sampleWithoutReplacement(
     questionItems.filter((question) => question.type === "read_aloud"),
     6,
@@ -205,9 +205,9 @@ function sampleAlternatingGame(questionItems, random, firstType = "read_aloud") 
     6,
     random
   );
-  return readAloud.flatMap((question, index) => firstType === "read_aloud"
-    ? [question, questionAnswer[index]]
-    : [questionAnswer[index], question]
+  return readAloud.flatMap((question, roundIndex) => roundIndex % 2 === 0
+    ? [question, questionAnswer[roundIndex]]
+    : [questionAnswer[roundIndex], question]
   );
 }
 
@@ -241,8 +241,8 @@ try {
 
 check(bank.schemaVersion === "1.0.0", "schemaVersion 必須是 1.0.0。");
 check(bank.mode?.key === "hwg7SentenceReview", "mode.key 必須是 hwg7SentenceReview。");
-check(bank.mode?.rubricVersion === "a1-v1", "mode.rubricVersion 必須是 a1-v1。");
-check(bank.rubric?.version === "a1-v1", "rubric.version 必須是 a1-v1。");
+check(bank.mode?.rubricVersion === "a1-v2-answer-only", "mode.rubricVersion 必須是 a1-v2-answer-only。");
+check(bank.rubric?.version === "a1-v2-answer-only", "rubric.version 必須是 a1-v2-answer-only。");
 check(Array.isArray(bank.questions), "questions 必須是陣列。");
 
 const questions = Array.isArray(bank.questions) ? bank.questions : [];
@@ -267,7 +267,7 @@ check(bank.game?.selection?.unusedQuestionsPerGame === 1, "13題中每局抽12�
 check(bank.game?.selection?.method === "balanced_by_type_then_alternate", "抽題方式必須先依題型各抽6題，再交替排列。");
 check(bank.game?.selection?.readAloudPerGame === 6, "每局必須有6題 read_aloud。");
 check(bank.game?.selection?.questionAnswerPerGame === 6, "每局必須有6題 question_answer。");
-check(bank.game?.selection?.typePattern === "assigned_player_type_alternating", "每局必須依 A/B 當局分配的起始題型嚴格交替。");
+check(bank.game?.selection?.typePattern === "round_pair_alternating", "每一回合兩隊題型相反，下一回合互換。");
 check(bank.game?.slotPlanPriority === "final_round_decision", "6回合設定必須保留最後一回合決勝優先。 ");
 check(bank.game?.passScore === 80 && bank.game?.passOperator === ">=", "達標條件必須是 score >= 80。");
 check(bank.game?.maxAttempts === 3, "每題最多有效嘗試必須是3次。");
@@ -286,13 +286,18 @@ check(Math.abs(sum(Object.values(bank.rubric?.questionAnswer?.answerAccuracyWeig
 check(Math.abs(sum(Object.values(bank.rubric?.questionAnswer?.accuracyWeights ?? {})) - 1) < 1e-9, "question_answer 準確度權重必須合計1。");
 check(Math.abs(sum(Object.values(bank.rubric?.questionAnswer?.completenessWeights ?? {})) - 1) < 1e-9, "question_answer 完整度權重必須合計1。");
 check(Math.abs(sum(Object.values(bank.rubric?.questionAnswer?.totalWeights ?? {})) - 1) < 1e-9, "question_answer 總分權重必須合計1。");
+check(JSON.stringify(bank.rubric?.readAloud?.totalWeights) === JSON.stringify({ textAccuracy: 0.5, completeness: 0.3, fluency: 0.2 }), "read_aloud 總分必須固定為50/30/20。");
+check(bank.rubric?.questionAnswer?.scoringInput === "answer_transcript_only", "question_answer 只能評量答句逐字稿。");
+check(JSON.stringify(bank.rubric?.questionAnswer?.accuracyWeights) === JSON.stringify({ answer: 1 }), "question_answer 準確度不得包含問句。");
+check(JSON.stringify(bank.rubric?.questionAnswer?.completenessWeights) === JSON.stringify({ answer: 1 }), "question_answer 完整度不得包含問句。");
+check(bank.game?.assignment?.everyGameStart === "Round 1 A=read_aloud; B=question_answer", "每局第一回合必須固定由 A 朗讀、B 回答。");
 check(bank.rubric?.questionAnswer?.wrongOrMissingCoreScoreCap === 59, "核心答案錯誤或未回答時的上限必須是59。");
 
 check(bank.review?.status === "teacher_confirmed", "題庫狀態必須是 teacher_confirmed。");
 check(Array.isArray(bank.review?.pending) && bank.review.pending.length === 0, "教師確認後 pending 清單必須為空。");
 check(Array.isArray(bank.review?.confirmed) && bank.review.confirmed.length >= 4, "教師確認依據至少要記錄四項。");
 check(bank.mode?.unitId === "hwg7-sr" && bank.mode?.label === "HWG7 SR", "單元必須精確為 hwg7-sr / HWG7 SR。");
-check(bank.mode?.questionBankVersion === "hwg7-sr-v1-confirmed", "題庫版本必須是 hwg7-sr-v1-confirmed。");
+check(bank.mode?.questionBankVersion === "hwg7-sr-v2-answer-only", "題庫版本必須是 hwg7-sr-v2-answer-only。");
 for (let index = 0; index < questions.length; index += 1) {
   const question = questions[index];
   const authority = expected[index];
@@ -308,15 +313,20 @@ for (let index = 0; index < questions.length; index += 1) {
   check(question?.questionSentenceAnalysis === null, `${label}: 問句不得含發音或語調分析。`);
   check(question?.passScore === 80, `${label}: passScore 必須是80。`);
   check(question?.maxAttempts === 3, `${label}: maxAttempts 必須是3。`);
-  check(question?.rubricVersion === "a1-v1", `${label}: rubricVersion 必須是 a1-v1。`);
+  check(question?.rubricVersion === "a1-v2-answer-only", `${label}: rubricVersion 必須是 a1-v2-answer-only。`);
+  check(question?.questionBankVersion === "hwg7-sr-v2-answer-only", `${label}: questionBankVersion 必須是 hwg7-sr-v2-answer-only。`);
 
   if (question?.type === "read_aloud") {
     check(question.questionText === "", `${label}: read_aloud 的 questionText 應為空字串。`);
     check(question.standardReadSentence === authority.read, `${label}: 朗讀句與權威來源不符。`);
     check(Array.isArray(question.acceptableAnswers) && question.acceptableAnswers.length === 0, `${label}: read_aloud 不應另填 acceptableAnswers。`);
     checkAnalysis(question.pronunciationAnalysis, label);
+    check(question.tts?.provider === "openai" && question.tts?.model === "gpt-4o-mini-tts" && question.tts?.voice === "marin", `${label}: TTS 必須使用 OpenAI gpt-4o-mini-tts / marin。`);
+    check(question.tts?.speed === 0.8 && question.tts?.path === `audio/hwg7-sr/${question.id}.mp3`, `${label}: TTS 必須是固定0.8速度與專屬音檔。`);
+    check(question.tts?.disclosure === "AI 語音", `${label}: 缺少 AI 語音揭露。`);
   } else if (question?.type === "question_answer") {
     check(question.questionText === authority.question, `${label}: 問句與權威來源不符。`);
+    check(question.typeLabel === "題型 2：Look and answer", `${label}: 題型二標籤必須是 Look and answer。`);
     check(question.questionSentenceAnalysisScope === "excluded_by_teacher_instruction", `${label}: 必須明記問句排除發音分析。`);
     check(question.standardReadSentence === "", `${label}: question_answer 的 standardReadSentence 應為空字串。`);
     check(Array.isArray(question.acceptableAnswers), `${label}: acceptableAnswers 必須是陣列。`);
@@ -333,6 +343,15 @@ for (let index = 0; index < questions.length; index += 1) {
       checkAnalysis(answer.pronunciationAnalysis, answerLabel);
     }
   }
+}
+
+const expectedScaffolds = new Map([
+  ["HWG7-SR-006", "___ her _____."],
+  ["HWG7-SR-008", "His ______ _____."],
+  ["HWG7-SR-010", "His ______ _____."],
+]);
+for (const [questionId, scaffold] of expectedScaffolds) {
+  check(questions.find((question) => question.id === questionId)?.answerPromptStructure === scaffold, `${questionId}: 答句鷹架不符。`);
 }
 
 const q005 = questions.find((question) => question.id === "HWG7-SR-005");
@@ -352,17 +371,16 @@ for (let index = 0; index < imageResults.length; index += 1) {
   totalImageBytes += result.bytes;
 }
 
+const expectedTurnTypes = ["read_aloud", "question_answer", "question_answer", "read_aloud", "read_aloud", "question_answer", "question_answer", "read_aloud", "read_aloud", "question_answer", "question_answer", "read_aloud"];
 for (let seed = 1; seed <= 250; seed += 1) {
-  for (const firstType of ["read_aloud", "question_answer"]) {
-    const sampled = sampleAlternatingGame(questions, mulberry32(seed), firstType);
-    const sampledIds = sampled.map((question) => question.id);
-    const prefix = `抽題模擬 seed=${seed} first=${firstType}`;
-    check(sampled.length === 12, `${prefix}: 題數不是12。`);
-    check(new Set(sampledIds).size === sampled.length, `${prefix}: 同局出現重複題目。`);
-    check(sampled.filter((question) => question.type === "read_aloud").length === 6, `${prefix}: read_aloud 不是6題。`);
-    check(sampled.filter((question) => question.type === "question_answer").length === 6, `${prefix}: question_answer 不是6題。`);
-    check(sampled.every((question, index) => question.type === (index % 2 === 0 ? firstType : (firstType === "read_aloud" ? "question_answer" : "read_aloud"))), `${prefix}: 題型沒有嚴格交替。`);
-  }
+  const sampled = sampleAlternatingGame(questions, mulberry32(seed));
+  const sampledIds = sampled.map((question) => question.id);
+  const prefix = `抽題模擬 seed=${seed}`;
+  check(sampled.length === 12, `${prefix}: 題數不是12。`);
+  check(new Set(sampledIds).size === sampled.length, `${prefix}: 同局出現重複題目。`);
+  check(sampled.filter((question) => question.type === "read_aloud").length === 6, `${prefix}: read_aloud 不是6題。`);
+  check(sampled.filter((question) => question.type === "question_answer").length === 6, `${prefix}: question_answer 不是6題。`);
+  check(sampled.every((question, index) => question.type === expectedTurnTypes[index]), `${prefix}: 每回合題型沒有互換。`);
 }
 if (shouldSyncBrowserData) {
   await mkdir(path.dirname(browserDataPath), { recursive: true });
@@ -404,7 +422,7 @@ const summary = {
   missingImageCount: imageResults.filter((result) => !result.exists).length,
   invalidImageSignatureCount: imageResults.filter((result) => result.exists && !result.decodableSignature).length,
   totalImageBytes,
-  sampledGamesChecked: 500,
+  sampledGamesChecked: 250,
   sampledGamesAlternating: errors.every((message) => !message.startsWith("抽題模擬")),
   browserJsSynced: browserQuestions ? JSON.stringify(browserQuestions) === JSON.stringify(questions) : false,
   pendingReviewKeys: [],

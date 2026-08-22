@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "generatedAt": "2026-08-22T05:18:21.849Z",
+  "generatedAt": "2026-08-22T13:30:29.236Z",
   "engine": "Chromium headless via Chrome DevTools Protocol",
   "limitation": "iPad 項目使用 Safari User-Agent、觸控與 1024×768 橫式尺寸模擬；不等同實體 iPad Safari，引擎實測留待部署後。",
   "questionCount": 13,
@@ -44,7 +44,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -57,52 +58,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 450.22,
+          "bottom": 543.97,
+          "left": 301.52,
+          "width": 148.7,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -117,10 +114,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-001--windows-chrome-1366x768.png"
@@ -139,7 +135,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -152,52 +149,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 246.52,
+          "top": 300.02,
           "right": 647,
-          "bottom": 415.47,
+          "bottom": 468.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 476.97,
           "right": 647,
-          "bottom": 517.47,
+          "bottom": 554.97,
           "left": 203,
           "width": 444,
-          "height": 94
+          "height": 78
         },
         "stem": {
-          "top": 458.47,
-          "right": 632,
-          "bottom": 482.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 562.3,
+          "bottom": 543.97,
+          "left": 287.7,
+          "width": 274.59,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 566.97,
           "right": 421,
-          "bottom": 585.47,
+          "bottom": 622.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 647,
-          "bottom": 637.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 115.02,
           "right": 675,
-          "bottom": 706.47,
+          "bottom": 652.97,
           "left": 175,
           "width": 500,
-          "height": 644.95
+          "height": 537.95
         },
         "image": {
           "complete": true,
@@ -212,10 +205,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 528,
+        "panelClientHeight": 528,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-002--windows-chrome-1366x768.png"
@@ -234,7 +226,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -247,52 +240,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 507.98,
+          "bottom": 543.97,
+          "left": 230.53,
+          "width": 277.45,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -307,10 +296,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-003--windows-chrome-1366x768.png"
@@ -329,7 +317,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -342,52 +331,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 246.52,
+          "top": 300.02,
           "right": 647,
-          "bottom": 415.47,
+          "bottom": 468.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 476.97,
           "right": 647,
-          "bottom": 517.47,
+          "bottom": 554.97,
           "left": 203,
           "width": 444,
-          "height": 94
+          "height": 78
         },
         "stem": {
-          "top": 458.47,
-          "right": 632,
-          "bottom": 482.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 581.91,
+          "bottom": 543.97,
+          "left": 268.09,
+          "width": 313.81,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 566.97,
           "right": 421,
-          "bottom": 585.47,
+          "bottom": 622.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 647,
-          "bottom": 637.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 115.02,
           "right": 675,
-          "bottom": 706.47,
+          "bottom": 652.97,
           "left": 175,
           "width": 500,
-          "height": 644.95
+          "height": 537.95
         },
         "image": {
           "complete": true,
@@ -402,10 +387,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 528,
+        "panelClientHeight": 528,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-004--windows-chrome-1366x768.png"
@@ -424,7 +408,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -437,52 +422,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 453.14,
+          "bottom": 543.97,
+          "left": 285.39,
+          "width": 167.75,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -497,10 +478,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-005--windows-chrome-1366x768.png"
@@ -519,7 +499,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -532,52 +513,55 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 246.52,
+          "top": 282.02,
           "right": 647,
-          "bottom": 415.47,
+          "bottom": 450.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 458.97,
           "right": 647,
-          "bottom": 517.47,
+          "bottom": 572.97,
           "left": 203,
           "width": 444,
-          "height": 94
+          "height": 114
         },
         "stem": {
-          "top": 458.47,
-          "right": 632,
-          "bottom": 482.47,
-          "left": 218,
-          "width": 414,
+          "top": 501.97,
+          "right": 541.72,
+          "bottom": 525.97,
+          "left": 308.28,
+          "width": 233.44,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 584.97,
           "right": 421,
-          "bottom": 585.47,
+          "bottom": 640.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 647,
-          "bottom": 637.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
+        "scaffold": {
+          "top": 533.97,
+          "right": 632,
+          "bottom": 561.97,
+          "left": 218,
+          "width": 414,
+          "height": 28
         },
+        "scaffoldText": "___ her _____.",
+        "hasScaffold": true,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 97.02,
           "right": 675,
-          "bottom": 706.47,
+          "bottom": 670.97,
           "left": 175,
           "width": 500,
-          "height": 644.95
+          "height": 573.95
         },
         "image": {
           "complete": true,
@@ -592,10 +576,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 564,
+        "panelClientHeight": 564,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-006--windows-chrome-1366x768.png"
@@ -614,7 +597,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -627,52 +611,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 442.42,
+          "bottom": 543.97,
+          "left": 296.11,
+          "width": 146.31,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -687,10 +667,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-007--windows-chrome-1366x768.png"
@@ -709,7 +688,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -722,52 +702,55 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 246.52,
+          "top": 282.02,
           "right": 647,
-          "bottom": 415.47,
+          "bottom": 450.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 458.97,
           "right": 647,
-          "bottom": 517.47,
+          "bottom": 572.97,
           "left": 203,
           "width": 444,
-          "height": 94
+          "height": 114
         },
         "stem": {
-          "top": 458.47,
-          "right": 632,
-          "bottom": 482.47,
-          "left": 218,
-          "width": 414,
+          "top": 501.97,
+          "right": 496.02,
+          "bottom": 525.97,
+          "left": 353.98,
+          "width": 142.03,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 584.97,
           "right": 421,
-          "bottom": 585.47,
+          "bottom": 640.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 647,
-          "bottom": 637.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
+        "scaffold": {
+          "top": 533.97,
+          "right": 632,
+          "bottom": 561.97,
+          "left": 218,
+          "width": 414,
+          "height": 28
         },
+        "scaffoldText": "His ______ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 97.02,
           "right": 675,
-          "bottom": 706.47,
+          "bottom": 670.97,
           "left": 175,
           "width": 500,
-          "height": 644.95
+          "height": 573.95
         },
         "image": {
           "complete": true,
@@ -782,10 +765,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 564,
+        "panelClientHeight": 564,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-008--windows-chrome-1366x768.png"
@@ -804,7 +786,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -817,52 +800,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 471.53,
+          "bottom": 543.97,
+          "left": 267,
+          "width": 204.53,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -877,10 +856,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-009--windows-chrome-1366x768.png"
@@ -899,7 +877,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -912,52 +891,55 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 246.52,
+          "top": 282.02,
           "right": 647,
-          "bottom": 415.47,
+          "bottom": 450.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 458.97,
           "right": 647,
-          "bottom": 517.47,
+          "bottom": 572.97,
           "left": 203,
           "width": 444,
-          "height": 94
+          "height": 114
         },
         "stem": {
-          "top": 458.47,
-          "right": 632,
-          "bottom": 482.47,
-          "left": 218,
-          "width": 414,
+          "top": 501.97,
+          "right": 496.02,
+          "bottom": 525.97,
+          "left": 353.98,
+          "width": 142.03,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 584.97,
           "right": 421,
-          "bottom": 585.47,
+          "bottom": 640.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 647,
-          "bottom": 637.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
+        "scaffold": {
+          "top": 533.97,
+          "right": 632,
+          "bottom": 561.97,
+          "left": 218,
+          "width": 414,
+          "height": 28
         },
+        "scaffoldText": "His ______ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 97.02,
           "right": 675,
-          "bottom": 706.47,
+          "bottom": 670.97,
           "left": 175,
           "width": 500,
-          "height": 644.95
+          "height": 573.95
         },
         "image": {
           "complete": true,
@@ -972,10 +954,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 564,
+        "panelClientHeight": 564,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-010--windows-chrome-1366x768.png"
@@ -994,7 +975,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1007,52 +989,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 510,
+          "bottom": 543.97,
+          "left": 228.52,
+          "width": 281.48,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -1067,10 +1045,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-011--windows-chrome-1366x768.png"
@@ -1089,7 +1066,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1102,52 +1080,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 246.52,
+          "top": 300.02,
           "right": 647,
-          "bottom": 415.47,
+          "bottom": 468.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 476.97,
           "right": 647,
-          "bottom": 517.47,
+          "bottom": 554.97,
           "left": 203,
           "width": 444,
-          "height": 94
+          "height": 78
         },
         "stem": {
-          "top": 458.47,
-          "right": 632,
-          "bottom": 482.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 565.81,
+          "bottom": 543.97,
+          "left": 284.19,
+          "width": 281.63,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 566.97,
           "right": 421,
-          "bottom": 585.47,
+          "bottom": 622.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 647,
-          "bottom": 637.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 115.02,
           "right": 675,
-          "bottom": 706.47,
+          "bottom": 652.97,
           "left": 175,
           "width": 500,
-          "height": 644.95
+          "height": 537.95
         },
         "image": {
           "complete": true,
@@ -1162,10 +1136,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 528,
+        "panelClientHeight": 528,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-012--windows-chrome-1366x768.png"
@@ -1184,7 +1157,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1197,52 +1171,48 @@
           "devicePixelRatio": 1
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 647,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 203,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 647,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 203,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 632,
-          "bottom": 494.47,
-          "left": 218,
-          "width": 414,
+          "top": 519.97,
+          "right": 499.77,
+          "bottom": 543.97,
+          "left": 238.75,
+          "width": 261.02,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 421,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 203,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 647,
-          "bottom": 625.47,
-          "left": 203,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 675,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 175,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -1257,10 +1227,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-013--windows-chrome-1366x768.png"
@@ -1279,7 +1248,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1292,52 +1262,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 307.67,
+          "bottom": 543.97,
+          "left": 154.84,
+          "width": 152.83,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -1352,10 +1318,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-001--ipad-safari-landscape-1024x768.png"
@@ -1374,7 +1339,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1387,52 +1353,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 246.52,
+          "top": 300.02,
           "right": 509,
-          "bottom": 415.47,
+          "bottom": 468.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 476.97,
           "right": 509,
-          "bottom": 517.47,
+          "bottom": 554.97,
           "left": 65,
           "width": 444,
-          "height": 94
+          "height": 78
         },
         "stem": {
-          "top": 458.47,
-          "right": 494,
-          "bottom": 482.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 424.3,
+          "bottom": 543.97,
+          "left": 149.7,
+          "width": 274.59,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 566.97,
           "right": 283,
-          "bottom": 585.47,
+          "bottom": 622.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 509,
-          "bottom": 637.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 115.02,
           "right": 537,
-          "bottom": 706.47,
+          "bottom": 652.97,
           "left": 37,
           "width": 500,
-          "height": 644.95
+          "height": 537.95
         },
         "image": {
           "complete": true,
@@ -1447,10 +1409,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 528,
+        "panelClientHeight": 528,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-002--ipad-safari-landscape-1024x768.png"
@@ -1469,7 +1430,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1482,52 +1444,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 369.98,
+          "bottom": 543.97,
+          "left": 92.53,
+          "width": 277.45,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -1542,10 +1500,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-003--ipad-safari-landscape-1024x768.png"
@@ -1564,7 +1521,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1577,52 +1535,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 246.52,
+          "top": 300.02,
           "right": 509,
-          "bottom": 415.47,
+          "bottom": 468.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 476.97,
           "right": 509,
-          "bottom": 517.47,
+          "bottom": 554.97,
           "left": 65,
           "width": 444,
-          "height": 94
+          "height": 78
         },
         "stem": {
-          "top": 458.47,
-          "right": 494,
-          "bottom": 482.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 443.91,
+          "bottom": 543.97,
+          "left": 130.09,
+          "width": 313.81,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 566.97,
           "right": 283,
-          "bottom": 585.47,
+          "bottom": 622.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 509,
-          "bottom": 637.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 115.02,
           "right": 537,
-          "bottom": 706.47,
+          "bottom": 652.97,
           "left": 37,
           "width": 500,
-          "height": 644.95
+          "height": 537.95
         },
         "image": {
           "complete": true,
@@ -1637,10 +1591,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 528,
+        "panelClientHeight": 528,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-004--ipad-safari-landscape-1024x768.png"
@@ -1659,7 +1612,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1672,52 +1626,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 315.14,
+          "bottom": 543.97,
+          "left": 147.39,
+          "width": 167.75,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -1732,10 +1682,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-005--ipad-safari-landscape-1024x768.png"
@@ -1754,7 +1703,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1767,52 +1717,55 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 246.52,
+          "top": 282.02,
           "right": 509,
-          "bottom": 415.47,
+          "bottom": 450.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 458.97,
           "right": 509,
-          "bottom": 517.47,
+          "bottom": 572.97,
           "left": 65,
           "width": 444,
-          "height": 94
+          "height": 114
         },
         "stem": {
-          "top": 458.47,
-          "right": 494,
-          "bottom": 482.47,
-          "left": 80,
-          "width": 414,
+          "top": 501.97,
+          "right": 403.72,
+          "bottom": 525.97,
+          "left": 170.28,
+          "width": 233.44,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 584.97,
           "right": 283,
-          "bottom": 585.47,
+          "bottom": 640.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 509,
-          "bottom": 637.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
+        "scaffold": {
+          "top": 533.97,
+          "right": 494,
+          "bottom": 561.97,
+          "left": 80,
+          "width": 414,
+          "height": 28
         },
+        "scaffoldText": "___ her _____.",
+        "hasScaffold": true,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 97.02,
           "right": 537,
-          "bottom": 706.47,
+          "bottom": 670.97,
           "left": 37,
           "width": 500,
-          "height": 644.95
+          "height": 573.95
         },
         "image": {
           "complete": true,
@@ -1827,10 +1780,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 564,
+        "panelClientHeight": 564,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-006--ipad-safari-landscape-1024x768.png"
@@ -1849,7 +1801,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1862,52 +1815,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 304.42,
+          "bottom": 543.97,
+          "left": 158.11,
+          "width": 146.31,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -1922,10 +1871,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-007--ipad-safari-landscape-1024x768.png"
@@ -1944,7 +1892,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -1957,52 +1906,55 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 246.52,
+          "top": 282.02,
           "right": 509,
-          "bottom": 415.47,
+          "bottom": 450.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 458.97,
           "right": 509,
-          "bottom": 517.47,
+          "bottom": 572.97,
           "left": 65,
           "width": 444,
-          "height": 94
+          "height": 114
         },
         "stem": {
-          "top": 458.47,
-          "right": 494,
-          "bottom": 482.47,
-          "left": 80,
-          "width": 414,
+          "top": 501.97,
+          "right": 358.02,
+          "bottom": 525.97,
+          "left": 215.98,
+          "width": 142.03,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 584.97,
           "right": 283,
-          "bottom": 585.47,
+          "bottom": 640.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 509,
-          "bottom": 637.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
+        "scaffold": {
+          "top": 533.97,
+          "right": 494,
+          "bottom": 561.97,
+          "left": 80,
+          "width": 414,
+          "height": 28
         },
+        "scaffoldText": "His ______ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 97.02,
           "right": 537,
-          "bottom": 706.47,
+          "bottom": 670.97,
           "left": 37,
           "width": 500,
-          "height": 644.95
+          "height": 573.95
         },
         "image": {
           "complete": true,
@@ -2017,10 +1969,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 564,
+        "panelClientHeight": 564,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-008--ipad-safari-landscape-1024x768.png"
@@ -2039,7 +1990,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -2052,52 +2004,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 333.53,
+          "bottom": 543.97,
+          "left": 129,
+          "width": 204.53,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -2112,10 +2060,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-009--ipad-safari-landscape-1024x768.png"
@@ -2134,7 +2081,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -2147,52 +2095,55 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 246.52,
+          "top": 282.02,
           "right": 509,
-          "bottom": 415.47,
+          "bottom": 450.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 458.97,
           "right": 509,
-          "bottom": 517.47,
+          "bottom": 572.97,
           "left": 65,
           "width": 444,
-          "height": 94
+          "height": 114
         },
         "stem": {
-          "top": 458.47,
-          "right": 494,
-          "bottom": 482.47,
-          "left": 80,
-          "width": 414,
+          "top": 501.97,
+          "right": 358.02,
+          "bottom": 525.97,
+          "left": 215.98,
+          "width": 142.03,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 584.97,
           "right": 283,
-          "bottom": 585.47,
+          "bottom": 640.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 509,
-          "bottom": 637.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
+        "scaffold": {
+          "top": 533.97,
+          "right": 494,
+          "bottom": 561.97,
+          "left": 80,
+          "width": 414,
+          "height": 28
         },
+        "scaffoldText": "His ______ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 97.02,
           "right": 537,
-          "bottom": 706.47,
+          "bottom": 670.97,
           "left": 37,
           "width": 500,
-          "height": 644.95
+          "height": 573.95
         },
         "image": {
           "complete": true,
@@ -2207,10 +2158,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 564,
+        "panelClientHeight": 564,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-010--ipad-safari-landscape-1024x768.png"
@@ -2229,7 +2179,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -2242,52 +2193,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 372,
+          "bottom": 543.97,
+          "left": 90.52,
+          "width": 281.48,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -2302,10 +2249,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-011--ipad-safari-landscape-1024x768.png"
@@ -2324,7 +2270,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -2337,52 +2284,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 246.52,
+          "top": 300.02,
           "right": 509,
-          "bottom": 415.47,
+          "bottom": 468.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 423.47,
+          "top": 476.97,
           "right": 509,
-          "bottom": 517.47,
+          "bottom": 554.97,
           "left": 65,
           "width": 444,
-          "height": 94
+          "height": 78
         },
         "stem": {
-          "top": 458.47,
-          "right": 494,
-          "bottom": 482.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 427.81,
+          "bottom": 543.97,
+          "left": 146.19,
+          "width": 281.63,
           "height": 24
         },
         "recordButton": {
-          "top": 529.47,
+          "top": 566.97,
           "right": 283,
-          "bottom": 585.47,
+          "bottom": 622.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 597.47,
-          "right": 509,
-          "bottom": 637.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": false,
         "panel": {
-          "top": 61.52,
+          "top": 115.02,
           "right": 537,
-          "bottom": 706.47,
+          "bottom": 652.97,
           "left": 37,
           "width": 500,
-          "height": 644.95
+          "height": 537.95
         },
         "image": {
           "complete": true,
@@ -2397,10 +2340,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 635,
-        "panelClientHeight": 635,
+        "panelScrollHeight": 528,
+        "panelClientHeight": 528,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-012--ipad-safari-landscape-1024x768.png"
@@ -2419,7 +2361,8 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
         "panelAtTop": true,
         "noHorizontalOverflow": true,
         "imageLoaded": true
@@ -2432,52 +2375,48 @@
           "devicePixelRatio": 2
         },
         "frame": {
-          "top": 258.52,
+          "top": 294.02,
           "right": 509,
-          "bottom": 427.47,
+          "bottom": 462.97,
           "left": 65,
           "width": 444,
           "height": 168.95
         },
         "prompt": {
-          "top": 435.47,
+          "top": 470.97,
           "right": 509,
-          "bottom": 505.47,
+          "bottom": 560.97,
           "left": 65,
           "width": 444,
-          "height": 70
+          "height": 90
         },
         "stem": {
-          "top": 470.47,
-          "right": 494,
-          "bottom": 494.47,
-          "left": 80,
-          "width": 414,
+          "top": 519.97,
+          "right": 361.77,
+          "bottom": 543.97,
+          "left": 100.75,
+          "width": 261.02,
           "height": 24
         },
         "recordButton": {
-          "top": 517.47,
+          "top": 572.97,
           "right": 283,
-          "bottom": 573.47,
+          "bottom": 628.97,
           "left": 65,
           "width": 218,
           "height": 56
         },
-        "guidance": {
-          "top": 585.47,
-          "right": 509,
-          "bottom": 625.47,
-          "left": 65,
-          "width": 444,
-          "height": 40
-        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
         "panel": {
-          "top": 73.52,
+          "top": 109.02,
           "right": 537,
-          "bottom": 694.47,
+          "bottom": 658.97,
           "left": 37,
           "width": 500,
-          "height": 620.95
+          "height": 549.95
         },
         "image": {
           "complete": true,
@@ -2492,10 +2431,9 @@
         "recordButtonHeightOk": true,
         "imageFrameHeightOk": true,
         "imageContained": true,
-        "guidanceCollapsed": true,
         "panelAtTop": true,
-        "panelScrollHeight": 611,
-        "panelClientHeight": 611,
+        "panelScrollHeight": 540,
+        "panelClientHeight": 540,
         "horizontalOverflow": false
       },
       "screenshot": "HWG7-SR-013--ipad-safari-landscape-1024x768.png"
@@ -2509,43 +2447,42 @@
       "fallbackVisible": true,
       "stableFrameHeight": true,
       "stablePromptTop": true,
-      "stemAndRecordRemainVisible": true,
-      "guidanceCollapsed": true
+      "stemAndRecordRemainVisible": true
     },
     "before": {
       "frame": {
-        "top": 258.52,
+        "top": 294.02,
         "right": 509,
-        "bottom": 427.47,
+        "bottom": 462.97,
         "left": 65,
         "width": 444,
         "height": 168.95
       },
       "prompt": {
-        "top": 435.47,
+        "top": 470.97,
         "right": 509,
-        "bottom": 505.47,
+        "bottom": 560.97,
         "left": 65,
         "width": 444,
-        "height": 70
+        "height": 90
       }
     },
     "after": {
       "frame": {
-        "top": 258.52,
+        "top": 294.02,
         "right": 509,
-        "bottom": 427.47,
+        "bottom": 462.97,
         "left": 65,
         "width": 444,
         "height": 168.95
       },
       "prompt": {
-        "top": 435.47,
+        "top": 470.97,
         "right": 509,
-        "bottom": 505.47,
+        "bottom": 560.97,
         "left": 65,
         "width": 444,
-        "height": 70
+        "height": 90
       }
     },
     "screenshot": "HWG7-SR-013--ipad-safari-landscape-1024x768--missing-image-fallback.png"

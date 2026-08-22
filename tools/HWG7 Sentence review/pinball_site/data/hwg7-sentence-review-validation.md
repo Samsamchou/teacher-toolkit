@@ -1,74 +1,71 @@
-# HWG7 Sentence Review 題庫驗證報告
+# HWG7 Sentence Review 題庫驗證報告 v2
 
 - 驗證日期：2026-08-22
-- 題庫版本：`hwg7-sr-v1-confirmed`
+- 題庫版本：`hwg7-sr-v2-answer-only`
 - 單元：`hwg7-sr`／`HWG7 SR`
-- 評分版本：`a1-v1`
-- 驗證結果：**PASS（教師內容確認與技術驗證均通過）**
+- 評分版本：`a1-v2-answer-only`
+- 驗證結果：**PASS（本機、Firebase Emulator 與正式線上）**
+- 部署狀態：**已部署至 `setencerevieworalpractice`；2026-08-22 22:08（Asia/Taipei）查驗完成**
 
 ## 已確認內容
 
-- 第 5 題保留精確句子：`They’re his caps.`
-- 第 13 題保留精確句子：`She would like some salad.`
-- 13 張圖片皆有中性繁體中文替代文字。
-- 除問句外，共 17 個朗讀句／可接受答案版本皆含發音難字與語調分析。
-- `caps /ps/`、`noodles /z/`、`would /d/` 的提醒已納入。
-- 降調只作教學建議；合理 A1 口音、自然弱化與思考停頓不會自動判定未達標。
-- 所列短答與完整答皆為各自獨立的滿分答案。
+- 第 5 題固定為 `They’re his caps.`；轉錄成 `They are his caps.` 視為等值。
+- 第 13 題固定為 `She would like some salad.`。
+- 題型二只錄、只評答句，不把問句列入逐字稿或分數。
+- 已列出的短答與完整答都是獨立滿分答案；`doesn’t`／`does not`、`I’d`／`I would`、`It’s`／`It is` 等依目標句做等值正規化。
+- 第 6 題鷹架：`___ her _____.`；第 8、10 題：`His ______ _____.`。
+- 除問句外的目標句與答案均保留發音難字、句子重音與語調分析，供單一改善建議使用。
+- 所有英文介面使用自架 Comic Relief；7 題朗讀題使用 OpenAI `gpt-4o-mini-tts`、`marin`、原生 `speed: 0.8` 的靜態 MP3。
+
+## 固定評分公式
+
+兩種題型都使用：
+
+`總分 = 準確度 × 50% + 完整度 × 30% + 流暢度 × 20%`
+
+- 字詞對齊符號：`C` 正確、`S` 替代、`D` 刪漏、`E` 多餘字、`N` 目標字數。
+- 朗讀準確度：`round(100 × C ÷ (C + S + E))`。
+- 朗讀完整度：`round(100 × (C + S) ÷ N)`。
+- 問答題只針對答句，在所有可接受答案中選擇最佳版本。非完全正確時：`答句準確度 = 核心內容正確度 × 70% + 句型正確度 × 30%`；答句完整度依已嘗試的核心／句型槽位權重計算。
+- 任何列為滿分的短答或完整答完全命中時，準確度與完整度都是 100；必要核心答案錯誤或缺漏時，總分上限為 59。
+- 流暢度依錄音時長、停頓與立即重複等固定規則計算；合理 A1 口音、自然弱化與教學用語調提示不會單獨造成未達標。
+- `score >= 80` 即達標；每題最多 3 次有效嘗試。三次仍未達標時顯示正確示範、記錄 `not_met`，仍可發射彈珠。
+- 系統或錄音服務失敗不消耗有效嘗試。
 
 ## 機器驗證結果
 
 | 檢查項目 | 結果 |
 |---|---:|
-| 題庫總數 | 13 |
-| 有效題目 | 13 |
-| 題型 1 `read_aloud` | 7 |
-| 題型 2 `question_answer` | 6 |
-| 題型 2 滿分答案版本 | 10 |
-| 每局題數 | 12 |
-| 每位玩家回合 | 6 |
-| 同局不重複題目 | 通過 |
-| A 題型 1／B 題型 2 起始模擬 | 通過 |
-| A 題型 2／B 題型 1 起始模擬 | 通過 |
-| 抽題與嚴格交替模擬 | 500／500 局通過 |
-| 達標公式 | `score >= 80` |
-| 每題有效嘗試上限 | 3 |
-| 三次未達標後顯示示範、記錄未達標並允許發射 | 通過 |
-| 系統失敗不消耗有效次數 | 通過 |
-| 重複 ID | 0 |
-| 圖片 | 13 |
-| 缺圖／無效檔頭 | 0／0 |
+| 題庫／有效題目 | 13／13 |
+| 題型一／題型二 | 7／6 |
+| 題型二滿分答案版本 | 10 |
+| 每局題數／每位玩家回合 | 12／6 |
+| 固定六回合輪替抽樣 | 250／250 PASS |
+| 圖片／缺圖／無效檔頭 | 13／0／0 |
 | 圖片總位元組 | 13,064,161 |
-| JSON／瀏覽器 JS 同步 | 通過 |
-| 待複核欄位 | 0 |
+| 網站測試 | 35／35 PASS |
+| Functions 測試 | 49／49 PASS |
+| 逐題版面 | 26／26 PASS；另 1 張缺圖 fallback PASS |
+| TTS MP3 | 7／7；HTTP 200、`audio/mpeg`、長度相符 |
+| Comic Relief | Regular／Bold 皆 HTTP 200、`font/ttf` |
+| 教師錄音 Emulator | 匿名 401；登入 200；`audio/webm`；位元組完全相同 |
+| 正式線上 QA | 14／14 PASS；首題開局 200、放棄 200、瀏覽器錯誤 0 |
+| 正式部署檔案 | 11／11 與本機 SHA-256 完全一致 |
+| 正式 Functions | 8／8 ACTIVE；Node.js 22；`asia-east1` |
+| Firestore／Storage 匿名存取 | 403／403 |
 | warnings／errors | 0／0 |
-
-## 評分公式參考
-
-題型 1：
-
-- `accuracy = 100 × C / (C + S + E)`
-- `completeness = 100 × (C + S) / N`
-- `score = 0.40 × accuracy + 0.35 × completeness + 0.25 × fluency`
-
-題型 2 依 `a1-v1` 固定規則分開計算答案內容、完整度與流暢度；若核心答案錯誤或缺漏，分數上限為 59。所有結果都由程式固定公式計算，OpenAI 只負責轉錄與質性回饋，不自由決定分數。
-
-學生回饋固定使用簡短、鼓勵式繁體中文，且只給一項可執行的改進提醒；發音與語調分析會優先用於該提醒。
 
 ## 檔案與 SHA-256
 
 | 檔案 | 位元組 | SHA-256 |
 |---|---:|---|
-| `data/hwg7-sentence-review.json` | 39,790 | `7467599206EAA55F41E38F82BF0A443BC8A2A8E893B1799EE8D33313B8EA2B12` |
-| `data/hwg7-sentence-review.js` | 32,687 | `CB625CFCD00A22A528871335D82BAF8D0F4564BC74BEBFA923D7B51DBE0590B4` |
-| `scripts/validate-question-bank.mjs` | 21,307 | `F66632A6C9082D02366FF4DDEC832CA2BC95271126887C3FC5519CEF9D96E5D6` |
+| `data/hwg7-sentence-review.json` | 43,374 | `83c96a02a45b45517921ab893ef4cf12bc25cf79a3e92d813662dd715fe060aa` |
+| `data/hwg7-sentence-review.js` | 34,426 | `dec3e470c7e5644229a5dd4e96049450c552eeeb2ccaa087e42355a0bd5091f9` |
+| `functions/data/question-bank.json` | 40,365 | `9324cecf8439309577386a76b70518ef956b4ad54f50ea404c0eb1eb351e53be` |
+| `audio/hwg7-sr/manifest.json` | 2,459 | `900c867d425e82f36399a1724719b29866c0a98f80444a7f20600a38293dcffc` |
+| `fonts/comic-relief/ComicRelief-Regular.ttf` | 78,272 | `64293c3487e414bfac52cb5b2f64d14266dd96e605a032c6b7d42d9140850f6e` |
+| `fonts/comic-relief/ComicRelief-Bold.ttf` | 92,512 | `f503ab3ec87bea8ddf232d8d64341b6cf2b97a2e1849eb007b8d48761c5db918` |
 
-## 驗證方式
+## 驗證範圍限制
 
-```powershell
-npm run validate
-npm test
-npm --prefix functions test
-```
-
-正式 OpenAI 語音、實體 iPad／Chrome 麥克風與正式 Firebase 流程仍屬部署前／部署後驗收，不在本報告的離線 PASS 範圍內。
+iPad Safari 使用 1024×768 橫式、觸控與 Safari User-Agent 的 Chromium 隔離模擬，不等同實體 Safari WebKit。正式 Firebase 已完成機器驗證；實體 iPad 的麥克風、AI 語音與教師登入後錄音播放仍需由教師真機抽查。

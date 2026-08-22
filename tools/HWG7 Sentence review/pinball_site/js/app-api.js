@@ -103,6 +103,44 @@
     return post("/api/teacher", { action, ...values }, { teacher: true });
   }
 
+  async function teacherRecording(attemptId, { signal } = {}) {
+    const token = teacherToken();
+    if (!token) {
+      const error = new Error("請先登入教師後台。");
+      error.code = "teacher_session_required";
+      error.status = 401;
+      throw error;
+    }
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "audio/*",
+      Authorization: `Bearer ${token}`,
+    };
+    const checkToken = await appCheckToken();
+    if (checkToken) headers["X-Firebase-AppCheck"] = checkToken;
+    const response = await fetch("/api/teacher/recording", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ attemptId }),
+      signal,
+    });
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      const error = new Error(payload.message || "錄音服務暫時無法提供，請稍後再試。");
+      error.status = response.status;
+      error.code = payload.error?.code || "recording_request_failed";
+      if (response.status === 401) clearTeacherToken();
+      throw error;
+    }
+    const contentType = String(response.headers.get("Content-Type") || "").toLowerCase();
+    if (!contentType.startsWith("audio/")) {
+      const error = new Error("錄音格式不正確，請稍後再試。");
+      error.status = 503;
+      error.code = "recording_content_type_invalid";
+      throw error;
+    }
+    return response.blob();
+  }
   async function teacherLogout() {
     try {
       if (teacherToken()) await teacherAction("logout");
@@ -119,6 +157,7 @@
     completeGame,
     teacherLogin,
     teacherAction,
+    teacherRecording,
     teacherLogout,
     hasTeacherSession: () => Boolean(teacherToken()),
     clearTeacherToken,

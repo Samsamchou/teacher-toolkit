@@ -160,7 +160,8 @@ function layoutMetricsExpression() {
     const prompt = document.querySelector('[data-testid="question-prompt"]');
     const stem = document.querySelector('[data-testid="question-stem"]');
     const record = document.querySelector('[data-testid="speech-record-button"]');
-    const guidance = document.querySelector('[data-testid="speech-guidance"]');
+    const scaffold = document.querySelector('[data-testid="answer-scaffold"]');
+    const modelAudio = document.querySelector('.speech-model-audio-button');
     const panel = document.querySelector('[data-testid="control-panel"]');
     const qaRoot = document.querySelector('[data-layout-qa-question]');
     const rect = element => {
@@ -184,7 +185,7 @@ function layoutMetricsExpression() {
     const promptRect = rect(prompt);
     const stemRect = rect(stem);
     const recordRect = rect(record);
-    const guidanceRect = rect(guidance);
+    const scaffoldRect = rect(scaffold);
     const panelRect = rect(panel);
     const follows = (first, second) => Boolean(
       first && second && (first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING)
@@ -200,7 +201,10 @@ function layoutMetricsExpression() {
       prompt: promptRect,
       stem: stemRect,
       recordButton: recordRect,
-      guidance: guidanceRect,
+      scaffold: scaffoldRect,
+      scaffoldText: scaffold?.textContent?.trim() || "",
+      hasScaffold: Boolean(scaffold),
+      hasModelAudio: Boolean(modelAudio),
       panel: panelRect,
       image: image ? {
         complete: image.complete,
@@ -209,7 +213,7 @@ function layoutMetricsExpression() {
         objectFit: getComputedStyle(image).objectFit
       } : null,
       fallbackVisible: Boolean(fallback),
-      domOrder: follows(frame, stem) && follows(stem, record) && follows(record, guidance),
+      domOrder: follows(frame, stem) && follows(stem, record),
       visualOrder: Boolean(frameRect && promptRect && recordRect)
         && frameRect.bottom <= promptRect.top + 0.5
         && promptRect.bottom <= recordRect.top + 0.5,
@@ -217,7 +221,7 @@ function layoutMetricsExpression() {
       recordButtonHeightOk: Boolean(recordRect) && recordRect.height >= 55.5,
       imageFrameHeightOk: Boolean(frameRect) && frameRect.height <= 224.5,
       imageContained: !image || getComputedStyle(image).objectFit === "contain",
-      guidanceCollapsed: Boolean(guidance) && guidance.open === false,
+
       panelAtTop: Boolean(panel) && panel.scrollTop === 0,
       panelScrollHeight: panel?.scrollHeight || 0,
       panelClientHeight: panel?.clientHeight || 0,
@@ -227,6 +231,8 @@ function layoutMetricsExpression() {
 }
 
 function checksFor(metrics, expectedQuestionId) {
+  const question = bank.questions.find(item => item.id === expectedQuestionId);
+  const expectedScaffold = question?.answerPromptStructure || "";
   return {
     correctQuestion: metrics.questionId === expectedQuestionId,
     viewportExact: metrics.viewport.width > 0 && metrics.viewport.height > 0,
@@ -236,7 +242,8 @@ function checksFor(metrics, expectedQuestionId) {
     recordButtonHeightOk: metrics.recordButtonHeightOk,
     imageFrameHeightOk: metrics.imageFrameHeightOk,
     imageContained: metrics.imageContained,
-    guidanceCollapsed: metrics.guidanceCollapsed,
+    modelAudioMatchesType: question?.type === "read_aloud" ? metrics.hasModelAudio : !metrics.hasModelAudio,
+    scaffoldMatchesQuestion: expectedScaffold ? metrics.scaffoldText === expectedScaffold : !metrics.hasScaffold,
     panelAtTop: metrics.panelAtTop,
     noHorizontalOverflow: !metrics.horizontalOverflow,
     imageLoaded: Boolean(metrics.image?.complete && metrics.image?.naturalWidth > 0 && metrics.image?.naturalHeight > 0)
@@ -332,8 +339,7 @@ async function captureFallback(client, baseUrl, viewport) {
     fallbackVisible: after.fallbackVisible,
     stableFrameHeight: Math.abs(after.frame.height - before.frame.height) <= 0.5,
     stablePromptTop: Math.abs(after.prompt.top - before.prompt.top) <= 0.5,
-    stemAndRecordRemainVisible: after.imageStemRecordInFirstViewport,
-    guidanceCollapsed: after.guidanceCollapsed
+    stemAndRecordRemainVisible: after.imageStemRecordInFirstViewport
   };
   const screenshot = await client.call("Page.captureScreenshot", {
     format: "png",

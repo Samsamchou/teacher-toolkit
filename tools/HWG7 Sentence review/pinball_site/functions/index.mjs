@@ -11,6 +11,7 @@ import {
   DomainValidationError,
   decideGameCompletion,
   decideGameStart,
+  expectedPlayerForTurn as expectedAssignedPlayerForTurn,
   pairRotationId,
   taipeiDate,
   validateCompletionSummary,
@@ -212,10 +213,7 @@ function requiredSessionId(value) {
 }
 
 function expectedPlayerForTurn(session, turnIndex) {
-  const playerKey = turnIndex % 2 === 0 ? "A" : "B";
-  const player = session.assignment?.players?.[playerKey];
-  if (!player) throw new DomainValidationError("invalid_game_assignment", "遊戲題型分配無法使用。", 409);
-  return { playerKey, ...player };
+  return expectedAssignedPlayerForTurn(session.assignment, turnIndex);
 }
 
 export const startGame = apiEndpoint(async (request, response) => {
@@ -300,7 +298,7 @@ export const abandonGame = apiEndpoint(async (request, response) => {
     }
     status = "abandoned";
   });
-  return response.status(200).json({ ok: true, status, flipped: false });
+  return response.status(200).json({ ok: true, status, nextGamePattern: "fixed_round_alternation" });
 });
 
 async function transcribeAudio(audio) {
@@ -480,7 +478,7 @@ export const completeGame = apiEndpoint(async (request, response) => {
     const rotation = rotationSnapshot.exists ? rotationSnapshot.data() : null;
     const decision = decideGameCompletion({ session, rotation });
     if (decision.action === "already_completed") {
-      outcome = { resultId: sessionId, completedGameCount: rotation?.completedGameCount ?? null, flipped: false, idempotent: true };
+      outcome = { resultId: sessionId, completedGameCount: rotation?.completedGameCount ?? null, nextGamePattern: "fixed_round_alternation", idempotent: true };
       return;
     }
 
@@ -524,7 +522,7 @@ export const completeGame = apiEndpoint(async (request, response) => {
       deletedAt: null,
       deletedBySession: null,
     });
-    outcome = { resultId: sessionId, completedGameCount: decision.completedGameCount, flipped: true, idempotent: false };
+    outcome = { resultId: sessionId, completedGameCount: decision.completedGameCount, nextGamePattern: "fixed_round_alternation", idempotent: false };
   });
   return response.status(200).json({ ok: true, ...outcome });
 });
@@ -621,6 +619,60 @@ function teacherRecord(data) {
   };
 }
 
+function requiredAttemptId(value) {
+  const attemptId = typeof value === "string" ? value.trim() : "";
+  if (!/^[A-Za-z0-9_-]{10,180}$/u.test(attemptId)) {
+    throw new DomainValidationError("invalid_attempt_id", "錄音紀錄格式不正確。");
+  }
+  return attemptId;
+}
+
+function isStorageNotFound(error) {
+  return [404, "404"].includes(error?.code) || Number(error?.statusCode) === 404;
+}
+
+export const teacherRecording = apiEndpoint(async (request, response) => {
+  await requireTeacherSession(request);
+  const attemptId = requiredAttemptId(request.body?.attemptId);
+  const { db, bucket } = adminServices();
+  const snapshot = await db.collection("practiceAttempts").doc(attemptId).get();
+  if (!snapshot.exists) {
+    throw new DomainValidationError("recording_not_found", "找不到這段錄音。", 404);
+  }
+  const attempt = snapshot.data();
+  const expiresAtMs = new Date(asIso(attempt.expiresAt)).getTime();
+  if (attempt.recordingDeletedAt || (Number.isFinite(expiresAtMs) && expiresAtMs <= Date.now())) {
+    throw new DomainValidationError("recording_expired", "這段錄音已超過 30 天保存期限。", 410);
+  }
+  if (!attempt.recordingPath) {
+    throw new DomainValidationError("recording_not_found", "找不到這段錄音。", 404);
+  }
+
+  const file = bucket.file(attempt.recordingPath);
+  let metadata;
+  let bytes;
+  try {
+    [metadata] = await file.getMetadata();
+    [bytes] = await file.download();
+  } catch (error) {
+    if (isStorageNotFound(error)) {
+      throw new DomainValidationError("recording_not_found", "找不到這段錄音。", 404);
+    }
+    throw new DomainValidationError("recording_storage_unavailable", "錄音服務暫時無法提供，請稍後再試。", 503);
+  }
+
+  const contentType = /^audio\/[a-z0-9.+-]+$/iu.test(String(metadata?.contentType || ""))
+    ? metadata.contentType
+    : "application/octet-stream";
+  response.set("Content-Type", contentType);
+  response.set("Content-Length", String(bytes.length));
+  response.set("Content-Disposition", "inline");
+  response.set("Cache-Control", "private, no-store, max-age=0");
+  response.set("Pragma", "no-cache");
+  response.set("Accept-Ranges", "none");
+  return response.status(200).send(bytes);
+});
+
 export const teacherApi = apiEndpoint(async (request, response) => {
   const auth = await requireTeacherSession(request);
   const action = typeof request.body?.action === "string" ? request.body.action : "";
@@ -643,19 +695,6 @@ export const teacherApi = apiEndpoint(async (request, response) => {
     return response.status(200).json({ ok: true, records: records.map(teacherRecord), count: records.length, truncated: snapshot.size >= 500 });
   }
 
-  if (action === "recordingUrl") {
-    const attemptId = typeof request.body?.attemptId === "string" ? request.body.attemptId : "";
-    if (!/^[A-Za-z0-9_-]{10,180}$/u.test(attemptId)) throw new DomainValidationError("invalid_attempt_id", "錄音紀錄格式不正確。");
-    const snapshot = await db.collection("practiceAttempts").doc(attemptId).get();
-    if (!snapshot.exists) throw new DomainValidationError("recording_not_found", "找不到這段錄音。", 404);
-    const attempt = snapshot.data();
-    if (!attempt.recordingPath || attempt.recordingDeletedAt || new Date(asIso(attempt.expiresAt)).getTime() <= Date.now()) {
-      throw new DomainValidationError("recording_expired", "這段錄音已超過 30 天保存期限。", 410);
-    }
-    const expires = Date.now() + 5 * 60 * 1000;
-    const [url] = await bucket.file(attempt.recordingPath).getSignedUrl({ action: "read", expires });
-    return response.status(200).json({ ok: true, url, expiresAt: new Date(expires).toISOString() });
-  }
 
   if (action === "softDeleteResult") {
     const resultId = requiredSessionId(request.body?.resultId);

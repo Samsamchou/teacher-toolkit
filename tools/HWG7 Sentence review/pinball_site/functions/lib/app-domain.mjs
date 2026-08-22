@@ -65,16 +65,37 @@ export function pairRotationId({ unitId, date, students }) {
 
 export function assignmentForCompletedCount(students, completedGameCount = 0) {
   const [studentA, studentB] = validateStudentCodes(students);
-  const completed = Number.isInteger(completedGameCount) && completedGameCount >= 0 ? completedGameCount : 0;
-  const aStartsWithReadAloud = completed % 2 === 0;
+  const completed = Number.isInteger(completedGameCount) && completedGameCount >= 0
+    ? completedGameCount
+    : 0;
   return {
-    phase: aStartsWithReadAloud ? "a_type1_b_type2" : "a_type2_b_type1",
-    firstTurnType: aStartsWithReadAloud ? QUESTION_TYPES.READ_ALOUD : QUESTION_TYPES.QUESTION_ANSWER,
+    phase: "round_alternating_fixed_start",
+    firstTurnType: QUESTION_TYPES.READ_ALOUD,
+    completedGameCountAtStart: completed,
     players: {
-      A: { studentCode: studentA, inputPosition: 1, questionType: aStartsWithReadAloud ? QUESTION_TYPES.READ_ALOUD : QUESTION_TYPES.QUESTION_ANSWER },
-      B: { studentCode: studentB, inputPosition: 2, questionType: aStartsWithReadAloud ? QUESTION_TYPES.QUESTION_ANSWER : QUESTION_TYPES.READ_ALOUD },
+      A: { studentCode: studentA, inputPosition: 1, firstRoundQuestionType: QUESTION_TYPES.READ_ALOUD },
+      B: { studentCode: studentB, inputPosition: 2, firstRoundQuestionType: QUESTION_TYPES.QUESTION_ANSWER },
     },
   };
+}
+
+export function questionTypeForTurn(turnIndex) {
+  if (!Number.isInteger(turnIndex) || turnIndex < 0 || turnIndex >= 12) {
+    throw new DomainValidationError("invalid_turn_index", "遊戲回合編號不正確。");
+  }
+  const roundIndex = Math.floor(turnIndex / 2);
+  const isPlayerA = turnIndex % 2 === 0;
+  const aReadsThisRound = roundIndex % 2 === 0;
+  return isPlayerA === aReadsThisRound
+    ? QUESTION_TYPES.READ_ALOUD
+    : QUESTION_TYPES.QUESTION_ANSWER;
+}
+
+export function expectedPlayerForTurn(assignment, turnIndex) {
+  const playerKey = turnIndex % 2 === 0 ? "A" : "B";
+  const player = assignment?.players?.[playerKey];
+  if (!player) throw new DomainValidationError("invalid_game_assignment", "遊戲題型分配無法使用。", 409);
+  return { playerKey, ...player, questionType: questionTypeForTurn(turnIndex), round: Math.floor(turnIndex / 2) + 1 };
 }
 
 export function decideGameStart({ rotation = null, students, unitId, now = new Date(), requestId }) {
@@ -123,16 +144,16 @@ export function decideGameCompletion({ session, rotation }) {
     throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
   }
   if (session.status === "completed") {
-    return { action: "already_completed", flip: false, completedGameCount: rotation?.completedGameCount ?? null };
+    return { action: "already_completed", resetForNextGame: true, completedGameCount: rotation?.completedGameCount ?? null };
   }
   if (session.status !== "active") {
-    throw new DomainValidationError("game_not_active", "這一局已失效，不能更新輪替。", 409);
+    throw new DomainValidationError("game_not_active", "這一局已失效，不能完成紀錄。", 409);
   }
   if (!rotation || rotation.activeGameId !== session.id) {
-    throw new DomainValidationError("rotation_mismatch", "遊戲輪替狀態不一致，請回首頁重新開始。", 409);
+    throw new DomainValidationError("rotation_mismatch", "遊戲狀態不一致，請回首頁重新開始。", 409);
   }
   const completedGameCount = (Number.isInteger(rotation.completedGameCount) ? rotation.completedGameCount : 0) + 1;
-  return { action: "complete", flip: true, completedGameCount };
+  return { action: "complete", resetForNextGame: true, completedGameCount };
 }
 
 export function validateCompletionSummary(value) {
@@ -141,7 +162,7 @@ export function validateCompletionSummary(value) {
   }
   const turnSummaries = Array.isArray(value.turnSummaries) ? value.turnSummaries : [];
   if (turnSummaries.length !== 12) {
-    throw new DomainValidationError("incomplete_game", "只有完整完成 12 回合的遊戲才會翻轉下一局題型。", 409);
+    throw new DomainValidationError("incomplete_game", "必須完整完成 12 次作答才能儲存本局紀錄。", 409);
   }
   const indexes = turnSummaries.map((turn) => Number(turn?.turnIndex));
   if (new Set(indexes).size !== 12 || !indexes.every((index) => Number.isInteger(index) && index >= 0 && index < 12)) {

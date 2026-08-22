@@ -29,6 +29,7 @@
       { "source": "/api/evaluate-speech", "function": { "functionId": "evaluateSpeech", "region": "asia-east1" } },
       { "source": "/api/game/complete", "function": { "functionId": "completeGame", "region": "asia-east1" } },
       { "source": "/api/teacher/login", "function": { "functionId": "teacherLogin", "region": "asia-east1" } },
+      { "source": "/api/teacher/recording", "function": { "functionId": "teacherRecording", "region": "asia-east1" } },
       { "source": "/api/teacher", "function": { "functionId": "teacherApi", "region": "asia-east1" } }
     ],
     "headers": [

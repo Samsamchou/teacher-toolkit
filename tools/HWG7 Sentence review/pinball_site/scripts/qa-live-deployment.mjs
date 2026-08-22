@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { once } from "node:events";
 import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { createServer as createNetServer } from "node:net";
@@ -17,6 +17,8 @@ const liveFullGameManifestPath = process.env.LIVE_FULL_GAME_MANIFEST || "";
 const projectId = "setencerevieworalpractice";
 const storageBucket = "setencerevieworalpractice.firebasestorage.app";
 const bank = JSON.parse(await readFile(path.join(siteRoot, "data", "hwg7-sentence-review.json"), "utf8"));
+const ttsManifest = JSON.parse(await readFile(path.join(siteRoot, "audio", "hwg7-sr", "manifest.json"), "utf8"));
+const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
 
 const browserCandidates = [
   process.env.CHROME_PATH,
@@ -192,14 +194,15 @@ async function runLiveFullGame(appCheckToken) {
   try {
     const session = await post("/api/game/start", { unitId: "hwg7-sr", students, requestId: `full-game-${randomUUID()}` });
     activeSessionId = session.gameSessionId;
-    if (session.assignment?.phase !== "a_type1_b_type2" || session.assignment?.firstTurnType !== "read_aloud") {
+    if (session.assignment?.phase !== "round_alternating_fixed_start" || session.assignment?.firstTurnType !== "read_aloud") {
       throw new Error("完整局 QA 初始題型不是 A 題型 1／B 題型 2。");
     }
     const results = [];
     const turnSummaries = [];
     for (let turnIndex = 0; turnIndex < manifest.length; turnIndex += 1) {
       const item = manifest[turnIndex];
-      const expectedType = turnIndex % 2 === 0 ? "read_aloud" : "question_answer";
+      const roundIndex = Math.floor(turnIndex / 2);
+      const expectedType = (turnIndex % 2 === 0) === (roundIndex % 2 === 0) ? "read_aloud" : "question_answer";
       if (item.questionType !== expectedType) throw new Error(`第 ${turnIndex + 1} 回合題型未交替。`);
       const audioBase64 = (await readFile(item.audioPath)).toString("base64");
       const evaluation = await post("/api/evaluate-speech", {
@@ -243,12 +246,12 @@ async function runLiveFullGame(appCheckToken) {
     activeSessionId = "";
     return {
       tested: true,
-      ok: completed.flipped === true && completed.completedGameCount === 1 && repeated.flipped === false && repeated.idempotent === true && next.assignment?.phase === "a_type2_b_type1" && abandoned.status === "abandoned" && abandoned.flipped === false,
+      ok: completed.nextGamePattern === "fixed_round_alternation" && completed.completedGameCount === 1 && repeated.nextGamePattern === "fixed_round_alternation" && repeated.idempotent === true && next.assignment?.phase === "round_alternating_fixed_start" && abandoned.status === "abandoned" && abandoned.nextGamePattern === "fixed_round_alternation",
       completedGameCount: completed.completedGameCount,
       firstPhase: session.assignment.phase,
       repeatedIdempotent: repeated.idempotent === true,
       nextPhase: next.assignment?.phase || "",
-      nextGameAbandoned: abandoned.status === "abandoned" && abandoned.flipped === false,
+      nextGameAbandoned: abandoned.status === "abandoned" && abandoned.nextGamePattern === "fixed_round_alternation",
       attemptCount: results.length,
       recordingsStored: results.filter(result => result.recordingStored).length,
       results,
@@ -291,6 +294,29 @@ async function staticChecks() {
     });
   }
 
+  const deployAssetPaths = [
+    "index.html",
+    "js/app-api.js",
+    "fonts/comic-relief/ComicRelief-Regular.ttf",
+    "fonts/comic-relief/ComicRelief-Bold.ttf",
+    ...ttsManifest.items.map(item => item.path),
+  ];
+  const deployAssets = [];
+  for (const assetPath of deployAssetPaths) {
+    const response = await fetch(`${baseUrl}/${assetPath}?assetQa=${Date.now()}`, { headers: { "Cache-Control": "no-cache" } });
+    const remoteBytes = Buffer.from(await response.arrayBuffer());
+    const localBytes = await readFile(path.join(siteRoot, ...assetPath.split("/")));
+    deployAssets.push({
+      path: assetPath,
+      status: response.status,
+      contentType: response.headers.get("content-type") || "",
+      bytes: remoteBytes.length,
+      sha256: sha256(remoteBytes),
+      localSha256: sha256(localBytes),
+      hashMatches: sha256(remoteBytes) === sha256(localBytes),
+    });
+  }
+
   const missingAppCheck = await fetch(`${baseUrl}/api/game/start`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: baseUrl },
@@ -311,6 +337,8 @@ async function staticChecks() {
     htmlHasNoSecretMarker: !/sk-proj-|OPENAI_API_KEY\s*=/u.test(html),
     imageCount: images.length,
     images,
+    deployAssetCount: deployAssets.length,
+    deployAssets,
     missingAppCheck: { status: missingAppCheck.status, code: missingAppCheckBody.error?.code || "" },
     wrongOrigin: { status: wrongOrigin.status, code: wrongOriginBody.error?.code || "" },
     firestoreAnonymousStatus: firestoreRead.status,
@@ -367,6 +395,17 @@ async function browserChecks() {
     if (navigation.errorText) throw new Error(`正式站導覽失敗：${navigation.errorText}`);
     await waitUntil(() => evaluate(client, "Boolean(window.HWG7AppApi && document.querySelector('h1'))"), 60000, "正式首頁載入");
 
+    const teacherRecordingSecurity = await evaluate(client, `(async () => {
+      const tokenResult = await firebase.appCheck().getToken(false);
+      const response = await fetch("/api/teacher/recording", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Firebase-AppCheck": tokenResult.token },
+        body: JSON.stringify({ attemptId: "qa-recording-check-0001" }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      return { status: response.status, code: payload.error?.code || "" };
+    })()`, 60000);
+
     const desktopHome = await evaluate(client, `(() => {
       const text = document.body.innerText;
       const modeLabels = ["HWG7 SR", "HWG5 SR", "HWG8 SR", "HWG6 SR"];
@@ -382,7 +421,7 @@ async function browserChecks() {
         pendingCount: modeButtons.filter(button => button.disabled && button.innerText.includes("題庫準備中")).length,
         startDisabled: Boolean(start?.disabled),
         horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
-        hasExpectedSummary: text.includes("每局12題") && text.includes("每人6回合") && text.includes("80分達標"),
+        hasNoBuilderSummary: !text.includes("每局12題") && !text.includes("每人6回合") && !text.includes("80分達標"),
       };
     })()`);
     const desktopScreenshot = await captureScreenshot(client, "desktop-home-1366x768.png");
@@ -445,7 +484,7 @@ async function browserChecks() {
           if (session?.gameSessionId) {
             try {
               const abandoned = await window.HWG7AppApi.abandonGame(session.gameSessionId);
-              outcome.abandoned = abandoned?.status === "abandoned" && abandoned?.flipped === false;
+              outcome.abandoned = abandoned?.status === "abandoned" && abandoned?.nextGamePattern === "fixed_round_alternation";
             } catch (error) {
               outcome.abandoned = false;
               outcome.abandonError = error?.code || error?.message || "abandon_failed";
@@ -541,10 +580,18 @@ async function browserChecks() {
     const consoleErrors = client.events
       .filter(event => event.method === "Runtime.consoleAPICalled" && event.params.type === "error")
       .map(event => event.params.args?.map(argument => argument.value || argument.description || "").join(" ") || "console error");
+    let ignoredTeacherRecording401 = false;
     const logErrors = client.events
       .filter(event => event.method === "Log.entryAdded" && event.params.entry?.level === "error")
       .map(event => event.params.entry.text || "log error")
-      .filter(text => !/favicon\.ico/iu.test(text));
+      .filter(text => {
+        if (/favicon\.ico/iu.test(text)) return false;
+        if (!ignoredTeacherRecording401 && teacherRecordingSecurity.status === 401 && /status of 401/iu.test(text)) {
+          ignoredTeacherRecording401 = true;
+          return false;
+        }
+        return true;
+      });
     const loadingFailures = client.events
       .filter(event => event.method === "Network.loadingFailed" && !event.params.canceled)
       .map(event => event.params.errorText || "network loading failed");
@@ -554,6 +601,8 @@ async function browserChecks() {
       limitation: "iPad Safari 使用 1024×768 橫式尺寸、觸控與 Safari User-Agent 模擬；不是實體 iPad 的 WebKit 引擎。",
       desktopHome,
       ipadHome,
+      teacherRecordingSecurity,
+      expectedTeacherRecording401Ignored: ignoredTeacherRecording401,
       fullGame,
       speech,
       game,
@@ -585,11 +634,13 @@ async function main() {
     securityHeaders: Object.values(staticResult.headerChecks).every(Boolean),
     noSecretMarker: staticResult.htmlHasNoSecretMarker,
     allImagesOnline: staticResult.imageCount === 13 && staticResult.images.every(image => image.ok),
+    deployedAssetsMatch: staticResult.deployAssetCount === 11 && staticResult.deployAssets.every(asset => asset.status === 200 && asset.hashMatches),
     appCheckRequired: staticResult.missingAppCheck.status === 401 && staticResult.missingAppCheck.code === "app_check_required",
+    teacherRecordingRequiresSession: browserResult.teacherRecordingSecurity.status === 401 && browserResult.teacherRecordingSecurity.code === "teacher_session_required",
     wrongOriginRejected: staticResult.wrongOrigin.status === 403 && staticResult.wrongOrigin.code === "origin_not_allowed",
     firestoreDenied: staticResult.firestoreAnonymousStatus === 403,
     storageDenied: staticResult.storageAnonymousStatus === 403,
-    desktopHomeReady: browserResult.desktopHome.teacherButton && browserResult.desktopHome.inputCount === 2 && browserResult.desktopHome.readyCount === 1 && browserResult.desktopHome.pendingCount === 3 && browserResult.desktopHome.startDisabled && !browserResult.desktopHome.horizontalOverflow && browserResult.desktopHome.hasExpectedSummary,
+    desktopHomeReady: browserResult.desktopHome.teacherButton && browserResult.desktopHome.inputCount === 2 && browserResult.desktopHome.readyCount === 1 && browserResult.desktopHome.pendingCount === 3 && browserResult.desktopHome.startDisabled && !browserResult.desktopHome.horizontalOverflow && browserResult.desktopHome.hasNoBuilderSummary,
     ipadHomeReady: browserResult.ipadHome.width === 1024 && browserResult.ipadHome.height === 768 && browserResult.ipadHome.teacherButtonInViewport && browserResult.ipadHome.inputCount === 2 && !browserResult.ipadHome.horizontalOverflow,
     liveStartWithAppCheck: browserResult.startResponses.some(response => response.status === 200),
     firstQuestionReady: browserResult.game.roundOne && browserResult.game.bothStudentsVisible && browserResult.game.imageLoaded && browserResult.game.promptVisible && !browserResult.game.horizontalOverflow,
@@ -600,7 +651,7 @@ async function main() {
     checks.liveSpeechEndToEnd = browserResult.speech.tested && browserResult.speech.ok && browserResult.speech.valid && browserResult.speech.passed && browserResult.speech.totalScore >= 80 && browserResult.speech.recordingStored && browserResult.speech.transcriptionModel === "gpt-4o-mini-transcribe" && browserResult.speech.abandoned;
   }
   if (liveFullGameManifestPath) {
-    checks.liveFullGameCompletionAndFlip = browserResult.fullGame.tested && browserResult.fullGame.ok && browserResult.fullGame.attemptCount === 12 && browserResult.fullGame.recordingsStored === 12 && browserResult.fullGame.completedGameCount === 1 && browserResult.fullGame.repeatedIdempotent && browserResult.fullGame.nextPhase === "a_type2_b_type1" && browserResult.fullGame.nextGameAbandoned;
+    checks.liveFullGameFixedRoundCompletion = browserResult.fullGame.tested && browserResult.fullGame.ok && browserResult.fullGame.attemptCount === 12 && browserResult.fullGame.recordingsStored === 12 && browserResult.fullGame.completedGameCount === 1 && browserResult.fullGame.repeatedIdempotent && browserResult.fullGame.nextPhase === "round_alternating_fixed_start" && browserResult.fullGame.nextGameAbandoned;
   }
   const report = {
     ok: Object.values(checks).every(Boolean),
@@ -618,6 +669,7 @@ async function main() {
     total: Object.keys(checks).length,
     failedChecks: Object.entries(checks).filter(([, passed]) => !passed).map(([name]) => name),
     imageCount: staticResult.imageCount,
+    deployAssetCount: staticResult.deployAssetCount,
     startStatus: browserResult.startResponses.at(-1)?.status || null,
     abandonStatus: browserResult.abandonResponses.at(-1)?.status || null,
     speech: browserResult.speech,

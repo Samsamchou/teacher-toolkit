@@ -9,6 +9,7 @@ import {
     DomainValidationError,
     decideGameCompletion,
     decideGameStart,
+    expectedPlayerForTurn as expectedAssignedPlayerForTurn,
     pairRotationId,
     taipeiDate,
     validateCompletionSummary,
@@ -67,7 +68,7 @@ const CONTENT_TYPES = {
     ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8",
     ".json": "application/json; charset=utf-8", ".css": "text/css; charset=utf-8", ".png": "image/png", ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg", ".webp": "image/webp", ".mp3": "audio/mpeg", ".mp4": "audio/mp4", ".webm": "audio/webm",
-    ".ogg": "audio/ogg", ".svg": "image/svg+xml"
+    ".ogg": "audio/ogg", ".svg": "image/svg+xml", ".ttf": "font/ttf"
 };
 
 function sendJson(response, statusCode, body) {
@@ -114,7 +115,7 @@ function requiredSessionId(value) {
 }
 
 function expectedPlayer(session, turnIndex) {
-    return session.assignment.players[turnIndex % 2 === 0 ? "A" : "B"];
+    return expectedAssignedPlayerForTurn(session.assignment, turnIndex);
 }
 
 function startLocalGame(body) {
@@ -148,7 +149,7 @@ function abandonLocalGame(body) {
         const rotation = rotations.get(session.rotationId);
         if (rotation?.activeGameId === sessionId) Object.assign(rotation, { activeGameId: null, activeRequestId: null, activeStudents: null, activeAssignment: null, activeUntil: null });
     }
-    return { ok: true, status: session.status, flipped: false };
+    return { ok: true, status: session.status, nextGamePattern: "fixed_round_alternation" };
 }
 
 async function evaluateLocalSpeech(body) {
@@ -187,7 +188,7 @@ function completeLocalGame(body) {
     if (!session) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
     const rotation = rotations.get(session.rotationId);
     const decision = decideGameCompletion({ session, rotation });
-    if (decision.action === "already_completed") return { ok: true, resultId: sessionId, completedGameCount: rotation?.completedGameCount ?? null, flipped: false, idempotent: true };
+    if (decision.action === "already_completed") return { ok: true, resultId: sessionId, completedGameCount: rotation?.completedGameCount ?? null, nextGamePattern: "fixed_round_alternation", idempotent: true };
     const questionIds = summary.turnSummaries.map(turn => turn.questionId);
     if (new Set(questionIds).size !== 12 || questionIds.some(id => !questionMap.has(id))) throw new DomainValidationError("invalid_question_set", "完整遊戲必須包含 12 道不重複題目。", 409);
     for (const turn of summary.turnSummaries) {
@@ -210,7 +211,7 @@ function completeLocalGame(body) {
         })),
         playedAt: completedAt, createdAt: completedAt, deletedAt: null
     });
-    return { ok: true, resultId: sessionId, completedGameCount: decision.completedGameCount, flipped: true, idempotent: false };
+    return { ok: true, resultId: sessionId, completedGameCount: decision.completedGameCount, nextGamePattern: "fixed_round_alternation", idempotent: false };
 }
 
 function loadLocalTeacherConfig() {
@@ -263,7 +264,6 @@ function localTeacherAction(request, body) {
         records.sort((left, right) => right.playedAt.localeCompare(left.playedAt));
         return { ok: true, records, count: records.length, truncated: false };
     }
-    if (body?.action === "recordingUrl") throw new DomainValidationError("local_recording_unavailable", "本機伺服器不保留錄音檔；正式後端會提供 30 天播放。", 410);
     if (body?.action === "softDeleteResult") {
         const id = requiredSessionId(body.resultId);
         const record = results.get(id);
@@ -276,6 +276,15 @@ function localTeacherAction(request, body) {
         return { ok: true };
     }
     throw new DomainValidationError("unknown_teacher_action", "教師後台動作不支援。");
+}
+
+function localTeacherRecording(request, body) {
+    requireLocalTeacher(request);
+    const attemptId = typeof body?.attemptId === "string" ? body.attemptId.trim() : "";
+    if (!/^[A-Za-z0-9_-]{10,180}$/u.test(attemptId)) {
+        throw new DomainValidationError("invalid_attempt_id", "錄音紀錄格式不正確。");
+    }
+    throw new DomainValidationError("local_recording_unavailable", "本機伺服器不保存學生錄音。", 410);
 }
 
 async function serveStatic(request, response) {
@@ -303,6 +312,7 @@ const server = http.createServer(async (request, response) => {
             if (pathname === "/api/evaluate-speech") return sendJson(response, 200, await evaluateLocalSpeech(body));
             if (pathname === "/api/game/complete") return sendJson(response, 200, completeLocalGame(body));
             if (pathname === "/api/teacher/login") return sendJson(response, 200, await localTeacherLogin(request, body));
+            if (pathname === "/api/teacher/recording") return sendJson(response, 200, localTeacherRecording(request, body));
             if (pathname === "/api/teacher") return sendJson(response, 200, localTeacherAction(request, body));
         }
         if (request.method === "GET" || request.method === "HEAD") return await serveStatic(request, response);

@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 import { createPasscodeConfig } from "../lib/teacher-auth.mjs";
 
 const projectId = process.env.GCLOUD_PROJECT || "demo-hwg7-sr";
@@ -9,6 +10,7 @@ const functionRoot = `http://127.0.0.1:5001/${projectId}/${region}`;
 const allowedOrigin = "http://127.0.0.1:5000";
 const bank = JSON.parse(await readFile(new URL("../data/question-bank.json", import.meta.url), "utf8"));
 const db = getFirestore(initializeApp({ projectId }));
+const bucket = getStorage().bucket(`${projectId}.appspot.com`);
 
 async function post(functionName, body, token = "") {
   const headers = { "Content-Type": "application/json", Origin: allowedOrigin };
@@ -16,6 +18,19 @@ async function post(functionName, body, token = "") {
   const response = await fetch(`${functionRoot}/${functionName}`, { method: "POST", headers, body: JSON.stringify(body) });
   const payload = await response.json().catch(() => ({}));
   return { status: response.status, payload };
+}
+
+async function postBinary(functionName, body, token = "") {
+  const headers = { "Content-Type": "application/json", Origin: allowedOrigin };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const response = await fetch(`${functionRoot}/${functionName}`, { method: "POST", headers, body: JSON.stringify(body) });
+  return {
+    status: response.status,
+    contentType: response.headers.get("content-type") || "",
+    cacheControl: response.headers.get("cache-control") || "",
+    contentDisposition: response.headers.get("content-disposition") || "",
+    bytes: Buffer.from(await response.arrayBuffer()),
+  };
 }
 
 function expect(condition, message) {
@@ -26,15 +41,18 @@ await db.collection("privateConfig").doc("teacherAuth").set(await createPasscode
 const students = ["00001", "00002"];
 
 const first = await post("startGame", { unitId: "hwg7-sr", students, requestId: "emulator-request-0001" });
-expect(first.status === 200 && first.payload.assignment.phase === "a_type1_b_type2", "first game assignment failed");
+expect(first.status === 200 && first.payload.assignment.phase === "round_alternating_fixed_start", "first game assignment failed");
 const abandoned = await post("abandonGame", { gameSessionId: first.payload.gameSessionId });
-expect(abandoned.status === 200 && abandoned.payload.flipped === false, "abandon must not flip");
+expect(abandoned.status === 200 && abandoned.payload.nextGamePattern === "fixed_round_alternation", "abandon must preserve the fixed pattern");
 
 const second = await post("startGame", { unitId: "hwg7-sr", students, requestId: "emulator-request-0002" });
-expect(second.status === 200 && second.payload.assignment.phase === "a_type1_b_type2", "abandoned game changed phase");
+expect(second.status === 200 && second.payload.assignment.phase === "round_alternating_fixed_start", "abandoned game changed the fixed pattern");
 const read = bank.questions.filter(question => question.type === "read_aloud").slice(0, 6);
 const answer = bank.questions.filter(question => question.type === "question_answer").slice(0, 6);
-const selected = read.flatMap((question, index) => [question, answer[index]]);
+const selected = read.flatMap((question, index) => index % 2 === 0 ? [question, answer[index]] : [answer[index], question]);
+const recordingPath = `recordings/${second.payload.gameSessionId}/turn-00.webm`;
+const recordingBytes = Buffer.from([0x1a, 0x45, 0xdf, 0xa3, 0x42, 0x86, 0x81, 0x01]);
+await bucket.file(recordingPath).save(recordingBytes, { metadata: { contentType: "audio/webm" } });
 const turnSummaries = [];
 for (let turnIndex = 0; turnIndex < selected.length; turnIndex += 1) {
   const question = selected[turnIndex];
@@ -52,7 +70,7 @@ for (let turnIndex = 0; turnIndex < selected.length; turnIndex += 1) {
     questionType: question.type,
     transcript: question.standardReadSentence || question.acceptableAnswers?.[0]?.text || "test",
     result: { scores: { accuracy: 100, completeness: 100, fluency: 100, total: 100 }, passed: true, feedback: "測試", primaryIssue: "achieved" },
-    recordingPath: null,
+    recordingPath: turnIndex === 0 ? recordingPath : null,
     expiresAt: new Date(Date.now() + 30 * 86400000),
   });
   turnSummaries.push({
@@ -68,12 +86,12 @@ for (let turnIndex = 0; turnIndex < selected.length; turnIndex += 1) {
 
 const completeBody = { gameSessionId: second.payload.gameSessionId, result: { scores: { pink: 24, blue: 24 }, turnSummaries } };
 const completed = await post("completeGame", completeBody);
-expect(completed.status === 200 && completed.payload.flipped === true && completed.payload.completedGameCount === 1, "complete did not flip once");
+expect(completed.status === 200 && completed.payload.nextGamePattern === "fixed_round_alternation" && completed.payload.completedGameCount === 1, "complete did not retain the fixed pattern");
 const repeated = await post("completeGame", completeBody);
-expect(repeated.status === 200 && repeated.payload.flipped === false && repeated.payload.idempotent === true, "repeat completion was not idempotent");
+expect(repeated.status === 200 && repeated.payload.nextGamePattern === "fixed_round_alternation" && repeated.payload.idempotent === true, "repeat completion was not idempotent");
 
 const third = await post("startGame", { unitId: "hwg7-sr", students, requestId: "emulator-request-0003" });
-expect(third.status === 200 && third.payload.assignment.phase === "a_type2_b_type1", "next completed game did not swap A/B types");
+expect(third.status === 200 && third.payload.assignment.phase === "round_alternating_fixed_start", "next completed game did not reset to the fixed pattern");
 await post("abandonGame", { gameSessionId: third.payload.gameSessionId });
 
 const wrongLogin = await post("teacherLogin", { passcode: "135790" });
@@ -83,6 +101,15 @@ expect(login.status === 200 && login.payload.teacherSessionToken, "teacher login
 const token = login.payload.teacherSessionToken;
 const listed = await post("teacherApi", { action: "listResults", filters: { dateFrom: second.payload.date, dateTo: second.payload.date, unitId: "hwg7-sr", studentCode: "00001" } }, token);
 expect(listed.status === 200 && listed.payload.count === 1 && listed.payload.records[0].attempts.length === 12, "teacher filters/details failed");
+const protectedAttemptId = `${second.payload.gameSessionId}_00_1`;
+const anonymousRecording = await postBinary("teacherRecording", { attemptId: protectedAttemptId });
+expect(anonymousRecording.status === 401, "anonymous teacher recording request should fail");
+const protectedRecording = await postBinary("teacherRecording", { attemptId: protectedAttemptId }, token);
+expect(protectedRecording.status === 200, `protected teacher recording failed: ${protectedRecording.status}`);
+expect(protectedRecording.contentType.startsWith("audio/webm"), `unexpected recording content type: ${protectedRecording.contentType}`);
+expect(protectedRecording.contentDisposition === "inline", "recording should be served inline");
+expect(protectedRecording.cacheControl.includes("private") && protectedRecording.cacheControl.includes("no-store"), "recording must not be publicly cached");
+expect(Buffer.compare(protectedRecording.bytes, recordingBytes) === 0, "protected recording bytes changed in transit");
 
 const directRead = await fetch(`http://127.0.0.1:8080/v1/projects/${projectId}/databases/(default)/documents/practiceResults/${second.payload.gameSessionId}`);
 expect(directRead.status === 403, `anonymous Firestore read was not denied: ${directRead.status}`);
@@ -107,6 +134,9 @@ console.log(JSON.stringify({
   idempotentRepeat: repeated.payload.idempotent,
   teacherFilteredRecords: listed.payload.count,
   attemptsInRecord: listed.payload.records[0].attempts.length,
+  anonymousRecordingStatus: anonymousRecording.status,
+  protectedRecordingStatus: protectedRecording.status,
+  protectedRecordingBytes: protectedRecording.bytes.length,
   firestoreAnonymousStatus: directRead.status,
   storageAnonymousStatus: directUpload.status,
   softDeleteHiddenCount: afterDelete.payload.count,

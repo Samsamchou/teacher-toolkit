@@ -1,0 +1,108 @@
+{
+  "ok": true,
+  "generatedAt": "2026-08-22T22:14:07.4339509+08:00",
+  "baseUrl": "https://setencerevieworalpractice.web.app",
+  "checked": 11,
+  "passed": 11,
+  "items": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "contentType": "text/html",
+      "bytes": 146698,
+      "sha256": "1d82f10e4b794c9151a468e3803409aee18a74211fccdf7dfa7d654b370c9353",
+      "localSha256": "1d82f10e4b794c9151a468e3803409aee18a74211fccdf7dfa7d654b370c9353",
+      "hashMatches": true
+    },
+    {
+      "path": "js/app-api.js",
+      "status": 200,
+      "contentType": "text/javascript",
+      "bytes": 5675,
+      "sha256": "928f4db8f869e993243c4f2f38dca60a046a7441eb89b9866acd3c5e8767dc27",
+      "localSha256": "928f4db8f869e993243c4f2f38dca60a046a7441eb89b9866acd3c5e8767dc27",
+      "hashMatches": true
+    },
+    {
+      "path": "fonts/comic-relief/ComicRelief-Regular.ttf",
+      "status": 200,
+      "contentType": "font/ttf",
+      "bytes": 78272,
+      "sha256": "64293c3487e414bfac52cb5b2f64d14266dd96e605a032c6b7d42d9140850f6e",
+      "localSha256": "64293c3487e414bfac52cb5b2f64d14266dd96e605a032c6b7d42d9140850f6e",
+      "hashMatches": true
+    },
+    {
+      "path": "fonts/comic-relief/ComicRelief-Bold.ttf",
+      "status": 200,
+      "contentType": "font/ttf",
+      "bytes": 92512,
+      "sha256": "f503ab3ec87bea8ddf232d8d64341b6cf2b97a2e1849eb007b8d48761c5db918",
+      "localSha256": "f503ab3ec87bea8ddf232d8d64341b6cf2b97a2e1849eb007b8d48761c5db918",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-001.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 36864,
+      "sha256": "0cd110efc2faed2ce458cdac89c84cbd885656fe4660a116f94f01e93a31f029",
+      "localSha256": "0cd110efc2faed2ce458cdac89c84cbd885656fe4660a116f94f01e93a31f029",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-003.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 35712,
+      "sha256": "2fadb4efe8738dad8fb6823a80f9780e52444c9082b2066217a5fafbf97066ab",
+      "localSha256": "2fadb4efe8738dad8fb6823a80f9780e52444c9082b2066217a5fafbf97066ab",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-005.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 30720,
+      "sha256": "20f746e0de21544887bfd1df804cfa5a91cc9408924f040b7589a4d5db816e82",
+      "localSha256": "20f746e0de21544887bfd1df804cfa5a91cc9408924f040b7589a4d5db816e82",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-007.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 40704,
+      "sha256": "9185c1a2891e952f2e04e26f59ed7471c32e84ab943ea0c2257762419bf143a0",
+      "localSha256": "9185c1a2891e952f2e04e26f59ed7471c32e84ab943ea0c2257762419bf143a0",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-009.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 33792,
+      "sha256": "396a27cfe10951f77b49909b08e85941d789c5cf7a3bd890f4a9795c29ad6f71",
+      "localSha256": "396a27cfe10951f77b49909b08e85941d789c5cf7a3bd890f4a9795c29ad6f71",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-011.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 39552,
+      "sha256": "3794b1443dbd15363db25a5afe9a03b86f91b6d7eedda77b963cfa48aef4ecc9",
+      "localSha256": "3794b1443dbd15363db25a5afe9a03b86f91b6d7eedda77b963cfa48aef4ecc9",
+      "hashMatches": true
+    },
+    {
+      "path": "audio/hwg7-sr/HWG7-SR-013.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 47616,
+      "sha256": "6e1b0fda2f9a4c68e05a4ee7c09f8f9ef1a56c3c92b337fb760caaea05ccc32f",
+      "localSha256": "6e1b0fda2f9a4c68e05a4ee7c09f8f9ef1a56c3c92b337fb760caaea05ccc32f",
+      "hashMatches": true
+    }
+  ]
+}
