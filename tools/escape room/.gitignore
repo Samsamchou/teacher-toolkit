@@ -1,0 +1,35 @@
+# Secrets and local credentials / 秘密資料與本機憑證
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.local.json
+*.credentials.json
+service-account*.json
+
+# Dependencies, caches, and local environments / 依賴、快取與本機環境
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.cache/
+
+# Editor-local files / 編輯器本機檔案
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files and logs / 暫存檔與記錄檔
+*.log
+*.tmp
+*.temp
+
+# Operating-system metadata / 作業系統中繼資料
+Thumbs.db
+.DS_Store
+Desktop.ini
