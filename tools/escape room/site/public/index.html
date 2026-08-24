@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b526b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="結合二水在地情境、國小英語句型與 Escape Room 任務的學習網站。" />
+    <title>國小英語情境任務網站</title>
+    <link rel="preload" href="assets/fonts/ComicRelief-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/ComicRelief-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#app">跳到主要內容</a>
+    <header class="site-header">
+      <button id="homeButton" class="brand-button" type="button" aria-label="返回首頁">
+        <span class="brand-mark" aria-hidden="true">水</span>
+        <span class="brand-copy">
+          <strong>國小英語情境任務網站</strong>
+          <small lang="en">Ershui Canal Guardian HQ</small>
+        </span>
+      </button>
+      <div class="header-actions">
+        <span id="networkStatus" class="status-pill" role="status">本機保存</span>
+        <button id="teacherButton" class="secondary-button" type="button">教師後台</button>
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1"></main>
+    <div id="liveRegion" class="sr-only" aria-live="polite"></div>
+
+    <dialog id="teacherDialog" class="teacher-dialog" aria-labelledby="teacherTitle">
+      <form method="dialog" class="dialog-close-row"><button class="icon-button" value="close" aria-label="關閉教師後台">×</button></form>
+      <div id="teacherPanel"></div>
+    </dialog>
+
+    <noscript>此網站需要 JavaScript 才能保存進度並進行任務。</noscript>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

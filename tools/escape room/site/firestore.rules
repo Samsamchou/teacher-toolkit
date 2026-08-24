@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Safe deployment baseline: deny everything until the teacher confirms
+    // the roster, Anonymous Auth flow, teacher session backend and retention.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

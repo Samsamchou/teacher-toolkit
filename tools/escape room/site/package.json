@@ -1,0 +1,9 @@
+{
+  "name": "ershui-english-mission",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/content.test.mjs && node tests/game-rules.test.mjs && node tests/storage.test.mjs && node tests/app-rendering.test.mjs && node tests/ui-contract.test.mjs",
+    "check": "node --check public/app.js && node --check public/data.js && node --check public/storage.js && node --check public/game-rules.js"
+  }
+}

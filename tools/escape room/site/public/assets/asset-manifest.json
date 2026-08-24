@@ -1,0 +1,538 @@
+[
+  {
+    "source": "assets/imagegen/masters/home/HOME-01-Hero.png",
+    "output": "assets/images/home/HOME-01.webp",
+    "width": 1600,
+    "height": 900,
+    "mode": "RGB",
+    "bytes": 204972
+  },
+  {
+    "source": "assets/imagegen/masters/home/HOME-02-MissionMap.png",
+    "output": "assets/images/home/HOME-02.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 253372
+  },
+  {
+    "source": "assets/imagegen/masters/home/HOME-03-HWG7U01U02.png",
+    "output": "assets/images/home/HOME-03.webp",
+    "width": 512,
+    "height": 384,
+    "mode": "RGB",
+    "bytes": 55628
+  },
+  {
+    "source": "assets/imagegen/masters/home/HOME-04-LockedPortal.png",
+    "output": "assets/images/home/HOME-04.webp",
+    "width": 512,
+    "height": 384,
+    "mode": "RGB",
+    "bytes": 59464
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-01-GuestData.png",
+    "output": "assets/images/scenes/SCENE-01.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 117846
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-01-GuestData.png",
+    "output": "assets/images/scenes/SCENE-01@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 324812
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-02-IdentityCheckpoint.png",
+    "output": "assets/images/scenes/SCENE-02.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 140784
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-02-IdentityCheckpoint.png",
+    "output": "assets/images/scenes/SCENE-02@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 378010
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-03-TeamGate.png",
+    "output": "assets/images/scenes/SCENE-03.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 193756
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-03-TeamGate.png",
+    "output": "assets/images/scenes/SCENE-03@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 515742
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-04-SchoolRoute.png",
+    "output": "assets/images/scenes/SCENE-04.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 184636
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-04-SchoolRoute.png",
+    "output": "assets/images/scenes/SCENE-04@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 468266
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-05-Manifest.png",
+    "output": "assets/images/scenes/SCENE-05.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 191734
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-05-Manifest.png",
+    "output": "assets/images/scenes/SCENE-05@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 511870
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-06-FinalDispatch.png",
+    "output": "assets/images/scenes/SCENE-06.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 186906
+  },
+  {
+    "source": "assets/imagegen/masters/scenes/SCENE-06-FinalDispatch.png",
+    "output": "assets/images/scenes/SCENE-06@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 488664
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-01.png",
+    "output": "assets/images/evidence/EVD-01.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 89668
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-02.png",
+    "output": "assets/images/evidence/EVD-02.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 102760
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-03.png",
+    "output": "assets/images/evidence/EVD-03.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 96912
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-04.png",
+    "output": "assets/images/evidence/EVD-04.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 129074
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-05.png",
+    "output": "assets/images/evidence/EVD-05.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 83864
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-06.png",
+    "output": "assets/images/evidence/EVD-06.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 96780
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-07.png",
+    "output": "assets/images/evidence/EVD-07.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 94866
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-08.png",
+    "output": "assets/images/evidence/EVD-08.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 115934
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-09.png",
+    "output": "assets/images/evidence/EVD-09.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 103866
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-10.png",
+    "output": "assets/images/evidence/EVD-10.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 153428
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-11.png",
+    "output": "assets/images/evidence/EVD-11.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 140836
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-12.png",
+    "output": "assets/images/evidence/EVD-12.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 85714
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-13.png",
+    "output": "assets/images/evidence/EVD-13.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 87074
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-14.png",
+    "output": "assets/images/evidence/EVD-14.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 99076
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-15.png",
+    "output": "assets/images/evidence/EVD-15.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 145002
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-16.png",
+    "output": "assets/images/evidence/EVD-16.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 71900
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-17.png",
+    "output": "assets/images/evidence/EVD-17.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 84954
+  },
+  {
+    "source": "assets/imagegen/masters/evidence/EVD-18.png",
+    "output": "assets/images/evidence/EVD-18.webp",
+    "width": 960,
+    "height": 720,
+    "mode": "RGB",
+    "bytes": 128302
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-01A.png",
+    "output": "assets/images/options/OPT-01A.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 56102
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-01B.png",
+    "output": "assets/images/options/OPT-01B.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 61516
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-01C.png",
+    "output": "assets/images/options/OPT-01C.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 60832
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-10A.png",
+    "output": "assets/images/options/OPT-10A.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 54350
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-10B.png",
+    "output": "assets/images/options/OPT-10B.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 48686
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-10C.png",
+    "output": "assets/images/options/OPT-10C.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 51910
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-18A.png",
+    "output": "assets/images/options/OPT-18A.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 38162
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-18B.png",
+    "output": "assets/images/options/OPT-18B.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 61094
+  },
+  {
+    "source": "assets/imagegen/masters/options/OPT-18C.png",
+    "output": "assets/images/options/OPT-18C.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGB",
+    "bytes": 31596
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-01-ArrivalDataChip.png",
+    "output": "assets/images/items/ITEM-01.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 58428
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-02-IdentityLens.png",
+    "output": "assets/images/items/ITEM-02.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 40876
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-03-TeamPass.png",
+    "output": "assets/images/items/ITEM-03.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 47846
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-04-RouteDial.png",
+    "output": "assets/images/items/ITEM-04.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 53008
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-05-ManifestSeal.png",
+    "output": "assets/images/items/ITEM-05.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 45642
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-06-WaterRouteKey.png",
+    "output": "assets/images/items/ITEM-06.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 36120
+  },
+  {
+    "source": "assets/imagegen/masters/items/ITEM-07-FinalWelcomePass.png",
+    "output": "assets/images/items/ITEM-07.webp",
+    "width": 512,
+    "height": 512,
+    "mode": "RGBA",
+    "bytes": 57962
+  },
+  {
+    "source": "assets/imagegen/masters/mascots/MASCOT-01-ShuiShui.png",
+    "output": "assets/images/mascots/MASCOT-01.webp",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "bytes": 30786
+  },
+  {
+    "source": "assets/imagegen/masters/mascots/MASCOT-02-Hint.png",
+    "output": "assets/images/mascots/MASCOT-02.webp",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "bytes": 21194
+  },
+  {
+    "source": "assets/imagegen/masters/mascots/MASCOT-03-Correct.png",
+    "output": "assets/images/mascots/MASCOT-03.webp",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "bytes": 19516
+  },
+  {
+    "source": "assets/imagegen/masters/mascots/MASCOT-04-TryAgain.png",
+    "output": "assets/images/mascots/MASCOT-04.webp",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "bytes": 22022
+  },
+  {
+    "source": "assets/imagegen/masters/mascots/MASCOT-05-Finale.png",
+    "output": "assets/images/mascots/MASCOT-05.webp",
+    "width": 384,
+    "height": 384,
+    "mode": "RGBA",
+    "bytes": 23952
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-01-Maya.png",
+    "output": "assets/images/characters/CHAR-01.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 18456
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-02-Andy.png",
+    "output": "assets/images/characters/CHAR-02.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 15042
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-03-Ken.png",
+    "output": "assets/images/characters/CHAR-03.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 16294
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-04-Amy.png",
+    "output": "assets/images/characters/CHAR-04.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 17962
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-05-Lynn.png",
+    "output": "assets/images/characters/CHAR-05.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 17370
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-06-Mina.png",
+    "output": "assets/images/characters/CHAR-06.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 16380
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-07-Alan.png",
+    "output": "assets/images/characters/CHAR-07.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 16418
+  },
+  {
+    "source": "assets/imagegen/masters/characters/CHAR-08-Wei.png",
+    "output": "assets/images/characters/CHAR-08.webp",
+    "width": 320,
+    "height": 480,
+    "mode": "RGBA",
+    "bytes": 15806
+  },
+  {
+    "source": "assets/imagegen/masters/finale/FINALE-01-WelcomeGateClosed.png",
+    "output": "assets/images/finale/FINALE-01.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 157738
+  },
+  {
+    "source": "assets/imagegen/masters/finale/FINALE-01-WelcomeGateClosed.png",
+    "output": "assets/images/finale/FINALE-01@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 383166
+  },
+  {
+    "source": "assets/imagegen/masters/finale/FINALE-02-WelcomeGateOpen.png",
+    "output": "assets/images/finale/FINALE-02.webp",
+    "width": 1024,
+    "height": 768,
+    "mode": "RGB",
+    "bytes": 179030
+  },
+  {
+    "source": "assets/imagegen/masters/finale/FINALE-02-WelcomeGateOpen.png",
+    "output": "assets/images/finale/FINALE-02@2x.webp",
+    "width": 2048,
+    "height": 1536,
+    "mode": "RGB",
+    "bytes": 470604
+  }
+]
