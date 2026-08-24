@@ -366,3 +366,14 @@
 - 最新補丁在乾淨隔離副本通過 73／73 項 Node 測試、46 節課資料驗證與 Vite 正式建置；Teacher Studio 顯示「可嵌入」，Save Lesson、本機重新載入、一般畫面、全螢幕／縮小、新分頁及桌面 PowerPoint 按鈕均通過。
 - 未登入的乾淨 Headless Chrome 載入最新 `em=2` Embed 時，Microsoft 最終仍導向 `onedrive.live.com/edit` 且 iframe 為空白；測試同時記錄 `res-1.cdn.office.net` 載入失敗，因此目前只能確認官方播放格式，實際投影片及 On Click 動畫仍需在教師 Chrome 預覽驗收。
 - 本次沒有部署 Firebase Hosting、Functions 或規則；PowerPoint 功能 commit `841efb18df82c4c64e50da17b74c01a76536cb47` 已推送至 `origin/main`，完整分享 token 未寫入公開 Git。
+
+## 2026-08-24 PowerPoint Firebase Hosting 正式部署
+
+- 部署時間：2026/08/24 17:01:06（Asia/Taipei）。來源為 `main` HEAD `70b45a052ce89f6c1c3559adafacb612baa0ea95`，PowerPoint 功能 commit 為 `841efb18df82c4c64e50da17b74c01a76536cb47`。
+- 由已提交原始碼建立乾淨暫存副本；根目錄與 Functions 依 lockfile 安裝後 audit 均為 0 vulnerabilities。完整 preflight 通過：46 節課資料驗證、73／73 網站測試、10／10 Functions 測試、7／7 Firestore／Storage 規則測試、Functions 語法、教師安全檢查、Firebase preflight 與 Vite 正式建置。
+- 已只部署 Firebase Hosting target `lesson-hub-v03`，共 42 個靜態檔案；正式網址為 <https://lesson-hub-v03.web.app>。Functions、Firestore／Storage 規則、Secret、匿名成績資料與預設 Hosting 均未變更。
+- 正式首頁回應 HTTP 200，`/__/firebase/init.json` 的 projectId 為 `hwg7teaching`；線上 `index.html` SHA-256 與本次建置完全相同，`/assets/index-C547H5_T.js` 與 `/assets/index-WP5t51tY.css` 亦逐檔相符。
+- 無登入 Headless Chrome 驗證頁面錯誤 0；Teacher Studio 可展開 HWG5 Starter Lesson 1，Step 1 顯示 `PowerPoint（動畫）`、OneDrive Embed URL／iframe 欄位與 Save Lesson。未解鎖狀態使用 7 Steps 本機預設資料。
+- 正式雲端既有 14 Steps 尚未由教師通行碼解鎖、載入與儲存，最新 OneDrive Embed 也尚未寫入雲端 Lesson。完整分享 token 仍未寫入 Git 或 HANDOFF；實際 PowerPoint Viewer 與 On Click 動畫仍需教師 Chrome 驗收。
+- 部署後又以教師最新提供的 OneDrive 官方 iframe，在無登入的頂層頁面與真正 iframe 環境重測；兩者仍導向 `onedrive.live.com/edit` 空白頁，Microsoft Office CDN 模組回應 404。替代 `/embed` 路由回應 500，`/view.aspx` 與 `/redir` 則要求登入。
+- 因此沒有把失效的最新 iframe 寫入雲端 Lesson，也沒有再次部署。下一步是重新產生可在無痕視窗匿名播放、且不落到 `/edit` 的官方 Embed；完整分享 token 持續不寫入 Git、HANDOFF 或工作筆記。
