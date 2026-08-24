@@ -365,4 +365,4 @@
 - 最新教師 Embed 採 16:9（1600×900）、`em=2` 播放模式，URL SHA-256 為 `9F2A1C1C57A4244BE2C24D64D63B5360B25A459C875B56B25470D6378AF571B0`；前兩個 `wdEaaCheck` 版本不再使用，完整分享 token 未寫入公開 Git。
 - 最新補丁在乾淨隔離副本通過 73／73 項 Node 測試、46 節課資料驗證與 Vite 正式建置；Teacher Studio 顯示「可嵌入」，Save Lesson、本機重新載入、一般畫面、全螢幕／縮小、新分頁及桌面 PowerPoint 按鈕均通過。
 - 未登入的乾淨 Headless Chrome 載入最新 `em=2` Embed 時，Microsoft 最終仍導向 `onedrive.live.com/edit` 且 iframe 為空白；測試同時記錄 `res-1.cdn.office.net` 載入失敗，因此目前只能確認官方播放格式，實際投影片及 On Click 動畫仍需在教師 Chrome 預覽驗收。
-- 本次沒有部署 Firebase Hosting、Functions 或規則，也沒有 commit／push；完整分享 token 未寫入公開 Git。
+- 本次沒有部署 Firebase Hosting、Functions 或規則；PowerPoint 功能 commit `841efb18df82c4c64e50da17b74c01a76536cb47` 已推送至 `origin/main`，完整分享 token 未寫入公開 Git。
