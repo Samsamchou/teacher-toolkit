@@ -2,15 +2,17 @@ import source from "../../config/site-source.json" with { type: "json" };
 import questionBank from "../../config/hwg7-u01-l1-vocabulary-quiz.json" with { type: "json" };
 
 export const TARGET_POWERPOINT_LESSON_ID = "hwg5-starter-l01";
+export const TARGET_ONLINE_PRESENTATION_EMBED_URL =
+  "https://docs.google.com/presentation/d/e/2PACX-1vSR_xQVB_deSBIi_JMs-AdZIi_oKuGh5aZ4Id-dS0rN5_E2-qRq5LilUjCqswRgjg/pubembed?start=false&loop=false&delayms=60000";
 
 const POWERPOINT_STEP_TEMPLATE = {
   id: "powerpoint",
   type: "powerpoint",
-  title: "PowerPoint（動畫）",
+  title: "線上簡報（動畫）",
   enabled: true,
   content: {
-    displayName: "課堂 PowerPoint",
-    embedUrl: ""
+    displayName: "線上簡報（動畫）",
+    embedUrl: TARGET_ONLINE_PRESENTATION_EMBED_URL
   }
 };
 
@@ -185,7 +187,7 @@ export const stepTypes = [
   { value: "warmup", label: "Warm-up" },
   { value: "ebook", label: "E-book / Web Embed" },
   { value: "video", label: "Teaching Video" },
-  { value: "powerpoint", label: "PowerPoint（動畫）" },
+  { value: "powerpoint", label: "線上簡報（動畫）" },
   { value: "presentation", label: "簡報（PDF）" },
   { value: "imageSlides", label: "Image Slides" },
   { value: "webPractice", label: "Live Interactive Practice" },

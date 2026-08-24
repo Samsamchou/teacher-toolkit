@@ -377,3 +377,19 @@
 - 正式雲端既有 14 Steps 尚未由教師通行碼解鎖、載入與儲存，最新 OneDrive Embed 也尚未寫入雲端 Lesson。完整分享 token 仍未寫入 Git 或 HANDOFF；實際 PowerPoint Viewer 與 On Click 動畫仍需教師 Chrome 驗收。
 - 部署後又以教師最新提供的 OneDrive 官方 iframe，在無登入的頂層頁面與真正 iframe 環境重測；兩者仍導向 `onedrive.live.com/edit` 空白頁，Microsoft Office CDN 模組回應 404。替代 `/embed` 路由回應 500，`/view.aspx` 與 `/redir` 則要求登入。
 - 因此沒有把失效的最新 iframe 寫入雲端 Lesson，也沒有再次部署。下一步是重新產生可在無痕視窗匿名播放、且不落到 `/edit` 的官方 Embed；完整分享 token 持續不寫入 Git、HANDOFF 或工作筆記。
+
+## 2026-08-24 Google Slides 線上簡報（動畫）（已部署）
+
+- **HWG5 Starter · Lesson 1 · Step 1** 已改用教師提供、可匿名播放的 Google Slides 發布網址；顯示名稱統一為「線上簡報（動畫）」，內部資料類型仍保留 `powerpoint`，避免破壞既有 14 Steps 與雲端 Lesson 格式。其餘 45 節標準 Lesson 不變。
+- Google 來源只接受 `https://docs.google.com/presentation/d/e/.../pubembed`，並限制 `start`、`loop`、`delayms`、`slide` 等已知參數；一般 `/edit`、未發布分享網址、未知參數、非 HTTPS 與偽造子網域均拒絕。
+- Teacher Studio 可貼 Google Slides 已發布 URL／單一 iframe code，也保留既有 Microsoft Embed。iframe 來源中的固定 `1548×900` 不套用，網站一律以 `width: 100%; height: 100%` 填滿投影區。
+- Google Slides 顯示「全螢幕／新分頁」，不顯示「桌面 PowerPoint」；Microsoft 來源才保留桌面 PowerPoint 備援。
+- 遷移測試涵蓋既有 14 Steps：舊預設 PowerPoint Step 1 會升級為 Google Slides，其餘 13 Steps 保留；教師已明確自訂的簡報則維持原設定。
+
+### 本次測試與正式發布
+
+- 乾淨隔離副本通過 74／74 網站測試、10／10 Functions 測試、7／7 Firestore／Storage Emulator 規則測試、46 節課資料驗證、Firebase preflight 與 Vite 正式建置。
+- 1366×768 與 1920×1080 一般投影均無 Lesson Hub 額外上下捲動；1920×1080 全螢幕 iframe 為 1896×1024。Google Slides 連續點擊產生 4 個不同畫面雜湊，證明投影片／已建立動畫可由滑鼠左鍵推進。
+- 已只部署 Firebase Hosting target `lesson-hub-v03`；Functions、Firestore／Storage 規則、Secret、匿名成績與雲端教材資料均未變更。正式網址為 <https://lesson-hub-v03.web.app>。
+- 正式站標題讀回為「線上簡報（動畫）」；Google iframe 已載入，「桌面 PowerPoint」按鈕為 0，「全螢幕」與「新分頁」各 1。線上主程式 `/assets/index-D5EmMqUd.js` SHA-256 為 `55f4bfb03d6aba98296e74bb1b2d3beb61c946d43eb0ac10d57224e0ce3bee9c`，與本機正式建置一致，且沒有 4xx 資源錯誤。
+- 未解鎖的匿名 Teacher Studio 仍顯示 7 Steps 預設資料；程式已自動驗證 14 Steps 遷移保留，但正式雲端 14 Steps 仍需教師本人解鎖後讀回確認，不在本次 Hosting-only 部署中改寫。

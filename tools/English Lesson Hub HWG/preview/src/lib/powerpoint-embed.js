@@ -9,6 +9,9 @@ const MICROSOFT_EMBED_DOMAINS = [
   "officeapps.live.com",
   "sharepoint.com"
 ];
+const GOOGLE_SLIDES_EMBED_HOST = "docs.google.com";
+const GOOGLE_SLIDES_EMBED_PATH = /^\/presentation\/d\/e\/[A-Za-z0-9_-]+\/pubembed\/?$/;
+const GOOGLE_SLIDES_ALLOWED_PARAMS = new Set(["start", "loop", "delayms", "slide"]);
 
 function hostMatches(hostname, domain) {
   const host = String(hostname || "").toLowerCase().replace(/\.$/, "");
@@ -38,6 +41,23 @@ function isMicrosoftEmbedHost(url) {
   return MICROSOFT_EMBED_DOMAINS.some((domain) => hostMatches(url.hostname, domain));
 }
 
+function isOfficialGoogleSlidesEmbed(url) {
+  const host = String(url.hostname || "").toLowerCase().replace(/\.$/, "");
+  if (host !== GOOGLE_SLIDES_EMBED_HOST || !GOOGLE_SLIDES_EMBED_PATH.test(url.pathname) || url.hash) return false;
+  for (const key of url.searchParams.keys()) {
+    if (!GOOGLE_SLIDES_ALLOWED_PARAMS.has(key) || url.searchParams.getAll(key).length !== 1) return false;
+  }
+  for (const key of ["start", "loop"]) {
+    const value = url.searchParams.get(key);
+    if (value !== null && !/^(?:true|false)$/.test(value)) return false;
+  }
+  const delay = url.searchParams.get("delayms");
+  if (delay !== null && !/^\d{1,9}$/.test(delay)) return false;
+  const slide = url.searchParams.get("slide");
+  if (slide !== null && !/^id\.[A-Za-z0-9_-]+$/.test(slide)) return false;
+  return true;
+}
+
 function isOfficialOneDriveShortEmbed(url) {
   if (!hostMatches(url.hostname, "1drv.ms") || !/^\/p\//i.test(url.pathname)) return false;
   const aspectRatio = Number(url.searchParams.get("wdAr"));
@@ -59,7 +79,7 @@ function isLikelyPresentationEmbed(url) {
 }
 
 function invalid(message) {
-  return { kind: "invalid", url: "", inputType: "invalid", needsPreviewCheck: false, message };
+  return { kind: "invalid", provider: "", url: "", inputType: "invalid", needsPreviewCheck: false, message };
 }
 
 export function parsePowerPointEmbedInput(input) {
@@ -67,10 +87,11 @@ export function parsePowerPointEmbedInput(input) {
   if (!raw) {
     return {
       kind: "empty",
+      provider: "",
       url: "",
       inputType: "empty",
       needsPreviewCheck: false,
-      message: "請貼入 OneDrive 的 PowerPoint for the web Embed URL 或完整 iframe code。"
+      message: "請貼入已發布的 Google Slides pubembed，或 Microsoft PowerPoint 官方 Embed URL／iframe code。"
     };
   }
 
@@ -91,12 +112,23 @@ export function parsePowerPointEmbedInput(input) {
 
   const parsed = readHttpsUrl(candidate);
   if (parsed.error) return invalid(parsed.error);
+  if (isOfficialGoogleSlidesEmbed(parsed.url)) {
+    return {
+      kind: "valid",
+      provider: "google",
+      url: parsed.url.toString(),
+      inputType,
+      needsPreviewCheck: false,
+      message: "Google Slides 已發布 pubembed 格式有效；固定 iframe 寬高會由 Lesson Hub 自動改為填滿投影區。"
+    };
+  }
   if (!isMicrosoftEmbedHost(parsed.url)) {
-    return invalid("只接受 OneDrive、PowerPoint for the web 或 Microsoft 365 官方 Embed 來源。");
+    return invalid("只接受 Google Slides 已發布的 /presentation/d/e/.../pubembed，或 Microsoft 官方 Embed 來源。");
   }
   const needsPreviewCheck = !isLikelyPresentationEmbed(parsed.url);
   return {
     kind: "valid",
+    provider: "microsoft",
     url: parsed.url.toString(),
     inputType,
     needsPreviewCheck,
@@ -108,5 +140,5 @@ export function parsePowerPointEmbedInput(input) {
 
 export function desktopPowerPointUrl(input) {
   const parsed = parsePowerPointEmbedInput(input);
-  return parsed.kind === "valid" ? "ms-powerpoint:ofe|u|" + parsed.url : "";
+  return parsed.kind === "valid" && parsed.provider === "microsoft" ? "ms-powerpoint:ofe|u|" + parsed.url : "";
 }

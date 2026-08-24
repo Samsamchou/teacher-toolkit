@@ -38,8 +38,8 @@
 .powerpoint-link-status.invalid { border-color: #f2a6b5; color: #9f203a; background: #fff0f3; }
 .powerpoint-link-status.invalid > span { color: #fff; background: #d62f51; }
 .powerpoint-link-status.empty > span { color: #53637c; background: #e2e8f2; }
-.powerpoint-step { min-width: 0; overflow: hidden; }
-.powerpoint-step iframe { min-height: 430px; background: #f5f8fd; }
+.powerpoint-step { display: flex; min-width: 0; overflow: hidden; flex-direction: column; }
+.powerpoint-step iframe { display: block; width: 100%; height: 100%; min-height: 430px; box-sizing: border-box; background: #f5f8fd; }
 .powerpoint-actions { justify-content: flex-end; }
 .powerpoint-runtime-warning { padding: 5px 9px; border: 1px solid #efc55c; border-radius: 999px; color: #6e4b00; background: #fff2b9; font-size: .72rem; font-weight: 900; white-space: nowrap; }
 .powerpoint-placeholder { display: grid; align-content: center; gap: 18px; }

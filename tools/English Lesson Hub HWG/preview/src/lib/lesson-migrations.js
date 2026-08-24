@@ -39,7 +39,26 @@ function withTargetPowerPointStep(seed, storedSteps) {
   const existingSteps = Array.isArray(storedSteps) ? clone(storedSteps) : [];
   const targetStep = seed?.steps?.[0];
   if (seed?.id !== TARGET_POWERPOINT_LESSON_ID || targetStep?.type !== "powerpoint") return existingSteps;
-  if (existingSteps[0]?.type === "powerpoint") return existingSteps;
+  if (existingSteps[0]?.type === "powerpoint") {
+    const current = existingSteps[0];
+    const currentContent = current.content || {};
+    const legacyTitle = !String(current.title || "").trim() || current.title === "PowerPoint（動畫）";
+    const legacyDisplayName = !String(currentContent.displayName || "").trim() || ["課堂 PowerPoint", "課堂線上簡報"].includes(currentContent.displayName);
+    const legacyDefaults = legacyTitle && legacyDisplayName;
+    existingSteps[0] = {
+      ...current,
+      title: legacyTitle ? targetStep.title : current.title,
+      content: {
+        ...clone(targetStep.content || {}),
+        ...currentContent,
+        displayName: legacyDisplayName ? targetStep.content?.displayName : currentContent.displayName,
+        embedUrl: legacyDefaults || !String(currentContent.embedUrl || "").trim()
+          ? targetStep.content?.embedUrl || ""
+          : currentContent.embedUrl
+      }
+    };
+    return existingSteps;
+  }
   if (existingSteps.length === 0) return [clone(targetStep)];
   existingSteps[0] = clone(targetStep);
   return existingSteps;

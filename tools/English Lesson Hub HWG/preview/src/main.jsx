@@ -68,7 +68,7 @@ const STEP_META = {
   warmup: { icon: "👋", label: "Warm-up" },
   ebook: { icon: "📘", label: "E-book" },
   video: { icon: "🎬", label: "Video" },
-  powerpoint: { icon: "📊", label: "PowerPoint" },
+  powerpoint: { icon: "📊", label: "線上簡報" },
   presentation: { icon: "🖥️", label: "簡報" },
   webPractice: { icon: "🌐", label: "Practice" },
   vocabularyQuiz: { icon: "🏆", label: "Quiz" }

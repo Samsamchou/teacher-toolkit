@@ -17,13 +17,13 @@ export function PowerPointEmbedFields({ content, onChange }) {
     <div className="powerpoint-editor">
       <div className="form-grid compact-fields">
         <label>Display name
-          <input value={content.displayName || ""} onChange={(event) => onChange({ displayName: event.target.value })} placeholder="例如 Starter 課堂簡報" />
+          <input value={content.displayName || ""} onChange={(event) => onChange({ displayName: event.target.value })} placeholder="例如 Starter 課堂線上簡報" />
         </label>
-        <label className="full-width">OneDrive Embed URL / iframe code
+        <label className="full-width">Google Slides / Microsoft Embed URL / iframe code
           <textarea
             value={draft}
             onChange={(event) => updateEmbedInput(event.target.value)}
-            placeholder="貼入 PowerPoint for the web 官方 HTTPS Embed URL 或完整 iframe code"
+            placeholder="貼入 Google Slides 已發布 pubembed，或 Microsoft 官方 HTTPS Embed URL／iframe code"
             rows="4"
           />
         </label>
@@ -33,7 +33,7 @@ export function PowerPointEmbedFields({ content, onChange }) {
         <p>{parsed.message}</p>
         {parsed.kind === "valid" ? <a className="secondary-button" href={parsed.url} target="_blank" rel="noopener noreferrer">新分頁測試</a> : null}
       </div>
-      <p className="field-help">只會儲存 Microsoft 官方 HTTPS URL；Lesson Hub 不會保存 Microsoft 帳密、Cookie 或 Token。一般 On Click 動畫可在播放畫面中測試，複雜 Trigger 仍以桌面 PowerPoint 為準。</p>
+      <p className="field-help">Google Slides 只接受已發布的 docs.google.com/presentation/d/e/.../pubembed；一般 /edit 或未發布分享網址會拒絕。iframe 原始寬高不會固定套用，Lesson Hub 會以 100% × 100% 填滿投影區。網站不保存任何帳密、Cookie 或 Token。</p>
     </div>
   );
 }
