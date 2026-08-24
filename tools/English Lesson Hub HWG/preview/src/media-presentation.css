@@ -26,9 +26,35 @@
 .projector-cockpit .presentation-step iframe { min-height: 0; height: 100%; flex: 1 1 0; }
 .projector-cockpit .presentation-step .presentation-actions { gap: 5px; }
 
+.powerpoint-editor { display: grid; gap: 10px; }
+.powerpoint-link-status { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #d4deed; border-radius: 12px; color: #51627d; background: #f5f8fd; }
+.powerpoint-link-status > span { padding: 5px 9px; border-radius: 999px; font-size: .76rem; font-weight: 900; white-space: nowrap; }
+.powerpoint-link-status p { margin: 0; font-size: .8rem; font-weight: 700; line-height: 1.4; }
+.powerpoint-link-status .secondary-button { min-height: 34px; padding: 6px 10px; }
+.powerpoint-link-status.valid { border-color: #84d9b7; color: #086448; background: #eafff5; }
+.powerpoint-link-status.valid > span { color: #056246; background: #bdf3dc; }
+.powerpoint-link-status.warning { border-color: #f0c663; color: #765000; background: #fff9df; }
+.powerpoint-link-status.warning > span { color: #684500; background: #ffe59a; }
+.powerpoint-link-status.invalid { border-color: #f2a6b5; color: #9f203a; background: #fff0f3; }
+.powerpoint-link-status.invalid > span { color: #fff; background: #d62f51; }
+.powerpoint-link-status.empty > span { color: #53637c; background: #e2e8f2; }
+.powerpoint-step { min-width: 0; overflow: hidden; }
+.powerpoint-step iframe { min-height: 430px; background: #f5f8fd; }
+.powerpoint-actions { justify-content: flex-end; }
+.powerpoint-runtime-warning { padding: 5px 9px; border: 1px solid #efc55c; border-radius: 999px; color: #6e4b00; background: #fff2b9; font-size: .72rem; font-weight: 900; white-space: nowrap; }
+.powerpoint-placeholder { display: grid; align-content: center; gap: 18px; }
+.powerpoint-placeholder > p { margin: 0; color: #5d7595; font-size: 1.1rem; text-align: center; }
+.powerpoint-step:fullscreen { width: 100vw; height: 100vh; box-sizing: border-box; padding: 10px 12px; border: 0; border-radius: 0; background: #fff; }
+.powerpoint-step:fullscreen iframe { min-height: 0; height: 100%; flex: 1 1 0; }
+.projector-cockpit .powerpoint-step { display: flex; flex-direction: column; gap: 6px; }
+.projector-cockpit .powerpoint-step iframe { min-height: 0; height: 100%; flex: 1 1 0; }
+.projector-cockpit .powerpoint-actions { gap: 5px; }
+
 @media (max-width: 720px) {
   .teacher-media-current span { max-width: 100%; }
   .presentation-actions { justify-content: flex-start; }
+  .powerpoint-link-status { grid-template-columns: 1fr; }
+  .powerpoint-actions { justify-content: flex-start; }
 }
 
 .quiz-corner-mascot { width: clamp(111px, 13.5vw, 186px); }

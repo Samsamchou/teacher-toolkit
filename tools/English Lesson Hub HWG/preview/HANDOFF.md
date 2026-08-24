@@ -355,3 +355,14 @@
 1. 正式站強制重新整理，將 `https://canva.link/6dmyzbaseejgv3s` 貼入任一 Live Interactive Practice，確認顯示「新分頁開啟」，而非拒絕連線 iframe。
 2. 若要留在 Lesson Hub 頁內互動，請從 Canva 取得官方 Embed URL 或 iframe code；貼上後確認顯示「頁內嵌入」，並測試全螢幕與新分頁備援。
 3. Wayground 若顯示「無效的遊戲代碼」，請在 Wayground 產生目前有效的加入網址後更新 Practice URL。
+
+## 2026-08-24 PowerPoint 動畫 Embed（程式完成，尚未部署）
+
+- 已確認 RDQ 規格卡：rdq/RDQ-spec-powerpoint-animation-embed-20260824.md。新增獨立「PowerPoint（動畫）」Step，既有「簡報（PDF）」保持不變。
+- **HWG5 Starter · Lesson 1 · Step 1** 會改為新類型；遷移測試證明既有 14 Steps 只替換 Step 1，其餘 13 Steps 保留，另外 45 節標準 Lesson 不變。
+- Teacher Studio 可貼入 OneDrive／PowerPoint for the web 官方 HTTPS Embed URL 或單一 iframe code；只儲存經 Microsoft 網域白名單驗證的 src，拒絕非 HTTPS、帳密 URL、script、事件屬性、多 iframe 與非 Microsoft 來源。
+- Lesson Flow 提供頁內播放、全螢幕／縮小、新分頁與桌面 PowerPoint 備援；一般短分享網址會顯示「需正式 Embed」警示，含 `wdAr` 與 `wdEaaCheck` 的 PowerPoint 官方 `1drv.ms/p/` Embed 則可辨識為正式格式。Lesson Hub 不保存 Microsoft 帳密、Cookie 或 Token。
+- 最新教師 Embed 採 16:9（1600×900）、`em=2` 播放模式，URL SHA-256 為 `9F2A1C1C57A4244BE2C24D64D63B5360B25A459C875B56B25470D6378AF571B0`；前兩個 `wdEaaCheck` 版本不再使用，完整分享 token 未寫入公開 Git。
+- 最新補丁在乾淨隔離副本通過 73／73 項 Node 測試、46 節課資料驗證與 Vite 正式建置；Teacher Studio 顯示「可嵌入」，Save Lesson、本機重新載入、一般畫面、全螢幕／縮小、新分頁及桌面 PowerPoint 按鈕均通過。
+- 未登入的乾淨 Headless Chrome 載入最新 `em=2` Embed 時，Microsoft 最終仍導向 `onedrive.live.com/edit` 且 iframe 為空白；測試同時記錄 `res-1.cdn.office.net` 載入失敗，因此目前只能確認官方播放格式，實際投影片及 On Click 動畫仍需在教師 Chrome 預覽驗收。
+- 本次沒有部署 Firebase Hosting、Functions 或規則，也沒有 commit／push；完整分享 token 未寫入公開 Git。

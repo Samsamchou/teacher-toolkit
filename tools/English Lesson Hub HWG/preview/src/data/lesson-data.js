@@ -1,6 +1,19 @@
 import source from "../../config/site-source.json" with { type: "json" };
 import questionBank from "../../config/hwg7-u01-l1-vocabulary-quiz.json" with { type: "json" };
 
+export const TARGET_POWERPOINT_LESSON_ID = "hwg5-starter-l01";
+
+const POWERPOINT_STEP_TEMPLATE = {
+  id: "powerpoint",
+  type: "powerpoint",
+  title: "PowerPoint（動畫）",
+  enabled: true,
+  content: {
+    displayName: "課堂 PowerPoint",
+    embedUrl: ""
+  }
+};
+
 const dateStamp = () => new Date().toISOString().slice(0, 10);
 
 function clone(value) {
@@ -76,6 +89,14 @@ export function buildSteps(profileName) {
   });
 }
 
+function buildPowerPointStep(position = 0) {
+  return {
+    ...clone(POWERPOINT_STEP_TEMPLATE),
+    id: POWERPOINT_STEP_TEMPLATE.id + "-" + (position + 1),
+    content: clone(POWERPOINT_STEP_TEMPLATE.content)
+  };
+}
+
 function titleFor(book, unit, lessonNumber) {
   const template = source.lessonTemplate?.titleTemplate || "{book} {unit} · Lesson {lesson}";
   return template
@@ -104,10 +125,14 @@ export function createSeedLessons() {
           contentProfile,
           lastModified: dateStamp()
         };
+        const steps = buildSteps(contentProfile);
+        if (base.id === TARGET_POWERPOINT_LESSON_ID) {
+          steps[0] = buildPowerPointStep(0);
+        }
         return {
           ...base,
           theme: themeForLesson(base),
-          steps: buildSteps(contentProfile)
+          steps
         };
       })
     ))
@@ -145,7 +170,9 @@ export function createLesson() {
 }
 
 export function createStep(type, position) {
-  const template = source.defaultFlow.find((step) => step.type === type) || source.defaultFlow[0];
+  const template = type === "powerpoint"
+    ? POWERPOINT_STEP_TEMPLATE
+    : source.defaultFlow.find((step) => step.type === type) || source.defaultFlow[0];
   return {
     ...clone(template),
     id: `${type}-${Date.now()}-${position}`,
@@ -158,6 +185,7 @@ export const stepTypes = [
   { value: "warmup", label: "Warm-up" },
   { value: "ebook", label: "E-book / Web Embed" },
   { value: "video", label: "Teaching Video" },
+  { value: "powerpoint", label: "PowerPoint（動畫）" },
   { value: "presentation", label: "簡報（PDF）" },
   { value: "imageSlides", label: "Image Slides" },
   { value: "webPractice", label: "Live Interactive Practice" },

@@ -1,6 +1,7 @@
 const LEGACY_EBOOK_URL_PATTERN = /^https:\/\/h5\.hle\.com\.tw\/toolbar\/release\/index\.html\?key=/i;
 const LEGACY_FLAT_LESSON_PATTERN = /^(hwg[57])-(u0[1-4])$/i;
 const REMOVED_STARTER_LESSON_PATTERN = /^hwg[57]-starter-l0[45]$/i;
+const TARGET_POWERPOINT_LESSON_ID = "hwg5-starter-l01";
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -31,6 +32,16 @@ function withMissingPresentationStep(seed, storedSteps) {
   const videoIndex = existingSteps.findIndex((step) => step?.type === "video");
   const insertAt = videoIndex >= 0 ? videoIndex + 1 : existingSteps.length;
   existingSteps.splice(insertAt, 0, clone(presentation));
+  return existingSteps;
+}
+
+function withTargetPowerPointStep(seed, storedSteps) {
+  const existingSteps = Array.isArray(storedSteps) ? clone(storedSteps) : [];
+  const targetStep = seed?.steps?.[0];
+  if (seed?.id !== TARGET_POWERPOINT_LESSON_ID || targetStep?.type !== "powerpoint") return existingSteps;
+  if (existingSteps[0]?.type === "powerpoint") return existingSteps;
+  if (existingSteps.length === 0) return [clone(targetStep)];
+  existingSteps[0] = clone(targetStep);
   return existingSteps;
 }
 
@@ -79,7 +90,9 @@ function mergeCanonicalLesson(seed, stored, originalId) {
     lessonNumber: seed.lessonNumber,
     theme: clone(seed.theme)
   };
-  merged.steps = withoutStoredDownloadTokens(withOfficialMediaDefaults(seed.steps, withMissingPresentationStep(seed, storedCopy.steps)));
+  const stepsWithPresentation = withMissingPresentationStep(seed, storedCopy.steps);
+  const stepsWithTargetPowerPoint = withTargetPowerPointStep(seed, stepsWithPresentation);
+  merged.steps = withoutStoredDownloadTokens(withOfficialMediaDefaults(seed.steps, stepsWithTargetPowerPoint));
   if (originalId !== seed.id) {
     merged.migratedFromLessonId = originalId;
   }

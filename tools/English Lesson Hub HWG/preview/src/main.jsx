@@ -42,6 +42,8 @@ import { deleteTeacherMedia, resolveTeacherMediaUrl } from "./lib/teacher-media-
 import { TeacherMediaUpload } from "./components/teacher-media-upload.jsx";
 import { TeacherImageSlidesUpload } from "./components/teacher-image-slides-upload.jsx";
 import { PresentationStep } from "./components/presentation-step.jsx";
+import { PowerPointEmbedFields } from "./components/powerpoint-embed-fields.jsx";
+import { PowerPointStep } from "./components/powerpoint-step.jsx";
 import { TeachingVideoPlayer } from "./components/teaching-video-player.jsx";
 import {
   deleteResultsAfterExport,
@@ -66,6 +68,7 @@ const STEP_META = {
   warmup: { icon: "👋", label: "Warm-up" },
   ebook: { icon: "📘", label: "E-book" },
   video: { icon: "🎬", label: "Video" },
+  powerpoint: { icon: "📊", label: "PowerPoint" },
   presentation: { icon: "🖥️", label: "簡報" },
   webPractice: { icon: "🌐", label: "Practice" },
   vocabularyQuiz: { icon: "🏆", label: "Quiz" }
@@ -830,6 +833,9 @@ function LessonEditor({ lesson, onSave, onCancel }) {
 
 function StepContentFields({ step, lessonId, onChange, onTrackUpload, onTrackRemoval }) {
   const content = step.content || {};
+  if (step.type === "powerpoint") {
+    return <PowerPointEmbedFields key={step.id} content={content} onChange={onChange} />;
+  }
   if (step.type === "warmup") {
     return (
       <label className="full-width">Warm-up text
@@ -1490,6 +1496,9 @@ function TeachingDock({ current, total, onHome, onPrevious, onNext, onResults })
   );
 }
 function StepRenderer({ step, mode, lesson, soundOn, onSaveResult }) {
+  if (step.type === "powerpoint") {
+    return <PowerPointStep step={step} />;
+  }
   if (step.type === "warmup") {
     return <ContentCard icon="👋" title={step.title}><p className="warmup-text">{step.content.body || "Add a warm-up in Lesson Studio."}</p></ContentCard>;
   }
