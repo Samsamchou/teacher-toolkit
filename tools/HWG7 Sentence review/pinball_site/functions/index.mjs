@@ -7,6 +7,7 @@ import { defineSecret, defineString } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { scoreSpeechAttempt } from "./lib/scoring.mjs";
+import { buildQuestionBankRegistry } from "./lib/question-bank.mjs";
 import {
   DomainValidationError,
   decideGameCompletion,
@@ -52,9 +53,12 @@ const REGION = "asia-east1";
 const RECORDING_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_QUERY_DAYS = 90;
 const bankDocument = JSON.parse(readFileSync(new URL("./data/question-bank.json", import.meta.url), "utf8"));
-const questions = Array.isArray(bankDocument.questions) ? bankDocument.questions : [];
-const questionMap = new Map(questions.map((question) => [question.id, question]));
-if (questions.length !== 13 || questionMap.size !== 13) throw new Error("Deployable question bank must contain 13 unique questions.");
+const bankRegistry = buildQuestionBankRegistry(bankDocument);
+const { questionMap, unitMap } = bankRegistry;
+
+function deployedUnit(unitId) {
+  return unitMap.get(unitId) ?? null;
+}
 
 function toBoolean(value) {
   return /^(1|true|yes|on)$/iu.test(String(value ?? "").trim());
@@ -172,6 +176,12 @@ async function reserveSpeechEvaluation({ db, attemptRef, attemptId, session, gam
     if (attemptSnapshot.exists) {
       const existing = attemptSnapshot.data();
       if (existing.questionId !== questionId) throw new DomainValidationError("attempt_conflict", "這次作答與既有紀錄不一致。", 409);
+      if (
+        existing.unitId !== session.unitId ||
+        existing.questionBankVersion !== session.questionBankVersion
+      ) {
+        throw new DomainValidationError("attempt_conflict", "這次作答與本局題庫不一致。", 409);
+      }
       reservation = { existing, claimRef: null };
       return;
     }
@@ -197,7 +207,7 @@ async function reserveSpeechEvaluation({ db, attemptRef, attemptId, session, gam
     const nowTimestamp = Timestamp.fromDate(now);
     const leaseUntil = Timestamp.fromDate(new Date(now.getTime() + AI_USAGE_LIMITS.claimLeaseMs));
     const usageExpiresAt = Timestamp.fromDate(new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000));
-    transaction.set(claimRef, { attemptId, gameSessionId, questionId, startedAt: nowTimestamp, leaseUntil });
+    transaction.set(claimRef, { attemptId, gameSessionId, questionId, unitId: session.unitId, questionBankVersion: session.questionBankVersion, startedAt: nowTimestamp, leaseUntil });
     transaction.set(studentRef, { scope: "student_daily", studentCode, date: session.date, count: decision.nextCounts.studentDaily, updatedAt: nowTimestamp, expiresAt: usageExpiresAt }, { merge: true });
     transaction.set(gameMinuteRef, { scope: "game_minute", gameSessionId, minute: minuteBucket(now), count: decision.nextCounts.gameMinute, updatedAt: nowTimestamp, expiresAt: usageExpiresAt }, { merge: true });
     transaction.set(projectRef, { scope: "project_daily", date: session.date, count: decision.nextCounts.projectDaily, updatedAt: nowTimestamp, expiresAt: usageExpiresAt }, { merge: true });
@@ -212,12 +222,48 @@ function requiredSessionId(value) {
   return sessionId;
 }
 
+function assertSessionUsesCurrentBank(session) {
+  const unit = deployedUnit(session?.unitId);
+  if (!unit) {
+    throw new DomainValidationError("unit_not_ready", "這個單元題庫準備中，請回首頁重新開始。", 409);
+  }
+  if (
+    typeof session?.questionBankVersion !== "string" ||
+    session.questionBankVersion !== unit.questionBankVersion
+  ) {
+    throw new DomainValidationError(
+      "question_bank_version_mismatch",
+      "題庫已更新，請回首頁重新開始這一局。",
+      409,
+    );
+  }
+  return unit;
+}
+
+function assertQuestionMatchesSession(question, session) {
+  if (!question || question.unitId !== session.unitId) {
+    throw new DomainValidationError("question_unit_mismatch", "這一道題目不屬於本局單元。", 409);
+  }
+  if (question.questionBankVersion !== session.questionBankVersion) {
+    throw new DomainValidationError(
+      "question_bank_version_mismatch",
+      "題目版本與本局題庫不一致，請回首頁重新開始。",
+      409,
+    );
+  }
+  return question;
+}
+
 function expectedPlayerForTurn(session, turnIndex) {
   return expectedAssignedPlayerForTurn(session.assignment, turnIndex);
 }
 
 export const startGame = apiEndpoint(async (request, response) => {
   const unitId = validateUnitId(request.body?.unitId);
+  const unit = deployedUnit(unitId);
+  if (!unit) {
+    throw new DomainValidationError("unit_not_ready", "這個單元題庫準備中，暫時不能開始。", 409);
+  }
   const students = validateStudentCodes(request.body?.students);
   const requestId = typeof request.body?.requestId === "string" ? request.body.requestId.trim() : "";
   const date = taipeiDate();
@@ -230,9 +276,19 @@ export const startGame = apiEndpoint(async (request, response) => {
     const rotationSnapshot = await transaction.get(rotationRef);
     const rawRotation = rotationSnapshot.exists ? rotationSnapshot.data() : null;
     const rotation = rawRotation ? { ...rawRotation, activeUntil: asIso(rawRotation.activeUntil) } : null;
+    if (
+      rotation?.activeGameId &&
+      rotation.questionBankVersion !== unit.questionBankVersion
+    ) {
+      throw new DomainValidationError(
+        "question_bank_version_mismatch",
+        "題庫已更新，請回首頁重新開始這一局。",
+        409,
+      );
+    }
     const decision = decideGameStart({ rotation, students, unitId, now: new Date(), requestId });
     if (decision.action === "resume") {
-      result = { gameSessionId: decision.gameSessionId, assignment: decision.assignment, activeUntil: decision.activeUntil, resumed: true, date };
+      result = { gameSessionId: decision.gameSessionId, assignment: decision.assignment, activeUntil: decision.activeUntil, resumed: true, date, questionBankVersion: unit.questionBankVersion };
       return;
     }
 
@@ -245,7 +301,7 @@ export const startGame = apiEndpoint(async (request, response) => {
       rotationId,
       students,
       assignment: decision.assignment,
-      questionBankVersion: bankDocument.mode?.questionBankVersion,
+      questionBankVersion: unit.questionBankVersion,
       status: "active",
       createdAt: FieldValue.serverTimestamp(),
       activeUntil,
@@ -255,6 +311,7 @@ export const startGame = apiEndpoint(async (request, response) => {
     transaction.set(rotationRef, {
       unitId,
       date,
+      questionBankVersion: unit.questionBankVersion,
       pairHash: rotationId,
       completedGameCount: decision.completedGameCount,
       activeGameId: sessionRef.id,
@@ -264,7 +321,7 @@ export const startGame = apiEndpoint(async (request, response) => {
       activeUntil,
       updatedAt: FieldValue.serverTimestamp(),
     }, { merge: true });
-    result = { gameSessionId: sessionRef.id, assignment: decision.assignment, activeUntil: decision.activeUntil, resumed: false, date };
+    result = { gameSessionId: sessionRef.id, assignment: decision.assignment, activeUntil: decision.activeUntil, resumed: false, date, questionBankVersion: unit.questionBankVersion };
   });
 
   return response.status(200).json({ ok: true, ...result });
@@ -344,14 +401,36 @@ async function transcribeAudio(audio) {
   return transcript;
 }
 
+function studentResultPayload(result, attemptNumber) {
+  const {
+    alignment: _alignment,
+    matchedAnswer,
+    feedbackReferences: _feedbackReferences,
+    ...safe
+  } = result ?? {};
+  const revealModel = Number(attemptNumber) >= 3 && safe.passed !== true;
+  return {
+    ...safe,
+    feedback: revealModel || safe.passed === true
+      ? safe.feedback
+      : "再看看圖片，聽一次示範後再試一次。",
+    confirmedModelAnswer: revealModel && typeof matchedAnswer?.text === "string"
+      ? matchedAnswer.text
+      : null,
+  };
+}
+
 function attemptResponse(data) {
   return {
     ok: true,
     consumeAttempt: true,
     attemptId: data.id,
     questionId: data.questionId,
-    transcript: data.transcript,
-    ...data.result,
+    transcript: data.displayTranscript ?? data.result?.displayTranscript ?? data.transcript,
+    rawTranscript: data.rawTranscript ?? data.transcript,
+    canonicalTranscript: data.canonicalTranscript ?? data.result?.canonicalTranscript ?? data.transcript,
+    displayTranscript: data.displayTranscript ?? data.result?.displayTranscript ?? data.transcript,
+    ...studentResultPayload(data.result, data.attemptNumber),
     recordingStored: Boolean(data.recordingPath),
     provider: { transcriptionModel: "gpt-4o-mini-transcribe" },
   };
@@ -368,8 +447,9 @@ export const evaluateSpeech = apiEndpoint(async (request, response) => {
   if (session.status !== "active" || new Date(asIso(session.activeUntil)).getTime() <= Date.now()) {
     throw new DomainValidationError("game_not_active", "這一局已結束或逾時，請回首頁重新開始。", 409);
   }
+  assertSessionUsesCurrentBank(session);
   const expectedPlayer = expectedPlayerForTurn(session, turnIndex);
-  const question = questionMap.get(audio.questionId);
+  const question = assertQuestionMatchesSession(questionMap.get(audio.questionId), session);
   if (question.type !== expectedPlayer.questionType) {
     throw new DomainValidationError("wrong_question_type", "這個回合的題型與玩家分配不一致。", 409);
   }
@@ -392,7 +472,11 @@ export const evaluateSpeech = apiEndpoint(async (request, response) => {
   try {
     const transcript = await transcribeAudio(audio);
     const result = scoreSpeechAttempt({ question, transcript, metrics: audio.metrics });
-    if (result.valid !== true) return sendError(response, 422, "speech_not_valid", "這次沒有形成可評分的英文內容，請再說一次。", true);
+    if (result.valid !== true) {
+      const code = result.systemLike ? "ambiguous_clock_transcript" : "speech_not_valid";
+      const message = result.systemLike ? "時間逐字稿格式不明確，請再說一次。" : "這次沒有形成可評分的英文內容，請再說一次。";
+      return sendError(response, 422, code, message, true);
+    }
 
     const expiresAt = new Date(now.getTime() + RECORDING_RETENTION_MS);
     const recordingPath = "recordings/" + taipeiDate(now) + "/" + gameSessionId + "/" + turnIndex + "/" + attemptId + "." + audio.extension;
@@ -411,6 +495,7 @@ export const evaluateSpeech = apiEndpoint(async (request, response) => {
       gameSessionId,
       unitId: session.unitId,
       date: session.date,
+      questionBankVersion: session.questionBankVersion,
       turnIndex,
       attemptNumber,
       studentCode: expectedPlayer.studentCode,
@@ -419,6 +504,9 @@ export const evaluateSpeech = apiEndpoint(async (request, response) => {
       questionType: question.type,
       transcript,
       result,
+      rawTranscript: result.rawTranscript,
+      canonicalTranscript: result.canonicalTranscript,
+      displayTranscript: result.displayTranscript,
       recordingPath,
       recordingDeletedAt: null,
       createdAt: Timestamp.fromDate(now),
@@ -441,7 +529,12 @@ function compactAttempt(data) {
     questionId: data.questionId,
     questionType: data.questionType,
     studentCode: data.studentCode,
-    transcript: data.transcript,
+    unitId: data.unitId,
+    questionBankVersion: data.questionBankVersion,
+    transcript: data.displayTranscript ?? data.result?.displayTranscript ?? data.transcript,
+    rawTranscript: data.rawTranscript ?? data.transcript,
+    canonicalTranscript: data.canonicalTranscript ?? data.result?.canonicalTranscript ?? data.transcript,
+    displayTranscript: data.displayTranscript ?? data.result?.displayTranscript ?? data.transcript,
     scores: data.result?.scores ?? null,
     passed: data.result?.passed === true,
     feedback: data.result?.feedback ?? "",
@@ -460,12 +553,26 @@ export const completeGame = apiEndpoint(async (request, response) => {
     throw new DomainValidationError("invalid_question_set", "完整遊戲必須包含 12 道不重複的正式題目。", 409);
   }
   const { db } = adminServices();
+  const initialSessionSnapshot = await db.collection("gameSessions").doc(sessionId).get();
+  if (!initialSessionSnapshot.exists) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
+  const initialSession = { id: sessionId, ...initialSessionSnapshot.data() };
+  assertSessionUsesCurrentBank(initialSession);
+  for (const questionId of questionIds) {
+    assertQuestionMatchesSession(questionMap.get(questionId), initialSession);
+  }
   const attemptIds = [...new Set(summary.turnSummaries.flatMap(({ attemptIds: ids }) => ids))];
   if (!attemptIds.length) throw new DomainValidationError("attempts_required", "缺少口說評測紀錄。", 409);
   const attemptSnapshots = await db.getAll(...attemptIds.map((id) => db.collection("practiceAttempts").doc(id)));
   if (attemptSnapshots.some((snapshot) => !snapshot.exists)) throw new DomainValidationError("attempt_not_found", "部分口說評測紀錄尚未完成，請稍後再試。", 409);
   const attempts = attemptSnapshots.map((snapshot) => snapshot.data());
   if (attempts.some((attempt) => attempt.gameSessionId !== sessionId)) throw new DomainValidationError("attempt_session_mismatch", "口說評測紀錄與本局不一致。", 409);
+  if (attempts.some((attempt) =>
+    attempt.gameSessionId !== sessionId ||
+    attempt.unitId !== initialSession.unitId ||
+    attempt.questionBankVersion !== initialSession.questionBankVersion
+  )) {
+    throw new DomainValidationError("attempt_session_mismatch", "口說評測紀錄與本局單元或版本不一致。", 409);
+  }
 
   let outcome;
   await db.runTransaction(async (transaction) => {
@@ -474,6 +581,7 @@ export const completeGame = apiEndpoint(async (request, response) => {
     if (!sessionSnapshot.exists) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
     const session = { id: sessionId, ...sessionSnapshot.data() };
     const rotationRef = db.collection("gameRotations").doc(session.rotationId);
+    assertSessionUsesCurrentBank(session);
     const rotationSnapshot = await transaction.get(rotationRef);
     const rotation = rotationSnapshot.exists ? rotationSnapshot.data() : null;
     const decision = decideGameCompletion({ session, rotation });
@@ -484,11 +592,23 @@ export const completeGame = apiEndpoint(async (request, response) => {
 
     for (const turn of summary.turnSummaries) {
       const expected = expectedPlayerForTurn(session, turn.turnIndex);
-      if (turn.studentCode !== expected.studentCode || turn.questionType !== expected.questionType || questionMap.get(turn.questionId)?.type !== expected.questionType) {
+      const question = assertQuestionMatchesSession(questionMap.get(turn.questionId), session);
+      if (turn.studentCode !== expected.studentCode || turn.questionType !== expected.questionType || question.type !== expected.questionType) {
         throw new DomainValidationError("turn_assignment_mismatch", "回合學生或題型與開局分配不一致。", 409);
       }
       if (!turn.attemptIds.length || turn.attemptIds.some((id) => !attemptIds.includes(id))) {
         throw new DomainValidationError("turn_attempt_missing", "每個回合都必須有口說評測紀錄。", 409);
+      }
+      const turnAttempts = attempts.filter((attempt) => turn.attemptIds.includes(attempt.id));
+      if (
+        turnAttempts.length !== turn.attemptIds.length ||
+        turnAttempts.some((attempt) =>
+          attempt.questionId !== turn.questionId ||
+          attempt.studentCode !== turn.studentCode ||
+          attempt.questionType !== turn.questionType
+        )
+      ) {
+        throw new DomainValidationError("turn_attempt_mismatch", "回合評測紀錄與題目或學生不一致。", 409);
       }
     }
 
@@ -691,7 +811,7 @@ export const teacherApi = apiEndpoint(async (request, response) => {
     if (filters.unitId) records = records.filter((record) => record.unitId === filters.unitId);
     if (/^\d{3}$/u.test(filters.classCode || "")) records = records.filter((record) => record.classCodes?.includes(filters.classCode));
     if (/^\d{5}$/u.test(filters.studentCode || "")) records = records.filter((record) => record.students?.includes(filters.studentCode));
-    if (/^HWG7-SR-\d{3}$/u.test(filters.questionId || "")) records = records.filter((record) => record.turnSummaries?.some((turn) => turn.questionId === filters.questionId));
+    if (questionMap.has(filters.questionId || "")) records = records.filter((record) => record.turnSummaries?.some((turn) => turn.questionId === filters.questionId));
     return response.status(200).json({ ok: true, records: records.map(teacherRecord), count: records.length, truncated: snapshot.size >= 500 });
   }
 

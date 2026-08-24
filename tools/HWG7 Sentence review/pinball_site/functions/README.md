@@ -1,14 +1,15 @@
 # HWG7 Sentence Review Firebase Functions
 
-本目錄是 Firebase Functions v2 的部署來源。2026-08-22 的 v2 修正版已部署至 `setencerevieworalpractice`，並於 22:08（Asia/Taipei）完成查驗，並完成本機、Emulator 與正式線上驗證；舊版部署證據保留於 `LOCAL-QA-REPORT-20260822.md`。
+本目錄是 Firebase Functions v2 的部署來源。HWG7 SR 與 HWG5 SR 已部署至 `setencerevieworalpractice`；2026-08-24 已完成多單元題庫、正式 TTS、本機測試、部署閘門與正式靜態資產／安全讀回。HWG7 舊版部署證據保留於 `LOCAL-QA-REPORT-20260822.md`，HWG5 驗證摘要位於專案 `qa/hwg5-sr-local-validation-20260824.md`。
 
 ## 目前規格
 
 - Runtime：Node.js 22；Region：`asia-east1`
-- 題庫：13 題；每局 12 題；兩位玩家各 6 回合
+- 題庫：HWG7 SR 13 題、HWG5 SR 15 題；每局從所選單元抽 12 題；兩位玩家各 6 回合
 - 回合：第 1 回合 A 朗讀／B 回答，第 2 回合 A 回答／B 朗讀，之後交替；每局都由此模式重新開始
-- 評分：`a1-v2-answer-only`；準確度 50%＋完整度 30%＋流暢度 20%；80 分（含）達標
+- 評分：HWG7 使用 `a1-v2-answer-only`，HWG5 使用 `hwg5-sr-v1-answer-only`；準確度 50%＋完整度 30%＋流暢度 20%；80 分（含）達標
 - 題型二只評學生答句，不要求錄下問句；短答與完整答均可各自滿分
+- HWG5 時間題使用 `clock-en-v1` 規則：英文數字字詞與 `o'clock` 先正規化後判讀，不以模糊連寫阿拉伯數字取代學生實際語句
 - OpenAI 金鑰：正式環境只可使用 Firebase Secret `OPENAI_API_KEY`
 
 ## 匯出函式
@@ -40,10 +41,10 @@ npm --prefix functions test
 firebase emulators:exec --project demo-hwg7-sr --only auth,functions,firestore,hosting,storage "node functions/emulator/smoke.mjs"
 ```
 
-2026-08-22 v2 結果：Functions `49/49`、網站 `35/35`、Firebase Emulator PASS、正式線上 QA `14/14`。Emulator 另驗證教師錄音：匿名請求 401、登入後 200／`audio/webm`，回傳位元組與 Storage 原檔完全相同；正式站 8 個 Functions 均為 ACTIVE。
+2026-08-24 多單元結果：Functions `86/86`、網站 `56/56`、HWG5 專屬測試 `14/14`、HWG5 題圖版面 `45/45` 加缺圖 fallback；28 張正式題圖與 22 段 TTS 已逐檔和正式 Hosting 讀回雜湊一致。正式站 8 個 Functions 均為 `ACTIVE`，缺少 App Check 的請求為 401、錯誤來源為 403。實體 iPad Safari 麥克風仍須由教師在校內裝置完成人工驗收。
 
 ## 正式部署閘門
 
-本次 v2 已完成部署；這次授權不自動延伸到後續修改。未來再次部署前仍須收到精確授權：
+HWG5 SR 本次新增已完成部署；這次授權不自動延伸到後續修改。未來再次部署前仍須收到精確授權：
 
 `確認部署 setencerevieworalpractice`

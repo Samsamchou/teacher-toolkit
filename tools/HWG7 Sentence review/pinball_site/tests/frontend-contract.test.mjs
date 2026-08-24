@@ -25,14 +25,15 @@ function sliceBetween(source, startMarker, endMarker) {
 function compileFrontEndBank(rawBank) {
   const mappingSource = sliceBetween(
     indexHtml,
-    "const HWG7_SPEECH_QUESTIONS =",
+    "function adaptSpeechQuestions(source, unit)",
     "const QUESTION_BANKS ="
   );
   const factory = new Function(
-    "window",
-    `"use strict";\n${mappingSource}\nreturn HWG7_SPEECH_QUESTIONS;`
+    "source",
+    "unit",
+    `"use strict";\n${mappingSource}\nreturn adaptSpeechQuestions(source, unit);`
   );
-  return factory({ HWG7_SENTENCE_REVIEW_BANK: rawBank.questions });
+  return factory(rawBank.questions, { questionBankVersion: rawBank.mode.questionBankVersion });
 }
 
 function compilePrepareQuestionSet(questionBank, shuffle) {
@@ -43,16 +44,43 @@ function compilePrepareQuestionSet(questionBank, shuffle) {
   );
   const factory = new Function(
     "QUESTION_BANKS",
-    "SPEECH_MODE",
+    "isSpeechAssessmentMode",
     "shuffle",
     "getModeTotalTurns",
     `"use strict";\n${functionSource}\nreturn prepareQuestionSet;`
   );
   return factory(
-    { hwg7SentenceReview: questionBank, grade4Phonics: [] },
-    "hwg7SentenceReview",
+    {
+      hwg7SentenceReview: questionBank,
+      hwg5SentenceReview: questionBank,
+      grade4Phonics: []
+    },
+    mode => mode === "hwg7SentenceReview" || mode === "hwg5SentenceReview",
     shuffle,
     () => 12
+  );
+}
+
+function compileTeacherQuestionOptions(questionBanks) {
+  const functionSource = sliceBetween(
+    indexHtml,
+    "function getTeacherQuestionOptions(unitId = \"\")",
+    "function TeacherDashboard"
+  );
+  const units = [
+    { id: "hwg7-sr", mode: "hwg7SentenceReview", label: "HWG7 SR" },
+    { id: "hwg5-sr", mode: "hwg5SentenceReview", label: "HWG5 SR" }
+  ];
+  const factory = new Function(
+    "UNIT_BY_ID",
+    "UNIT_REGISTRY",
+    "QUESTION_BANKS",
+    `"use strict";\n${functionSource}\nreturn getTeacherQuestionOptions;`
+  );
+  return factory(
+    Object.fromEntries(units.map(unit => [unit.id, unit])),
+    units,
+    questionBanks
   );
 }
 
@@ -183,7 +211,7 @@ test("front-end bank adapter resolves all 13 unique, non-empty image paths", asy
   }
 });
 
-test("actual prepareQuestionSet makes 12 unique questions in the fixed six-round pattern", () => {
+test("every registered speech assessment makes 12 unique questions in the fixed six-round pattern", () => {
   const adapted = compileFrontEndBank(bank);
   const expectedTypes = [
     "read_aloud", "question_answer",
@@ -194,22 +222,46 @@ test("actual prepareQuestionSet makes 12 unique questions in the fixed six-round
     "question_answer", "read_aloud"
   ];
 
-  for (let seed = 1; seed <= 250; seed += 1) {
-    const prepareQuestionSet = compilePrepareQuestionSet(adapted, seededShuffle(seed));
-    const game = prepareQuestionSet("hwg7SentenceReview");
-    const ids = game.map(question => question.id);
+  for (const mode of ["hwg7SentenceReview", "hwg5SentenceReview"]) {
+    for (let seed = 1; seed <= 250; seed += 1) {
+      const prepareQuestionSet = compilePrepareQuestionSet(adapted, seededShuffle(seed));
+      const game = prepareQuestionSet(mode);
+      const ids = game.map(question => question.id);
 
-    assert.equal(game.length, 12, `seed ${seed}: game length`);
-    assert.equal(new Set(ids).size, 12, `seed ${seed}: duplicate question`);
-    assert.equal(game.filter(question => question.type === "read_aloud").length, 6, `seed ${seed}: type 1 count`);
-    assert.equal(game.filter(question => question.type === "question_answer").length, 6, `seed ${seed}: type 2 count`);
-    assert.deepEqual(game.map(question => question.type), expectedTypes, `seed ${seed}: round pattern`);
-    for (const playerOffset of [0, 1]) {
-      const playerTypes = game.filter((_, index) => index % 2 === playerOffset).map(question => question.type);
-      assert.equal(playerTypes.filter(type => type === "read_aloud").length, 3, `seed ${seed}: player ${playerOffset} read count`);
-      assert.equal(playerTypes.filter(type => type === "question_answer").length, 3, `seed ${seed}: player ${playerOffset} answer count`);
+      assert.equal(game.length, 12, `${mode} seed ${seed}: game length`);
+      assert.equal(new Set(ids).size, 12, `${mode} seed ${seed}: duplicate question`);
+      assert.equal(game.filter(question => question.type === "read_aloud").length, 6, `${mode} seed ${seed}: type 1 count`);
+      assert.equal(game.filter(question => question.type === "question_answer").length, 6, `${mode} seed ${seed}: type 2 count`);
+      assert.deepEqual(game.map(question => question.type), expectedTypes, `${mode} seed ${seed}: round pattern`);
+      for (const playerOffset of [0, 1]) {
+        const playerTypes = game.filter((_, index) => index % 2 === playerOffset).map(question => question.type);
+        assert.equal(playerTypes.filter(type => type === "read_aloud").length, 3, `${mode} seed ${seed}: player ${playerOffset} read count`);
+        assert.equal(playerTypes.filter(type => type === "question_answer").length, 3, `${mode} seed ${seed}: player ${playerOffset} answer count`);
+      }
     }
   }
+});
+
+test("HWG5 bank registration and teacher question options are unit-aware", () => {
+  assert.match(indexHtml, /data\/hwg5-sentence-review\.js/u);
+  assert.match(indexHtml, /const globalName = unit\?\.questionBankGlobal/u);
+  assert.match(indexHtml, /globalName \? window\[globalName\] : null/u);
+  assert.doesNotMatch(indexHtml, /const\s+SPEECH_MODE\s*=/u);
+  assert.match(indexHtml, /const ready = unit\.status === "ready" && \(QUESTION_BANKS\[unit\.mode\] \|\| \[\]\)\.length/u);
+
+  const banks = {
+    hwg7SentenceReview: [{ id: "HWG7-SR-001", type: "read_aloud" }],
+    hwg5SentenceReview: [{ id: "HWG5-SR-001", type: "question_answer" }]
+  };
+  const getTeacherQuestionOptions = compileTeacherQuestionOptions(banks);
+  assert.deepEqual(
+    getTeacherQuestionOptions("hwg5-sr").map(item => [item.unitId, item.question.id]),
+    [["hwg5-sr", "HWG5-SR-001"]]
+  );
+  assert.deepEqual(
+    getTeacherQuestionOptions("").map(item => [item.unitId, item.question.id]),
+    [["hwg7-sr", "HWG7-SR-001"], ["hwg5-sr", "HWG5-SR-001"]]
+  );
 });
 
 test("HomePage accepts only two distinct five-digit student codes", () => {

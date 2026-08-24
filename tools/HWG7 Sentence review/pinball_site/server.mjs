@@ -31,7 +31,7 @@ import {
 
 const SITE_ROOT = path.dirname(fileURLToPath(import.meta.url));
 const WORKSPACE_ROOT = path.dirname(SITE_ROOT);
-const BANK_PATH = path.join(SITE_ROOT, "data", "hwg7-sentence-review.json");
+const UNIT_REGISTRY_PATH = path.join(SITE_ROOT, "data", "unit-registry.json");
 const ENV_PATH = path.join(WORKSPACE_ROOT, ".env.local");
 const LOCAL_TEACHER_CONFIG_PATH = path.join(SITE_ROOT, ".local", "teacher-auth.json");
 const PORT = Number(process.env.PORT || 4173);
@@ -51,8 +51,36 @@ function loadLocalEnv(filePath) {
 }
 loadLocalEnv(ENV_PATH);
 
-const bankDocument = JSON.parse(await readFile(BANK_PATH, "utf8"));
-const questionMap = new Map((bankDocument.questions || []).map(question => [question.id, question]));
+const unitRegistryDocument = JSON.parse(await readFile(UNIT_REGISTRY_PATH, "utf8"));
+const unitDefinitions = new Map((unitRegistryDocument.units || []).map(unit => [unit.id, unit]));
+const bankDocuments = new Map();
+const questionMaps = new Map();
+for (const unit of unitDefinitions.values()) {
+    const defaultFile = `data/${unit.id.replace(/-sr$/u, "-sentence-review")}.json`;
+    const bankFile = unit.questionBankFile || defaultFile;
+    if (!/^data\/[a-z0-9-]+\.json$/u.test(bankFile)) continue;
+    const bankPath = path.resolve(SITE_ROOT, ...bankFile.split("/"));
+    if (!bankPath.startsWith(`${SITE_ROOT}${path.sep}`)) continue;
+    if (!existsSync(bankPath)) continue;
+    const document = JSON.parse(await readFile(bankPath, "utf8"));
+    const questions = Array.isArray(document.questions) ? document.questions : [];
+    bankDocuments.set(unit.id, document);
+    questionMaps.set(unit.id, new Map(questions.map(question => [question.id, question])));
+}
+
+function localBankForUnit(unitId, { requireReady = false } = {}) {
+    const unit = unitDefinitions.get(unitId);
+    if (!unit || (requireReady && unit.status !== "ready")) {
+        throw new DomainValidationError("unit_not_ready", "這個單元題庫準備中，暫時不能開始。", 409);
+    }
+    const bankDocument = bankDocuments.get(unitId);
+    const questionMap = questionMaps.get(unitId);
+    if (!bankDocument || !questionMap?.size) {
+        throw new DomainValidationError("unit_bank_unavailable", "這個單元題庫暫時無法使用。", 503);
+    }
+    return { unit, bankDocument, questionMap };
+}
+
 const rotations = new Map();
 const gameSessions = new Map();
 const attempts = new Map();
@@ -120,6 +148,7 @@ function expectedPlayer(session, turnIndex) {
 
 function startLocalGame(body) {
     const unitId = validateUnitId(body?.unitId);
+    const { unit, bankDocument } = localBankForUnit(unitId, { requireReady: true });
     const students = validateStudentCodes(body?.students);
     const date = taipeiDate();
     const rotationId = pairRotationId({ unitId, date, students });
@@ -129,7 +158,7 @@ function startLocalGame(body) {
     const gameSessionId = `session_${randomBytes(12).toString("base64url")}`;
     const session = {
         id: gameSessionId, unitId, date, rotationId, students, assignment: decision.assignment,
-        questionBankVersion: bankDocument.mode.questionBankVersion, status: "active", createdAt: new Date().toISOString(), activeUntil: decision.activeUntil
+        questionBankVersion: unit.questionBankVersion || bankDocument.mode?.questionBankVersion || "", status: "active", createdAt: new Date().toISOString(), activeUntil: decision.activeUntil
     };
     gameSessions.set(gameSessionId, session);
     rotations.set(rotationId, {
@@ -153,14 +182,15 @@ function abandonLocalGame(body) {
 }
 
 async function evaluateLocalSpeech(body) {
-    const question = questionMap.get(String(body?.questionId || ""));
-    if (!question) throw new DomainValidationError("question_not_found", "找不到這一道題目。", 404);
     const sessionId = requiredSessionId(body?.gameSessionId);
     const turnIndex = Number(body?.turnIndex);
     const attemptNumber = Number(body?.attemptNumber);
     if (!Number.isInteger(turnIndex) || turnIndex < 0 || turnIndex > 11 || !Number.isInteger(attemptNumber) || attemptNumber < 1 || attemptNumber > 3) throw new DomainValidationError("invalid_attempt_context", "評測回合或次數不正確。");
     const session = gameSessions.get(sessionId);
     if (!session || session.status !== "active" || new Date(session.activeUntil).getTime() <= Date.now()) throw new DomainValidationError("game_not_active", "這一局已結束或逾時。", 409);
+    const { questionMap } = localBankForUnit(session.unitId);
+    const question = questionMap.get(String(body?.questionId || ""));
+    if (!question) throw new DomainValidationError("question_not_found", "找不到這一道題目。", 404);
     const player = expectedPlayer(session, turnIndex);
     if (player.questionType !== question.type) throw new DomainValidationError("wrong_question_type", "這個回合的題型與玩家分配不一致。", 409);
     const attemptId = `${sessionId}_${String(turnIndex).padStart(2, "0")}_${attemptNumber}`;
@@ -189,6 +219,7 @@ function completeLocalGame(body) {
     const rotation = rotations.get(session.rotationId);
     const decision = decideGameCompletion({ session, rotation });
     if (decision.action === "already_completed") return { ok: true, resultId: sessionId, completedGameCount: rotation?.completedGameCount ?? null, nextGamePattern: "fixed_round_alternation", idempotent: true };
+    const { questionMap } = localBankForUnit(session.unitId);
     const questionIds = summary.turnSummaries.map(turn => turn.questionId);
     if (new Set(questionIds).size !== 12 || questionIds.some(id => !questionMap.has(id))) throw new DomainValidationError("invalid_question_set", "完整遊戲必須包含 12 道不重複題目。", 409);
     for (const turn of summary.turnSummaries) {
@@ -304,7 +335,7 @@ async function serveStatic(request, response) {
 const server = http.createServer(async (request, response) => {
     try {
         const pathname = new URL(request.url, `http://${request.headers.host || "localhost"}`).pathname;
-        if (request.method === "GET" && pathname === "/api/health") return sendJson(response, 200, { ok: true, questionCount: questionMap.size, openaiConfigured: Boolean(process.env.OPENAI_API_KEY), localTeacherConfigured: existsSync(LOCAL_TEACHER_CONFIG_PATH) });
+        if (request.method === "GET" && pathname === "/api/health") return sendJson(response, 200, { ok: true, questionCount: [...questionMaps.values()].reduce((sum, map) => sum + map.size, 0), questionCountsByUnit: Object.fromEntries([...questionMaps].map(([unitId, map]) => [unitId, map.size])), openaiConfigured: Boolean(process.env.OPENAI_API_KEY), localTeacherConfigured: existsSync(LOCAL_TEACHER_CONFIG_PATH) });
         if (request.method === "POST") {
             const body = await readJsonBody(request);
             if (pathname === "/api/game/start") return sendJson(response, 200, startLocalGame(body));
@@ -326,6 +357,6 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(PORT, "127.0.0.1", () => {
-    console.log(`HWG7 speech pinball local server: http://127.0.0.1:${PORT}`);
-    console.log(`Question bank: ${questionMap.size}; OpenAI configured: ${Boolean(process.env.OPENAI_API_KEY)}; local teacher hash configured: ${existsSync(LOCAL_TEACHER_CONFIG_PATH)}`);
+    console.log(`Speech pinball local server: http://127.0.0.1:${PORT}`);
+    console.log(`Question banks: ${[...questionMaps].map(([unitId, map]) => `${unitId}=${map.size}`).join(", ")}; OpenAI configured: ${Boolean(process.env.OPENAI_API_KEY)}; local teacher hash configured: ${existsSync(LOCAL_TEACHER_CONFIG_PATH)}`);
 });

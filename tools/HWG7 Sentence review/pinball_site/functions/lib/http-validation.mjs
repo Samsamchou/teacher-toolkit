@@ -127,7 +127,7 @@ export function validateEvaluationBody(body, questionIds) {
   const unknown = Object.keys(body).filter((key) => !BODY_FIELDS.has(key));
   if (unknown.length) fail(400, "unexpected_field", "評測資料包含不需要的欄位。");
 
-  if (typeof body.questionId !== "string" || !/^HWG7-SR-\d{3}$/u.test(body.questionId)) {
+  if (typeof body.questionId !== "string" || !/^[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{3}$/u.test(body.questionId)) {
     fail(400, "invalid_question_id", "題目編號格式不正確。");
   }
   if (!questionIds.has(body.questionId)) fail(404, "question_not_found", "找不到這一道題目。");

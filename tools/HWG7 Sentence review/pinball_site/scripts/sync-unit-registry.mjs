@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
+import { verifyHwg5Media } from "./verify-hwg5-media.mjs";
 
 const jsonUrl = new URL("../data/unit-registry.json", import.meta.url);
 const jsUrl = new URL("../data/unit-registry.js", import.meta.url);
@@ -7,7 +8,18 @@ const document = JSON.parse(await readFile(jsonUrl, "utf8"));
 if (!Array.isArray(document.units) || document.units.length !== 4) throw new Error("Unit registry must contain exactly four homepage units.");
 const labels = document.units.map(({ label }) => label);
 if (JSON.stringify(labels) !== JSON.stringify(["HWG7 SR", "HWG5 SR", "HWG8 SR", "HWG6 SR"])) throw new Error("Homepage unit order is incorrect.");
-if (document.units.filter(({ status }) => status === "ready").map(({ id }) => id).join(",") !== "hwg7-sr") throw new Error("Only HWG7 SR may be ready in this build.");
+const readyIds = document.units.filter(({ status }) => status === "ready").map(({ id }) => id);
+if (JSON.stringify(readyIds) !== JSON.stringify(["hwg7-sr", "hwg5-sr"])) throw new Error("HWG7 SR and HWG5 SR must be the only ready units in this build.");
+const hwg5 = document.units.find(({ id }) => id === "hwg5-sr");
+if (hwg5?.status !== "ready" || hwg5?.hint !== "") throw new Error("HWG5 SR must be ready after teacher image review and static TTS verification.");
+if (hwg5?.questionBankVersion !== "hwg5-sr-v1-answer-only") throw new Error("HWG5 SR question bank version is incorrect.");
+if (hwg5?.rubricVersion !== "a1-v3-clock-en-answer-only") throw new Error("HWG5 SR rubric version is incorrect.");
+if (hwg5?.interactionType !== "speech_assessment") throw new Error("HWG5 SR interaction type is incorrect.");
+if (hwg5?.questionBankGlobal !== "HWG5_SPEECH_QUESTIONS") throw new Error("HWG5 SR public data global is incorrect.");
+if (hwg5?.questionBankFile !== "data/hwg5-sentence-review.json") throw new Error("HWG5 SR private bank file is incorrect.");
+if (hwg5?.questionBankScript !== "data/hwg5-sentence-review.js") throw new Error("HWG5 SR public bank script is incorrect.");
+if ("readinessBlockers" in hwg5) throw new Error("Ready HWG5 SR must not retain readiness blockers.");
+await verifyHwg5Media();
 const payload = JSON.stringify(document);
 const hash = createHash("sha256").update(payload).digest("hex");
 await writeFile(jsUrl, [
@@ -17,4 +29,10 @@ await writeFile(jsUrl, [
   `window.HWG7_UNIT_REGISTRY_DOCUMENT = ${JSON.stringify(document, null, 2)};`,
   ""
 ].join("\n"), "utf8");
-console.log(JSON.stringify({ unitCount: document.units.length, labels, ready: ["hwg7-sr"], hash }, null, 2));
+console.log(JSON.stringify({
+  unitCount: document.units.length,
+  labels,
+  ready: readyIds,
+  preparing: document.units.filter(({ status }) => status === "preparing").map(({ id }) => id),
+  hash
+}, null, 2));

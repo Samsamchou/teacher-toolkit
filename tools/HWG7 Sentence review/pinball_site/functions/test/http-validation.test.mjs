@@ -7,7 +7,7 @@ import {
   validateEvaluationBody,
 } from "../lib/http-validation.mjs";
 
-const questionIds = new Set(["HWG7-SR-001"]);
+const questionIds = new Set(["HWG7-SR-001", "HWG5-SR-001"]);
 
 function audioBase64(container = "webm", size = 1200) {
   const bytes = Buffer.alloc(size);
@@ -27,6 +27,15 @@ test("accepts a known question and canonical WebM audio", () => {
   assert.equal(result.extension, "webm");
   assert.equal(result.bytes.length, 1200);
   assert.deepEqual(result.metrics, { speechWindowMs: 2400, mediumPauses: 1, longPauses: 0 });
+});
+
+test("accepts a known HWG5 question ID without weakening membership checks", () => {
+  const result = validateEvaluationBody({
+    questionId: "HWG5-SR-001",
+    mimeType: "audio/webm",
+    audioBase64: audioBase64(),
+  }, questionIds);
+  assert.equal(result.questionId, "HWG5-SR-001");
 });
 
 test("rejects student identifiers and every other unexpected field", () => {

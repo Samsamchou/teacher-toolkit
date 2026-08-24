@@ -6,6 +6,11 @@
       "mode": "hwg7SentenceReview",
       "label": "HWG7 SR",
       "title": "HWG7 Sentence Review",
+      "interactionType": "speech_assessment",
+      "questionBankGlobal": "HWG7_SENTENCE_REVIEW_BANK",
+      "questionBankFile": "data/hwg7-sentence-review.json",
+      "questionBankScript": "data/hwg7-sentence-review.js",
+      "rubricVersion": "a1-v2-answer-only",
       "hint": "",
       "status": "ready",
       "questionBankVersion": "hwg7-sr-v2-answer-only",
@@ -19,8 +24,18 @@
       "mode": "hwg5SentenceReview",
       "label": "HWG5 SR",
       "title": "HWG5 Sentence Review",
-      "hint": "題庫準備中",
-      "status": "preparing"
+      "hint": "",
+      "status": "ready",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "interactionType": "speech_assessment",
+      "questionBankGlobal": "HWG5_SPEECH_QUESTIONS",
+      "questionBankFile": "data/hwg5-sentence-review.json",
+      "questionBankScript": "data/hwg5-sentence-review.js",
+      "questionsPerGame": 12,
+      "roundsPerPlayer": 6,
+      "passScore": 80,
+      "maxAttempts": 3
     },
     {
       "id": "hwg8-sr",
@@ -28,6 +43,7 @@
       "label": "HWG8 SR",
       "title": "HWG8 Sentence Review",
       "hint": "題庫準備中",
+      "interactionType": "speech_assessment",
       "status": "preparing"
     },
     {
@@ -36,6 +52,7 @@
       "label": "HWG6 SR",
       "title": "HWG6 Sentence Review",
       "hint": "題庫準備中",
+      "interactionType": "speech_assessment",
       "status": "preparing"
     }
   ]

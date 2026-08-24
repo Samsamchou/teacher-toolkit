@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HWG7 口說與打彈珠小高手</title>
+    <title>英語口說與打彈珠小高手</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="data/unit-registry.js"></script>
     <script src="data/hwg7-sentence-review.js"></script>
+    <script src="data/hwg5-sentence-review.js"></script>
     <script src="js/app-api.js"></script>
     <script src="js/speech-practice.js"></script>
 
@@ -592,10 +593,9 @@
         };
         // Firebase App Check 使用正式網域限定的 reCAPTCHA Enterprise 公開 site key。
         const appCheckSiteKey = "6LeEqZItAAAAAMf76jAuZSRQrcn2fWGjRQcuCQda";
-        const HWG7_PATCH_VERSION = "speech-pinball-v2-secure";
+
         const PHONICS_TOTAL_TURNS = 20;
         const PHRASE_TOTAL_TURNS = 30;
-        const SPEECH_MODE = "hwg7SentenceReview";
         const UNIT_REGISTRY = Object.freeze([...(window.HWG7_UNIT_REGISTRY_DOCUMENT?.units || [])]);
         const UNIT_BY_MODE = Object.freeze(Object.fromEntries(UNIT_REGISTRY.map(unit => [unit.mode, unit])));
         const UNIT_BY_ID = Object.freeze(Object.fromEntries(UNIT_REGISTRY.map(unit => [unit.id, unit])));
@@ -657,7 +657,7 @@
                 status: unit.status,
                 totalTurns: unit.questionsPerGame || 12,
                 roundsPerPlayer: unit.roundsPerPlayer || 6,
-                interactionType: "speech",
+                interactionType: unit.interactionType || (unit.mode?.endsWith("SentenceReview") ? "speech_assessment" : ""),
                 passScore: unit.passScore || 80,
                 maxAttempts: unit.maxAttempts || 3,
                 questionBankVersion: unit.questionBankVersion || null
@@ -805,33 +805,45 @@
             correctAnswer: q.transcript
         }, "grade5Phrases"));
 
-        const HWG7_SPEECH_QUESTIONS = (window.HWG7_SENTENCE_REVIEW_BANK || []).map(question => ({
-            ...question,
-            id: question.questionId || question.id,
-            interactionType: "speech",
-            optionType: "speech",
-            stem: question.type === "read_aloud" ? question.standardReadSentence : question.questionText,
-            imagePath: question.image?.path || question.imagePath || "",
-            imageAlt: question.image?.alt || question.imageAlt || "題目圖片",
-            questionBankVersion: question.questionBankVersion || "hwg7-sr-v2-answer-only",
-            pronunciationTargets: [...new Set([
-                ...(question.pronunciationAnalysis?.pronunciationTargets || question.pronunciationTargets || []),
-                ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.pronunciationTargets || [])
-            ])],
-            difficultWords: [...new Set([
-                ...(question.pronunciationAnalysis?.difficultWords || question.difficultWords || []),
-                ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.difficultWords || [])
-            ].map(item => typeof item === "string" ? item : item.word).filter(Boolean))],
-            correctAnswer: question.type === "read_aloud"
-                ? question.standardReadSentence
-                : (question.acceptableAnswers?.[0]?.text || question.acceptableAnswers?.[0] || "")
-        }));
+        function isSpeechAssessmentMode(mode) {
+            return MODE_META?.[mode]?.interactionType === "speech_assessment";
+        }
+
+        function getRegisteredSpeechSource(unit) {
+            const globalName = unit?.questionBankGlobal;
+            const source = globalName ? window[globalName] : null;
+            return Array.isArray(source) ? source : [];
+        }
+
+        function adaptSpeechQuestions(source, unit) {
+            return (source || []).map(question => ({
+                ...question,
+                id: question.questionId || question.id,
+                interactionType: "speech_assessment",
+                optionType: "speech",
+                stem: question.type === "read_aloud" ? question.standardReadSentence : question.questionText,
+                imagePath: question.image?.path || question.imagePath || "",
+                imageAlt: question.image?.alt || question.imageAlt || "題目圖片",
+                questionBankVersion: question.questionBankVersion || unit?.questionBankVersion || "",
+                pronunciationTargets: [...new Set([
+                    ...(question.pronunciationAnalysis?.pronunciationTargets || question.pronunciationTargets || []),
+                    ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.pronunciationTargets || [])
+                ])],
+                difficultWords: [...new Set([
+                    ...(question.pronunciationAnalysis?.difficultWords || question.difficultWords || []),
+                    ...(question.acceptableAnswers || []).flatMap(answer => answer.pronunciationAnalysis?.difficultWords || [])
+                ].map(item => typeof item === "string" ? item : item.word).filter(Boolean))],
+                correctAnswer: question.type === "read_aloud" ? question.standardReadSentence : ""
+            }));
+        }
 
         const QUESTION_BANKS = {
-            hwg7SentenceReview: HWG7_SPEECH_QUESTIONS,
-            hwg5SentenceReview: [],
-            hwg8SentenceReview: [],
-            hwg6SentenceReview: [],
+            ...Object.fromEntries(UNIT_REGISTRY.map(unit => [
+                unit.mode,
+                isSpeechAssessmentMode(unit.mode)
+                    ? adaptSpeechQuestions(getRegisteredSpeechSource(unit), unit)
+                    : []
+            ])),
             grade4Phonics: PHONICS_QUESTIONS,
             grade4Phrases: PHRASE_QUESTIONS,
             grade5Phonics: GRADE5_PHONICS_QUESTIONS,
@@ -893,7 +905,7 @@
 
         function prepareQuestionSet(mode) {
             const source = QUESTION_BANKS[mode] || [];
-            if (mode === SPEECH_MODE) {
+            if (isSpeechAssessmentMode(mode)) {
                 const readAloud = shuffle(source.filter(question => question.type === "read_aloud")).slice(0, 6);
                 const questionAnswer = shuffle(source.filter(question => question.type === "question_answer")).slice(0, 6);
                 if (readAloud.length !== 6 || questionAnswer.length !== 6) return [];
@@ -1255,7 +1267,7 @@
             const currentPlayer = config.teams[currentTeam];
             const currentRound = Math.floor(turnIndex / 2) + 1;
             const modeMeta = MODE_META[config.mode];
-            const isSpeechPractice = config.mode === SPEECH_MODE;
+            const isSpeechPractice = isSpeechAssessmentMode(config.mode);
             const isImagePractice = isSpeechPractice || config.questions.some(q => q.optionType === "image");
             const showQuestionStem = Boolean(currentQuestion?.stem?.trim());
 
@@ -1303,7 +1315,7 @@
                     })),
                     speechResults: isSpeechPractice ? answersRef.current : null,
                     passScore: isSpeechPractice ? modeMeta.passScore : null,
-                    questionBankVersion: config.questionBankVersion || "hwg7-sr-v2-answer-only"
+                    questionBankVersion: config.questionBankVersion || modeMeta.questionBankVersion || ""
                 };
                 onFinish(result);
             }, [config, onFinish]);
@@ -1541,7 +1553,7 @@
             }, [currentQuestion]);
 
             const playSpeechModelAudio = useCallback(() => {
-                const source = currentQuestion?.type === "read_aloud" ? currentQuestion.tts?.path : "";
+                const source = currentQuestion?.tts?.path || "";
                 if (!source) {
                     setModelAudioStatus("示範音檔暫時無法播放。");
                     return;
@@ -1598,7 +1610,7 @@
                     feedback: apiResult.feedback,
                     attempts: history,
                     rubricVersion: apiResult.rubricVersion || currentQuestion.rubricVersion,
-                    questionBankVersion: currentQuestion.questionBankVersion || "hwg7-sr-v2-answer-only",
+                    questionBankVersion: currentQuestion.questionBankVersion || config.questionBankVersion || "",
                     mode: config.mode
                 };
                 const withoutCurrent = answersRef.current[currentTeam].filter(item => item.id !== questionId);
@@ -1786,6 +1798,9 @@
             };
 
             const answerButtonsDisabled = !audioReadyForAnswer || isLaunchReady || finalWaiting;
+            const speechModelText = currentQuestion?.type === "read_aloud"
+                ? currentQuestion.standardReadSentence
+                : currentQuestion?.type === "question_answer" ? currentQuestion.questionText : "";
 
             return (
                 <div className={`game-screen ${isImagePractice ? "image-practice-screen" : ""} ${isSpeechPractice ? "speech-game-screen" : ""}`} data-layout-qa-question={config.layoutQa ? currentQuestion?.id : undefined}>
@@ -1836,14 +1851,14 @@
                                             <p className="text-sm font-black text-purple-600">{currentQuestion.type === "read_aloud" ? "Look and read" : "Look and answer"}</p>
                                             <div className="speech-question-line mt-2">
                                                 <p className="speech-question-stem text-2xl font-black text-slate-900 leading-snug" data-testid="question-stem">{currentQuestion.type === "read_aloud" ? currentQuestion.standardReadSentence : currentQuestion.questionText}</p>
-                                                {currentQuestion.type === "read_aloud" && (
-                                                    <button type="button" onClick={playSpeechModelAudio} className={`speech-model-audio-button rounded-xl border-2 border-purple-300 bg-white px-3 py-2 text-sm font-black text-purple-700 hover:bg-purple-50 ${modelAudioStatus === "AI 語音播放中" ? "speaker-active" : ""}`} aria-label={`播放 ${currentQuestion.standardReadSentence} 的 AI 美式英語示範`}>
+                                                {speechModelText && currentQuestion?.tts?.path && (
+                                                    <button type="button" onClick={playSpeechModelAudio} className={`speech-model-audio-button rounded-xl border-2 border-purple-300 bg-white px-3 py-2 text-sm font-black text-purple-700 hover:bg-purple-50 ${modelAudioStatus === "AI 語音播放中" ? "speaker-active" : ""}`} aria-label={`播放 ${speechModelText} 的 AI 美式英語示範`}>
                                                         <i className="fas fa-volume-high mr-1" aria-hidden="true"></i>AI 語音
                                                     </button>
                                                 )}
                                             </div>
                                             {currentQuestion.type === "question_answer" && currentQuestion.answerPromptStructure && <p className="answer-scaffold mt-2 text-xl font-black text-purple-700" data-testid="answer-scaffold">{currentQuestion.answerPromptStructure}</p>}
-                                            {currentQuestion.type === "read_aloud" && modelAudioStatus && <p className="mt-2 text-xs font-black text-purple-600" role="status">{modelAudioStatus}</p>}
+                                            {modelAudioStatus && <p className="mt-2 text-xs font-black text-purple-600" role="status">{modelAudioStatus}</p>}
                                         </div>
                                         <div className="speech-record-row grid grid-cols-2 gap-3 items-center" data-testid="speech-record-row">
                                             <button onClick={handleSpeechRecord} data-testid="speech-record-button" disabled={isLaunchReady || finalWaiting || speechStatus === "evaluating" || speechStatus === "requesting"} className={`speech-record-button min-h-[64px] rounded-xl border-4 px-4 py-3 text-xl font-black text-white transition-all ${speechStatus === "recording" || speechStatus === "stopping" ? "bg-red-600 border-red-200 animate-pulse" : "bg-gradient-to-r from-pink-500 to-purple-600 border-white"} disabled:bg-slate-300 disabled:border-slate-200`}>
@@ -2103,6 +2118,15 @@
             );
         }
 
+        function getTeacherQuestionOptions(unitId = "") {
+            const units = unitId ? [UNIT_BY_ID[unitId]].filter(Boolean) : UNIT_REGISTRY;
+            return units.flatMap(unit => (QUESTION_BANKS[unit.mode] || []).map(question => ({
+                unitId: unit.id,
+                unitLabel: unit.label,
+                question
+            })));
+        }
+
         function TeacherDashboard({ onHome, onSessionExpired }) {
             const today = todayString();
             const [filters, setFilters] = useState({
@@ -2207,7 +2231,7 @@
                 const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
                 const anchor = document.createElement("a");
                 anchor.href = url;
-                anchor.download = `HWG7-SR-results-${filters.dateFrom}-${filters.dateTo}.csv`;
+                anchor.download = `${filters.unitId || "all-units"}-speech-results-${filters.dateFrom}-${filters.dateTo}.csv`;
                 document.body.appendChild(anchor);
                 anchor.click();
                 anchor.remove();
@@ -2294,12 +2318,12 @@
                                     <label className="block"><span className="block font-black text-slate-700 mb-1">開始日期</span><input type="date" value={filters.dateFrom} onChange={event => updateFilter("dateFrom", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
                                     <label className="block"><span className="block font-black text-slate-700 mb-1">結束日期</span><input type="date" value={filters.dateTo} onChange={event => updateFilter("dateTo", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
                                 </div>
-                                <label className="block mt-3"><span className="block font-black text-slate-700 mb-1">單元</span><select value={filters.unitId} onChange={event => updateFilter("unitId", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black"><option value="">全部單元</option>{UNIT_REGISTRY.map(unit => <option key={unit.id} value={unit.id}>{unit.label}</option>)}</select></label>
+                                <label className="block mt-3"><span className="block font-black text-slate-700 mb-1">單元</span><select value={filters.unitId} onChange={event => setFilters(previous => ({ ...previous, unitId: event.target.value, questionId: "" }))} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black"><option value="">全部單元</option>{UNIT_REGISTRY.map(unit => <option key={unit.id} value={unit.id}>{unit.label}</option>)}</select></label>
                                 <div className="grid grid-cols-2 gap-3 mt-3">
                                     <label className="block"><span className="block font-black text-slate-700 mb-1">班級（三碼）</span><input value={filters.classCode} onChange={event => updateFilter("classCode", String(event.target.value || "").replace(/\D/g, "").slice(0, 3))} inputMode="numeric" maxLength="3" className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
                                     <label className="block"><span className="block font-black text-slate-700 mb-1">學生（五碼）</span><input value={filters.studentCode} onChange={event => updateFilter("studentCode", sanitizeStudentCode(event.target.value))} inputMode="numeric" maxLength="5" className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black" /></label>
                                 </div>
-                                <label className="block mt-3"><span className="block font-black text-slate-700 mb-1">題目</span><select value={filters.questionId} onChange={event => updateFilter("questionId", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black"><option value="">全部題目</option>{HWG7_SPEECH_QUESTIONS.map(question => <option key={question.id} value={question.id}>{question.id}・{question.type === "read_aloud" ? "題型一" : "題型二"}</option>)}</select></label>
+                                <label className="block mt-3"><span className="block font-black text-slate-700 mb-1">題目</span><select value={filters.questionId} onChange={event => updateFilter("questionId", event.target.value)} className="w-full rounded-xl border-2 border-white bg-white px-3 py-2 font-black"><option value="">全部題目</option>{getTeacherQuestionOptions(filters.unitId).map(({ unitId, unitLabel, question }) => <option key={`${unitId}:${question.id}`} value={question.id}>{filters.unitId ? "" : `${unitLabel}・`}{question.id}・{question.type === "read_aloud" ? "題型一" : "題型二"}</option>)}</select></label>
                                 <div className="grid grid-cols-2 gap-2 mt-4">
                                     <button onClick={refreshRecords} disabled={loading} className="rounded-xl bg-cyan-500 text-white px-4 py-3 font-black shadow hover:bg-cyan-600 disabled:bg-slate-300"><i className="fas fa-magnifying-glass mr-2"></i>{loading ? "查詢中" : "查詢"}</button>
                                     <button onClick={downloadCsv} disabled={!records.length} className="rounded-xl bg-green-600 text-white px-4 py-3 font-black shadow hover:bg-green-700 disabled:bg-slate-300"><i className="fas fa-file-csv mr-2"></i>匯出 CSV</button>
@@ -2367,23 +2391,30 @@
         function getLocalLayoutQaConfig() {
             const loopbackHosts = new Set(["127.0.0.1", "localhost", "::1", "[::1]"]);
             if (!loopbackHosts.has(window.location.hostname.toLowerCase())) return null;
-            const questionId = new URLSearchParams(window.location.search).get("layoutQa");
+            const params = new URLSearchParams(window.location.search);
+            const questionId = params.get("layoutQa");
+            const requestedUnitId = params.get("unitId") || params.get("layoutQaUnit") || "";
             if (!questionId) return null;
-            const question = (QUESTION_BANKS[SPEECH_MODE] || []).find(item => item.id === questionId);
-            if (!question) return null;
-            const unit = UNIT_BY_MODE[SPEECH_MODE];
+            const candidateUnits = requestedUnitId
+                ? [UNIT_BY_ID[requestedUnitId]].filter(Boolean)
+                : UNIT_REGISTRY.filter(unit => isSpeechAssessmentMode(unit.mode));
+            const match = candidateUnits
+                .map(unit => ({ unit, question: (QUESTION_BANKS[unit.mode] || []).find(item => item.id === questionId) }))
+                .find(candidate => candidate.question);
+            if (!match) return null;
+            const { unit, question } = match;
             return {
                 layoutQa: true,
-                gameSessionId: `layout-qa-${question.id}`,
+                gameSessionId: `layout-qa-${unit.id}-${question.id}`,
                 gameDate: todayString(),
                 students: ["60101", "60102"],
-                unitId: unit?.id || "hwg7-sr",
-                mode: SPEECH_MODE,
+                unitId: unit.id,
+                mode: unit.mode,
                 assignment: { firstTurnType: question.type, qaOnly: true },
-                questionBankVersion: unit?.questionBankVersion || question.questionBankVersion,
+                questionBankVersion: unit.questionBankVersion || question.questionBankVersion || "",
                 teams: { pink: "60101", blue: "60102" },
-                totalTurns: getModeTotalTurns(SPEECH_MODE),
-                roundsPerPlayer: getModeRoundsPerPlayer(SPEECH_MODE),
+                totalTurns: getModeTotalTurns(unit.mode),
+                roundsPerPlayer: getModeRoundsPerPlayer(unit.mode),
                 questions: [question]
             };
         }

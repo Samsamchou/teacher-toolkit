@@ -1,0 +1,6043 @@
+{
+  "ok": true,
+  "generatedAt": "2026-08-24T11:46:55.044Z",
+  "engine": "Chromium headless via Chrome DevTools Protocol",
+  "limitation": "iPad 項目使用 Safari User-Agent、觸控與 1024×768 橫式尺寸模擬；不等同實體 iPad Safari，引擎實測留待部署後。",
+  "questionCount": 15,
+  "viewportCount": 3,
+  "screenshotCount": 46,
+  "passedCount": 45,
+  "failedCount": 0,
+  "viewports": [
+    {
+      "id": "windows-chrome-1366x768",
+      "label": "Windows Chrome 1366×768",
+      "width": 1366,
+      "height": 768,
+      "deviceScaleFactor": 1,
+      "mobile": false,
+      "touch": false
+    },
+    {
+      "id": "windows-chrome-1920x1080",
+      "label": "Windows Chrome 1920×1080",
+      "width": 1920,
+      "height": 1080,
+      "deviceScaleFactor": 1,
+      "mobile": false,
+      "touch": false
+    },
+    {
+      "id": "ipad-safari-landscape-1024x768",
+      "label": "iPad Safari 橫式尺寸模擬 1024×768",
+      "width": 1024,
+      "height": 768,
+      "deviceScaleFactor": 2,
+      "mobile": true,
+      "touch": true,
+      "userAgent": "Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
+    }
+  ],
+  "results": [
+    {
+      "questionId": "HWG5-SR-001",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-001",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 492.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 103.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 493.16,
+          "bottom": 481.55,
+          "left": 89.98,
+          "width": 403.17,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 504.55,
+          "right": 340,
+          "bottom": 560.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-001--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-002",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-002",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 492.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 103.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 482.05,
+          "bottom": 481.55,
+          "left": 101.09,
+          "width": 380.95,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 504.55,
+          "right": 340,
+          "bottom": 560.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-002--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-003",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-003",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 492.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 103.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 408.64,
+          "bottom": 481.55,
+          "left": 167.89,
+          "width": 240.75,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 504.55,
+          "right": 340,
+          "bottom": 560.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-003--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-004",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-004",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 492.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 103.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 441,
+          "bottom": 481.55,
+          "left": 135.52,
+          "width": 305.48,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 504.55,
+          "right": 340,
+          "bottom": 560.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-004--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-005",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-005",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 492.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 103.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 500.58,
+          "bottom": 481.55,
+          "left": 75.94,
+          "width": 424.64,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 504.55,
+          "right": 340,
+          "bottom": 560.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-005--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-006",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-006",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 492.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 103.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 463.86,
+          "bottom": 481.55,
+          "left": 112.66,
+          "width": 351.2,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 504.55,
+          "right": 340,
+          "bottom": 560.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-006--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-007",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-007",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 542.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 153.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 603.92,
+          "bottom": 481.55,
+          "left": 84.08,
+          "width": 519.84,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 554.55,
+          "right": 340,
+          "bottom": 610.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-007--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-008",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-008",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 542.55,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 153.17
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 590.14,
+          "bottom": 481.55,
+          "left": 97.86,
+          "width": 492.28,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 554.55,
+          "right": 340,
+          "bottom": 610.55,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-008--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-009",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-009",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 454.58,
+          "bottom": 481.55,
+          "left": 121.95,
+          "width": 332.63,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "It's ___ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-009--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-010",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-010",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 454.58,
+          "bottom": 481.55,
+          "left": 121.95,
+          "width": 332.63,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "It's ___ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-010--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-011",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-011",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 464.11,
+          "bottom": 481.55,
+          "left": 112.41,
+          "width": 351.7,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "He's _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-011--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-012",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-012",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 496.28,
+          "bottom": 481.55,
+          "left": 80.23,
+          "width": 416.05,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "I'm _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-012--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-013",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-013",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 448.97,
+          "bottom": 481.55,
+          "left": 127.56,
+          "width": 321.41,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "I'm in the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-013--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-014",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-014",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 422.53,
+          "bottom": 481.55,
+          "left": 154,
+          "width": 268.53,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "He's in the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-014--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-015",
+      "viewportId": "windows-chrome-1366x768",
+      "viewportLabel": "Windows Chrome 1366×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-015",
+        "viewport": {
+          "width": 1366,
+          "height": 768,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 651.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 651.25,
+          "bottom": 539.81,
+          "left": 36.75,
+          "width": 614.5,
+          "height": 150.44
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 464.39,
+          "bottom": 481.55,
+          "left": 112.13,
+          "width": 352.27,
+          "height": 49.17
+        },
+        "recordButton": {
+          "top": 551.81,
+          "right": 340,
+          "bottom": 607.81,
+          "left": 36.75,
+          "width": 303.25,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 489.55,
+          "right": 636.25,
+          "bottom": 528.81,
+          "left": 51.75,
+          "width": 584.5,
+          "height": 39.27
+        },
+        "scaffoldText": "It's _____ the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 678,
+          "bottom": 758,
+          "left": 10,
+          "width": 668,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1356,
+          "bottom": 758,
+          "left": 688,
+          "width": 668,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1310,
+          "bottom": 744,
+          "left": 734,
+          "width": 576,
+          "height": 720
+        },
+        "game": {
+          "top": 0,
+          "right": 1366,
+          "bottom": 768,
+          "left": 0,
+          "width": 1366,
+          "height": 768
+        },
+        "stemFontSize": 40.98,
+        "scaffoldFontSize": 31.418,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-015--windows-chrome-1366x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-001",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-001",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 633.36,
+          "bottom": 891.31,
+          "left": 220.16,
+          "width": 413.2,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-001--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-002",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-002",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 621.98,
+          "bottom": 891.31,
+          "left": 231.55,
+          "width": 390.44,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-002--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-003",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-003",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 550.13,
+          "bottom": 891.31,
+          "left": 303.39,
+          "width": 246.73,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-003--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-004",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-004",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 583.3,
+          "bottom": 891.31,
+          "left": 270.22,
+          "width": 313.08,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-004--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-005",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-005",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 644.36,
+          "bottom": 891.31,
+          "left": 209.16,
+          "width": 435.2,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-005--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-006",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-006",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 606.73,
+          "bottom": 891.31,
+          "left": 246.8,
+          "width": 359.94,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-006--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-007",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-007",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 693.16,
+          "bottom": 891.31,
+          "left": 160.38,
+          "width": 532.78,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-007--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-008",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-008",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 911.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 118.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 679.03,
+          "bottom": 891.31,
+          "left": 174.48,
+          "width": 504.55,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 933.31,
+          "right": 476.5,
+          "bottom": 997.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1050,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-008--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-009",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-009",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 597.22,
+          "bottom": 891.31,
+          "left": 256.31,
+          "width": 340.91,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "It's ___ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-009--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-010",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-010",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 597.22,
+          "bottom": 891.31,
+          "left": 256.31,
+          "width": 340.91,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "It's ___ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-010--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-011",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-011",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 606.98,
+          "bottom": 891.31,
+          "left": 246.53,
+          "width": 360.45,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "He's _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-011--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-012",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-012",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 639.97,
+          "bottom": 891.31,
+          "left": 213.56,
+          "width": 426.41,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "I'm _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-012--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-013",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-013",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 591.47,
+          "bottom": 891.31,
+          "left": 262.06,
+          "width": 329.41,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "I'm in the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-013--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-014",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-014",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 564.38,
+          "bottom": 891.31,
+          "left": 289.16,
+          "width": 275.22,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "He's in the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-014--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-015",
+      "viewportId": "windows-chrome-1920x1080",
+      "viewportLabel": "Windows Chrome 1920×1080",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-015",
+        "viewport": {
+          "width": 1920,
+          "height": 1080,
+          "devicePixelRatio": 1
+        },
+        "frame": {
+          "top": 521.73,
+          "right": 914.89,
+          "bottom": 780.92,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 259.19
+        },
+        "prompt": {
+          "top": 792.92,
+          "right": 914.89,
+          "bottom": 959.31,
+          "left": 50.11,
+          "width": 864.78,
+          "height": 166.39
+        },
+        "stem": {
+          "top": 840.92,
+          "right": 607.28,
+          "bottom": 891.31,
+          "left": 246.25,
+          "width": 361.03,
+          "height": 50.39
+        },
+        "recordButton": {
+          "top": 981.31,
+          "right": 476.5,
+          "bottom": 1045.31,
+          "left": 50.11,
+          "width": 426.39,
+          "height": 64
+        },
+        "scaffold": {
+          "top": 899.31,
+          "right": 894.89,
+          "bottom": 939.31,
+          "left": 70.11,
+          "width": 824.78,
+          "height": 40
+        },
+        "scaffoldText": "It's _____ the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 955,
+          "bottom": 1070,
+          "left": 10,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1910,
+          "bottom": 1070,
+          "left": 965,
+          "width": 945,
+          "height": 1060
+        },
+        "pinballShell": {
+          "top": 24,
+          "right": 1850.3,
+          "bottom": 1055.98,
+          "left": 1024.7,
+          "width": 825.59,
+          "height": 1031.98
+        },
+        "game": {
+          "top": 0,
+          "right": 1920,
+          "bottom": 1080,
+          "left": 0,
+          "width": 1920,
+          "height": 1080
+        },
+        "stemFontSize": 42,
+        "scaffoldFontSize": 32,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 1075,
+        "panelClientHeight": 1050,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-015--windows-chrome-1920x1080.png"
+    },
+    {
+      "questionId": "HWG5-SR-001",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-001",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 534.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 144.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 425.75,
+          "bottom": 473.17,
+          "left": 91.25,
+          "width": 334.5,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 546.17,
+          "right": 254.5,
+          "bottom": 602.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-001--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-002",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-002",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 534.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 144.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 416.53,
+          "bottom": 473.17,
+          "left": 100.47,
+          "width": 316.06,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 546.17,
+          "right": 254.5,
+          "bottom": 602.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-002--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-003",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-003",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 484.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 94.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 302.63,
+          "bottom": 473.17,
+          "left": 102.89,
+          "width": 199.73,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 496.17,
+          "right": 254.5,
+          "bottom": 552.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-003--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-004",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-004",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 484.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 94.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 329.48,
+          "bottom": 473.17,
+          "left": 76.03,
+          "width": 253.45,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 496.17,
+          "right": 254.5,
+          "bottom": 552.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-004--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-005",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-005",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 534.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 144.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 434.66,
+          "bottom": 473.17,
+          "left": 82.34,
+          "width": 352.31,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 546.17,
+          "right": 254.5,
+          "bottom": 602.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-005--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-006",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-006",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 484.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 94.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 348.45,
+          "bottom": 473.17,
+          "left": 57.08,
+          "width": 291.38,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 496.17,
+          "right": 254.5,
+          "bottom": 552.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-006--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-007",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-007",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 574.97,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 185.59
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 465.25,
+          "bottom": 513.97,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 81.59
+        },
+        "recordButton": {
+          "top": 586.97,
+          "right": 254.5,
+          "bottom": 642.97,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-007--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-008",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-008",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 534.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 144.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 462.72,
+          "bottom": 473.17,
+          "left": 54.28,
+          "width": 408.44,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 546.17,
+          "right": 254.5,
+          "bottom": 602.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": null,
+        "scaffoldText": "",
+        "hasScaffold": false,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": null,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-008--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-009",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-009",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 527.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 137.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 340.75,
+          "bottom": 473.17,
+          "left": 64.78,
+          "width": 275.97,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 539.17,
+          "right": 254.5,
+          "bottom": 595.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 481.17,
+          "right": 465.25,
+          "bottom": 516.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "It's ___ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-009--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-010",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-010",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 527.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 137.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 340.75,
+          "bottom": 473.17,
+          "left": 64.78,
+          "width": 275.97,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 539.17,
+          "right": 254.5,
+          "bottom": 595.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 481.17,
+          "right": 465.25,
+          "bottom": 516.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "It's ___ _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-010--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-011",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-011",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 527.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 137.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 348.66,
+          "bottom": 473.17,
+          "left": 56.86,
+          "width": 291.8,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 539.17,
+          "right": 254.5,
+          "bottom": 595.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 481.17,
+          "right": 465.25,
+          "bottom": 516.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "He's _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-011--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-012",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-012",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 577.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 187.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 431.09,
+          "bottom": 473.17,
+          "left": 85.91,
+          "width": 345.19,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 589.17,
+          "right": 254.5,
+          "bottom": 645.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 531.17,
+          "right": 465.25,
+          "bottom": 566.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "I'm _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-012--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-013",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-013",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 527.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 137.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 336.09,
+          "bottom": 473.17,
+          "left": 69.44,
+          "width": 266.66,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 539.17,
+          "right": 254.5,
+          "bottom": 595.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 481.17,
+          "right": 465.25,
+          "bottom": 516.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "I'm in the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-013--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-014",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-014",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 527.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 137.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 314.16,
+          "bottom": 473.17,
+          "left": 91.36,
+          "width": 222.8,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 539.17,
+          "right": 254.5,
+          "bottom": 595.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 481.17,
+          "right": 465.25,
+          "bottom": 516.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "He's in the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-014--ipad-safari-landscape-1024x768.png"
+    },
+    {
+      "questionId": "HWG5-SR-015",
+      "viewportId": "ipad-safari-landscape-1024x768",
+      "viewportLabel": "iPad Safari 橫式尺寸模擬 1024×768",
+      "passed": true,
+      "checks": {
+        "correctQuestion": true,
+        "viewportExact": true,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "modelAudioMatchesType": true,
+        "scaffoldMatchesQuestion": true,
+        "panelAtTop": true,
+        "noHorizontalOverflow": true,
+        "equalHalfWidth": true,
+        "outerGapsOk": true,
+        "stemFontSizeOk": true,
+        "scaffoldFontSizeOk": true,
+        "pinballContained": true,
+        "pinballAspectRatioOk": true,
+        "imageLoaded": true
+      },
+      "metrics": {
+        "questionId": "HWG5-SR-015",
+        "viewport": {
+          "width": 1024,
+          "height": 768,
+          "devicePixelRatio": 2
+        },
+        "frame": {
+          "top": 197.06,
+          "right": 480.25,
+          "bottom": 381.38,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 184.31
+        },
+        "prompt": {
+          "top": 389.38,
+          "right": 480.25,
+          "bottom": 527.17,
+          "left": 36.75,
+          "width": 443.5,
+          "height": 137.8
+        },
+        "stem": {
+          "top": 432.38,
+          "right": 348.89,
+          "bottom": 473.17,
+          "left": 56.63,
+          "width": 292.27,
+          "height": 40.8
+        },
+        "recordButton": {
+          "top": 539.17,
+          "right": 254.5,
+          "bottom": 595.17,
+          "left": 36.75,
+          "width": 217.75,
+          "height": 56
+        },
+        "scaffold": {
+          "top": 481.17,
+          "right": 465.25,
+          "bottom": 516.17,
+          "left": 51.75,
+          "width": 413.5,
+          "height": 35
+        },
+        "scaffoldText": "It's _____ the _____.",
+        "hasScaffold": true,
+        "hasModelAudio": true,
+        "panel": {
+          "top": 10,
+          "right": 507,
+          "bottom": 758,
+          "left": 10,
+          "width": 497,
+          "height": 748
+        },
+        "pinballPanel": {
+          "top": 10,
+          "right": 1014,
+          "bottom": 758,
+          "left": 517,
+          "width": 497,
+          "height": 748
+        },
+        "pinballShell": {
+          "top": 88.38,
+          "right": 1002,
+          "bottom": 679.63,
+          "left": 529,
+          "width": 473,
+          "height": 591.25
+        },
+        "game": {
+          "top": 0,
+          "right": 1024,
+          "bottom": 768,
+          "left": 0,
+          "width": 1024,
+          "height": 768
+        },
+        "stemFontSize": 34,
+        "scaffoldFontSize": 28,
+        "columnWidthDifference": 0,
+        "pinballAspectRatio": 0.8,
+        "outerGaps": {
+          "left": 10,
+          "right": 10
+        },
+        "image": {
+          "complete": true,
+          "naturalWidth": 1280,
+          "naturalHeight": 720,
+          "objectFit": "contain"
+        },
+        "fallbackVisible": false,
+        "domOrder": true,
+        "visualOrder": true,
+        "imageStemRecordInFirstViewport": true,
+        "recordButtonHeightOk": true,
+        "imageFrameHeightOk": true,
+        "imageContained": true,
+        "panelAtTop": true,
+        "panelScrollHeight": 738,
+        "panelClientHeight": 738,
+        "horizontalOverflow": false
+      },
+      "screenshot": "HWG5-SR-015--ipad-safari-landscape-1024x768.png"
+    }
+  ],
+  "missingImageFallback": {
+    "questionId": "HWG5-SR-015",
+    "viewportId": "windows-chrome-1920x1080",
+    "passed": true,
+    "checks": {
+      "fallbackVisible": true,
+      "stableFrameHeight": true,
+      "stablePromptTop": true,
+      "stemAndRecordRemainVisible": true
+    },
+    "before": {
+      "frame": {
+        "top": 521.73,
+        "right": 914.89,
+        "bottom": 780.92,
+        "left": 50.11,
+        "width": 864.78,
+        "height": 259.19
+      },
+      "prompt": {
+        "top": 792.92,
+        "right": 914.89,
+        "bottom": 959.31,
+        "left": 50.11,
+        "width": 864.78,
+        "height": 166.39
+      }
+    },
+    "after": {
+      "frame": {
+        "top": 521.73,
+        "right": 914.89,
+        "bottom": 780.92,
+        "left": 50.11,
+        "width": 864.78,
+        "height": 259.19
+      },
+      "prompt": {
+        "top": 792.92,
+        "right": 914.89,
+        "bottom": 959.31,
+        "left": 50.11,
+        "width": 864.78,
+        "height": 166.39
+      }
+    },
+    "screenshot": "HWG5-SR-015--windows-chrome-1920x1080--missing-image-fallback.png"
+  }
+}

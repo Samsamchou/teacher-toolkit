@@ -1,0 +1,2029 @@
+{
+  "schemaVersion": "1.0.0",
+  "mode": {
+    "key": "hwg5SentenceReview",
+    "label": "HWG5 SR",
+    "interactionType": "speech_assessment",
+    "questionBankVersion": "hwg5-sr-v1-answer-only",
+    "rubricVersion": "a1-v3-clock-en-answer-only",
+    "unitId": "hwg5-sr"
+  },
+  "game": {
+    "bankSize": 15,
+    "playerCount": 2,
+    "questionsPerGame": 12,
+    "roundsPerPlayer": 6,
+    "selection": {
+      "method": "balanced_by_type_then_round_pair_alternating",
+      "withoutReplacement": true,
+      "unusedQuestionsPerGame": 3,
+      "readAloudPerGame": 6,
+      "questionAnswerPerGame": 6,
+      "typePattern": "round_pair_alternating"
+    },
+    "turnOrder": "pink_blue_alternating",
+    "passScore": 80,
+    "passOperator": ">=",
+    "maxAttempts": 3,
+    "systemFailureConsumesAttempt": false,
+    "afterMaxAttempts": {
+      "showConfirmedModelAnswer": true,
+      "resultStatus": "unmet",
+      "allowPinballLaunch": true
+    },
+    "speechInteraction": {
+      "attemptCounterRule": "Only a valid scored evaluation consumes one attempt.",
+      "launchGate": "score >= 80 OR validAttempts >= 3",
+      "failedEvaluationRule": "A network, recording, transcription, or evaluation system failure returns to retry_ready and does not consume an attempt."
+    },
+    "assignment": {
+      "playerIdentity": "A is first homepage code; B is second homepage code",
+      "everyGameStart": "Round 1 A=read_aloud; B=question_answer",
+      "roundPattern": "Odd rounds A=read_aloud and B=question_answer; even rounds reverse",
+      "nextGameRule": "Every new game restarts from the same round-1 pattern"
+    }
+  },
+  "rubric": {
+    "version": "a1-v3-clock-en-answer-only",
+    "scoreScale": {
+      "min": 0,
+      "max": 100,
+      "passScore": 80
+    },
+    "totalWeights": {
+      "accuracy": 0.5,
+      "completeness": 0.3,
+      "fluency": 0.2
+    },
+    "readAloud": {
+      "totalWeights": {
+        "textAccuracy": 0.5,
+        "completeness": 0.3,
+        "fluency": 0.2
+      },
+      "timeCorePolicy": "For clock items, a wrong or missing hour, minute, or o'clock core slot caps total at 59."
+    },
+    "questionAnswer": {
+      "answerAccuracyWeights": {
+        "coreAnswer": 0.7,
+        "sentenceStructure": 0.3
+      },
+      "accuracyWeights": {
+        "answer": 1
+      },
+      "completenessWeights": {
+        "answer": 1
+      },
+      "totalWeights": {
+        "accuracy": 0.5,
+        "completeness": 0.3,
+        "fluency": 0.2
+      },
+      "wrongOrMissingCoreScoreCap": 59,
+      "scoringInput": "answer_transcript_only",
+      "acceptableAnswerRule": "Every listed acceptable answer is independently eligible for full credit.",
+      "contractionEquivalence": "Target-aware contracted and expanded forms are canonicalized before scoring; raw transcript remains unchanged."
+    },
+    "transcriptPolicy": {
+      "rawTranscript": "preserved_for_teacher_audit",
+      "canonicalTranscript": "deterministic_question_scoped_scoring_input",
+      "displayTranscript": "canonical_clock_time_in_english_words",
+      "clockCanonicalizerVersion": "clock-en-v1"
+    },
+    "analysisUse": {
+      "pronunciationTargets": "feedback_only_no_double_deduction",
+      "stressToneAndLinking": "feedback_only",
+      "accentTolerance": "Natural reduction or an intelligible accent difference does not automatically fail a student.",
+      "standardizedAssessmentClaim": false
+    }
+  },
+  "source": {
+    "authority": "teacher_confirmed_markdown_and_rdq",
+    "questionAnalysisFile": "../HWG5 Sentence review 15題輪替與發音語調分析.md",
+    "sourceDirectory": "../HWG5 Sentence review pics",
+    "sourceImagesPolicy": "reference_only_do_not_modify_or_publish",
+    "reviewedOn": "2026-08-24"
+  },
+  "review": {
+    "status": "teacher_confirmed",
+    "confirmedOn": "2026-08-24",
+    "confirmedBy": "teacher",
+    "confirmedDecisions": [
+      "He is running. is the corrected full-credit answer for HWG5-SR-011.",
+      "HWG5-SR-015 uses the scaffold: It's _____ the _____.",
+      "It is eleven o'clock. is a full-credit answer for HWG5-SR-010.",
+      "Clock core errors or omissions cap the total score at 59 for HWG5-SR-001, -002, -009, and -010."
+    ],
+    "pendingContentDecisions": [],
+    "productionAssetsStatus": "ready",
+    "studentPilotAllowedAfterTechnicalQa": true,
+    "localQaStatus": {
+      "status": "passed",
+      "completedOn": "2026-08-24",
+      "websiteTestsPassed": 51,
+      "functionsTestsPassed": 86,
+      "layoutCasesPassed": 45,
+      "layoutCasesFailed": 0,
+      "missingImageFallbackPassed": true,
+      "targetViewports": [
+        "windows-chrome-1366x768",
+        "windows-chrome-1920x1080",
+        "ipad-safari-landscape-1024x768"
+      ],
+      "limitation": "iPad Safari 使用 Chromium 搭配 Safari User-Agent、觸控與 1024×768 橫式尺寸模擬；實體 iPad 麥克風與 Safari 引擎仍待部署後實測。"
+    },
+    "mediaVerification": {
+      "status": "passed",
+      "verifiedAt": "2026-08-24T11:36:51.571Z",
+      "teacherConfirmedOn": "2026-08-24",
+      "imageCount": 15,
+      "imageBytes": 3267970,
+      "teacherConfirmedImageCount": 15,
+      "ttsCount": 15,
+      "ttsBytes": 561792,
+      "ttsDurationSeconds": 35.112,
+      "ttsDurationRangeSeconds": {
+        "min": 1.68,
+        "max": 3.168
+      },
+      "mp3FrameCount": 1463,
+      "verificationScope": "manifest_bytes_sha256_signature_full_frame_duration_and_prompt_mapping"
+    }
+  },
+  "questions": [
+    {
+      "id": "HWG5-SR-001",
+      "displayOrder": 1,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/01.gif",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-001.png",
+        "alt": "一個顯示特定時間的指針時鐘。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "It's five fifty-five.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [
+        {
+          "target": "It's",
+          "equivalent": "It is"
+        }
+      ],
+      "requiredCorePhrases": [
+        "five fifty-five"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "It's",
+          "five",
+          "fifty-five"
+        ],
+        "difficultWords": [
+          {
+            "word": "It's",
+            "note": "保留縮寫字尾 /s/。"
+          },
+          {
+            "word": "five",
+            "note": "保留字尾 /v/。"
+          },
+          {
+            "word": "fifty-five",
+            "note": "不要把 -ty 說成 -teen。"
+          }
+        ],
+        "stressWords": [
+          "FIVE",
+          "fifty-FIVE"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "It's five",
+          "fifty-five"
+        ],
+        "linking": [
+          "It's five"
+        ],
+        "studentReminder": "five 和 fifty-five 都要說完整，最後一句往下降。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "It's five fifty-five.",
+        "path": "audio/hwg5-sr/HWG5-SR-001.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 38784,
+          "sha256": "63fb0508ceb9cddc1fff418cbd19ef2c2b991f2e72d05e0b4b4bbe74ef9712e5",
+          "durationSeconds": 2.424,
+          "frameCount": 101,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      },
+      "transcriptCanonicalizer": "clock-en-v1",
+      "transcriptCanonicalization": {
+        "kind": "clock_time_en",
+        "version": "clock-en-v1",
+        "canonicalPhrase": "five fifty-five",
+        "coreSlots": [
+          {
+            "name": "hour",
+            "value": "five"
+          },
+          {
+            "name": "minute",
+            "value": "fifty-five"
+          }
+        ],
+        "acceptedInputs": [
+          "5:55",
+          "5.55",
+          "5 55",
+          "five fifty five",
+          "five-fifty-five"
+        ],
+        "preserveRawTranscript": true,
+        "displayTranscriptPolicy": "english_words_only",
+        "ambiguousCompactDigits": "invalid_retry_without_attempt",
+        "wrongOrMissingCoreScoreCap": 59,
+        "noTargetAnswerInjection": true
+      },
+      "scoringPolicy": {
+        "wrongOrMissingCoreScoreCap": 59,
+        "requiresAllClockCoreSlots": true
+      }
+    },
+    {
+      "id": "HWG5-SR-002",
+      "displayOrder": 2,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/02.gif",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-002.png",
+        "alt": "一個顯示特定時間的指針時鐘。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "It's three fifteen.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [
+        {
+          "target": "It's",
+          "equivalent": "It is"
+        }
+      ],
+      "requiredCorePhrases": [
+        "three fifteen"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "It's",
+          "three",
+          "fifteen"
+        ],
+        "difficultWords": [
+          {
+            "word": "three",
+            "note": "舌尖輕放上下齒間。"
+          },
+          {
+            "word": "fifteen",
+            "note": "重音在 -teen。"
+          }
+        ],
+        "stressWords": [
+          "THREE",
+          "fif-TEEN"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "It's three",
+          "fifteen"
+        ],
+        "linking": [
+          "It's three"
+        ],
+        "studentReminder": "先把 three 的咬舌音說清楚，再重讀 fifTEEN。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "It's three fifteen.",
+        "path": "audio/hwg5-sr/HWG5-SR-002.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 48768,
+          "sha256": "c4ec28c2825067c3a170881a781d426961bc89072e1ccf342e765d42d3aeebdf",
+          "durationSeconds": 3.048,
+          "frameCount": 127,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      },
+      "transcriptCanonicalizer": "clock-en-v1",
+      "transcriptCanonicalization": {
+        "kind": "clock_time_en",
+        "version": "clock-en-v1",
+        "canonicalPhrase": "three fifteen",
+        "coreSlots": [
+          {
+            "name": "hour",
+            "value": "three"
+          },
+          {
+            "name": "minute",
+            "value": "fifteen"
+          }
+        ],
+        "acceptedInputs": [
+          "3:15",
+          "3.15",
+          "3 15",
+          "three fifteen"
+        ],
+        "preserveRawTranscript": true,
+        "displayTranscriptPolicy": "english_words_only",
+        "ambiguousCompactDigits": "invalid_retry_without_attempt",
+        "wrongOrMissingCoreScoreCap": 59,
+        "noTargetAnswerInjection": true
+      },
+      "scoringPolicy": {
+        "wrongOrMissingCoreScoreCap": 59,
+        "requiresAllClockCoreSlots": true
+      }
+    },
+    {
+      "id": "HWG5-SR-003",
+      "displayOrder": 3,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/03.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-003.png",
+        "alt": "一位學生坐在桌邊進行書寫活動。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "I'm writing.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [
+        {
+          "target": "I'm",
+          "equivalent": "I am"
+        }
+      ],
+      "requiredCorePhrases": [
+        "writing"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "I'm",
+          "writing"
+        ],
+        "difficultWords": [
+          {
+            "word": "I'm",
+            "note": "保留字尾 /m/。"
+          },
+          {
+            "word": "writing",
+            "note": "美式 /t/ 可自然輕彈，尾音為 /?/。"
+          }
+        ],
+        "stressWords": [
+          "WRIT-ing"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "I'm WRIT-ing"
+        ],
+        "linking": [
+          "I'm writing"
+        ],
+        "studentReminder": "把 I'm writing 連順，-ing 尾音不要只說成 /n/。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "I'm writing.",
+        "path": "audio/hwg5-sr/HWG5-SR-003.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 27648,
+          "sha256": "8aaed935c9f98cd942ac32b99b81f87cba0228bf568c705ca658eb7c6861e705",
+          "durationSeconds": 1.728,
+          "frameCount": 72,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-004",
+      "displayOrder": 4,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/04.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-004.png",
+        "alt": "一位男孩在泳池中運動。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "He's swimming.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [
+        {
+          "target": "He's",
+          "equivalent": "He is"
+        }
+      ],
+      "requiredCorePhrases": [
+        "swimming"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "He's",
+          "swimming"
+        ],
+        "difficultWords": [
+          {
+            "word": "He's",
+            "note": "保留縮寫字尾 /z/。"
+          },
+          {
+            "word": "swimming",
+            "note": "/sw/ 連起來，尾音為 /?/。"
+          }
+        ],
+        "stressWords": [
+          "SWIM-ming"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "He's SWIM-ming"
+        ],
+        "linking": [
+          "He's swimming"
+        ],
+        "studentReminder": "He's 不要漏掉 /z/，swimming 的尾音要收成 /?/。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "He's swimming.",
+        "path": "audio/hwg5-sr/HWG5-SR-004.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 48768,
+          "sha256": "fc4aad2d2d298b4aabfb7107c656f5add757282229366fec2a437059b530e07e",
+          "durationSeconds": 3.048,
+          "frameCount": 127,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-005",
+      "displayOrder": 5,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/05.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-005.png",
+        "alt": "一位女孩在有爐台與流理台的室內空間。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "She's in the kitchen.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [
+        {
+          "target": "She's",
+          "equivalent": "She is"
+        }
+      ],
+      "requiredCorePhrases": [
+        "kitchen"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "She's",
+          "kitchen"
+        ],
+        "difficultWords": [
+          {
+            "word": "She's",
+            "note": "保留縮寫字尾 /z/。"
+          },
+          {
+            "word": "kitchen",
+            "note": "/t?/ 清楚，共兩音節。"
+          }
+        ],
+        "stressWords": [
+          "KITCH-en"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "She's in",
+          "the KITCH-en"
+        ],
+        "linking": [
+          "She's in"
+        ],
+        "studentReminder": "把 she's in 連起來，kitchen 的 /t?/ 要清楚。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "She's in the kitchen.",
+        "path": "audio/hwg5-sr/HWG5-SR-005.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 27648,
+          "sha256": "bbe296c8288efd7d83f4a972ffbf1230de002114029379249bf9a277542fde15",
+          "durationSeconds": 1.728,
+          "frameCount": 72,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-006",
+      "displayOrder": 6,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/06.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-006.png",
+        "alt": "一位男孩站在有植物與戶外步道的庭院。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "He's in the yard.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [
+        {
+          "target": "He's",
+          "equivalent": "He is"
+        }
+      ],
+      "requiredCorePhrases": [
+        "yard"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "He's",
+          "yard"
+        ],
+        "difficultWords": [
+          {
+            "word": "He's",
+            "note": "保留縮寫字尾 /z/。"
+          },
+          {
+            "word": "yard",
+            "note": "保留美式 /r/。"
+          }
+        ],
+        "stressWords": [
+          "YARD"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "He's in the YARD"
+        ],
+        "linking": [
+          "He's in the"
+        ],
+        "studentReminder": "He's in the 順順連讀，最後把 yard 說清楚。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "He's in the yard.",
+        "path": "audio/hwg5-sr/HWG5-SR-006.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 50688,
+          "sha256": "d13756690f54082db11456fd3842c7f36ae52a6dcd4a48fb84d52b6b602495e6",
+          "durationSeconds": 3.168,
+          "frameCount": 132,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-007",
+      "displayOrder": 7,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/14.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-007.png",
+        "alt": "一個透明袋子裡放著一件文具。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "The marker is in the bag.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [],
+      "requiredCorePhrases": [
+        "marker",
+        "in",
+        "bag"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "marker",
+          "bag"
+        ],
+        "difficultWords": [
+          {
+            "word": "marker",
+            "note": "美式 /r/ 要清楚。"
+          },
+          {
+            "word": "bag",
+            "note": "/a/ 與尾音 /g/ 要清楚。"
+          }
+        ],
+        "stressWords": [
+          "MARKER",
+          "BAG"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "The MARKER is in",
+          "the BAG"
+        ],
+        "linking": [
+          "marker is in"
+        ],
+        "studentReminder": "marker is in 要連順，最後不要漏掉 bag 的 /g/。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "The marker is in the bag.",
+        "path": "audio/hwg5-sr/HWG5-SR-007.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 49920,
+          "sha256": "daa3ab3b8a5a8d12061a4bf970f3cd19e1951abac49d6ed81094d9affe6ab15a",
+          "durationSeconds": 3.12,
+          "frameCount": 130,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-008",
+      "displayOrder": 8,
+      "type": "read_aloud",
+      "typeLabel": "題型 1：Look and read",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/15.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-008.png",
+        "alt": "畫面中有一頂小帽子與一張矮桌。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "",
+      "questionSentenceAnalysis": null,
+      "standardReadSentence": "The hat is by the table.",
+      "acceptableAnswers": [],
+      "acceptedEquivalentForms": [],
+      "requiredCorePhrases": [
+        "hat",
+        "by",
+        "table"
+      ],
+      "pronunciationAnalysis": {
+        "reviewStatus": "teacher_confirmed",
+        "pronunciationTargets": [
+          "hat",
+          "by",
+          "table"
+        ],
+        "difficultWords": [
+          {
+            "word": "hat",
+            "note": "短母音 /a/ 與字尾 /t/ 要清楚。"
+          },
+          {
+            "word": "table",
+            "note": "要說滿兩音節。"
+          }
+        ],
+        "stressWords": [
+          "HAT",
+          "BY",
+          "TABLE"
+        ],
+        "tone": {
+          "pattern": "falling",
+          "mark": "↘",
+          "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+          "scoringUse": "model_only_not_pass_fail"
+        },
+        "chunks": [
+          "The HAT is",
+          "by the TA-ble"
+        ],
+        "linking": [
+          "hat is"
+        ],
+        "studentReminder": "位置是 by，不要漏掉；table 要說滿兩音節。",
+        "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+      },
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "The hat is by the table.",
+        "path": "audio/hwg5-sr/HWG5-SR-008.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 42624,
+          "sha256": "407a1c545b7a9a9e696c31fa4eac0716a7a46c62dcf91c8a22b05743b527f257",
+          "durationSeconds": 2.664,
+          "frameCount": 111,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-009",
+      "displayOrder": 9,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/08.gif",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-009.png",
+        "alt": "一個顯示特定時間的指針時鐘。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "What time is it?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "It's ___ _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "five forty-five"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "It's five forty-five.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "five forty-five"
+          ],
+          "answerStructureSlots": [
+            "It's"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "five",
+              "forty-five"
+            ],
+            "difficultWords": [
+              {
+                "word": "forty",
+                "note": "保留美式 /r/。"
+              },
+              {
+                "word": "forty-five",
+                "note": "最後 /v/ 要保留。"
+              }
+            ],
+            "stressWords": [
+              "FIVE",
+              "forty-FIVE"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "It's five",
+              "forty-five"
+            ],
+            "linking": [
+              "It's five"
+            ],
+            "studentReminder": "先說 five，再清楚說 forty-five，兩個時間數字都不能漏。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "It is five forty-five.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "five forty-five"
+          ],
+          "answerStructureSlots": [
+            "It",
+            "is"
+          ],
+          "answerWordCount": 4,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "five",
+              "forty-five"
+            ],
+            "difficultWords": [
+              {
+                "word": "forty",
+                "note": "保留美式 /r/。"
+              },
+              {
+                "word": "forty-five",
+                "note": "最後 /v/ 要保留。"
+              }
+            ],
+            "stressWords": [
+              "FIVE",
+              "forty-FIVE"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "It's five",
+              "forty-five"
+            ],
+            "linking": [
+              "It's five"
+            ],
+            "studentReminder": "先說 five，再清楚說 forty-five，兩個時間數字都不能漏。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "What time is it?",
+        "path": "audio/hwg5-sr/HWG5-SR-009.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 34944,
+          "sha256": "111bcab1cfdf0fedfad9c262232f08800d758f63fca165f0ba340568f20d2fb1",
+          "durationSeconds": 2.184,
+          "frameCount": 91,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      },
+      "transcriptCanonicalizer": "clock-en-v1",
+      "transcriptCanonicalization": {
+        "kind": "clock_time_en",
+        "version": "clock-en-v1",
+        "canonicalPhrase": "five forty-five",
+        "coreSlots": [
+          {
+            "name": "hour",
+            "value": "five"
+          },
+          {
+            "name": "minute",
+            "value": "forty-five"
+          }
+        ],
+        "acceptedInputs": [
+          "5:45",
+          "5.45",
+          "5 45",
+          "five forty five",
+          "five-forty-five"
+        ],
+        "preserveRawTranscript": true,
+        "displayTranscriptPolicy": "english_words_only",
+        "ambiguousCompactDigits": "invalid_retry_without_attempt",
+        "wrongOrMissingCoreScoreCap": 59,
+        "noTargetAnswerInjection": true
+      },
+      "scoringPolicy": {
+        "wrongOrMissingCoreScoreCap": 59,
+        "requiresAllClockCoreSlots": true
+      }
+    },
+    {
+      "id": "HWG5-SR-010",
+      "displayOrder": 10,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/09 eleven oclock.gif",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-010.png",
+        "alt": "一個整點的指針時鐘。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "What time is it?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "It's ___ _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "eleven o'clock"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "It's eleven o'clock.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "eleven o'clock"
+          ],
+          "answerStructureSlots": [
+            "It's"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "eleven",
+              "o'clock"
+            ],
+            "difficultWords": [
+              {
+                "word": "eleven",
+                "note": "重音在第二音節。"
+              },
+              {
+                "word": "o'clock",
+                "note": "/kl/ 要清楚。"
+              }
+            ],
+            "stressWords": [
+              "e-LEV-en",
+              "o-CLOCK"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "It's eleven o'clock"
+            ],
+            "linking": [
+              "eleven o'clock"
+            ],
+            "studentReminder": "不要只說 eleven；o'clock 也要完整說出來。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "It is eleven o'clock.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "eleven o'clock"
+          ],
+          "answerStructureSlots": [
+            "It",
+            "is"
+          ],
+          "answerWordCount": 4,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "eleven",
+              "o'clock"
+            ],
+            "difficultWords": [
+              {
+                "word": "eleven",
+                "note": "重音在第二音節。"
+              },
+              {
+                "word": "o'clock",
+                "note": "/kl/ 要清楚。"
+              }
+            ],
+            "stressWords": [
+              "e-LEV-en",
+              "o-CLOCK"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "It's eleven o'clock"
+            ],
+            "linking": [
+              "eleven o'clock"
+            ],
+            "studentReminder": "不要只說 eleven；o'clock 也要完整說出來。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "What time is it?",
+        "path": "audio/hwg5-sr/HWG5-SR-010.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 29568,
+          "sha256": "471dbe4d5df5117d754bebbfbe00feeda3ce3dbeb45290d725521dcf7efd4a49",
+          "durationSeconds": 1.848,
+          "frameCount": 77,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      },
+      "transcriptCanonicalizer": "clock-en-v1",
+      "transcriptCanonicalization": {
+        "kind": "clock_time_en",
+        "version": "clock-en-v1",
+        "canonicalPhrase": "eleven o'clock",
+        "coreSlots": [
+          {
+            "name": "hour",
+            "value": "eleven"
+          },
+          {
+            "name": "zero-minute-marker",
+            "value": "o'clock"
+          }
+        ],
+        "acceptedInputs": [
+          "11:00",
+          "11.00",
+          "eleven o clock",
+          "eleven oclock",
+          "eleven o’clock",
+          "eleven oh clock"
+        ],
+        "preserveRawTranscript": true,
+        "displayTranscriptPolicy": "english_words_only",
+        "ambiguousCompactDigits": "invalid_retry_without_attempt",
+        "wrongOrMissingCoreScoreCap": 59,
+        "noTargetAnswerInjection": true
+      },
+      "scoringPolicy": {
+        "wrongOrMissingCoreScoreCap": 59,
+        "requiresAllClockCoreSlots": true
+      }
+    },
+    {
+      "id": "HWG5-SR-011",
+      "displayOrder": 11,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/10.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-011.png",
+        "alt": "一位男孩在戶外快速向前移動。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "What's he doing?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "He's _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "running"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "He's running.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "running"
+          ],
+          "answerStructureSlots": [
+            "He's"
+          ],
+          "answerWordCount": 2,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "running"
+            ],
+            "difficultWords": [
+              {
+                "word": "running",
+                "note": "母音 /?/，尾音 /?/。"
+              }
+            ],
+            "stressWords": [
+              "RUN-ning"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "He's RUN-ning"
+            ],
+            "linking": [
+              "He's running"
+            ],
+            "studentReminder": "要說出 He's，並把 running 的 -ing 尾音收好。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "He is running.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "running"
+          ],
+          "answerStructureSlots": [
+            "He",
+            "is"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "running"
+            ],
+            "difficultWords": [
+              {
+                "word": "running",
+                "note": "母音 /?/，尾音 /?/。"
+              }
+            ],
+            "stressWords": [
+              "RUN-ning"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "He's RUN-ning"
+            ],
+            "linking": [
+              "He's running"
+            ],
+            "studentReminder": "要說出 He's，並把 running 的 -ing 尾音收好。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "What's he doing?",
+        "path": "audio/hwg5-sr/HWG5-SR-011.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 29568,
+          "sha256": "fc022e488ce49176f98412e6aa6b1a33b72b28700c8945bc543b070ec35c833a",
+          "durationSeconds": 1.848,
+          "frameCount": 77,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-012",
+      "displayOrder": 12,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/11.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-012.png",
+        "alt": "一個角色在廚房桌邊，手上拿著杯子。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "What are you doing?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "I'm _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "drinking"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "I'm drinking.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "drinking"
+          ],
+          "answerStructureSlots": [
+            "I'm"
+          ],
+          "answerWordCount": 2,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "drinking"
+            ],
+            "difficultWords": [
+              {
+                "word": "drinking",
+                "note": "中間有 /?k/，尾音為 /?/。"
+              }
+            ],
+            "stressWords": [
+              "DRINK-ing"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "I'm DRINK-ing"
+            ],
+            "linking": [
+              "I'm drinking"
+            ],
+            "studentReminder": "drinking 中間有 /?k/，結尾還要再收成 /?/。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "I am drinking.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "drinking"
+          ],
+          "answerStructureSlots": [
+            "I",
+            "am"
+          ],
+          "answerWordCount": 3,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "drinking"
+            ],
+            "difficultWords": [
+              {
+                "word": "drinking",
+                "note": "中間有 /?k/，尾音為 /?/。"
+              }
+            ],
+            "stressWords": [
+              "DRINK-ing"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "I'm DRINK-ing"
+            ],
+            "linking": [
+              "I'm drinking"
+            ],
+            "studentReminder": "drinking 中間有 /?k/，結尾還要再收成 /?/。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "What are you doing?",
+        "path": "audio/hwg5-sr/HWG5-SR-012.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 45696,
+          "sha256": "1ad12587563b85a610fdbcc361b241056c046b6a5141b42117c16684373f99c5",
+          "durationSeconds": 2.856,
+          "frameCount": 119,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-013",
+      "displayOrder": 13,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/12.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-013.png",
+        "alt": "一個角色站在有餐桌與餐椅的室內空間。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "Where are you?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "I'm in the _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "dining room"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "I'm in the dining room.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "dining room"
+          ],
+          "answerStructureSlots": [
+            "I'm",
+            "in",
+            "the"
+          ],
+          "answerWordCount": 5,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "dining",
+              "room"
+            ],
+            "difficultWords": [
+              {
+                "word": "dining",
+                "note": "要有 /a?/。"
+              },
+              {
+                "word": "dining room",
+                "note": "兩個字都要說。"
+              }
+            ],
+            "stressWords": [
+              "DIN-ing room"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "I'm in the",
+              "DIN-ing room"
+            ],
+            "linking": [
+              "I'm in the"
+            ],
+            "studentReminder": "dining 要有 /a?/，dining room 兩個字都要說出來。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "I am in the dining room.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "dining room"
+          ],
+          "answerStructureSlots": [
+            "I",
+            "am",
+            "in",
+            "the"
+          ],
+          "answerWordCount": 6,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "dining",
+              "room"
+            ],
+            "difficultWords": [
+              {
+                "word": "dining",
+                "note": "要有 /a?/。"
+              },
+              {
+                "word": "dining room",
+                "note": "兩個字都要說。"
+              }
+            ],
+            "stressWords": [
+              "DIN-ing room"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "I'm in the",
+              "DIN-ing room"
+            ],
+            "linking": [
+              "I'm in the"
+            ],
+            "studentReminder": "dining 要有 /a?/，dining room 兩個字都要說出來。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "Where are you?",
+        "path": "audio/hwg5-sr/HWG5-SR-013.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 30720,
+          "sha256": "650726ff5fb1c727cae49259c74fc52eaf590b07d412ef72f8a7635f492052a6",
+          "durationSeconds": 1.92,
+          "frameCount": 80,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-014",
+      "displayOrder": 14,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/13.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-014.png",
+        "alt": "一位男孩在有沙發、茶几與燈具的室內空間。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "Where is he?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "He's in the _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "living room"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "He's in the living room.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "living room"
+          ],
+          "answerStructureSlots": [
+            "He's",
+            "in",
+            "the"
+          ],
+          "answerWordCount": 5,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "living",
+              "room"
+            ],
+            "difficultWords": [
+              {
+                "word": "living",
+                "note": "短母音 /?/，不要說成 leaving。"
+              },
+              {
+                "word": "room",
+                "note": "長母音 /u?/ 與字尾 /m/。"
+              }
+            ],
+            "stressWords": [
+              "LIV-ing room"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "He's in the",
+              "LIV-ing room"
+            ],
+            "linking": [
+              "He's in the"
+            ],
+            "studentReminder": "living 是短短的 /?/，不要漏掉後面的 room。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "He is in the living room.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "living room"
+          ],
+          "answerStructureSlots": [
+            "He",
+            "is",
+            "in",
+            "the"
+          ],
+          "answerWordCount": 6,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "living",
+              "room"
+            ],
+            "difficultWords": [
+              {
+                "word": "living",
+                "note": "短母音 /?/，不要說成 leaving。"
+              },
+              {
+                "word": "room",
+                "note": "長母音 /u?/ 與字尾 /m/。"
+              }
+            ],
+            "stressWords": [
+              "LIV-ing room"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "He's in the",
+              "LIV-ing room"
+            ],
+            "linking": [
+              "He's in the"
+            ],
+            "studentReminder": "living 是短短的 /?/，不要漏掉後面的 room。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "Where is he?",
+        "path": "audio/hwg5-sr/HWG5-SR-014.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 29568,
+          "sha256": "05a4047d334dcb4e5af5a822904abf8cecb57c8bd8dcaa9f594c3a3b32756a97",
+          "durationSeconds": 1.848,
+          "frameCount": 77,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    },
+    {
+      "id": "HWG5-SR-015",
+      "displayOrder": 15,
+      "type": "question_answer",
+      "typeLabel": "題型 2：Look and answer",
+      "unit": "HWG5 SR",
+      "unitId": "hwg5-sr",
+      "unitReviewStatus": "teacher_confirmed",
+      "questionBankVersion": "hwg5-sr-v1-answer-only",
+      "rubricVersion": "a1-v3-clock-en-answer-only",
+      "passScore": 80,
+      "maxAttempts": 3,
+      "image": {
+        "sourcePath": "../HWG5 Sentence review pics/16.png",
+        "sourceUse": "reference_only_do_not_publish",
+        "path": "images/hwg5-sentence-review/HWG5-SR-015.png",
+        "alt": "一個房間裡有一張圓桌，桌子附近放著幾樣物品。",
+        "altReviewStatus": "teacher_confirmed",
+        "generationStatus": "generated_teacher_confirmed",
+        "teacherConfirmedOn": "2026-08-24"
+      },
+      "questionText": "Where's my ball?",
+      "questionSentenceAnalysis": null,
+      "questionSentenceAnalysisScope": "excluded_by_teacher_instruction",
+      "answerPromptStructure": "It's _____ the _____.",
+      "standardReadSentence": "",
+      "requiredCorePhrases": [
+        "under the table"
+      ],
+      "acceptableAnswers": [
+        {
+          "id": "contracted",
+          "text": "It's under the table.",
+          "answerKind": "contracted_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "under the table"
+          ],
+          "answerStructureSlots": [
+            "It's"
+          ],
+          "answerWordCount": 4,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "under",
+              "table"
+            ],
+            "difficultWords": [
+              {
+                "word": "under",
+                "note": "重音在第一音節。"
+              },
+              {
+                "word": "table",
+                "note": "要說滿兩音節。"
+              }
+            ],
+            "stressWords": [
+              "UN-der",
+              "TA-ble"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "It's under",
+              "the TA-ble"
+            ],
+            "linking": [
+              "It's under"
+            ],
+            "studentReminder": "位置詞是 under，一定要說出來；table 要說滿兩音節。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        },
+        {
+          "id": "expanded",
+          "text": "It is under the table.",
+          "answerKind": "expanded_full",
+          "fullCredit": true,
+          "requiredContentSlots": [
+            "under the table"
+          ],
+          "answerStructureSlots": [
+            "It",
+            "is"
+          ],
+          "answerWordCount": 5,
+          "pronunciationAnalysis": {
+            "reviewStatus": "teacher_confirmed",
+            "pronunciationTargets": [
+              "under",
+              "table"
+            ],
+            "difficultWords": [
+              {
+                "word": "under",
+                "note": "重音在第一音節。"
+              },
+              {
+                "word": "table",
+                "note": "要說滿兩音節。"
+              }
+            ],
+            "stressWords": [
+              "UN-der",
+              "TA-ble"
+            ],
+            "tone": {
+              "pattern": "falling",
+              "mark": "↘",
+              "note": "陳述句或答句句尾降調；只供模仿參考，不單獨決定是否達標。",
+              "scoringUse": "model_only_not_pass_fail"
+            },
+            "chunks": [
+              "It's under",
+              "the TA-ble"
+            ],
+            "linking": [
+              "It's under"
+            ],
+            "studentReminder": "位置詞是 under，一定要說出來；table 要說滿兩音節。",
+            "accentPolicy": "先依逐字稿判斷內容；自然弱化與可理解的口音差異不另行扣分。"
+          }
+        }
+      ],
+      "scoringInput": "answer_transcript_only",
+      "tts": {
+        "provider": "openai",
+        "model": "gpt-4o-mini-tts",
+        "voice": "marin",
+        "speed": 0.8,
+        "text": "Where's my ball?",
+        "path": "audio/hwg5-sr/HWG5-SR-015.mp3",
+        "disclosure": "AI 語音",
+        "generationStatus": "generated_verified",
+        "assetVerification": {
+          "status": "passed",
+          "bytes": 26880,
+          "sha256": "689196ab43242d7bca1fc26ef929b4c555d43934a2459712a264b604ccb60c0c",
+          "durationSeconds": 1.68,
+          "frameCount": 70,
+          "signature": "MPEG-Layer-III",
+          "verifiedAt": "2026-08-24T11:36:51.571Z"
+        }
+      }
+    }
+  ]
+}

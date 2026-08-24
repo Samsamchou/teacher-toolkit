@@ -8,7 +8,7 @@
     "node": "22"
   },
   "scripts": {
-    "check": "node --check index.mjs && node --check lib/http-validation.mjs && node --check lib/scoring.mjs && node --check lib/app-domain.mjs && node --check lib/teacher-auth.mjs && node --check lib/usage-limits.mjs && node --check scripts/set-teacher-passcode.mjs",
+    "check": "node --check index.mjs && node --check lib/http-validation.mjs && node --check lib/scoring.mjs && node --check lib/app-domain.mjs && node --check lib/question-bank.mjs && node --check lib/teacher-auth.mjs && node --check lib/usage-limits.mjs && node --check scripts/sync-question-bank.mjs && node --check scripts/set-teacher-passcode.mjs",
     "test": "node --test test/*.test.mjs",
     "sync-bank": "node scripts/sync-question-bank.mjs",
     "set-teacher-passcode": "node scripts/set-teacher-passcode.mjs"

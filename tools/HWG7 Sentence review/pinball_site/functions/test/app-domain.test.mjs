@@ -11,6 +11,7 @@ import {
   taipeiDate,
   validateCompletionSummary,
   validateStudentCodes,
+  validateUnitId,
 } from "../lib/app-domain.mjs";
 
 const students = ["60101", "60102"];
@@ -104,6 +105,31 @@ test("completion requires exactly 12 unique turn summaries", () => {
   });
   assert.equal(good.turnSummaries.length, 12);
   assert.throws(() => validateCompletionSummary({ turnSummaries: good.turnSummaries.slice(0, 11) }), /完整完成 12 次作答/);
+});
+
+test("both ready units are accepted while unfinished units remain blocked", () => {
+  assert.equal(validateUnitId("hwg7-sr"), "hwg7-sr");
+  assert.equal(validateUnitId("hwg5-sr"), "hwg5-sr");
+  assert.throws(
+    () => validateUnitId("hwg8-sr"),
+    (error) => error instanceof DomainValidationError && error.code === "unit_not_ready",
+  );
+});
+
+test("completion summary accepts a known-format HWG5 question set", () => {
+  const result = validateCompletionSummary({
+    scores: {},
+    turnSummaries: Array.from({ length: 12 }, (_, turnIndex) => ({
+      turnIndex,
+      questionId: `HWG5-SR-${String(turnIndex + 1).padStart(3, "0")}`,
+      studentCode: students[turnIndex % 2],
+      questionType: questionTypeForTurn(turnIndex),
+      status: "passed",
+      bestScore: 80,
+      attemptIds: [`hwg5-attempt-${turnIndex}`],
+    })),
+  });
+  assert.equal(result.turnSummaries.length, 12);
 });
 
 test("student codes are two distinct five-digit values", () => {

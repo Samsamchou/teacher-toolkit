@@ -36,9 +36,14 @@ test("speech card source order is image, prompt and stem, then record button", (
   assert.doesNotMatch(speechCard, /<details|speech-guidance/u);
 });
 
-test("read-aloud has an adjacent AI voice button while Q&A has answer scaffolding", () => {
+test("read-aloud targets and Q&A prompts share the safe static AI voice button", () => {
   const speechCard = sliceBetween(indexSource, '<div className="speech-question-flow"', "{speechMessage &&");
-  assert.match(speechCard, /currentQuestion\.type === "read_aloud"[\s\S]*speech-model-audio-button[\s\S]*AI 語音/u);
+  const playerSource = sliceBetween(indexSource, "const playSpeechModelAudio =", "const saveSpeechResult =");
+  assert.match(indexSource, /const speechModelText = currentQuestion\?\.type === "read_aloud"[\s\S]*currentQuestion\.standardReadSentence[\s\S]*currentQuestion\?\.type === "question_answer" \? currentQuestion\.questionText/u);
+  assert.match(speechCard, /speechModelText && currentQuestion\?\.tts\?\.path && \([\s\S]*speech-model-audio-button[\s\S]*aria-label=\{`播放 \$\{speechModelText\} 的 AI 美式英語示範`\}/u);
+  assert.match(playerSource, /const source = currentQuestion\?\.tts\?\.path \|\| "";/u);
+  assert.match(playerSource, /if \(!source\) \{[\s\S]*示範音檔暫時無法播放。[\s\S]*return;/u);
+  assert.doesNotMatch(playerSource, /setAttemptMap|speechHistoryRef|saveSpeechResult/u);
   assert.match(speechCard, /currentQuestion\.type === "question_answer"[\s\S]*data-testid="answer-scaffold"/u);
   assert.deepEqual(
     bank.questions.filter(question => question.answerPromptStructure).map(question => [question.id, question.answerPromptStructure]),
@@ -78,7 +83,9 @@ test("per-question layout QA route is restricted to loopback hosts", () => {
   assert.match(qaSource, /127\.0\.0\.1/u);
   assert.match(qaSource, /localhost/u);
   assert.match(qaSource, /loopbackHosts\.has\(window\.location\.hostname\.toLowerCase\(\)\)/u);
-  assert.match(qaSource, /new URLSearchParams\(window\.location\.search\)\.get\("layoutQa"\)/u);
+  assert.match(qaSource, /const params = new URLSearchParams\(window\.location\.search\)/u);
+  assert.match(qaSource, /params\.get\("layoutQa"\)/u);
+  assert.match(qaSource, /params\.get\("unitId"\)[\s\S]*QUESTION_BANKS\[unit\.mode\]/u);
   assert.doesNotMatch(qaSource, /firebaseapp\.com|web\.app/u);
 });
 test("speech landscape uses equal half-width regions and projection-sized English", () => {

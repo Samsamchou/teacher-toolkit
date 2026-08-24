@@ -10,15 +10,47 @@ import { fileURLToPath } from "node:url";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptDir, "..");
 const workspaceRoot = path.resolve(siteRoot, "..");
-const outputDir = path.join(workspaceRoot, "qa", "live-deployment-20260822");
-const baseUrl = process.env.LIVE_BASE_URL || "https://setencerevieworalpractice.web.app";
+const qaDate = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+const outputDir = path.join(workspaceRoot, "qa", process.env.LIVE_QA_OUTPUT_NAME || `live-deployment-${qaDate}`);
+const projectId = "setencerevieworalpractice";
+const expectedBaseUrl = `https://${projectId}.web.app`;
+const baseUrl = (process.env.LIVE_BASE_URL || expectedBaseUrl).replace(/\/$/u, "");
 const liveSpeechAudioPath = process.env.LIVE_SPEECH_AUDIO_PATH || "";
 const liveFullGameManifestPath = process.env.LIVE_FULL_GAME_MANIFEST || "";
-const projectId = "setencerevieworalpractice";
+const liveQaUnitId = process.env.LIVE_QA_UNIT_ID || "";
 const storageBucket = "setencerevieworalpractice.firebasestorage.app";
-const bank = JSON.parse(await readFile(path.join(siteRoot, "data", "hwg7-sentence-review.json"), "utf8"));
-const ttsManifest = JSON.parse(await readFile(path.join(siteRoot, "audio", "hwg7-sr", "manifest.json"), "utf8"));
 const sha256 = bytes => createHash("sha256").update(bytes).digest("hex");
+
+if (new URL(baseUrl).origin !== expectedBaseUrl) {
+  throw new Error(`LIVE_BASE_URL 必須是 ${expectedBaseUrl}，目前為 ${baseUrl}。`);
+}
+
+const registry = JSON.parse(await readFile(path.join(siteRoot, "data", "unit-registry.json"), "utf8"));
+const readySpeechUnits = (registry.units || []).filter(unit => unit.status === "ready" && unit.interactionType === "speech_assessment");
+if (!readySpeechUnits.length) throw new Error("unit registry 沒有 ready 的口說評測單元。");
+
+const readyUnitBundles = await Promise.all(readySpeechUnits.map(async unit => {
+  if (!unit.questionBankFile || !unit.questionBankScript) throw new Error(`${unit.id} 缺少題庫路徑。`);
+  const bank = JSON.parse(await readFile(path.join(siteRoot, ...unit.questionBankFile.split("/")), "utf8"));
+  const imagePaths = [...new Set(bank.questions?.map(question => question.image?.path).filter(Boolean) || [])];
+  const ttsQuestions = bank.questions?.filter(question => question.tts?.path) || [];
+  const ttsManifest = JSON.parse(await readFile(path.join(siteRoot, "audio", unit.id, "manifest.json"), "utf8"));
+  if (bank.mode?.unitId !== unit.id || bank.mode?.questionBankVersion !== unit.questionBankVersion) {
+    throw new Error(`${unit.id} 題庫與 registry 不一致。`);
+  }
+  if (imagePaths.length !== bank.questions.length || ttsManifest.itemCount !== ttsQuestions.length || ttsManifest.items?.length !== ttsQuestions.length) {
+    throw new Error(`${unit.id} 本機題圖或 TTS manifest 數量不完整。`);
+  }
+  if (unit.id === "hwg5-sr" && (bank.questions.length !== 15 || imagePaths.length !== 15 || ttsQuestions.length !== 15)) {
+    throw new Error("HWG5 SR 上線 QA 必須正好有 15 題、15 張題圖與 15 段 TTS。");
+  }
+  return { unit, bank, imagePaths, ttsManifest, ttsQuestions };
+}));
+const readyUnitById = new Map(readyUnitBundles.map(bundle => [bundle.unit.id, bundle]));
+const defaultQaUnit = readyUnitById.get(liveQaUnitId) || readyUnitBundles[0];
+if (liveQaUnitId && !readyUnitById.has(liveQaUnitId)) throw new Error(`LIVE_QA_UNIT_ID 不是 ready 單元：${liveQaUnitId}`);
+const defaultSpeechQuestion = defaultQaUnit.bank.questions.find(question => question.type === "read_aloud" && question.tts?.path);
+if (!defaultSpeechQuestion) throw new Error(`${defaultQaUnit.unit.id} 沒有可做 live speech QA 的朗讀題。`);
 
 const browserCandidates = [
   process.env.CHROME_PATH,
@@ -170,7 +202,7 @@ async function configureIpadLandscape(client) {
   });
 }
 
-async function runLiveFullGame(appCheckToken) {
+async function runLiveFullGame(appCheckToken, unitId = defaultQaUnit.unit.id) {
   const manifest = JSON.parse(await readFile(liveFullGameManifestPath, "utf8"));
   if (!Array.isArray(manifest) || manifest.length !== 12) throw new Error("完整局 QA manifest 必須正好 12 題。");
   const students = ["99781", "99782"];
@@ -192,7 +224,7 @@ async function runLiveFullGame(appCheckToken) {
     return payload;
   };
   try {
-    const session = await post("/api/game/start", { unitId: "hwg7-sr", students, requestId: `full-game-${randomUUID()}` });
+    const session = await post("/api/game/start", { unitId, students, requestId: `full-game-${randomUUID()}` });
     activeSessionId = session.gameSessionId;
     if (session.assignment?.phase !== "round_alternating_fixed_start" || session.assignment?.firstTurnType !== "read_aloud") {
       throw new Error("完整局 QA 初始題型不是 A 題型 1／B 題型 2。");
@@ -240,12 +272,13 @@ async function runLiveFullGame(appCheckToken) {
     const completed = await post("/api/game/complete", completionBody);
     activeSessionId = "";
     const repeated = await post("/api/game/complete", completionBody);
-    const next = await post("/api/game/start", { unitId: "hwg7-sr", students, requestId: `next-game-${randomUUID()}` });
+    const next = await post("/api/game/start", { unitId, students, requestId: `next-game-${randomUUID()}` });
     activeSessionId = next.gameSessionId;
     const abandoned = await post("/api/game/abandon", { gameSessionId: next.gameSessionId });
     activeSessionId = "";
     return {
       tested: true,
+      unitId,
       ok: completed.nextGamePattern === "fixed_round_alternation" && completed.completedGameCount === 1 && repeated.nextGamePattern === "fixed_round_alternation" && repeated.idempotent === true && next.assignment?.phase === "round_alternating_fixed_start" && abandoned.status === "abandoned" && abandoned.nextGamePattern === "fixed_round_alternation",
       completedGameCount: completed.completedGameCount,
       firstPhase: session.assignment.phase,
@@ -280,27 +313,35 @@ async function staticChecks() {
     microphoneSelfOnly: /microphone=\(self\)/iu.test(homeResponse.headers.get("permissions-policy") || ""),
   };
 
-  const imagePaths = [...new Set(bank.questions.map(question => question.image?.path).filter(Boolean))];
   const images = [];
-  for (const imagePath of imagePaths) {
-    const response = await fetch(new URL(imagePath, `${baseUrl}/`));
-    const bytes = new Uint8Array(await response.arrayBuffer());
-    images.push({
-      path: imagePath,
-      status: response.status,
-      contentType: response.headers.get("content-type") || "",
-      bytes: bytes.byteLength,
-      ok: response.status === 200 && /^image\//iu.test(response.headers.get("content-type") || "") && bytes.byteLength > 1000,
-    });
+  for (const bundle of readyUnitBundles) {
+    for (const imagePath of bundle.imagePaths) {
+      const response = await fetch(new URL(imagePath, `${baseUrl}/`));
+      const remoteBytes = Buffer.from(await response.arrayBuffer());
+      const localBytes = await readFile(path.join(siteRoot, ...imagePath.split("/")));
+      images.push({
+        unitId: bundle.unit.id,
+        path: imagePath,
+        status: response.status,
+        contentType: response.headers.get("content-type") || "",
+        bytes: remoteBytes.length,
+        sha256: sha256(remoteBytes),
+        localSha256: sha256(localBytes),
+        hashMatches: sha256(remoteBytes) === sha256(localBytes),
+        ok: response.status === 200 && /^image\//iu.test(response.headers.get("content-type") || "") && remoteBytes.length > 1000 && sha256(remoteBytes) === sha256(localBytes),
+      });
+    }
   }
 
-  const deployAssetPaths = [
+  const deployAssetPaths = [...new Set([
     "index.html",
     "js/app-api.js",
     "fonts/comic-relief/ComicRelief-Regular.ttf",
     "fonts/comic-relief/ComicRelief-Bold.ttf",
-    ...ttsManifest.items.map(item => item.path),
-  ];
+    "data/unit-registry.js",
+    ...readyUnitBundles.map(bundle => bundle.unit.questionBankScript),
+    ...readyUnitBundles.flatMap(bundle => bundle.ttsManifest.items.map(item => item.path)),
+  ])];
   const deployAssets = [];
   for (const assetPath of deployAssetPaths) {
     const response = await fetch(`${baseUrl}/${assetPath}?assetQa=${Date.now()}`, { headers: { "Cache-Control": "no-cache" } });
@@ -314,19 +355,29 @@ async function staticChecks() {
       sha256: sha256(remoteBytes),
       localSha256: sha256(localBytes),
       hashMatches: sha256(remoteBytes) === sha256(localBytes),
+      unitId: readyUnitBundles.find(bundle => assetPath.startsWith(`audio/${bundle.unit.id}/`))?.unit.id || "shared",
+      kind: assetPath.endsWith(".mp3") ? "tts" : "public_app",
     });
   }
+
+  const privateBankChecks = await Promise.all(readySpeechUnits.map(async unit => {
+    const response = await fetch(`${baseUrl}/${unit.questionBankFile}?privateQa=${Date.now()}`, {
+      headers: { "Cache-Control": "no-cache" },
+      redirect: "manual",
+    });
+    return { path: unit.questionBankFile, status: response.status };
+  }));
 
   const missingAppCheck = await fetch(`${baseUrl}/api/game/start`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: baseUrl },
-    body: JSON.stringify({ unitId: "hwg7-sr", students: ["99991", "99992"], requestId: "qa-no-app-check" }),
+    body: JSON.stringify({ unitId: defaultQaUnit.unit.id, students: ["99991", "99992"], requestId: "qa-no-app-check" }),
   });
   const missingAppCheckBody = await missingAppCheck.json().catch(() => ({}));
   const wrongOrigin = await fetch(`${baseUrl}/api/game/start`, {
     method: "POST",
     headers: { "Content-Type": "application/json", Origin: "https://example.invalid" },
-    body: JSON.stringify({ unitId: "hwg7-sr", students: ["99991", "99992"], requestId: "qa-wrong-origin" }),
+    body: JSON.stringify({ unitId: defaultQaUnit.unit.id, students: ["99991", "99992"], requestId: "qa-wrong-origin" }),
   });
   const wrongOriginBody = await wrongOrigin.json().catch(() => ({}));
   const firestoreRead = await fetch(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/practiceResults/qa-missing`);
@@ -336,9 +387,13 @@ async function staticChecks() {
     headerChecks,
     htmlHasNoSecretMarker: !/sk-proj-|OPENAI_API_KEY\s*=/u.test(html),
     imageCount: images.length,
+    expectedImageCount: readyUnitBundles.reduce((sum, bundle) => sum + bundle.imagePaths.length, 0),
     images,
     deployAssetCount: deployAssets.length,
+    expectedDeployAssetCount: deployAssetPaths.length,
     deployAssets,
+    privateBankChecks,
+    readyUnits: readyUnitBundles.map(bundle => ({ unitId: bundle.unit.id, questionCount: bundle.bank.questions.length, imageCount: bundle.imagePaths.length, ttsCount: bundle.ttsQuestions.length })),
     missingAppCheck: { status: missingAppCheck.status, code: missingAppCheckBody.error?.code || "" },
     wrongOrigin: { status: wrongOrigin.status, code: wrongOriginBody.error?.code || "" },
     firestoreAnonymousStatus: firestoreRead.status,
@@ -408,14 +463,19 @@ async function browserChecks() {
 
     const desktopHome = await evaluate(client, `(() => {
       const text = document.body.innerText;
-      const modeLabels = ["HWG7 SR", "HWG5 SR", "HWG8 SR", "HWG6 SR"];
+      const modeLabels = ${JSON.stringify(registry.units.map(unit => unit.label))};
       const modeButtons = [...document.querySelectorAll("button")].filter(button => modeLabels.some(label => button.innerText.includes(label)));
       const inputs = [...document.querySelectorAll('input[placeholder^="例如"]')];
       const start = [...document.querySelectorAll("button")].find(button => button.innerText.includes("進入遊戲頁面"));
+      const modeStates = modeLabels.map(label => {
+        const button = modeButtons.find(item => item.innerText.includes(label));
+        return { label, found: Boolean(button), disabled: Boolean(button?.disabled), preparing: Boolean(button?.innerText.includes("題庫準備中")) };
+      });
       return {
         title: document.querySelector("h1")?.innerText || "",
         teacherButton: [...document.querySelectorAll("button")].some(button => button.innerText.includes("教師後台")),
         inputCount: inputs.length,
+        modeStates,
         modeLabels: modeButtons.map(button => modeLabels.find(label => button.innerText.includes(label))),
         readyCount: modeButtons.filter(button => !button.disabled).length,
         pendingCount: modeButtons.filter(button => button.disabled && button.innerText.includes("題庫準備中")).length,
@@ -425,6 +485,29 @@ async function browserChecks() {
       };
     })()`);
     const desktopScreenshot = await captureScreenshot(client, "desktop-home-1366x768.png");
+
+    const readyUnitStarts = await evaluate(client, `(async () => {
+      const unitIds = ${JSON.stringify(readySpeechUnits.map(unit => unit.id))};
+      const results = [];
+      for (let index = 0; index < unitIds.length; index += 1) {
+        const unitId = unitIds[index];
+        let session = null;
+        let abandoned = false;
+        try {
+          session = await window.HWG7AppApi.startGame({ unitId, students: [String(99600 + index * 2 + 1), String(99600 + index * 2 + 2)] });
+          const abandonResult = await window.HWG7AppApi.abandonGame(session.gameSessionId);
+          abandoned = abandonResult?.status === "abandoned";
+          results.push({ unitId, ok: session?.assignment?.firstTurnType === "read_aloud" && abandoned, firstTurnType: session?.assignment?.firstTurnType || "", abandoned });
+        } catch (error) {
+          results.push({ unitId, ok: false, error: { code: error?.code || "", status: error?.status || null, message: error?.message || "" } });
+        } finally {
+          if (session?.gameSessionId && !abandoned) {
+            await window.HWG7AppApi.abandonGame(session.gameSessionId).catch(() => {});
+          }
+        }
+      }
+      return results;
+    })()`, 120000);
 
     await configureIpadLandscape(client);
     await client.call("Page.navigate", { url: `${baseUrl}/?liveQaIpad=${Date.now()}` });
@@ -446,7 +529,7 @@ async function browserChecks() {
     if (liveFullGameManifestPath) {
       const tokenResult = await evaluate(client, "firebase.appCheck().getToken(false)", 60000);
       if (!tokenResult?.token) throw new Error("無法取得完整局 QA 所需的 App Check token。");
-      fullGame = await runLiveFullGame(tokenResult.token);
+      fullGame = await runLiveFullGame(tokenResult.token, defaultQaUnit.unit.id);
     }
 
     let speech = { tested: false };
@@ -456,10 +539,10 @@ async function browserChecks() {
         let session = null;
         let outcome = { tested: true, ok: false };
         try {
-          session = await window.HWG7AppApi.startGame({ unitId: "hwg7-sr", students: ["99881", "99882"] });
+          session = await window.HWG7AppApi.startGame({ unitId: ${JSON.stringify(defaultQaUnit.unit.id)}, students: ["99881", "99882"] });
           if (session.assignment?.firstTurnType !== "read_aloud") throw new Error("QA pair did not receive read_aloud first.");
           const result = await window.HWG7AppApi.post("/api/evaluate-speech", {
-            questionId: "HWG7-SR-013",
+            questionId: ${JSON.stringify(defaultSpeechQuestion.id)},
             mimeType: "audio/wav",
             audioBase64: ${speechBase64},
             gameSessionId: session.gameSessionId,
@@ -601,6 +684,7 @@ async function browserChecks() {
       limitation: "iPad Safari 使用 1024×768 橫式尺寸、觸控與 Safari User-Agent 模擬；不是實體 iPad 的 WebKit 引擎。",
       desktopHome,
       ipadHome,
+      readyUnitStarts,
       teacherRecordingSecurity,
       expectedTeacherRecording401Ignored: ignoredTeacherRecording401,
       fullGame,
@@ -630,19 +714,37 @@ async function main() {
   await mkdir(outputDir, { recursive: true });
   const staticResult = await staticChecks();
   const browserResult = await browserChecks();
+  const readyLabels = new Set(readySpeechUnits.map(unit => unit.label));
+  const preparingLabels = new Set((registry.units || []).filter(unit => unit.status === "preparing").map(unit => unit.label));
+  const modeStateByLabel = new Map(browserResult.desktopHome.modeStates.map(state => [state.label, state]));
+  const homepageStatesMatch = (registry.units || []).every(unit => {
+    const state = modeStateByLabel.get(unit.label);
+    if (!state?.found) return false;
+    if (readyLabels.has(unit.label)) return state.disabled === false && state.preparing === false;
+    if (preparingLabels.has(unit.label)) return state.disabled === true && state.preparing === true;
+    return true;
+  });
+  const expectedReadyIds = readySpeechUnits.map(unit => unit.id);
+  const startedReadyIds = browserResult.readyUnitStarts.map(result => result.unitId);
+  const hwg5Assets = staticResult.readyUnits.find(unit => unit.unitId === "hwg5-sr");
+  const hwg5Ready = readySpeechUnits.some(unit => unit.id === "hwg5-sr");
   const checks = {
     securityHeaders: Object.values(staticResult.headerChecks).every(Boolean),
     noSecretMarker: staticResult.htmlHasNoSecretMarker,
-    allImagesOnline: staticResult.imageCount === 13 && staticResult.images.every(image => image.ok),
-    deployedAssetsMatch: staticResult.deployAssetCount === 11 && staticResult.deployAssets.every(asset => asset.status === 200 && asset.hashMatches),
+    allImagesOnline: staticResult.imageCount === staticResult.expectedImageCount && staticResult.images.every(image => image.ok),
+    allTtsOnline: staticResult.deployAssets.filter(asset => asset.kind === "tts").length === readyUnitBundles.reduce((sum, bundle) => sum + bundle.ttsQuestions.length, 0) && staticResult.deployAssets.filter(asset => asset.kind === "tts").every(asset => asset.status === 200 && asset.hashMatches),
+    deployedAssetsMatch: staticResult.deployAssetCount === staticResult.expectedDeployAssetCount && staticResult.deployAssets.every(asset => asset.status === 200 && asset.hashMatches),
+    privateBanksUnavailable: staticResult.privateBankChecks.length === readySpeechUnits.length && staticResult.privateBankChecks.every(item => item.status === 404),
+    hwg5ReadyAssetsExact: !hwg5Ready || Boolean(hwg5Assets && hwg5Assets.questionCount === 15 && hwg5Assets.imageCount === 15 && hwg5Assets.ttsCount === 15),
     appCheckRequired: staticResult.missingAppCheck.status === 401 && staticResult.missingAppCheck.code === "app_check_required",
     teacherRecordingRequiresSession: browserResult.teacherRecordingSecurity.status === 401 && browserResult.teacherRecordingSecurity.code === "teacher_session_required",
     wrongOriginRejected: staticResult.wrongOrigin.status === 403 && staticResult.wrongOrigin.code === "origin_not_allowed",
     firestoreDenied: staticResult.firestoreAnonymousStatus === 403,
     storageDenied: staticResult.storageAnonymousStatus === 403,
-    desktopHomeReady: browserResult.desktopHome.teacherButton && browserResult.desktopHome.inputCount === 2 && browserResult.desktopHome.readyCount === 1 && browserResult.desktopHome.pendingCount === 3 && browserResult.desktopHome.startDisabled && !browserResult.desktopHome.horizontalOverflow && browserResult.desktopHome.hasNoBuilderSummary,
+    desktopHomeReady: browserResult.desktopHome.teacherButton && browserResult.desktopHome.inputCount === 2 && browserResult.desktopHome.readyCount === readySpeechUnits.length && browserResult.desktopHome.pendingCount === preparingLabels.size && homepageStatesMatch && browserResult.desktopHome.startDisabled && !browserResult.desktopHome.horizontalOverflow && browserResult.desktopHome.hasNoBuilderSummary,
     ipadHomeReady: browserResult.ipadHome.width === 1024 && browserResult.ipadHome.height === 768 && browserResult.ipadHome.teacherButtonInViewport && browserResult.ipadHome.inputCount === 2 && !browserResult.ipadHome.horizontalOverflow,
-    liveStartWithAppCheck: browserResult.startResponses.some(response => response.status === 200),
+    allReadyUnitsStartWithAppCheck: JSON.stringify(startedReadyIds) === JSON.stringify(expectedReadyIds) && browserResult.readyUnitStarts.every(result => result.ok),
+    liveStartWithAppCheck: browserResult.startResponses.filter(response => response.status === 200).length >= readySpeechUnits.length,
     firstQuestionReady: browserResult.game.roundOne && browserResult.game.bothStudentsVisible && browserResult.game.imageLoaded && browserResult.game.promptVisible && !browserResult.game.horizontalOverflow,
     incompleteGameAbandoned: browserResult.abandonResponses.some(response => response.status === 200),
     noBrowserErrors: browserResult.consoleErrors.length === 0 && browserResult.logErrors.length === 0 && browserResult.loadingFailures.length === 0,

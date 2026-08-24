@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "generatedAt": "2026-08-22T15:39:18.482Z",
+  "generatedAt": "2026-08-24T11:02:05.857Z",
   "engine": "Chromium headless via Chrome DevTools Protocol",
   "limitation": "iPad 項目使用 Safari User-Agent、觸控與 1024×768 橫式尺寸模擬；不等同實體 iPad Safari，引擎實測留待部署後。",
   "questionCount": 13,
@@ -90,10 +90,10 @@
         },
         "stem": {
           "top": 432.38,
-          "right": 448.14,
+          "right": 447.22,
           "bottom": 481.55,
-          "left": 135,
-          "width": 313.14,
+          "left": 142.53,
+          "width": 304.69,
           "height": 49.17
         },
         "recordButton": {

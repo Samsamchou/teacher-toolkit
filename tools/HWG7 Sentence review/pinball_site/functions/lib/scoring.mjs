@@ -48,6 +48,184 @@ export function normalizeText(value) {
     .join(" ");
 }
 
+export const CLOCK_TRANSCRIPT_CANONICALIZER = "clock-en-v1";
+
+const HOUR_WORDS = Object.freeze({
+  one: 1,
+  two: 2,
+  three: 3,
+  four: 4,
+  five: 5,
+  six: 6,
+  seven: 7,
+  eight: 8,
+  nine: 9,
+  ten: 10,
+  eleven: 11,
+  twelve: 12,
+});
+const NUMBER_ONES = Object.freeze([
+  "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+]);
+const NUMBER_TEENS = Object.freeze([
+  "ten", "eleven", "twelve", "thirteen", "fourteen",
+  "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+]);
+const NUMBER_TENS = Object.freeze({
+  20: "twenty",
+  30: "thirty",
+  40: "forty",
+  50: "fifty",
+});
+const MINUTE_WORD_VALUES = new Map([
+  ...NUMBER_ONES.slice(1).map((word, index) => [word, index + 1]),
+  ...NUMBER_TEENS.map((word, index) => [word, index + 10]),
+  ...Object.entries(NUMBER_TENS).map(([value, word]) => [word, Number(value)]),
+]);
+
+function usesClockCanonicalizer(question) {
+  return [
+    question?.transcriptCanonicalizer,
+    question?.canonicalizer,
+    question?.normalizationProfile,
+    question?.transcriptNormalization?.profile,
+  ].includes(CLOCK_TRANSCRIPT_CANONICALIZER);
+}
+
+function numberUnderSixty(value) {
+  if (!Number.isInteger(value) || value < 0 || value > 59) return null;
+  if (value < 10) return NUMBER_ONES[value];
+  if (value < 20) return NUMBER_TEENS[value - 10];
+  const tens = Math.floor(value / 10) * 10;
+  const remainder = value % 10;
+  return remainder ? `${NUMBER_TENS[tens]}-${NUMBER_ONES[remainder]}` : NUMBER_TENS[tens];
+}
+
+function clockPhrase(hour, minute) {
+  const hourWord = Object.entries(HOUR_WORDS).find(([, value]) => value === hour)?.[0];
+  if (!hourWord) return null;
+  if (minute === 0) return `${hourWord} o'clock`;
+  const minuteWord = numberUnderSixty(minute);
+  return minuteWord ? `${hourWord} ${minuteWord}` : null;
+}
+
+function clockValue(hour, minute) {
+  return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+}
+
+function readMinute(tokens, start) {
+  const first = tokens[start];
+  if (first === "o'clock") return { minute: 0, length: 1 };
+  if (first === "oh" && MINUTE_WORD_VALUES.has(tokens[start + 1])) {
+    const minute = MINUTE_WORD_VALUES.get(tokens[start + 1]);
+    return minute < 10 ? { minute, length: 2 } : null;
+  }
+
+  const base = MINUTE_WORD_VALUES.get(first);
+  if (base === undefined || base < 10) return null;
+  if ([20, 30, 40, 50].includes(base) && HOUR_WORDS[tokens[start + 1]] <= 9) {
+    return { minute: base + HOUR_WORDS[tokens[start + 1]], length: 2 };
+  }
+  return { minute: base, length: 1 };
+}
+
+function clockValuesFromDisplay(display) {
+  const tokens = normalizeText(display).split(" ").filter(Boolean);
+  const values = [];
+  for (let index = 0; index < tokens.length - 1; index += 1) {
+    const hour = HOUR_WORDS[tokens[index]];
+    if (!hour) continue;
+    const minute = readMinute(tokens, index + 1);
+    if (!minute) continue;
+    values.push(clockValue(hour, minute.minute));
+    index += minute.length;
+  }
+  return [...new Set(values)];
+}
+
+function canonicalClockDisplay(rawTranscript) {
+  let display = rawTranscript
+    .normalize("NFKC")
+    .replace(/[\u2018\u2019\u02bc\u2032]/gu, "'")
+    .toLowerCase();
+
+  display = display.replace(
+    /\b([1-9]|1[0-2])\s*[:.]\s*([0-5]\d)\b/gu,
+    (_, hour, minute) => clockPhrase(Number(hour), Number(minute)),
+  );
+  display = display.replace(
+    /\b([1-9]|1[0-2])\s+([0-5]\d)\b/gu,
+    (_, hour, minute) => clockPhrase(Number(hour), Number(minute)),
+  );
+  display = display
+    .replace(/\bo\s*'?\s*clock\b|\boclock\b/gu, "o'clock")
+    .replace(
+      /\b(twenty|thirty|forty|fifty)[ -]+(one|two|three|four|five|six|seven|eight|nine)\b/gu,
+      "$1-$2",
+    )
+    .replace(/[^a-z0-9'\-\s]/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
+  return display;
+}
+
+/**
+ * Canonicalize only questions explicitly marked clock-en-v1. The conversion is
+ * based exclusively on what was transcribed; it never consults the target time.
+ */
+export function canonicalizeTranscriptForQuestion(question, value) {
+  const rawTranscript = value === null || value === undefined ? "" : String(value);
+  if (!usesClockCanonicalizer(question)) {
+    const canonicalTranscript = normalizeText(rawTranscript);
+    return {
+      profile: null,
+      rawTranscript,
+      canonicalTranscript,
+      displayTranscript: rawTranscript.trim(),
+      clockValue: null,
+      valid: Boolean(canonicalTranscript),
+      systemLike: false,
+      invalidReason: canonicalTranscript ? null : "empty_transcript",
+    };
+  }
+
+  if (/\b\d{3,4}\b/u.test(rawTranscript)) {
+    return {
+      profile: CLOCK_TRANSCRIPT_CANONICALIZER,
+      rawTranscript,
+      canonicalTranscript: "",
+      displayTranscript: rawTranscript.trim(),
+      clockValue: null,
+      valid: false,
+      systemLike: true,
+      invalidReason: "ambiguous_clock_digits",
+    };
+  }
+
+  const displayTranscript = canonicalClockDisplay(rawTranscript);
+  const values = clockValuesFromDisplay(displayTranscript);
+  return {
+    profile: CLOCK_TRANSCRIPT_CANONICALIZER,
+    rawTranscript,
+    canonicalTranscript: displayTranscript,
+    displayTranscript,
+    clockValue: values.length === 1 ? values[0] : null,
+    valid: Boolean(normalizeText(displayTranscript)),
+    systemLike: false,
+    invalidReason: normalizeText(displayTranscript) ? null : "empty_transcript",
+  };
+}
+
+function clockCoreCorrect(question, actualState, expectedText) {
+  if (!usesClockCanonicalizer(question)) return true;
+  const expectedState = canonicalizeTranscriptForQuestion(question, expectedText);
+  return Boolean(
+    actualState.clockValue &&
+    expectedState.clockValue &&
+    actualState.clockValue === expectedState.clockValue,
+  );
+}
+
 export function tokenize(value) {
   if (Array.isArray(value)) {
     return value.flatMap((token) => tokenize(token));
@@ -722,7 +900,7 @@ function choosePrimaryIssue({
   passed,
 }) {
   if (!valid) return "invalid_transcript";
-  if (type === "question_answer" && !coreCorrect) return "wrong_core";
+  if (!coreCorrect) return "wrong_core";
 
   const alignments = type === "question_answer"
     ? [alignment.answer]
@@ -772,14 +950,17 @@ function buildFeedback({ primaryIssue, alignment, type, modelPhrase, references 
   }
 }
 
-function invalidResult(type, question, passScore) {
-  const modelPhrase =
-    type === "read_aloud"
-      ? firstString(question.standardReadSentence, question.targetText, question.sentence)
-      : firstString(question.acceptableAnswers?.[0]?.text, question.acceptableAnswers?.[0]);
+function invalidResult(type, question, passScore, transcriptState) {
+  const state = transcriptState ?? canonicalizeTranscriptForQuestion(question, "");
   return {
     rubricVersion: question.rubricVersion ?? RUBRIC_VERSION,
     type,
+    rawTranscript: state.rawTranscript,
+    canonicalTranscript: state.canonicalTranscript,
+    displayTranscript: state.displayTranscript,
+    canonicalizationProfile: state.profile,
+    invalidReason: state.invalidReason,
+    systemLike: state.systemLike,
     scores: { accuracy: null, completeness: null, fluency: null, total: null },
     passed: false,
     passScore,
@@ -790,7 +971,6 @@ function invalidResult(type, question, passScore) {
     alignment: null,
     matchedAnswer: null,
     scoringScope: SCORING_SCOPE,
-    modelPhrase,
   };
 }
 
@@ -802,21 +982,27 @@ export function scoreReadAloud({ question, transcript, metrics = {} }) {
     question.sentence,
   );
   if (!targetText) throw new TypeError("read_aloud question is missing standardReadSentence");
-  if (!normalizeText(transcript)) return invalidResult("read_aloud", question, passScore);
 
-  const alignment = alignWords(targetText, transcript);
+  const transcriptState = canonicalizeTranscriptForQuestion(question, transcript);
+  if (!transcriptState.valid) {
+    return invalidResult("read_aloud", question, passScore, transcriptState);
+  }
+
+  const alignment = alignWords(targetText, transcriptState.canonicalTranscript);
   const accuracy = accuracyFromAlignment(alignment);
   const completeness = completenessFromAlignment(alignment);
   const fluencyDetails = type1Fluency(alignment, metrics);
-  const total = roundScore(
+  const uncappedTotal = roundScore(
     accuracy * 0.5 + completeness * 0.3 + fluencyDetails.fluency * 0.2,
   );
-  const passed = total >= passScore;
+  const coreCorrect = clockCoreCorrect(question, transcriptState, targetText);
+  const total = coreCorrect ? uncappedTotal : Math.min(59, uncappedTotal);
+  const passed = total >= passScore && coreCorrect;
   const references = analysisReferences(question, null);
   const primaryIssue = choosePrimaryIssue({
     valid: true,
     type: "read_aloud",
-    coreCorrect: true,
+    coreCorrect,
     alignment,
     fluencyDetails,
     passed,
@@ -825,7 +1011,11 @@ export function scoreReadAloud({ question, transcript, metrics = {} }) {
   return {
     rubricVersion: question.rubricVersion ?? RUBRIC_VERSION,
     type: "read_aloud",
-    normalizedTranscript: normalizeText(transcript),
+    rawTranscript: transcriptState.rawTranscript,
+    canonicalTranscript: transcriptState.canonicalTranscript,
+    displayTranscript: transcriptState.displayTranscript,
+    canonicalizationProfile: transcriptState.profile,
+    normalizedTranscript: normalizeText(transcriptState.canonicalTranscript),
     scores: {
       accuracy,
       completeness,
@@ -834,7 +1024,7 @@ export function scoreReadAloud({ question, transcript, metrics = {} }) {
     },
     passed,
     passScore,
-    coreCorrect: true,
+    coreCorrect,
     valid: true,
     feedback: buildFeedback({
       primaryIssue,
@@ -846,6 +1036,11 @@ export function scoreReadAloud({ question, transcript, metrics = {} }) {
     primaryIssue,
     alignment,
     matchedAnswer: null,
+    components: {
+      uncappedTotal,
+      clockCoreCorrect: coreCorrect,
+      coreScoreCapApplied: !coreCorrect && uncappedTotal > 59,
+    },
     fluencyDetails,
     feedbackReferences: references,
     scoringScope: SCORING_SCOPE,
@@ -863,9 +1058,24 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
   }
   const variants = rawAnswers.map((answer, index) => normalizeAnswerVariant(answer, index, question));
   const answerTranscript = firstString(metrics.answerTranscript, metrics.segments?.answer, transcript);
-  if (!normalizeText(answerTranscript)) return invalidResult("question_answer", question, passScore);
+  const transcriptState = canonicalizeTranscriptForQuestion(question, answerTranscript);
+  if (!transcriptState.valid) {
+    return invalidResult("question_answer", question, passScore, transcriptState);
+  }
 
-  const selected = chooseQuestionAnswerAlignment(variants, transcript, metrics);
+  const scoringMetrics = {
+    ...metrics,
+    answerTranscript: transcriptState.canonicalTranscript,
+    segments: {
+      ...(metrics.segments && typeof metrics.segments === "object" ? metrics.segments : {}),
+      answer: transcriptState.canonicalTranscript,
+    },
+  };
+  const selected = chooseQuestionAnswerAlignment(
+    variants,
+    transcriptState.canonicalTranscript,
+    scoringMetrics,
+  );
   const accuracy = selected.answer.answerAccuracy;
   const completeness = selected.answer.answerCompleteness;
   const fluencyDetails = type2Fluency(
@@ -876,7 +1086,12 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
   const uncappedTotal = roundScore(
     accuracy * 0.5 + completeness * 0.3 + fluencyDetails.fluency * 0.2,
   );
-  const coreCorrect = selected.answer.coreCorrect;
+  const timeCoreCorrect = clockCoreCorrect(
+    question,
+    transcriptState,
+    selected.variant.text,
+  );
+  const coreCorrect = selected.answer.coreCorrect && timeCoreCorrect;
   const total = coreCorrect ? uncappedTotal : Math.min(59, uncappedTotal);
   const passed = total >= passScore && coreCorrect;
   const alignment = { answer: selected.answer.alignment };
@@ -906,7 +1121,11 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
   return {
     rubricVersion: question.rubricVersion ?? RUBRIC_VERSION,
     type: "question_answer",
-    normalizedTranscript: normalizeText(answerTranscript),
+    rawTranscript: transcriptState.rawTranscript,
+    canonicalTranscript: transcriptState.canonicalTranscript,
+    displayTranscript: transcriptState.displayTranscript,
+    canonicalizationProfile: transcriptState.profile,
+    normalizedTranscript: normalizeText(transcriptState.canonicalTranscript),
     segments: { answer: selected.answerTokens.join(" ") },
     scores: {
       accuracy,
@@ -932,6 +1151,7 @@ export function scoreQuestionAnswer({ question, transcript, metrics = {} }) {
       answerAccuracy: accuracy,
       answerCompleteness: completeness,
       uncappedTotal,
+      clockCoreCorrect: timeCoreCorrect,
       coreScoreCapApplied: !coreCorrect && uncappedTotal > 59,
     },
     fluencyDetails,

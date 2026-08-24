@@ -15,6 +15,8 @@ const [
   firebaseConfig,
   firestoreRules,
   storageRules,
+  deploymentGateSource,
+  liveQaSource,
 ] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../js/speech-practice.js", import.meta.url), "utf8"),
@@ -28,14 +30,39 @@ const [
   readFile(new URL("../firebase.json", import.meta.url), "utf8").then(JSON.parse),
   readFile(new URL("../firestore.rules", import.meta.url), "utf8"),
   readFile(new URL("../storage.rules", import.meta.url), "utf8"),
+  readFile(new URL("../scripts/deployment-gate.mjs", import.meta.url), "utf8"),
+  readFile(new URL("../scripts/qa-live-deployment.mjs", import.meta.url), "utf8"),
 ]);
 
-test("homepage has the exact four-unit order and only HWG7 SR is ready", () => {
+test("homepage has the exact four-unit order and derives ready state from the registry", () => {
   assert.deepEqual(registry.units.map(unit => unit.label), ["HWG7 SR", "HWG5 SR", "HWG8 SR", "HWG6 SR"]);
-  assert.deepEqual(registry.units.filter(unit => unit.status === "ready").map(unit => unit.id), ["hwg7-sr"]);
+  const readyUnits = registry.units.filter(unit => unit.status === "ready");
+  assert.ok(readyUnits.length >= 1);
+  for (const unit of readyUnits) {
+    assert.equal(unit.interactionType, "speech_assessment");
+    assert.equal(typeof unit.questionBankFile, "string");
+    assert.equal(typeof unit.questionBankScript, "string");
+    assert.equal(typeof unit.questionBankGlobal, "string");
+  }
   assert.match(indexSource, /UNIT_REGISTRY\.map\(unit =>/u);
   assert.match(indexSource, /disabled=\{!ready\}/u);
   assert.match(indexSource, /題庫準備中/u);
+});
+
+test("deployment gate and live QA validate every ready speech unit", () => {
+  assert.match(deploymentGateSource, /readySpeechUnits = registry\.units\?\.filter\(unit => unit\.status === "ready" && unit\.interactionType === "speech_assessment"\)/u);
+  assert.match(deploymentGateSource, /readySpeechUnits\.map\(unit => validateReadySpeechUnit\(root, unit\)\)/u);
+  assert.match(deploymentGateSource, /deployProject === EXPECTED_PROJECT/u);
+  assert.match(deploymentGateSource, /unit\.id === "hwg5-sr"/u);
+  assert.match(deploymentGateSource, /questions\.length === 15/u);
+  assert.match(deploymentGateSource, /ttsQuestions\.length === 15/u);
+  assert.doesNotMatch(deploymentGateSource, /data\/hwg7-sentence-review\.json/u);
+
+  assert.match(liveQaSource, /const readySpeechUnits = \(registry\.units \|\| \[\]\)\.filter/u);
+  assert.match(liveQaSource, /readyUnitBundles\.flatMap\(bundle => bundle\.ttsManifest\.items/u);
+  assert.match(liveQaSource, /allReadyUnitsStartWithAppCheck/u);
+  assert.match(liveQaSource, /privateBanksUnavailable/u);
+  assert.doesNotMatch(liveQaSource, /unitId: "hwg7-sr"|imageCount === 13|deployAssetCount === 11|readyCount === 1|pendingCount === 3/u);
 });
 
 test("student pages omit builder-known feature and rule explanations", () => {

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
-export const READY_UNIT_ID = "hwg7-sr";
+export const READY_UNIT_IDS = Object.freeze(["hwg7-sr", "hwg5-sr"]);
+const READY_UNIT_ID_SET = new Set(READY_UNIT_IDS);
 export const QUESTION_TYPES = Object.freeze({
   READ_ALOUD: "read_aloud",
   QUESTION_ANSWER: "question_answer",
@@ -24,7 +25,7 @@ function requiredString(value, code, message) {
 
 export function validateUnitId(value) {
   const unitId = requiredString(value, "unit_required", "請先選擇練習單元。");
-  if (unitId !== READY_UNIT_ID) {
+  if (!READY_UNIT_ID_SET.has(unitId)) {
     throw new DomainValidationError("unit_not_ready", "這個單元題庫準備中，暫時不能開始。", 409);
   }
   return unitId;
@@ -177,7 +178,7 @@ export function validateCompletionSummary(value) {
       const status = requiredString(turn.status, "turn_status_required", "回合缺少達標狀態。");
       const bestScore = Number(turn.bestScore);
       const attemptIds = Array.isArray(turn.attemptIds) ? turn.attemptIds.map(String) : [];
-      if (!/^HWG7-SR-\d{3}$/u.test(questionId)) throw new DomainValidationError("invalid_question_id", "回合題目代碼格式不正確。");
+      if (!/^[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{3}$/u.test(questionId)) throw new DomainValidationError("invalid_question_id", "回合題目代碼格式不正確。");
       if (!/^\d{5}$/u.test(studentCode)) throw new DomainValidationError("invalid_student_code", "回合學生代碼格式不正確。");
       if (![QUESTION_TYPES.READ_ALOUD, QUESTION_TYPES.QUESTION_ANSWER].includes(questionType)) throw new DomainValidationError("invalid_question_type", "回合題型不正確。");
       if (!["passed", "not_met"].includes(status)) throw new DomainValidationError("invalid_turn_status", "回合達標狀態不正確。");

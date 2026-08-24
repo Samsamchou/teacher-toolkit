@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-24T11:21:12.670Z",
+  "disclosure": "AI-generated voice",
+  "provider": "OpenAI",
+  "model": "gpt-4o-mini-tts",
+  "voice": "marin",
+  "speed": 0.8,
+  "responseFormat": "mp3",
+  "processing": "native_tts_speed_parameter",
+  "instructions": {
+    "readAloud": "Speak in natural American English for a Taiwanese elementary-school learner. Use a warm, clear voice, accurate sentence stress, natural phrasing, and falling statement intonation. Do not add or omit words.",
+    "questionAnswerPrompt": "Ask this question in natural American English for a Taiwanese elementary-school learner. Use a warm, clear voice, accurate question stress, natural phrasing, and natural American question intonation. Do not answer the question and do not add or omit words."
+  },
+  "itemCount": 15,
+  "items": [
+    {
+      "questionId": "HWG5-SR-001",
+      "questionType": "read_aloud",
+      "input": "It's five fifty-five.",
+      "path": "audio/hwg5-sr/HWG5-SR-001.mp3",
+      "bytes": 38784,
+      "sha256": "63fb0508ceb9cddc1fff418cbd19ef2c2b991f2e72d05e0b4b4bbe74ef9712e5",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-002",
+      "questionType": "read_aloud",
+      "input": "It's three fifteen.",
+      "path": "audio/hwg5-sr/HWG5-SR-002.mp3",
+      "bytes": 48768,
+      "sha256": "c4ec28c2825067c3a170881a781d426961bc89072e1ccf342e765d42d3aeebdf",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-003",
+      "questionType": "read_aloud",
+      "input": "I'm writing.",
+      "path": "audio/hwg5-sr/HWG5-SR-003.mp3",
+      "bytes": 27648,
+      "sha256": "8aaed935c9f98cd942ac32b99b81f87cba0228bf568c705ca658eb7c6861e705",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-004",
+      "questionType": "read_aloud",
+      "input": "He's swimming.",
+      "path": "audio/hwg5-sr/HWG5-SR-004.mp3",
+      "bytes": 48768,
+      "sha256": "fc4aad2d2d298b4aabfb7107c656f5add757282229366fec2a437059b530e07e",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-005",
+      "questionType": "read_aloud",
+      "input": "She's in the kitchen.",
+      "path": "audio/hwg5-sr/HWG5-SR-005.mp3",
+      "bytes": 27648,
+      "sha256": "bbe296c8288efd7d83f4a972ffbf1230de002114029379249bf9a277542fde15",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-006",
+      "questionType": "read_aloud",
+      "input": "He's in the yard.",
+      "path": "audio/hwg5-sr/HWG5-SR-006.mp3",
+      "bytes": 50688,
+      "sha256": "d13756690f54082db11456fd3842c7f36ae52a6dcd4a48fb84d52b6b602495e6",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-007",
+      "questionType": "read_aloud",
+      "input": "The marker is in the bag.",
+      "path": "audio/hwg5-sr/HWG5-SR-007.mp3",
+      "bytes": 49920,
+      "sha256": "daa3ab3b8a5a8d12061a4bf970f3cd19e1951abac49d6ed81094d9affe6ab15a",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-008",
+      "questionType": "read_aloud",
+      "input": "The hat is by the table.",
+      "path": "audio/hwg5-sr/HWG5-SR-008.mp3",
+      "bytes": 42624,
+      "sha256": "407a1c545b7a9a9e696c31fa4eac0716a7a46c62dcf91c8a22b05743b527f257",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-009",
+      "questionType": "question_answer",
+      "input": "What time is it?",
+      "path": "audio/hwg5-sr/HWG5-SR-009.mp3",
+      "bytes": 34944,
+      "sha256": "111bcab1cfdf0fedfad9c262232f08800d758f63fca165f0ba340568f20d2fb1",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-010",
+      "questionType": "question_answer",
+      "input": "What time is it?",
+      "path": "audio/hwg5-sr/HWG5-SR-010.mp3",
+      "bytes": 29568,
+      "sha256": "471dbe4d5df5117d754bebbfbe00feeda3ce3dbeb45290d725521dcf7efd4a49",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-011",
+      "questionType": "question_answer",
+      "input": "What's he doing?",
+      "path": "audio/hwg5-sr/HWG5-SR-011.mp3",
+      "bytes": 29568,
+      "sha256": "fc022e488ce49176f98412e6aa6b1a33b72b28700c8945bc543b070ec35c833a",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-012",
+      "questionType": "question_answer",
+      "input": "What are you doing?",
+      "path": "audio/hwg5-sr/HWG5-SR-012.mp3",
+      "bytes": 45696,
+      "sha256": "1ad12587563b85a610fdbcc361b241056c046b6a5141b42117c16684373f99c5",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-013",
+      "questionType": "question_answer",
+      "input": "Where are you?",
+      "path": "audio/hwg5-sr/HWG5-SR-013.mp3",
+      "bytes": 30720,
+      "sha256": "650726ff5fb1c727cae49259c74fc52eaf590b07d412ef72f8a7635f492052a6",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-014",
+      "questionType": "question_answer",
+      "input": "Where is he?",
+      "path": "audio/hwg5-sr/HWG5-SR-014.mp3",
+      "bytes": 29568,
+      "sha256": "05a4047d334dcb4e5af5a822904abf8cecb57c8bd8dcaa9f594c3a3b32756a97",
+      "contentType": "audio/mpeg"
+    },
+    {
+      "questionId": "HWG5-SR-015",
+      "questionType": "question_answer",
+      "input": "Where's my ball?",
+      "path": "audio/hwg5-sr/HWG5-SR-015.mp3",
+      "bytes": 26880,
+      "sha256": "689196ab43242d7bca1fc26ef929b4c555d43934a2459712a264b604ccb60c0c",
+      "contentType": "audio/mpeg"
+    }
+  ]
+}

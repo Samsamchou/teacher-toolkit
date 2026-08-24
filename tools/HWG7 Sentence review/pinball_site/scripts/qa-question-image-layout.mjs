@@ -9,8 +9,12 @@ import { fileURLToPath } from "node:url";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(scriptDir, "..");
 const workspaceRoot = path.resolve(siteRoot, "..");
-const outputDir = path.join(workspaceRoot, "qa", "question-image-layout-20260822");
-const bank = JSON.parse(await readFile(path.join(siteRoot, "data", "hwg7-sentence-review.json"), "utf8"));
+const requestedUnitId = process.argv.find(arg => arg.startsWith("--unit="))?.slice("--unit=".length) || "hwg7-sr";
+const registry = JSON.parse(await readFile(path.join(siteRoot, "data", "unit-registry.json"), "utf8"));
+const unit = registry.units.find(item => item.id === requestedUnitId && item.interactionType === "speech_assessment");
+if (!unit?.questionBankFile) throw new Error(`找不到可做版面 QA 的口說單元：${requestedUnitId}`);
+const outputDir = path.join(workspaceRoot, "qa", "question-image-layout-" + requestedUnitId + "-20260824");
+const bank = JSON.parse(await readFile(path.join(siteRoot, ...unit.questionBankFile.split("/")), "utf8"));
 const questionIds = bank.questions.map(question => question.id);
 
 const browserCandidates = [
@@ -272,7 +276,7 @@ function checksFor(metrics, expectedQuestionId) {
     recordButtonHeightOk: metrics.recordButtonHeightOk,
     imageFrameHeightOk: metrics.imageFrameHeightOk,
     imageContained: metrics.imageContained,
-    modelAudioMatchesType: question?.type === "read_aloud" ? metrics.hasModelAudio : !metrics.hasModelAudio,
+    modelAudioMatchesType: Boolean(question?.tts?.path) === metrics.hasModelAudio,
     scaffoldMatchesQuestion: expectedScaffold ? metrics.scaffoldText === expectedScaffold : !metrics.hasScaffold,
     panelAtTop: metrics.panelAtTop,
     noHorizontalOverflow: !metrics.horizontalOverflow,
@@ -335,7 +339,7 @@ async function captureViewport(client, baseUrl, viewport) {
   await configureViewport(client, viewport);
   const results = [];
   for (const questionId of questionIds) {
-    const url = `${baseUrl}/?layoutQa=${encodeURIComponent(questionId)}`;
+    const url = `${baseUrl}/?layoutQa=${encodeURIComponent(questionId)}&unitId=${encodeURIComponent(requestedUnitId)}`;
     const navigation = await client.call("Page.navigate", { url });
     if (navigation.errorText) throw new Error(`${questionId} 導覽失敗：${navigation.errorText}`);
     await waitForQuestionLayout(client, questionId);
@@ -365,8 +369,8 @@ async function captureViewport(client, baseUrl, viewport) {
 
 async function captureFallback(client, baseUrl, viewport) {
   await configureViewport(client, viewport);
-  const questionId = "HWG7-SR-013";
-  await client.call("Page.navigate", { url: `${baseUrl}/?layoutQa=${questionId}` });
+  const questionId = questionIds.at(-1);
+  await client.call("Page.navigate", { url: `${baseUrl}/?layoutQa=${encodeURIComponent(questionId)}&unitId=${encodeURIComponent(requestedUnitId)}` });
   await waitForQuestionLayout(client, questionId);
   const before = await evaluate(client, layoutMetricsExpression());
   await evaluate(client, `(() => {
@@ -491,7 +495,7 @@ async function main() {
       return `| ${viewport.label} | ${viewportResults.filter(result => result.passed).length}/${viewportResults.length} | ${viewportResults.every(result => result.passed) ? "通過" : "未通過"} |`;
     });
     const summary = [
-      "# HWG7 十三題圖片同屏 QA",
+      "# " + (bank.mode?.label || requestedUnitId) + " " + questionIds.length + " 題圖片同屏 QA",
       "",
       `- 結果：**${report.ok ? "通過" : "未通過"}**`,
       `- 題目：${report.questionCount}`,
