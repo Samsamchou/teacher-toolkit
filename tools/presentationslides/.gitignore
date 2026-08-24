@@ -1,0 +1,23 @@
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.*
+*credentials*.json
+
+# Generated caches and local environments
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# Editors and temporary logs
+.vscode/
+.idea/
+*.log
+
+# OS metadata
+Thumbs.db
+.DS_Store
