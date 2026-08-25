@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "status": "homepage-assets-generated",
+  "generationPolicy": {
+    "generateNow": true,
+    "originalArtworkRequired": true,
+    "embeddedTextAllowed": false,
+    "reasonNoText": "站名、標題、按鈕與時間必須由HTML後製，避免圖片文字錯誤或亂碼。",
+    "factCheckBeforeGeneration": true,
+    "factCheckRule": "製作前以臺鐵、地方政府或場館官方資料確認車站與景觀；AI圖只作兒童教學情境，不作精確地圖或現況照片。",
+    "sharedVisualDirection": "溫暖、明亮、兒童友善的3D立體繪本微縮場景，圓潤造型，清楚前中後景，柔和日光，安全乘車行為，無商標、無可讀文字、無浮水印。",
+    "output": {
+      "format": "webp",
+      "width": 1600,
+      "height": 900,
+      "aspectRatio": "16:9",
+      "colorSpace": "sRGB",
+      "maxFileSizeKb": 350
+    }
+  },
+  "assets": [
+    {
+      "id": "asset.home.roundhouse",
+      "fileName": "home-roundhouse.webp",
+      "unitId": "unit.roundhouse",
+      "usage": "四單元首頁的扇形車庫卡片",
+      "alt": "扇形軌道圍繞轉車臺，後方排列多個車庫門的兒童教學插圖",
+      "animation": {
+        "type": "css-layer",
+        "description": "只讓轉車臺方向指示光點緩慢移動；減少動態模式完全靜止。"
+      },
+      "factCheck": [
+        "轉車臺位於扇形軌道中心",
+        "多股軌道呈扇形通往車庫門",
+        "不把場景畫成一般圓形車站或高速鐵路"
+      ],
+      "promptZh": "16:9橫式、溫暖明亮的兒童3D立體繪本微縮場景。以教學示意方式呈現扇形車庫：中央圓形轉車臺，多股鋼軌像扇骨向後展開，通往一排弧形排列的車庫門；一列小型復古火車安全停放，兩名四年級學生和教師站在護欄後觀察。構圖中央保留清楚的轉車臺與扇形軌道，邊緣留安全裁切空間。圓潤造型、柔和日光、深藍與暖橘點綴、細節清楚但不擁擠。不得出現商標、可讀文字、站名、浮水印、錯誤軌道連接或危險站位。"
+    },
+    {
+      "id": "asset.home.jiji-train",
+      "fileName": "home-jiji-train.webp",
+      "unitId": "unit.train-tickets",
+      "usage": "四單元首頁及購票練習首頁主視覺",
+      "alt": "可愛紅黃色支線小火車穿過二水田野，遠方有綠色山丘的兒童教學插圖",
+      "animation": {
+        "type": "css-layer",
+        "description": "火車沿固定軌跡慢速橫移，雲朵與稻葉小幅移動；減少動態模式顯示靜態圖。"
+      },
+      "factCheck": [
+        "以二水田野與支線旅行氣氛為主，不宣稱是即時車況",
+        "人物在安全區，不站在軌道或月臺邊緣",
+        "不在圖中畫精確站名或路線文字"
+      ],
+      "promptZh": "16:9橫式、溫暖明亮的兒童3D立體繪本微縮場景。可愛紅黃色支線小火車從左向右行駛，穿過二水風格的稻田、水圳與平原，遠方是柔和綠色山丘，天空有少量白雲；兩名四年級學生與教師在有護欄的安全觀景區揮手。火車與軌道位置清楚，右側保留網站標題與按鈕的HTML留白區。圓潤、友善、清晰、具有探索感，使用深藍、票務藍、暖橘與成功綠的點綴。不得出現商標、可讀文字、英文、站名、浮水印、都市高樓、危險站位或不合理軌道。"
+    },
+    {
+      "id": "asset.home.railway-reading",
+      "fileName": "home-railway-reading.webp",
+      "unitId": "unit.railway-reading",
+      "usage": "四單元首頁的閱覽鐵道風華卡片",
+      "alt": "打開的鐵路閱讀卡旁呈現山線、海線與沿線景觀的兒童教學插圖",
+      "animation": {
+        "type": "css-layer",
+        "description": "書頁角落與路線光點緩慢移動；不讓文字或圖例跟著變形。"
+      },
+      "factCheck": [
+        "山地與海岸只作景觀比較，不作精確臺灣路線圖",
+        "不生成站名、圖例或方向文字",
+        "實際教學路線另由HTML或經查證的教材圖呈現"
+      ],
+      "promptZh": "16:9橫式、溫暖明亮的兒童3D立體繪本微縮場景。一張打開的大型鐵路閱讀卡放在木桌中央，左側延伸出藍色海岸、平原與沿海列車意象，右側延伸出綠色山丘、城市與山線列車意象；兩名四年級學生拿著放大鏡與證據卡閱讀比較。畫面是概念性景觀比較，不是精確地圖；中央與上方保留HTML標題區。圓潤可愛、層次清楚、柔和日光。不得出現可讀文字、錯誤站名、商標、浮水印、精確但錯誤的路線圖或危險行為。"
+    },
+    {
+      "id": "asset.home.narrow-gauge",
+      "fileName": "home-narrow-gauge.webp",
+      "unitId": "unit.narrow-gauge",
+      "usage": "四單元首頁的五分車卡片",
+      "alt": "小型窄軌五分車載著甘蔗，與一般火車軌道形成比較的兒童教學插圖",
+      "animation": {
+        "type": "css-layer",
+        "description": "五分車車輪與田野光影小幅移動；減少動態模式完全靜止。"
+      },
+      "factCheck": [
+        "五分車軌距明顯較窄",
+        "糖業運輸以歷史情境呈現，不混成現行臺鐵列車",
+        "不使用真實公司商標或虛構型號文字"
+      ],
+      "promptZh": "16:9橫式、溫暖明亮的兒童3D立體繪本微縮場景。前景是一列小型窄軌五分車，載有整齊甘蔗束，軌道明顯較窄；遠景以柔和方式呈現一般火車與較寬軌道，讓四年級學生能比較大小與用途。旁邊有安全距離標線與教師帶領觀察，背景是糖業田野與簡化倉庫。構圖清楚、不擁擠、圓潤可愛、具有歷史探索感。不得出現可讀文字、商標、浮水印、錯誤軌道比例、把五分車畫成高速列車或讓人物站上軌道。"
+    },
+    {
+      "id": "asset.scene.green-tunnel",
+      "fileName": "scene-green-tunnel.webp",
+      "unitId": "unit.train-tickets",
+      "usage": "購票練習步驟間的裝飾場景",
+      "alt": "陽光穿過拱形樹葉形成的綠色隧道，支線火車安全通過",
+      "animation": {
+        "type": "css-layer",
+        "description": "分層樹葉小幅搖晃，不連續閃爍。"
+      },
+      "factCheck": [
+        "只作集集線旅行意象，不標為特定即時地點",
+        "軌道與列車清楚，無人物進入軌道"
+      ],
+      "promptZh": "16:9橫式兒童3D立體繪本場景，枝葉形成拱形綠色隧道，柔和陽光穿過葉片，一列小型支線火車安全通過，景深清楚、畫面安定、低刺激、適合iPad介面背景。右側保留HTML內容留白。無人物站在軌道上，無商標、無可讀文字、無站名、無浮水印、無閃爍光源。"
+    },
+    {
+      "id": "asset.scene.ershui-fields",
+      "fileName": "scene-ershui-fields.webp",
+      "unitId": "unit.train-tickets",
+      "usage": "二水出發與路線情境背景",
+      "alt": "二水平原的稻田、水圳、遠山與支線小火車",
+      "animation": {
+        "type": "css-layer",
+        "description": "雲朵慢移、稻葉輕擺，採低耗能循環。"
+      },
+      "factCheck": [
+        "以二水平原、田野與水圳景觀為主",
+        "不生成錯誤車站建築或站名"
+      ],
+      "promptZh": "16:9橫式兒童3D立體繪本場景，二水平原的稻田、水圳、遠山與安全行駛的小型支線火車，柔和早晨日光，色彩清新，前中後景清楚，左側保留HTML路線與步驟資訊。無可讀文字、無站名、無商標、無浮水印、無人物站上軌道、無誇張不存在地標。"
+    },
+    {
+      "id": "asset.scene.checheng-wood-station",
+      "fileName": "scene-checheng-wood-station.webp",
+      "unitId": "unit.train-tickets",
+      "usage": "最終成功頁的終點氣氛",
+      "alt": "山林環繞的木造車站與支線小火車終點場景",
+      "animation": {
+        "type": "css-layer",
+        "description": "光點與遠方鳥群緩慢移動，不使用影片檔。"
+      },
+      "factCheck": [
+        "生成前查核車埕車站官方或可信現況照片",
+        "木造站體與山林為主，不加入都市高樓",
+        "不把AI圖當作車站現況照片"
+      ],
+      "promptZh": "16:9橫式兒童3D立體繪本微縮場景，參考經查證的車埕木造車站外觀與山林終點氣氛，一列小型支線火車安全停靠，月臺人物位於安全線後，陽光溫暖，畫面有抵達與完成感。站體細節應在生成前依官方照片修正；不畫都市高樓。無商標、無可讀文字、無站名、無浮水印、無危險行為、無虛構大型建築。"
+    }
+  ]
+}

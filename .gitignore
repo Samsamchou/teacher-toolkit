@@ -26,6 +26,10 @@ __pycache__/
 !tools/sf3-4-voc/site/package-lock.json
 !tools/sf3-4-voc/site/functions/package-lock.json
 
+# Keep dependency locks for the Ershui local-course backup
+!tools/localcoursesErshui/sites/grade4-local-curriculum/package-lock.json
+!tools/localcoursesErshui/sites/grade4-local-curriculum/functions/package-lock.json
+
 # Editors and temporary logs
 .vscode/
 .idea/

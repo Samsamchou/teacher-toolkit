@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isTeacher() {
+      return request.auth != null && request.auth.token.teacher == true;
+    }
+
+    function ownsAttempt(uid, attemptId) {
+      return request.auth != null
+        && request.auth.uid == uid
+        && firestore.get(
+          /databases/(default)/documents/tickets-v2/$(attemptId)
+        ).data.uid == uid;
+    }
+
+    match /tickets-v2/{uid}/{attemptId}/{fileName} {
+      allow read: if isTeacher();
+      allow create, update: if ownsAttempt(uid, attemptId)
+        && (
+          (
+            fileName == "evidence.pdf"
+            && request.resource.contentType == "application/pdf"
+            && request.resource.size < 20 * 1024 * 1024
+          )
+          ||
+          (
+            fileName.matches('screen-recording\\.(webm|mp4)')
+            && request.resource.contentType.matches('video/.*')
+            && request.resource.size < 80 * 1024 * 1024
+          )
+        );
+      allow delete: if isTeacher();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

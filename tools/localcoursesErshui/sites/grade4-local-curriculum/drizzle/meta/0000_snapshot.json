@@ -1,0 +1,670 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "d38faf66-805e-489d-ace4-b904766c7752",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "attempt_events": {
+      "name": "attempt_events",
+      "columns": {
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "seq": {
+          "name": "seq",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "step": {
+          "name": "step",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "payload_json": {
+          "name": "payload_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'{}'"
+        },
+        "before_state_json": {
+          "name": "before_state_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'{}'"
+        },
+        "after_state_json": {
+          "name": "after_state_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'{}'"
+        },
+        "client_elapsed_ms": {
+          "name": "client_elapsed_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "server_received_at": {
+          "name": "server_received_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "attempt_events_attempt_seq_uq": {
+          "name": "attempt_events_attempt_seq_uq",
+          "columns": [
+            "attempt_id",
+            "seq"
+          ],
+          "isUnique": true
+        },
+        "attempt_events_attempt_time_idx": {
+          "name": "attempt_events_attempt_time_idx",
+          "columns": [
+            "attempt_id",
+            "client_elapsed_ms"
+          ],
+          "isUnique": false
+        },
+        "attempt_events_action_idx": {
+          "name": "attempt_events_action_idx",
+          "columns": [
+            "action"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "attempt_events_attempt_id_attempts_attempt_id_fk": {
+          "name": "attempt_events_attempt_id_attempts_attempt_id_fk",
+          "tableFrom": "attempt_events",
+          "tableTo": "attempts",
+          "columnsFrom": [
+            "attempt_id"
+          ],
+          "columnsTo": [
+            "attempt_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "attempt_events_seq_chk": {
+          "name": "attempt_events_seq_chk",
+          "value": "\"attempt_events\".\"seq\" >= 1"
+        },
+        "attempt_events_elapsed_chk": {
+          "name": "attempt_events_elapsed_chk",
+          "value": "\"attempt_events\".\"client_elapsed_ms\" >= 0 and \"attempt_events\".\"client_elapsed_ms\" <= 14400000"
+        },
+        "attempt_events_json_size_chk": {
+          "name": "attempt_events_json_size_chk",
+          "value": "length(\"attempt_events\".\"payload_json\") <= 4096 and length(\"attempt_events\".\"before_state_json\") <= 8192 and length(\"attempt_events\".\"after_state_json\") <= 8192"
+        }
+      }
+    },
+    "attempts": {
+      "name": "attempts",
+      "columns": {
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "attempt_token_hash": {
+          "name": "attempt_token_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "unit_slug": {
+          "name": "unit_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content_version": {
+          "name": "content_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_event_at": {
+          "name": "last_event_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'in_progress'"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "event_count": {
+          "name": "event_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 1
+        },
+        "error_count": {
+          "name": "error_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "correction_count": {
+          "name": "correction_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "pdf_key": {
+          "name": "pdf_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pdf_checksum": {
+          "name": "pdf_checksum",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pdf_page_count": {
+          "name": "pdf_page_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pdf_uploaded_at": {
+          "name": "pdf_uploaded_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "attempts_date_student_idx": {
+          "name": "attempts_date_student_idx",
+          "columns": [
+            "started_at",
+            "student_id"
+          ],
+          "isUnique": false
+        },
+        "attempts_unit_date_idx": {
+          "name": "attempts_unit_date_idx",
+          "columns": [
+            "unit_slug",
+            "started_at"
+          ],
+          "isUnique": false
+        },
+        "attempts_status_idx": {
+          "name": "attempts_status_idx",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        },
+        "attempts_expires_at_idx": {
+          "name": "attempts_expires_at_idx",
+          "columns": [
+            "expires_at"
+          ],
+          "isUnique": false
+        },
+        "attempts_token_hash_uq": {
+          "name": "attempts_token_hash_uq",
+          "columns": [
+            "attempt_token_hash"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "attempts_unit_slug_units_slug_fk": {
+          "name": "attempts_unit_slug_units_slug_fk",
+          "tableFrom": "attempts",
+          "tableTo": "units",
+          "columnsFrom": [
+            "unit_slug"
+          ],
+          "columnsTo": [
+            "slug"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "attempts_student_id_chk": {
+          "name": "attempts_student_id_chk",
+          "value": "\"attempts\".\"student_id\" glob '[0-9][0-9][0-9][0-9][0-9]'"
+        },
+        "attempts_pdf_page_count_chk": {
+          "name": "attempts_pdf_page_count_chk",
+          "value": "\"attempts\".\"pdf_page_count\" is null or \"attempts\".\"pdf_page_count\" = 7"
+        }
+      }
+    },
+    "deletion_log": {
+      "name": "deletion_log",
+      "columns": {
+        "deletion_id": {
+          "name": "deletion_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "unit_slug": {
+          "name": "unit_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "requested_by": {
+          "name": "requested_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "r2_result": {
+          "name": "r2_result",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "d1_result": {
+          "name": "d1_result",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "deletion_log_deleted_at_idx": {
+          "name": "deletion_log_deleted_at_idx",
+          "columns": [
+            "deleted_at"
+          ],
+          "isUnique": false
+        },
+        "deletion_log_attempt_idx": {
+          "name": "deletion_log_attempt_idx",
+          "columns": [
+            "attempt_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "evidence_manifest": {
+      "name": "evidence_manifest",
+      "columns": {
+        "evidence_id": {
+          "name": "evidence_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "attempt_id": {
+          "name": "attempt_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "page_no": {
+          "name": "page_no",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "step_key": {
+          "name": "step_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "captured_at": {
+          "name": "captured_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "checksum": {
+          "name": "checksum",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "upload_status": {
+          "name": "upload_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'captured'"
+        }
+      },
+      "indexes": {
+        "evidence_manifest_attempt_page_uq": {
+          "name": "evidence_manifest_attempt_page_uq",
+          "columns": [
+            "attempt_id",
+            "page_no"
+          ],
+          "isUnique": true
+        },
+        "evidence_manifest_attempt_step_uq": {
+          "name": "evidence_manifest_attempt_step_uq",
+          "columns": [
+            "attempt_id",
+            "step_key"
+          ],
+          "isUnique": true
+        },
+        "evidence_manifest_status_idx": {
+          "name": "evidence_manifest_status_idx",
+          "columns": [
+            "upload_status"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "evidence_manifest_attempt_id_attempts_attempt_id_fk": {
+          "name": "evidence_manifest_attempt_id_attempts_attempt_id_fk",
+          "tableFrom": "evidence_manifest",
+          "tableTo": "attempts",
+          "columnsFrom": [
+            "attempt_id"
+          ],
+          "columnsTo": [
+            "attempt_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "evidence_manifest_page_chk": {
+          "name": "evidence_manifest_page_chk",
+          "value": "\"evidence_manifest\".\"page_no\" between 1 and 7"
+        }
+      }
+    },
+    "teacher_allowlist": {
+      "name": "teacher_allowlist",
+      "columns": {
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'teacher'"
+        },
+        "active": {
+          "name": "active",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "teacher_allowlist_active_idx": {
+          "name": "teacher_allowlist_active_idx",
+          "columns": [
+            "active"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "teacher_allowlist_email_lower_chk": {
+          "name": "teacher_allowlist_email_lower_chk",
+          "value": "\"teacher_allowlist\".\"email\" = lower(\"teacher_allowlist\".\"email\")"
+        }
+      }
+    },
+    "units": {
+      "name": "units",
+      "columns": {
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "unit_id": {
+          "name": "unit_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "version": {
+          "name": "version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "evidence_policy": {
+          "name": "evidence_policy",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'placeholder'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "units_unit_id_uq": {
+          "name": "units_unit_id_uq",
+          "columns": [
+            "unit_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "units_evidence_policy_chk": {
+          "name": "units_evidence_policy_chk",
+          "value": "\"units\".\"evidence_policy\" in ('to-be-defined','event-replay-and-seven-page-pdf')"
+        }
+      }
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}

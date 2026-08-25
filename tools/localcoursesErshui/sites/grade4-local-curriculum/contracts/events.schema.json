@@ -1,0 +1,313 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/contracts/events.schema.json",
+  "title": "Stored train-ticket learning event",
+  "description": "教師重播使用的結構化操作事件；不是螢幕錄影。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "attemptId",
+    "seq",
+    "step",
+    "action",
+    "payload",
+    "clientElapsedMs",
+    "serverReceivedAt",
+    "before",
+    "after"
+  ],
+  "properties": {
+    "attemptId": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "step": {
+      "enum": [
+        "student_id",
+        "origin",
+        "destination",
+        "date",
+        "search",
+        "train",
+        "summary",
+        "success"
+      ]
+    },
+    "action": {
+      "enum": [
+        "attempt_started",
+        "field_selected",
+        "validation_failed",
+        "swap",
+        "back",
+        "step_passed",
+        "attempt_completed"
+      ]
+    },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    },
+    "clientElapsedMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 14400000
+    },
+    "serverReceivedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "before": {
+      "$ref": "#/$defs/allowedState"
+    },
+    "after": {
+      "$ref": "#/$defs/allowedState"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "validation_failed"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "errorCode"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action": {
+            "const": "step_passed"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "required": [
+              "stepId",
+              "pageNo"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 8,
+      "properties": {
+        "field": {
+          "enum": [
+            "student_id",
+            "origin",
+            "destination",
+            "date",
+            "train",
+            "summary.from",
+            "summary.to",
+            "summary.date",
+            "summary.train",
+            "summary.depart",
+            "summary.arrive"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "boolean",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "expected": {
+          "type": [
+            "string",
+            "boolean",
+            "null"
+          ],
+          "maxLength": 64
+        },
+        "errorCode": {
+          "enum": [
+            "same_station",
+            "reversed_route",
+            "wrong_date",
+            "wrong_train",
+            "incomplete_summary",
+            "invalid_student_id"
+          ]
+        },
+        "stepId": {
+          "enum": [
+            "step.origin",
+            "step.destination",
+            "step.date",
+            "step.search",
+            "step.train",
+            "step.summary",
+            "step.success"
+          ]
+        },
+        "pageNo": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "contentVersion": {
+          "const": "tickets-v1"
+        },
+        "reason": {
+          "enum": [
+            "student_action",
+            "teacher_demonstration",
+            "offline_retry"
+          ]
+        }
+      }
+    },
+    "allowedState": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currentStep": {
+          "enum": [
+            "student_id",
+            "origin",
+            "destination",
+            "date",
+            "search",
+            "train",
+            "summary",
+            "success"
+          ]
+        },
+        "origin": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "station.ershui",
+            null
+          ]
+        },
+        "destination": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "station.jiji",
+            "station.shuili",
+            "station.checheng",
+            null
+          ]
+        },
+        "date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "date.practice-day-1",
+            "date.practice-day-2",
+            "date.practice-day-3",
+            null
+          ]
+        },
+        "train": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "train.sample-a",
+            "train.sample-b",
+            "train.sample-c",
+            null
+          ]
+        },
+        "summaryChecks": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 6,
+          "items": {
+            "enum": [
+              "summary.from",
+              "summary.to",
+              "summary.date",
+              "summary.train",
+              "summary.depart",
+              "summary.arrive"
+            ]
+          }
+        },
+        "passedSteps": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 7,
+          "items": {
+            "enum": [
+              "step.origin",
+              "step.destination",
+              "step.date",
+              "step.search",
+              "step.train",
+              "step.summary",
+              "step.success"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "attemptId": "a_01JEXAMPLE8GJY0A5X",
+      "seq": 2,
+      "step": "origin",
+      "action": "field_selected",
+      "payload": {
+        "field": "origin",
+        "value": "station.ershui",
+        "contentVersion": "tickets-v1"
+      },
+      "clientElapsedMs": 1450,
+      "serverReceivedAt": "2026-07-29T08:00:01.450Z",
+      "before": {
+        "currentStep": "origin",
+        "origin": null,
+        "passedSteps": []
+      },
+      "after": {
+        "currentStep": "origin",
+        "origin": "station.ershui",
+        "passedSteps": []
+      }
+    }
+  ]
+}

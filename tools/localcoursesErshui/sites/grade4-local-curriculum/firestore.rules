@@ -1,0 +1,113 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isTeacher() {
+      return signedIn() && request.auth.token.teacher == true;
+    }
+
+    function isAnonymousStudent() {
+      return signedIn()
+        && request.auth.token.firebase.sign_in_provider == "anonymous";
+    }
+
+    function validAttemptUpdate() {
+      return isAnonymousStudent()
+        && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.studentId == resource.data.studentId
+        && request.resource.data.attemptId == resource.data.attemptId
+        && request.resource.data.unitId == resource.data.unitId
+        && request.resource.data.contentVersion == resource.data.contentVersion
+        && request.resource.data.createdAtClient == resource.data.createdAtClient
+        && request.resource.data.expiresAt == resource.data.expiresAt
+        && request.resource.data.practiceStartedAt == resource.data.practiceStartedAt
+        && request.resource.data.practiceDateTaipei == resource.data.practiceDateTaipei
+        && request.resource.data.practiceDateStatus == resource.data.practiceDateStatus
+        && request.resource.data.origin == "ershui"
+        && request.resource.data.currentStep is int
+        && request.resource.data.currentStep >= 1
+        && request.resource.data.currentStep <= 7
+        && request.resource.data.passedSteps is int
+        && request.resource.data.passedSteps >= 0
+        && request.resource.data.passedSteps <= 7
+        && request.resource.data.score is int
+        && request.resource.data.score >= 0
+        && request.resource.data.score <= 100
+        && request.resource.data.errorCount is int
+        && request.resource.data.errorCount >= 0
+        && request.resource.data.eventCount is int
+        && request.resource.data.eventCount >= 0
+        && request.resource.data.status in [
+          "in_progress",
+          "pdf_pending",
+          "completed"
+        ]
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "status",
+          "currentStep",
+          "passedSteps",
+          "score",
+          "errorCount",
+          "eventCount",
+          "travelDate",
+          "timeStart",
+          "timeEnd",
+          "destination",
+          "trainNumber",
+          "trainType",
+          "depart",
+          "arrive",
+          "durationMinutes",
+          "pdfPath",
+          "recordingPath",
+          "recordingStatus",
+          "completedAtClient",
+          "updatedAt"
+        ]);
+    }
+
+    match /tickets-v2/{attemptId} {
+      // Attempts are created only by createTicketAttemptV2 with Admin SDK so
+      // students cannot forge the trusted practice date or start timestamp.
+      allow create: if false;
+      allow get: if isTeacher()
+        || (isAnonymousStudent() && resource.data.uid == request.auth.uid);
+      allow list: if isTeacher();
+      allow update: if validAttemptUpdate();
+      allow delete: if isTeacher();
+
+      match /events/{eventId} {
+        allow create: if isAnonymousStudent()
+          && get(/databases/$(database)/documents/tickets-v2/$(attemptId)).data.uid
+            == request.auth.uid
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.seq is int
+          && request.resource.data.seq >= 1
+          && request.resource.data.step is int
+          && request.resource.data.step >= 1
+          && request.resource.data.step <= 7
+          && request.resource.data.action is string
+          && request.resource.data.clientElapsedMs is int
+          && request.resource.data.clientElapsedMs >= 0
+          && request.resource.data.createdAt == request.time;
+        allow read, delete: if isTeacher();
+        allow update: if false;
+      }
+    }
+
+    match /teacher-audit-v2/{auditId} {
+      allow create, read: if isTeacher();
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

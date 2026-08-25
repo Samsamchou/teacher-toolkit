@@ -1,0 +1,4 @@
+# These folders contain machine-extracted or archived source evidence.
+# Preserve their bytes exactly instead of rewriting historical whitespace.
+_course_source_md/** -whitespace
+**/references/*.html -whitespace

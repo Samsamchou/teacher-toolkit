@@ -1,0 +1,104 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "tickets-v2",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "studentId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAtClient",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tickets-v2",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "travelDate",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAtClient",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tickets-v2",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "studentId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "travelDate",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAtClient",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tickets-v2",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "studentId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "practiceStartedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tickets-v2",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "practiceDateTaipei",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "practiceStartedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tickets-v2",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "studentId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "practiceDateTaipei",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "practiceStartedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "tickets-v2",
+      "fieldPath": "expiresAt",
+      "ttl": true,
+      "indexes": []
+    }
+  ]
+}

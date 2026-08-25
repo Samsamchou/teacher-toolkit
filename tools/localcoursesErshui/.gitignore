@@ -1,0 +1,48 @@
+# Secrets and local credentials
+.env
+.env.*
+!.env.example
+!**/.env.example
+!**/.env.production.example
+*.key
+*.pem
+credentials.*
+*credentials*.json
+
+# Dependencies and local environments
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.npm-cache/
+
+# Generated build and runtime state
+.next/
+.vinext/
+dist/
+out/
+firebase-dist/
+.firebase/
+.wrangler/
+coverage/
+outputs/
+work/
+tmp/
+*.tsbuildinfo
+
+# Logs and editor state
+*.log
+.vscode/
+.idea/
+.claude/
+.codex/
+
+# Operating-system metadata
+Thumbs.db
+.DS_Store
+desktop.ini
+~$*
+
+# Dependency locks are part of the reproducible Firebase site source.
+!sites/grade4-local-curriculum/package-lock.json
+!sites/grade4-local-curriculum/functions/package-lock.json

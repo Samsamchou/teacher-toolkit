@@ -1,0 +1,18 @@
+{
+  "name": "4年級上學期 在地課程",
+  "short_name": "二水在地課程",
+  "description": "二水國小四年級鐵道在地課程與模擬購票練習。",
+  "lang": "zh-Hant",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7fafc",
+  "theme_color": "#17324d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

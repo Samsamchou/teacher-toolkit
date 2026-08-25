@@ -1,0 +1,355 @@
+{
+  "contractVersion": "1.0.0",
+  "title": "四年級在地課程線上購票練習 API",
+  "basePath": "/api",
+  "defaultContentType": "application/json; charset=utf-8",
+  "timeFormat": "UTC ISO 8601",
+  "bindings": {
+    "d1": "DB",
+    "r2": "EVIDENCE_BUCKET"
+  },
+  "securityModels": {
+    "studentAttempt": {
+      "type": "bearer",
+      "description": "建立attempt時回傳的短效不可猜測token；D1只存token hash。",
+      "canListRecords": false
+    },
+    "teacher": {
+      "type": "chatgpt-siwc-plus-d1-allowlist",
+      "description": "平台驗證ChatGPT身分後，由伺服器以可信email查詢teacher_allowlist。",
+      "trustedEmailHeader": "oai-authenticated-user-email",
+      "serverSideAuthorizationRequired": true
+    }
+  },
+  "limits": {
+    "studentIdPattern": "^[0-9]{5}$",
+    "eventBatchMax": 25,
+    "teacherPageSizeMax": 50,
+    "cleanupBatchMax": 25,
+    "pdfPageCount": 7,
+    "pdfMaxBytes": 12582912,
+    "payloadJsonMaxBytes": 4096,
+    "clientElapsedMsMax": 14400000
+  },
+  "endpoints": [
+    {
+      "id": "api.student.attempts.create",
+      "method": "POST",
+      "path": "/attempts",
+      "auth": "public",
+      "request": {
+        "required": [
+          "studentId",
+          "unitId",
+          "contentVersion"
+        ],
+        "properties": {
+          "studentId": {
+            "type": "string",
+            "pattern": "^[0-9]{5}$"
+          },
+          "unitId": {
+            "const": "unit.train-tickets"
+          },
+          "contentVersion": {
+            "const": "tickets-v1"
+          }
+        }
+      },
+      "response201": {
+        "required": [
+          "attemptId",
+          "attemptToken",
+          "nextSeq",
+          "status",
+          "expiresAt"
+        ]
+      },
+      "writes": [
+        "attempts",
+        "attempt_events:event.attempt_started"
+      ],
+      "tests": [
+        "test.ticket.standard-flow",
+        "test.privacy.data-minimization"
+      ]
+    },
+    {
+      "id": "api.student.events.append",
+      "method": "POST",
+      "path": "/attempts/{attemptId}/events",
+      "auth": "studentAttempt",
+      "requestSchema": "./events.schema.json",
+      "batch": true,
+      "sequenceRule": "strictly-contiguous-and-idempotent",
+      "response200": {
+        "required": [
+          "acceptedThroughSeq",
+          "nextSeq",
+          "attemptStatus"
+        ]
+      },
+      "writes": [
+        "attempt_events",
+        "attempts.event_count",
+        "attempts.last_event_at",
+        "evidence_manifest:on-step-passed"
+      ],
+      "errors": [
+        "ATTEMPT_TOKEN_REQUIRED",
+        "EVENT_SEQUENCE_CONFLICT",
+        "ATTEMPT_LOCKED",
+        "INVALID_SIMULATION_VALUE"
+      ],
+      "tests": [
+        "test.events.complete-and-locked",
+        "test.ticket.error-recovery",
+        "test.offline.idempotent-resume"
+      ]
+    },
+    {
+      "id": "api.student.attempts.sync",
+      "method": "GET",
+      "path": "/attempts/{attemptId}/sync",
+      "auth": "studentAttempt",
+      "response200": {
+        "fields": [
+          "nextSeq",
+          "status",
+          "receivedEvidencePages",
+          "pdfStatus"
+        ]
+      },
+      "tests": [
+        "test.offline.idempotent-resume"
+      ]
+    },
+    {
+      "id": "api.student.evidence.upload",
+      "method": "POST",
+      "path": "/attempts/{attemptId}/evidence",
+      "auth": "studentAttempt",
+      "contentType": "multipart/form-data",
+      "request": {
+        "required": [
+          "pdf",
+          "checksum",
+          "pageCount",
+          "contentVersion"
+        ],
+        "serverGeneratedR2Key": true
+      },
+      "preconditions": [
+        "event.attempt_completed exists",
+        "evidence pages 1 through 7 are complete",
+        "attempt status permits evidence upload"
+      ],
+      "validation": [
+        "PDF signature and content type",
+        "size is within limit",
+        "pageCount equals 7",
+        "SHA-256 checksum matches",
+        "page manifest order is 1 through 7"
+      ],
+      "writeOrder": [
+        "put PDF to R2",
+        "verify R2 result",
+        "update D1 evidence_manifest",
+        "update attempts.pdf_key and status"
+      ],
+      "tests": [
+        "test.evidence.seven-pages",
+        "test.offline.idempotent-resume"
+      ]
+    },
+    {
+      "id": "api.teacher.attempts.list",
+      "method": "GET",
+      "path": "/teacher/attempts",
+      "auth": "teacher",
+      "query": [
+        "unitId",
+        "from",
+        "to",
+        "studentId",
+        "status",
+        "cursor"
+      ],
+      "response200": {
+        "fields": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "tests": [
+        "test.teacher.layout-and-filters",
+        "test.teacher.authorization",
+        "test.attempt.same-student-multiple"
+      ]
+    },
+    {
+      "id": "api.teacher.attempts.detail",
+      "method": "GET",
+      "path": "/teacher/attempts/{attemptId}",
+      "auth": "teacher",
+      "response200": {
+        "fields": [
+          "summary",
+          "correctionCounts",
+          "eventCount",
+          "evidenceStatus",
+          "contentVersion"
+        ]
+      },
+      "tests": [
+        "test.teacher.layout-and-filters"
+      ]
+    },
+    {
+      "id": "api.teacher.events.list",
+      "method": "GET",
+      "path": "/teacher/attempts/{attemptId}/events",
+      "auth": "teacher",
+      "responseSchema": "./events.schema.json",
+      "ordering": "seq ascending",
+      "tests": [
+        "test.replay.silent-chronological",
+        "test.events.complete-and-locked"
+      ]
+    },
+    {
+      "id": "api.teacher.evidence.stream",
+      "method": "GET",
+      "path": "/teacher/attempts/{attemptId}/evidence",
+      "auth": "teacher",
+      "query": [
+        "disposition"
+      ],
+      "responseContentType": "application/pdf",
+      "cacheControl": "private, no-store",
+      "publicUrl": false,
+      "tests": [
+        "test.evidence.seven-pages",
+        "test.teacher.authorization"
+      ]
+    },
+    {
+      "id": "api.teacher.attempts.export",
+      "method": "GET",
+      "path": "/teacher/attempts/export",
+      "auth": "teacher",
+      "responseContentType": "text/csv; charset=utf-8",
+      "excludedFields": [
+        "teacher_email",
+        "attempt_token_hash",
+        "ip_address",
+        "r2_internal_key"
+      ],
+      "tests": [
+        "test.privacy.data-minimization",
+        "test.teacher.authorization"
+      ]
+    },
+    {
+      "id": "api.teacher.attempts.delete",
+      "method": "DELETE",
+      "path": "/teacher/attempts/{attemptId}",
+      "auth": "teacher",
+      "request": {
+        "required": [
+          "confirmation",
+          "reason"
+        ],
+        "confirmationConst": "DELETE"
+      },
+      "deleteOrder": [
+        "delete R2 object",
+        "confirm R2 deletion",
+        "delete D1 learning content",
+        "write deletion_log without learning content"
+      ],
+      "tests": [
+        "test.retention.delete-order",
+        "test.teacher.authorization"
+      ]
+    },
+    {
+      "id": "api.teacher.retention.cleanup",
+      "method": "POST",
+      "path": "/teacher/retention/cleanup",
+      "auth": "teacher",
+      "request": {
+        "optional": [
+          "cursor",
+          "limit"
+        ],
+        "limitMaximum": 25
+      },
+      "response200": {
+        "fields": [
+          "scanned",
+          "deleted",
+          "failed",
+          "nextCursor"
+        ]
+      },
+      "tests": [
+        "test.retention.delete-order"
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "status": 400,
+      "code": "INVALID_STUDENT_ID"
+    },
+    {
+      "status": 400,
+      "code": "INVALID_SIMULATION_VALUE"
+    },
+    {
+      "status": 400,
+      "code": "INVALID_EVIDENCE"
+    },
+    {
+      "status": 401,
+      "code": "ATTEMPT_TOKEN_REQUIRED"
+    },
+    {
+      "status": 401,
+      "code": "TEACHER_SIGN_IN_REQUIRED"
+    },
+    {
+      "status": 403,
+      "code": "TEACHER_NOT_ALLOWED"
+    },
+    {
+      "status": 404,
+      "code": "ATTEMPT_NOT_FOUND"
+    },
+    {
+      "status": 409,
+      "code": "EVENT_SEQUENCE_CONFLICT"
+    },
+    {
+      "status": 409,
+      "code": "ATTEMPT_LOCKED"
+    },
+    {
+      "status": 409,
+      "code": "EVIDENCE_NOT_READY"
+    },
+    {
+      "status": 413,
+      "code": "EVIDENCE_TOO_LARGE"
+    },
+    {
+      "status": 429,
+      "code": "RATE_LIMITED"
+    },
+    {
+      "status": 503,
+      "code": "SYNC_DEFERRED"
+    }
+  ]
+}

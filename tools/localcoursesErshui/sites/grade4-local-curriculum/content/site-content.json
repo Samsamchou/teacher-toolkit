@@ -1,0 +1,344 @@
+{
+  "schemaVersion": "1.0.0",
+  "contentVersion": "tickets-v1",
+  "locale": "zh-TW",
+  "site": {
+    "id": "site.grade4-local-curriculum.semester1",
+    "title": "4年級上學期 在地課程",
+    "teacherEntryLabel": "教師後台",
+    "simulationNotice": "模擬教材，不可作為真實乘車或訂票資訊。",
+    "privacyNotice": "只輸入五位數學號；請勿輸入姓名、電話、電子郵件或任何付款資料。"
+  },
+  "typography": {
+    "zh": "\"Noto Sans TC\", system-ui, sans-serif",
+    "en": "\"Comic Relief\", \"Comic Sans MS\", cursive"
+  },
+  "colors": {
+    "navy": "#17324D",
+    "ticketBlue": "#1E6FA8",
+    "warmOrange": "#F4A62A",
+    "successGreen": "#2E8B57",
+    "background": "#F7FAFC",
+    "text": "#24313D"
+  },
+  "units": [
+    {
+      "id": "unit.roundhouse",
+      "slug": "roundhouse",
+      "displayName": "扇形車庫",
+      "route": "/units/roundhouse",
+      "assetId": "asset.home.roundhouse",
+      "status": "placeholder",
+      "evidencePolicy": "to-be-defined",
+      "description": "從扇形軌道、轉車臺與車庫門認識鐵道文化。"
+    },
+    {
+      "id": "unit.train-tickets",
+      "slug": "train-tickets",
+      "displayName": "坐火車趣集集",
+      "route": "/units/train-tickets",
+      "assetId": "asset.home.jiji-train",
+      "status": "specified",
+      "evidencePolicy": "event-replay-and-seven-page-pdf",
+      "description": "從二水出發，練習讀懂模擬車票與購票步驟。"
+    },
+    {
+      "id": "unit.railway-reading",
+      "slug": "railway-reading",
+      "displayName": "閱覽鐵道風華",
+      "route": "/units/railway-reading",
+      "assetId": "asset.home.railway-reading",
+      "status": "placeholder",
+      "evidencePolicy": "to-be-defined",
+      "description": "閱讀山線、海線與鐵路故事，認識沿線景觀。"
+    },
+    {
+      "id": "unit.narrow-gauge",
+      "slug": "narrow-gauge",
+      "displayName": "介紹五分車與認識小火車鐵道",
+      "route": "/units/narrow-gauge",
+      "assetId": "asset.home.narrow-gauge",
+      "status": "placeholder",
+      "evidencePolicy": "to-be-defined",
+      "description": "比較五分車、窄軌與一般火車的運輸特色。"
+    }
+  ],
+  "trainTicketPractice": {
+    "id": "activity.train-tickets.online-simulation",
+    "unitId": "unit.train-tickets",
+    "pageTitleZh": "火車線上購票網站",
+    "pageTitleEn": "Buy Train Tickets Online",
+    "studentId": {
+      "label": "學生學號",
+      "placeholder": "請輸入學號，例如40100",
+      "pattern": "^[0-9]{5}$",
+      "error": "請輸入五位數學號，例如40100。"
+    },
+    "startButton": "Start／開始練習",
+    "muteButtonOn": "關閉音效",
+    "muteButtonOff": "開啟音效",
+    "offlinePending": "離線練習，尚未同步。",
+    "syncPending": "等待同步",
+    "teacherReceived": "教師已收到",
+    "roles": {
+      "operator": "Operator：操作 iPad",
+      "checker": "Checker：逐項核對",
+      "checkerPrompt": "Check from / to / date / train / time."
+    },
+    "mission": {
+      "id": "mission.train-tickets.standard",
+      "instruction": "請從二水出發，前往車埕，選擇模擬日期2與車次B，完成六欄確認。",
+      "originId": "station.ershui",
+      "destinationId": "station.checheng",
+      "dateId": "date.practice-day-2",
+      "trainId": "train.sample-b"
+    },
+    "stations": [
+      {
+        "id": "station.ershui",
+        "zh": "二水",
+        "en": "Ershui",
+        "role": "origin"
+      },
+      {
+        "id": "station.jiji",
+        "zh": "集集",
+        "en": "Jiji",
+        "role": "destination"
+      },
+      {
+        "id": "station.shuili",
+        "zh": "水里",
+        "en": "Shuili",
+        "role": "destination"
+      },
+      {
+        "id": "station.checheng",
+        "zh": "車埕",
+        "en": "Checheng",
+        "role": "destination"
+      }
+    ],
+    "dates": [
+      {
+        "id": "date.practice-day-1",
+        "label": "模擬日期1",
+        "isRealTravelDate": false
+      },
+      {
+        "id": "date.practice-day-2",
+        "label": "模擬日期2",
+        "isRealTravelDate": false
+      },
+      {
+        "id": "date.practice-day-3",
+        "label": "模擬日期3",
+        "isRealTravelDate": false
+      }
+    ],
+    "trains": [
+      {
+        "id": "train.sample-a",
+        "label": "模擬車次 A",
+        "depart": "09:10",
+        "arrive": "10:05",
+        "durationMinutes": 55,
+        "sample": true
+      },
+      {
+        "id": "train.sample-b",
+        "label": "模擬車次 B",
+        "depart": "09:40",
+        "arrive": "10:35",
+        "durationMinutes": 55,
+        "sample": true
+      },
+      {
+        "id": "train.sample-c",
+        "label": "模擬車次 C",
+        "depart": "10:20",
+        "arrive": "11:15",
+        "durationMinutes": 55,
+        "sample": true
+      }
+    ],
+    "summaryFields": [
+      {
+        "id": "summary.from",
+        "labelEn": "from",
+        "labelZh": "起點"
+      },
+      {
+        "id": "summary.to",
+        "labelEn": "to",
+        "labelZh": "目的地"
+      },
+      {
+        "id": "summary.date",
+        "labelEn": "date",
+        "labelZh": "日期"
+      },
+      {
+        "id": "summary.train",
+        "labelEn": "train",
+        "labelZh": "車次"
+      },
+      {
+        "id": "summary.depart",
+        "labelEn": "depart",
+        "labelZh": "出發"
+      },
+      {
+        "id": "summary.arrive",
+        "labelEn": "arrive",
+        "labelZh": "抵達"
+      }
+    ],
+    "steps": [
+      {
+        "id": "step.origin",
+        "order": 1,
+        "title": "選起點",
+        "instruction": "請選擇出發站：二水 Ershui。",
+        "passRule": {
+          "field": "origin",
+          "equals": "station.ershui"
+        },
+        "evidencePage": 1
+      },
+      {
+        "id": "step.destination",
+        "order": 2,
+        "title": "選目的地",
+        "instruction": "請依任務卡選擇目的地；本次任務要前往車埕 Checheng。",
+        "passRule": {
+          "field": "destination",
+          "equals": "station.checheng",
+          "mustDifferFrom": "origin"
+        },
+        "evidencePage": 2
+      },
+      {
+        "id": "step.date",
+        "order": 3,
+        "title": "選日期",
+        "instruction": "三個日期都是模擬資料，請選擇任務指定的模擬日期2。",
+        "passRule": {
+          "field": "date",
+          "equals": "date.practice-day-2"
+        },
+        "evidencePage": 3
+      },
+      {
+        "id": "step.search",
+        "order": 4,
+        "title": "查詢",
+        "instruction": "先檢查起點、目的地與日期，再按查詢。",
+        "passRule": {
+          "fieldsMatchMission": [
+            "origin",
+            "destination",
+            "date"
+          ],
+          "originAndDestinationMustDiffer": true
+        },
+        "evidencePage": 4
+      },
+      {
+        "id": "step.train",
+        "order": 5,
+        "title": "選車次",
+        "instruction": "比較出發、抵達及所需時間，選擇模擬車次B。",
+        "passRule": {
+          "field": "train",
+          "equals": "train.sample-b"
+        },
+        "evidencePage": 5
+      },
+      {
+        "id": "step.summary",
+        "order": 6,
+        "title": "確認摘要",
+        "instruction": "逐項核對 from、to、date、train、depart、arrive 六欄。",
+        "passRule": {
+          "allSummaryFieldsChecked": true,
+          "summaryMatchesSelectedData": true
+        },
+        "evidencePage": 6
+      },
+      {
+        "id": "step.success",
+        "order": 7,
+        "title": "練習完成",
+        "instruction": "閱讀 SAMPLE 車票；這只是練習，沒有真的訂票。",
+        "passRule": {
+          "previousStepsPassed": 6
+        },
+        "evidencePage": 7
+      }
+    ],
+    "feedback": {
+      "correctText": "You're right!",
+      "correctAria": "答對了，這一步完成。",
+      "correctDurationMs": 1200,
+      "errorHeading": "再檢查一次",
+      "errorSameStation": "起點和目的地不能相同，請重新選擇。",
+      "errorReversed": "起點和目的地顛倒了，請交換後再試一次。",
+      "errorDate": "請再看任務卡上的模擬日期。",
+      "errorTrain": "請比較三張模擬車次卡，再選擇任務指定車次。",
+      "completionText": "練習完成，沒有真的訂票。"
+    },
+    "sampleTicket": {
+      "badge": "SAMPLE／模擬票",
+      "notice": "教學練習使用，不可乘車。",
+      "fields": [
+        "from",
+        "to",
+        "date",
+        "train",
+        "depart",
+        "arrive"
+      ]
+    },
+    "evidence": {
+      "pageCount": 7,
+      "pageFormat": "A4-landscape",
+      "captureTarget": "main[data-evidence-region]",
+      "headerFields": [
+        "unit",
+        "date",
+        "studentId",
+        "attemptSuffix",
+        "stepTitle",
+        "pageNumber"
+      ],
+      "pdfObjectPattern": "evidence/{unit_slug}/{attempt_id}/proof.pdf"
+    }
+  },
+  "teacherDashboard": {
+    "route": "/teacher",
+    "filters": [
+      "unit",
+      "dateRange",
+      "studentId",
+      "syncStatus"
+    ],
+    "listFields": [
+      "date",
+      "studentId",
+      "completedAt",
+      "status",
+      "attemptSuffix"
+    ],
+    "detailTabs": [
+      "summary",
+      "replay",
+      "pdf"
+    ],
+    "replaySpeeds": [
+      0.5,
+      1,
+      2
+    ]
+  }
+}
