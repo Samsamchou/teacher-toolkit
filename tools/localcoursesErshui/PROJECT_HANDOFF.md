@@ -205,11 +205,11 @@
 
 - 新唯一主目錄為 `G:\我的雲端硬碟\teacher-toolkit\tools\localcoursesErshui`；C 槽原專案完整保留為回復副本，不再雙向維護。
 - 遷移前網站內層 Git 基線為 `770a31e Build Grade 4 local curriculum ticket practice site`，無 remote；其後 5 個 Read and drag 工作樹檔案已連同現行內容納入新專案。內層 `.git` 已排除，後續由父層 `Samsamchou/teacher-toolkit` 管理。詳見 `sites\grade4-local-curriculum\LEGACY_GIT_HISTORY.md`。
-- G 槽專案共 273 個檔案；`migration\MIGRATION_MANIFEST_20260825.csv` 列 272 個 payload、171,028,218 bytes，逐檔 SHA-256 不一致 0；清冊 SHA-256 為 `33639eeaaac945c5a35c7c1b0f7efafdd499d63de9cdb051a2a10af304b82464`。
+- G 槽專案共 273 個檔案；`migration\MIGRATION_MANIFEST_20260825.csv` 列 272 個 payload、171,030,048 bytes，逐檔 SHA-256 不一致 0。清冊本身的最終雜湊記在 C 槽轉移指引與 Obsidian，避免清冊所涵蓋的文件反過來自我引用清冊雜湊。
 - 主要遷移提交 `bf44925d287582a7179356fcd9a3786924aae667` 已推送；當次以 GitHub API 讀回 `main`，與本機 HEAD 及 `origin/main` 相同。其他 8 個不相關未追蹤根目錄未納入。
 - Obsidian `G:\我的雲端硬碟\secondbrain\teacher-toolkit\工作筆記.md` 已更新並讀回，包含新主路徑、完成狀態、Git、遷移驗證、限制與下次入口。
 - Google 文件已在本次交接以連接器只讀確認，沒有再修改內容。
-- G 槽掛載資料的逐檔讀回不等於 Google Drive 遠端上傳完成；仍須以 Google Drive 桌面程式的同步狀態為準。
+- Google Drive 連接器已直接讀到雲端 `localcoursesErshui` 資料夾、37 個頂層項目，並在 `migration` 子資料夾看到清冊、報告與複製腳本；可確認主要備份已上雲。完整 273 個遠端物件未逐一下載重算雜湊，來源／G 槽逐檔 SHA-256 清冊仍是完整一致性證據。
 
 ## 十二、下次開工的第一句指令
 
