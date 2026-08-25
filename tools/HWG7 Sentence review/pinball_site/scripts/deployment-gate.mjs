@@ -151,6 +151,22 @@ export function validateDeployment({ root = projectRoot, env = process.env } = {
   }
   requireCondition(firebase.hosting?.public === ".", "Hosting public 根目錄必須維持目前專案根目錄。");
   requireCondition(firebase.hosting?.ignore?.includes("data/*.json"), "Hosting 必須排除私有 JSON 題庫。");
+  const publicHeaders = firebase.hosting?.headers
+    ?.find((entry) => entry.source === "**")?.headers || [];
+  const publicHeaderMap = new Map(
+    publicHeaders.map(({ key, value }) => [String(key).toLowerCase(), String(value)]),
+  );
+  const csp = publicHeaderMap.get("content-security-policy") || "";
+  const permissionsPolicy = publicHeaderMap.get("permissions-policy") || "";
+  requireCondition(
+    /frame-ancestors\s+'self'\s+https:\/\/\*\.web\.app\s+https:\/\/\*\.firebaseapp\.com(?:\s*;|$)/u.test(csp),
+    "口說站必須允許 Firebase Hosting 父頁內嵌。",
+  );
+  requireCondition(!/frame-ancestors\s+'none'/u.test(csp), "口說站不可再拒絕所有父頁內嵌。");
+  requireCondition(!publicHeaderMap.has("x-frame-options"), "口說站不可再送出 X-Frame-Options，以免覆蓋 CSP 白名單。");
+  requireCondition(/camera=\(\)/u.test(permissionsPolicy), "Permissions-Policy 必須繼續封鎖 camera。");
+  requireCondition(/geolocation=\(\)/u.test(permissionsPolicy), "Permissions-Policy 必須繼續封鎖 geolocation。");
+  requireCondition(/microphone=\*/u.test(permissionsPolicy), "Permissions-Policy 必須允許父頁委派 microphone。");
 
   const indexHtml = readFileSync(resolveProjectFile(root, "index.html", "首頁"), "utf8");
   const appCheckMatch = indexHtml.match(/const\s+appCheckSiteKey\s*=\s*["']([^"']*)["']/u);

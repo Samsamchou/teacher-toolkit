@@ -299,6 +299,7 @@ async function staticChecks() {
   const homeResponse = await fetch(`${baseUrl}/index.html`, { redirect: "follow" });
   const html = await homeResponse.text();
   const csp = homeResponse.headers.get("content-security-policy") || "";
+  const permissionsPolicy = homeResponse.headers.get("permissions-policy") || "";
   const headerChecks = {
     status200: homeResponse.status === 200,
     noStore: /no-store/iu.test(homeResponse.headers.get("cache-control") || ""),
@@ -307,10 +308,14 @@ async function staticChecks() {
     cspRecaptchaScript: /script-src[^;]*https:\/\/www\.google\.com\/recaptcha\//iu.test(csp),
     cspRecaptchaConnect: /connect-src[^;]*https:\/\/www\.google\.com\/recaptcha\//iu.test(csp),
     cspRecaptchaFrame: /frame-src[^;]*https:\/\/www\.google\.com\/recaptcha\/[^;]*https:\/\/recaptcha\.google\.com\/recaptcha\//iu.test(csp),
-    frameDenied: homeResponse.headers.get("x-frame-options") === "DENY",
+    firebaseHostingParentsAllowed: /frame-ancestors 'self' https:\/\/\*\.web\.app https:\/\/\*\.firebaseapp\.com/iu.test(csp),
+    allParentsNotDenied: !/frame-ancestors 'none'/iu.test(csp),
+    legacyXFrameOptionsRemoved: homeResponse.headers.get("x-frame-options") === null,
     noSniff: homeResponse.headers.get("x-content-type-options") === "nosniff",
     referrerPolicy: homeResponse.headers.get("referrer-policy") === "same-origin",
-    microphoneSelfOnly: /microphone=\(self\)/iu.test(homeResponse.headers.get("permissions-policy") || ""),
+    cameraDenied: /camera=\(\)/iu.test(permissionsPolicy),
+    geolocationDenied: /geolocation=\(\)/iu.test(permissionsPolicy),
+    microphoneDelegated: /microphone=\*/iu.test(permissionsPolicy),
   };
 
   const images = [];

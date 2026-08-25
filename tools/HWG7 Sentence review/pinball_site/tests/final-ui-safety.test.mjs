@@ -65,6 +65,25 @@ test("deployment gate and live QA validate every ready speech unit", () => {
   assert.doesNotMatch(liveQaSource, /unitId: "hwg7-sr"|imageCount === 13|deployAssetCount === 11|readyCount === 1|pendingCount === 3/u);
 });
 
+test("Hosting permits Firebase parent embeds with delegated microphone while preserving other privacy blocks", () => {
+  const publicHeaders = firebaseConfig.hosting.headers
+    .find((entry) => entry.source === "**").headers;
+  const headers = new Map(
+    publicHeaders.map(({ key, value }) => [key.toLowerCase(), value]),
+  );
+  const csp = headers.get("content-security-policy") || "";
+  const permissionsPolicy = headers.get("permissions-policy") || "";
+
+  assert.match(csp, /frame-ancestors 'self' https:\/\/\*\.web\.app https:\/\/\*\.firebaseapp\.com/u);
+  assert.doesNotMatch(csp, /frame-ancestors 'none'/u);
+  assert.equal(headers.has("x-frame-options"), false);
+  assert.match(permissionsPolicy, /camera=\(\)/u);
+  assert.match(permissionsPolicy, /geolocation=\(\)/u);
+  assert.match(permissionsPolicy, /microphone=\*/u);
+  assert.match(deploymentGateSource, /口說站必須允許 Firebase Hosting 父頁內嵌/u);
+  assert.match(deploymentGateSource, /口說站不可再送出 X-Frame-Options/u);
+});
+
 test("student pages omit builder-known feature and rule explanations", () => {
   assert.doesNotMatch(indexSource, /請先讀問句|評分公式與本題提醒|看圖並按下錄音，完成後系統會依固定公式評分|只輸入五碼班級|每局\s*12\s*題|每人\s*6\s*回合|80\s*分達標/u);
   assert.doesNotMatch(indexSource, /data-testid="speech-guidance"|speech-guidance-details/u);

@@ -2,6 +2,11 @@ const DANGEROUS_MARKUP = /<\s*(?:script|object|embed|form|base|meta|link)\b|\bsr
 const IFRAME_TAG = /<iframe\b/gi;
 const IFRAME_OPENING_TAG = /<iframe\b[^>]*>/i;
 const IFRAME_SRC = /\bsrc\s*=\s*(["'])(.*?)\1/i;
+const DEFAULT_IFRAME_ALLOW = "fullscreen";
+const TRUSTED_SPEAKING_IFRAME_ALLOW = "microphone *; fullscreen *";
+const TRUSTED_SPEAKING_PRACTICE_ORIGINS = new Set([
+  "https://setencerevieworalpractice.web.app"
+]);
 
 function hostMatches(hostname, domain) {
   const host = String(hostname || "").toLowerCase().replace(/\.$/, "");
@@ -27,8 +32,19 @@ function readHttpsUrl(value) {
   }
 }
 
+function isTrustedSpeakingPracticeUrl(url) {
+  return TRUSTED_SPEAKING_PRACTICE_ORIGINS.has(url.origin);
+}
+
+function iframePermissionsFor(url) {
+  return isTrustedSpeakingPracticeUrl(url)
+    ? TRUSTED_SPEAKING_IFRAME_ALLOW
+    : DEFAULT_IFRAME_ALLOW;
+}
+
 function isKnownEmbedUrl(url) {
   const host = url.hostname.toLowerCase();
+  if (isTrustedSpeakingPracticeUrl(url)) return true;
   if (hostMatches(host, "wayground.com") || hostMatches(host, "quizizz.com")) return true;
   if (hostMatches(host, "canva.com")) {
     return url.searchParams.has("embed") || /\/(?:embed|embedded)(?:\/|$)/i.test(url.pathname);
@@ -42,13 +58,22 @@ function isKnownEmbedUrl(url) {
 }
 
 function platformFor(url) {
+  if (isTrustedSpeakingPracticeUrl(url)) return "Sentence Review Oral Practice";
   if (hostMatches(url.hostname, "canva.link") || hostMatches(url.hostname, "canva.com")) return "Canva";
   if (hostMatches(url.hostname, "wayground.com") || hostMatches(url.hostname, "quizizz.com")) return "Wayground";
   return url.hostname;
 }
 
 function invalid(message) {
-  return { kind: "invalid", url: "", platform: "", inputType: "invalid", message };
+  return {
+    kind: "invalid",
+    url: "",
+    platform: "",
+    inputType: "invalid",
+    trustedSpeakingPractice: false,
+    iframeAllow: DEFAULT_IFRAME_ALLOW,
+    message
+  };
 }
 
 export function parseWebPracticeInput(input) {
@@ -59,6 +84,8 @@ export function parseWebPracticeInput(input) {
       url: "",
       platform: "",
       inputType: "empty",
+      trustedSpeakingPractice: false,
+      iframeAllow: DEFAULT_IFRAME_ALLOW,
       message: "可貼入公開分享網址、Embed URL 或完整 iframe code。"
     };
   }
@@ -74,11 +101,14 @@ export function parseWebPracticeInput(input) {
     if (!source) return invalid("Embed code 找不到 iframe 的 src。");
     const parsed = readHttpsUrl(decodeHtmlAttribute(source));
     if (parsed.error) return invalid(parsed.error);
+    const trustedSpeakingPractice = isTrustedSpeakingPracticeUrl(parsed.url);
     return {
       kind: "embed",
       url: parsed.url.toString(),
       platform: platformFor(parsed.url),
       inputType: "iframe",
+      trustedSpeakingPractice,
+      iframeAllow: iframePermissionsFor(parsed.url),
       message: "將在 Lesson Hub 頁內嵌入；仍保留新分頁備援。"
     };
   }
@@ -86,11 +116,14 @@ export function parseWebPracticeInput(input) {
   const parsed = readHttpsUrl(raw);
   if (parsed.error) return invalid(parsed.error);
   const kind = isKnownEmbedUrl(parsed.url) ? "embed" : "external";
+  const trustedSpeakingPractice = isTrustedSpeakingPracticeUrl(parsed.url);
   return {
     kind,
     url: parsed.url.toString(),
     platform: platformFor(parsed.url),
     inputType: "url",
+    trustedSpeakingPractice,
+    iframeAllow: iframePermissionsFor(parsed.url),
     message: kind === "embed"
       ? "將在 Lesson Hub 頁內嵌入；仍保留新分頁備援。"
       : "此公開連結會在新分頁開啟，不會顯示失敗的 iframe。"

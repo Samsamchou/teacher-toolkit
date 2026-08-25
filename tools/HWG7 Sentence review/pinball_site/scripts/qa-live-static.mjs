@@ -78,6 +78,7 @@ const homeResponse = await fetch(`${baseUrl}/index.html?headersQa=${Date.now()}`
   headers: { "Cache-Control": "no-cache" },
 });
 const csp = homeResponse.headers.get("content-security-policy") ?? "";
+const permissionsPolicy = homeResponse.headers.get("permissions-policy") ?? "";
 const homeText = await homeResponse.text();
 
 const requestBody = {
@@ -122,12 +123,13 @@ const checks = {
     wrongOriginResponse.status === 403 &&
     wrongOriginBody.error?.code === "origin_not_allowed",
   securityHeaders:
-    /frame-ancestors 'none'/u.test(csp) &&
+    /frame-ancestors 'self' https:\/\/\*\.web\.app https:\/\/\*\.firebaseapp\.com/u.test(csp) &&
+    !/frame-ancestors 'none'/u.test(csp) &&
     homeResponse.headers.get("x-content-type-options") === "nosniff" &&
-    homeResponse.headers.get("x-frame-options") === "DENY" &&
-    /microphone=\(self\)/u.test(
-      homeResponse.headers.get("permissions-policy") ?? "",
-    ),
+    homeResponse.headers.get("x-frame-options") === null &&
+    /camera=\(\)/u.test(permissionsPolicy) &&
+    /geolocation=\(\)/u.test(permissionsPolicy) &&
+    /microphone=\*/u.test(permissionsPolicy),
 };
 
 const report = {

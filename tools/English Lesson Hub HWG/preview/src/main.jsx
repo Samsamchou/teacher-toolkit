@@ -1781,7 +1781,7 @@ function WebPracticeStep({ step }) {
           <a className="secondary-button" href={practiceLink.url} target="_blank" rel="noopener noreferrer">新分頁開啟</a>
         </div>
       </div>
-      <iframe title={title} src={practiceLink.url} loading="lazy" allow="fullscreen" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
+      <iframe title={title} src={practiceLink.url} loading="lazy" allow={practiceLink.iframeAllow} allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
       <p className="embed-note">若平台不允許內嵌，請使用新分頁開啟。</p>
     </section>
   );

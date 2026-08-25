@@ -35,9 +35,41 @@ test("Canva Embed URLs and full iframe code resolve to one safe HTTPS src", () =
 
 test("existing Wayground and explicit embed URLs remain inline", () => {
   const configured = source.contentProfiles["hwg7-u01-l01-live"].webPractice.url;
-  assert.equal(parseWebPracticeInput(configured).kind, "embed");
-  assert.equal(parseWebPracticeInput("https://example.org/tools/embed/activity-1").kind, "embed");
-  assert.equal(parseWebPracticeInput("https://embed.example.org/activity-1").kind, "embed");
+  for (const parsed of [
+    parseWebPracticeInput(configured),
+    parseWebPracticeInput("https://example.org/tools/embed/activity-1"),
+    parseWebPracticeInput("https://embed.example.org/activity-1")
+  ]) {
+    assert.equal(parsed.kind, "embed");
+    assert.equal(parsed.trustedSpeakingPractice, false);
+    assert.equal(parsed.iframeAllow, "fullscreen");
+  }
+});
+
+test("the exact speaking-practice origin embeds with microphone delegation", () => {
+  const direct = parseWebPracticeInput("https://setencerevieworalpractice.web.app/");
+  assert.equal(direct.kind, "embed");
+  assert.equal(direct.platform, "Sentence Review Oral Practice");
+  assert.equal(direct.trustedSpeakingPractice, true);
+  assert.equal(direct.iframeAllow, "microphone *; fullscreen *");
+
+  const iframe = parseWebPracticeInput('<iframe src="https://setencerevieworalpractice.web.app/?unit=hwg5-sr"></iframe>');
+  assert.equal(iframe.kind, "embed");
+  assert.equal(iframe.trustedSpeakingPractice, true);
+  assert.equal(iframe.iframeAllow, "microphone *; fullscreen *");
+});
+
+test("other Firebase Hosting origins do not receive inline microphone access", () => {
+  for (const url of [
+    "https://someone-else.web.app/",
+    "https://someone-else.firebaseapp.com/",
+    "https://setencerevieworalpractice.web.app.example.org/"
+  ]) {
+    const parsed = parseWebPracticeInput(url);
+    assert.equal(parsed.kind, "external", url);
+    assert.equal(parsed.trustedSpeakingPractice, false, url);
+    assert.equal(parsed.iframeAllow, "fullscreen", url);
+  }
 });
 
 test("unknown HTTPS URLs safely fall back to a new tab", () => {
@@ -71,9 +103,11 @@ test("Studio and Lesson Flow use classified URLs, status help, and an external l
     "web-practice-launch-panel",
     "開啟互動網頁",
     "Lesson Hub 不會讀取帳密或 Cookie",
-    "src={practiceLink.url}"
+    "src={practiceLink.url}",
+    "allow={practiceLink.iframeAllow}"
   ]) assert.ok(mainSource.includes(marker), "missing " + marker);
   assert.equal(mainSource.includes("src={step.content.url}"), false);
+  assert.equal(mainSource.includes('allow="microphone *; fullscreen *"'), false);
   assert.match(styleSource, /\.web-practice-launch-panel \{/);
   assert.match(styleSource, /\.projector-cockpit \.web-practice-launch-panel \{/);
   assert.match(styleSource, /\.lesson-stage:fullscreen \.web-practice-launch-panel \{/);
