@@ -393,3 +393,28 @@
 - 已只部署 Firebase Hosting target `lesson-hub-v03`；Functions、Firestore／Storage 規則、Secret、匿名成績與雲端教材資料均未變更。正式網址為 <https://lesson-hub-v03.web.app>。
 - 正式站標題讀回為「線上簡報（動畫）」；Google iframe 已載入，「桌面 PowerPoint」按鈕為 0，「全螢幕」與「新分頁」各 1。線上主程式 `/assets/index-D5EmMqUd.js` SHA-256 為 `55f4bfb03d6aba98296e74bb1b2d3beb61c946d43eb0ac10d57224e0ce3bee9c`，與本機正式建置一致，且沒有 4xx 資源錯誤。
 - 未解鎖的匿名 Teacher Studio 仍顯示 7 Steps 預設資料；程式已自動驗證 14 Steps 遷移保留，但正式雲端 14 Steps 仍需教師本人解鎖後讀回確認，不在本次 Hosting-only 部署中改寫。
+
+## 2026-08-25 可信口說站頁內嵌與正式 Chrome 驗收（已部署）
+
+- Lesson Hub 已將正式口說站 `https://setencerevieworalpractice.web.app/` 納入精確可信來源；該來源預設在 Lesson Hub 頁內載入，iframe 明確委派 `microphone *` 與 `fullscreen *`。其他未知 `*.web.app`／`*.firebaseapp.com` 網址仍維持新分頁，不會因此取得麥克風委派。
+- 口說站 Hosting 標頭允許可信 Firebase Hosting 父頁內嵌，並保留麥克風 Permissions Policy；沒有讀取、保存或轉送帳密、Cookie、Token 或瀏覽器登入狀態。
+- 本次來源提交為 `c43cdaa698e19f82cc0ef64803f4c9e04c14b23f`，精準包含 9 個 Lesson Hub／口說站的可信嵌入、標頭、部署閘門與測試檔。
+
+### 測試與正式部署
+
+- Lesson Hub 以乾淨隔離副本通過 76／76 網站測試、10／10 Functions 單元測試、7／7 Firestore／Storage Emulator 規則測試與 Vite 正式建置。
+- 口說站通過 13／13 題庫驗證、57／57 測試與部署閘門。
+- 已正式部署口說站 Hosting `setencerevieworalpractice`（395 個檔案）與 Lesson Hub Hosting `lesson-hub-v03`（42 個檔案）；本階段未部署 Functions、Firestore／Storage 規則、Secrets 或修改正式匿名成績資料。
+- 正式靜態讀回確認口說站 CSP 可接受 `https://*.web.app`／`https://*.firebaseapp.com` 父頁、麥克風 Permissions Policy 存在，且 Lesson Hub 線上資產雜湊與本次建置一致。
+
+### Windows Chrome 正式整合驗收
+
+- 教師解鎖雲端教材後，正式 **HWG7 Unit 1 Lesson 1** 讀回仍為 **14 Steps**；原 Lesson 全程未被測試修改。
+- 另建立獨立臨時 Custom Lesson `QA TEMP · Oral Embed 2026-08-25`，只在其中設定口說站 URL。正式 iframe 的 `src`、麥克風／全螢幕委派與頁內首頁顯示均正確，Lesson Hub 外層沒有額外上下捲動。
+- 教師本人允許 Chrome 麥克風後，實際朗讀 `She would like some noodles.`；AI 評分成功，畫面自動進入第 2 題，粉紅隊增加 5 分，證明頁內錄音與評分鏈路可用。測試於未完成整局時返回首頁，沒有把不完整測試冒充完整成績驗收。
+- 臨時 Custom Lesson 已由教師本人確認刪除。Chrome 控制橋在刪除後讀回時逾時，因此「最終刪除畫面」以教師確認為準；原有 14 Steps Lesson 未受影響。
+
+### 剩餘人工確認
+
+1. 原生全螢幕切換無法由自動化穩定觸發；教師可在實際投影時手動按一次「全螢幕」，確認 Chrome 原生全螢幕呈現。
+2. 隔離 Headless Chrome 的 App Check 曾因 403 節流停止重試；一般教師 Chrome 已實際通過 App Check、進題、錄音與 AI 評分，不應在節流期間反覆建立全新瀏覽器設定檔。
