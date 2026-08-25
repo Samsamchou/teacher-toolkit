@@ -42,7 +42,11 @@
 
 - RDQ 確認將主目錄遷移到 GDrive，採乾淨正式專案、既有 `teacher-toolkit` GitHub repo、結構化對話歷程及保留 C 槽回復副本。
 - 稽核網站內層 Git 後確認：本地已有〈閱覽鐵道風華〉Read and drag 前端原型，包含 12 張雙語卡、三區分類、拖曳／點選替代操作與整批檢查；現行建置及 13 項測試通過，但尚未部署，也未完成後端事件／分數／重播等規格。
-- 遷移、雜湊核對、GitHub push 與 Obsidian 讀回結果完成後，應以本節後續紀錄及 Obsidian 最新區段為準。
+- 乾淨專案已複製至 G 槽：273 個檔案；清冊列 272 個 payload、171,028,218 bytes，清冊本身另計；逐檔 SHA-256 不一致為 0。
+- 清冊 SHA-256：`33639eeaaac945c5a35c7c1b0f7efafdd499d63de9cdb051a2a10af304b82464`。
+- 主要遷移提交 `bf44925d287582a7179356fcd9a3786924aae667` 已推送至 `Samsamchou/teacher-toolkit`；推送後 GitHub API 讀回與本機及 `origin/main` 一致。
+- Obsidian `teacher-toolkit/工作筆記.md` 已更新並讀回；上次進度、工具清單、最近更動、下一步與踩坑各有一筆本專案紀錄。
+- Google Drive 掛載資料已逐檔讀回；真正遠端上傳狀態仍須由 Google Drive 桌面程式確認，不在未確認時冒稱雲端同步已完成。
 
 ## 下一個工作入口
 
