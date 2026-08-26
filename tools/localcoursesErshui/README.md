@@ -18,9 +18,11 @@
 ## 主要資料夾
 
 - `在地課程4年級上學期教案/`：四份現行 Word 教案及各單元教材。
+- `202609 在地課程4年級上學期教案/`：依四個正式單元、週次及20個節次資料夾分類的新分析、詳案、教材、QA與重建工具；入口為 `00_四年級上學期單元資料夾索引.md`。
 - `sites/grade4-local-curriculum/`：Firebase 互動網站原始碼、Functions、規則及測試。
 - `docs/conversations/`：不含寒暄的可接手工作歷程摘要。
 - `rdq/`：需求訪談與確認規格。
+- `skills/ershui-local-curriculum-builder/`：二水在地課程單元擴編的正式 Skill 來源；個人安裝副本只由內附同步工具更新。
 - `migration/`：遷移清冊與驗證報告。
 - `_course_source_md/`：供 AI／搜尋使用的課程來源文字。
 
@@ -28,6 +30,7 @@
 
 - 四年級上學期四個單元，共 20 節詳細教案。
 - 三個單元的圖卡、學習單、地圖、分鏡及教學素材。
+- 〈扇形車庫〉第2節正式數位教材：學生版與教師答案版各7頁、正式PDF、逐頁PNG、QA紀錄及可重建來源；實體試印仍待教師完成。
 - 〈坐火車趣集集〉模擬線上購票網站：<https://hwg8-u01-listen-and-speak.web.app>
 - 〈閱覽鐵道風華〉Read and drag 本地前端原型；尚未完成後端紀錄規格，也尚未部署。
 - 三、四年級課程大架構 Google 文件：<https://docs.google.com/document/d/1ZIVs007MKpiabjw3pRdrfbp406K_4b9oe6XpVupZm04/edit>

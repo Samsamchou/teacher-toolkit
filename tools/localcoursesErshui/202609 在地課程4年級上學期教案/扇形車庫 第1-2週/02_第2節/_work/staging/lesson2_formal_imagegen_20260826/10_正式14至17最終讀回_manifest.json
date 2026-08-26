@@ -1,0 +1,448 @@
+{
+  "verified_at": "2026-08-26",
+  "status": "pass",
+  "pdfs": {
+    "14_扇形車庫_第2節正式教材_學生版_20260826.pdf": {
+      "file": "14_扇形車庫_第2節正式教材_學生版_20260826.pdf",
+      "bytes": 75462122,
+      "sha256": "E59F7B237555D6167858F7B83FFF17096BD1068E20CB05C5411FFB7C436BB36E",
+      "pages": 7,
+      "page_sizes_pt": [
+        [
+          595.28,
+          841.89
+        ],
+        [
+          419.53,
+          595.28
+        ],
+        [
+          297.64,
+          419.53
+        ],
+        [
+          841.89,
+          595.28
+        ],
+        [
+          595.28,
+          841.89
+        ],
+        [
+          419.53,
+          595.28
+        ],
+        [
+          419.53,
+          595.28
+        ]
+      ],
+      "searchable_text_checks": [
+        "1922",
+        "1933",
+        "Where's the turntable?"
+      ]
+    },
+    "15_扇形車庫_第2節正式教材_教師答案版_20260826.pdf": {
+      "file": "15_扇形車庫_第2節正式教材_教師答案版_20260826.pdf",
+      "bytes": 74269074,
+      "sha256": "F79BB242679D12D3A9B995A3CD3AFBB1F6AB240BE6C94F8483BD64D3C62D7EC2",
+      "pages": 7,
+      "page_sizes_pt": [
+        [
+          595.28,
+          841.89
+        ],
+        [
+          419.53,
+          595.28
+        ],
+        [
+          297.64,
+          419.53
+        ],
+        [
+          841.89,
+          595.28
+        ],
+        [
+          595.28,
+          841.89
+        ],
+        [
+          419.53,
+          595.28
+        ],
+        [
+          419.53,
+          595.28
+        ]
+      ],
+      "searchable_text_checks": [
+        "1922",
+        "1933",
+        "It's in the middle."
+      ]
+    }
+  },
+  "formal_16": {
+    "directory": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\02_第2節\\16_扇形車庫_第2節正式教材圖檔_20260826",
+    "file_count": 67,
+    "bytes": 140869249,
+    "formal_equals_staging": true,
+    "page_png_count": 14,
+    "selected_master_count": 7,
+    "print_preview_count": 14,
+    "files": [
+      {
+        "relative_path": "00_教材清冊與列印說明.md",
+        "bytes": 916,
+        "sha256": "1369AA2CD26CE9893BA15435C6129049CCAEC722701DABB67A7C8EF405970AE5"
+      },
+      {
+        "relative_path": "01_學生版_A4直式_個人解密單.png",
+        "bytes": 5938301,
+        "sha256": "A9A69951D582F0ED0E63BFD60003173E5EC2B9AD4253B75B12A59E536C5CE5E4"
+      },
+      {
+        "relative_path": "01_教師答案版_A4直式_個人解密單.png",
+        "bytes": 5631223,
+        "sha256": "38C65F9A745788B9A778342EA480A00A52CCA2CE184ECF5E677812A2E40B3BDB"
+      },
+      {
+        "relative_path": "02_學生版_A5直式_四色圖例卡.png",
+        "bytes": 4723612,
+        "sha256": "FDC1201DE01367D51007CDDBA368992321495C22582F568BCAB898FB2A27F793"
+      },
+      {
+        "relative_path": "02_教師答案版_A5直式_四色圖例卡.png",
+        "bytes": 4699066,
+        "sha256": "D7A7285632EA5F77F23CF2F87FAEB8D019140090B6EC7C7C6DB70C253D0741E9"
+      },
+      {
+        "relative_path": "03_學生版_A6直式_三格出口票.png",
+        "bytes": 2765050,
+        "sha256": "C5C37CABCB78DF8F92FD3212E71ABA4EEB4FF51791493D1D2DD3F56787B79596"
+      },
+      {
+        "relative_path": "03_教師答案版_A6直式_三格出口票.png",
+        "bytes": 2739689,
+        "sha256": "80A083A05D8E10A6C6000583AEB72A7ED5C27E782CB166F83C378CD4A72FB2A0"
+      },
+      {
+        "relative_path": "04_學生版_A4橫式_何時構件功能三格圖示板.png",
+        "bytes": 7669418,
+        "sha256": "5026AC84B44B34B6E71907BC3D5F63753B10785D1F9E441D1CD1C7E22ED75E3A"
+      },
+      {
+        "relative_path": "04_教師答案版_A4橫式_何時構件功能三格圖示板.png",
+        "bytes": 7625969,
+        "sha256": "7DA8DD8A6E4266B08ACFE052BF3FD161439587E07C88424923BB02314784EE8D"
+      },
+      {
+        "relative_path": "05_學生版_A4直式_8張中文資料句條.png",
+        "bytes": 5876083,
+        "sha256": "3879AE365158F57E4A3AFCE7AFB64132C9013198DF8802B68896EE40FC037699"
+      },
+      {
+        "relative_path": "05_教師答案版_A4直式_8張中文資料句條.png",
+        "bytes": 5840586,
+        "sha256": "7D49E67ED53BBE3A5909C19C0D816931D43CD21F481EEEAE991363318F4BDF94"
+      },
+      {
+        "relative_path": "06_學生版_A5直式_4張英文句型卡.png",
+        "bytes": 3725883,
+        "sha256": "BE0D54C9AF28EC79FA500B32099A8C994C68E21386DBB15E50A72B916B032094"
+      },
+      {
+        "relative_path": "06_教師答案版_A5直式_4張英文句型卡.png",
+        "bytes": 3721022,
+        "sha256": "9B1C8F95708657E34F600055C0717D16FC1C64950EB65DB9A8E1D26AB3FDA2AE"
+      },
+      {
+        "relative_path": "07_學生版_A5直式_30秒導覽順序卡.png",
+        "bytes": 5555706,
+        "sha256": "016B5FCD122CF2CD7521F1E692AC838EDB2405C054396678037645A53B042762"
+      },
+      {
+        "relative_path": "07_教師答案版_A5直式_30秒導覽順序卡.png",
+        "bytes": 5534012,
+        "sha256": "A27052AC014DECE9C47C6C0578D40221649F39BDBE8B4E51D3978D7DE44F651E"
+      },
+      {
+        "relative_path": "_assets/Comic Relief/comic-relief-font.md",
+        "bytes": 1683,
+        "sha256": "7BA4463AF47C6DD4A245BCC7ADB31415C468B2F404A0C6BB89007FB05CF6A55D"
+      },
+      {
+        "relative_path": "_assets/Comic Relief/ComicRelief-Regular.ttf",
+        "bytes": 80324,
+        "sha256": "9EF4958AB06385D91F635F83A15569786B243F9D010CFB3F9A5CDDA593C7BC22"
+      },
+      {
+        "relative_path": "_assets/Comic Relief/OFL.txt",
+        "bytes": 4396,
+        "sha256": "009B3056CEF5C9BCAFF872BFB0E27FA4A0F8CC6F6984CC490CAF5618748D766B"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/01_個人解密單_ImageGen無字母版_採用.png",
+        "bytes": 1949793,
+        "sha256": "07F3A1D8859A0EFC340610E1F498AD5F52607D5735E1D7166E0E6AB0EA70CBD2"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/02_四色圖例卡_ImageGen無字母版_嘗試2_採用.png",
+        "bytes": 2235083,
+        "sha256": "749DB900B9BB195657C3C98A18BCD651E0AFDC848117D3259CD342A8CC9F2537"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/03_三格出口票_ImageGen無字母版_嘗試1_採用.png",
+        "bytes": 2178689,
+        "sha256": "4AD1B509E651B5BDCF33B244122A9580179971EB034C876C7FBC9B88DEBD8809"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/04_何時構件功能三格圖示板_ImageGen無字母版_嘗試1_採用.png",
+        "bytes": 2249771,
+        "sha256": "DF9ACBA728C9E74BE539FB416398F5035583B98BCAF770F2CD48053849D4CFB4"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/05_8張中文資料句條_ImageGen無字母版_嘗試3_採用.png",
+        "bytes": 2168875,
+        "sha256": "6B2904B080ED10DFCDC2627BFD9FA9232C682A2E796229AA438D6625E55B6A31"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/06_4張英文句型卡_ImageGen無字母版_嘗試2_採用.png",
+        "bytes": 1872340,
+        "sha256": "1E19CFF51BE84834DBE1A84E8AF93C073FEEBE888F7AF5ABCA6215720C3F513E"
+      },
+      {
+        "relative_path": "_ImageGen採用母版/07_30秒導覽順序卡_ImageGen無字母版_嘗試1_採用.png",
+        "bytes": 2680351,
+        "sha256": "355FE7D38B0B1AE1925F8497156E25EE2A58514602CA634B258838A8785506AA"
+      },
+      {
+        "relative_path": "_QA證據/01_學生版_7頁彩色接觸表.png",
+        "bytes": 1952729,
+        "sha256": "631A2F7287B76CB097305A16F4C3C0222797DCD6140924A040C8A31C59C5826F"
+      },
+      {
+        "relative_path": "_QA證據/02_學生版_7頁灰階接觸表.png",
+        "bytes": 1193331,
+        "sha256": "8DA2AD553D877888BBECF8CF6C16436ED8E06995109C18163542690459EFE9A4"
+      },
+      {
+        "relative_path": "_QA證據/03_教師答案版_7頁彩色接觸表.png",
+        "bytes": 1965564,
+        "sha256": "AE9E971406AB72EDEFDE08171F7E6E9797F0B133987CE6EE6411D0A5B55CEFCC"
+      },
+      {
+        "relative_path": "_QA證據/04_教師答案版_7頁灰階接觸表.png",
+        "bytes": 1213416,
+        "sha256": "6C1C616D270153C5F4735E18F8E9436086E1A3EEFAC25848F9D7DE7D5BED4983"
+      },
+      {
+        "relative_path": "_QA證據/05_第2節ImageGen整批頁面_manifest.json",
+        "bytes": 68227,
+        "sha256": "4204C5017EEE582AFAE936EEE229048FFB07C75E3883D236A2753F01783F5568"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/01_學生PDF_7頁彩色回渲.png",
+        "bytes": 2208911,
+        "sha256": "BC7A7B334FC4FEDDEE834438AF9306686248203BD5C10336109A7B56D025A38B"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/02_教師PDF_7頁彩色回渲.png",
+        "bytes": 2223347,
+        "sha256": "5CE1684EC12D9A2623A653870BE36031CD39C5B30740A6A09D9B6F9856E3C775"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/03_學生PDF_7頁灰階回渲.png",
+        "bytes": 1382412,
+        "sha256": "72BFADFB698C3036D742848C2C0D2FB366D6B0EDB3FFBE8AEE7287D7C19AE43B"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/04_教師PDF_7頁灰階回渲.png",
+        "bytes": 1405137,
+        "sha256": "8ECCDCD9EFD2E5DE95B20E4F9723F7F785ADE5D388F7D1384F6E3A399DA4CBCF"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-1.png",
+        "bytes": 1615866,
+        "sha256": "80178AB3FB89F3F800DFC90FF57D1852F0723059AC9C22746566C62FB9C5CEC7"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-2.png",
+        "bytes": 1004136,
+        "sha256": "61F13841D5830531F7DB33F13E50353CD3B04F8A59B56D9336BE1DF131397626"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-3.png",
+        "bytes": 482875,
+        "sha256": "44F590F3B0C09D13BE01272B605B736D1A51A393B1A1555DF298C563A0D3517D"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-4.png",
+        "bytes": 1869234,
+        "sha256": "917B89F43A572B905379991E83F32DF3987BA3BA7CD58484DD98BB27E44D61C6"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-5.png",
+        "bytes": 1523063,
+        "sha256": "0A254A5BE1979D61B6B215F4E8BA50BEC174C2CEBDB6FD16AE083F49DB28E402"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-6.png",
+        "bytes": 837160,
+        "sha256": "92EFB69F9690C4BDB000F28BE339E02A90E733992666AF5D7106B3C37BC91408"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_student/student-7.png",
+        "bytes": 1084015,
+        "sha256": "BA4634070422DB44470870EAA457CC3D118C637E46055CECD3C55A54B9DF1FE0"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-1.png",
+        "bytes": 1528376,
+        "sha256": "4513F3D788FD1ED871FB3E3B480C724339A276CDE0998E4602FCA868DB367E5D"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-2.png",
+        "bytes": 1001719,
+        "sha256": "794B7363D61187E4701BA1680F3555AAE61BC9212C198ED08CF8E51E0F82F145"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-3.png",
+        "bytes": 482887,
+        "sha256": "7FF70B912096E2D88076ECCC5D7DF20DE3F73B21488B9E49170608913E9111A1"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-4.png",
+        "bytes": 1872090,
+        "sha256": "25F4D064B5AD9FB71AE12C43EBE73D9A20C2931C5A20821EF7DDDF62CD88B429"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-5.png",
+        "bytes": 1515750,
+        "sha256": "4A0CBB6E4FBF20C4C92AAADDF2B755F035EA789BC5E36BA8F2C847DFD5E3E144"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-6.png",
+        "bytes": 839481,
+        "sha256": "60415A826E7B11B7B749A7FA65BD99A0FCE7B76DE7C51131263AD1E82104F2C1"
+      },
+      {
+        "relative_path": "_QA證據/PDF回渲/render_teacher/teacher-7.png",
+        "bytes": 1085538,
+        "sha256": "1880170E42D52BA745870A164586BFE70D16B124042096D40B5233A9FAC6741D"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/01_學生版_A4_portrait_預覽.png",
+        "bytes": 2583207,
+        "sha256": "1E6A51025CCCA4DE1EDAF8223336FBFBF28409EB5B2F445F2FE8F5E10284A5DA"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/01_教師答案版_A4_portrait_預覽.png",
+        "bytes": 2090328,
+        "sha256": "F473E09FF929301E55C37C6F32B8FC684EDEAD798D4594F8A76B0B0E727546ED"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/02_學生版_A5_portrait_預覽.png",
+        "bytes": 1559741,
+        "sha256": "7F75CA94AD238A07CC9D69DF171148F1F4F2D5BDD28196E35F907625A9E1CF01"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/02_教師答案版_A5_portrait_預覽.png",
+        "bytes": 1556775,
+        "sha256": "5835AFCFE4E33792CA5E209F85D7DE8C6E2D504FB52EE19AC0ED563D0A545687"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/03_學生版_A6_portrait_預覽.png",
+        "bytes": 1498961,
+        "sha256": "44897D1FE8CD5A7421521C4A32A56F44C2CDC2171B0D8AFE0922451FC725EE8B"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/03_教師答案版_A6_portrait_預覽.png",
+        "bytes": 1498667,
+        "sha256": "857792F77F7D2B268A4A948482AC0E0080D3192D3838CAC6D849411D2E4B6254"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/04_學生版_A4_landscape_預覽.png",
+        "bytes": 1790482,
+        "sha256": "924913BAD84A9DD6D45393FE4AB48A776514EC3BE459116F558AC7ED99D71D0B"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/04_教師答案版_A4_landscape_預覽.png",
+        "bytes": 1801519,
+        "sha256": "9D7EE295D8EA44C82DF4B90A76611F670F373882CBA9E031B480ACF6E2CBF4D1"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/05_學生版_A4_portrait_預覽.png",
+        "bytes": 1271982,
+        "sha256": "4F5D7255690047E6724025780FE993A29CDFBC0886B59B79B0937F4F1A866B44"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/05_教師答案版_A4_portrait_預覽.png",
+        "bytes": 1270652,
+        "sha256": "2BA95F10B440F54B6C9DD6F8D5AAE2B2AEAA2491AB5BA58F3491E26A675E9692"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/06_學生版_A5_portrait_預覽.png",
+        "bytes": 1326449,
+        "sha256": "47D44228A6D9FBDF257DB7C46DB16BFC5074A369EEB2CD7F341EF75FA0C3CCBD"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/06_教師答案版_A5_portrait_預覽.png",
+        "bytes": 1331470,
+        "sha256": "1F947B17D68F3841E295F5A2853D4804FC47DF826CA5C87BA9B421A3B71FA425"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/07_學生版_A5_portrait_預覽.png",
+        "bytes": 1678613,
+        "sha256": "F0E449E7EE1E7922A223B179E60C32D8192BDE0DF948204E035258746589CA8A"
+      },
+      {
+        "relative_path": "_QA證據/列印預覽/07_教師答案版_A5_portrait_預覽.png",
+        "bytes": 1683084,
+        "sha256": "C452A4B4FC44AD542E04490FFC3CD82D73D7153309C49451F1227E270A0D60C2"
+      },
+      {
+        "relative_path": "_重建與追溯/06_ImageGen與覆排修復追溯_20260826.md",
+        "bytes": 9696,
+        "sha256": "F391679E425152EEC189E2F30E08444617E1E3108FED792CF76EDAAAC0A22F35"
+      },
+      {
+        "relative_path": "_重建與追溯/build_lesson2_formal_imagegen_package.py",
+        "bytes": 19738,
+        "sha256": "C82B4372DFAA2CEFE71176A40727AAE8FBA15E64C19920CEA579029ADD4F1F08"
+      },
+      {
+        "relative_path": "_重建與追溯/build_lesson2_imagegen_full_batch.py",
+        "bytes": 35975,
+        "sha256": "ADB933EB655766B10026B8BFB09EC0E98A938796FAFEA4E607C85BCC00874CCC"
+      },
+      {
+        "relative_path": "_重建與追溯/build_lesson2_teacher_formal_overlay.py",
+        "bytes": 18760,
+        "sha256": "B863D6929F5DCEF4D3075B0CEF37537621423C460A672CF3D64BC92325AA9CEB"
+      },
+      {
+        "relative_path": "manifest.json",
+        "bytes": 20045,
+        "sha256": "2E9D1ACF94EDDC5856236132FAA1E0BD703E8751BEFD31A992649CE10EDA0593"
+      }
+    ]
+  },
+  "formal_17": {
+    "file": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\02_第2節\\17_扇形車庫_第2節正式教材_教師確認與製作QA紀錄_20260826.md",
+    "bytes": 4154,
+    "sha256": "DFC33051EB8017B1DB516752BA09212C1BD0E9F3E9FD02BBCED93C058915BC01",
+    "formal_equals_staging": true
+  },
+  "backup": {
+    "manifest": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\02_第2節\\_history\\backups\\lesson2_formal_before_imagegen_20260826-201024\\00_舊版14-17備份_manifest.json",
+    "sha256": "CFB199ED9F945278EE9959CF2B310DE9BE580E906DF45AEC51C0F8DAE48798A6",
+    "baseline_files": 25,
+    "baseline_bytes": 15482842
+  },
+  "transaction_temporary_files": 0,
+  "physical_print": "teacher-todo"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-08-26T21:53:53+08:00",
+  "originalRecords": 402,
+  "missingOriginalFiles": 0,
+  "unchangedOriginalFiles": 378,
+  "modifiedForPathOrIndexUpdates": 24,
+  "originalTotalBytes": 1078552307,
+  "finalBytesForOriginalSet": 1078552505,
+  "modifiedPaths": [
+    "02_第2節\\_work\\staging\\lesson2_formal_imagegen_20260826\\10_正式14至17最終讀回_manifest.json",
+    "02_第2節\\_work\\staging\\lesson2_formal_imagegen_20260826\\formal_targets\\16_扇形車庫_第2節正式教材圖檔_20260826\\_重建與追溯\\build_lesson2_formal_imagegen_package.py",
+    "02_第2節\\_work\\staging\\lesson2_formal_imagegen_20260826\\formal_targets\\16_扇形車庫_第2節正式教材圖檔_20260826\\_重建與追溯\\build_lesson2_imagegen_full_batch.py",
+    "02_第2節\\_work\\staging\\lesson2_formal_imagegen_20260826\\formal_targets\\16_扇形車庫_第2節正式教材圖檔_20260826\\_重建與追溯\\build_lesson2_teacher_formal_overlay.py",
+    "02_第2節\\_work\\staging\\lesson2_formal_imagegen_20260826\\formal_targets\\17_扇形車庫_第2節正式教材_教師確認與製作QA紀錄_20260826.md",
+    "02_第2節\\_work\\build_lesson2_formal_imagegen_package.py",
+    "02_第2節\\_work\\build_lesson2_imagegen_full_batch.py",
+    "02_第2節\\_work\\build_lesson2_imagegen_pilot.py",
+    "02_第2節\\_work\\build_lesson2_imagegen_student_revision.py",
+    "02_第2節\\_work\\build_lesson2_teacher_formal_overlay.py",
+    "02_第2節\\_work\\build_lesson2_teacher_imagegen_stop_qa.py",
+    "01_第1節\\_work\\lesson1_sample\\build_lesson1_sample.py",
+    "01_第1節\\_work\\lesson1_sample\\verify_lesson1_sample.py",
+    "02_第2節\\_work\\lesson2_sample\\artifact.md",
+    "02_第2節\\_work\\lesson2_sample\\build_lesson2_sample.py",
+    "02_第2節\\_work\\lesson2_sample\\verify_lesson2_sample.py",
+    "02_第2節\\_work\\transactional_swap_lesson2_formal_14_17.py",
+    "02_第2節\\_work\\verify_lesson2_formal_14_17.py",
+    "00_工作索引.md",
+    "01_扇形車庫_來源追溯與設計決定.md",
+    "02_第2節\\16_扇形車庫_第2節正式教材圖檔_20260826\\_重建與追溯\\build_lesson2_formal_imagegen_package.py",
+    "02_第2節\\16_扇形車庫_第2節正式教材圖檔_20260826\\_重建與追溯\\build_lesson2_imagegen_full_batch.py",
+    "02_第2節\\16_扇形車庫_第2節正式教材圖檔_20260826\\_重建與追溯\\build_lesson2_teacher_formal_overlay.py",
+    "02_第2節\\17_扇形車庫_第2節正式教材_教師確認與製作QA紀錄_20260826.md"
+  ],
+  "finalDiffCsvSha256": "94C896BE4FF25DD2FB09C46DFBD952674BE4B61204318E868652B250A9F33E4C",
+  "lessonFolderCounts": {
+    "fanRoundhouse": 2,
+    "trainToJiji": 8,
+    "railwayHeritage": 4,
+    "narrowGaugeRailways": 6
+  },
+  "skillSourceFiles": 26,
+  "skillManifestSha256": "8E203937690AC024CFBEA0BF1C3B8A1FDDAEB8AFFAAF9880A84031A8455805AA",
+  "workspaceValidator": {
+    "errors": 0,
+    "warnings": 0,
+    "readOnly": true
+  }
+}

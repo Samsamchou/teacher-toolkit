@@ -1,0 +1,837 @@
+{
+  "generated_on": "2026-08-26",
+  "scope": "個人解密單學生版與教師答案版兩頁樣稿；未生成其餘12頁",
+  "page_size": {
+    "pixels": [
+      2480,
+      3508
+    ],
+    "dpi": 300,
+    "paper": "A4 portrait"
+  },
+  "imagegen": {
+    "student_attempts": 2,
+    "student_selected": "02_學生版_ImageGen無字母版_嘗試2_採用.png",
+    "teacher_attempts": 1,
+    "teacher_selected": "03_教師答案版_ImageGen無字母版_嘗試1_採用.png",
+    "teacher_derived_from_student": true
+  },
+  "font": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\skills\\ershui-local-curriculum-builder\\assets\\fonts\\ComicRelief-Regular.ttf",
+    "family_style": [
+      "Comic Relief",
+      "Regular"
+    ],
+    "sha256": "9EF4958AB06385D91F635F83A15569786B243F9D010CFB3F9A5CDDA593C7BC22",
+    "license": "SIL Open Font License 1.1"
+  },
+  "content_locks": {
+    "origin": [
+      "1922年啟用，初期6股道",
+      "1933年形成12股道"
+    ],
+    "matching": {
+      "A 中央轉車台": "2 讓火車頭轉向並對準軌道",
+      "B 放射狀軌道": "3 讓火車頭進出不同庫位",
+      "C 扇形車庫庫位": "1 供火車頭檢修、保養與停放"
+    },
+    "roundhouse_diagram": {
+      "turntable": 1,
+      "radial_tracks": 12,
+      "bays": 12,
+      "locomotive": 1
+    },
+    "english": {
+      "question": "Where's the turntable?",
+      "student": "It's in the __________.",
+      "teacher": "It's in the middle."
+    }
+  },
+  "student": {
+    "output": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\04_學生版_正式文字覆排樣稿.png",
+    "master": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\02_學生版_ImageGen無字母版_嘗試2_採用.png",
+    "pixels": [
+      2480,
+      3508
+    ],
+    "sha256": "0D1BCB5E682BFBEA4B69EDD5C2DC014FEBF3BF19DCE3C94CC5393520A717C23D",
+    "text_records": [
+      {
+        "text": "個人《扇形車庫解密單》",
+        "box": [
+          306,
+          113,
+          1763,
+          247
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 73
+      },
+      {
+        "text": "第2節｜何時－構件－功能｜先獨立完成8分鐘",
+        "box": [
+          310,
+          254,
+          1787,
+          341
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 33
+      },
+      {
+        "text": "學生樣稿",
+        "box": [
+          1806,
+          94,
+          2085,
+          174
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 29
+      },
+      {
+        "text": "班級：",
+        "box": [
+          118,
+          402,
+          334,
+          468
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "座號：",
+        "box": [
+          844,
+          402,
+          1060,
+          468
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "姓名：",
+        "box": [
+          1575,
+          402,
+          1791,
+          468
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "1｜由來小偵探：從資料句條找出時間線",
+        "box": [
+          193,
+          536,
+          2080,
+          621
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "2｜構件找功能：把每個構件連到正確功能",
+        "box": [
+          193,
+          1278,
+          2080,
+          1365
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "3｜四色位置解密：依圖例在圖中標出位置",
+        "box": [
+          193,
+          1906,
+          2080,
+          1990
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "4｜英語定位解密：回答轉車台在哪裡",
+        "box": [
+          193,
+          2809,
+          2080,
+          2894
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "彰化扇形車庫在 ______ 年啟用，初期有 ______ 股道；",
+        "box": [
+          212,
+          689,
+          2057,
+          798
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 41
+      },
+      {
+        "text": "後來分期增建，到 ______ 年形成 ______ 股道。",
+        "box": [
+          212,
+          828,
+          2057,
+          936
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 41
+      },
+      {
+        "text": "小提示：先找「何時」的兩張中文資料句條。",
+        "box": [
+          517,
+          1031,
+          2210,
+          1143
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "A",
+        "box": [
+          177,
+          1474,
+          200,
+          1500
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "中央轉車台",
+        "box": [
+          224,
+          1474,
+          945,
+          1502
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "1",
+        "box": [
+          1465,
+          1473,
+          1479,
+          1499
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "供火車頭檢修、保養與停放",
+        "box": [
+          1503,
+          1473,
+          2094,
+          1503
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "B",
+        "box": [
+          177,
+          1614,
+          197,
+          1641
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "放射狀軌道",
+        "box": [
+          221,
+          1614,
+          945,
+          1644
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "2",
+        "box": [
+          1465,
+          1614,
+          1485,
+          1639
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "讓火車頭轉向並對準軌道",
+        "box": [
+          1509,
+          1614,
+          2094,
+          1644
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "C",
+        "box": [
+          177,
+          1756,
+          196,
+          1780
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "扇形車庫庫位",
+        "box": [
+          220,
+          1756,
+          945,
+          1784
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "3",
+        "box": [
+          1465,
+          1756,
+          1485,
+          1782
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "讓火車頭進出不同庫位",
+        "box": [
+          1509,
+          1756,
+          2094,
+          1784
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "紅色圓形｜中央轉車台",
+        "box": [
+          1568,
+          2028,
+          2094,
+          2165
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "藍色線條｜放射狀軌道",
+        "box": [
+          1568,
+          2188,
+          2094,
+          2325
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "綠色方格｜車庫庫位",
+        "box": [
+          1568,
+          2346,
+          2094,
+          2482
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "黃色火車｜火車頭",
+        "box": [
+          1568,
+          2503,
+          2094,
+          2640
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "Where's the turntable?",
+        "box": [
+          212,
+          2960,
+          1333,
+          3092
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 48
+      },
+      {
+        "text": "It's in the __________.",
+        "box": [
+          212,
+          3122,
+          1333,
+          3259
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 48
+      },
+      {
+        "text": "小提示：",
+        "box": [
+          1469,
+          3084,
+          2073,
+          3124
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "想想「中央」的英文。",
+        "box": [
+          1469,
+          3124,
+          2073,
+          3166
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "完成後請先自己檢查，再和組員核對；不要先看教師答案版。",
+        "box": [
+          188,
+          3374,
+          2292,
+          3423
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 22
+      }
+    ]
+  },
+  "teacher": {
+    "output": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\05_教師答案版_正式文字覆排樣稿.png",
+    "master": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\03_教師答案版_ImageGen無字母版_嘗試1_採用.png",
+    "pixels": [
+      2480,
+      3508
+    ],
+    "sha256": "15A2B676875983FF227543BA25198D4F7BC6931419E9DF45B6EB720D6727C21B",
+    "text_records": [
+      {
+        "text": "個人《扇形車庫解密單》",
+        "box": [
+          306,
+          113,
+          1763,
+          247
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 73
+      },
+      {
+        "text": "第2節｜何時－構件－功能｜先獨立完成8分鐘",
+        "box": [
+          310,
+          254,
+          1787,
+          341
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 33
+      },
+      {
+        "text": "教師答案樣稿",
+        "box": [
+          1806,
+          94,
+          2085,
+          174
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 29
+      },
+      {
+        "text": "班級：",
+        "box": [
+          118,
+          402,
+          334,
+          468
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "座號：",
+        "box": [
+          844,
+          402,
+          1060,
+          468
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "姓名：",
+        "box": [
+          1575,
+          402,
+          1791,
+          468
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "1｜由來小偵探：從資料句條找出時間線",
+        "box": [
+          193,
+          536,
+          2080,
+          621
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "2｜構件找功能：把每個構件連到正確功能",
+        "box": [
+          193,
+          1278,
+          2080,
+          1365
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "3｜四色位置解密：依圖例在圖中標出位置",
+        "box": [
+          193,
+          1906,
+          2080,
+          1990
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "4｜英語定位解密：回答轉車台在哪裡",
+        "box": [
+          193,
+          2809,
+          2080,
+          2894
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 47
+      },
+      {
+        "text": "彰化扇形車庫在 1922 年啟用，初期有 6 股道；",
+        "box": [
+          212,
+          689,
+          2057,
+          798
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 41
+      },
+      {
+        "text": "後來分期增建，到 1933 年形成 12 股道。",
+        "box": [
+          212,
+          828,
+          2057,
+          936
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 41
+      },
+      {
+        "text": "小提示：先找「何時」的兩張中文資料句條。",
+        "box": [
+          517,
+          1031,
+          2210,
+          1143
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 32
+      },
+      {
+        "text": "A",
+        "box": [
+          177,
+          1474,
+          200,
+          1500
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "中央轉車台",
+        "box": [
+          224,
+          1474,
+          945,
+          1502
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 32
+      },
+      {
+        "text": "1",
+        "box": [
+          1465,
+          1473,
+          1479,
+          1499
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "供火車頭檢修、保養與停放",
+        "box": [
+          1503,
+          1473,
+          2094,
+          1503
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 32
+      },
+      {
+        "text": "B",
+        "box": [
+          177,
+          1614,
+          197,
+          1642
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "放射狀軌道",
+        "box": [
+          221,
+          1614,
+          945,
+          1644
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 32
+      },
+      {
+        "text": "2",
+        "box": [
+          1465,
+          1614,
+          1485,
+          1640
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "讓火車頭轉向並對準軌道",
+        "box": [
+          1509,
+          1614,
+          2094,
+          1644
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 32
+      },
+      {
+        "text": "C",
+        "box": [
+          177,
+          1755,
+          196,
+          1780
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "扇形車庫庫位",
+        "box": [
+          220,
+          1755,
+          945,
+          1785
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 32
+      },
+      {
+        "text": "3",
+        "box": [
+          1465,
+          1756,
+          1485,
+          1782
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 32
+      },
+      {
+        "text": "讓火車頭進出不同庫位",
+        "box": [
+          1509,
+          1756,
+          2094,
+          1784
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 32
+      },
+      {
+        "text": "紅色圓形｜中央轉車台",
+        "box": [
+          1568,
+          2028,
+          2094,
+          2165
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "藍色線條｜放射狀軌道",
+        "box": [
+          1568,
+          2188,
+          2094,
+          2325
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "綠色方格｜車庫庫位",
+        "box": [
+          1568,
+          2346,
+          2094,
+          2482
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "黃色火車｜火車頭",
+        "box": [
+          1568,
+          2503,
+          2094,
+          2640
+        ],
+        "font": "Microsoft JhengHei Bold",
+        "font_size_px": 31
+      },
+      {
+        "text": "Where's the turntable?",
+        "box": [
+          212,
+          2960,
+          1333,
+          3092
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 48
+      },
+      {
+        "text": "It's in the middle.",
+        "box": [
+          212,
+          3122,
+          1333,
+          3259
+        ],
+        "font": "Comic Relief Regular",
+        "font_size_px": 48
+      },
+      {
+        "text": "小提示：",
+        "box": [
+          1469,
+          3084,
+          2073,
+          3124
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "想想「中央」的英文。",
+        "box": [
+          1469,
+          3124,
+          2073,
+          3166
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 31
+      },
+      {
+        "text": "教師答案版供快速核對，請勿先讓學生看到。",
+        "box": [
+          188,
+          3374,
+          2292,
+          3423
+        ],
+        "font": "Microsoft JhengHei",
+        "font_size_px": 22
+      }
+    ]
+  },
+  "alignment": {
+    "same_dimensions": true,
+    "overlay_coordinate_system_identical": true,
+    "grayscale_mean_absolute_difference_0_to_255": 5.299,
+    "note": "教師版刻意包含答案、四色標示與紅色配對線，差異值只作讀回紀錄；兩版正式文字採同一座標表。"
+  },
+  "qa_outputs": [
+    {
+      "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\_qa\\01_學生教師版_彩色對照表.png",
+      "sha256": "F7EDA79CA013037BC52FB1B20527905DB4FBE17F04441AA4C118DCAEBD81B501"
+    },
+    {
+      "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\_qa\\02_學生教師版_灰階對照表.png",
+      "sha256": "C70F88DF8950DF1D4C13ED410A68EB588F2ED85CCA3DB7392CC460DC1E739B18"
+    }
+  ],
+  "manual_gate": "等待教師確認兩頁樣稿；不得批次生成其餘12頁。"
+}

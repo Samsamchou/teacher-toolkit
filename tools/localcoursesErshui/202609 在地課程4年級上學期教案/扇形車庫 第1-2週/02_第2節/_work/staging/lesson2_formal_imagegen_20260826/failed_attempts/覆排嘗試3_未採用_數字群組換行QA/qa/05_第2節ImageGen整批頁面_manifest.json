@@ -1,0 +1,2686 @@
+{
+  "generated_on": "2026-08-26",
+  "status": "staged; manual visual QA required before formal swap",
+  "scope": "lesson 2 pages 2-7; page 1 pair copied from confirmed pilot",
+  "font": {
+    "english_family_style": [
+      "Comic Relief",
+      "Regular"
+    ],
+    "comic_relief_sha256": "9EF4958AB06385D91F635F83A15569786B243F9D010CFB3F9A5CDDA593C7BC22"
+  },
+  "page1_locked": {
+    "student": {
+      "file": "01_學生版_A4直式_個人解密單.png",
+      "sha256": "A9A69951D582F0ED0E63BFD60003173E5EC2B9AD4253B75B12A59E536C5CE5E4"
+    },
+    "teacher": {
+      "file": "01_教師答案版_A4直式_個人解密單.png",
+      "sha256": "38C65F9A745788B9A778342EA480A00A52CCA2CE184ECF5E677812A2E40B3BDB"
+    }
+  },
+  "pages_2_to_7": [
+    {
+      "page": 2,
+      "paper": "A5 portrait",
+      "pixels": [
+        1748,
+        2480
+      ],
+      "master": {
+        "file": "02_四色圖例卡_ImageGen無字母版_嘗試2_採用.png",
+        "sha256": "749DB900B9BB195657C3C98A18BCD651E0AFDC848117D3259CD342A8CC9F2537",
+        "source_pixels": [
+          1054,
+          1492
+        ],
+        "manual_no_readable_text": true
+      },
+      "student": {
+        "file": "02_學生版_A5直式_四色圖例卡.png",
+        "bytes": 4723612,
+        "sha256": "FDC1201DE01367D51007CDDBA368992321495C22582F568BCAB898FB2A27F793",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "teacher": {
+        "file": "02_教師答案版_A5直式_四色圖例卡.png",
+        "bytes": 4699066,
+        "sha256": "D7A7285632EA5F77F23CF2F87FAEB8D019140090B6EC7C7C6DB70C253D0741E9",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "alignment": {
+        "outside_answer_mask_pixel_difference": 0,
+        "answer_mask_antialias_dilation_px": 15,
+        "difference_bbox": [
+          1169,
+          532,
+          1543,
+          633
+        ]
+      },
+      "content_structure": {
+        "content_count": 4
+      },
+      "text_records": {
+        "student": [
+          {
+            "text": "四色圖例卡",
+            "role": "title",
+            "target": [
+              473,
+              141,
+              1542,
+              407
+            ],
+            "rendered_bbox": [
+              812,
+              227,
+              1202,
+              297
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 78,
+            "color": "#0B5558"
+          },
+          {
+            "text": "看顏色，也看圖形和文字",
+            "role": "subtitle",
+            "target": [
+              547,
+              407,
+              1534,
+              549
+            ],
+            "rendered_bbox": [
+              832,
+              455,
+              1250,
+              490
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 38,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "紅色圓形｜中央轉車台",
+            "role": "legend-title",
+            "target": [
+              680,
+              698,
+              1542,
+              855
+            ],
+            "rendered_bbox": [
+              680,
+              798,
+              1160,
+              850
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 48,
+            "color": "#0B5558"
+          },
+          {
+            "text": "讓火車頭轉向並對準軌道",
+            "role": "legend-body",
+            "target": [
+              680,
+              863,
+              1542,
+              1039
+            ],
+            "rendered_bbox": [
+              680,
+              863,
+              1120,
+              899
+            ],
+            "font": "Microsoft JhengHei",
+            "font_size_px": 40,
+            "color": "#26393D"
+          },
+          {
+            "text": "藍色線條｜放射狀軌道",
+            "role": "legend-title",
+            "target": [
+              680,
+              1105,
+              1542,
+              1262
+            ],
+            "rendered_bbox": [
+              680,
+              1205,
+              1160,
+              1257
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 48,
+            "color": "#0B5558"
+          },
+          {
+            "text": "從轉車台通往不同庫位",
+            "role": "legend-body",
+            "target": [
+              680,
+              1270,
+              1542,
+              1446
+            ],
+            "rendered_bbox": [
+              680,
+              1270,
+              1080,
+              1307
+            ],
+            "font": "Microsoft JhengHei",
+            "font_size_px": 40,
+            "color": "#26393D"
+          },
+          {
+            "text": "綠色方格｜扇形車庫庫位",
+            "role": "legend-title",
+            "target": [
+              680,
+              1504,
+              1542,
+              1661
+            ],
+            "rendered_bbox": [
+              680,
+              1604,
+              1208,
+              1656
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 48,
+            "color": "#0B5558"
+          },
+          {
+            "text": "供火車頭檢修、保養與停放",
+            "role": "legend-body",
+            "target": [
+              680,
+              1669,
+              1542,
+              1845
+            ],
+            "rendered_bbox": [
+              680,
+              1669,
+              1160,
+              1706
+            ],
+            "font": "Microsoft JhengHei",
+            "font_size_px": 40,
+            "color": "#26393D"
+          },
+          {
+            "text": "黃色火車｜火車頭",
+            "role": "legend-title",
+            "target": [
+              680,
+              1912,
+              1542,
+              2073
+            ],
+            "rendered_bbox": [
+              680,
+              2016,
+              1064,
+              2068
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 48,
+            "color": "#0B5558"
+          },
+          {
+            "text": "依轉車台與軌道進出庫位",
+            "role": "legend-body",
+            "target": [
+              680,
+              2081,
+              1542,
+              2261
+            ],
+            "rendered_bbox": [
+              680,
+              2081,
+              1120,
+              2117
+            ],
+            "font": "Microsoft JhengHei",
+            "font_size_px": 40,
+            "color": "#26393D"
+          }
+        ],
+        "teacher": [
+          {
+            "text": "教師答案版",
+            "role": "teacher-badge",
+            "target": [
+              1179,
+              536,
+              1532,
+              628
+            ],
+            "rendered_bbox": [
+              1240,
+              555,
+              1470,
+              597
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 46,
+            "color": "#7D261F"
+          }
+        ]
+      },
+      "prohibited_terms": {
+        "學生樣稿": 0,
+        "教師樣稿": 0,
+        "草稿": 0,
+        "待確認": 0
+      },
+      "previews": [
+        "02_學生版_A5_portrait_預覽.png",
+        "02_教師答案版_A5_portrait_預覽.png"
+      ]
+    },
+    {
+      "page": 3,
+      "paper": "A6 portrait",
+      "pixels": [
+        1240,
+        1748
+      ],
+      "master": {
+        "file": "03_三格出口票_ImageGen無字母版_嘗試1_採用.png",
+        "sha256": "4AD1B509E651B5BDCF33B244122A9580179971EB034C876C7FBC9B88DEBD8809",
+        "source_pixels": [
+          1054,
+          1492
+        ],
+        "manual_no_readable_text": true
+      },
+      "student": {
+        "file": "03_學生版_A6直式_三格出口票.png",
+        "bytes": 2765050,
+        "sha256": "C5C37CABCB78DF8F92FD3212E71ABA4EEB4FF51791493D1D2DD3F56787B79596",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "teacher": {
+        "file": "03_教師答案版_A6直式_三格出口票.png",
+        "bytes": 2739689,
+        "sha256": "80A083A05D8E10A6C6000583AEB72A7ED5C27E782CB166F83C378CD4A72FB2A0",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "alignment": {
+        "outside_answer_mask_pixel_difference": 0,
+        "answer_mask_antialias_dilation_px": 15,
+        "difference_bbox": [
+          277,
+          351,
+          1083,
+          1520
+        ]
+      },
+      "content_structure": {
+        "content_count": 3
+      },
+      "text_records": {
+        "student": [
+          {
+            "text": "三格出口票",
+            "role": "title",
+            "target": [
+              141,
+              82,
+              835,
+              240
+            ],
+            "rendered_bbox": [
+              338,
+              125,
+              638,
+              178
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 60,
+            "color": "#0B5558"
+          },
+          {
+            "text": "下課前5分鐘｜每人1張",
+            "role": "subtitle",
+            "target": [
+              165,
+              240,
+              824,
+              351
+            ],
+            "rendered_bbox": [
+              342,
+              278,
+              648,
+              311
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 30,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "1｜由來小偵探",
+            "role": "section-title",
+            "target": [
+              276,
+              457,
+              1118,
+              545
+            ],
+            "rendered_bbox": [
+              276,
+              479,
+              513,
+              518
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#0B5558"
+          },
+          {
+            "text": "扇形車庫何時啟用？當時有幾股道？",
+            "role": "question",
+            "target": [
+              276,
+              545,
+              1118,
+              650
+            ],
+            "rendered_bbox": [
+              276,
+              577,
+              820,
+              609
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 34,
+            "color": "#26393D"
+          },
+          {
+            "text": "2｜功能小工程師",
+            "role": "section-title",
+            "target": [
+              288,
+              849,
+              1118,
+              935
+            ],
+            "rendered_bbox": [
+              288,
+              871,
+              561,
+              910
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#0B5558"
+          },
+          {
+            "text": "轉車台有什麼功能？",
+            "role": "question",
+            "target": [
+              288,
+              935,
+              1118,
+              1039
+            ],
+            "rendered_bbox": [
+              288,
+              966,
+              594,
+              998
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 34,
+            "color": "#26393D"
+          },
+          {
+            "text": "3｜英語小導覽員",
+            "role": "section-title",
+            "target": [
+              447,
+              1242,
+              1118,
+              1326
+            ],
+            "rendered_bbox": [
+              447,
+              1263,
+              720,
+              1302
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#0B5558"
+          },
+          {
+            "text": "Where's the turntable?",
+            "role": "question",
+            "target": [
+              447,
+              1326,
+              1118,
+              1426
+            ],
+            "rendered_bbox": [
+              447,
+              1352,
+              895,
+              1386
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 40,
+            "color": "#26393D"
+          },
+          {
+            "text": "提示：它在1920年代初啟用。",
+            "role": "student-hint",
+            "target": [
+              276,
+              661,
+              1118,
+              808
+            ],
+            "rendered_bbox": [
+              276,
+              716,
+              674,
+              743
+            ],
+            "font": "Microsoft JhengHei",
+            "font_size_px": 30,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "提示：中央轉車台可以……",
+            "role": "student-hint",
+            "target": [
+              288,
+              1050,
+              1118,
+              1195
+            ],
+            "rendered_bbox": [
+              288,
+              1104,
+              634,
+              1131
+            ],
+            "font": "Microsoft JhengHei",
+            "font_size_px": 30,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "It's in the ________.",
+            "role": "student-hint",
+            "target": [
+              447,
+              1436,
+              1118,
+              1576
+            ],
+            "rendered_bbox": [
+              447,
+              1486,
+              801,
+              1520
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 34,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "班級：",
+            "role": "identity",
+            "target": [
+              65,
+              1626,
+              376,
+              1711
+            ],
+            "rendered_bbox": [
+              184,
+              1654,
+              256,
+              1676
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 24,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "座號：",
+            "role": "identity",
+            "target": [
+              429,
+              1626,
+              776,
+              1711
+            ],
+            "rendered_bbox": [
+              566,
+              1654,
+              638,
+              1676
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 24,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "姓名：",
+            "role": "identity",
+            "target": [
+              829,
+              1626,
+              1182,
+              1711
+            ],
+            "rendered_bbox": [
+              970,
+              1654,
+              1042,
+              1675
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 24,
+            "color": "#5E6B6F"
+          }
+        ],
+        "teacher": [
+          {
+            "text": "1922年啟用，初期有6股道。",
+            "role": "teacher-answer",
+            "target": [
+              276,
+              661,
+              1118,
+              808
+            ],
+            "rendered_bbox": [
+              276,
+              716,
+              676,
+              745
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "中央轉車台可以讓火車頭轉向並對準軌道。",
+            "role": "teacher-answer",
+            "target": [
+              288,
+              1050,
+              1118,
+              1195
+            ],
+            "rendered_bbox": [
+              288,
+              1104,
+              877,
+              1132
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "It's in the middle.",
+            "role": "teacher-answer",
+            "target": [
+              447,
+              1436,
+              1118,
+              1576
+            ],
+            "rendered_bbox": [
+              447,
+              1484,
+              758,
+              1515
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 37,
+            "color": "#A6382E"
+          },
+          {
+            "text": "班級：",
+            "role": "identity",
+            "target": [
+              65,
+              1626,
+              376,
+              1711
+            ],
+            "rendered_bbox": [
+              184,
+              1654,
+              256,
+              1676
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 24,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "座號：",
+            "role": "identity",
+            "target": [
+              429,
+              1626,
+              776,
+              1711
+            ],
+            "rendered_bbox": [
+              566,
+              1654,
+              638,
+              1676
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 24,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "姓名：",
+            "role": "identity",
+            "target": [
+              829,
+              1626,
+              1182,
+              1711
+            ],
+            "rendered_bbox": [
+              970,
+              1654,
+              1042,
+              1675
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 24,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "教師答案版",
+            "role": "teacher-badge",
+            "target": [
+              786,
+              355,
+              1072,
+              412
+            ],
+            "rendered_bbox": [
+              854,
+              366,
+              1004,
+              393
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 30,
+            "color": "#7D261F"
+          }
+        ]
+      },
+      "prohibited_terms": {
+        "學生樣稿": 0,
+        "教師樣稿": 0,
+        "草稿": 0,
+        "待確認": 0
+      },
+      "previews": [
+        "03_學生版_A6_portrait_預覽.png",
+        "03_教師答案版_A6_portrait_預覽.png"
+      ]
+    },
+    {
+      "page": 4,
+      "paper": "A4 landscape",
+      "pixels": [
+        3508,
+        2480
+      ],
+      "master": {
+        "file": "04_何時構件功能三格圖示板_ImageGen無字母版_嘗試1_採用.png",
+        "sha256": "DF9ACBA728C9E74BE539FB416398F5035583B98BCAF770F2CD48053849D4CFB4",
+        "source_pixels": [
+          1492,
+          1054
+        ],
+        "manual_no_readable_text": true
+      },
+      "student": {
+        "file": "04_學生版_A4橫式_何時構件功能三格圖示板.png",
+        "bytes": 7669418,
+        "sha256": "5026AC84B44B34B6E71907BC3D5F63753B10785D1F9E441D1CD1C7E22ED75E3A",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "teacher": {
+        "file": "04_教師答案版_A4橫式_何時構件功能三格圖示板.png",
+        "bytes": 7625969,
+        "sha256": "7DA8DD8A6E4266B08ACFE052BF3FD161439587E07C88424923BB02314784EE8D",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "alignment": {
+        "outside_answer_mask_pixel_difference": 0,
+        "answer_mask_antialias_dilation_px": 15,
+        "difference_bbox": [
+          733,
+          588,
+          3269,
+          2113
+        ]
+      },
+      "content_structure": {
+        "slot_count": [
+          2,
+          3,
+          3
+        ]
+      },
+      "text_records": {
+        "student": [
+          {
+            "text": "「何時－構件－功能」三格圖示板",
+            "role": "title",
+            "target": [
+              893,
+              129,
+              2798,
+              518
+            ],
+            "rendered_bbox": [
+              1260,
+              277,
+              2430,
+              347
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 78,
+            "color": "#0B5558"
+          },
+          {
+            "text": "何時",
+            "role": "column-header",
+            "target": [
+              705,
+              929,
+              1446,
+              1176
+            ],
+            "rendered_bbox": [
+              931,
+              1029,
+              1035,
+              1075
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "WHEN",
+            "role": "column-header",
+            "target": [
+              705,
+              929,
+              1446,
+              1176
+            ],
+            "rendered_bbox": [
+              1053,
+              1032,
+              1220,
+              1073
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "構件",
+            "role": "column-header",
+            "target": [
+              1528,
+              929,
+              2316,
+              1176
+            ],
+            "rendered_bbox": [
+              1776,
+              1029,
+              1880,
+              1075
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "WHAT",
+            "role": "column-header",
+            "target": [
+              1528,
+              929,
+              2316,
+              1176
+            ],
+            "rendered_bbox": [
+              1898,
+              1032,
+              2068,
+              1073
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "功能",
+            "role": "column-header",
+            "target": [
+              2386,
+              929,
+              3198,
+              1176
+            ],
+            "rendered_bbox": [
+              2663,
+              1029,
+              2767,
+              1075
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "HOW",
+            "role": "column-header",
+            "target": [
+              2386,
+              929,
+              3198,
+              1176
+            ],
+            "rendered_bbox": [
+              2785,
+              1032,
+              2921,
+              1073
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "放入第1張何時句條",
+            "role": "student-slot",
+            "target": [
+              727,
+              1224,
+              1412,
+              1659
+            ],
+            "rendered_bbox": [
+              915,
+              1420,
+              1224,
+              1453
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第2張何時句條",
+            "role": "student-slot",
+            "target": [
+              727,
+              1730,
+              1412,
+              2259
+            ],
+            "rendered_bbox": [
+              915,
+              1973,
+              1224,
+              2006
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第1張構件句條",
+            "role": "student-slot",
+            "target": [
+              1550,
+              1224,
+              2282,
+              1517
+            ],
+            "rendered_bbox": [
+              1762,
+              1349,
+              2071,
+              1381
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第2張構件句條",
+            "role": "student-slot",
+            "target": [
+              1550,
+              1577,
+              2282,
+              1882
+            ],
+            "rendered_bbox": [
+              1762,
+              1708,
+              2071,
+              1740
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第3張構件句條",
+            "role": "student-slot",
+            "target": [
+              1550,
+              1941,
+              2282,
+              2259
+            ],
+            "rendered_bbox": [
+              1762,
+              2079,
+              2071,
+              2111
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第1張功能句條",
+            "role": "student-slot",
+            "target": [
+              2420,
+              1224,
+              3164,
+              1517
+            ],
+            "rendered_bbox": [
+              2638,
+              1349,
+              2947,
+              1381
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第2張功能句條",
+            "role": "student-slot",
+            "target": [
+              2420,
+              1577,
+              3164,
+              1882
+            ],
+            "rendered_bbox": [
+              2638,
+              1708,
+              2947,
+              1740
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "放入第3張功能句條",
+            "role": "student-slot",
+            "target": [
+              2420,
+              1941,
+              3164,
+              2259
+            ],
+            "rendered_bbox": [
+              2638,
+              2079,
+              2947,
+              2111
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 36,
+            "color": "#5E6B6F"
+          }
+        ],
+        "teacher": [
+          {
+            "text": "1922年，彰化扇形車庫啟用，初期有6股道。",
+            "role": "teacher-slot",
+            "target": [
+              727,
+              1224,
+              1412,
+              1659
+            ],
+            "rendered_bbox": [
+              730,
+              1394,
+              1410,
+              1476
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "後來分期增建，1933年形成12股道。",
+            "role": "teacher-slot",
+            "target": [
+              727,
+              1730,
+              1412,
+              2259
+            ],
+            "rendered_bbox": [
+              738,
+              1970,
+              1402,
+              2006
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "轉車台位在扇形軌道中央。",
+            "role": "teacher-slot",
+            "target": [
+              1550,
+              1224,
+              2282,
+              1517
+            ],
+            "rendered_bbox": [
+              1676,
+              1346,
+              2156,
+              1383
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "放射狀軌道從轉車台連到各個庫位。",
+            "role": "teacher-slot",
+            "target": [
+              1550,
+              1577,
+              2282,
+              1882
+            ],
+            "rendered_bbox": [
+              1596,
+              1706,
+              2236,
+              1742
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "扇形車庫有多個庫位，可容納火車頭。",
+            "role": "teacher-slot",
+            "target": [
+              1550,
+              1941,
+              2282,
+              2259
+            ],
+            "rendered_bbox": [
+              1576,
+              2076,
+              2256,
+              2113
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "轉車台讓火車頭轉向並對準軌道。",
+            "role": "teacher-slot",
+            "target": [
+              2420,
+              1224,
+              3164,
+              1517
+            ],
+            "rendered_bbox": [
+              2492,
+              1346,
+              3092,
+              1382
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "放射狀軌道讓火車頭進出不同庫位。",
+            "role": "teacher-slot",
+            "target": [
+              2420,
+              1577,
+              3164,
+              1882
+            ],
+            "rendered_bbox": [
+              2472,
+              1706,
+              3112,
+              1742
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "車庫供火車頭檢修、保養與停放。",
+            "role": "teacher-slot",
+            "target": [
+              2420,
+              1941,
+              3164,
+              2259
+            ],
+            "rendered_bbox": [
+              2492,
+              2076,
+              3092,
+              2112
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "教師答案版",
+            "role": "teacher-badge",
+            "target": [
+              2761,
+              592,
+              3258,
+              737
+            ],
+            "rendered_bbox": [
+              2834,
+              623,
+              3184,
+              685
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 70,
+            "color": "#7D261F"
+          }
+        ]
+      },
+      "prohibited_terms": {
+        "學生樣稿": 0,
+        "教師樣稿": 0,
+        "草稿": 0,
+        "待確認": 0
+      },
+      "previews": [
+        "04_學生版_A4_landscape_預覽.png",
+        "04_教師答案版_A4_landscape_預覽.png"
+      ]
+    },
+    {
+      "page": 5,
+      "paper": "A4 portrait",
+      "pixels": [
+        2480,
+        3508
+      ],
+      "master": {
+        "file": "05_8張中文資料句條_ImageGen無字母版_嘗試3_採用.png",
+        "sha256": "6B2904B080ED10DFCDC2627BFD9FA9232C682A2E796229AA438D6625E55B6A31",
+        "source_pixels": [
+          1024,
+          1536
+        ],
+        "manual_no_readable_text": true
+      },
+      "student": {
+        "file": "05_學生版_A4直式_8張中文資料句條.png",
+        "bytes": 5876192,
+        "sha256": "48D476460B412FB6D9928C7D2610F53971535C2954F0494704F34B0656C035D8",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "teacher": {
+        "file": "05_教師答案版_A4直式_8張中文資料句條.png",
+        "bytes": 5840359,
+        "sha256": "90C109DDD17B4FF18C05F7291D49883B2E5F9C84346B16951CF3E0598176E259",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "alignment": {
+        "outside_answer_mask_pixel_difference": 0,
+        "answer_mask_antialias_dilation_px": 15,
+        "difference_bbox": [
+          883,
+          34,
+          2399,
+          2660
+        ]
+      },
+      "content_structure": {
+        "card_count": 8
+      },
+      "text_records": {
+        "student": [
+          {
+            "text": "8張中文資料句條",
+            "role": "page-title",
+            "target": [
+              739,
+              18,
+              1744,
+              164
+            ],
+            "rendered_bbox": [
+              1044,
+              60,
+              1439,
+              107
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 52,
+            "color": "#0B5558"
+          },
+          {
+            "text": "1922年，彰化扇形車庫啟用，初期有6股道。",
+            "role": "data-sentence",
+            "target": [
+              763,
+              417,
+              1150,
+              925
+            ],
+            "rendered_bbox": [
+              763,
+              594,
+              1133,
+              734
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "後來分期增建，1933年形成12股道。",
+            "role": "data-sentence",
+            "target": [
+              1950,
+              417,
+              2337,
+              925
+            ],
+            "rendered_bbox": [
+              1950,
+              620,
+              2329,
+              710
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "轉車台位在扇形軌道中央。",
+            "role": "data-sentence",
+            "target": [
+              763,
+              1229,
+              1150,
+              1701
+            ],
+            "rendered_bbox": [
+              763,
+              1414,
+              1150,
+              1503
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "放射狀軌道從轉車台連到各個庫位。",
+            "role": "data-sentence",
+            "target": [
+              1950,
+              1229,
+              2337,
+              1701
+            ],
+            "rendered_bbox": [
+              1950,
+              1414,
+              2337,
+              1505
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "扇形車庫有多個庫位，可容納火車頭。",
+            "role": "data-sentence",
+            "target": [
+              763,
+              2002,
+              1150,
+              2421
+            ],
+            "rendered_bbox": [
+              763,
+              2160,
+              1150,
+              2251
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "轉車台讓火車頭轉向並對準軌道。",
+            "role": "data-sentence",
+            "target": [
+              1950,
+              2002,
+              2337,
+              2421
+            ],
+            "rendered_bbox": [
+              1950,
+              2161,
+              2337,
+              2250
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "放射狀軌道讓火車頭進出不同庫位。",
+            "role": "data-sentence",
+            "target": [
+              763,
+              2704,
+              1150,
+              3140
+            ],
+            "rendered_bbox": [
+              763,
+              2871,
+              1150,
+              2962
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "車庫供火車頭檢修、保養與停放。",
+            "role": "data-sentence",
+            "target": [
+              1950,
+              2704,
+              2337,
+              3140
+            ],
+            "rendered_bbox": [
+              1950,
+              2871,
+              2337,
+              2961
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 43,
+            "color": "#26393D"
+          },
+          {
+            "text": "資料1",
+            "role": "student-label",
+            "target": [
+              763,
+              274,
+              1150,
+              417
+            ],
+            "rendered_bbox": [
+              916,
+              327,
+              996,
+              355
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料2",
+            "role": "student-label",
+            "target": [
+              1950,
+              274,
+              2337,
+              417
+            ],
+            "rendered_bbox": [
+              2104,
+              327,
+              2184,
+              355
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料3",
+            "role": "student-label",
+            "target": [
+              763,
+              1096,
+              1150,
+              1229
+            ],
+            "rendered_bbox": [
+              916,
+              1144,
+              996,
+              1172
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料4",
+            "role": "student-label",
+            "target": [
+              1950,
+              1096,
+              2337,
+              1229
+            ],
+            "rendered_bbox": [
+              2104,
+              1144,
+              2184,
+              1172
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料5",
+            "role": "student-label",
+            "target": [
+              763,
+              1884,
+              1150,
+              2002
+            ],
+            "rendered_bbox": [
+              916,
+              1924,
+              996,
+              1952
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料6",
+            "role": "student-label",
+            "target": [
+              1950,
+              1884,
+              2337,
+              2002
+            ],
+            "rendered_bbox": [
+              2104,
+              1924,
+              2184,
+              1952
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料7",
+            "role": "student-label",
+            "target": [
+              763,
+              2581,
+              1150,
+              2704
+            ],
+            "rendered_bbox": [
+              916,
+              2624,
+              996,
+              2652
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          },
+          {
+            "text": "資料8",
+            "role": "student-label",
+            "target": [
+              1950,
+              2581,
+              2337,
+              2704
+            ],
+            "rendered_bbox": [
+              2104,
+              2624,
+              2184,
+              2652
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#0B5558"
+          }
+        ],
+        "teacher": [
+          {
+            "text": "何時｜",
+            "role": "teacher-category",
+            "target": [
+              763,
+              274,
+              1150,
+              417
+            ],
+            "rendered_bbox": [
+              887,
+              328,
+              980,
+              362
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "T1",
+            "role": "teacher-category",
+            "target": [
+              763,
+              274,
+              1150,
+              417
+            ],
+            "rendered_bbox": [
+              991,
+              334,
+              1026,
+              358
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "何時｜",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              274,
+              2337,
+              417
+            ],
+            "rendered_bbox": [
+              2072,
+              328,
+              2165,
+              362
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "T2",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              274,
+              2337,
+              417
+            ],
+            "rendered_bbox": [
+              2176,
+              334,
+              2216,
+              358
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "構件｜",
+            "role": "teacher-category",
+            "target": [
+              763,
+              1096,
+              1150,
+              1229
+            ],
+            "rendered_bbox": [
+              884,
+              1146,
+              977,
+              1180
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "M1",
+            "role": "teacher-category",
+            "target": [
+              763,
+              1096,
+              1150,
+              1229
+            ],
+            "rendered_bbox": [
+              988,
+              1150,
+              1029,
+              1176
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "構件｜",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              1096,
+              2337,
+              1229
+            ],
+            "rendered_bbox": [
+              2068,
+              1146,
+              2161,
+              1180
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "M2",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              1096,
+              2337,
+              1229
+            ],
+            "rendered_bbox": [
+              2172,
+              1150,
+              2218,
+              1176
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "構件｜",
+            "role": "teacher-category",
+            "target": [
+              763,
+              1884,
+              1150,
+              2002
+            ],
+            "rendered_bbox": [
+              882,
+              1926,
+              975,
+              1960
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "M3",
+            "role": "teacher-category",
+            "target": [
+              763,
+              1884,
+              1150,
+              2002
+            ],
+            "rendered_bbox": [
+              986,
+              1930,
+              1032,
+              1956
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "功能｜",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              1884,
+              2337,
+              2002
+            ],
+            "rendered_bbox": [
+              2075,
+              1926,
+              2168,
+              1960
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "F1",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              1884,
+              2337,
+              2002
+            ],
+            "rendered_bbox": [
+              2179,
+              1931,
+              2212,
+              1955
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "功能｜",
+            "role": "teacher-category",
+            "target": [
+              763,
+              2581,
+              1150,
+              2704
+            ],
+            "rendered_bbox": [
+              886,
+              2626,
+              979,
+              2660
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "F2",
+            "role": "teacher-category",
+            "target": [
+              763,
+              2581,
+              1150,
+              2704
+            ],
+            "rendered_bbox": [
+              990,
+              2630,
+              1028,
+              2654
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "功能｜",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              2581,
+              2337,
+              2704
+            ],
+            "rendered_bbox": [
+              2072,
+              2626,
+              2165,
+              2660
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "F3",
+            "role": "teacher-category",
+            "target": [
+              1950,
+              2581,
+              2337,
+              2704
+            ],
+            "rendered_bbox": [
+              2176,
+              2630,
+              2214,
+              2655
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 31,
+            "color": "#A6382E"
+          },
+          {
+            "text": "教師答案版",
+            "role": "teacher-badge",
+            "target": [
+              1923,
+              38,
+              2388,
+              156
+            ],
+            "rendered_bbox": [
+              2010,
+              62,
+              2300,
+              114
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 58,
+            "color": "#7D261F"
+          }
+        ]
+      },
+      "prohibited_terms": {
+        "學生樣稿": 0,
+        "教師樣稿": 0,
+        "草稿": 0,
+        "待確認": 0
+      },
+      "previews": [
+        "05_學生版_A4_portrait_預覽.png",
+        "05_教師答案版_A4_portrait_預覽.png"
+      ]
+    },
+    {
+      "page": 6,
+      "paper": "A5 portrait",
+      "pixels": [
+        1748,
+        2480
+      ],
+      "master": {
+        "file": "06_4張英文句型卡_ImageGen無字母版_嘗試2_採用.png",
+        "sha256": "1E19CFF51BE84834DBE1A84E8AF93C073FEEBE888F7AF5ABCA6215720C3F513E",
+        "source_pixels": [
+          1054,
+          1492
+        ],
+        "manual_no_readable_text": true
+      },
+      "student": {
+        "file": "06_學生版_A5直式_4張英文句型卡.png",
+        "bytes": 3725883,
+        "sha256": "BE0D54C9AF28EC79FA500B32099A8C994C68E21386DBB15E50A72B916B032094",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "teacher": {
+        "file": "06_教師答案版_A5直式_4張英文句型卡.png",
+        "bytes": 3721022,
+        "sha256": "9B1C8F95708657E34F600055C0717D16FC1C64950EB65DB9A8E1D26AB3FDA2AE",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "alignment": {
+        "outside_answer_mask_pixel_difference": 0,
+        "answer_mask_antialias_dilation_px": 15,
+        "difference_bbox": [
+          139,
+          17,
+          1709,
+          1579
+        ]
+      },
+      "content_structure": {
+        "card_count": 4
+      },
+      "text_records": {
+        "student": [
+          {
+            "text": "指向一個構件問問題",
+            "role": "cue",
+            "target": [
+              158,
+              981,
+              738,
+              1147
+            ],
+            "rendered_bbox": [
+              308,
+              1046,
+              587,
+              1075
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "說出構件名稱",
+            "role": "cue",
+            "target": [
+              1012,
+              981,
+              1592,
+              1147
+            ],
+            "rendered_bbox": [
+              1209,
+              1046,
+              1395,
+              1074
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "問構件在哪裡",
+            "role": "cue",
+            "target": [
+              158,
+              2161,
+              738,
+              2335
+            ],
+            "rendered_bbox": [
+              355,
+              2230,
+              541,
+              2259
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "小提示：中央的英文是",
+            "role": "cue",
+            "target": [
+              1012,
+              2161,
+              1383,
+              2335
+            ],
+            "rendered_bbox": [
+              1103,
+              2231,
+              1383,
+              2256
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 28,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "middle",
+            "role": "cue-english",
+            "target": [
+              1393,
+              2161,
+              1592,
+              2335
+            ],
+            "rendered_bbox": [
+              1393,
+              2227,
+              1497,
+              2255
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 34,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "What's this?",
+            "role": "student-english",
+            "target": [
+              116,
+              125,
+              771,
+              532
+            ],
+            "rendered_bbox": [
+              276,
+              296,
+              612,
+              343
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#0B5558"
+          },
+          {
+            "text": "It's a __________.",
+            "role": "student-english",
+            "target": [
+              970,
+              125,
+              1625,
+              532
+            ],
+            "rendered_bbox": [
+              1038,
+              296,
+              1556,
+              350
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#0B5558"
+          },
+          {
+            "text": "Where's the __________?",
+            "role": "student-english",
+            "target": [
+              116,
+              1338,
+              771,
+              1720
+            ],
+            "rendered_bbox": [
+              259,
+              1464,
+              629,
+              1579
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#0B5558"
+          },
+          {
+            "text": "It's in the __________.",
+            "role": "student-english",
+            "target": [
+              970,
+              1338,
+              1625,
+              1720
+            ],
+            "rendered_bbox": [
+              978,
+              1496,
+              1616,
+              1550
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#0B5558"
+          }
+        ],
+        "teacher": [
+          {
+            "text": "What's this?",
+            "role": "teacher-english",
+            "target": [
+              116,
+              125,
+              771,
+              532
+            ],
+            "rendered_bbox": [
+              276,
+              296,
+              612,
+              343
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#A6382E"
+          },
+          {
+            "text": "It's a turntable.",
+            "role": "teacher-english",
+            "target": [
+              970,
+              125,
+              1625,
+              532
+            ],
+            "rendered_bbox": [
+              1088,
+              296,
+              1508,
+              344
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#A6382E"
+          },
+          {
+            "text": "Where's the turntable?",
+            "role": "teacher-english",
+            "target": [
+              116,
+              1338,
+              771,
+              1720
+            ],
+            "rendered_bbox": [
+              136,
+              1496,
+              750,
+              1544
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#A6382E"
+          },
+          {
+            "text": "It's in the middle.",
+            "role": "teacher-english",
+            "target": [
+              970,
+              1338,
+              1625,
+              1720
+            ],
+            "rendered_bbox": [
+              1065,
+              1496,
+              1530,
+              1543
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 55,
+            "color": "#A6382E"
+          },
+          {
+            "text": "教師答案版",
+            "role": "teacher-badge",
+            "target": [
+              1353,
+              21,
+              1698,
+              104
+            ],
+            "rendered_bbox": [
+              1420,
+              38,
+              1630,
+              76
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 42,
+            "color": "#7D261F"
+          }
+        ]
+      },
+      "prohibited_terms": {
+        "學生樣稿": 0,
+        "教師樣稿": 0,
+        "草稿": 0,
+        "待確認": 0
+      },
+      "previews": [
+        "06_學生版_A5_portrait_預覽.png",
+        "06_教師答案版_A5_portrait_預覽.png"
+      ]
+    },
+    {
+      "page": 7,
+      "paper": "A5 portrait",
+      "pixels": [
+        1748,
+        2480
+      ],
+      "master": {
+        "file": "07_30秒導覽順序卡_ImageGen無字母版_嘗試1_採用.png",
+        "sha256": "355FE7D38B0B1AE1925F8497156E25EE2A58514602CA634B258838A8785506AA",
+        "source_pixels": [
+          1024,
+          1536
+        ],
+        "manual_no_readable_text": true
+      },
+      "student": {
+        "file": "07_學生版_A5直式_30秒導覽順序卡.png",
+        "bytes": 5555706,
+        "sha256": "016B5FCD122CF2CD7521F1E692AC838EDB2405C054396678037645A53B042762",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "teacher": {
+        "file": "07_教師答案版_A5直式_30秒導覽順序卡.png",
+        "bytes": 5534012,
+        "sha256": "A27052AC014DECE9C47C6C0578D40221649F39BDBE8B4E51D3978D7DE44F651E",
+        "dpi": [
+          299.9994,
+          299.9994
+        ]
+      },
+      "alignment": {
+        "outside_answer_mask_pixel_difference": 0,
+        "answer_mask_antialias_dilation_px": 15,
+        "difference_bbox": [
+          717,
+          484,
+          1640,
+          2198
+        ]
+      },
+      "content_structure": {
+        "step_count": 4
+      },
+      "text_records": {
+        "student": [
+          {
+            "text": "30秒導覽順序卡",
+            "role": "title",
+            "target": [
+              452,
+              121,
+              1442,
+              355
+            ],
+            "rendered_bbox": [
+              695,
+              197,
+              1199,
+              261
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 70,
+            "color": "#0B5558"
+          },
+          {
+            "text": "一句由來＋一個構件＋一組問答＋一個功能",
+            "role": "subtitle",
+            "target": [
+              512,
+              355,
+              1408,
+              476
+            ],
+            "rendered_bbox": [
+              666,
+              397,
+              1255,
+              425
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 31,
+            "color": "#5E6B6F"
+          },
+          {
+            "text": "1｜先說由來",
+            "role": "step-title",
+            "target": [
+              717,
+              589,
+              1588,
+              698
+            ],
+            "rendered_bbox": [
+              717,
+              619,
+              952,
+              667
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 42,
+            "color": "#0B5558"
+          },
+          {
+            "text": "2｜指出並命名構件",
+            "role": "step-title",
+            "target": [
+              717,
+              1033,
+              1588,
+              1142
+            ],
+            "rendered_bbox": [
+              717,
+              1063,
+              1078,
+              1109
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 42,
+            "color": "#0B5558"
+          },
+          {
+            "text": "3｜做一組英語問答",
+            "role": "step-title",
+            "target": [
+              717,
+              1485,
+              1588,
+              1591
+            ],
+            "rendered_bbox": [
+              717,
+              1513,
+              1078,
+              1560
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 42,
+            "color": "#0B5558"
+          },
+          {
+            "text": "4｜說明一個功能",
+            "role": "step-title",
+            "target": [
+              717,
+              1938,
+              1588,
+              2044
+            ],
+            "rendered_bbox": [
+              717,
+              1966,
+              1036,
+              2014
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 42,
+            "color": "#0B5558"
+          },
+          {
+            "text": "_____年啟用，初期有_____股道；\n_____年形成_____股道。",
+            "role": "student-step",
+            "target": [
+              717,
+              709,
+              1588,
+              977
+            ],
+            "rendered_bbox": [
+              717,
+              795,
+              1297,
+              884
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#26393D"
+          },
+          {
+            "text": "What's this?\nIt's a __________.",
+            "role": "student-step",
+            "target": [
+              717,
+              1153,
+              1588,
+              1421
+            ],
+            "rendered_bbox": [
+              717,
+              1230,
+              1173,
+              1334
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 48,
+            "color": "#26393D"
+          },
+          {
+            "text": "Where's the turntable?\nIt's in the __________.",
+            "role": "student-step",
+            "target": [
+              717,
+              1603,
+              1588,
+              1865
+            ],
+            "rendered_bbox": [
+              717,
+              1677,
+              1277,
+              1781
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 48,
+            "color": "#26393D"
+          },
+          {
+            "text": "中央轉車台可以……",
+            "role": "student-step",
+            "target": [
+              717,
+              2055,
+              1588,
+              2317
+            ],
+            "rendered_bbox": [
+              717,
+              2162,
+              1065,
+              2197
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#26393D"
+          }
+        ],
+        "teacher": [
+          {
+            "text": "1922年啟用，初期有6股道；\n1933年形成12股道。",
+            "role": "teacher-step",
+            "target": [
+              717,
+              709,
+              1588,
+              977
+            ],
+            "rendered_bbox": [
+              717,
+              795,
+              1237,
+              879
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "What's this?\nIt's a turntable.",
+            "role": "teacher-step",
+            "target": [
+              717,
+              1153,
+              1588,
+              1421
+            ],
+            "rendered_bbox": [
+              717,
+              1230,
+              1084,
+              1328
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 48,
+            "color": "#A6382E"
+          },
+          {
+            "text": "Where's the turntable?\nIt's in the middle.",
+            "role": "teacher-step",
+            "target": [
+              717,
+              1603,
+              1588,
+              1865
+            ],
+            "rendered_bbox": [
+              717,
+              1677,
+              1253,
+              1775
+            ],
+            "font": "Comic Relief Regular",
+            "font_size_px": 48,
+            "color": "#A6382E"
+          },
+          {
+            "text": "中央轉車台可以讓火車頭轉向並對準軌道。",
+            "role": "teacher-step",
+            "target": [
+              717,
+              2055,
+              1588,
+              2317
+            ],
+            "rendered_bbox": [
+              717,
+              2162,
+              1477,
+              2198
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 40,
+            "color": "#A6382E"
+          },
+          {
+            "text": "教師答案版",
+            "role": "teacher-badge",
+            "target": [
+              1307,
+              488,
+              1629,
+              569
+            ],
+            "rendered_bbox": [
+              1366,
+              504,
+              1571,
+              541
+            ],
+            "font": "Microsoft JhengHei Bold",
+            "font_size_px": 41,
+            "color": "#7D261F"
+          }
+        ]
+      },
+      "prohibited_terms": {
+        "學生樣稿": 0,
+        "教師樣稿": 0,
+        "草稿": 0,
+        "待確認": 0
+      },
+      "previews": [
+        "07_學生版_A5_portrait_預覽.png",
+        "07_教師答案版_A5_portrait_預覽.png"
+      ]
+    }
+  ],
+  "qa": {
+    "content_machine_checks": "pass",
+    "answer_machine_checks": "pass",
+    "pair_alignment_outside_answer_masks": "pass",
+    "comic_relief_actual_font": "pass",
+    "prohibited_face_terms": "pass",
+    "page_sizes_and_dpi": "pass",
+    "color_contacts": "generated",
+    "grayscale_contacts": "generated",
+    "paper_previews": "generated",
+    "manual_visual_read": "pending",
+    "physical_print": "teacher-todo"
+  }
+}

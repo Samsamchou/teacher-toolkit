@@ -1,0 +1,264 @@
+{
+  "generated_on": "2026-08-26",
+  "status": "正式數位教材；實體試印待教師",
+  "strategy": "reuse-approved-complete-student-imagegen-master-plus-deterministic-answer-layer",
+  "imagegen": {
+    "shared_master": "08_學生版_ImageGen活潑版無字母版_嘗試2_採用.png",
+    "shared_master_sha256": "07F3A1D8859A0EFC340610E1F498AD5F52607D5735E1D7166E0E6AB0EA70CBD2",
+    "master_complete_visual_layout": true,
+    "new_teacher_imagegen_call": false,
+    "reason": "confirmed RDQ 3A: exact student/teacher alignment is best preserved by a shared approved complete master"
+  },
+  "student": {
+    "file": "11_學生版_A4直式_個人解密單_正式版_20260826.png",
+    "sha256": "A9A69951D582F0ED0E63BFD60003173E5EC2B9AD4253B75B12A59E536C5CE5E4",
+    "pixels": [
+      2480,
+      3508
+    ],
+    "dpi_readback": [
+      299.9994,
+      299.9994
+    ]
+  },
+  "teacher": {
+    "file": "14_教師答案版_A4直式_個人解密單_正式版_20260826.png",
+    "sha256": "38C65F9A745788B9A778342EA480A00A52CCA2CE184ECF5E677812A2E40B3BDB",
+    "bytes": 5631223,
+    "pixels": [
+      2480,
+      3508
+    ],
+    "dpi_readback": [
+      299.9994,
+      299.9994
+    ]
+  },
+  "answer_text": [
+    {
+      "text": "彰化扇形車庫在 1922 年啟用，初期有 6 股道；",
+      "box": [
+        218,
+        754,
+        2083,
+        909
+      ],
+      "rendered_bbox": [
+        218,
+        807,
+        1270,
+        857
+      ],
+      "font": "Microsoft JhengHei Bold",
+      "font_size_px": 50,
+      "color": "#A6382E"
+    },
+    {
+      "text": "後來分期增建，到 1933 年形成 12 股道。",
+      "box": [
+        218,
+        962,
+        2083,
+        1110
+      ],
+      "rendered_bbox": [
+        218,
+        1014,
+        1150,
+        1059
+      ],
+      "font": "Microsoft JhengHei Bold",
+      "font_size_px": 50,
+      "color": "#A6382E"
+    },
+    {
+      "text": "It's in the middle.",
+      "box": [
+        213,
+        3040,
+        1296,
+        3177
+      ],
+      "rendered_bbox": [
+        213,
+        3083,
+        704,
+        3133
+      ],
+      "font": "Comic Relief Regular",
+      "font_size_px": 58,
+      "color": "#A6382E"
+    }
+  ],
+  "matching": {
+    "mapping": {
+      "A": "2",
+      "B": "3",
+      "C": "1"
+    },
+    "paths_page_px": {
+      "A_to_2": [
+        [
+          647,
+          1614
+        ],
+        [
+          900,
+          1614
+        ],
+        [
+          1450,
+          1789
+        ],
+        [
+          1763,
+          1789
+        ]
+      ],
+      "B_to_3": [
+        [
+          647,
+          1789
+        ],
+        [
+          850,
+          1789
+        ],
+        [
+          1350,
+          1959
+        ],
+        [
+          1763,
+          1959
+        ]
+      ],
+      "C_to_1": [
+        [
+          647,
+          1959
+        ],
+        [
+          800,
+          1959
+        ],
+        [
+          1500,
+          1614
+        ],
+        [
+          1763,
+          1614
+        ]
+      ]
+    }
+  },
+  "four_color_geometry": {
+    "turntable_count": 1,
+    "radial_track_count": 12,
+    "bay_count": 12,
+    "locomotive_count": 1,
+    "source_clip": [
+      65,
+      915,
+      579,
+      1190
+    ],
+    "center_source_px": [
+      333,
+      1128
+    ],
+    "bay_centers_source_px": [
+      [
+        125,
+        1071
+      ],
+      [
+        148,
+        1030
+      ],
+      [
+        181,
+        987
+      ],
+      [
+        218,
+        955
+      ],
+      [
+        267,
+        934
+      ],
+      [
+        317,
+        926
+      ],
+      [
+        367,
+        931
+      ],
+      [
+        416,
+        947
+      ],
+      [
+        458,
+        971
+      ],
+      [
+        499,
+        1000
+      ],
+      [
+        530,
+        1038
+      ],
+      [
+        552,
+        1082
+      ]
+    ],
+    "grayscale_redundancy": [
+      "圓框",
+      "實線軌道",
+      "斜線格紋庫位",
+      "火車外輪廓"
+    ]
+  },
+  "font": {
+    "english_family_style": [
+      "Comic Relief",
+      "Regular"
+    ],
+    "comic_relief_sha256": "9EF4958AB06385D91F635F83A15569786B243F9D010CFB3F9A5CDDA593C7BC22"
+  },
+  "qa": {
+    "content_answers": "pass",
+    "same_complete_master": "pass",
+    "outside_answer_mask_pixel_difference": 0,
+    "answer_mask_antialias_dilation_px": 15,
+    "prohibited_face_terms": {
+      "學生樣稿": 0,
+      "教師樣稿": 0,
+      "草稿": 0,
+      "待確認": 0
+    },
+    "page_size": "pass",
+    "dpi": "pass",
+    "matching_mapping": "pass",
+    "diagram_counts": "pass",
+    "comic_relief_actual_font": "pass",
+    "cross_section_gaps_inherited_from_locked_student_px": {
+      "1_to_2": 136,
+      "2_to_3": 35,
+      "3_to_4": 20.19,
+      "overlap": 0
+    },
+    "color_contact": "19_正式學生教師版_彩色對照.png",
+    "grayscale_contact": "20_正式學生教師版_灰階對照.png",
+    "detail_contact": "21_教師答案版_配對與四色局部QA.png",
+    "a4_preview": "22_教師答案版_A4列印預覽.png",
+    "manual_visual_read_required": true,
+    "physical_print": "teacher-todo"
+  }
+}

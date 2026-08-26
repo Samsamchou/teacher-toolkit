@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-08-26T21:23:18+08:00",
+  "manifestRecords": 402,
+  "verifiedFiles": 402,
+  "totalBytes": 1078552307,
+  "failures": 0,
+  "verificationCsvSha256": "81152FF8FADCFAE2F37D43D5BCE74D2624907566180543CA3BEFEF2BB1BB1BDD"
+}

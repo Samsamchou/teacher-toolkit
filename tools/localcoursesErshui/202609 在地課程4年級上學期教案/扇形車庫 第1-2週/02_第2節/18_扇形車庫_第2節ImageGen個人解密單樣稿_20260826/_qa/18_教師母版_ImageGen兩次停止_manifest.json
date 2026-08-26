@@ -1,0 +1,195 @@
+{
+  "generated_on": "2026-08-26",
+  "status": "stopped_waiting_teacher_after_two_imagegen_attempts",
+  "scope": "已另存11號學生正式數位頁；教師答案無字母版兩次ImageGen均未通過，因此未覆排教師答案、未生成其餘12頁、未更新14至17號正式成果。",
+  "rdq": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\rdq\\RDQ-spec-fan-roundhouse-lesson2-formal-imagegen-batch-20260826.md",
+    "status": "confirmed",
+    "maximum_imagegen_attempts_per_page": 2
+  },
+  "locked_student": {
+    "source": {
+      "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\04_學生版_正式文字覆排樣稿.png",
+      "bytes": 5938301,
+      "sha256": "A9A69951D582F0ED0E63BFD60003173E5EC2B9AD4253B75B12A59E536C5CE5E4",
+      "pixels": [
+        2480,
+        3508
+      ],
+      "mode": "RGB"
+    },
+    "formal_copy": {
+      "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\11_學生版_A4直式_個人解密單_正式版_20260826.png",
+      "bytes": 5938301,
+      "sha256": "A9A69951D582F0ED0E63BFD60003173E5EC2B9AD4253B75B12A59E536C5CE5E4",
+      "pixels": [
+        2480,
+        3508
+      ],
+      "mode": "RGB"
+    },
+    "bytes_equal": true,
+    "hash_equal": true,
+    "digital_status": "正式數位教材；實體試印待教師完成"
+  },
+  "teacher_master_attempts": [
+    {
+      "attempt": 1,
+      "tool": "built-in imagegen reference edit",
+      "reference": {
+        "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\08_學生版_ImageGen活潑版無字母版_嘗試2_採用.png",
+        "bytes": 1949793,
+        "sha256": "07F3A1D8859A0EFC340610E1F498AD5F52607D5735E1D7166E0E6AB0EA70CBD2",
+        "pixels": [
+          1055,
+          1491
+        ],
+        "mode": "RGB"
+      },
+      "prompt": "Use case: precise-object-edit\nAsset type: A4 portrait elementary-school worksheet, no-text teacher answer visual master\nInput images: Image 1 is the exact edit target and the complete approved student no-text master.\nPrimary request: Add only one small functional teacher-answer cue: a coral-red circular badge with one simple white check mark, placed inside the unused upper-right area of the large white title cloud, above the future title line. Keep the badge about 45 x 45 pixels relative to the 1055 x 1491 source, centered near source coordinate x=705, y=70.\nStyle/medium: preserve the exact existing warm 3D chibi family-animation worksheet style.\nComposition/framing: preserve the exact A4 portrait framing, all section boundaries, paper shapes, writing spaces, cards, decorative train characters, railway signal, bunting, track border, and negative space.\nCritical invariants: change only the tiny check badge area; keep every other pixel-level object and geometry unchanged as closely as possible. Preserve exactly one central turntable, exactly 12 radial tracks, exactly 12 roundhouse bays, and exactly one small locomotive in the section-3 diagram. Preserve all four colored section bands, every ticket/card, the existing icons and characters, and every blank writing/answer area. Do not move, resize, crop, cover, replace, restyle, or add any other object.\nText constraint: absolutely no readable text, no letters, no numbers, no fake text, no pseudo-writing, no watermark, no logo.\nAvoid: layout drift, added labels, extra badges, extra trains, changed track or bay count, altered card geometry, changed page proportions, objects touching future text or answer areas.",
+      "output": {
+        "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\12_教師答案版_ImageGen活潑版無字母版_嘗試1_未採用_主標題碰撞.png",
+        "bytes": 1907451,
+        "sha256": "CC2BB34EA4CD8EC69D26D811BB75378C6DD054A73ACC4BD3FCAB3D0AE5F2504D",
+        "pixels": [
+          1055,
+          1491
+        ],
+        "mode": "RGB"
+      },
+      "manual_no_readable_text": true,
+      "manual_structure_count": {
+        "turntable": 1,
+        "radial_tracks": 12,
+        "roundhouse_bays": 12,
+        "small_locomotive": 1
+      },
+      "passed": false,
+      "failure": "新增勾選徽章進入主標題實際字形區，違反裝飾避讓與不可遮字規則。",
+      "badge_bbox_source": [
+        636,
+        55,
+        686,
+        106
+      ],
+      "badge_bbox_page": [
+        1495.05,
+        129.4,
+        1612.59,
+        249.4
+      ],
+      "locked_title_glyph_bbox_page": [
+        703.0,
+        223.0,
+        1671.0,
+        302.0
+      ],
+      "overlap_bbox_page": [
+        1495.05,
+        223.0,
+        1612.59,
+        249.4
+      ]
+    },
+    {
+      "attempt": 2,
+      "tool": "built-in imagegen reference edit",
+      "reference": {
+        "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\12_教師答案版_ImageGen活潑版無字母版_嘗試1_未採用_主標題碰撞.png",
+        "bytes": 1907451,
+        "sha256": "CC2BB34EA4CD8EC69D26D811BB75378C6DD054A73ACC4BD3FCAB3D0AE5F2504D",
+        "pixels": [
+          1055,
+          1491
+        ],
+        "mode": "RGB"
+      },
+      "prompt": "Use case: precise-object-edit\nAsset type: A4 portrait elementary-school worksheet, no-text teacher answer visual master\nInput images: Image 1 is the exact edit target from attempt 1.\nPrimary request: Fix only the teacher-answer cue placement. Completely remove the coral circular check badge from the large white title cloud and restore that cloud to clean blank white paper. Add one small coral-red check mark, without a surrounding circle, centered on the existing yellow puzzle piece held by the train character at the far right of the blue matching section. The check mark should be small enough to stay fully inside the yellow puzzle piece.\nCritical invariants: make only these two localized changes. Keep every other object, pixel-level geometry, color band, paper/card shape, writing space, character, prop, border, and decoration unchanged as closely as possible. Keep the title cloud fully blank. Preserve exactly one central turntable, exactly 12 radial tracks, exactly 12 roundhouse bays, and exactly one small locomotive in the section-3 diagram. Preserve all four colored section bands and all answer/write spaces.\nText constraint: absolutely no readable text, no letters, no numbers, no fake text, no pseudo-writing, no watermark, no logo.\nAvoid: any cue near the title or future text, layout drift, extra badges, extra trains, changed track or bay count, altered card geometry, changed page proportions, objects touching future text or answer areas.",
+      "output": {
+        "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\13_教師答案版_ImageGen活潑版無字母版_嘗試2_未採用_圖例遮擋.png",
+        "bytes": 1857029,
+        "sha256": "958A38ABA001D7A62E32CE5AD5FA5556571769E85308AF5A839FE0581E6A7801",
+        "pixels": [
+          1055,
+          1491
+        ],
+        "mode": "RGB"
+      },
+      "manual_no_readable_text": true,
+      "manual_structure_count": {
+        "turntable": 1,
+        "radial_tracks": 12,
+        "roundhouse_bays": 12,
+        "small_locomotive": 1
+      },
+      "passed": false,
+      "failure": "勾號誤放並覆蓋第四色圖例的黃色火車圖示，違反圖例不得被裝飾接觸或遮住。",
+      "misplaced_check_bbox_source": [
+        649,
+        1133,
+        687,
+        1166
+      ],
+      "locked_yellow_train_icon_bbox_source": [
+        649,
+        1132,
+        692,
+        1165
+      ],
+      "overlap_bbox_source": [
+        649.0,
+        1133.0,
+        687.0,
+        1165.0
+      ]
+    }
+  ],
+  "qa_outputs": [
+    {
+      "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\_qa\\16_教師母版_ImageGen兩次未採用_彩色對照.png",
+      "bytes": 3283292,
+      "sha256": "D80330ACF665E2AB03FFC90BAFDDF4E73267CE1029572C4D3242456807579A1C",
+      "pixels": [
+        2140,
+        1580
+      ],
+      "mode": "RGB"
+    },
+    {
+      "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\18_扇形車庫_第2節ImageGen個人解密單樣稿_20260826\\_qa\\17_教師母版_ImageGen兩次未採用_碰撞局部放大.png",
+      "bytes": 418031,
+      "sha256": "B7E93D7607460B0ABD01E85A0904647C8C64B93CBD7B73A8D91884C374EE272E",
+      "pixels": [
+        1900,
+        1020
+      ],
+      "mode": "RGB"
+    }
+  ],
+  "formal_14_to_17_readback_unchanged": {
+    "14_student_pdf": {
+      "bytes": 3538976,
+      "sha256": "8C755B7C29E5E6111C528119D5BE8498CBFD47A22CAB2D78FA9BC15E49424516"
+    },
+    "15_teacher_pdf": {
+      "bytes": 3664255,
+      "sha256": "88B6301ABCD0D59F481E0CA21CEBE34235126F551F51710604F6BCD1DC124D33"
+    },
+    "16_image_folder": {
+      "file_count": 22,
+      "total_bytes": 8273905,
+      "note": "本階段只讀回檔數與位元組；整套完成前不建立覆寫備份，也不更新內容。"
+    },
+    "17_qa_record": {
+      "bytes": 5706,
+      "sha256": "60257B29603D866DC97E9A82332C835559ED12BE38523583B608AB4C4CD29D55"
+    }
+  },
+  "stopped_actions": [
+    "不建立教師答案正式覆排頁",
+    "不生成其餘12頁",
+    "不更新14至17號正式成果",
+    "不宣稱已完成實體試印"
+  ],
+  "next_gate": "等待教師決定是否改採可重建答案層搭配鎖定學生無字母版，或另行明確授權新的ImageGen策略。"
+}

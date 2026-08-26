@@ -1,0 +1,117 @@
+{
+  "formal_directory": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\_staging\\lesson2_formal_imagegen_20260826\\formal_targets",
+  "student_pdf": {
+    "file": "14_扇形車庫_第2節正式教材_學生版_20260826.pdf",
+    "bytes": 75462122,
+    "sha256": "E59F7B237555D6167858F7B83FFF17096BD1068E20CB05C5411FFB7C436BB36E",
+    "pages": 7,
+    "page_sizes_pt": [
+      [
+        595.28,
+        841.89
+      ],
+      [
+        419.53,
+        595.28
+      ],
+      [
+        297.64,
+        419.53
+      ],
+      [
+        841.89,
+        595.28
+      ],
+      [
+        595.28,
+        841.89
+      ],
+      [
+        419.53,
+        595.28
+      ],
+      [
+        419.53,
+        595.28
+      ]
+    ],
+    "required_text": [
+      "1922",
+      "1933",
+      "Where's the turntable?"
+    ]
+  },
+  "teacher_pdf": {
+    "file": "15_扇形車庫_第2節正式教材_教師答案版_20260826.pdf",
+    "bytes": 74269074,
+    "sha256": "F79BB242679D12D3A9B995A3CD3AFBB1F6AB240BE6C94F8483BD64D3C62D7EC2",
+    "pages": 7,
+    "page_sizes_pt": [
+      [
+        595.28,
+        841.89
+      ],
+      [
+        419.53,
+        595.28
+      ],
+      [
+        297.64,
+        419.53
+      ],
+      [
+        841.89,
+        595.28
+      ],
+      [
+        595.28,
+        841.89
+      ],
+      [
+        419.53,
+        595.28
+      ],
+      [
+        419.53,
+        595.28
+      ]
+    ],
+    "required_text": [
+      "1922",
+      "1933",
+      "It's in the middle."
+    ]
+  },
+  "formal_png_directory": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\_staging\\lesson2_formal_imagegen_20260826\\formal_targets\\16_扇形車庫_第2節正式教材圖檔_20260826",
+    "files": 67,
+    "bytes": 140869235
+  },
+  "qa_markdown": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週\\_staging\\lesson2_formal_imagegen_20260826\\formal_targets\\17_扇形車庫_第2節正式教材_教師確認與製作QA紀錄_20260826.md",
+    "bytes": 2838,
+    "sha256": "C5CCB6D3DA5486456DD029D2009722D7911139CFF9035D29BF80D227427C89ED"
+  },
+  "pdf_render_contacts": [
+    {
+      "file": "01_學生PDF_7頁彩色回渲.png",
+      "bytes": 2208911,
+      "sha256": "BC7A7B334FC4FEDDEE834438AF9306686248203BD5C10336109A7B56D025A38B"
+    },
+    {
+      "file": "02_教師PDF_7頁彩色回渲.png",
+      "bytes": 2223347,
+      "sha256": "5CE1684EC12D9A2623A653870BE36031CD39C5B30740A6A09D9B6F9856E3C775"
+    },
+    {
+      "file": "03_學生PDF_7頁灰階回渲.png",
+      "bytes": 1382412,
+      "sha256": "72BFADFB698C3036D742848C2C0D2FB366D6B0EDB3FFBE8AEE7287D7C19AE43B"
+    },
+    {
+      "file": "04_教師PDF_7頁灰階回渲.png",
+      "bytes": 1405137,
+      "sha256": "8ECCDCD9EFD2E5DE95B20E4F9723F7F785ADE5D388F7D1384F6E3A399DA4CBCF"
+    }
+  ]
+}

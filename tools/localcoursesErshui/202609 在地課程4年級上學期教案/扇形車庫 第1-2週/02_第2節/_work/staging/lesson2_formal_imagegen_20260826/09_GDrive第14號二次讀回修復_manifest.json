@@ -1,0 +1,33 @@
+{
+  "date": "2026-08-26",
+  "status": "repaired_and_verified",
+  "target": "14_扇形車庫_第2節正式教材_學生版_20260826.pdf",
+  "expected": {
+    "bytes": 75462122,
+    "sha256": "E59F7B237555D6167858F7B83FFF17096BD1068E20CB05C5411FFB7C436BB36E",
+    "pages": 7
+  },
+  "detection": {
+    "check": "independent read-back after transactional script completion",
+    "formal_target_bytes": 0,
+    "protective_holder_bytes": 75462122,
+    "temporary_holder": ".__old__20260826-201024__14_扇形車庫_第2節正式教材_學生版_20260826.pdf",
+    "classification": "Google Drive delayed or non-atomic rename state"
+  },
+  "repair": [
+    "copied the already verified staged PDF directly over the 0-byte formal placeholder",
+    "waited 3 seconds and verified exact bytes and SHA-256",
+    "waited another 5 seconds and verified exact bytes and SHA-256",
+    "removed the duplicate protective holder",
+    "waited 5 seconds and verified the formal PDF again"
+  ],
+  "final_read_back": {
+    "bytes": 75462122,
+    "sha256": "E59F7B237555D6167858F7B83FFF17096BD1068E20CB05C5411FFB7C436BB36E",
+    "temporary_swap_files": 0
+  },
+  "recovery": {
+    "old_version_backup": "_backup/lesson2_formal_before_imagegen_20260826-201024",
+    "backup_manifest_sha256": "CFB199ED9F945278EE9959CF2B310DE9BE580E906DF45AEC51C0F8DAE48798A6"
+  }
+}

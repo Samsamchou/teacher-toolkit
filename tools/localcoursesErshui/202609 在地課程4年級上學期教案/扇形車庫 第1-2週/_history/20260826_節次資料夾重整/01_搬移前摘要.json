@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-08-26T21:14:52+08:00",
+  "unitRoot": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週",
+  "fileCount": 402,
+  "totalBytes": 1078552307,
+  "categoryCounts": {
+    "shared": 3,
+    "lesson1": 20,
+    "lesson2": 379
+  },
+  "manifestSetSha256": "A1B0FA474B51FC48E2CAAA8C71BD9E357AB79C837D5A02815FF1E63F304D0803",
+  "csvSha256": "0F5BA9912376E89FA22220439299A3DE91130F0B7A2AE484A239AE979B796CA8"
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "二水在地課程擴編"
+  short_description: "依正式單元與週次擴編二水在地課程、教材及安全網站"
+  default_prompt: "Use $ershui-local-curriculum-builder to expand the next confirmed Ershui local-curriculum unit."
+policy:
+  allow_implicit_invocation: true

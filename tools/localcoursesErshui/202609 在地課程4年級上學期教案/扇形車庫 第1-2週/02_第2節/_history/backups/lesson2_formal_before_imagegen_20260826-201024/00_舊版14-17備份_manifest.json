@@ -1,0 +1,146 @@
+{
+  "created_at": "2026-08-26T20:10:27",
+  "purpose": "baseline before full ImageGen replacement of formal lesson 2 targets 14-17",
+  "unit_directory": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\localcoursesErshui\\202609 在地課程4年級上學期教案\\扇形車庫 第1-2週",
+  "targets": {
+    "14_扇形車庫_第2節正式教材_學生版_20260826.pdf": {
+      "kind": "file",
+      "name": "14_扇形車庫_第2節正式教材_學生版_20260826.pdf",
+      "bytes": 3538976,
+      "sha256": "8C755B7C29E5E6111C528119D5BE8498CBFD47A22CAB2D78FA9BC15E49424516"
+    },
+    "15_扇形車庫_第2節正式教材_教師答案版_20260826.pdf": {
+      "kind": "file",
+      "name": "15_扇形車庫_第2節正式教材_教師答案版_20260826.pdf",
+      "bytes": 3664255,
+      "sha256": "88B6301ABCD0D59F481E0CA21CEBE34235126F551F51710604F6BCD1DC124D33"
+    },
+    "16_扇形車庫_第2節正式教材圖檔_20260826": {
+      "kind": "directory",
+      "name": "16_扇形車庫_第2節正式教材圖檔_20260826",
+      "file_count": 22,
+      "bytes": 8273905,
+      "files": [
+        {
+          "relative_path": "00_教材清冊與列印說明.md",
+          "bytes": 3110,
+          "sha256": "78A9EE9F6A5382A6A1A47B0B4E616F21C4D7D718B86A8571463EFE39E27A3179"
+        },
+        {
+          "relative_path": "01_學生版_A4直式_個人解密單.png",
+          "bytes": 604977,
+          "sha256": "C364EA57F5C399D6B1DB1AA5F6470107CE9EE8787933C48FC817158D17DD6F3A"
+        },
+        {
+          "relative_path": "01_教師答案版_A4直式_個人解密單.png",
+          "bytes": 613481,
+          "sha256": "38014299A721422411A46D54E7C2667D9563033FBA9AE0830DE2537C75017001"
+        },
+        {
+          "relative_path": "02_學生版_A5直式_四色圖例卡.png",
+          "bytes": 161821,
+          "sha256": "DE7904BCE3AE31472B3ED2DABB7AC0EDAEF4D51997864A7A59F3461236366766"
+        },
+        {
+          "relative_path": "02_教師答案版_A5直式_四色圖例卡.png",
+          "bytes": 163871,
+          "sha256": "F976FCFA55E03D63E21E5615BF7212EB8FF36E0911B75AFD0BB9C1C9CD31933B"
+        },
+        {
+          "relative_path": "03_學生版_A6直式_三格出口票.png",
+          "bytes": 108481,
+          "sha256": "78486CBB3EDB8E3FDA8EF88536EF090CE627083A9494EA99168BDE8C13B3D501"
+        },
+        {
+          "relative_path": "03_教師答案版_A6直式_三格出口票.png",
+          "bytes": 114839,
+          "sha256": "995E46206370EA6890FCABD767222703FFC07B922349BE60DC1497045B05D736"
+        },
+        {
+          "relative_path": "04_學生版_A4橫式_何時構件功能三格圖示板.png",
+          "bytes": 198984,
+          "sha256": "E37A69AC4B53A3AB6BB98175D5E4DB1834C913A91F947C3247AC3430C923B62D"
+        },
+        {
+          "relative_path": "04_教師答案版_A4橫式_何時構件功能三格圖示板.png",
+          "bytes": 255615,
+          "sha256": "DF21E6246D054F87CAD1DF615AC003C2994922AD9AD9DDDF8974C4AE7DB30546"
+        },
+        {
+          "relative_path": "05_學生版_A4直式_8張中文資料句條.png",
+          "bytes": 815350,
+          "sha256": "FBDAE4EA533803342174CD8F279A2ADDA7085A3C89A1334E4C0D5CA02AF86D3F"
+        },
+        {
+          "relative_path": "05_教師答案版_A4直式_8張中文資料句條.png",
+          "bytes": 816027,
+          "sha256": "5C392CA3829F156D2976744221AABC1292F83B89588A9335C358DB7745ECDCBE"
+        },
+        {
+          "relative_path": "06_學生版_A5直式_4張英文句型卡.png",
+          "bytes": 462215,
+          "sha256": "FC895063C6F646335901203C1178EA43E30C90BE55BFCA8F77862CA306E3C968"
+        },
+        {
+          "relative_path": "06_教師答案版_A5直式_4張英文句型卡.png",
+          "bytes": 470510,
+          "sha256": "C38D7BF0710E2E02FB51F78139A9AD740B73050FEE816798BC5BBBC88D830F63"
+        },
+        {
+          "relative_path": "07_學生版_A5直式_30秒導覽順序卡.png",
+          "bytes": 148722,
+          "sha256": "010DA07F69EA6B75F6BC2D868F5D84626B65EBE5BB61608FA8E4D6E6D952117D"
+        },
+        {
+          "relative_path": "07_教師答案版_A5直式_30秒導覽順序卡.png",
+          "bytes": 177525,
+          "sha256": "8A852C2B808164788035CC493C1DF94150B01D304879DB951CBA98E421CC2E40"
+        },
+        {
+          "relative_path": "08_火車小偵探_風格3_六姿勢母版.png",
+          "bytes": 1693383,
+          "sha256": "B3529123713E895987CF13EBEF522B68238331CE343D23AE6B71048841902E28"
+        },
+        {
+          "relative_path": "_assets/火車小偵探_01_clock.png",
+          "bytes": 258961,
+          "sha256": "FABC49CF5A8C9D13890EC1322F8EBF1CAF7BB91460BCFC48BB337BF35F16F446"
+        },
+        {
+          "relative_path": "_assets/火車小偵探_02_link.png",
+          "bytes": 232738,
+          "sha256": "F2B23F4EB990B1A64F695806403179AC76D7CDDF558F05272143EE7B82826094"
+        },
+        {
+          "relative_path": "_assets/火車小偵探_03_palette.png",
+          "bytes": 251055,
+          "sha256": "C659C64515A705A85A211CC9C16F24763F36BB64A70E3EBE1C116A88FDF6A881"
+        },
+        {
+          "relative_path": "_assets/火車小偵探_04_pin.png",
+          "bytes": 236771,
+          "sha256": "8734E8D6774EA0FF214FE588728147CDA71670EFA60096AC4B108A50F4AD2CD3"
+        },
+        {
+          "relative_path": "_assets/火車小偵探_05_gear.png",
+          "bytes": 249605,
+          "sha256": "D79913D452170FBC19349A128C8A78640B417BD2AC7F0A4BE397742C592224E1"
+        },
+        {
+          "relative_path": "_assets/火車小偵探_06_mic.png",
+          "bytes": 235864,
+          "sha256": "A014B33458CEF04681966CA3C39ECB7C06AF23F312EDEAA6ECF4766728C5F580"
+        }
+      ]
+    },
+    "17_扇形車庫_第2節正式教材_教師確認與製作QA紀錄_20260826.md": {
+      "kind": "file",
+      "name": "17_扇形車庫_第2節正式教材_教師確認與製作QA紀錄_20260826.md",
+      "bytes": 5706,
+      "sha256": "60257B29603D866DC97E9A82332C835559ED12BE38523583B608AB4C4CD29D55"
+    }
+  },
+  "target_count": 4,
+  "total_files": 25,
+  "total_bytes": 15482842
+}
