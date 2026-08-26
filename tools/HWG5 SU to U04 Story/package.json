@@ -1,0 +1,10 @@
+{
+  "name": "hwg5-su-to-u04-story",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-isolation=none tests/*.test.js",
+    "check": "node --check public/ai-scoring.js && node --check public/ai-scoring-core.js && node --check functions/index.js"
+  }
+}

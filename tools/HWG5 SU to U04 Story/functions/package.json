@@ -1,0 +1,14 @@
+{
+  "name": "hwg5-su-u04-story-functions",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "@google-cloud/text-to-speech": "7.0.0",
+    "firebase-functions": "7.3.2"
+  }
+}

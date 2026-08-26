@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HWG Story Reading Practice</title>
+    
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入 Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    <script type="module" src="./ai-scoring.js"></script>
+    <!-- 載入 Google Fonts (Comic Neue 備援) -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --accent2: #ec4899;
+            --bg-color: #fefce8;
+        }
+
+        /* 全局強制套用 Comic Sans / Comic Relief 字型 */
+        body, button, input, select, textarea, span, p, h1, h2, h3, h4, div {
+            font-family: 'Comic Sans MS', 'Comic Relief', 'Comic Neue', cursive, sans-serif !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#cbd5e1 2.5px, transparent 2.5px);
+            background-size: 32px 32px;
+            color: #333;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 隱藏捲動條 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 多巴胺立體按鈕特效 */
+        .btn-dopamine {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 0 rgba(0,0,0,0.18);
+        }
+        .btn-dopamine:active {
+            transform: translateY(6px);
+            box-shadow: 0 0px 0 rgba(0,0,0,0);
+        }
+
+        /* 錄音中特效 (紅色脈衝) */
+        .recording-pulse {
+            animation: pulse-red 1.5s infinite;
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #dc2626 !important;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* 彈跳視窗動畫 */
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-content {
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { 
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* 可點擊單字樣式 */
+        .clickable-word {
+            display: inline-block;
+            cursor: pointer;
+            border-bottom: 3px dashed var(--secondary);
+            margin: 0 4px;
+            transition: all 0.2s;
+            border-radius: 8px;
+            padding: 0 4px;
+        }
+        .clickable-word:hover {
+            background-color: #fef08a;
+            transform: translateY(-2px) scale(1.05);
+            color: #d97706;
+        }
+
+        .loading-spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid var(--secondary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-3 sm:p-6">
+
+    <!-- 全域 Loading 遮罩 -->
+    <div id="global-loading" class="hidden fixed inset-0 z-[100] modal-overlay flex flex-col items-center justify-center">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl flex flex-col items-center text-center max-w-sm mx-4 border-4 border-amber-400">
+            <div class="text-7xl mb-4 animate-bounce">🤖</div>
+            <div class="loading-spinner mb-4"></div>
+            <h3 class="text-3xl font-black text-indigo-600 mb-2" id="loading-title">AI 分析中...</h3>
+            <p class="text-gray-600 font-black text-lg" id="loading-desc">正在仔細聽你的發音，請稍候 🚀</p>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 1. 首頁 (多巴胺鮮豔配色 + 文字放大 20% + iPad 橫向排版) -->
+    <!-- ========================================== -->
+    <div id="view-home" class="flex-1 flex items-center justify-center p-4 w-full h-screen relative">
+        
+        <!-- 教師後臺入口按鈕 -->
+        <button onclick="openTeacherLogin()" class="absolute top-6 right-6 z-50 bg-white hover:bg-pink-50 text-pink-600 border-4 border-pink-400 px-6 py-3 rounded-2xl font-black text-xl shadow-lg flex items-center gap-2 btn-dopamine transition-all">
+            <span>👨‍🏫</span> 教師後臺
+        </button>
+
+        <div class="bg-white p-8 sm:p-10 rounded-[3.5rem] shadow-2xl border-8 border-indigo-400 w-full max-w-5xl flex flex-col md:flex-row gap-8 items-center relative overflow-hidden">
+            
+            <!-- 左側：多巴胺風格視覺大卡片 (佔 42%) -->
+            <div class="w-full md:w-5/12 bg-gradient-to-br from-amber-100 via-rose-100 to-sky-100 p-8 rounded-[2.5rem] border-4 border-amber-300 flex flex-col items-center justify-center text-center shadow-inner">
+                <div class="text-9xl mb-3 drop-shadow-md animate-bounce">🏆</div>
+                <h1 class="text-6xl sm:text-7xl font-black text-blue-600 tracking-wide mb-2 drop-shadow-sm">HWG</h1>
+                <h2 class="text-3xl sm:text-4xl font-black text-gray-700 leading-tight">Story Reading<br>Practice</h2>
+                <div class="mt-6 inline-flex items-center gap-2 bg-white text-pink-600 px-6 py-2.5 rounded-full font-black text-lg shadow-md border-2 border-pink-200">
+                    <span>✨</span> 英語口說發音特訓中心
+                </div>
+            </div>
+
+            <!-- 右側：多色區塊選單與輸入 (佔 58%) -->
+            <div class="w-full md:w-7/12 flex flex-col gap-5">
+                
+                <!-- 1. 選擇主題 (Theme) -->
+                <div>
+                    <p class="text-xl sm:text-2xl font-black text-blue-600 mb-2 flex items-center gap-2">
+                        <span>📂</span> 1. 選擇主題 (Theme)：
+                    </p>
+                    <div class="grid grid-cols-4 gap-2.5">
+                        <button onclick="selectTheme('HWG5')" id="btn-theme-HWG5" class="theme-btn py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">HWG5</button>
+                        <button onclick="selectTheme('HWG6')" id="btn-theme-HWG6" class="theme-btn py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">HWG6</button>
+                        <button onclick="selectTheme('HWG7')" id="btn-theme-HWG7" class="theme-btn py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">HWG7</button>
+                        <button onclick="selectTheme('HWG8')" id="btn-theme-HWG8" class="theme-btn py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">HWG8</button>
+                    </div>
+                </div>
+
+                <!-- 2. 選擇單元 (Unit) -->
+                <div>
+                    <p class="text-xl sm:text-2xl font-black text-emerald-600 mb-2 flex items-center gap-2">
+                        <span>📖</span> 2. 選擇單元 (Unit)：
+                    </p>
+                    <div class="flex justify-between gap-2">
+                        <button onclick="selectUnit('SU')" id="btn-unit-SU" class="unit-btn flex-1 py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">SU</button>
+                        <button onclick="selectUnit('U01')" id="btn-unit-U01" class="unit-btn flex-1 py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">U01</button>
+                        <button onclick="selectUnit('U02')" id="btn-unit-U02" class="unit-btn flex-1 py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">U02</button>
+                        <button onclick="selectUnit('U03')" id="btn-unit-U03" class="unit-btn flex-1 py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">U03</button>
+                        <button onclick="selectUnit('U04')" id="btn-unit-U04" class="unit-btn flex-1 py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine">U04</button>
+                    </div>
+                </div>
+
+                <!-- 3. 輸入學號 (Student ID) -->
+                <div>
+                    <p class="text-xl sm:text-2xl font-black text-purple-600 mb-2 flex items-center gap-2">
+                        <span>👤</span> 3. 輸入學號 (Student ID)：
+                    </p>
+                    <input type="number" id="student-id" placeholder="000" class="w-full px-6 py-4 rounded-2xl border-4 border-purple-200 text-center text-4xl sm:text-5xl font-black focus:border-purple-500 focus:outline-none transition-colors bg-purple-50/40 text-purple-900 placeholder-purple-300">
+                </div>
+                
+                <!-- 開始練習按鈕 -->
+                <button onclick="login()" class="btn-dopamine w-full bg-black text-white hover:bg-gray-900 text-3xl sm:text-4xl font-black py-4 sm:py-5 rounded-2xl flex items-center justify-center gap-3 mt-1 shadow-2xl border-4 border-gray-800">
+                    開始練習 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 2. 練習畫面 (每頁 4 句) -->
+    <!-- ========================================== -->
+    <div id="view-practice" class="hidden flex-1 flex flex-col p-2 sm:p-6 relative max-w-5xl mx-auto w-full h-screen overflow-y-auto no-scrollbar">
+        <div class="flex justify-between items-center mb-4 bg-white p-4 rounded-3xl shadow-md border-4 border-indigo-300 sticky top-0 z-40">
+            <div class="font-black text-xl sm:text-2xl text-gray-700">👤 學號: <span id="display-sid" class="text-blue-600"></span></div>
+            <div class="font-black text-2xl sm:text-3xl text-pink-500" id="page-indicator">Page 1 / 10</div>
+            <button onclick="showView('view-home')" class="text-gray-700 hover:text-pink-600 font-black text-xl bg-gray-100 border-3 border-gray-300 px-5 py-2.5 rounded-2xl flex items-center gap-1 btn-dopamine transition-colors">🏠 回到首頁</button>
+        </div>
+
+        <div id="sentences-container" class="flex-1 flex flex-col gap-6 pb-24"></div>
+
+        <!-- 底部導覽列 -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md p-4 border-t-4 border-indigo-200 flex justify-between items-center z-40">
+            <button id="btn-prev" onclick="changePage(-1)" class="btn-dopamine bg-gray-200 text-gray-700 border-2 border-gray-300 px-7 py-3.5 rounded-2xl font-black text-xl disabled:opacity-50">⬅️ 上一頁</button>
+            <button onclick="showDashboard()" class="btn-dopamine bg-amber-500 text-white border-2 border-amber-600 px-7 py-3.5 rounded-2xl font-black text-xl flex items-center gap-2 shadow-lg">🌟 今日練習成果</button>
+            <button id="btn-next" onclick="changePage(1)" class="btn-dopamine bg-emerald-500 text-white border-2 border-emerald-600 px-7 py-3.5 rounded-2xl font-black text-xl">下一頁 ➡️</button>
+        </div>
+    </div>
+
+    <!-- 單字卡彈跳視窗 -->
+    <div id="word-modal" class="hidden fixed inset-0 z-[60] modal-overlay flex items-center justify-center p-4" onclick="closeWordModal()">
+        <div class="modal-content bg-white p-8 rounded-[2.5rem] shadow-2xl border-8 border-amber-400 w-full max-w-sm text-center relative" onclick="event.stopPropagation()">
+            <button onclick="closeWordModal()" class="absolute top-4 right-4 bg-gray-100 text-gray-500 rounded-full w-10 h-10 font-black text-xl hover:bg-gray-200">✕</button>
+            <h2 id="modal-word-en" class="text-5xl font-black text-pink-500 mb-4">Word</h2>
+            <div class="bg-blue-50 p-5 rounded-3xl border-3 border-blue-200 mb-6">
+                <p id="modal-word-tip" class="text-xl font-bold text-gray-700 leading-relaxed">提示訊息</p>
+            </div>
+            <button id="modal-btn-speak" class="btn-dopamine w-full bg-amber-500 hover:bg-amber-600 text-white text-2xl font-black py-4 rounded-2xl shadow-lg flex items-center justify-center gap-2 border-2 border-amber-600">
+                🔊 聽發音
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 3. 學生個人儀表板 -->
+    <!-- ========================================== -->
+    <div id="view-dashboard" class="hidden flex-1 flex flex-col p-4 sm:p-6 w-full max-w-4xl mx-auto h-screen overflow-y-auto no-scrollbar">
+        <div class="flex justify-between items-center mb-6 bg-white p-6 rounded-[2.5rem] shadow-md border-6 border-amber-400">
+            <h2 class="text-4xl font-black text-amber-500">🌟 今日挑戰成果</h2>
+            <button onclick="showView('view-practice')" class="btn-dopamine bg-gray-100 text-gray-700 px-6 py-3.5 rounded-2xl font-black text-xl hover:bg-gray-200 border-2 border-gray-300">返回練習 ↩️</button>
+        </div>
+        <div id="dashboard-content" class="flex flex-col gap-4 pb-12"></div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 4. 教師後臺 -->
+    <!-- ========================================== -->
+    <div id="view-teacher" class="hidden flex-1 flex h-screen bg-gray-100 w-full overflow-hidden">
+        <!-- 左側面板 -->
+        <div class="w-80 bg-white border-r-4 border-gray-200 flex flex-col shadow-lg z-10">
+            <div class="p-6 bg-indigo-500 text-white flex justify-between items-center">
+                <h2 class="text-2xl font-black flex items-center gap-2">👨‍🏫 教師後臺</h2>
+                <button onclick="showView('view-home')" class="text-white text-base font-black bg-white/20 px-4 py-1.5 rounded-xl hover:bg-white/30">登出</button>
+            </div>
+            <div class="p-4 border-b-2 border-gray-100 bg-gray-50">
+                <input type="date" id="teacher-date-picker" class="w-full px-4 py-3 rounded-2xl border-3 border-gray-300 font-black text-gray-700 focus:border-indigo-500 outline-none text-lg" onchange="loadTeacherDateData()">
+            </div>
+            <div id="teacher-student-list" class="flex-1 overflow-y-auto p-2 no-scrollbar"></div>
+        </div>
+
+        <!-- 右側面板 -->
+        <div class="flex-1 flex flex-col overflow-hidden bg-gray-50">
+            <div class="p-6 bg-white border-b-4 border-gray-200 shadow-sm flex items-center justify-between flex-wrap gap-4" id="teacher-detail-header">
+                <h3 class="text-3xl font-black text-gray-700">請選擇左側學生</h3>
+                <div id="teacher-averages-container" class="flex gap-4 flex-wrap"></div>
+            </div>
+            <div id="teacher-detail-content" class="flex-1 overflow-y-auto p-6 flex flex-col gap-6 no-scrollbar"></div>
+        </div>
+    </div>
+
+    <!-- Firebase 與核心邏輯腳本 -->
+    <script>
+        // 👉 1. Firebase AI Logic 與 App Check 公開設定（site key 不是秘密）
+        const APP_CHECK_SITE_KEY = "6LeVaJktAAAAAAKgklO3h9PI3-l_15FMgIgZ4aOp";
+        const AI_MODEL_NAME = "gemini-3.7-flash";
+        window.HWG_AI_SCORING_READY = new Promise((resolve) => {
+            window.__resolveHwgAiScoring = resolve;
+        });
+        // 👉 2. Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7GQLo5iiuS3cxlaHR3aNbFk7RW_lcQZU",
+            authDomain: "hwg5-su-to-u04-story.firebaseapp.com",
+            projectId: "hwg5-su-to-u04-story",
+            storageBucket: "hwg5-su-to-u04-story.firebasestorage.app",
+            messagingSenderId: "362090476515",
+            appId: "1:362090476515:web:877a285182327a8277e6d6"
+        };
+        window.HWG_APP_CONFIG = Object.freeze({
+            firebaseConfig,
+            appCheckSiteKey: APP_CHECK_SITE_KEY,
+            aiModelName: AI_MODEL_NAME
+        });
+
+        // 全域變數
+        let currentStudentId = "";
+        let currentTheme = "HWG5";
+        let currentUnit = "SU";
+        let practiceData = []; 
+        let currentPage = 0;
+        const ITEMS_PER_PAGE = 4;
+        const MAX_SCORED_ATTEMPTS_PER_ITEM = 3;
+        const RECORD_RETENTION_MONTHS = 7;
+
+        let audioContext = null;
+        let activeMediaStream = null;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let recordingSentenceId = null;
+        let audioLevelReq = null;
+        let lastSpeakTime = 0;
+
+        let deleteTargetStudentId = "";
+        let currentTeacherDate = "";
+
+        // 初始化 Firebase
+        try {
+            if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+            window.db = firebase.firestore();
+            window.storage = firebase.storage();
+            console.log("✅ Firebase 連線成功");
+        } catch (e) {
+            console.error("❌ Firebase 初始化錯誤:", e);
+        }
+
+        function todayRecordDate() {
+            return new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+        }
+
+        function attemptStorageKey(sentenceId) {
+            return ["hwg-score-attempts", todayRecordDate(), currentStudentId, currentTheme, currentUnit, sentenceId].join(":");
+        }
+
+        function localAttemptCount(sentenceId) {
+            try {
+                return Number.parseInt(localStorage.getItem(attemptStorageKey(sentenceId)) || "0", 10) || 0;
+            } catch {
+                return 0;
+            }
+        }
+
+        function markSuccessfulAttempt(sentenceId) {
+            try {
+                localStorage.setItem(attemptStorageKey(sentenceId), String(localAttemptCount(sentenceId) + 1));
+            } catch (error) {
+                console.warn("無法在此裝置保存練習次數：", error);
+            }
+        }
+
+        async function cloudAttemptCount(sentenceId) {
+            if (!window.db || !currentStudentId) return 0;
+            try {
+                const snapshot = await Promise.race([
+                    window.db.collection("reading_records")
+                        .where("studentId", "==", currentStudentId)
+                        .where("date", "==", todayRecordDate())
+                        .where("theme", "==", currentTheme)
+                        .where("unit", "==", currentUnit)
+                        .get(),
+                    timeout(5000)
+                ]);
+                let count = 0;
+                snapshot.forEach((doc) => {
+                    if (doc.data().sentenceId === sentenceId) count += 1;
+                });
+                return count;
+            } catch (error) {
+                console.warn("無法讀取雲端練習次數，改用本機計數：", error);
+                return 0;
+            }
+        }
+
+        async function canStartScoring(sentenceId) {
+            const attempts = Math.max(localAttemptCount(sentenceId), await cloudAttemptCount(sentenceId));
+            if (attempts >= MAX_SCORED_ATTEMPTS_PER_ITEM) {
+                alert(`今天這一題已完成 ${MAX_SCORED_ATTEMPTS_PER_ITEM} 次評分，明天再繼續挑戰喔！`);
+                return false;
+            }
+            return true;
+        }
+
+        // ==========================================
+        // 📚 題庫資料 (收錄 HWG5 SU ~ U03 全單元分析)
+        // ==========================================
+        const allPracticeData = {
+            "HWG5-SU": [
+                { id: "su_1", en: "Good afternoon!", zh: "午安！", focus: "Good 字尾 /d/ 要輕收。afternoon 重音在 noon。語氣要自然、明亮。", ssml: "<speak><prosody pitch='+5%'>Good</prosody> <break time='150ms'/> after<emphasis level='strong'>noon</emphasis>!</speak>" },
+                { id: "su_2", en: "Good afternoon!", zh: "午安！", focus: "這句是回應，Good 稍亮，afternoon 的 noon 要重，結尾下降。", ssml: "<speak><prosody pitch='+15%'>Good</prosody> <break time='150ms'/> after<emphasis level='strong'>noon</emphasis>!</speak>" },
+                { id: "su_3", en: "Let's go out!", zh: "我們出去吧！", focus: "Let's 字尾 /ts/ 清楚，out 字尾 /t/ 收乾淨。可以連音 go-out。語氣開心有活力。", ssml: "<speak><emphasis level='moderate'>Let's</emphasis> <break time='150ms'/> <prosody pitch='+10%'>go out!</prosody></speak>" },
+                { id: "su_4", en: "Where's Rocky?", zh: "洛基在哪裡？", focus: "Where's 字尾 /z/ 要出來，Rocky 的 R 音清楚。Where's 微微上揚帶疑問感，句尾下降。", ssml: "<speak><prosody pitch='+15%'>Where's</prosody> <break time='150ms'/> Rocky?</speak>" },
+                { id: "su_5", en: "He's sleeping under the table.", zh: "他在桌子底下睡覺。", focus: "He's 字尾 /z/ 清楚，sleeping 長音拉夠、尾音 /ŋ/。under 第一音節重，the 發有聲 th。", ssml: "<speak>He's sleeping <break time='200ms'/> under <break time='100ms'/> the table.</speak>" },
+                { id: "su_6", en: "Hey, Rocky!", zh: "嘿，洛基！", focus: "Hey 短而亮，Rocky 的 R 清楚。語氣帶有發現的驚喜感。", ssml: "<speak><prosody pitch='+20%' rate='fast'>Hey</prosody>, <break time='200ms'/> Rocky!</speak>" }
+            ],
+            "HWG5-U01": [
+                { id: "u01_1", en: "Let's go here!", zh: "我們去這裡吧！", focus: "Let's 的 /ts/ 要清楚，here 的 h 要出來，句尾下降。", ssml: "<speak><emphasis level='strong'>Let's</emphasis> <break time='150ms'/> <emphasis level='strong'>go</emphasis> <emphasis level='strong'>here</emphasis>!</speak>" },
+                { id: "u01_2", en: "OK. Let's book the tickets.", zh: "好。我們來訂票吧。", focus: "OK 兩拍清楚。Let's 字尾 /ts/。book 短音 /ʊ/。tickets 字尾 /ts/ 收乾淨。", ssml: "<speak>O<emphasis level='strong'>K</emphasis>. <break time='300ms'/> <emphasis level='strong'>Let's</emphasis> <break time='150ms'/> <emphasis level='strong'>book</emphasis> the <emphasis level='strong'>tickets</emphasis>.</speak>" },
+                { id: "u01_3", en: "What day is today?", zh: "今天是星期幾？", focus: "wh-question 句尾下降。What 的 /t/ 輕收，today 重音在 day。", ssml: "<speak><emphasis level='strong'>What</emphasis> <emphasis level='strong'>day</emphasis> <break time='150ms'/> is to<emphasis level='strong'>day</emphasis>?</speak>" },
+                { id: "u01_4", en: "It's Friday.", zh: "今天是星期五。", focus: "It's 的 /ts/。Friday 第一音節重，r 音清楚。句尾下降。", ssml: "<speak><emphasis level='strong'>It's</emphasis> <break time='150ms'/> <emphasis level='strong'>Friday</emphasis>.</speak>" },
+                { id: "u01_5", en: "Friday. Done! Let's go!", zh: "星期五。完成！我們走吧！", focus: "短節奏，有活力。done 是 /ʌ/ 不是 down。Let's 字尾 /ts/。", ssml: "<speak><emphasis level='strong'>Friday</emphasis>. <break time='300ms'/> <emphasis level='strong'>Done</emphasis>! <break time='300ms'/> <emphasis level='strong'>Let's</emphasis> <emphasis level='strong'>go</emphasis>!</speak>" },
+                { id: "u01_6", en: "Is it Wednesday today?", zh: "今天是星期三嗎？", focus: "yes/no question 句尾上揚。Wednesday 唸 WENZ-day。", ssml: "<speak><emphasis level='strong'>Is it</emphasis> <break time='150ms'/> <emphasis level='strong'>Wednesday</emphasis> <break time='150ms'/> to<prosody pitch='+15%'>day?</prosody></speak>" },
+                { id: "u01_7", en: "No, it isn't. It's Friday.", zh: "不，不是。今天是星期五。", focus: "isn't 的 /nt/ 要出來。It's Friday 下降肯定。", ssml: "<speak><emphasis level='strong'>No</emphasis>, <break time='150ms'/> it <emphasis level='strong'>isn't</emphasis>. <break time='300ms'/> <emphasis level='strong'>It's</emphasis> <break time='150ms'/> <emphasis level='strong'>Friday</emphasis>.</speak>" },
+                { id: "u01_8", en: "TGIF! There's a football game today.", zh: "感謝週五！今天有足球賽。", focus: "TGIF 逐字母唸。There's 的 /z/。football 的 foot 是短音。today 下降。", ssml: "<speak>T-G-I-<emphasis level='strong'>F</emphasis>! <break time='300ms'/> <emphasis level='strong'>There's</emphasis> a <emphasis level='strong'>football</emphasis> <emphasis level='strong'>game</emphasis> <break time='150ms'/> to<emphasis level='strong'>day</emphasis>.</speak>" },
+                { id: "u01_9", en: "Have a good time.", zh: "祝你玩得開心。", focus: "good 是短音，time 清楚。語氣溫暖下降。", ssml: "<speak>Have a <break time='100ms'/> <emphasis level='strong'>good</emphasis> <emphasis level='strong'>time</emphasis>.</speak>" },
+                { id: "u01_10", en: "Thank you.", zh: "謝謝你。", focus: "Thank 無聲 th 要吐氣，不是 tank。you 下降。", ssml: "<speak><emphasis level='strong'>Thank</emphasis> <break time='150ms'/> <emphasis level='strong'>you</emphasis>.</speak>" }
+            ],
+            "HWG5-U02": [
+                { id: "u02_1", en: "It's Sunday. Let's go out!", zh: "今天是星期天。我們出去吧！", focus: "It's, Let's 字尾 /ts/。Sunday 重音。go out 活力。", ssml: "<speak><emphasis level='strong'>It's</emphasis> <emphasis level='strong'>Sunday</emphasis>. <break time='300ms'/> <emphasis level='strong'>Let's</emphasis> <break time='150ms'/> <emphasis level='strong'>go</emphasis> <emphasis level='strong'>out</emphasis>!</speak>" },
+                { id: "u02_2", en: "Does she have science class on Monday?", zh: "她星期一有自然課嗎？", focus: "yes/no question 句尾上揚。Does /z/，science 雙字尾 /s/。", ssml: "<speak><emphasis level='strong'>Does</emphasis> she <break time='150ms'/> have <emphasis level='strong'>science</emphasis> <emphasis level='strong'>class</emphasis> <break time='150ms'/> on <prosody pitch='+15%'>Monday?</prosody></speak>" },
+                { id: "u02_3", en: "Yes, she does.", zh: "是的，她有。", focus: "Yes /s/，does /z/。肯定下降。", ssml: "<speak><emphasis level='strong'>Yes</emphasis>, <break time='150ms'/> she <emphasis level='strong'>does</emphasis>.</speak>" },
+                { id: "u02_4", en: "Oops, sorry! I'm in a hurry.", zh: "噢，抱歉！我在趕時間。", focus: "Oops /ps/。sorry / hurry 的 r/h 音。hurry 句尾下降。", ssml: "<speak><prosody pitch='+10%'><emphasis level='strong'>Oops</emphasis>,</prosody> <break time='150ms'/> <emphasis level='strong'>sorry</emphasis>! <break time='300ms'/> <emphasis level='strong'>I'm</emphasis> <break time='150ms'/> in a <emphasis level='strong'>hurry</emphasis>.</speak>" },
+                { id: "u02_5", en: "What's that?", zh: "那是什麼？", focus: "wh-question 句尾下降。What's /ts/。that /th/。", ssml: "<speak><prosody pitch='+10%'><emphasis level='strong'>What's</emphasis></prosody> <break time='150ms'/> <emphasis level='strong'>that</emphasis>?</speak>" },
+                { id: "u02_6", en: "It's an ice hockey stick.", zh: "這是一根冰上曲棍球桿。", focus: "ice /s/，hockey /h/，stick /st/, /k/。", ssml: "<speak><emphasis level='strong'>It's</emphasis> an <break time='150ms'/> <emphasis level='strong'>ice</emphasis> <emphasis level='strong'>hockey</emphasis> <emphasis level='strong'>stick</emphasis>.</speak>" },
+                { id: "u02_7", en: "Do you have PE class today?", zh: "你今天有體育課嗎？", focus: "yes/no question 句尾上揚。PE 唸 P-E。", ssml: "<speak>Do you <break time='150ms'/> have <emphasis level='strong'>P-E</emphasis> <emphasis level='strong'>class</emphasis> <break time='150ms'/> to<prosody pitch='+15%'>day?</prosody></speak>" },
+                { id: "u02_8", en: "Yes, I do.", zh: "是的，我有。", focus: "肯定回答。Yes /s/，do 下降收句。", ssml: "<speak><emphasis level='strong'>Yes</emphasis>, <break time='150ms'/> I <emphasis level='strong'>do</emphasis>.</speak>" },
+                { id: "u02_9", en: "Can we go and watch?", zh: "我們可以去看嗎？", focus: "請求句 句尾上揚。watch /tʃ/ 不要唸成 wash。", ssml: "<speak>Can we <break time='150ms'/> <emphasis level='strong'>go</emphasis> and <prosody pitch='+15%'><emphasis level='strong'>watch</emphasis>?</prosody></speak>" },
+                { id: "u02_10", en: "Sure! Follow me.", zh: "好啊！跟我來。", focus: "Sure /ʃ/。Follow /f/。爽快下降。", ssml: "<speak><emphasis level='strong'>Sure</emphasis>! <break time='300ms'/> <emphasis level='strong'>Follow</emphasis> <emphasis level='strong'>me</emphasis>.</speak>" }
+            ],
+            "HWG5-U03": [
+                { id: "u03_1", en: "Where are we going?", zh: "我們要去哪裡？", focus: "wh-question 句尾下降。Where 的 w 與 r 要清楚。going 的 /ŋ/ 不要加音。", ssml: "<speak><emphasis level='strong'>Where</emphasis> are we <break time='150ms'/> <emphasis level='strong'>going</emphasis><prosody pitch='-10%'>?</prosody></speak>" },
+                { id: "u03_2", en: "We're going to the park.", zh: "我們要去公園。", focus: "We're 的 r 音。going 的 /ŋ/。park 的 r 與 /k/ 清楚。句尾下降。", ssml: "<speak><emphasis level='strong'>We're</emphasis> <emphasis level='strong'>going</emphasis> <break time='150ms'/> to the <emphasis level='strong'>park</emphasis>.</speak>" },
+                { id: "u03_3", en: "Say cheese!", zh: "說起司！(笑一個)", focus: "ch /tʃ/ 開頭，長音 /iː/，尾音 /z/ 清楚。明亮開心。", ssml: "<speak><prosody pitch='+15%'><emphasis level='strong'>Say</emphasis> <break time='150ms'/> <emphasis level='strong'>cheese</emphasis>!</prosody></speak>" },
+                { id: "u03_4", en: "Excuse me.", zh: "不好意思。", focus: "Excuse 重音在 cuse，尾音 /z/。禮貌溫和。", ssml: "<speak>Ex<emphasis level='strong'>cuse</emphasis> <break time='150ms'/> <emphasis level='strong'>me</emphasis>.</speak>" },
+                { id: "u03_5", en: "I'm lost.", zh: "我迷路了。", focus: "I'm 的 /m/，lost 的 /st/ 收乾淨。", ssml: "<speak><emphasis level='strong'>I'm</emphasis> <break time='150ms'/> <emphasis level='strong'>lost</emphasis>.</speak>" },
+                { id: "u03_6", en: "Where are you going?", zh: "你要去哪裡？", focus: "wh-question 句尾下降。Where 的 r，going 的 /ŋ/。", ssml: "<speak><emphasis level='strong'>Where</emphasis> are you <break time='150ms'/> <emphasis level='strong'>going</emphasis><prosody pitch='-10%'>?</prosody></speak>" },
+                { id: "u03_7", en: "I'm going to the Louvre Museum.", zh: "我要去羅浮宮。", focus: "Louvre 的 v 音，Museum 重音第二音節。", ssml: "<speak><emphasis level='strong'>I'm</emphasis> <emphasis level='strong'>going</emphasis> <break time='150ms'/> to the <emphasis level='strong'>Louvre</emphasis> Mu<emphasis level='strong'>seum</emphasis>.</speak>" },
+                { id: "u03_8", en: "It's on Rivoli Street.", zh: "在里沃利街上。", focus: "Rivoli 的 v 音，Street 的 st, r, /t/。", ssml: "<speak><emphasis level='strong'>It's</emphasis> on <break time='150ms'/> <emphasis level='strong'>Rivoli</emphasis> <emphasis level='strong'>Street</emphasis>.</speak>" },
+                { id: "u03_9", en: "Turn right there.", zh: "在那邊右轉。", focus: "Turn 的 r, n。right 的 r, /t/。there 的 th, r。", ssml: "<speak><emphasis level='strong'>Turn</emphasis> <emphasis level='strong'>right</emphasis> <break time='150ms'/> <emphasis level='strong'>there</emphasis>.</speak>" }
+            ]
+        };
+
+        // 字典庫 (含所有單元重點與基礎字)
+        const wordDictionary = {
+            "where": { zh: "哪裡", tip: "w 音與 r 音都要聽得出來，不要唸成 wear 太平。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>where</emphasis></prosody></speak>" },
+            "going": { zh: "去", tip: "尾音 /ŋ/，不要加成 going-guh。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>going</emphasis></prosody></speak>" },
+            "park": { zh: "公園", tip: "ar 音要有，字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>park</emphasis></prosody></speak>" },
+            "cheese": { zh: "起司 (拍照用語)", tip: "ch 開頭 /tʃ/，長音 /iː/，字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>cheese</emphasis></prosody></speak>" },
+            "excuse": { zh: "不好意思", tip: "第二音節重，動詞用法尾音是 /z/。", ssml: "<speak><prosody rate='slow'>ex<emphasis level='strong'>cuse</emphasis></prosody></speak>" },
+            "lost": { zh: "迷路", tip: "字尾 /st/ 要收乾淨。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>lost</emphasis></prosody></speak>" },
+            "louvre": { zh: "羅浮宮", tip: "v 音要出來，上齒輕碰下唇，吐氣並帶震動。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Louvre</emphasis></prosody></speak>" },
+            "museum": { zh: "博物館", tip: "重音在第二音節 SE。", ssml: "<speak><prosody rate='slow'>mu<emphasis level='strong'>se</emphasis>um</prosody></speak>" },
+            "rivoli": { zh: "里沃利(街名)", tip: "v 音要清楚，不要變成 b。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Rivoli</emphasis></prosody></speak>" },
+            "street": { zh: "街道", tip: "st + r 開頭要連起來，字尾 /t/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>street</emphasis></prosody></speak>" },
+            "turn": { zh: "轉彎", tip: "r 音要有，n 收尾。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>turn</emphasis></prosody></speak>" },
+            "right": { zh: "右", tip: "r 開頭清楚，字尾 /t/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>right</emphasis></prosody></speak>" },
+            "there": { zh: "那裡", tip: "有聲 th，r 音自然收尾，不要唸成 dare。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>there</emphasis></prosody></speak>" },
+            "sunday": { zh: "星期日", tip: "SUN-day，第一音節重。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Sun</emphasis>day</prosody></speak>" },
+            "does": { zh: "助動詞(單數)", tip: "does /dʌz/，字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>does</emphasis></prosody></speak>" },
+            "science": { zh: "自然科學", tip: "sci-ence，開頭 /sai/，字尾 /ns/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>science</emphasis></prosody></speak>" },
+            "class": { zh: "課堂", tip: "字尾 /s/ 要清楚，不要唸成 cla。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>class</emphasis></prosody></speak>" },
+            "monday": { zh: "星期一", tip: "MON-day，第一音節重。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Mon</emphasis>day</prosody></speak>" },
+            "oops": { zh: "噢(驚訝/抱歉)", tip: "/uːps/，字尾 /ps/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Oops</emphasis></prosody></speak>" },
+            "sorry": { zh: "抱歉", tip: "SOR-ry，第一音節重，r 清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>sorry</emphasis></prosody></speak>" },
+            "hurry": { zh: "趕緊", tip: "HUR-ry，h 要出來，第一音節重。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>hurry</emphasis></prosody></speak>" },
+            "what's": { zh: "是什麼", tip: "What is 的縮寫，字尾 /ts/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>What's</emphasis></prosody></speak>" },
+            "that": { zh: "那個", tip: "有聲 th，不要唸成 dat。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>that</emphasis></prosody></speak>" },
+            "ice": { zh: "冰", tip: "字尾 /s/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>ice</emphasis></prosody></speak>" },
+            "hockey": { zh: "曲棍球", tip: "HOC-key，h 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>hockey</emphasis></prosody></speak>" },
+            "stick": { zh: "棍子", tip: "st 開頭清楚，字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>stick</emphasis></prosody></speak>" },
+            "pe": { zh: "體育", tip: "逐字母唸 P-E。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>P-E</emphasis></prosody></speak>" },
+            "today": { zh: "今天", tip: "to-DAY，重音在 day。", ssml: "<speak><prosody rate='slow'>to<emphasis level='strong'>day</emphasis></prosody></speak>" },
+            "watch": { zh: "觀看", tip: "字尾 /tʃ/ 要清楚，不是 wash。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>watch</emphasis></prosody></speak>" },
+            "sure": { zh: "當然", tip: "Sure 可自然唸成 shur，/ʃ/ 音要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Sure</emphasis></prosody></speak>" },
+            "follow": { zh: "跟隨", tip: "FOL-low，f 音要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Follow</emphasis></prosody></speak>" },
+            "let's": { zh: "我們...吧", tip: "字尾 /ts/ 要清楚，不要漏掉 s。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Let's</emphasis></prosody></speak>" },
+            "here": { zh: "這裡", tip: "/h/ 要出來，尾端不要拖長。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>here</emphasis></prosody></speak>" },
+            "ok": { zh: "好的", tip: "兩拍清楚，O-K，不要唸太短。", ssml: "<speak><prosody rate='slow'>O-<emphasis level='strong'>K</emphasis></prosody></speak>" },
+            "book": { zh: "預訂", tip: "短音 /ʊ/，不是長音 boo。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>book</emphasis></prosody></speak>" },
+            "tickets": { zh: "票", tip: "tick-ets，字尾 /ts/ 要收乾淨。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>tickets</emphasis></prosody></speak>" },
+            "what": { zh: "什麼", tip: "句首 wh 要清楚，字尾 /t/ 要輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>What</emphasis></prosody></speak>" },
+            "day": { zh: "日子", tip: "要清楚，不要太短。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>day</emphasis></prosody></speak>" },
+            "friday": { zh: "星期五", tip: "FRI-day，第一音節重，r 音要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Friday</emphasis></prosody></speak>" },
+            "done": { zh: "完成", tip: "短音 /ʌ/，字尾 n 要清楚。不要唸成 down。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>done</emphasis></prosody></speak>" },
+            "wednesday": { zh: "星期三", tip: "WENZ-day，第一音節重。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Wednesday</emphasis></prosody></speak>" },
+            "isn't": { zh: "不是", tip: "is-n't，字尾 /nt/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>isn't</emphasis></prosody></speak>" },
+            "tgif": { zh: "感謝星期五", tip: "逐字母唸：T-G-I-F。F 要清楚。", ssml: "<speak><prosody rate='slow'>T-G-I-<emphasis level='strong'>F</emphasis></prosody></speak>" },
+            "there's": { zh: "有", tip: "There is 的縮寫，字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>There's</emphasis></prosody></speak>" },
+            "football": { zh: "足球", tip: "FOOT-ball，foot 是短音，不是 food。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>football</emphasis></prosody></speak>" },
+            "game": { zh: "比賽", tip: "長音要清楚，m 輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>game</emphasis></prosody></speak>" },
+            "good": { zh: "好的", tip: "短音 /ʊ/，字尾 d 輕收。不是 goo。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>good</emphasis></prosody></speak>" },
+            "time": { zh: "時間", tip: "要清楚，最後 m 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>time</emphasis></prosody></speak>" },
+            "thank": { zh: "感謝", tip: "無聲 th，舌尖輕碰牙齒，吐氣。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Thank</emphasis></prosody></speak>" },
+            "afternoon": { zh: "下午", tip: "重音在 noon，after-NOON。", ssml: "<speak><prosody rate='slow'>after<emphasis level='strong'>noon</emphasis></prosody></speak>" },
+            "out": { zh: "出去", tip: "字尾 /t/ 要收乾淨。不要唸成 ow。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>out</emphasis></prosody></speak>" },
+            "where's": { zh: "在哪裡", tip: "字尾 /z/ 要出來。不要唸太分開。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>where's</emphasis></prosody></speak>" },
+            "rocky": { zh: "洛基(人名)", tip: "R 要出來，不要唸成 Locky。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Rocky</emphasis></prosody></speak>" },
+            "he's": { zh: "他是", tip: "字尾 /z/ 要清楚。不要漏掉 z。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>he's</emphasis></prosody></speak>" },
+            "sleeping": { zh: "睡覺", tip: "長音 /iː/ 要拉夠，尾音是 /ŋ/。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>sleeping</emphasis></prosody></speak>" },
+            "under": { zh: "在...下面", tip: "UN-der，第一音節較重。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>under</emphasis></prosody></speak>" },
+            "the": { zh: "這個", tip: "有聲 th，舌尖輕碰牙齒。不要唸成 de。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>the</emphasis></prosody></speak>" },
+            "table": { zh: "桌子", tip: "TA-ble，第一音節重。不要唸成 ta-bol。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>ta</emphasis>ble</prosody></speak>" },
+            "hey": { zh: "嘿", tip: "短而亮，帶有驚喜感。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Hey</emphasis></prosody></speak>" },
+            "we're": { zh: "我們是", tip: "we are 縮寫，r 音自然帶出。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>we're</emphasis></prosody></speak>" },
+            "i'm": { zh: "我是", tip: "字尾 m 嘴唇要閉合輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>I'm</emphasis></prosody></speak>" },
+            "it's": { zh: "它是", tip: "字尾 /ts/ 輕脆收尾。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>it's</emphasis></prosody></speak>" },
+            "to": { zh: "去/到", tip: "輕讀即可。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>to</emphasis></prosody></speak>" },
+            "a": { zh: "一個", tip: "輕讀即可。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>a</emphasis></prosody></speak>" },
+            "an": { zh: "一個(母音前)", tip: "輕連下一個母音單字。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>an</emphasis></prosody></speak>" },
+            "on": { zh: "在...之上", tip: "短音，n 收尾。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>on</emphasis></prosody></speak>" },
+            "is": { zh: "是", tip: "字尾是 z 的聲音。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>is</emphasis></prosody></speak>" },
+            "do": { zh: "做/助動詞", tip: "清晰唸出。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>do</emphasis></prosody></speak>" },
+            "go": { zh: "去", tip: "o 圓唇飽滿。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>go</emphasis></prosody></speak>" },
+            "she": { zh: "她", tip: "/ʃ/ 音要標準，不要唸成 see。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>she</emphasis></prosody></speak>" },
+            "he": { zh: "他", tip: "h 音吐氣。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>he</emphasis></prosody></speak>" },
+            "i": { zh: "我", tip: "長母音飽滿。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>I</emphasis></prosody></speak>" },
+            "you": { zh: "你", tip: "自然發音即可。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>you</emphasis></prosody></speak>" },
+            "we": { zh: "我們", tip: "w 音圓唇。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>we</emphasis></prosody></speak>" },
+            "me": { zh: "我(受格)", tip: "長音 /iː/ 清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>me</emphasis></prosody></speak>" },
+            "have": { zh: "有", tip: "v 輕咬下唇收尾。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>have</emphasis></prosody></speak>" },
+            "yes": { zh: "是的", tip: "字尾 s 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>yes</emphasis></prosody></speak>" },
+            "no": { zh: "不", tip: "o 圓唇飽滿。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>no</emphasis></prosody></speak>" },
+            "can": { zh: "可以", tip: "a 的蝴蝶音要對。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>can</emphasis></prosody></speak>" },
+            "and": { zh: "和", tip: "d 可輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>and</emphasis></prosody></speak>" },
+            "it": { zh: "它", tip: "字尾 t 輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>it</emphasis></prosody></speak>" },
+            "say": { zh: "說", tip: "長母音清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>say</emphasis></prosody></speak>" }
+        };
+
+        // ==========================================
+        // 🎨 多巴胺專屬獨立色塊配置表
+        // ==========================================
+        const themeConfig = {
+            "HWG5": { active: "bg-blue-600 text-white border-blue-600 shadow-md scale-105", inactive: "bg-blue-50 text-blue-700 border-blue-300 hover:bg-blue-100" },
+            "HWG6": { active: "bg-orange-500 text-white border-orange-500 shadow-md scale-105", inactive: "bg-orange-50 text-orange-700 border-orange-300 hover:bg-orange-100" },
+            "HWG7": { active: "bg-purple-600 text-white border-purple-600 shadow-md scale-105", inactive: "bg-purple-50 text-purple-700 border-purple-300 hover:bg-purple-100" },
+            "HWG8": { active: "bg-pink-500 text-white border-pink-500 shadow-md scale-105", inactive: "bg-pink-50 text-pink-700 border-pink-300 hover:bg-pink-100" }
+        };
+
+        const unitConfig = {
+            "SU":  { active: "bg-emerald-500 text-white border-emerald-500 shadow-md scale-105", inactive: "bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100" },
+            "U01": { active: "bg-cyan-500 text-white border-cyan-500 shadow-md scale-105", inactive: "bg-cyan-50 text-cyan-700 border-cyan-300 hover:bg-cyan-100" },
+            "U02": { active: "bg-amber-500 text-white border-amber-500 shadow-md scale-105", inactive: "bg-amber-50 text-amber-700 border-amber-300 hover:bg-amber-100" },
+            "U03": { active: "bg-rose-500 text-white border-rose-500 shadow-md scale-105", inactive: "bg-rose-50 text-rose-700 border-rose-300 hover:bg-rose-100" },
+            "U04": { active: "bg-violet-600 text-white border-violet-600 shadow-md scale-105", inactive: "bg-violet-50 text-violet-700 border-violet-300 hover:bg-violet-100" }
+        };
+
+        function selectTheme(theme) {
+            currentTheme = theme;
+            Object.keys(themeConfig).forEach(t => {
+                const btn = document.getElementById(`btn-theme-${t}`);
+                if (btn) {
+                    btn.className = `theme-btn py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine ${t === theme ? themeConfig[t].active : themeConfig[t].inactive}`;
+                }
+            });
+        }
+
+        function selectUnit(unit) {
+            currentUnit = unit;
+            Object.keys(unitConfig).forEach(u => {
+                const btn = document.getElementById(`btn-unit-${u}`);
+                if (btn) {
+                    btn.className = `unit-btn flex-1 py-3.5 rounded-2xl font-black text-xl sm:text-2xl border-4 transition-all btn-dopamine ${u === unit ? unitConfig[u].active : unitConfig[u].inactive}`;
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            selectTheme('HWG5');
+            selectUnit('SU');
+        });
+
+        // 登入流程
+        async function login() {
+            const sid = document.getElementById('student-id').value.trim();
+            if (!sid) { alert("🚨 請輸入學號喔！"); return; }
+            if (window.isSecureContext === false) { alert("⚠️ 網址不安全！請使用 https 開頭的正式網址。"); return; }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                stream.getTracks().forEach(track => track.stop());
+            } catch (err) {
+                alert("⚠️ 必須允許麥克風權限才能進行錄音練習喔！請檢查瀏覽器設定。");
+                return;
+            }
+
+            currentStudentId = sid;
+            currentPage = 0;
+            
+            const dataKey = `${currentTheme}-${currentUnit}`;
+            practiceData = allPracticeData[dataKey];
+            if (!practiceData || practiceData.length === 0) {
+                practiceData = [
+                    { id: "demo_1", en: `This is ${currentTheme} ${currentUnit}.`, zh: "教材準備中。", focus: "請唸清楚。", ssml: `<speak>This is <emphasis level='strong'>${currentTheme}</emphasis> <emphasis level='strong'>${currentUnit}</emphasis>.</speak>` }
+                ];
+            }
+
+            document.getElementById('display-sid').innerText = `${sid} (${currentTheme}-${currentUnit})`;
+            renderPage();
+            showView('view-practice');
+        }
+
+        function showView(viewId) {
+            ['view-home', 'view-practice', 'view-dashboard', 'view-teacher'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(viewId).classList.remove('hidden');
+        }
+
+        function renderPage() {
+            const container = document.getElementById('sentences-container');
+            container.innerHTML = '';
+            
+            const totalPages = Math.ceil(practiceData.length / ITEMS_PER_PAGE);
+            document.getElementById('page-indicator').innerText = `Page ${currentPage + 1} / ${totalPages}`;
+            
+            document.getElementById('btn-prev').disabled = currentPage === 0;
+            document.getElementById('btn-next').disabled = currentPage === totalPages - 1;
+
+            const startIdx = currentPage * ITEMS_PER_PAGE;
+            const pageItems = practiceData.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+
+            pageItems.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl p-6 sm:p-8 shadow-md border-4 border-indigo-200 flex flex-col gap-4";
+                card.id = `card-${item.id}`;
+
+                let clickableEnHtml = item.en.split(/([\s,.!?]+)/).map(part => {
+                    if (/^[a-zA-Z']+$/.test(part)) {
+                        const cleanWord = part.replace(/[']/g, "\\'");
+                        return `<span class="clickable-word text-3xl sm:text-4xl font-black text-gray-800" onclick="handleWordClick('${cleanWord}')">${part}</span>`;
+                    }
+                    return `<span class="text-3xl sm:text-4xl font-black text-gray-800">${part}</span>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-4">
+                            <span class="bg-blue-600 text-white font-black text-2xl w-12 h-12 flex items-center justify-center rounded-2xl shrink-0 shadow-md">${startIdx + index + 1}</span>
+                            <div class="leading-relaxed">
+                                ${clickableEnHtml}
+                            </div>
+                        </div>
+                        <div id="zh-${item.id}" class="text-gray-500 text-xl font-bold ml-16 hidden">${item.zh}</div>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-3 mt-2 ml-16">
+                        <button onclick="playSentenceTTS('${item.id}')" class="btn-dopamine bg-blue-100 text-blue-700 border-2 border-blue-200 px-5 py-2.5 rounded-2xl font-black text-lg flex items-center gap-1 hover:bg-blue-200">🔊 聽示範</button>
+                        <button onclick="toggleZh('${item.id}')" class="btn-dopamine bg-purple-100 text-purple-700 border-2 border-purple-200 px-5 py-2.5 rounded-2xl font-black text-lg flex items-center gap-1 hover:bg-purple-200">🇹🇼 翻譯</button>
+                        <button id="btn-record-${item.id}" onclick="toggleRecord('${item.id}')" class="btn-dopamine bg-rose-100 text-rose-600 border-2 border-rose-300 px-6 py-2.5 rounded-2xl font-black text-lg flex items-center gap-2 hover:bg-rose-200 ml-auto transition-all duration-300">
+                            🎤 開始錄音
+                        </button>
+                    </div>
+
+                    <div id="status-${item.id}" class="text-base font-black text-center mt-2 hidden"></div>
+                    <div id="result-${item.id}" class="hidden mt-4 pt-4 border-t-2 border-gray-100"></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function changePage(delta) {
+            const totalPages = Math.ceil(practiceData.length / ITEMS_PER_PAGE);
+            if (currentPage + delta >= 0 && currentPage + delta < totalPages) {
+                currentPage += delta;
+                renderPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function toggleZh(id) {
+            const zhEl = document.getElementById(`zh-${id}`);
+            zhEl.classList.toggle('hidden');
+        }
+
+        // ==========================================
+        // 單字發音與卡片系統
+        // ==========================================
+        function handleWordClick(word) {
+            const cleanWord = word.replace(/[^a-zA-Z']/g, "").toLowerCase();
+            const dictData = wordDictionary[cleanWord] || { zh: "這字不難，你可以的！", tip: "跟著句子多唸幾次就能掌握喔！", ssml: `<speak><prosody rate='slow'><emphasis level='strong'>${cleanWord}</emphasis></prosody></speak>` };
+
+            document.getElementById('modal-word-en').innerText = word;
+            document.getElementById('modal-word-tip').innerHTML = `
+                <div class="text-blue-600 mb-2 font-black text-2xl">【 ${dictData.zh} 】</div>
+                <div class="text-gray-700 text-lg font-bold leading-relaxed">${dictData.tip}</div>
+            `;
+            
+            const btnSpeak = document.getElementById('modal-btn-speak');
+            btnSpeak.onclick = () => playCurrentWordAudio(dictData.ssml || `<speak>${cleanWord}</speak>`);
+            
+            document.getElementById('word-modal').classList.remove('hidden');
+        }
+
+        function closeWordModal() {
+            document.getElementById('word-modal').classList.add('hidden');
+        }
+
+        async function playCurrentWordAudio(ssml) {
+            showLoading("讀取發音中...");
+            try {
+                await speakWithGoogleTTS(ssml);
+            } catch(e) {
+                alert("發音載入失敗，請檢查網路。");
+            }
+            hideLoading();
+        }
+
+        async function playSentenceTTS(id) {
+            const item = practiceData.find(x => x.id === id);
+            if(!item) return;
+            showLoading("準備完美示範...");
+            try {
+                await speakWithGoogleTTS(item.ssml);
+            } catch(e) {
+                alert("發音載入失敗。");
+            }
+            hideLoading();
+        }
+
+        async function speakWithGoogleTTS(ssml) {
+            const xml = new DOMParser().parseFromString(String(ssml || ""), "application/xml");
+            if (xml.querySelector("parsererror")) throw new Error("TTS 文字格式不正確。");
+            const text = (xml.documentElement?.textContent || "").replace(/\s+/g, " ").trim();
+            const services = await Promise.race([window.HWG_AI_SCORING_READY, timeout(15000)]);
+            if (!services?.speakText) throw new Error("安全語音服務尚未就緒。");
+            const audioContent = await services.speakText(text);
+            const audio = new Audio("data:audio/mp3;base64," + audioContent);
+            await audio.play();
+        }
+
+        // ==========================================
+        // VAD 與錄音系統
+        // ==========================================
+        async function toggleRecord(id) {
+            if (isRecording) { stopRecording(); return; }
+            if (!(await canStartScoring(id))) return;
+            recordingSentenceId = id;
+            try {
+                activeMediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioContext.createMediaStreamSource(activeMediaStream);
+                const analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                source.connect(analyser);
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                let hasSpoken = false;
+                lastSpeakTime = Date.now();
+
+                const checkAudioLevel = () => {
+                    if (!isRecording) return;
+                    analyser.getByteFrequencyData(dataArray);
+                    let sum = 0;
+                    for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+                    let average = sum / dataArray.length;
+
+                    const statusEl = document.getElementById(`status-${recordingSentenceId}`);
+                    if (average > 15) {
+                        hasSpoken = true;
+                        lastSpeakTime = Date.now();
+                        statusEl.innerText = "🗣️ 收到聲音，請繼續唸...";
+                        statusEl.className = "text-base font-black text-center mt-2 text-green-500 animate-pulse";
+                    } else if (hasSpoken && Date.now() - lastSpeakTime > 4000) {
+                        console.log("偵測到靜音，自動停止錄音");
+                        stopRecording();
+                        return;
+                    } else if (!hasSpoken) {
+                        statusEl.innerText = "🎧 正在聆聽，請開始唸...";
+                        statusEl.className = "text-base font-black text-center mt-2 text-gray-500";
+                    }
+                    audioLevelReq = requestAnimationFrame(checkAudioLevel);
+                };
+
+                let options = {};
+                if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+                    options = { mimeType: 'audio/webm;codecs=opus' };
+                } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+                    options = { mimeType: 'audio/webm' };
+                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                    options = { mimeType: 'audio/mp4' };
+                }
+
+                mediaRecorder = new MediaRecorder(activeMediaStream, options);
+                audioChunks = [];
+                mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+                mediaRecorder.onstop = processAudioRecording;
+                
+                mediaRecorder.start(100);
+                isRecording = true;
+                
+                const btn = document.getElementById(`btn-record-${id}`);
+                btn.innerHTML = "⏹️ 停止錄音";
+                btn.classList.add('recording-pulse');
+                
+                const statusEl = document.getElementById(`status-${id}`);
+                statusEl.innerText = "🎧 準備就緒，請說話...";
+                statusEl.className = "text-base font-black text-center mt-2 text-gray-500 block";
+
+                checkAudioLevel();
+
+            } catch (err) {
+                alert("無法存取麥克風，請檢查權限設定！");
+                console.error(err);
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                if (audioLevelReq) cancelAnimationFrame(audioLevelReq);
+                if (audioContext) audioContext.close();
+                activeMediaStream.getTracks().forEach(track => track.stop());
+                
+                const btn = document.getElementById(`btn-record-${recordingSentenceId}`);
+                if(btn){
+                    btn.innerHTML = "🎤 開始錄音";
+                    btn.classList.remove('recording-pulse');
+                }
+                const statusEl = document.getElementById(`status-${recordingSentenceId}`);
+                if(statusEl) statusEl.classList.add('hidden');
+            }
+        }
+
+        const timeout = (ms) => new Promise((resolve, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
+
+        // ==========================================
+        // 🚀 AI 評分核心（Firebase AI Logic + App Check）
+        // ==========================================
+        async function processAudioRecording() {
+            if (audioChunks.length === 0) return;
+            const recordMime = mediaRecorder.mimeType || 'audio/webm';
+            const audioBlob = new Blob(audioChunks, { type: recordMime });
+            showLoading("AI 教練批改中...");
+            
+            const sid = recordingSentenceId;
+            const targetSentenceObj = practiceData.find(x => x.id === sid);
+            const targetText = targetSentenceObj.en;
+            const focusRule = targetSentenceObj.focus;
+
+            try {
+                const base64Audio = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                    reader.readAsDataURL(audioBlob);
+                });
+
+                const aiScoring = await Promise.race([window.HWG_AI_SCORING_READY, timeout(15000)]);
+                if (!aiScoring) {
+                    const initMessage = window.HWG_AI_INIT_ERROR?.message || "Firebase AI Logic 尚未完成初始化。";
+                    throw new Error(initMessage);
+                }
+
+                const cleanMime = recordMime.split(';')[0] || "audio/webm";
+                const aiResult = await Promise.race([
+                    aiScoring.scoreAudio({
+                        base64Audio,
+                        mimeType: cleanMime,
+                        targetText,
+                        focusRule
+                    }),
+                    timeout(60000)
+                ]);
+                markSuccessfulAttempt(sid);
+
+                // 備份音檔至 Storage 與 Firestore (15 秒寬限)
+                let audioUrl = "";
+                const todayDateStr = todayRecordDate();
+                const expiresAt = new Date();
+                expiresAt.setMonth(expiresAt.getMonth() + RECORD_RETENTION_MONTHS);
+                try {
+                    if (window.storage && window.db) {
+                        const audioPath = `audio_records/${currentStudentId}/${Date.now()}.webm`;
+                        const fileRef = window.storage.ref(audioPath);
+                        await Promise.race([
+                            fileRef.put(audioBlob, { customMetadata: { expiresAt: expiresAt.toISOString() } }),
+                            timeout(15000)
+                        ]);
+                        audioUrl = await fileRef.getDownloadURL();
+                        
+                        await Promise.race([
+                            window.db.collection("reading_records").add({
+                                studentId: currentStudentId, 
+                                theme: currentTheme, 
+                                unit: currentUnit, 
+                                date: todayDateStr, 
+                                sentenceId: sid,
+                                targetText: targetText, 
+                                transcript: aiResult.transcript, 
+                                score: aiResult.total_score,
+                                feedback: aiResult.feedback, 
+                                audioUrl: audioUrl,
+                                audioPath: audioPath,
+                                expiresAt: expiresAt,
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                            }), timeout(5000)
+                        ]);
+                    }
+                } catch (dbErr) {
+                    console.warn("備份失敗，但仍正常顯示成績:", dbErr);
+                }
+
+                displayResult(sid, aiResult, targetText);
+
+            } catch (err) {
+                console.error("AI 分析失敗:", err);
+                alert("🚨 AI 評分失敗原因：\n" + (err.message || err));
+            }
+            hideLoading();
+        }
+
+        function displayResult(sid, aiResult, targetText) {
+            const resultEl = document.getElementById(`result-${sid}`);
+            const usedAttempts = Math.min(localAttemptCount(sid), MAX_SCORED_ATTEMPTS_PER_ITEM);
+            const remainingAttempts = Math.max(0, MAX_SCORED_ATTEMPTS_PER_ITEM - usedAttempts);
+            
+            const targetWords = targetText.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(' ');
+            let transcriptHtml = aiResult.transcript.split(' ').map(w => {
+                const cleanW = w.toLowerCase().replace(/[^a-z0-9]/g, '');
+                const safeWord = escapeHtml(w);
+                if (targetWords.includes(cleanW)) return `<span class="text-green-600">${safeWord}</span>`;
+                return `<span class="text-red-500 font-black underline decoration-wavy underline-offset-4">${safeWord}</span>`;
+            }).join(' ');
+
+            let colorClass = aiResult.total_score >= 80 ? "text-green-500" : (aiResult.total_score >= 60 ? "text-yellow-500" : "text-red-500");
+
+            resultEl.innerHTML = `
+                <div class="bg-gray-50 rounded-3xl p-6 sm:p-8 shadow-inner relative overflow-hidden animate-[fadeIn_0.5s_ease-out] border-2 border-gray-200">
+                    <div class="absolute top-0 left-0 w-3 h-full ${aiResult.total_score >= 80 ? 'bg-green-500' : 'bg-yellow-500'}"></div>
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-1.5">AI 聽到的句子</h4>
+                            <p class="text-xl sm:text-2xl font-black bg-white p-4 rounded-2xl border-2 border-gray-200">${transcriptHtml}</p>
+                        </div>
+                        <div class="ml-5 text-center bg-white p-4 rounded-3xl shadow-md border-3 ${aiResult.total_score >= 80 ? 'border-green-300' : 'border-yellow-300'}">
+                            <div class="text-xs font-black text-gray-400 uppercase">總分</div>
+                            <div class="text-5xl font-black ${colorClass}">${aiResult.total_score}</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 sm:gap-5 mb-5">
+                        <div class="bg-white p-3 sm:p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <div class="text-sm font-black text-gray-400 mb-1">精準度</div>
+                            <div class="w-full bg-gray-100 rounded-full h-3 mb-1.5"><div class="bg-emerald-500 h-3 rounded-full" style="width: ${aiResult.accuracy}%"></div></div>
+                            <div class="font-black text-gray-800 text-lg">${aiResult.accuracy}</div>
+                        </div>
+                        <div class="bg-white p-3 sm:p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <div class="text-sm font-black text-gray-400 mb-1">流暢度</div>
+                            <div class="w-full bg-gray-100 rounded-full h-3 mb-1.5"><div class="bg-cyan-500 h-3 rounded-full" style="width: ${aiResult.fluency}%"></div></div>
+                            <div class="font-black text-gray-800 text-lg">${aiResult.fluency}</div>
+                        </div>
+                        <div class="bg-white p-3 sm:p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <div class="text-sm font-black text-gray-400 mb-1">完整度</div>
+                            <div class="w-full bg-gray-100 rounded-full h-3 mb-1.5"><div class="bg-amber-500 h-3 rounded-full" style="width: ${aiResult.completeness}%"></div></div>
+                            <div class="font-black text-gray-800 text-lg">${aiResult.completeness}</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 text-blue-900 p-5 rounded-2xl border-2 border-blue-200">
+                        <div class="font-black text-base mb-1.5 text-blue-600 flex items-center gap-1.5"><span>✨</span> 教練點評</div>
+                        <p class="font-bold text-base sm:text-lg leading-relaxed">${escapeHtml(aiResult.feedback)}</p>
+                    </div>
+                    <div role="status" class="mt-4 rounded-2xl border-2 ${remainingAttempts > 0 ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-red-200 bg-red-50 text-red-700'} p-4 text-center font-black">
+                        今天這一題還可評分 ${remainingAttempts} 次（每日最多 ${MAX_SCORED_ATTEMPTS_PER_ITEM} 次）
+                    </div>
+                </div>
+            `;
+            resultEl.classList.remove('hidden');
+        }
+
+        // ==========================================
+        // 儀表板與後臺系統
+        // ==========================================
+        async function showDashboard() {
+            if (!window.db) { alert("尚未連接資料庫，無法查詢紀錄。"); return; }
+            showLoading("撈取今日最佳成績...");
+            showView('view-dashboard');
+            const container = document.getElementById('dashboard-content');
+            container.innerHTML = '';
+
+            const todayDateStr = new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+            
+            try {
+                const snapshot = await window.db.collection("reading_records")
+                    .where("studentId", "==", currentStudentId)
+                    .where("date", "==", todayDateStr)
+                    .where("theme", "==", currentTheme)
+                    .where("unit", "==", currentUnit)
+                    .get();
+
+                const bestScores = {};
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (!bestScores[data.sentenceId] || data.score > bestScores[data.sentenceId].score) {
+                        bestScores[data.sentenceId] = data;
+                    }
+                });
+
+                if (Object.keys(bestScores).length === 0) {
+                    container.innerHTML = `<div class="text-center text-gray-400 font-black text-2xl py-16">今天還沒有練習紀錄喔！趕快去挑戰吧 💪</div>`;
+                } else {
+                    Object.values(bestScores).sort((a,b) => a.sentenceId.localeCompare(b.sentenceId)).forEach(data => {
+                        const card = document.createElement('div');
+                        card.className = "bg-white p-5 rounded-3xl shadow-sm border-3 border-gray-100 flex justify-between items-center";
+                        card.innerHTML = `
+                            <div class="flex-1 pr-4">
+                                <div class="font-black text-xl text-gray-800 mb-1">${data.targetText}</div>
+                                <div class="text-base font-bold text-gray-500">🏆 最高分紀錄</div>
+                            </div>
+                            <div class="text-4xl font-black ${data.score >= 80 ? 'text-green-500' : 'text-yellow-500'} bg-gray-50 w-20 h-20 flex items-center justify-center rounded-2xl border-2 border-gray-200 shrink-0">
+                                ${data.score}
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = `<div class="text-center text-red-400 font-black text-xl py-12">讀取失敗，請檢查網路連線。</div>`;
+            }
+            hideLoading();
+        }
+
+        function openTeacherLogin() {
+            const pwd = prompt("請輸入教師密碼：");
+            if (pwd === "359307") {
+                document.getElementById('teacher-date-picker').valueAsDate = new Date();
+                loadTeacherDateData();
+                showView('view-teacher');
+            } else if (pwd !== null) {
+                alert("密碼錯誤");
+            }
+        }
+
+        async function loadTeacherDateData() {
+            if(!window.db) return;
+            const dateVal = document.getElementById('teacher-date-picker').value;
+            if(!dateVal) return;
+            currentTeacherDate = dateVal.replace(/-/g, '/');
+            
+            const listContainer = document.getElementById('teacher-student-list');
+            listContainer.innerHTML = '<div class="p-4 text-gray-400 text-center font-black text-lg">讀取中...</div>';
+            document.getElementById('teacher-detail-content').innerHTML = '';
+            document.getElementById('teacher-detail-header').innerHTML = '<h3 class="text-3xl font-black text-gray-700">請選擇左側學生</h3><div id="teacher-averages-container" class="flex gap-4"></div>';
+
+            try {
+                const snapshot = await window.db.collection("reading_records").where("date", "==", currentTeacherDate).get();
+                const students = new Set();
+                snapshot.forEach(doc => students.add(doc.data().studentId));
+                
+                listContainer.innerHTML = '';
+                if(students.size === 0){
+                    listContainer.innerHTML = '<div class="p-4 text-gray-400 text-center font-black text-lg">該日無資料</div>';
+                    return;
+                }
+
+                Array.from(students).sort().forEach(sid => {
+                    const btn = document.createElement('div');
+                    btn.className = "p-4 border-b border-gray-100 hover:bg-gray-100 cursor-pointer font-black text-xl text-gray-700 flex items-center gap-2 transition-colors";
+                    btn.innerHTML = `👤 學號: ${sid}`;
+                    btn.onclick = () => loadTeacherStudentDetail(sid);
+                    btn.oncontextmenu = (e) => {
+                        e.preventDefault();
+                        deleteTargetStudentId = sid;
+                        if(confirm(`⚠️ 確定要刪除學號 ${sid} 於 ${currentTeacherDate} 的所有紀錄嗎？`)){
+                            deleteStudentRecords();
+                        }
+                    };
+                    listContainer.appendChild(btn);
+                });
+            } catch(e) {
+                console.error(e);
+                listContainer.innerHTML = '<div class="p-4 text-red-400 text-center font-black">讀取錯誤</div>';
+            }
+        }
+
+        async function loadTeacherStudentDetail(sid) {
+            const container = document.getElementById('teacher-detail-content');
+            const avgContainer = document.getElementById('teacher-averages-container');
+            container.innerHTML = '<div class="text-center text-gray-400 font-black text-2xl p-10">讀取詳細資料中...</div>';
+            
+            try {
+                const snapshot = await window.db.collection("reading_records")
+                    .where("studentId", "==", sid)
+                    .where("date", "==", currentTeacherDate)
+                    .get();
+
+                const bestByCombo = {}; 
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const combo = `${data.theme || 'HWG5'}-${data.unit || 'SU'}`;
+                    const sidKey = data.sentenceId;
+                    
+                    if(!bestByCombo[combo]) bestByCombo[combo] = {};
+                    
+                    if (!bestByCombo[combo][sidKey] || data.score > bestByCombo[combo][sidKey].score) {
+                        bestByCombo[combo][sidKey] = data;
+                    }
+                });
+
+                let avgHtml = "";
+                let contentHtml = "";
+
+                for (const combo in bestByCombo) {
+                    const records = Object.values(bestByCombo[combo]);
+                    if(records.length === 0) continue;
+
+                    const totalScore = records.reduce((sum, r) => sum + r.score, 0);
+                    const avgScore = Math.round(totalScore / records.length);
+                    let colorClass = avgScore >= 80 ? 'text-green-500' : (avgScore >= 60 ? 'text-yellow-500' : 'text-red-500');
+
+                    avgHtml += `
+                        <div class="text-right bg-gray-50 px-5 py-3 rounded-2xl border-2 border-gray-200 shadow-inner">
+                            <div class="text-sm font-black text-gray-400">${combo} 平均</div>
+                            <div class="text-4xl font-black ${colorClass}">${avgScore}</div>
+                        </div>
+                    `;
+
+                    contentHtml += `
+                        <div class="mb-8 bg-white p-6 rounded-3xl shadow-sm border-2 border-gray-100">
+                            <h4 class="text-2xl font-black text-gray-700 mb-4 border-b-2 border-gray-100 pb-3 flex items-center gap-2">
+                                <span>📚</span> ${combo} 單元明細
+                            </h4>
+                            <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+                    `;
+
+                    records.sort((a,b) => a.sentenceId.localeCompare(b.sentenceId)).forEach(data => {
+                        let scColor = data.score >= 80 ? 'text-green-500' : (data.score >= 60 ? 'text-yellow-500' : 'text-red-500');
+                        contentHtml += `
+                            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-200 flex gap-4 hover:shadow-md transition-shadow">
+                                <div class="flex-1 flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-sm font-black text-blue-600 mb-1">Target</div>
+                                        <div class="font-black text-gray-800 text-lg leading-tight mb-2">${data.targetText}</div>
+                                        <div class="text-xs font-black text-gray-400 mb-1">Transcript</div>
+                                        <div class="font-bold text-gray-600 text-base italic mb-3 bg-white p-2.5 rounded-xl border border-gray-100">${data.transcript}</div>
+                                    </div>
+                                    ${data.audioUrl ? `<audio src="${data.audioUrl}" controls class="w-full h-8 outline-none rounded-full"></audio>` : '<span class="text-sm text-gray-400 font-black">無音檔</span>'}
+                                </div>
+                                <div class="w-28 shrink-0 flex flex-col">
+                                    <div class="bg-white flex-1 rounded-2xl border border-gray-200 flex flex-col items-center justify-center mb-2 shadow-sm">
+                                        <div class="text-3xl font-black ${scColor}">${data.score}</div>
+                                    </div>
+                                    <div class="bg-blue-50 p-2.5 rounded-2xl border border-blue-100 h-28 overflow-y-auto no-scrollbar">
+                                        <p class="text-xs font-bold text-blue-800 leading-tight">${data.feedback}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    contentHtml += `</div></div>`;
+                }
+
+                document.getElementById('teacher-detail-header').innerHTML = `<h3 class="text-3xl font-black text-gray-700">學號: ${sid}</h3><div id="teacher-averages-container" class="flex gap-4 flex-wrap justify-end">${avgHtml}</div>`;
+                container.innerHTML = contentHtml;
+
+            } catch(e) {
+                console.error(e);
+                container.innerHTML = '<div class="text-center text-red-400 font-black p-10">讀取失敗</div>';
+            }
+        }
+
+        async function deleteStudentRecords() {
+            if(!window.db || !deleteTargetStudentId || !currentTeacherDate) return;
+            try {
+                const snapshot = await window.db.collection("reading_records")
+                    .where("studentId", "==", deleteTargetStudentId)
+                    .where("date", "==", currentTeacherDate)
+                    .get();
+                
+                const batch = window.db.batch();
+                snapshot.forEach(doc => batch.delete(doc.ref));
+                await batch.commit();
+                alert(`已刪除 ${deleteTargetStudentId} 的資料`);
+                document.getElementById('teacher-detail-content').innerHTML = '';
+                document.getElementById('teacher-detail-header').innerHTML = '<h3 class="text-3xl font-black text-gray-700">請選擇左側學生</h3><div id="teacher-averages-container" class="flex gap-4"></div>';
+                loadTeacherDateData();
+            } catch(e) {
+                console.error(e);
+                alert("刪除失敗");
+            }
+        }
+
+        // ==========================================
+        // UI 輔助功能
+        // ==========================================
+        function showLoading(title) {
+            document.getElementById('loading-title').innerText = title;
+            document.getElementById('global-loading').classList.remove('hidden');
+        }
+        function hideLoading() {
+            document.getElementById('global-loading').classList.add('hidden');
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, (character) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            })[character]);
+        }
+    </script>
+</body>
+</html>

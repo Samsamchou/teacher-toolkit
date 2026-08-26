@@ -1,0 +1,16 @@
+{
+  "rule": [
+    {
+      "action": {
+        "type": "Delete"
+      },
+      "condition": {
+        "age": 215,
+        "matchesPrefix": [
+          "audio_records/"
+        ]
+      }
+    }
+  ]
+}
+
