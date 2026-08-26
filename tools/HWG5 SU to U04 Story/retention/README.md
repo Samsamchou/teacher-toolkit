@@ -10,7 +10,7 @@
 
 - Collection group：`reading_records`
 - TTL field：`expiresAt`
-- 已於 2026-08-26 部署；控制台讀回狀態為「建構中」、偏移 `0 秒`。
+- 已於 2026-08-26 部署；控制台最終讀回為「可用／提供中」、偏移 `0 秒`。
 - TTL 刪除是非即時的背景作業；到期後可能延遲。
 
 ## Cloud Storage lifecycle
