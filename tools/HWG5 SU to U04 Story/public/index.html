@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 載入 Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script type="module" src="./ai-scoring.js"></script>
@@ -240,7 +242,7 @@
         <div class="w-80 bg-white border-r-4 border-gray-200 flex flex-col shadow-lg z-10">
             <div class="p-6 bg-indigo-500 text-white flex justify-between items-center">
                 <h2 class="text-2xl font-black flex items-center gap-2">👨‍🏫 教師後臺</h2>
-                <button onclick="showView('view-home')" class="text-white text-base font-black bg-white/20 px-4 py-1.5 rounded-xl hover:bg-white/30">登出</button>
+                <button onclick="closeTeacherDashboard()" class="text-white text-base font-black bg-white/20 px-4 py-1.5 rounded-xl hover:bg-white/30">登出</button>
             </div>
             <div class="p-4 border-b-2 border-gray-100 bg-gray-50">
                 <input type="date" id="teacher-date-picker" class="w-full px-4 py-3 rounded-2xl border-3 border-gray-300 font-black text-gray-700 focus:border-indigo-500 outline-none text-lg" onchange="loadTeacherDateData()">
@@ -290,6 +292,7 @@
         const ITEMS_PER_PAGE = 4;
         const MAX_SCORED_ATTEMPTS_PER_ITEM = 3;
         const RECORD_RETENTION_MONTHS = 7;
+        const AUTHORIZED_TEACHER_EMAIL = "samchouou@gmail.com";
 
         let audioContext = null;
         let activeMediaStream = null;
@@ -302,10 +305,20 @@
 
         let deleteTargetStudentId = "";
         let currentTeacherDate = "";
+        let currentOwnerUid = "";
 
         // 初始化 Firebase
         try {
             if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+            if (["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname)) {
+                self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+            }
+            firebase.appCheck().activate(
+                new firebase.appCheck.ReCaptchaEnterpriseProvider(APP_CHECK_SITE_KEY),
+                true
+            );
+            window.auth = firebase.auth();
+            window.auth.useDeviceLanguage();
             window.db = firebase.firestore();
             window.storage = firebase.storage();
             console.log("✅ Firebase 連線成功");
@@ -315,6 +328,43 @@
 
         function todayRecordDate() {
             return new Date().toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '/');
+        }
+
+        function waitForAuthUser() {
+            if (!window.auth) return Promise.reject(new Error("Firebase Authentication 尚未初始化。"));
+            return new Promise((resolve, reject) => {
+                let unsubscribe = () => {};
+                unsubscribe = window.auth.onAuthStateChanged((user) => {
+                    unsubscribe();
+                    resolve(user);
+                }, reject);
+            });
+        }
+
+        function isAuthorizedTeacher(user) {
+            return Boolean(
+                user &&
+                user.emailVerified === true &&
+                String(user.email || "").toLowerCase() === AUTHORIZED_TEACHER_EMAIL &&
+                Array.isArray(user.providerData) &&
+                user.providerData.some((profile) => profile?.providerId === "google.com")
+            );
+        }
+
+        async function ensureAnonymousStudentSession() {
+            let user = await waitForAuthUser();
+            if (user?.isAnonymous) return user;
+            if (user) await window.auth.signOut();
+            const credential = await window.auth.signInAnonymously();
+            return credential.user;
+        }
+
+        async function requireTeacherUser() {
+            const user = await waitForAuthUser();
+            if (isAuthorizedTeacher(user)) return user;
+            alert("教師登入已失效，請重新使用授權的 Google 帳戶登入。");
+            showView('view-home');
+            return null;
         }
 
         function attemptStorageKey(sentenceId) {
@@ -342,6 +392,7 @@
             try {
                 const snapshot = await Promise.race([
                     window.db.collection("reading_records")
+                        .where("ownerUid", "==", currentOwnerUid)
                         .where("studentId", "==", currentStudentId)
                         .where("date", "==", todayRecordDate())
                         .where("theme", "==", currentTheme)
@@ -370,7 +421,7 @@
         }
 
         // ==========================================
-        // 📚 題庫資料 (收錄 HWG5 SU ~ U03 全單元分析)
+        // 📚 題庫資料 (收錄 HWG5 SU ~ U04 與 HWG7 SU ~ U04 分析)
         // ==========================================
         const allPracticeData = {
             "HWG5-SU": [
@@ -415,6 +466,67 @@
                 { id: "u03_7", en: "I'm going to the Louvre Museum.", zh: "我要去羅浮宮。", focus: "Louvre 的 v 音，Museum 重音第二音節。", ssml: "<speak><emphasis level='strong'>I'm</emphasis> <emphasis level='strong'>going</emphasis> <break time='150ms'/> to the <emphasis level='strong'>Louvre</emphasis> Mu<emphasis level='strong'>seum</emphasis>.</speak>" },
                 { id: "u03_8", en: "It's on Rivoli Street.", zh: "在里沃利街上。", focus: "Rivoli 的 v 音，Street 的 st, r, /t/。", ssml: "<speak><emphasis level='strong'>It's</emphasis> on <break time='150ms'/> <emphasis level='strong'>Rivoli</emphasis> <emphasis level='strong'>Street</emphasis>.</speak>" },
                 { id: "u03_9", en: "Turn right there.", zh: "在那邊右轉。", focus: "Turn 的 r, n。right 的 r, /t/。there 的 th, r。", ssml: "<speak><emphasis level='strong'>Turn</emphasis> <emphasis level='strong'>right</emphasis> <break time='150ms'/> <emphasis level='strong'>there</emphasis>.</speak>" }
+            ],
+            "HWG7-SU": [
+                { id: "hwg7_su_1", en: "Would you like some beef sandwiches?", zh: "你想要一些牛肉三明治嗎？", focus: "難字：Would /d/ 字尾：字尾 /d/ 可輕連到 you，但不可完全吞掉。；like /k/ 字尾：字尾 /k/ 要收乾淨，不可唸成 lie。；some /səm/ 弱讀：句中可弱讀，但 s 與 m 都要清楚。；beef /iː/、/f/：長音 /iː/ 要拉夠，字尾 /f/ 要收。；sandwiches /tʃ/、複數 /ɪz/：重音在第一音節；ch 與複數字尾 /ɪz/ 要清楚。 重音：重讀 Would、like、beef、sandwiches。 連音：Would you 可自然連成 Would-you；like some 可輕連但 /k/ 仍要聽到；beef sandwiches 作為食物片語要清楚。 節奏：Would you / like some / beef sandwiches? 語調：禮貌邀請的 yes/no question；句尾 sandwiches 上揚，語氣友善。 評分：檢查 Would 字尾 /d/、like /k/、beef /iː/ 與 /f/、sandwiches 的 ch 與複數 /ɪz/，以及問句句尾上揚。", ssml: "<speak>Would you like some beef sandwiches?</speak>" },
+                { id: "hwg7_su_2", en: "Yes, please.", zh: "好，麻煩了。", focus: "難字：Yes /s/ 字尾：字尾 /s/ 要清楚，不可只剩 Yeh。；please /pl/、/iː/、/z/：pl 開頭完整，長音 /iː/ 與字尾 /z/ 都要出來。 重音：重讀 Yes 與 please。 連音：Yes, please 可自然連成 Yes-please，但兩個字尾都要清楚。 節奏：Yes, / please. 語調：Yes 與 please 都下降；語氣溫和、有禮貌。 評分：檢查 Yes 的 /s/、please 的 pl、長音 /iː/ 與字尾 /z/，並保持禮貌下降語調。", ssml: "<speak>Yes, please.</speak>" },
+                { id: "hwg7_su_3", en: "I'd like some cheeseburgers.", zh: "我想要一些起司漢堡。", focus: "難字：I'd /d/ 字尾：I would 的縮寫，字尾 /d/ 要輕收，不可變成 I like。；like /k/ 字尾：字尾 /k/ 要收。；some /səm/ 弱讀：可弱讀但不可消失。；cheeseburgers /tʃ/、/z/、/r/、複數 /z/：cheese 的 ch 與 /z/、burgers 的 r 與字尾 /z/ 都要清楚。 重音：重讀 I'd、like 與 cheeseburgers 的核心音節。 連音：I'd like 可自然連成 I'd-like；like some 可輕連，但 like 的 /k/ 不可消失。 節奏：I'd like / some cheeseburgers. 語調：清楚肯定地表達想要的食物；cheeseburgers 是句子核心，最後下降收句。 評分：檢查 I'd 的 /d/、like /k/、some 弱讀、cheeseburgers 的 ch、r 與字尾 /z/，以及肯定下降語調。", ssml: "<speak>I&apos;d like some cheeseburgers.</speak>" },
+                { id: "hwg7_su_4", en: "Whose soda is that on the chair?", zh: "椅子上是誰的汽水？", focus: "難字：Whose /huːz/：h、長音 /uː/ 與字尾 /z/ 都要清楚。；soda long o（來源未列完整 IPA）：第一音節重，長 o 音要清楚。；is /z/ 字尾：字尾 /z/ 要自然接到下一個字。；that 有聲 th（來源未列 IPA）：舌尖輕碰牙齒，不可唸成 dat。；the 有聲 th（來源未列 IPA）：不可唸成 de，也不可在連音時消失。；chair /tʃ/ + air（來源未列完整 IPA）：ch 與 air 音要完整，不可變成 share。 重音：重讀 Whose、soda、that、chair。 連音：Whose soda is 可自然連讀但 Whose /z/ 要保留；that on 可輕連；on the chair 可連讀但 the 不可消失。 節奏：Whose soda / is that / on the chair? 語調：wh-question；Whose 是所有者焦點、chair 是位置焦點，句尾下降。 評分：檢查 Whose /huːz/、soda 第一音節、is /z/、that/the 有聲 th、chair 的 ch 與 air，以及 wh-question 下降語調。", ssml: "<speak>Whose soda is that on the chair?</speak>" },
+                { id: "hwg7_su_5", en: "It's my soda.", zh: "它是我的汽水。", focus: "難字：It's /ts/ 字尾：縮寫字尾 /ts/ 要清楚，不可在連音時吞掉。；my /aɪ/：雙母音 /aɪ/ 要完整；所有格重點要清楚。；soda long o（來源未列完整 IPA）：第一音節重。 重音：重讀 It's、my、soda。 連音：It's my 可自然連成 It's-my，但 It's 的 /ts/ 不要吞掉。 節奏：It's / my soda. 語調：這句是回答所有權，語氣要明確但不生氣。my soda 是核心資訊，句尾下降。 評分：檢查 It's /ts/、my /aɪ/、soda 第一音節與所有格重點，並以明確下降語調收句。", ssml: "<speak>It&apos;s my soda.</speak>" },
+                { id: "hwg7_su_6", en: "Watch out!", zh: "小心！", focus: "難字：Watch /tʃ/ 字尾：字尾 /tʃ/ 要清楚，不可唸成 wash。；out /aʊ/、/t/：雙母音 /aʊ/ 完整，字尾 /t/ 要收。 重音：重讀 Watch 與 out。 連音：Watch out 可以自然連成 Watch-out，但 Watch 的 /tʃ/ 與 out 的 /t/ 都要聽得出來。 節奏：Watch / out! 語調：這是危險提醒，要短、清楚、有警告感。不要拖長，也不要尖叫到模糊。out 下降收句，聲音要有力。 評分：檢查 Watch 字尾 /tʃ/、out /aʊ/ 與字尾 /t/、兩字連音，以及短促有力的下降警告語氣。", ssml: "<speak>Watch out!</speak>" }
+            ],
+            "HWG7-U01": [
+                { id: "hwg7_u01_1", en: "Where are you from?", zh: "你來自哪裡？", focus: "難字：Where /wer/：w 音與 r 音都要聽得出來；r 音不可消失。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不能完全消失。；from fr 開頭、字尾 /m/：fr 開頭與 r 音要清楚，字尾 /m/ 要收。 重音：重讀 Where 與 from。 連音：Where are 可連成 Where-are；are you 可輕連；you from 可自然連音，但 from 的 fr 與 /m/ 不可吞掉。 節奏：Where are you / from? 語調：wh-question；句尾 from 下降，語氣友善、自然。 評分：檢查 Where 的 w/r、are 不可省略、from 的 fr 與字尾 /m/，以及 wh-question 句尾下降。", ssml: "<speak>Where are you from?</speak>" },
+                { id: "hwg7_u01_2", en: "I'm from Taiwan.", zh: "我來自臺灣。", focus: "難字：I'm 字尾 /m/：縮寫的 /m/ 要清楚。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 都要出來。；Taiwan Tai-WAN（來源未列完整 IPA）：Tai 的雙母音要清楚，重音在後半段 WAN。 重音：重讀 I'm 與 Taiwan；Taiwan 重音在 WAN。 連音：I'm from 可連成 I'm-from；from Taiwan 可輕連，但 Taiwan 要清楚。 節奏：I'm / from Taiwan. 語調：肯定回答國家；Taiwan 是核心資訊，句尾下降。 評分：檢查 I'm /m/、from 的 fr 與 /m/、Taiwan 後半段重音，以及肯定下降語調。", ssml: "<speak>I&apos;m from Taiwan.</speak>" },
+                { id: "hwg7_u01_3", en: "Are you from the UK?", zh: "你來自英國嗎？", focus: "難字：Are r 音（來源未列完整 IPA）：r 音要保留。；from fr 開頭、字尾 /m/：字尾 /m/ 不可吞掉。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；UK U-K 逐字母：逐字母唸 U-K，K 要清楚。 重音：重讀 Are 與 UK。 連音：Are you 可連成 Are-you；from the UK 可連讀，但 from 的 /m/ 與 the 都不可消失。 節奏：Are you / from the UK? 語調：yes/no question；句尾 UK 上揚，表示確認對方是否來自英國。 評分：檢查 Are 的 r、from /m/、the 有聲 th、UK 逐字母，以及 yes/no 問句句尾上揚。", ssml: "<speak>Are you from the UK?</speak>" },
+                { id: "hwg7_u01_4", en: "Yes, I am.", zh: "是的，我是。", focus: "難字：Yes 字尾 /s/：字尾 /s/ 要收清楚。；I 不可過短（來源未列完整 IPA）：I 不要唸得太短。；am 字尾 /m/：字尾 /m/ 要清楚。 重音：重讀 Yes 與 am。 連音：Yes, I am 可自然連成 Yes-I-am，但 am 的 /m/ 不可消失。 節奏：Yes, / I am. 語調：肯定回答；Yes 與 I am 都下降，語氣自然、肯定。 評分：檢查 Yes /s/、I 不可過短、am /m/，並以兩段下降語調作答。", ssml: "<speak>Yes, I am.</speak>" },
+                { id: "hwg7_u01_5", en: "She's my friend. She's from the USA.", zh: "她是我的朋友。她來自美國。", focus: "難字：She's 字尾 /z/：She is 的縮寫，字尾 /z/ 要出來。；my 完整雙母音（來源未列完整 IPA）：雙母音要完整。；friend fr 開頭、字尾 /d/：fr 開頭要清楚，字尾 /d/ 要輕收。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 都要清楚。；the 有聲 th（來源未列完整 IPA）：不可唸成 de，也不可在連音時消失。；USA U-S-A 逐字母：逐字母唸 U-S-A，S 要清楚。 重音：重讀 She's、friend 與 USA。 連音：She's my 可連成 She's-my；my friend 可輕連但 friend 的 /d/ 要聽到；She's from the USA 可連讀，但 from 與 the 不可糊掉。 節奏：She's my friend. // She's from the USA. 語調：介紹朋友與國家；friend 與 USA 皆下降，語氣友善、自然。 評分：檢查 She's /z/、my 雙母音、friend 的 fr/d、from /m/、the 有聲 th、USA 逐字母，以及兩句下降語調。", ssml: "<speak>She&apos;s my friend. She&apos;s from the USA.</speak>" },
+                { id: "hwg7_u01_6", en: "That looks good. Is it curry?", zh: "那看起來不錯。它是咖哩嗎？", focus: "難字：That 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 dat。；looks 字尾 /ks/：look + s 的字尾 /ks/ 要清楚。；good 短音 /ʊ/、字尾 /d/：不可唸成 food 的長音，字尾 /d/ 要輕收。；is 字尾 /z/：在 Is it 中可自然連成 Is-it，但 is 的 /z/ 要保留。；curry CUR-ry（來源未列完整 IPA）：第一音節重，r 音要自然清楚。 重音：重讀 That、looks、good、Is 與 curry；curry 第一音節重。 連音：That looks 與 looks good 可輕連，但 /ks/ 要保留；Is it 可連成 Is-it。 節奏：That looks good. // Is it curry? 語調：陳述句 good 下降；yes/no question curry 上揚，先表現好吃再表現好奇。 評分：檢查 That 有聲 th、looks /ks/、good /ʊ/ 與 /d/、Is it 的 /z/ 連音、curry 重音/r，以及先降後升的語調。", ssml: "<speak>That looks good. Is it curry?</speak>" },
+                { id: "hwg7_u01_7", en: "Yes, it is.", zh: "是的，它是。", focus: "難字：Yes 字尾 /s/：字尾 /s/ 要清楚。；it 字尾 /t/：字尾 /t/ 可輕收。；is 字尾 /z/：字尾 /z/ 要清楚，不可在連音時消失。 重音：重讀 Yes 與 is。 連音：it is 可自然連成 it-is，但 is 不可消失。 節奏：Yes, / it is. 語調：肯定回答；Yes 與 it is 都下降，語氣自然、肯定。 評分：檢查 Yes /s/、it /t/、is /z/ 與 it-is 連音，並以兩段下降語調作答。", ssml: "<speak>Yes, it is.</speak>" },
+                { id: "hwg7_u01_8", en: "Where are you from?", zh: "你們來自哪裡？", focus: "難字：Where /wer/：w 音與 r 音都要聽得出來；r 音不可消失。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可省略。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 要清楚。 重音：重讀 Where 與 from。 連音：Where are 可連成 Where-are；are you 可連成 are-you；you from 可自然連音，但 from 的 /m/ 要收。 節奏：Where are you / from? 語調：店家詢問多位客人來自哪裡；語氣友善、好奇，句尾下降。 評分：檢查 Where 的 w/r、are 不可省略、from 的 fr 與 /m/，以及友善的 wh-question 下降語調。", ssml: "<speak>Where are you from?</speak>" },
+                { id: "hwg7_u01_9", en: "We're from Taiwan.", zh: "我們來自臺灣。", focus: "難字：We're r 音（來源未列完整 IPA）：We are 的縮寫，r 音要有。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 要清楚。；Taiwan Tai-WAN（來源未列完整 IPA）：Tai 的雙母音要清楚，重音在後半段 WAN。 重音：重讀 We're 與 Taiwan；Taiwan 重音在 WAN。 連音：We're from 可連成 We're-from；from Taiwan 可輕連，但 Taiwan 要清楚。 節奏：We're / from Taiwan. 語調：團體回答，語氣自然、有自信；Taiwan 是核心資訊，句尾下降。 評分：檢查 We're 的 r、from 的 fr 與 /m/、Taiwan 後半段重音，以及有自信的下降語調。", ssml: "<speak>We&apos;re from Taiwan.</speak>" }
+            ],
+            "HWG7-U02": [
+                { id: "hwg7_u02_1", en: "Where are we?", zh: "我們在哪裡？", focus: "難字：Where r 音（來源未列完整 IPA）：r 音要清楚。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可完全消失。；we 不可過短（來源未列完整 IPA）：要清楚，不要唸太短。 重音：重讀 Where 與 we。 連音：Where are 可連成 Where-are，但不可糊成 Where we；are we 可輕連，但仍要聽得出 are。 節奏：Where are / we? 語調：wh-question；角色在陌生地方帶疑惑感，句尾 we 下降，不作 yes/no 問句上揚。 評分：檢查 Where 的 r、are 不省略、we 不過短，以及 wh-question 句尾下降。", ssml: "<speak>Where are we?</speak>" },
+                { id: "hwg7_u02_2", en: "You're on a boat.", zh: "你們在船上。", focus: "難字：You're r 音（來源未列完整 IPA）：You are 的縮寫，r 音要有。；on 與 a 連音（來源未列完整 IPA）：on a 可自然連成 on-a。；boat /oʊ/、字尾 /t/：雙母音 /oʊ/ 與字尾 /t/ 要清楚。 重音：重讀 You're 與 boat。 連音：You're on a 可連成 You're-on-a，但 You're 的 r 不可消失；on a boat 可連成 on-a-boat，但 boat 的 /t/ 要收。 節奏：You're / on a boat. 語調：回答位置，boat 是核心資訊；語氣清楚肯定，句尾下降。 評分：檢查 You're 的 r、on-a 連音、boat 的 /oʊ/ 與 /t/，以及肯定下降語調。", ssml: "<speak>You&apos;re on a boat.</speak>" },
+                { id: "hwg7_u02_3", en: "Where are you going?", zh: "你們要去哪裡？", focus: "難字：Where r 音（來源未列完整 IPA）：r 音要清楚。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不能省略。；going 字尾 /ŋ/：/ŋ/ 要清楚，不要在後面多加 guh。 重音：重讀 Where 與 going。 連音：Where are you 可連成 Where-are-you，但仍要聽得出 are；you going 可輕連，但 going 要完整。 節奏：Where are you / going? 語調：wh-question；可帶緊張詢問目的地的語氣，句尾 going 下降。 評分：檢查 Where 的 r、are 不省略、going 的 /ŋ/ 不加尾音，以及 wh-question 下降。", ssml: "<speak>Where are you going?</speak>" },
+                { id: "hwg7_u02_4", en: "We're going to school.", zh: "我們要去上學。", focus: "難字：We're r 音（來源未列完整 IPA）：We are 的縮寫，r 音要有。；going 字尾 /ŋ/：/ŋ/ 要清楚。；to /tə/：可輕讀成 /tə/，但不要消失。；school /sk/、/uː/、字尾 /l/：/sk/、長音 /uː/ 與字尾 /l/ 都要清楚。 重音：重讀 We're、going 與 school。 連音：We're going to 可連成 We're-going-to；to school 可輕連，但 school 不可糊掉。 節奏：We're going / to school. 語調：回答目的地，school 是重點；語氣肯定，句尾下降。 評分：檢查 We're 的 r、going /ŋ/、to 不消失、school 的 /sk/ /uː/ /l/，以及下降語調。", ssml: "<speak>We&apos;re going to school.</speak>" },
+                { id: "hwg7_u02_5", en: "By boat?", zh: "搭船嗎？", focus: "難字：By /aɪ/：雙母音 /aɪ/ 要清楚。；boat 字尾 /t/：字尾 /t/ 要收。 重音：重讀 By 與 boat。 連音：By boat 可連成 By-boat，但 boat 的 /t/ 要聽得見。 節奏：By / boat? 語調：省略式 yes/no question；帶驚訝與確認感，句尾 boat 上揚。 評分：檢查 By /aɪ/、boat /t/、By-boat 連音，以及確認問句句尾上揚。", ssml: "<speak>By boat?</speak>" },
+                { id: "hwg7_u02_6", en: "Yes. How do you go to school?", zh: "是的。你們如何上學？", focus: "難字：Yes 字尾 /s/：字尾 /s/ 要清楚。；How h、/aʊ/：h 與雙母音 /aʊ/ 要出來。；do 連音中不省略（來源未列完整 IPA）：do you 可輕連，但 do 不可完全消失。；school /sk/、字尾 /l/：/sk/ 與字尾 /l/ 要清楚。 重音：重讀 Yes、How、go 與 school。 連音：How do you 可連成 How-do-you，但不可變成 How you；go to school 可連成 go-to-school。 節奏：Yes. // How do you / go to school? 語調：Yes 簡短下降；後半為 wh-question，句尾 school 下降，語氣自然詢問上學方式。 評分：檢查 Yes /s/、How 的 h/aʊ、do 不省略、school 的 /sk/ /l/，以及兩段下降語調。", ssml: "<speak>Yes. How do you go to school?</speak>" },
+                { id: "hwg7_u02_7", en: "I go to school on foot.", zh: "我走路上學。", focus: "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；school /sk/、/uː/、字尾 /l/：/sk/、長音 /uː/ 與字尾 /l/ 要清楚。；foot /ʊ/、字尾 /t/：使用短音 /ʊ/，不是 food；字尾 /t/ 要收。 重音：重讀 I、go、school 與 foot。 連音：go to school 可連成 go-to-school；on foot 可連成 on-foot，但 foot 的 /t/ 要聽得出來。 節奏：I go / to school / on foot. 語調：說明自己的上學方式，foot 是重點；語氣平穩，句尾下降。 評分：檢查 I /aɪ/、school 的 /sk/ /uː/ /l/、foot 的 /ʊ/ /t/，以及平穩下降。", ssml: "<speak>I go to school on foot.</speak>" },
+                { id: "hwg7_u02_8", en: "He goes to school by car.", zh: "他搭車上學。", focus: "難字：He /iː/：長音 /iː/ 要清楚。；goes 字尾 /z/：第三人稱字尾 /z/ 要出來。；school /sk/、字尾 /l/：/sk/ 與字尾 /l/ 要清楚。；by /aɪ/：雙母音 /aɪ/ 要完整。；car r 音（來源未列完整 IPA）：r 音要自然收尾。 重音：重讀 He、goes、school 與 car。 連音：goes to school 可連成 goes-to-school，但 goes 的 /z/ 不可吞掉；by car 可輕連，但 car 的 r 要有。 節奏：He goes / to school / by car. 語調：說明第三人稱上學方式，goes 是語法重點、car 是交通方式重點；句尾下降。 評分：檢查 He /iː/、goes /z/、school /sk/ /l/、by /aɪ/、car 的 r，以及下降語調。", ssml: "<speak>He goes to school by car.</speak>" }
+            ],
+            "HWG7-U03": [
+                { id: "hwg7_u03_1", en: "What do you do in your free time?", zh: "你休閒時間做什麼？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；your 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可完全吞掉。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要收。 重音：重讀 What、第二個 do、free 與 time。 連音：What do you 可連成 What-do-you，但不可糊成 Wha-you；do in your 可輕連，但 free time 要清楚。 節奏：What do you do / in your free time? 語調：wh-question；自然友善地詢問休閒活動，句尾 time 下降。 評分：檢查 What /t/、do 不省略、your 不全吞、free 的 fr、time /aɪ/ /m/，以及問句下降。", ssml: "<speak>What do you do in your free time?</speak>" },
+                { id: "hwg7_u03_2", en: "I play the piano in my free time.", zh: "我休閒時間彈鋼琴。", focus: "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；play /pl/、/eɪ/：/pl/ 與長音 /eɪ/ 要清楚。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；piano 重音在中間音節（來源未列完整 IPA）：重音要放在中間音節。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 I、play、piano、free 與 time；piano 重音在中間音節。 連音：play the piano 可連成 play-the-piano，但 the 不可消失；in my free time 可輕連，但 free time 要清楚。 節奏：I play the piano / in my free time. 語調：回答休閒活動，piano 和 free time 是重點；語氣有自信，句尾下降。 評分：檢查 I /aɪ/、play /pl/ /eɪ/、the 有聲 th、piano 中間重音、free time 清楚，以及下降語調。", ssml: "<speak>I play the piano in my free time.</speak>" },
+                { id: "hwg7_u03_3", en: "What does Mozart do in his free time?", zh: "莫札特休閒時間做什麼？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；does 字尾 /z/：字尾 /z/ 要出來。；Mozart 第一音節較重（來源未列完整 IPA）：第一音節較重，r 音自然。；do 不可弱化至消失（來源未列完整 IPA）：不要弱到消失。；his 字尾 /z/：可輕讀，但 /z/ 不可完全不見。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 What、Mozart、do、free 與 time；Mozart 第一音節較重。 連音：What does 可連成 What-does，但 /z/ 要保留；does Mozart 與 in his free time 可自然連音，free time 要清楚。 節奏：What does Mozart do / in his free time? 語調：wh-question；Mozart 是人物重點、do 是動作重點，句尾 time 下降。 評分：檢查 What /t/、does /z/、Mozart 重音/r、do 不消失、his /z/、free time 與問句下降。", ssml: "<speak>What does Mozart do in his free time?</speak>" },
+                { id: "hwg7_u03_4", en: "He writes music in his free time.", zh: "他休閒時間作曲。", focus: "難字：He /iː/：長音 /iː/ 要清楚。；writes w 不發音、字尾 /ts/：w 不發音，第三人稱字尾 /ts/ 要清楚。；music 字尾 /k/：字尾 /k/ 要收。；his 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可完全吞掉。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 He、writes、music、free 與 time。 連音：writes music 可連成 writes-music，但 writes 的 /ts/ 要保留；in his free time 可輕連，但 free time 是重點。 節奏：He writes music / in his free time. 語調：回答第三人稱活動，writes 與 music 是核心資訊；句尾 time 下降。 評分：檢查 He /iː/、writes 不發 w 且 /ts/ 清楚、music /k/、his 不全吞、free time 與下降語調。", ssml: "<speak>He writes music in his free time.</speak>" },
+                { id: "hwg7_u03_5", en: "I watch TV in my free time.", zh: "我休閒時間看電視。", focus: "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；watch 字尾 /tʃ/：字尾 /tʃ/ 要清楚，不可唸成 wash。；TV T-V 逐字母：逐字母唸 T-V，V 不可變成 B。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 I、watch、T-V、free 與 time。 連音：watch TV 可連成 watch-TV，但 watch 的 /tʃ/ 不可糊掉；in my free time 可輕連，time 要收 /m/。 節奏：I watch TV / in my free time. 語調：自然分享休閒活動，watch TV 是核心；句尾下降，不唸成逐字背誦。 評分：檢查 I /aɪ/、watch /tʃ/、TV 逐字母且 V 不變 B、free time 與自然下降。", ssml: "<speak>I watch TV in my free time.</speak>" },
+                { id: "hwg7_u03_6", en: "What is TV?", zh: "什麼是電視？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；is 字尾 /z/：字尾 /z/ 要清楚。；TV T-V 逐字母：逐字母唸 T-V；V 要上齒碰下唇，不可變成 B。 重音：重讀 What 與 T-V。 連音：What is 可連成 What-is，但 What 的 /t/ 與 is 的 /z/ 都要保留。 節奏：What is / TV? 語調：wh-question；帶好奇感，句尾 TV 下降，不作 yes/no 問句上揚。 評分：檢查 What /t/、is /z/、TV 逐字母與 V 唇齒音，以及 wh-question 句尾下降。", ssml: "<speak>What is TV?</speak>" },
+                { id: "hwg7_u03_7", en: "Let me show you.", zh: "讓我展示給你看。", focus: "難字：Let 字尾 /t/：字尾 /t/ 可輕收。；me /iː/：長音 /iː/ 要清楚。；show /ʃ/：sh /ʃ/ 要出來，不可唸成 so。；you 不可過短（來源未列完整 IPA）：要自然，不要唸太短。 重音：重讀 Let、show 與 you。 連音：Let me 可連成 Let-me；show you 可連成 show-you，但 show 的 /ʃ/ 要清楚。 節奏：Let me / show you. 語調：友善回應並邀請示範；show you 是重點，語氣親切自然，句尾下降。 評分：檢查 Let /t/、me /iː/、show /ʃ/、you 不過短、兩組連音與親切下降語調。", ssml: "<speak>Let me show you.</speak>" },
+                { id: "hwg7_u03_8", en: "Look! I play baseball on weekends.", zh: "看！我週末打棒球。", focus: "難字：Look /ʊ/、字尾 /k/：短音 /ʊ/ 與字尾 /k/ 要收。；I /aɪ/：雙母音 /aɪ/ 要完整。；play /pl/、/eɪ/：/pl/ 與長音 /eɪ/ 要清楚。；baseball 第一音節重、base /eɪ/：第一音節重，base 的長音 /eɪ/ 要清楚。；weekends 字尾 /z/：字尾 /z/ 要出來。 重音：重讀 Look、I、play、baseball 與 weekends；baseball 第一音節重。 連音：Look 後小停頓；I play baseball 可連成 I-play-baseball；on weekends 可輕連，但 weekends 的 /z/ 不可漏。 節奏：Look! // I play baseball / on weekends. 語調：Look 短、亮並下降；後半有興奮感，baseball 與 weekends 是重點，句尾下降。 評分：檢查 Look /ʊ/ /k/ 與停頓、I /aɪ/、play /pl/ /eɪ/、baseball 重音、weekends /z/，以及興奮但清楚的下降語調。", ssml: "<speak>Look! I play baseball on weekends.</speak>" }
+            ],
+            "HWG7-U04": [
+                { id: "hwg7_u04_1", en: "What time do you get up, Joy?", zh: "Joy，你幾點起床？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要清楚。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；get 字尾 /t/：get up 時 /t/ 可輕連到 up，但不可完全消失。；Joy /dʒ/：/dʒ/ 要清楚。 重音：重讀 What、time、get、up 與 Joy。 連音：What time 可連成 What-time；do you 可連成 do-you；get up 可連成 get-up，但 get 的 /t/ 不可完全消失。 節奏：What time / do you get up, Joy? 語調：wh-question；自然友善地詢問 Joy 起床時間，句尾 Joy 下降。 評分：檢查 What /t/、time /aɪ/ /m/、do 不省略、get-up /t/、Joy /dʒ/，以及問句下降。", ssml: "<speak>What time do you get up, Joy?</speak>" },
+                { id: "hwg7_u04_2", en: "I get up at eight o'clock.", zh: "我八點起床。", focus: "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；get 字尾 /t/：get up 時 /t/ 輕收並連到 up。；eight 字尾 /t/：at eight 可連音，但 eight 的 /t/ 要有。；o'clock clock 字尾 /k/：clock 的字尾 /k/ 要收。 重音：重讀 I、get、up、eight 與 clock。 連音：get up 可連成 get-up；at eight 可連成 at-eight；eight o'clock 可連成 eight-o'clock，但 /t/ 與 /k/ 都要聽得到。 節奏：I get up / at eight o'clock. 語調：回答起床時間，eight o'clock 是核心資訊；語氣肯定，句尾下降。 評分：檢查 I /aɪ/、get-up /t/、at-eight 連音、eight /t/、clock /k/，以及肯定下降。", ssml: "<speak>I get up at eight o&apos;clock.</speak>" },
+                { id: "hwg7_u04_3", en: "What do you do after breakfast?", zh: "你早餐之後做什麼？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；after 第一音節重（來源未列完整 IPA）：第一音節要重讀。；breakfast /br/、/f/、字尾 /st/：/br/、/f/ 與字尾 /st/ 要清楚。 重音：重讀 What、第二個 do、after 與 breakfast；after 第一音節重。 連音：What do you 可連成 What-do-you，但不可糊成 Wha-you；do after 可輕連，after breakfast 要分清楚。 節奏：What do you do / after breakfast? 語調：wh-question；自然、不急地詢問早餐後活動，句尾 breakfast 下降。 評分：檢查 What /t/、do 不省略、after 第一音節重、breakfast /br/ /f/ /st/，以及問句下降。", ssml: "<speak>What do you do after breakfast?</speak>" },
+                { id: "hwg7_u04_4", en: "I make a snowman.", zh: "我堆雪人。", focus: "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；make /eɪ/、字尾 /k/：長音 /eɪ/ 與字尾 /k/ 要清楚。；snowman sn 開頭、第一音節重（來源未列完整 IPA）：sn 開頭與第一音節重音要清楚。 重音：重讀 I、make 與 snowman；snowman 第一音節重。 連音：make a 可連成 make-a；a snowman 可輕連，但 snowman 要清楚。 節奏：I make / a snowman. 語調：回答早餐後活動，snowman 是核心資訊；可帶開心興奮感，句尾下降。 評分：檢查 I /aɪ/、make /eɪ/ /k/、make-a 連音、snowman 的 sn 與重音，以及下降語調。", ssml: "<speak>I make a snowman.</speak>" },
+                { id: "hwg7_u04_5", en: "I walk the reindeer.", zh: "我遛馴鹿。", focus: "難字：walk l 不發音、字尾 /k/：l 不發音，字尾 /k/ 要收。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；reindeer r 音、deer 清楚（來源未列完整 IPA）：r 音要自然，deer 要清楚。 重音：重讀 I、walk 與 reindeer。 連音：walk the 可連成 walk-the，但 walk 的 /k/ 不可完全消失；the reindeer 可輕連，但 th 與 r 要清楚。 節奏：I walk / the reindeer. 語調：自然介紹活動，reindeer 是核心資訊；句尾下降，不要唸得太平。 評分：檢查 walk 不發 l 且 /k/ 清楚、the 有聲 th、reindeer 的 r/deer、兩組連音與自然下降。", ssml: "<speak>I walk the reindeer.</speak>" },
+                { id: "hwg7_u04_6", en: "What time does Santa go home?", zh: "耶誕老人幾點回家？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；time /aɪ/、字尾 /m/：/aɪ/ 與 /m/ 要清楚。；does 字尾 /z/：字尾 /z/ 要出來。；Santa 第一音節重（來源未列完整 IPA）：第一音節要重讀。；home h、/oʊ/：h 與長音 /oʊ/ 要清楚。 重音：重讀 What、time、Santa、go 與 home；Santa 第一音節重。 連音：What time 可連成 What-time；does Santa 可輕連，但 /z/ 不消失；go home 可連成 go-home，home 的 h 要清楚。 節奏：What time / does Santa / go home? 語調：wh-question；詢問 Santa 回家時間，句尾 home 下降，不作 yes/no 問句上揚。 評分：檢查 What /t/、time /aɪ/ /m/、does /z/、Santa 重音、home h/oʊ，以及問句下降。", ssml: "<speak>What time does Santa go home?</speak>" },
+                { id: "hwg7_u04_7", en: "He goes home at twelve o'clock.", zh: "他十二點回家。", focus: "難字：He /iː/：長音 /iː/ 要清楚。；goes 字尾 /z/：第三人稱字尾 /z/ 要出來。；home h、/oʊ/：h 與長音 /oʊ/ 要清楚。；twelve /tw/、/v/：/tw/ 與 /v/ 要出來。；o'clock clock 字尾 /k/：clock 的字尾 /k/ 要收。 重音：重讀 He、goes、home、twelve 與 clock。 連音：goes home 可連成 goes-home，但 /z/ 要聽得到；at twelve 可輕連；twelve o'clock 可連成 twelve-o'clock，但 /v/ 與 /k/ 都要清楚。 節奏：He goes home / at twelve o'clock. 語調：回答 Santa 回家時間，twelve o'clock 是核心資訊；語氣肯定，句尾下降。 評分：檢查 He /iː/、goes /z/、home h/oʊ、twelve /tw/ /v/、clock /k/，以及肯定下降。", ssml: "<speak>He goes home at twelve o&apos;clock.</speak>" },
+                { id: "hwg7_u04_8", en: "What does he do in his free time?", zh: "他休閒時間做什麼？", focus: "難字：What 字尾 /t/：字尾 /t/ 要輕收。；does 字尾 /z/：字尾 /z/ 要清楚。；he /iː/：長音 /iː/ 要完整。；his 句中輕讀（來源未列完整 IPA）：in his 可連音，但 his 不可完全消失。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要收。 重音：重讀 What、第二個 do、free 與 time。 連音：What does 可連成 What-does，但 /z/ 要有；does he do 可輕連，do 要清楚；in his free time 可連音，free time 是重點。 節奏：What does he do / in his free time? 語調：wh-question；自然清楚地詢問 Santa 的休閒活動，句尾 time 下降。 評分：檢查 What /t/、does /z/、he /iː/、his 不消失、free 的 fr、time /aɪ/ /m/，以及問句下降。", ssml: "<speak>What does he do in his free time?</speak>" },
+                { id: "hwg7_u04_9", en: "He takes an ice bath.", zh: "他泡冰浴。", focus: "難字：He /iː/：長音 /iː/ 要清楚。；takes /ks/：第三人稱字尾 /ks/ 要完整。；ice 字尾 /s/：字尾 /s/ 要清楚。；bath /θ/：th 是無聲 /θ/，不可唸成 bat。 重音：重讀 He、takes、ice 與 bath。 連音：takes an 可連成 takes-an，但 /ks/ 要保留；an ice 可連成 an-ice；ice bath 可輕連，但 /s/ 與 /θ/ 都要聽得到。 節奏：He takes / an ice bath. 語調：回答第三人稱活動，takes 與 ice bath 是核心；可帶一點驚訝感，句尾下降。 評分：檢查 He /iː/、takes /ks/、an-ice 連音、ice /s/、bath /θ/，以及清楚的下降語調。", ssml: "<speak>He takes an ice bath.</speak>" }
+            ],
+            "HWG5-U04": [
+                { id: "hwg5_u04_1", en: "How many zebras are there?", zh: "有幾隻斑馬？", focus: "難字：How h（來源未列完整 IPA）：h 要清楚。；many 第一音節重（來源未列完整 IPA）：第一音節要重讀。；zebras z、複數 /z/：開頭 z 與複數字尾 /z/ 都要出來。；are 句中輕讀（來源未列完整 IPA）：可輕讀，但不可完全消失。；there th、r（來源未列完整 IPA）：th 與 r 都要清楚。 重音：重讀 How、many、zebras 與 there。 連音：How many 可連成 How-many；zebras are there 可連成 zebras-are-there，但 are 不可消失。 節奏：How many zebras / are there? 語調：wh-question；詢問斑馬數量，句尾 there 下降，不整句上揚。 評分：檢查 How h、many 第一音節重、zebras 開頭與複數 /z/、are 不消失、there th/r，以及問句下降。", ssml: "<speak>How many zebras are there?</speak>" },
+                { id: "hwg5_u04_2", en: "One, two, three!", zh: "一、二、三！", focus: "難字：One w 感（來源未列完整 IPA）：開頭的 /w/ 感要清楚。；two /uː/：長音 /uː/ 要穩。；three /θ/、r：無聲 th /θ/ 與 r 要清楚，不可唸成 tree。 重音：One、two、three 三個數字都重讀。 連音：三個數字要分清楚並保留小停頓，不可連成一串糊掉。 節奏：One, / two, / three! 語調：數數要有節奏並帶興奮感；one、two 平接，three 下降收句。 評分：檢查 One /w/、two /uː/、three /θ/ 與 r、三段節奏，以及 three 下降。", ssml: "<speak>One, two, three!</speak>" },
+                { id: "hwg5_u04_3", en: "There are three zebras.", zh: "有三隻斑馬。", focus: "難字：There th、r（來源未列完整 IPA）：th 與 r 要清楚。；are 句中輕讀（來源未列完整 IPA）：可輕讀，但不可消失。；three /θ/：無聲 th /θ/ 要清楚，不可唸成 tree。；zebras 複數 /z/：複數字尾 /z/ 要出來。 重音：重讀 There、three 與 zebras；three zebras 是核心資訊。 連音：There are 可連成 There-are；three zebras 可輕連，但兩個字都要清楚。 節奏：There are / three zebras. 語調：回答數量，語氣肯定；句尾 zebras 下降。 評分：檢查 There th/r、are 不消失、three /θ/、zebras 複數 /z/，以及肯定下降。", ssml: "<speak>There are three zebras.</speak>" },
+                { id: "hwg5_u04_4", en: "Bye, zebras.", zh: "再見，斑馬們。", focus: "難字：Bye /aɪ/：雙母音 /aɪ/ 要完整。；zebras z、字尾 /z/：開頭 z 與字尾 /z/ 要清楚。 重音：重讀 Bye 與 zebras。 連音：Bye 後可小停頓；zebras 要清楚，不可糊成 zebra。 節奏：Bye, / zebras. 語調：友善告別；Bye 稍明亮，zebras 下降收句。 評分：檢查 Bye /aɪ/、停頓、zebras 開頭與複數 /z/，以及友善下降語調。", ssml: "<speak>Bye, zebras.</speak>" },
+                { id: "hwg5_u04_5", en: "Take care!", zh: "保重！", focus: "難字：Take 字尾 /k/：字尾 /k/ 要收。；care k、r（來源未列完整 IPA）：k 音與 r 音要清楚。 重音：重讀 Take 與 care。 連音：Take care 可連成 Take-care，但 Take 的 /k/ 不可完全消失。 節奏：Take / care! 語調：溫暖清楚地提醒與祝福，care 下降收句，不要太平。 評分：檢查 Take /k/、care 的 k/r、Take-care 連音，以及溫暖下降語調。", ssml: "<speak>Take care!</speak>" },
+                { id: "hwg5_u04_6", en: "This lion is hungry!", zh: "這隻獅子餓了！", focus: "難字：This /ð/：有聲 th /ð/ 要清楚，不可唸成 dis。；lion 兩音節（來源未列完整 IPA）：兩個音節都要清楚。；is 字尾 /z/：字尾 /z/ 要自然。；hungry h、第一音節重（來源未列完整 IPA）：h 要出來，第一音節重。 重音：重讀 This、lion 與 hungry；lion 和 hungry 是核心資訊。 連音：This lion 可連成 This-lion，但 th 要保留；lion is 可連成 lion-is；is hungry 可連音，但 hungry 的 h 要清楚。 節奏：This lion / is hungry! 語調：驚訝提醒，帶緊張感但不喊糊；句尾 hungry 下降。 評分：檢查 This /ð/、lion 兩音節、is /z/、hungry h 與第一音節重，以及緊張但清楚的下降語調。", ssml: "<speak>This lion is hungry!</speak>" },
+                { id: "hwg5_u04_7", en: "Rocky doesn't like tigers.", zh: "Rocky 不喜歡老虎。", focus: "難字：Rocky r 音（來源未列完整 IPA）：r 音要清楚。；doesn't z、字尾 /t/：z 與最後 /t/ 要出來。；like 字尾 /k/：字尾 /k/ 要收。；tigers 複數 /z/：複數字尾 /z/ 要清楚。 重音：重讀 Rocky、doesn't、like 與 tigers。 連音：doesn't like 可連成 doesn't-like，但 doesn't 的 /t/ 不可消失；like tigers 可輕連，但 like 的 /k/ 要保留。 節奏：Rocky doesn't like / tigers. 語調：說明 Rocky 不喜歡老虎，doesn't 與 tigers 是重點；句尾下降。 評分：檢查 Rocky r、doesn't 的 z/t、like /k/、tigers 複數 /z/、連音與下降語調。", ssml: "<speak>Rocky doesn&apos;t like tigers.</speak>" },
+                { id: "hwg5_u04_8", en: "Does he like lions?", zh: "他喜歡獅子嗎？", focus: "難字：Does 字尾 /z/：字尾 /z/ 要清楚。；he /iː/：長音 /iː/ 要清楚。；like 字尾 /k/：字尾 /k/ 要收。；lions 複數 /z/：複數字尾 /z/ 要出來。 重音：重讀 Does、like 與 lions。 連音：Does he 可連成 Does-he；like lions 可輕連，但 like 的 /k/ 與 lions 的 /z/ 都要聽得出來。 節奏：Does he / like lions? 語調：yes/no question；確認 Rocky 是否喜歡獅子，帶疑問感，句尾 lions 上揚。 評分：檢查 Does /z/、he /iː/、like /k/、lions /z/、兩組連音與句尾上揚。", ssml: "<speak>Does he like lions?</speak>" },
+                { id: "hwg5_u04_9", en: "No, he doesn't, I guess.", zh: "不，我猜他不喜歡。", focus: "難字：No 短而清楚（來源未列完整 IPA）：要短而清楚。；he /iː/：長音 /iː/ 要清楚。；doesn't z、字尾 /t/：z 與最後 /t/ 要出來。；I /aɪ/：雙母音 /aɪ/ 要完整。；guess /g/、字尾 /s/：/g/ 與字尾 /s/ 要收。 重音：重讀 No、doesn't 與 guess。 連音：he doesn't 可連成 he-doesn't，但 /t/ 不可消失；I guess 可連音，但 guess 的 /s/ 要收。 節奏：No, / he doesn't, / I guess. 語調：否定回答；No 下降、he doesn't 放穩、I guess 帶一點不確定但仍下降，不作高揚疑問句。 評分：檢查 No 短清楚、he /iː/、doesn't z/t、I /aɪ/、guess g/s、連音與三段下降。", ssml: "<speak>No, he doesn&apos;t, I guess.</speak>" }
             ]
         };
 
@@ -451,6 +563,80 @@
             "watch": { zh: "觀看", tip: "字尾 /tʃ/ 要清楚，不是 wash。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>watch</emphasis></prosody></speak>" },
             "sure": { zh: "當然", tip: "Sure 可自然唸成 shur，/ʃ/ 音要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Sure</emphasis></prosody></speak>" },
             "follow": { zh: "跟隨", tip: "FOL-low，f 音要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Follow</emphasis></prosody></speak>" },
+            "would": { zh: "願意／會（禮貌邀請）", tip: "字尾 /d/ 可輕連到 you，但不可完全吞掉。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Would</emphasis></prosody></speak>" },
+            "like": { zh: "想要／喜歡", tip: "字尾 /k/ 要收乾淨，不可唸成 lie。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>like</emphasis></prosody></speak>" },
+            "some": { zh: "一些", tip: "句中可弱讀成 /səm/，但 s 與 m 都要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>some</emphasis></prosody></speak>" },
+            "beef": { zh: "牛肉", tip: "長音 /iː/ 要拉夠，字尾 /f/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>beef</emphasis></prosody></speak>" },
+            "sandwiches": { zh: "三明治（複數）", tip: "重音在第一音節，ch 與複數字尾 /ɪz/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>sandwiches</emphasis></prosody></speak>" },
+            "please": { zh: "請／麻煩了", tip: "pl 開頭完整，長音 /iː/ 與字尾 /z/ 都要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>please</emphasis></prosody></speak>" },
+            "i'd": { zh: "我想要（I would 的縮寫）", tip: "字尾 /d/ 要輕收，不可變成 I like。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>I&apos;d</emphasis></prosody></speak>" },
+            "cheeseburgers": { zh: "起司漢堡（複數）", tip: "cheese 的 ch 與 /z/、burgers 的 r 與字尾 /z/ 都要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>cheeseburgers</emphasis></prosody></speak>" },
+            "whose": { zh: "誰的", tip: "h、長音 /uː/ 與字尾 /z/ 都要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Whose</emphasis></prosody></speak>" },
+            "soda": { zh: "汽水", tip: "SO-da，第一音節重，長 o 音要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>soda</emphasis></prosody></speak>" },
+            "chair": { zh: "椅子", tip: "ch /tʃ/ 與 air 音要完整，不可變成 share。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>chair</emphasis></prosody></speak>" },
+            "my": { zh: "我的", tip: "雙母音 /aɪ/ 要完整，所有格重點要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>my</emphasis></prosody></speak>" },
+            "are": { zh: "是（be 動詞）", tip: "句中可以輕讀，但不能完全省略；r 音要保留。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>are</emphasis></prosody></speak>" },
+            "from": { zh: "來自", tip: "fr 開頭與 r 音要清楚，字尾 /m/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>from</emphasis></prosody></speak>" },
+            "taiwan": { zh: "臺灣", tip: "Tai-WAN，Tai 的雙母音要清楚，重音在後半段 WAN。", ssml: "<speak><prosody rate='slow'>Tai-<emphasis level='strong'>WAN</emphasis></prosody></speak>" },
+            "uk": { zh: "英國", tip: "逐字母唸 U-K，K 要清楚。", ssml: "<speak><prosody rate='slow'>U-<emphasis level='strong'>K</emphasis></prosody></speak>" },
+            "am": { zh: "是（be 動詞）", tip: "字尾 /m/ 要清楚，不能吞掉。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>am</emphasis></prosody></speak>" },
+            "she's": { zh: "她是", tip: "She is 的縮寫，字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>She&apos;s</emphasis></prosody></speak>" },
+            "friend": { zh: "朋友", tip: "fr 開頭要清楚，字尾 /d/ 要輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>friend</emphasis></prosody></speak>" },
+            "usa": { zh: "美國", tip: "逐字母唸 U-S-A，S 要清楚。", ssml: "<speak><prosody rate='slow'>U-<emphasis level='strong'>S</emphasis>-A</prosody></speak>" },
+            "looks": { zh: "看起來", tip: "look + s，字尾 /ks/ 要完整清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>looks</emphasis></prosody></speak>" },
+            "curry": { zh: "咖哩", tip: "CUR-ry，第一音節重，r 音要自然清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>CUR</emphasis>-ry</prosody></speak>" },
+            "you're": { zh: "你／你們是、在（You are 縮寫）", tip: "r 音（來源未列完整 IPA）；You are 的縮寫，r 音要有。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>you&apos;re</emphasis></prosody></speak>" },
+            "boat": { zh: "船", tip: "/oʊ/、字尾 /t/；雙母音 /oʊ/ 與字尾 /t/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>boat</emphasis></prosody></speak>" },
+            "school": { zh: "學校", tip: "/sk/、/uː/、字尾 /l/；/sk/、長音 /uː/ 與字尾 /l/ 都要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>school</emphasis></prosody></speak>" },
+            "by": { zh: "搭乘／藉由", tip: "/aɪ/；雙母音 /aɪ/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>by</emphasis></prosody></speak>" },
+            "how": { zh: "如何／多少（依句意）", tip: "h、/aʊ/；h 與雙母音 /aʊ/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>how</emphasis></prosody></speak>" },
+            "foot": { zh: "腳；on foot 表示走路", tip: "/ʊ/、字尾 /t/；使用短音 /ʊ/，不是 food；字尾 /t/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>foot</emphasis></prosody></speak>" },
+            "goes": { zh: "去／回去（第三人稱）", tip: "字尾 /z/；第三人稱字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>goes</emphasis></prosody></speak>" },
+            "car": { zh: "汽車", tip: "r 音（來源未列完整 IPA）；r 音要自然收尾。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>car</emphasis></prosody></speak>" },
+            "your": { zh: "你的", tip: "句中輕讀（來源未列完整 IPA）；可以輕讀，但不可完全吞掉。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>your</emphasis></prosody></speak>" },
+            "free": { zh: "空閒的", tip: "fr 開頭（來源未列完整 IPA）；fr 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>free</emphasis></prosody></speak>" },
+            "play": { zh: "彈奏／打（依句意）", tip: "/pl/、/eɪ/；/pl/ 與長音 /eɪ/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>play</emphasis></prosody></speak>" },
+            "piano": { zh: "鋼琴", tip: "重音在中間音節（來源未列完整 IPA）；重音要放在中間音節。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>piano</emphasis></prosody></speak>" },
+            "mozart": { zh: "莫札特", tip: "第一音節較重（來源未列完整 IPA）；第一音節較重，r 音自然。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>mozart</emphasis></prosody></speak>" },
+            "his": { zh: "他的", tip: "字尾 /z/；可輕讀，但 /z/ 不可完全不見。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>his</emphasis></prosody></speak>" },
+            "writes": { zh: "寫／作曲（第三人稱）", tip: "w 不發音、字尾 /ts/；w 不發音，第三人稱字尾 /ts/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>writes</emphasis></prosody></speak>" },
+            "music": { zh: "音樂／作曲", tip: "字尾 /k/；字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>music</emphasis></prosody></speak>" },
+            "tv": { zh: "電視", tip: "T-V 逐字母；逐字母唸 T-V，V 不可變成 B。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>tv</emphasis></prosody></speak>" },
+            "let": { zh: "讓", tip: "字尾 /t/；字尾 /t/ 可輕收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>let</emphasis></prosody></speak>" },
+            "show": { zh: "展示", tip: "/ʃ/；sh /ʃ/ 要出來，不可唸成 so。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>show</emphasis></prosody></speak>" },
+            "look": { zh: "看", tip: "/ʊ/、字尾 /k/；短音 /ʊ/ 與字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>look</emphasis></prosody></speak>" },
+            "baseball": { zh: "棒球", tip: "第一音節重、base /eɪ/；第一音節重，base 的長音 /eɪ/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>baseball</emphasis></prosody></speak>" },
+            "weekends": { zh: "週末", tip: "字尾 /z/；字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>weekends</emphasis></prosody></speak>" },
+            "get": { zh: "起身；get up 表示起床", tip: "字尾 /t/；get up 時 /t/ 可輕連到 up，但不可完全消失。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>get</emphasis></prosody></speak>" },
+            "joy": { zh: "Joy（人名）", tip: "/dʒ/；/dʒ/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>joy</emphasis></prosody></speak>" },
+            "eight": { zh: "八", tip: "字尾 /t/；at eight 可連音，但 eight 的 /t/ 要有。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>eight</emphasis></prosody></speak>" },
+            "o'clock": { zh: "點鐘", tip: "clock 字尾 /k/；clock 的字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>o&apos;clock</emphasis></prosody></speak>" },
+            "after": { zh: "之後", tip: "第一音節重（來源未列完整 IPA）；第一音節要重讀。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>after</emphasis></prosody></speak>" },
+            "breakfast": { zh: "早餐", tip: "/br/、/f/、字尾 /st/；/br/、/f/ 與字尾 /st/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>breakfast</emphasis></prosody></speak>" },
+            "make": { zh: "製作／堆", tip: "/eɪ/、字尾 /k/；長音 /eɪ/ 與字尾 /k/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>make</emphasis></prosody></speak>" },
+            "snowman": { zh: "雪人", tip: "sn 開頭、第一音節重（來源未列完整 IPA）；sn 開頭與第一音節重音要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>snowman</emphasis></prosody></speak>" },
+            "walk": { zh: "走；此處為遛", tip: "l 不發音、字尾 /k/；l 不發音，字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>walk</emphasis></prosody></speak>" },
+            "reindeer": { zh: "馴鹿", tip: "r 音、deer 清楚（來源未列完整 IPA）；r 音要自然，deer 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>reindeer</emphasis></prosody></speak>" },
+            "santa": { zh: "耶誕老人", tip: "第一音節重（來源未列完整 IPA）；第一音節要重讀。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>santa</emphasis></prosody></speak>" },
+            "home": { zh: "家／回家", tip: "h、/oʊ/；h 與長音 /oʊ/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>home</emphasis></prosody></speak>" },
+            "twelve": { zh: "十二", tip: "/tw/、/v/；/tw/ 與 /v/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>twelve</emphasis></prosody></speak>" },
+            "takes": { zh: "做／進行（第三人稱）", tip: "/ks/；第三人稱字尾 /ks/ 要完整。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>takes</emphasis></prosody></speak>" },
+            "bath": { zh: "浴／洗澡", tip: "/θ/；th 是無聲 /θ/，不可唸成 bat。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>bath</emphasis></prosody></speak>" },
+            "many": { zh: "許多／幾", tip: "第一音節重（來源未列完整 IPA）；第一音節要重讀。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>many</emphasis></prosody></speak>" },
+            "zebras": { zh: "斑馬（複數）", tip: "z、複數 /z/；開頭 z 與複數字尾 /z/ 都要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>zebras</emphasis></prosody></speak>" },
+            "one": { zh: "一", tip: "w 感（來源未列完整 IPA）；開頭的 /w/ 感要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>one</emphasis></prosody></speak>" },
+            "two": { zh: "二", tip: "/uː/；長音 /uː/ 要穩。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>two</emphasis></prosody></speak>" },
+            "three": { zh: "三", tip: "/θ/、r；無聲 th /θ/ 與 r 要清楚，不可唸成 tree。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>three</emphasis></prosody></speak>" },
+            "bye": { zh: "再見", tip: "/aɪ/；雙母音 /aɪ/ 要完整。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>bye</emphasis></prosody></speak>" },
+            "take": { zh: "拿；Take care 表示保重", tip: "字尾 /k/；字尾 /k/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>take</emphasis></prosody></speak>" },
+            "care": { zh: "保重／照顧", tip: "k、r（來源未列完整 IPA）；k 音與 r 音要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>care</emphasis></prosody></speak>" },
+            "this": { zh: "這／這隻", tip: "/ð/；有聲 th /ð/ 要清楚，不可唸成 dis。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>this</emphasis></prosody></speak>" },
+            "lion": { zh: "獅子", tip: "兩音節（來源未列完整 IPA）；兩個音節都要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>lion</emphasis></prosody></speak>" },
+            "hungry": { zh: "餓的", tip: "h、第一音節重（來源未列完整 IPA）；h 要出來，第一音節重。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>hungry</emphasis></prosody></speak>" },
+            "doesn't": { zh: "不（第三人稱否定）", tip: "z、字尾 /t/；z 與最後 /t/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>doesn&apos;t</emphasis></prosody></speak>" },
+            "tigers": { zh: "老虎（複數）", tip: "複數 /z/；複數字尾 /z/ 要清楚。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>tigers</emphasis></prosody></speak>" },
+            "lions": { zh: "獅子（複數）", tip: "複數 /z/；複數字尾 /z/ 要出來。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>lions</emphasis></prosody></speak>" },
+            "guess": { zh: "猜", tip: "/g/、字尾 /s/；/g/ 與字尾 /s/ 要收。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>guess</emphasis></prosody></speak>" },
             "let's": { zh: "我們...吧", tip: "字尾 /ts/ 要清楚，不要漏掉 s。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>Let's</emphasis></prosody></speak>" },
             "here": { zh: "這裡", tip: "/h/ 要出來，尾端不要拖長。", ssml: "<speak><prosody rate='slow'><emphasis level='strong'>here</emphasis></prosody></speak>" },
             "ok": { zh: "好的", tip: "兩拍清楚，O-K，不要唸太短。", ssml: "<speak><prosody rate='slow'>O-<emphasis level='strong'>K</emphasis></prosody></speak>" },
@@ -551,6 +737,7 @@
         async function login() {
             const sid = document.getElementById('student-id').value.trim();
             if (!sid) { alert("🚨 請輸入學號喔！"); return; }
+            if (!/^[0-9]{1,12}$/.test(sid)) { alert("🚨 學號請輸入 1 到 12 位數字。"); return; }
             if (window.isSecureContext === false) { alert("⚠️ 網址不安全！請使用 https 開頭的正式網址。"); return; }
 
             try {
@@ -558,6 +745,15 @@
                 stream.getTracks().forEach(track => track.stop());
             } catch (err) {
                 alert("⚠️ 必須允許麥克風權限才能進行錄音練習喔！請檢查瀏覽器設定。");
+                return;
+            }
+
+            try {
+                const studentUser = await ensureAnonymousStudentSession();
+                currentOwnerUid = studentUser.uid;
+            } catch (error) {
+                console.error("匿名學生驗證失敗：", error);
+                alert("⚠️ 學生安全驗證失敗，請檢查網路後再試一次。");
                 return;
             }
 
@@ -848,7 +1044,8 @@
                 expiresAt.setMonth(expiresAt.getMonth() + RECORD_RETENTION_MONTHS);
                 try {
                     if (window.storage && window.db) {
-                        const audioPath = `audio_records/${currentStudentId}/${Date.now()}.webm`;
+                        if (!currentOwnerUid) throw new Error("學生驗證狀態已失效。請回首頁重新進入。");
+                        const audioPath = `audio_records/${currentOwnerUid}/${currentStudentId}/${Date.now()}.webm`;
                         const fileRef = window.storage.ref(audioPath);
                         await Promise.race([
                             fileRef.put(audioBlob, { customMetadata: { expiresAt: expiresAt.toISOString() } }),
@@ -858,6 +1055,7 @@
                         
                         await Promise.race([
                             window.db.collection("reading_records").add({
+                                ownerUid: currentOwnerUid,
                                 studentId: currentStudentId, 
                                 theme: currentTheme, 
                                 unit: currentUnit, 
@@ -960,6 +1158,7 @@
             
             try {
                 const snapshot = await window.db.collection("reading_records")
+                    .where("ownerUid", "==", currentOwnerUid)
                     .where("studentId", "==", currentStudentId)
                     .where("date", "==", todayDateStr)
                     .where("theme", "==", currentTheme)
@@ -982,7 +1181,7 @@
                         card.className = "bg-white p-5 rounded-3xl shadow-sm border-3 border-gray-100 flex justify-between items-center";
                         card.innerHTML = `
                             <div class="flex-1 pr-4">
-                                <div class="font-black text-xl text-gray-800 mb-1">${data.targetText}</div>
+                                <div class="font-black text-xl text-gray-800 mb-1">${escapeHtml(data.targetText)}</div>
                                 <div class="text-base font-bold text-gray-500">🏆 最高分紀錄</div>
                             </div>
                             <div class="text-4xl font-black ${data.score >= 80 ? 'text-green-500' : 'text-yellow-500'} bg-gray-50 w-20 h-20 flex items-center justify-center rounded-2xl border-2 border-gray-200 shrink-0">
@@ -999,19 +1198,51 @@
             hideLoading();
         }
 
-        function openTeacherLogin() {
-            const pwd = prompt("請輸入教師密碼：");
-            if (pwd === "359307") {
+        async function openTeacherLogin() {
+            if (!window.auth) { alert("Firebase Authentication 尚未初始化。"); return; }
+            showLoading("教師 Google 登入中...");
+            try {
+                let user = await waitForAuthUser();
+                if (!isAuthorizedTeacher(user)) {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    provider.setCustomParameters({ prompt: "select_account" });
+                    const credential = await window.auth.signInWithPopup(provider);
+                    user = credential.user;
+                }
+                if (!isAuthorizedTeacher(user)) {
+                    await window.auth.signOut();
+                    await window.auth.signInAnonymously();
+                    alert("此 Google 帳戶沒有教師後臺權限。");
+                    return;
+                }
                 document.getElementById('teacher-date-picker').valueAsDate = new Date();
-                loadTeacherDateData();
                 showView('view-teacher');
-            } else if (pwd !== null) {
-                alert("密碼錯誤");
+                await loadTeacherDateData();
+            } catch (error) {
+                console.error("教師登入失敗：", error);
+                if (error?.code !== "auth/popup-closed-by-user") {
+                    alert("教師 Google 登入失敗，請確認使用授權帳戶與瀏覽器彈出式視窗設定。");
+                }
+            } finally {
+                hideLoading();
             }
+        }
+
+        async function closeTeacherDashboard() {
+            try {
+                if (window.auth?.currentUser) await window.auth.signOut();
+                const studentUser = await ensureAnonymousStudentSession();
+                currentOwnerUid = studentUser.uid;
+            } catch (error) {
+                console.warn("教師登出後無法恢復匿名學生狀態：", error);
+                currentOwnerUid = "";
+            }
+            showView('view-home');
         }
 
         async function loadTeacherDateData() {
             if(!window.db) return;
+            if (!await requireTeacherUser()) return;
             const dateVal = document.getElementById('teacher-date-picker').value;
             if(!dateVal) return;
             currentTeacherDate = dateVal.replace(/-/g, '/');
@@ -1035,7 +1266,7 @@
                 Array.from(students).sort().forEach(sid => {
                     const btn = document.createElement('div');
                     btn.className = "p-4 border-b border-gray-100 hover:bg-gray-100 cursor-pointer font-black text-xl text-gray-700 flex items-center gap-2 transition-colors";
-                    btn.innerHTML = `👤 學號: ${sid}`;
+                    btn.textContent = `👤 學號: ${sid}`;
                     btn.onclick = () => loadTeacherStudentDetail(sid);
                     btn.oncontextmenu = (e) => {
                         e.preventDefault();
@@ -1053,6 +1284,7 @@
         }
 
         async function loadTeacherStudentDetail(sid) {
+            if (!await requireTeacherUser()) return;
             const container = document.getElementById('teacher-detail-content');
             const avgContainer = document.getElementById('teacher-averages-container');
             container.innerHTML = '<div class="text-center text-gray-400 font-black text-2xl p-10">讀取詳細資料中...</div>';
@@ -1097,7 +1329,7 @@
                     contentHtml += `
                         <div class="mb-8 bg-white p-6 rounded-3xl shadow-sm border-2 border-gray-100">
                             <h4 class="text-2xl font-black text-gray-700 mb-4 border-b-2 border-gray-100 pb-3 flex items-center gap-2">
-                                <span>📚</span> ${combo} 單元明細
+                                <span>📚</span> ${escapeHtml(combo)} 單元明細
                             </h4>
                             <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
                     `;
@@ -1109,18 +1341,18 @@
                                 <div class="flex-1 flex flex-col justify-between">
                                     <div>
                                         <div class="text-sm font-black text-blue-600 mb-1">Target</div>
-                                        <div class="font-black text-gray-800 text-lg leading-tight mb-2">${data.targetText}</div>
+                                        <div class="font-black text-gray-800 text-lg leading-tight mb-2">${escapeHtml(data.targetText)}</div>
                                         <div class="text-xs font-black text-gray-400 mb-1">Transcript</div>
-                                        <div class="font-bold text-gray-600 text-base italic mb-3 bg-white p-2.5 rounded-xl border border-gray-100">${data.transcript}</div>
+                                        <div class="font-bold text-gray-600 text-base italic mb-3 bg-white p-2.5 rounded-xl border border-gray-100">${escapeHtml(data.transcript)}</div>
                                     </div>
-                                    ${data.audioUrl ? `<audio src="${data.audioUrl}" controls class="w-full h-8 outline-none rounded-full"></audio>` : '<span class="text-sm text-gray-400 font-black">無音檔</span>'}
+                                    ${data.audioUrl ? `<audio src="${escapeHtml(data.audioUrl)}" controls class="w-full h-8 outline-none rounded-full"></audio>` : '<span class="text-sm text-gray-400 font-black">無音檔</span>'}
                                 </div>
                                 <div class="w-28 shrink-0 flex flex-col">
                                     <div class="bg-white flex-1 rounded-2xl border border-gray-200 flex flex-col items-center justify-center mb-2 shadow-sm">
                                         <div class="text-3xl font-black ${scColor}">${data.score}</div>
                                     </div>
                                     <div class="bg-blue-50 p-2.5 rounded-2xl border border-blue-100 h-28 overflow-y-auto no-scrollbar">
-                                        <p class="text-xs font-bold text-blue-800 leading-tight">${data.feedback}</p>
+                                        <p class="text-xs font-bold text-blue-800 leading-tight">${escapeHtml(data.feedback)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -1130,7 +1362,7 @@
                     contentHtml += `</div></div>`;
                 }
 
-                document.getElementById('teacher-detail-header').innerHTML = `<h3 class="text-3xl font-black text-gray-700">學號: ${sid}</h3><div id="teacher-averages-container" class="flex gap-4 flex-wrap justify-end">${avgHtml}</div>`;
+                document.getElementById('teacher-detail-header').innerHTML = `<h3 class="text-3xl font-black text-gray-700">學號: ${escapeHtml(sid)}</h3><div id="teacher-averages-container" class="flex gap-4 flex-wrap justify-end">${avgHtml}</div>`;
                 container.innerHTML = contentHtml;
 
             } catch(e) {
@@ -1141,6 +1373,7 @@
 
         async function deleteStudentRecords() {
             if(!window.db || !deleteTargetStudentId || !currentTeacherDate) return;
+            if (!await requireTeacherUser()) return;
             try {
                 const snapshot = await window.db.collection("reading_records")
                     .where("studentId", "==", deleteTargetStudentId)

@@ -1,0 +1,176 @@
+{
+  "targetKey": "HWG7-U01",
+  "practiceData": [
+    {
+      "id": "hwg7_u01_1",
+      "en": "Where are you from?",
+      "zh": "你來自哪裡？",
+      "focus": "難字：Where /wer/：w 音與 r 音都要聽得出來；r 音不可消失。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不能完全消失。；from fr 開頭、字尾 /m/：fr 開頭與 r 音要清楚，字尾 /m/ 要收。 重音：重讀 Where 與 from。 連音：Where are 可連成 Where-are；are you 可輕連；you from 可自然連音，但 from 的 fr 與 /m/ 不可吞掉。 節奏：Where are you / from? 語調：wh-question；句尾 from 下降，語氣友善、自然。 評分：檢查 Where 的 w/r、are 不可省略、from 的 fr 與字尾 /m/，以及 wh-question 句尾下降。",
+      "ssml": "<speak>Where are you from?</speak>"
+    },
+    {
+      "id": "hwg7_u01_2",
+      "en": "I’m from Taiwan.",
+      "zh": "我來自臺灣。",
+      "focus": "難字：I’m 字尾 /m/：縮寫的 /m/ 要清楚。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 都要出來。；Taiwan Tai-WAN（來源未列完整 IPA）：Tai 的雙母音要清楚，重音在後半段 WAN。 重音：重讀 I’m 與 Taiwan；Taiwan 重音在 WAN。 連音：I’m from 可連成 I’m-from；from Taiwan 可輕連，但 Taiwan 要清楚。 節奏：I’m / from Taiwan. 語調：肯定回答國家；Taiwan 是核心資訊，句尾下降。 評分：檢查 I’m /m/、from 的 fr 與 /m/、Taiwan 後半段重音，以及肯定下降語調。",
+      "ssml": "<speak>I’m from Taiwan.</speak>"
+    },
+    {
+      "id": "hwg7_u01_3",
+      "en": "Are you from the UK?",
+      "zh": "你來自英國嗎？",
+      "focus": "難字：Are r 音（來源未列完整 IPA）：r 音要保留。；from fr 開頭、字尾 /m/：字尾 /m/ 不可吞掉。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；UK U-K 逐字母：逐字母唸 U-K，K 要清楚。 重音：重讀 Are 與 UK。 連音：Are you 可連成 Are-you；from the UK 可連讀，但 from 的 /m/ 與 the 都不可消失。 節奏：Are you / from the UK? 語調：yes/no question；句尾 UK 上揚，表示確認對方是否來自英國。 評分：檢查 Are 的 r、from /m/、the 有聲 th、UK 逐字母，以及 yes/no 問句句尾上揚。",
+      "ssml": "<speak>Are you from the UK?</speak>"
+    },
+    {
+      "id": "hwg7_u01_4",
+      "en": "Yes, I am.",
+      "zh": "是的，我是。",
+      "focus": "難字：Yes 字尾 /s/：字尾 /s/ 要收清楚。；I 不可過短（來源未列完整 IPA）：I 不要唸得太短。；am 字尾 /m/：字尾 /m/ 要清楚。 重音：重讀 Yes 與 am。 連音：Yes, I am 可自然連成 Yes-I-am，但 am 的 /m/ 不可消失。 節奏：Yes, / I am. 語調：肯定回答；Yes 與 I am 都下降，語氣自然、肯定。 評分：檢查 Yes /s/、I 不可過短、am /m/，並以兩段下降語調作答。",
+      "ssml": "<speak>Yes, I am.</speak>"
+    },
+    {
+      "id": "hwg7_u01_5",
+      "en": "She’s my friend. She’s from the USA.",
+      "zh": "她是我的朋友。她來自 美國。",
+      "focus": "難字：She’s 字尾 /z/：She is 的縮寫，字尾 /z/ 要出來。；my 完整雙母音（來源未列完整 IPA）：雙母音要完整。；friend fr 開頭、字尾 /d/：fr 開頭要清楚，字尾 /d/ 要輕收。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 都要清楚。；the 有聲 th（來源未列完整 IPA）：不可唸成 de，也不可在連音時消失。；USA U-S-A 逐字母：逐字母唸 U-S-A，S 要清楚。 重音：重讀 She’s、friend 與 USA。 連音：She’s my 可連成 She’s-my；my friend 可輕連但 friend 的 /d/ 要聽到；She’s from the USA 可連讀，但 from 與 the 不可糊掉。 節奏：She’s my friend. // She’s from the USA. 語調：介紹朋友與國家；friend 與 USA 皆下降，語氣友善、自然。 評分：檢查 She’s /z/、my 雙母音、friend 的 fr/d、from /m/、the 有聲 th、USA 逐字母，以及兩句下降語調。",
+      "ssml": "<speak>She’s my friend. She’s from the USA.</speak>"
+    },
+    {
+      "id": "hwg7_u01_6",
+      "en": "That looks good. Is it curry?",
+      "zh": "那看起來不錯。它是咖哩嗎？",
+      "focus": "難字：That 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 dat。；looks 字尾 /ks/：look + s 的字尾 /ks/ 要清楚。；good 短音 /ʊ/、字尾 /d/：不可唸成 food 的長音，字尾 /d/ 要輕收。；is 字尾 /z/：在 Is it 中可自然連成 Is-it，但 is 的 /z/ 要保留。；curry CUR-ry（來源未列完整 IPA）：第一音節重，r 音要自然清楚。 重音：重讀 That、looks、good、Is 與 curry；curry 第一音節重。 連音：That looks 與 looks good 可輕連，但 /ks/ 要保留；Is it 可連成 Is-it。 節奏：That looks good. // Is it curry? 語調：陳述句 good 下降；yes/no question curry 上揚，先表現好吃再表現好奇。 評分：檢查 That 有聲 th、looks /ks/、good /ʊ/ 與 /d/、Is it 的 /z/ 連音、curry 重音/r，以及先降後升的語調。",
+      "ssml": "<speak>That looks good. Is it curry?</speak>"
+    },
+    {
+      "id": "hwg7_u01_7",
+      "en": "Yes, it is.",
+      "zh": "是的，它是。",
+      "focus": "難字：Yes 字尾 /s/：字尾 /s/ 要清楚。；it 字尾 /t/：字尾 /t/ 可輕收。；is 字尾 /z/：字尾 /z/ 要清楚，不可在連音時消失。 重音：重讀 Yes 與 is。 連音：it is 可自然連成 it-is，但 is 不可消失。 節奏：Yes, / it is. 語調：肯定回答；Yes 與 it is 都下降，語氣自然、肯定。 評分：檢查 Yes /s/、it /t/、is /z/ 與 it-is 連音，並以兩段下降語調作答。",
+      "ssml": "<speak>Yes, it is.</speak>"
+    },
+    {
+      "id": "hwg7_u01_8",
+      "en": "Where are you from?",
+      "zh": "你們來自哪裡？",
+      "focus": "難字：Where /wer/：w 音與 r 音都要聽得出來；r 音不可消失。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可省略。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 要清楚。 重音：重讀 Where 與 from。 連音：Where are 可連成 Where-are；are you 可連成 are-you；you from 可自然連音，但 from 的 /m/ 要收。 節奏：Where are you / from? 語調：店家詢問多位客人來自哪裡；語氣友善、好奇，句尾下降。 評分：檢查 Where 的 w/r、are 不可省略、from 的 fr 與 /m/，以及友善的 wh-question 下降語調。",
+      "ssml": "<speak>Where are you from?</speak>"
+    },
+    {
+      "id": "hwg7_u01_9",
+      "en": "We’re from Taiwan.",
+      "zh": "我們來自臺灣。",
+      "focus": "難字：We’re r 音（來源未列完整 IPA）：We are 的縮寫，r 音要有。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 要清楚。；Taiwan Tai-WAN（來源未列完整 IPA）：Tai 的雙母音要清楚，重音在後半段 WAN。 重音：重讀 We’re 與 Taiwan；Taiwan 重音在 WAN。 連音：We’re from 可連成 We’re-from；from Taiwan 可輕連，但 Taiwan 要清楚。 節奏：We’re / from Taiwan. 語調：團體回答，語氣自然、有自信；Taiwan 是核心資訊，句尾下降。 評分：檢查 We’re 的 r、from 的 fr 與 /m/、Taiwan 後半段重音，以及有自信的下降語調。",
+      "ssml": "<speak>We’re from Taiwan.</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "where": {
+      "zh": "待教師確認",
+      "tip": "/wer/；w 音與 r 音都要聽得出來；r 音不可消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Where</emphasis></prosody></speak>"
+    },
+    "are": {
+      "zh": "待教師確認",
+      "tip": "句中輕讀（來源未列完整 IPA）；可以輕讀，但不能完全消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>are</emphasis></prosody></speak>"
+    },
+    "from": {
+      "zh": "待教師確認",
+      "tip": "fr 開頭、字尾 /m/；fr 開頭與 r 音要清楚，字尾 /m/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>from</emphasis></prosody></speak>"
+    },
+    "i’m": {
+      "zh": "待教師確認",
+      "tip": "字尾 /m/；縮寫的 /m/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I’m</emphasis></prosody></speak>"
+    },
+    "taiwan": {
+      "zh": "待教師確認",
+      "tip": "Tai-WAN（來源未列完整 IPA）；Tai 的雙母音要清楚，重音在後半段 WAN。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Taiwan</emphasis></prosody></speak>"
+    },
+    "the": {
+      "zh": "待教師確認",
+      "tip": "有聲 th（來源未列完整 IPA）；舌尖輕碰牙齒，不可唸成 de。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>the</emphasis></prosody></speak>"
+    },
+    "uk": {
+      "zh": "待教師確認",
+      "tip": "U-K 逐字母；逐字母唸 U-K，K 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>UK</emphasis></prosody></speak>"
+    },
+    "yes": {
+      "zh": "待教師確認",
+      "tip": "字尾 /s/；字尾 /s/ 要收清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Yes</emphasis></prosody></speak>"
+    },
+    "i": {
+      "zh": "待教師確認",
+      "tip": "不可過短（來源未列完整 IPA）；I 不要唸得太短。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I</emphasis></prosody></speak>"
+    },
+    "am": {
+      "zh": "待教師確認",
+      "tip": "字尾 /m/；字尾 /m/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>am</emphasis></prosody></speak>"
+    },
+    "she’s": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；She is 的縮寫，字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>She’s</emphasis></prosody></speak>"
+    },
+    "my": {
+      "zh": "待教師確認",
+      "tip": "完整雙母音（來源未列完整 IPA）；雙母音要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>my</emphasis></prosody></speak>"
+    },
+    "friend": {
+      "zh": "待教師確認",
+      "tip": "fr 開頭、字尾 /d/；fr 開頭要清楚，字尾 /d/ 要輕收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>friend</emphasis></prosody></speak>"
+    },
+    "usa": {
+      "zh": "待教師確認",
+      "tip": "U-S-A 逐字母；逐字母唸 U-S-A，S 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>USA</emphasis></prosody></speak>"
+    },
+    "that": {
+      "zh": "待教師確認",
+      "tip": "有聲 th（來源未列完整 IPA）；舌尖輕碰牙齒，不可唸成 dat。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>That</emphasis></prosody></speak>"
+    },
+    "looks": {
+      "zh": "待教師確認",
+      "tip": "字尾 /ks/；look + s 的字尾 /ks/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>looks</emphasis></prosody></speak>"
+    },
+    "good": {
+      "zh": "待教師確認",
+      "tip": "短音 /ʊ/、字尾 /d/；不可唸成 food 的長音，字尾 /d/ 要輕收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>good</emphasis></prosody></speak>"
+    },
+    "is": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；在 Is it 中可自然連成 Is-it，但 is 的 /z/ 要保留。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>is</emphasis></prosody></speak>"
+    },
+    "curry": {
+      "zh": "待教師確認",
+      "tip": "CUR-ry（來源未列完整 IPA）；第一音節重，r 音要自然清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>curry</emphasis></prosody></speak>"
+    },
+    "it": {
+      "zh": "待教師確認",
+      "tip": "字尾 /t/；字尾 /t/ 可輕收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>it</emphasis></prosody></speak>"
+    },
+    "we’re": {
+      "zh": "待教師確認",
+      "tip": "r 音（來源未列完整 IPA）；We are 的縮寫，r 音要有。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>We’re</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

@@ -1,0 +1,36 @@
+{
+  "projectPath": "C:\\firebase-deploy\\HWG5 SU to U04 Story",
+  "files": {
+    "public/index.html": {
+      "bytes": 93682,
+      "sha256": "c0441fe973f97011b07dddc8071a1cc27cf2c5cb88937990bfed8dff33868996"
+    },
+    "public/ai-scoring.js": {
+      "bytes": 4515,
+      "sha256": "ed3be9e7aab88cbd2a1c4af40d4ba43e564e51917bcfe62318982b2b15458d8f"
+    },
+    "public/ai-scoring-core.js": {
+      "bytes": 2173,
+      "sha256": "e16f797d345f5cd1de96539c0b065517cc5acfa92c103fd9154b0ccec2f7bd92"
+    },
+    "functions/index.js": {
+      "bytes": 1899,
+      "sha256": "a8a6c00c576f80505d5e01e55c92d55bfede252a76da2afe1a240e563c563e04"
+    },
+    "firebase.json": {
+      "bytes": 271,
+      "sha256": "257ed2a4d06d6281d5b27824ef83f24977f3b78004882e56878826192b583edc"
+    },
+    "firestore.indexes.json": {
+      "bytes": 174,
+      "sha256": "da839572e06f9b9f3ec881e0d1bcf3b7d0c08cfa7f82cc02e9f8d1f218904f43"
+    }
+  },
+  "detectedUnitKeys": [
+    "HWG5-SU",
+    "HWG5-U01",
+    "HWG5-U02",
+    "HWG5-U03",
+    "HWG7-SU"
+  ]
+}

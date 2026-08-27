@@ -1,0 +1,201 @@
+{
+  "targetKey": "HWG7-U04",
+  "practiceData": [
+    {
+      "id": "hwg7_u04_1",
+      "en": "What time do you get up, Joy?",
+      "zh": "Joy，你幾點起床？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要清楚。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；get 字尾 /t/：get up 時 /t/ 可輕連到 up，但不可完全消失。；Joy /dʒ/：/dʒ/ 要清楚。 重音：重讀 What、time、get、up 與 Joy。 連音：What time 可連成 What-time；do you 可連成 do-you；get up 可連成 get-up，但 get 的 /t/ 不可完全消失。 節奏：What time / do you get up, Joy? 語調：wh-question；自然友善地詢問 Joy 起床時間，句尾 Joy 下降。 評分：檢查 What /t/、time /aɪ/ /m/、do 不省略、get-up /t/、Joy /dʒ/，以及問句下降。",
+      "ssml": "<speak>What time do you get up, Joy?</speak>"
+    },
+    {
+      "id": "hwg7_u04_2",
+      "en": "I get up at eight o’clock.",
+      "zh": "我八點起床。",
+      "focus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；get 字尾 /t/：get up 時 /t/ 輕收並連到 up。；eight 字尾 /t/：at eight 可連音，但 eight 的 /t/ 要有。；o’clock clock 字尾 /k/：clock 的字尾 /k/ 要收。 重音：重讀 I、get、up、eight 與 clock。 連音：get up 可連成 get-up；at eight 可連成 at-eight；eight o’clock 可連成 eight-o’clock，但 /t/ 與 /k/ 都要聽得到。 節奏：I get up / at eight o’clock. 語調：回答起床時間，eight o’clock 是核心資訊；語氣肯定，句尾下降。 評分：檢查 I /aɪ/、get-up /t/、at-eight 連音、eight /t/、clock /k/，以及肯定下降。",
+      "ssml": "<speak>I get up at eight o’clock.</speak>"
+    },
+    {
+      "id": "hwg7_u04_3",
+      "en": "What do you do after breakfast?",
+      "zh": "你早餐之後做什麼？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；after 第一音節重（來源未列完整 IPA）：第一音節要重讀。；breakfast /br/、/f/、字尾 /st/：/br/、/f/ 與字尾 /st/ 要清楚。 重音：重讀 What、第二個 do、after 與 breakfast；after 第一音節重。 連音：What do you 可連成 What-do-you，但不可糊成 Wha-you；do after 可輕連，after breakfast 要分清楚。 節奏：What do you do / after breakfast? 語調：wh-question；自然、不急地詢問早餐後活動，句尾 breakfast 下降。 評分：檢查 What /t/、do 不省略、after 第一音節重、breakfast /br/ /f/ /st/，以及問句下降。",
+      "ssml": "<speak>What do you do after breakfast?</speak>"
+    },
+    {
+      "id": "hwg7_u04_4",
+      "en": "I make a snowman.",
+      "zh": "我堆雪人。",
+      "focus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；make /eɪ/、字尾 /k/：長音 /eɪ/ 與字尾 /k/ 要清楚。；snowman sn 開頭、第一音節重（來源未列完整 IPA）：sn 開頭與第一音節重音要清楚。 重音：重讀 I、make 與 snowman；snowman 第一音節重。 連音：make a 可連成 make-a；a snowman 可輕連，但 snowman 要清楚。 節奏：I make / a snowman. 語調：回答早餐後活動，snowman 是核心資訊；可帶開心興奮感，句尾下降。 評分：檢查 I /aɪ/、make /eɪ/ /k/、make-a 連音、snowman 的 sn 與重音，以及下降語調。",
+      "ssml": "<speak>I make a snowman.</speak>"
+    },
+    {
+      "id": "hwg7_u04_5",
+      "en": "I walk the reindeer.",
+      "zh": "我遛馴鹿。",
+      "focus": "難字：walk l 不發音、字尾 /k/：l 不發音，字尾 /k/ 要收。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；reindeer r 音、deer 清楚（來源未列完整 IPA）：r 音要自然，deer 要清楚。 重音：重讀 I、walk 與 reindeer。 連音：walk the 可連成 walk-the，但 walk 的 /k/ 不可完全消失；the reindeer 可輕連，但 th 與 r 要清楚。 節奏：I walk / the reindeer. 語調：自然介紹活動，reindeer 是核心資訊；句尾下降，不要唸得太平。 評分：檢查 walk 不發 l 且 /k/ 清楚、the 有聲 th、reindeer 的 r/deer、兩組連音與自然下降。",
+      "ssml": "<speak>I walk the reindeer.</speak>"
+    },
+    {
+      "id": "hwg7_u04_6",
+      "en": "What time does Santa go home?",
+      "zh": "耶誕老人幾點回家？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；time /aɪ/、字尾 /m/：/aɪ/ 與 /m/ 要清楚。；does 字尾 /z/：字尾 /z/ 要出來。；Santa 第一音節重（來源未列完整 IPA）：第一音節要重讀。；home h、/oʊ/：h 與長音 /oʊ/ 要清楚。 重音：重讀 What、time、Santa、go 與 home；Santa 第一音節重。 連音：What time 可連成 What-time；does Santa 可輕連，但 /z/ 不消失；go home 可連成 go-home，home 的 h 要清楚。 節奏：What time / does Santa / go home? 語調：wh-question；詢問 Santa 回家時間，句尾 home 下降，不作 yes/no 問句上揚。 評分：檢查 What /t/、time /aɪ/ /m/、does /z/、Santa 重音、home h/oʊ，以及問句下降。",
+      "ssml": "<speak>What time does Santa go home?</speak>"
+    },
+    {
+      "id": "hwg7_u04_7",
+      "en": "He goes home at twelve o’clock.",
+      "zh": "他十二點回家。",
+      "focus": "難字：He /iː/：長音 /iː/ 要清楚。；goes 字尾 /z/：第三人稱字尾 /z/ 要出來。；home h、/oʊ/：h 與長音 /oʊ/ 要清楚。；twelve /tw/、/v/：/tw/ 與 /v/ 要出來。；o’clock clock 字尾 /k/：clock 的字尾 /k/ 要收。 重音：重讀 He、goes、home、twelve 與 clock。 連音：goes home 可連成 goes-home，但 /z/ 要聽得到；at twelve 可輕連；twelve o’clock 可連成 twelve-o’clock，但 /v/ 與 /k/ 都要清楚。 節奏：He goes home / at twelve o’clock. 語調：回答 Santa 回家時間，twelve o’clock 是核心資訊；語氣肯定，句尾下降。 評分：檢查 He /iː/、goes /z/、home h/oʊ、twelve /tw/ /v/、clock /k/，以及肯定下降。",
+      "ssml": "<speak>He goes home at twelve o’clock.</speak>"
+    },
+    {
+      "id": "hwg7_u04_8",
+      "en": "What does he do in his free time?",
+      "zh": "他休閒時間做什麼？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；does 字尾 /z/：字尾 /z/ 要清楚。；he /iː/：長音 /iː/ 要完整。；his 句中輕讀（來源未列完整 IPA）：in his 可連音，但 his 不可完全消失。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要收。 重音：重讀 What、第二個 do、free 與 time。 連音：What does 可連成 What-does，但 /z/ 要有；does he do 可輕連，do 要清楚；in his free time 可連音，free time 是重點。 節奏：What does he do / in his free time? 語調：wh-question；自然清楚地詢問 Santa 的休閒活動，句尾 time 下降。 評分：檢查 What /t/、does /z/、he /iː/、his 不消失、free 的 fr、time /aɪ/ /m/，以及問句下降。",
+      "ssml": "<speak>What does he do in his free time?</speak>"
+    },
+    {
+      "id": "hwg7_u04_9",
+      "en": "He takes an ice bath.",
+      "zh": "他泡冰浴。",
+      "focus": "難字：He /iː/：長音 /iː/ 要清楚。；takes /ks/：第三人稱字尾 /ks/ 要完整。；ice 字尾 /s/：字尾 /s/ 要清楚。；bath /θ/：th 是無聲 /θ/，不可唸成 bat。 重音：重讀 He、takes、ice 與 bath。 連音：takes an 可連成 takes-an，但 /ks/ 要保留；an ice 可連成 an-ice；ice bath 可輕連，但 /s/ 與 /θ/ 都要聽得到。 節奏：He takes / an ice bath. 語調：回答第三人稱活動，takes 與 ice bath 是核心；可帶一點驚訝感，句尾下降。 評分：檢查 He /iː/、takes /ks/、an-ice 連音、ice /s/、bath /θ/，以及清楚的下降語調。",
+      "ssml": "<speak>He takes an ice bath.</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "what": {
+      "zh": "待教師確認",
+      "tip": "字尾 /t/；字尾 /t/ 要輕收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>What</emphasis></prosody></speak>"
+    },
+    "time": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/、字尾 /m/；雙母音 /aɪ/ 與字尾 /m/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>time</emphasis></prosody></speak>"
+    },
+    "do": {
+      "zh": "待教師確認",
+      "tip": "連音中不省略（來源未列完整 IPA）；do you 可自然連音，但 do 不可消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>do</emphasis></prosody></speak>"
+    },
+    "get": {
+      "zh": "待教師確認",
+      "tip": "字尾 /t/；get up 時 /t/ 可輕連到 up，但不可完全消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>get</emphasis></prosody></speak>"
+    },
+    "joy": {
+      "zh": "待教師確認",
+      "tip": "/dʒ/；/dʒ/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Joy</emphasis></prosody></speak>"
+    },
+    "i": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I</emphasis></prosody></speak>"
+    },
+    "eight": {
+      "zh": "待教師確認",
+      "tip": "字尾 /t/；at eight 可連音，但 eight 的 /t/ 要有。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>eight</emphasis></prosody></speak>"
+    },
+    "o’clock": {
+      "zh": "待教師確認",
+      "tip": "clock 字尾 /k/；clock 的字尾 /k/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>o’clock</emphasis></prosody></speak>"
+    },
+    "after": {
+      "zh": "待教師確認",
+      "tip": "第一音節重（來源未列完整 IPA）；第一音節要重讀。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>after</emphasis></prosody></speak>"
+    },
+    "breakfast": {
+      "zh": "待教師確認",
+      "tip": "/br/、/f/、字尾 /st/；/br/、/f/ 與字尾 /st/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>breakfast</emphasis></prosody></speak>"
+    },
+    "make": {
+      "zh": "待教師確認",
+      "tip": "/eɪ/、字尾 /k/；長音 /eɪ/ 與字尾 /k/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>make</emphasis></prosody></speak>"
+    },
+    "snowman": {
+      "zh": "待教師確認",
+      "tip": "sn 開頭、第一音節重（來源未列完整 IPA）；sn 開頭與第一音節重音要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>snowman</emphasis></prosody></speak>"
+    },
+    "walk": {
+      "zh": "待教師確認",
+      "tip": "l 不發音、字尾 /k/；l 不發音，字尾 /k/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>walk</emphasis></prosody></speak>"
+    },
+    "the": {
+      "zh": "待教師確認",
+      "tip": "有聲 th（來源未列完整 IPA）；舌尖輕碰牙齒，不可唸成 de。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>the</emphasis></prosody></speak>"
+    },
+    "reindeer": {
+      "zh": "待教師確認",
+      "tip": "r 音、deer 清楚（來源未列完整 IPA）；r 音要自然，deer 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>reindeer</emphasis></prosody></speak>"
+    },
+    "does": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>does</emphasis></prosody></speak>"
+    },
+    "santa": {
+      "zh": "待教師確認",
+      "tip": "第一音節重（來源未列完整 IPA）；第一音節要重讀。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Santa</emphasis></prosody></speak>"
+    },
+    "home": {
+      "zh": "待教師確認",
+      "tip": "h、/oʊ/；h 與長音 /oʊ/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>home</emphasis></prosody></speak>"
+    },
+    "he": {
+      "zh": "待教師確認",
+      "tip": "/iː/；長音 /iː/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>He</emphasis></prosody></speak>"
+    },
+    "goes": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；第三人稱字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>goes</emphasis></prosody></speak>"
+    },
+    "twelve": {
+      "zh": "待教師確認",
+      "tip": "/tw/、/v/；/tw/ 與 /v/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>twelve</emphasis></prosody></speak>"
+    },
+    "his": {
+      "zh": "待教師確認",
+      "tip": "句中輕讀（來源未列完整 IPA）；in his 可連音，但 his 不可完全消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>his</emphasis></prosody></speak>"
+    },
+    "free": {
+      "zh": "待教師確認",
+      "tip": "fr 開頭（來源未列完整 IPA）；fr 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>free</emphasis></prosody></speak>"
+    },
+    "takes": {
+      "zh": "待教師確認",
+      "tip": "/ks/；第三人稱字尾 /ks/ 要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>takes</emphasis></prosody></speak>"
+    },
+    "ice": {
+      "zh": "待教師確認",
+      "tip": "字尾 /s/；字尾 /s/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>ice</emphasis></prosody></speak>"
+    },
+    "bath": {
+      "zh": "待教師確認",
+      "tip": "/θ/；th 是無聲 /θ/，不可唸成 bat。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>bath</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

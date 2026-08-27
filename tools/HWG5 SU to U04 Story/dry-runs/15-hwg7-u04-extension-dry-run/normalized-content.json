@@ -1,0 +1,419 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "site": {
+    "name": "HWG5 Story Reading Practice",
+    "slug": null,
+    "targetProjectId": "hwg5-su-to-u04-story",
+    "productionUrl": "https://hwg5-su-to-u04-story.web.app"
+  },
+  "source": {
+    "title": "HWG7 U04文本發音分析",
+    "documentId": "10lK9-RsLnZtt9N_e8jMv72ELMKDk7TXrTosXu-hg4Vk",
+    "documentUrl": "https://docs.google.com/document/d/10lK9-RsLnZtt9N_e8jMv72ELMKDk7TXrTosXu-hg4Vk/edit?usp=drivesdk",
+    "tabId": "t.0",
+    "revisionId": "AIroW37WGSPaCwTFT1a_dmC_5UQSJ0KX3vS51QL13QJHOfM4uSVvMWRezA2i9E1kL0D6MaNtBALif2D9bnDmE5GPD4q9JcOBXspsSZCeUfA",
+    "modifiedTime": "2026-08-27T05:44:53.365Z",
+    "treatment": "content-only source; instructions in the document were not executed"
+  },
+  "translationSource": {
+    "title": "Here We Go 7 中譯表",
+    "path": "C:\\翰林電子教科書\\115國小英語HereWeGo 7\\resources\\app\\entry\\ebook\\files\\教學資源\\Word\\中譯表\\Here We Go 7 中譯表.doc",
+    "sha256": "c044ff40f7f5b1a9951f3108eaf8b1dc3f1935ed2341b6d3ea7939ece5ac2347",
+    "modifiedTime": "2026-06-18T14:52:52.0000000+08:00",
+    "section": "Unit 4 / 課文內容 / 課文中譯",
+    "treatment": "content-only source; opened read-only and left unchanged"
+  },
+  "teacherApproval": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  },
+  "policy": {
+    "classSize": 26,
+    "maxScoredAttemptsPerItemPerDay": 3,
+    "recordRetentionCalendarMonths": 7
+  },
+  "normalizationReview": [
+    {
+      "source": "o’clock",
+      "proposed": "o'clock",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；第 2、7 句尚未取得本單元教師確認。"
+    }
+  ],
+  "units": [
+    {
+      "theme": "HWG7",
+      "unit": "U04",
+      "label": "HWG7 U04",
+      "items": [
+        {
+          "id": "hwg7_u04_1",
+          "text": "What time do you get up, Joy?",
+          "translation": "Joy，你幾點起床？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "What",
+                "ipa": "字尾 /t/",
+                "tip": "字尾 /t/ 要輕收。"
+              },
+              {
+                "word": "time",
+                "ipa": "/aɪ/、字尾 /m/",
+                "tip": "雙母音 /aɪ/ 與字尾 /m/ 要清楚。"
+              },
+              {
+                "word": "do",
+                "ipa": "連音中不省略（來源未列完整 IPA）",
+                "tip": "do you 可自然連音，但 do 不可消失。"
+              },
+              {
+                "word": "get",
+                "ipa": "字尾 /t/",
+                "tip": "get up 時 /t/ 可輕連到 up，但不可完全消失。"
+              },
+              {
+                "word": "Joy",
+                "ipa": "/dʒ/",
+                "tip": "/dʒ/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 What、time、get、up 與 Joy。",
+            "linking": "What time 可連成 What-time；do you 可連成 do-you；get up 可連成 get-up，但 get 的 /t/ 不可完全消失。",
+            "rhythm": "What time / do you get up, Joy?",
+            "intonation": "wh-question；自然友善地詢問 Joy 起床時間，句尾 Joy 下降。",
+            "scoringFocus": "檢查 What /t/、time /aɪ/ /m/、do 不省略、get-up /t/、Joy /dʒ/，以及問句下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要清楚。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；get 字尾 /t/：get up 時 /t/ 可輕連到 up，但不可完全消失。；Joy /dʒ/：/dʒ/ 要清楚。 重音：重讀 What、time、get、up 與 Joy。 連音：What time 可連成 What-time；do you 可連成 do-you；get up 可連成 get-up，但 get 的 /t/ 不可完全消失。 節奏：What time / do you get up, Joy? 語調：wh-question；自然友善地詢問 Joy 起床時間，句尾 Joy 下降。 評分：檢查 What /t/、time /aɪ/ /m/、do 不省略、get-up /t/、Joy /dʒ/，以及問句下降。",
+            "ssml": "<speak>What time do you get up, Joy?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_2",
+          "text": "I get up at eight o’clock.",
+          "translation": "我八點起床。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "I",
+                "ipa": "/aɪ/",
+                "tip": "雙母音 /aɪ/ 要完整。"
+              },
+              {
+                "word": "get",
+                "ipa": "字尾 /t/",
+                "tip": "get up 時 /t/ 輕收並連到 up。"
+              },
+              {
+                "word": "eight",
+                "ipa": "字尾 /t/",
+                "tip": "at eight 可連音，但 eight 的 /t/ 要有。"
+              },
+              {
+                "word": "o’clock",
+                "ipa": "clock 字尾 /k/",
+                "tip": "clock 的字尾 /k/ 要收。"
+              }
+            ],
+            "stress": "重讀 I、get、up、eight 與 clock。",
+            "linking": "get up 可連成 get-up；at eight 可連成 at-eight；eight o’clock 可連成 eight-o’clock，但 /t/ 與 /k/ 都要聽得到。",
+            "rhythm": "I get up / at eight o’clock.",
+            "intonation": "回答起床時間，eight o’clock 是核心資訊；語氣肯定，句尾下降。",
+            "scoringFocus": "檢查 I /aɪ/、get-up /t/、at-eight 連音、eight /t/、clock /k/，以及肯定下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；get 字尾 /t/：get up 時 /t/ 輕收並連到 up。；eight 字尾 /t/：at eight 可連音，但 eight 的 /t/ 要有。；o’clock clock 字尾 /k/：clock 的字尾 /k/ 要收。 重音：重讀 I、get、up、eight 與 clock。 連音：get up 可連成 get-up；at eight 可連成 at-eight；eight o’clock 可連成 eight-o’clock，但 /t/ 與 /k/ 都要聽得到。 節奏：I get up / at eight o’clock. 語調：回答起床時間，eight o’clock 是核心資訊；語氣肯定，句尾下降。 評分：檢查 I /aɪ/、get-up /t/、at-eight 連音、eight /t/、clock /k/，以及肯定下降。",
+            "ssml": "<speak>I get up at eight o’clock.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_3",
+          "text": "What do you do after breakfast?",
+          "translation": "你早餐之後做什麼？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "What",
+                "ipa": "字尾 /t/",
+                "tip": "字尾 /t/ 要輕收。"
+              },
+              {
+                "word": "do",
+                "ipa": "連音中不省略（來源未列完整 IPA）",
+                "tip": "do you 可自然連音，但 do 不可消失。"
+              },
+              {
+                "word": "after",
+                "ipa": "第一音節重（來源未列完整 IPA）",
+                "tip": "第一音節要重讀。"
+              },
+              {
+                "word": "breakfast",
+                "ipa": "/br/、/f/、字尾 /st/",
+                "tip": "/br/、/f/ 與字尾 /st/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 What、第二個 do、after 與 breakfast；after 第一音節重。",
+            "linking": "What do you 可連成 What-do-you，但不可糊成 Wha-you；do after 可輕連，after breakfast 要分清楚。",
+            "rhythm": "What do you do / after breakfast?",
+            "intonation": "wh-question；自然、不急地詢問早餐後活動，句尾 breakfast 下降。",
+            "scoringFocus": "檢查 What /t/、do 不省略、after 第一音節重、breakfast /br/ /f/ /st/，以及問句下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；after 第一音節重（來源未列完整 IPA）：第一音節要重讀。；breakfast /br/、/f/、字尾 /st/：/br/、/f/ 與字尾 /st/ 要清楚。 重音：重讀 What、第二個 do、after 與 breakfast；after 第一音節重。 連音：What do you 可連成 What-do-you，但不可糊成 Wha-you；do after 可輕連，after breakfast 要分清楚。 節奏：What do you do / after breakfast? 語調：wh-question；自然、不急地詢問早餐後活動，句尾 breakfast 下降。 評分：檢查 What /t/、do 不省略、after 第一音節重、breakfast /br/ /f/ /st/，以及問句下降。",
+            "ssml": "<speak>What do you do after breakfast?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_4",
+          "text": "I make a snowman.",
+          "translation": "我堆雪人。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "I",
+                "ipa": "/aɪ/",
+                "tip": "雙母音 /aɪ/ 要完整。"
+              },
+              {
+                "word": "make",
+                "ipa": "/eɪ/、字尾 /k/",
+                "tip": "長音 /eɪ/ 與字尾 /k/ 要清楚。"
+              },
+              {
+                "word": "snowman",
+                "ipa": "sn 開頭、第一音節重（來源未列完整 IPA）",
+                "tip": "sn 開頭與第一音節重音要清楚。"
+              }
+            ],
+            "stress": "重讀 I、make 與 snowman；snowman 第一音節重。",
+            "linking": "make a 可連成 make-a；a snowman 可輕連，但 snowman 要清楚。",
+            "rhythm": "I make / a snowman.",
+            "intonation": "回答早餐後活動，snowman 是核心資訊；可帶開心興奮感，句尾下降。",
+            "scoringFocus": "檢查 I /aɪ/、make /eɪ/ /k/、make-a 連音、snowman 的 sn 與重音，以及下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；make /eɪ/、字尾 /k/：長音 /eɪ/ 與字尾 /k/ 要清楚。；snowman sn 開頭、第一音節重（來源未列完整 IPA）：sn 開頭與第一音節重音要清楚。 重音：重讀 I、make 與 snowman；snowman 第一音節重。 連音：make a 可連成 make-a；a snowman 可輕連，但 snowman 要清楚。 節奏：I make / a snowman. 語調：回答早餐後活動，snowman 是核心資訊；可帶開心興奮感，句尾下降。 評分：檢查 I /aɪ/、make /eɪ/ /k/、make-a 連音、snowman 的 sn 與重音，以及下降語調。",
+            "ssml": "<speak>I make a snowman.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_5",
+          "text": "I walk the reindeer.",
+          "translation": "我遛馴鹿。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "walk",
+                "ipa": "l 不發音、字尾 /k/",
+                "tip": "l 不發音，字尾 /k/ 要收。"
+              },
+              {
+                "word": "the",
+                "ipa": "有聲 th（來源未列完整 IPA）",
+                "tip": "舌尖輕碰牙齒，不可唸成 de。"
+              },
+              {
+                "word": "reindeer",
+                "ipa": "r 音、deer 清楚（來源未列完整 IPA）",
+                "tip": "r 音要自然，deer 要清楚。"
+              }
+            ],
+            "stress": "重讀 I、walk 與 reindeer。",
+            "linking": "walk the 可連成 walk-the，但 walk 的 /k/ 不可完全消失；the reindeer 可輕連，但 th 與 r 要清楚。",
+            "rhythm": "I walk / the reindeer.",
+            "intonation": "自然介紹活動，reindeer 是核心資訊；句尾下降，不要唸得太平。",
+            "scoringFocus": "檢查 walk 不發 l 且 /k/ 清楚、the 有聲 th、reindeer 的 r/deer、兩組連音與自然下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：walk l 不發音、字尾 /k/：l 不發音，字尾 /k/ 要收。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；reindeer r 音、deer 清楚（來源未列完整 IPA）：r 音要自然，deer 要清楚。 重音：重讀 I、walk 與 reindeer。 連音：walk the 可連成 walk-the，但 walk 的 /k/ 不可完全消失；the reindeer 可輕連，但 th 與 r 要清楚。 節奏：I walk / the reindeer. 語調：自然介紹活動，reindeer 是核心資訊；句尾下降，不要唸得太平。 評分：檢查 walk 不發 l 且 /k/ 清楚、the 有聲 th、reindeer 的 r/deer、兩組連音與自然下降。",
+            "ssml": "<speak>I walk the reindeer.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_6",
+          "text": "What time does Santa go home?",
+          "translation": "耶誕老人幾點回家？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "What",
+                "ipa": "字尾 /t/",
+                "tip": "字尾 /t/ 要輕收。"
+              },
+              {
+                "word": "time",
+                "ipa": "/aɪ/、字尾 /m/",
+                "tip": "/aɪ/ 與 /m/ 要清楚。"
+              },
+              {
+                "word": "does",
+                "ipa": "字尾 /z/",
+                "tip": "字尾 /z/ 要出來。"
+              },
+              {
+                "word": "Santa",
+                "ipa": "第一音節重（來源未列完整 IPA）",
+                "tip": "第一音節要重讀。"
+              },
+              {
+                "word": "home",
+                "ipa": "h、/oʊ/",
+                "tip": "h 與長音 /oʊ/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 What、time、Santa、go 與 home；Santa 第一音節重。",
+            "linking": "What time 可連成 What-time；does Santa 可輕連，但 /z/ 不消失；go home 可連成 go-home，home 的 h 要清楚。",
+            "rhythm": "What time / does Santa / go home?",
+            "intonation": "wh-question；詢問 Santa 回家時間，句尾 home 下降，不作 yes/no 問句上揚。",
+            "scoringFocus": "檢查 What /t/、time /aɪ/ /m/、does /z/、Santa 重音、home h/oʊ，以及問句下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；time /aɪ/、字尾 /m/：/aɪ/ 與 /m/ 要清楚。；does 字尾 /z/：字尾 /z/ 要出來。；Santa 第一音節重（來源未列完整 IPA）：第一音節要重讀。；home h、/oʊ/：h 與長音 /oʊ/ 要清楚。 重音：重讀 What、time、Santa、go 與 home；Santa 第一音節重。 連音：What time 可連成 What-time；does Santa 可輕連，但 /z/ 不消失；go home 可連成 go-home，home 的 h 要清楚。 節奏：What time / does Santa / go home? 語調：wh-question；詢問 Santa 回家時間，句尾 home 下降，不作 yes/no 問句上揚。 評分：檢查 What /t/、time /aɪ/ /m/、does /z/、Santa 重音、home h/oʊ，以及問句下降。",
+            "ssml": "<speak>What time does Santa go home?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_7",
+          "text": "He goes home at twelve o’clock.",
+          "translation": "他十二點回家。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "He",
+                "ipa": "/iː/",
+                "tip": "長音 /iː/ 要清楚。"
+              },
+              {
+                "word": "goes",
+                "ipa": "字尾 /z/",
+                "tip": "第三人稱字尾 /z/ 要出來。"
+              },
+              {
+                "word": "home",
+                "ipa": "h、/oʊ/",
+                "tip": "h 與長音 /oʊ/ 要清楚。"
+              },
+              {
+                "word": "twelve",
+                "ipa": "/tw/、/v/",
+                "tip": "/tw/ 與 /v/ 要出來。"
+              },
+              {
+                "word": "o’clock",
+                "ipa": "clock 字尾 /k/",
+                "tip": "clock 的字尾 /k/ 要收。"
+              }
+            ],
+            "stress": "重讀 He、goes、home、twelve 與 clock。",
+            "linking": "goes home 可連成 goes-home，但 /z/ 要聽得到；at twelve 可輕連；twelve o’clock 可連成 twelve-o’clock，但 /v/ 與 /k/ 都要清楚。",
+            "rhythm": "He goes home / at twelve o’clock.",
+            "intonation": "回答 Santa 回家時間，twelve o’clock 是核心資訊；語氣肯定，句尾下降。",
+            "scoringFocus": "檢查 He /iː/、goes /z/、home h/oʊ、twelve /tw/ /v/、clock /k/，以及肯定下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：He /iː/：長音 /iː/ 要清楚。；goes 字尾 /z/：第三人稱字尾 /z/ 要出來。；home h、/oʊ/：h 與長音 /oʊ/ 要清楚。；twelve /tw/、/v/：/tw/ 與 /v/ 要出來。；o’clock clock 字尾 /k/：clock 的字尾 /k/ 要收。 重音：重讀 He、goes、home、twelve 與 clock。 連音：goes home 可連成 goes-home，但 /z/ 要聽得到；at twelve 可輕連；twelve o’clock 可連成 twelve-o’clock，但 /v/ 與 /k/ 都要清楚。 節奏：He goes home / at twelve o’clock. 語調：回答 Santa 回家時間，twelve o’clock 是核心資訊；語氣肯定，句尾下降。 評分：檢查 He /iː/、goes /z/、home h/oʊ、twelve /tw/ /v/、clock /k/，以及肯定下降。",
+            "ssml": "<speak>He goes home at twelve o’clock.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_8",
+          "text": "What does he do in his free time?",
+          "translation": "他休閒時間做什麼？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "What",
+                "ipa": "字尾 /t/",
+                "tip": "字尾 /t/ 要輕收。"
+              },
+              {
+                "word": "does",
+                "ipa": "字尾 /z/",
+                "tip": "字尾 /z/ 要清楚。"
+              },
+              {
+                "word": "he",
+                "ipa": "/iː/",
+                "tip": "長音 /iː/ 要完整。"
+              },
+              {
+                "word": "his",
+                "ipa": "句中輕讀（來源未列完整 IPA）",
+                "tip": "in his 可連音，但 his 不可完全消失。"
+              },
+              {
+                "word": "free",
+                "ipa": "fr 開頭（來源未列完整 IPA）",
+                "tip": "fr 要清楚。"
+              },
+              {
+                "word": "time",
+                "ipa": "/aɪ/、字尾 /m/",
+                "tip": "雙母音 /aɪ/ 與字尾 /m/ 要收。"
+              }
+            ],
+            "stress": "重讀 What、第二個 do、free 與 time。",
+            "linking": "What does 可連成 What-does，但 /z/ 要有；does he do 可輕連，do 要清楚；in his free time 可連音，free time 是重點。",
+            "rhythm": "What does he do / in his free time?",
+            "intonation": "wh-question；自然清楚地詢問 Santa 的休閒活動，句尾 time 下降。",
+            "scoringFocus": "檢查 What /t/、does /z/、he /iː/、his 不消失、free 的 fr、time /aɪ/ /m/，以及問句下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；does 字尾 /z/：字尾 /z/ 要清楚。；he /iː/：長音 /iː/ 要完整。；his 句中輕讀（來源未列完整 IPA）：in his 可連音，但 his 不可完全消失。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要收。 重音：重讀 What、第二個 do、free 與 time。 連音：What does 可連成 What-does，但 /z/ 要有；does he do 可輕連，do 要清楚；in his free time 可連音，free time 是重點。 節奏：What does he do / in his free time? 語調：wh-question；自然清楚地詢問 Santa 的休閒活動，句尾 time 下降。 評分：檢查 What /t/、does /z/、he /iː/、his 不消失、free 的 fr、time /aɪ/ /m/，以及問句下降。",
+            "ssml": "<speak>What does he do in his free time?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u04_9",
+          "text": "He takes an ice bath.",
+          "translation": "他泡冰浴。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "He",
+                "ipa": "/iː/",
+                "tip": "長音 /iː/ 要清楚。"
+              },
+              {
+                "word": "takes",
+                "ipa": "/ks/",
+                "tip": "第三人稱字尾 /ks/ 要完整。"
+              },
+              {
+                "word": "ice",
+                "ipa": "字尾 /s/",
+                "tip": "字尾 /s/ 要清楚。"
+              },
+              {
+                "word": "bath",
+                "ipa": "/θ/",
+                "tip": "th 是無聲 /θ/，不可唸成 bat。"
+              }
+            ],
+            "stress": "重讀 He、takes、ice 與 bath。",
+            "linking": "takes an 可連成 takes-an，但 /ks/ 要保留；an ice 可連成 an-ice；ice bath 可輕連，但 /s/ 與 /θ/ 都要聽得到。",
+            "rhythm": "He takes / an ice bath.",
+            "intonation": "回答第三人稱活動，takes 與 ice bath 是核心；可帶一點驚訝感，句尾下降。",
+            "scoringFocus": "檢查 He /iː/、takes /ks/、an-ice 連音、ice /s/、bath /θ/，以及清楚的下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：He /iː/：長音 /iː/ 要清楚。；takes /ks/：第三人稱字尾 /ks/ 要完整。；ice 字尾 /s/：字尾 /s/ 要清楚。；bath /θ/：th 是無聲 /θ/，不可唸成 bat。 重音：重讀 He、takes、ice 與 bath。 連音：takes an 可連成 takes-an，但 /ks/ 要保留；an ice 可連成 an-ice；ice bath 可輕連，但 /s/ 與 /θ/ 都要聽得到。 節奏：He takes / an ice bath. 語調：回答第三人稱活動，takes 與 ice bath 是核心；可帶一點驚訝感，句尾下降。 評分：檢查 He /iː/、takes /ks/、an-ice 連音、ice /s/、bath /θ/，以及清楚的下降語調。",
+            "ssml": "<speak>He takes an ice bath.</speak>",
+            "ssmlWasGenerated": true
+          }
+        }
+      ]
+    }
+  ]
+}

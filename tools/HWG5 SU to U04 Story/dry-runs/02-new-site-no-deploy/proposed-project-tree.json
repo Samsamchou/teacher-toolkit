@@ -1,0 +1,21 @@
+{
+  "generatedInDryRun": [
+    "preview/public/index.html",
+    "preview/public/site-content.js"
+  ],
+  "plannedAfterContentApproval": [
+    "public/index.html",
+    "public/site-content.js",
+    "public/ai-scoring.js",
+    "public/ai-scoring-core.js",
+    "functions/index.js",
+    "firestore.rules",
+    "storage.rules",
+    "firebase.json",
+    "tests/"
+  ],
+  "firebaseConfigured": false,
+  "aiConfigured": false,
+  "ttsConfigured": false,
+  "deployed": false
+}

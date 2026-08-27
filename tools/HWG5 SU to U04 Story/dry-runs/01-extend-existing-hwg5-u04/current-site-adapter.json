@@ -1,0 +1,32 @@
+{
+  "targetKey": "HWG5-U04",
+  "practiceData": [
+    {
+      "id": "u04_dry_1",
+      "en": "This is a dry-run sentence.",
+      "zh": "這是 dry run 測試句，並非正式題庫。",
+      "focus": "難字：sentence /ˈsentəns/：第一音節重，字尾 /s/ 清楚。 重音：重讀 dry-run 與 sentence。 連音：This-is 可自然連讀。 節奏：分成 This is / a dry-run sentence 兩個意群。 語調：陳述句句尾下降。 評分：檢查 This is 連讀、sentence 第一音節重音與句尾下降。",
+      "ssml": "<speak>This is a <emphasis level='strong'>dry-run sentence</emphasis>.</speak>"
+    },
+    {
+      "id": "u04_dry_2",
+      "en": "We can practice together.",
+      "zh": "我們可以一起練習。這也是非正式測試句。",
+      "focus": "難字：together /təˈɡeðər/：重音在第二音節，th 是有聲 /ð/。 重音：重讀 practice 與 together。 連音：practice-together 之間保持自然，不另加母音。 節奏：We can 輕讀，重點落在 practice together。 語調：溫和肯定，句尾下降。 評分：檢查 practice 的字尾、together 的第二音節重音與有聲 th。",
+      "ssml": "<speak>We can <emphasis level='strong'>practice together</emphasis>.</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "sentence": {
+      "zh": "待教師確認",
+      "tip": "/ˈsentəns/；第一音節重，字尾 /s/ 清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>sentence</emphasis></prosody></speak>"
+    },
+    "together": {
+      "zh": "待教師確認",
+      "tip": "/təˈɡeðər/；重音在第二音節，th 是有聲 /ð/。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>together</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

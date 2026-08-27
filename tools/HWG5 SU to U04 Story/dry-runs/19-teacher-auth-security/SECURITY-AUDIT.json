@@ -1,0 +1,30 @@
+{
+  "score": 4,
+  "summary": "Prototype rules use default deny, immutable student records, strict schema validation, ownerUid isolation, verified teacher email authorization, bounded audio uploads, and server timestamps. Emulator attacks and Firebase compilation passed. Remaining findings are release-sequencing and lifecycle caveats rather than known cross-user access bypasses.",
+  "findings": [
+    {
+      "check": "App Check enforcement",
+      "severity": "minor",
+      "issue": "Cloud Firestore and Storage are still in monitoring mode in production. Enforcing them before the updated default app is deployed would break the current site.",
+      "recommendation": "Deploy the App Check-initialized client and Rules together, validate a real student write/read, then enforce Firestore and Storage separately and read back the status."
+    },
+    {
+      "check": "Storage lifecycle after teacher deletion",
+      "severity": "minor",
+      "issue": "The teacher UI deletes Firestore records but does not immediately delete the referenced audio object.",
+      "recommendation": "Retain the current 215-day lifecycle guarantee, or add an authenticated backend deletion function in a separately approved change if immediate paired deletion becomes a requirement."
+    },
+    {
+      "check": "Legacy record compatibility",
+      "severity": "minor",
+      "issue": "Legacy records have no ownerUid, so they cannot be safely exposed to new anonymous student sessions.",
+      "recommendation": "Keep legacy records teacher-only and do not backfill, move, rewrite, or delete them, matching the teacher's retention instruction."
+    },
+    {
+      "check": "Download URL bearer token",
+      "severity": "minor",
+      "issue": "audioUrl is a Firebase Storage download URL; anyone who obtains the URL token could fetch the object until deletion or token rotation.",
+      "recommendation": "Keep Firestore reads teacher/owner-only, avoid logging or sharing audio URLs, and consider authenticated SDK playback without download URLs in a future privacy-hardening release."
+    }
+  ]
+}

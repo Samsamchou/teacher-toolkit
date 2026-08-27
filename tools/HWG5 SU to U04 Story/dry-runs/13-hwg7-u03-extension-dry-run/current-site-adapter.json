@@ -1,0 +1,189 @@
+{
+  "targetKey": "HWG7-U03",
+  "practiceData": [
+    {
+      "id": "hwg7_u03_1",
+      "en": "What do you do in your free time?",
+      "zh": "你休閒時間做什麼？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；do 連音中不省略（來源未列完整 IPA）：do you 可自然連音，但 do 不可消失。；your 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可完全吞掉。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time /aɪ/、字尾 /m/：雙母音 /aɪ/ 與字尾 /m/ 要收。 重音：重讀 What、第二個 do、free 與 time。 連音：What do you 可連成 What-do-you，但不可糊成 Wha-you；do in your 可輕連，但 free time 要清楚。 節奏：What do you do / in your free time? 語調：wh-question；自然友善地詢問休閒活動，句尾 time 下降。 評分：檢查 What /t/、do 不省略、your 不全吞、free 的 fr、time /aɪ/ /m/，以及問句下降。",
+      "ssml": "<speak>What do you do in your free time?</speak>"
+    },
+    {
+      "id": "hwg7_u03_2",
+      "en": "I play the piano in my free time.",
+      "zh": "我休閒時間彈鋼琴。",
+      "focus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；play /pl/、/eɪ/：/pl/ 與長音 /eɪ/ 要清楚。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；piano 重音在中間音節（來源未列完整 IPA）：重音要放在中間音節。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 I、play、piano、free 與 time；piano 重音在中間音節。 連音：play the piano 可連成 play-the-piano，但 the 不可消失；in my free time 可輕連，但 free time 要清楚。 節奏：I play the piano / in my free time. 語調：回答休閒活動，piano 和 free time 是重點；語氣有自信，句尾下降。 評分：檢查 I /aɪ/、play /pl/ /eɪ/、the 有聲 th、piano 中間重音、free time 清楚，以及下降語調。",
+      "ssml": "<speak>I play the piano in my free time.</speak>"
+    },
+    {
+      "id": "hwg7_u03_3",
+      "en": "What does Mozart do in his free time?",
+      "zh": "莫札特休閒時間做什麼？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；does 字尾 /z/：字尾 /z/ 要出來。；Mozart 第一音節較重（來源未列完整 IPA）：第一音節較重，r 音自然。；do 不可弱化至消失（來源未列完整 IPA）：不要弱到消失。；his 字尾 /z/：可輕讀，但 /z/ 不可完全不見。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 What、Mozart、do、free 與 time；Mozart 第一音節較重。 連音：What does 可連成 What-does，但 /z/ 要保留；does Mozart 與 in his free time 可自然連音，free time 要清楚。 節奏：What does Mozart do / in his free time? 語調：wh-question；Mozart 是人物重點、do 是動作重點，句尾 time 下降。 評分：檢查 What /t/、does /z/、Mozart 重音/r、do 不消失、his /z/、free time 與問句下降。",
+      "ssml": "<speak>What does Mozart do in his free time?</speak>"
+    },
+    {
+      "id": "hwg7_u03_4",
+      "en": "He writes music in his free time.",
+      "zh": "他休閒時間作曲。",
+      "focus": "難字：He /iː/：長音 /iː/ 要清楚。；writes w 不發音、字尾 /ts/：w 不發音，第三人稱字尾 /ts/ 要清楚。；music 字尾 /k/：字尾 /k/ 要收。；his 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可完全吞掉。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 He、writes、music、free 與 time。 連音：writes music 可連成 writes-music，但 writes 的 /ts/ 要保留；in his free time 可輕連，但 free time 是重點。 節奏：He writes music / in his free time. 語調：回答第三人稱活動，writes 與 music 是核心資訊；句尾 time 下降。 評分：檢查 He /iː/、writes 不發 w 且 /ts/ 清楚、music /k/、his 不全吞、free time 與下降語調。",
+      "ssml": "<speak>He writes music in his free time.</speak>"
+    },
+    {
+      "id": "hwg7_u03_5",
+      "en": "I watch TV in my free time.",
+      "zh": "我休閒時間看電視。",
+      "focus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；watch 字尾 /tʃ/：字尾 /tʃ/ 要清楚，不可唸成 wash。；TV T-V 逐字母：逐字母唸 T-V，V 不可變成 B。；free fr 開頭（來源未列完整 IPA）：fr 要清楚。；time 字尾 /m/：字尾 /m/ 要收。 重音：重讀 I、watch、T-V、free 與 time。 連音：watch TV 可連成 watch-TV，但 watch 的 /tʃ/ 不可糊掉；in my free time 可輕連，time 要收 /m/。 節奏：I watch TV / in my free time. 語調：自然分享休閒活動，watch TV 是核心；句尾下降，不唸成逐字背誦。 評分：檢查 I /aɪ/、watch /tʃ/、TV 逐字母且 V 不變 B、free time 與自然下降。",
+      "ssml": "<speak>I watch TV in my free time.</speak>"
+    },
+    {
+      "id": "hwg7_u03_6",
+      "en": "What is TV?",
+      "zh": "什麼是電視？",
+      "focus": "難字：What 字尾 /t/：字尾 /t/ 要輕收。；is 字尾 /z/：字尾 /z/ 要清楚。；TV T-V 逐字母：逐字母唸 T-V；V 要上齒碰下唇，不可變成 B。 重音：重讀 What 與 T-V。 連音：What is 可連成 What-is，但 What 的 /t/ 與 is 的 /z/ 都要保留。 節奏：What is / TV? 語調：wh-question；帶好奇感，句尾 TV 下降，不作 yes/no 問句上揚。 評分：檢查 What /t/、is /z/、TV 逐字母與 V 唇齒音，以及 wh-question 句尾下降。",
+      "ssml": "<speak>What is TV?</speak>"
+    },
+    {
+      "id": "hwg7_u03_7",
+      "en": "Let me show you.",
+      "zh": "讓我展示給你看。",
+      "focus": "難字：Let 字尾 /t/：字尾 /t/ 可輕收。；me /iː/：長音 /iː/ 要清楚。；show /ʃ/：sh /ʃ/ 要出來，不可唸成 so。；you 不可過短（來源未列完整 IPA）：要自然，不要唸太短。 重音：重讀 Let、show 與 you。 連音：Let me 可連成 Let-me；show you 可連成 show-you，但 show 的 /ʃ/ 要清楚。 節奏：Let me / show you. 語調：友善回應並邀請示範；show you 是重點，語氣親切自然，句尾下降。 評分：檢查 Let /t/、me /iː/、show /ʃ/、you 不過短、兩組連音與親切下降語調。",
+      "ssml": "<speak>Let me show you.</speak>"
+    },
+    {
+      "id": "hwg7_u03_8",
+      "en": "Look! I play baseball on weekends.",
+      "zh": "看！我週末打棒球。",
+      "focus": "難字：Look /ʊ/、字尾 /k/：短音 /ʊ/ 與字尾 /k/ 要收。；I /aɪ/：雙母音 /aɪ/ 要完整。；play /pl/、/eɪ/：/pl/ 與長音 /eɪ/ 要清楚。；baseball 第一音節重、base /eɪ/：第一音節重，base 的長音 /eɪ/ 要清楚。；weekends 字尾 /z/：字尾 /z/ 要出來。 重音：重讀 Look、I、play、baseball 與 weekends；baseball 第一音節重。 連音：Look 後小停頓；I play baseball 可連成 I-play-baseball；on weekends 可輕連，但 weekends 的 /z/ 不可漏。 節奏：Look! // I play baseball / on weekends. 語調：Look 短、亮並下降；後半有興奮感，baseball 與 weekends 是重點，句尾下降。 評分：檢查 Look /ʊ/ /k/ 與停頓、I /aɪ/、play /pl/ /eɪ/、baseball 重音、weekends /z/，以及興奮但清楚的下降語調。",
+      "ssml": "<speak>Look! I play baseball on weekends.</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "what": {
+      "zh": "待教師確認",
+      "tip": "字尾 /t/；字尾 /t/ 要輕收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>What</emphasis></prosody></speak>"
+    },
+    "do": {
+      "zh": "待教師確認",
+      "tip": "連音中不省略（來源未列完整 IPA）；do you 可自然連音，但 do 不可消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>do</emphasis></prosody></speak>"
+    },
+    "your": {
+      "zh": "待教師確認",
+      "tip": "句中輕讀（來源未列完整 IPA）；可以輕讀，但不可完全吞掉。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>your</emphasis></prosody></speak>"
+    },
+    "free": {
+      "zh": "待教師確認",
+      "tip": "fr 開頭（來源未列完整 IPA）；fr 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>free</emphasis></prosody></speak>"
+    },
+    "time": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/、字尾 /m/；雙母音 /aɪ/ 與字尾 /m/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>time</emphasis></prosody></speak>"
+    },
+    "i": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I</emphasis></prosody></speak>"
+    },
+    "play": {
+      "zh": "待教師確認",
+      "tip": "/pl/、/eɪ/；/pl/ 與長音 /eɪ/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>play</emphasis></prosody></speak>"
+    },
+    "the": {
+      "zh": "待教師確認",
+      "tip": "有聲 th（來源未列完整 IPA）；舌尖輕碰牙齒，不可唸成 de。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>the</emphasis></prosody></speak>"
+    },
+    "piano": {
+      "zh": "待教師確認",
+      "tip": "重音在中間音節（來源未列完整 IPA）；重音要放在中間音節。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>piano</emphasis></prosody></speak>"
+    },
+    "does": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>does</emphasis></prosody></speak>"
+    },
+    "mozart": {
+      "zh": "待教師確認",
+      "tip": "第一音節較重（來源未列完整 IPA）；第一音節較重，r 音自然。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Mozart</emphasis></prosody></speak>"
+    },
+    "his": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；可輕讀，但 /z/ 不可完全不見。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>his</emphasis></prosody></speak>"
+    },
+    "he": {
+      "zh": "待教師確認",
+      "tip": "/iː/；長音 /iː/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>He</emphasis></prosody></speak>"
+    },
+    "writes": {
+      "zh": "待教師確認",
+      "tip": "w 不發音、字尾 /ts/；w 不發音，第三人稱字尾 /ts/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>writes</emphasis></prosody></speak>"
+    },
+    "music": {
+      "zh": "待教師確認",
+      "tip": "字尾 /k/；字尾 /k/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>music</emphasis></prosody></speak>"
+    },
+    "watch": {
+      "zh": "待教師確認",
+      "tip": "字尾 /tʃ/；字尾 /tʃ/ 要清楚，不可唸成 wash。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>watch</emphasis></prosody></speak>"
+    },
+    "tv": {
+      "zh": "待教師確認",
+      "tip": "T-V 逐字母；逐字母唸 T-V，V 不可變成 B。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>TV</emphasis></prosody></speak>"
+    },
+    "is": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；字尾 /z/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>is</emphasis></prosody></speak>"
+    },
+    "let": {
+      "zh": "待教師確認",
+      "tip": "字尾 /t/；字尾 /t/ 可輕收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Let</emphasis></prosody></speak>"
+    },
+    "me": {
+      "zh": "待教師確認",
+      "tip": "/iː/；長音 /iː/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>me</emphasis></prosody></speak>"
+    },
+    "show": {
+      "zh": "待教師確認",
+      "tip": "/ʃ/；sh /ʃ/ 要出來，不可唸成 so。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>show</emphasis></prosody></speak>"
+    },
+    "you": {
+      "zh": "待教師確認",
+      "tip": "不可過短（來源未列完整 IPA）；要自然，不要唸太短。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>you</emphasis></prosody></speak>"
+    },
+    "look": {
+      "zh": "待教師確認",
+      "tip": "/ʊ/、字尾 /k/；短音 /ʊ/ 與字尾 /k/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Look</emphasis></prosody></speak>"
+    },
+    "baseball": {
+      "zh": "待教師確認",
+      "tip": "第一音節重、base /eɪ/；第一音節重，base 的長音 /eɪ/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>baseball</emphasis></prosody></speak>"
+    },
+    "weekends": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>weekends</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

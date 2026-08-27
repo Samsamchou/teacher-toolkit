@@ -1,0 +1,19 @@
+{
+  "targetProjectId": "hwg5-su-to-u04-story",
+  "targetUrl": "https://hwg5-su-to-u04-story.web.app",
+  "intendedFilesAfterApproval": [
+    "public/index.html",
+    "tests/content-data.test.mjs"
+  ],
+  "preserve": [
+    "UI fields",
+    "structured AI score schema",
+    "App Check",
+    "TTS callable",
+    "reading_records schema",
+    "7-calendar-month expiry"
+  ],
+  "unitCollision": false,
+  "sourceModified": false,
+  "deployed": false
+}

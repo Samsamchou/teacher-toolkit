@@ -1,0 +1,17 @@
+{
+  "currentState": "DRY_RUN_ONLY",
+  "contentWriteAllowed": false,
+  "skillInstallAllowed": false,
+  "productionDeployAllowed": false,
+  "requiredPhrases": [
+    "確認內容",
+    "確認安裝 Skill",
+    "確認正式部署"
+  ],
+  "note": "JSON 中的布林旗標不會授權外部動作；必須由教師在當次對話明確確認。",
+  "suppliedFlags": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  }
+}

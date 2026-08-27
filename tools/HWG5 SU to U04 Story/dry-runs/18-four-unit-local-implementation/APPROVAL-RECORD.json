@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "approvalPhrase": "確認內容",
+  "approvalDate": "2026-08-27",
+  "targetProjectId": "hwg5-su-to-u04-story",
+  "confirmedUnits": [
+    { "key": "HWG7-U02", "itemCount": 8 },
+    { "key": "HWG7-U03", "itemCount": 8 },
+    { "key": "HWG7-U04", "itemCount": 9 },
+    { "key": "HWG5-U04", "itemCount": 9 }
+  ],
+  "confirmedNormalizations": [
+    { "unit": "HWG7-U02", "source": "You’re", "written": "You're" },
+    { "unit": "HWG7-U02", "source": "We’re", "written": "We're" },
+    { "unit": "HWG7-U04", "source": "o’clock", "written": "o'clock" },
+    { "unit": "HWG5-U04", "source": "doesn’t", "written": "doesn't" }
+  ],
+  "authorization": {
+    "localSourceWrite": true,
+    "skillInstall": false,
+    "productionDeploy": false,
+    "githubPush": false,
+    "firebaseQuotaChange": false,
+    "recordMutation": false
+  }
+}

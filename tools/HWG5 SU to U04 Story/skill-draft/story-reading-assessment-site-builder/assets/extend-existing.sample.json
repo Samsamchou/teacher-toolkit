@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "site": {
+    "name": "HWG5 Story Reading Practice",
+    "slug": null,
+    "targetProjectId": "hwg5-su-to-u04-story",
+    "productionUrl": "https://hwg5-su-to-u04-story.web.app"
+  },
+  "teacherApproval": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  },
+  "policy": {
+    "classSize": 26,
+    "maxScoredAttemptsPerItemPerDay": 3,
+    "recordRetentionCalendarMonths": 7
+  },
+  "units": [
+    {
+      "theme": "HWG5",
+      "unit": "U04",
+      "label": "HWG5 U04 dry-run only",
+      "items": [
+        {
+          "id": "u04_dry_1",
+          "text": "This is a dry-run sentence.",
+          "translation": "這是 dry run 測試句，並非正式題庫。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "sentence",
+                "ipa": "/ˈsentəns/",
+                "tip": "第一音節重，字尾 /s/ 清楚。"
+              }
+            ],
+            "stress": "重讀 dry-run 與 sentence。",
+            "linking": "This-is 可自然連讀。",
+            "rhythm": "分成 This is / a dry-run sentence 兩個意群。",
+            "intonation": "陳述句句尾下降。",
+            "scoringFocus": "檢查 This is 連讀、sentence 第一音節重音與句尾下降。"
+          },
+          "tts": {
+            "ssml": "<speak>This is a <emphasis level='strong'>dry-run sentence</emphasis>.</speak>"
+          }
+        },
+        {
+          "id": "u04_dry_2",
+          "text": "We can practice together.",
+          "translation": "我們可以一起練習。這也是非正式測試句。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "together",
+                "ipa": "/təˈɡeðər/",
+                "tip": "重音在第二音節，th 是有聲 /ð/。"
+              }
+            ],
+            "stress": "重讀 practice 與 together。",
+            "linking": "practice-together 之間保持自然，不另加母音。",
+            "rhythm": "We can 輕讀，重點落在 practice together。",
+            "intonation": "溫和肯定，句尾下降。",
+            "scoringFocus": "檢查 practice 的字尾、together 的第二音節重音與有聲 th。"
+          },
+          "tts": {
+            "ssml": "<speak>We can <emphasis level='strong'>practice together</emphasis>.</speak>"
+          }
+        }
+      ]
+    }
+  ]
+}

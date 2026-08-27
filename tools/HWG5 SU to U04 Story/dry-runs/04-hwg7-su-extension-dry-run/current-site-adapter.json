@@ -1,0 +1,145 @@
+{
+  "targetKey": "HWG7-SU",
+  "practiceData": [
+    {
+      "id": "hwg7_su_1",
+      "en": "Would you like some beef sandwiches?",
+      "zh": "你想要一些牛肉三明治嗎？",
+      "focus": "難字：Would /d/ 字尾：字尾 /d/ 可輕連到 you，但不可完全吞掉。；like /k/ 字尾：字尾 /k/ 要收乾淨，不可唸成 lie。；some /səm/ 弱讀：句中可弱讀，但 s 與 m 都要清楚。；beef /iː/、/f/：長音 /iː/ 要拉夠，字尾 /f/ 要收。；sandwiches /tʃ/、複數 /ɪz/：重音在第一音節；ch 與複數字尾 /ɪz/ 要清楚。 重音：重讀 Would、like、beef、sandwiches。 連音：Would you 可自然連成 Would-you；like some 可輕連但 /k/ 仍要聽到；beef sandwiches 作為食物片語要清楚。 節奏：Would you / like some / beef sandwiches? 語調：禮貌邀請的 yes/no question；句尾 sandwiches 上揚，語氣友善。 評分：檢查 Would 字尾 /d/、like /k/、beef /iː/ 與 /f/、sandwiches 的 ch 與複數 /ɪz/，以及問句句尾上揚。",
+      "ssml": "<speak>Would you like some beef sandwiches?</speak>"
+    },
+    {
+      "id": "hwg7_su_2",
+      "en": "Yes, please.",
+      "zh": "好，麻煩了。",
+      "focus": "難字：Yes /s/ 字尾：字尾 /s/ 要清楚，不可只剩 Yeh。；please /pl/、/iː/、/z/：pl 開頭完整，長音 /iː/ 與字尾 /z/ 都要出來。 重音：重讀 Yes 與 please。 連音：Yes, please 可自然連成 Yes-please，但兩個字尾都要清楚。 節奏：Yes, / please. 語調：Yes 與 please 都下降；語氣溫和、有禮貌。 評分：檢查 Yes 的 /s/、please 的 pl、長音 /iː/ 與字尾 /z/，並保持禮貌下降語調。",
+      "ssml": "<speak>Yes, please.</speak>"
+    },
+    {
+      "id": "hwg7_su_3",
+      "en": "I'd like some cheeseburgers.",
+      "zh": "我想要一些起司漢堡。",
+      "focus": "難字：I'd /d/ 字尾：I would 的縮寫，字尾 /d/ 要輕收，不可變成 I like。；like /k/ 字尾：字尾 /k/ 要收。；some /səm/ 弱讀：可弱讀但不可消失。；cheeseburgers /tʃ/、/z/、/r/、複數 /z/：cheese 的 ch 與 /z/、burgers 的 r 與字尾 /z/ 都要清楚。 重音：重讀 I'd、like 與 cheeseburgers 的核心音節。 連音：I'd like 可自然連成 I'd-like；like some 可輕連，但 like 的 /k/ 不可消失。 節奏：I'd like / some cheeseburgers. 語調：清楚肯定地表達想要的食物；cheeseburgers 是核心，句尾下降。 評分：檢查 I'd 的 /d/、like /k/、some 弱讀、cheeseburgers 的 ch、r 與字尾 /z/，以及肯定下降語調。",
+      "ssml": "<speak>I&apos;d like some cheeseburgers.</speak>"
+    },
+    {
+      "id": "hwg7_su_4",
+      "en": "Whose soda is that on the chair?",
+      "zh": "椅子上是誰的汽水？",
+      "focus": "難字：Whose /huːz/：h、長音 /uː/ 與字尾 /z/ 都要清楚。；soda long o（來源未列完整 IPA）：第一音節重，長 o 音要清楚。；is /z/ 字尾：字尾 /z/ 要自然接到下一個字。；that 有聲 th（來源未列 IPA）：舌尖輕碰牙齒，不可唸成 dat。；the 有聲 th（來源未列 IPA）：不可唸成 de，也不可在連音時消失。；chair /tʃ/ + air（來源未列完整 IPA）：ch 與 air 音要完整，不可變成 share。 重音：重讀 Whose、soda、that、chair。 連音：Whose soda is 可自然連讀但 Whose /z/ 要保留；that on 可輕連；on the chair 可連讀但 the 不可消失。 節奏：Whose soda / is that / on the chair? 語調：wh-question；Whose 是所有者焦點、chair 是位置焦點，句尾下降。 評分：檢查 Whose /huːz/、soda 第一音節、is /z/、that/the 有聲 th、chair 的 ch 與 air，以及 wh-question 下降語調。",
+      "ssml": "<speak>Whose soda is that on the chair?</speak>"
+    },
+    {
+      "id": "hwg7_su_5",
+      "en": "It's my soda.",
+      "zh": "它是我的汽水。",
+      "focus": "難字：It's /ts/ 字尾：縮寫字尾 /ts/ 要清楚，不可在連音時吞掉。；my /aɪ/：雙母音 /aɪ/ 要完整；所有格重點要清楚。；soda long o（來源未列完整 IPA）：第一音節重。 重音：重讀 It's、my、soda。 連音：It's my 可自然連成 It's-my，但 It's 的 /ts/ 不可吞掉。 節奏：It's / my soda. 語調：明確回答所有權但不生氣；my soda 是核心，句尾下降。 評分：檢查 It's /ts/、my /aɪ/、soda 第一音節與所有格重點，並以明確下降語調收句。",
+      "ssml": "<speak>It&apos;s my soda.</speak>"
+    },
+    {
+      "id": "hwg7_su_6",
+      "en": "Watch out!",
+      "zh": "小心！",
+      "focus": "難字：Watch /tʃ/ 字尾：字尾 /tʃ/ 要清楚，不可唸成 wash。；out /aʊ/、/t/：雙母音 /aʊ/ 完整，字尾 /t/ 要收。 重音：重讀 Watch 與 out。 連音：Watch out 可自然連成 Watch-out，但 Watch 的 /tʃ/ 與 out 的 /t/ 都要聽得出來。 節奏：Watch / out! 語調：危險提醒要短、清楚、有警告感；out 下降收句，聲音有力但不尖叫。 評分：檢查 Watch 字尾 /tʃ/、out /aʊ/ 與字尾 /t/、兩字連音，以及短促有力的下降警告語氣。",
+      "ssml": "<speak>Watch out!</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "would": {
+      "zh": "待教師確認",
+      "tip": "/d/ 字尾；字尾 /d/ 可輕連到 you，但不可完全吞掉。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Would</emphasis></prosody></speak>"
+    },
+    "like": {
+      "zh": "待教師確認",
+      "tip": "/k/ 字尾；字尾 /k/ 要收乾淨，不可唸成 lie。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>like</emphasis></prosody></speak>"
+    },
+    "some": {
+      "zh": "待教師確認",
+      "tip": "/səm/ 弱讀；句中可弱讀，但 s 與 m 都要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>some</emphasis></prosody></speak>"
+    },
+    "beef": {
+      "zh": "待教師確認",
+      "tip": "/iː/、/f/；長音 /iː/ 要拉夠，字尾 /f/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>beef</emphasis></prosody></speak>"
+    },
+    "sandwiches": {
+      "zh": "待教師確認",
+      "tip": "/tʃ/、複數 /ɪz/；重音在第一音節；ch 與複數字尾 /ɪz/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>sandwiches</emphasis></prosody></speak>"
+    },
+    "yes": {
+      "zh": "待教師確認",
+      "tip": "/s/ 字尾；字尾 /s/ 要清楚，不可只剩 Yeh。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Yes</emphasis></prosody></speak>"
+    },
+    "please": {
+      "zh": "待教師確認",
+      "tip": "/pl/、/iː/、/z/；pl 開頭完整，長音 /iː/ 與字尾 /z/ 都要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>please</emphasis></prosody></speak>"
+    },
+    "i'd": {
+      "zh": "待教師確認",
+      "tip": "/d/ 字尾；I would 的縮寫，字尾 /d/ 要輕收，不可變成 I like。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I&apos;d</emphasis></prosody></speak>"
+    },
+    "cheeseburgers": {
+      "zh": "待教師確認",
+      "tip": "/tʃ/、/z/、/r/、複數 /z/；cheese 的 ch 與 /z/、burgers 的 r 與字尾 /z/ 都要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>cheeseburgers</emphasis></prosody></speak>"
+    },
+    "whose": {
+      "zh": "待教師確認",
+      "tip": "/huːz/；h、長音 /uː/ 與字尾 /z/ 都要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Whose</emphasis></prosody></speak>"
+    },
+    "soda": {
+      "zh": "待教師確認",
+      "tip": "long o（來源未列完整 IPA）；第一音節重，長 o 音要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>soda</emphasis></prosody></speak>"
+    },
+    "is": {
+      "zh": "待教師確認",
+      "tip": "/z/ 字尾；字尾 /z/ 要自然接到下一個字。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>is</emphasis></prosody></speak>"
+    },
+    "that": {
+      "zh": "待教師確認",
+      "tip": "有聲 th（來源未列 IPA）；舌尖輕碰牙齒，不可唸成 dat。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>that</emphasis></prosody></speak>"
+    },
+    "the": {
+      "zh": "待教師確認",
+      "tip": "有聲 th（來源未列 IPA）；不可唸成 de，也不可在連音時消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>the</emphasis></prosody></speak>"
+    },
+    "chair": {
+      "zh": "待教師確認",
+      "tip": "/tʃ/ + air（來源未列完整 IPA）；ch 與 air 音要完整，不可變成 share。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>chair</emphasis></prosody></speak>"
+    },
+    "it's": {
+      "zh": "待教師確認",
+      "tip": "/ts/ 字尾；縮寫字尾 /ts/ 要清楚，不可在連音時吞掉。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>It&apos;s</emphasis></prosody></speak>"
+    },
+    "my": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要完整；所有格重點要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>my</emphasis></prosody></speak>"
+    },
+    "watch": {
+      "zh": "待教師確認",
+      "tip": "/tʃ/ 字尾；字尾 /tʃ/ 要清楚，不可唸成 wash。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Watch</emphasis></prosody></speak>"
+    },
+    "out": {
+      "zh": "待教師確認",
+      "tip": "/aʊ/、/t/；雙母音 /aʊ/ 完整，字尾 /t/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>out</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

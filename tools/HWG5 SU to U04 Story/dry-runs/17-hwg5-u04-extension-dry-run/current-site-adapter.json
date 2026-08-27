@@ -1,0 +1,196 @@
+{
+  "targetKey": "HWG5-U04",
+  "practiceData": [
+    {
+      "id": "hwg5_u04_1",
+      "en": "How many zebras are there?",
+      "zh": "有幾隻斑馬？",
+      "focus": "難字：How h（來源未列完整 IPA）：h 要清楚。；many 第一音節重（來源未列完整 IPA）：第一音節要重讀。；zebras z、複數 /z/：開頭 z 與複數字尾 /z/ 都要出來。；are 句中輕讀（來源未列完整 IPA）：可輕讀，但不可完全消失。；there th、r（來源未列完整 IPA）：th 與 r 都要清楚。 重音：重讀 How、many、zebras 與 there。 連音：How many 可連成 How-many；zebras are there 可連成 zebras-are-there，但 are 不可消失。 節奏：How many zebras / are there? 語調：wh-question；詢問斑馬數量，句尾 there 下降，不整句上揚。 評分：檢查 How h、many 第一音節重、zebras 開頭與複數 /z/、are 不消失、there th/r，以及問句下降。",
+      "ssml": "<speak>How many zebras are there?</speak>"
+    },
+    {
+      "id": "hwg5_u04_2",
+      "en": "One, two, three!",
+      "zh": "一、二、三！",
+      "focus": "難字：One w 感（來源未列完整 IPA）：開頭的 /w/ 感要清楚。；two /uː/：長音 /uː/ 要穩。；three /θ/、r：無聲 th /θ/ 與 r 要清楚，不可唸成 tree。 重音：One、two、three 三個數字都重讀。 連音：三個數字要分清楚並保留小停頓，不可連成一串糊掉。 節奏：One, / two, / three! 語調：數數要有節奏並帶興奮感；one、two 平接，three 下降收句。 評分：檢查 One /w/、two /uː/、three /θ/ 與 r、三段節奏，以及 three 下降。",
+      "ssml": "<speak>One, two, three!</speak>"
+    },
+    {
+      "id": "hwg5_u04_3",
+      "en": "There are three zebras.",
+      "zh": "有三隻斑馬。",
+      "focus": "難字：There th、r（來源未列完整 IPA）：th 與 r 要清楚。；are 句中輕讀（來源未列完整 IPA）：可輕讀，但不可消失。；three /θ/：無聲 th /θ/ 要清楚，不可唸成 tree。；zebras 複數 /z/：複數字尾 /z/ 要出來。 重音：重讀 There、three 與 zebras；three zebras 是核心資訊。 連音：There are 可連成 There-are；three zebras 可輕連，但兩個字都要清楚。 節奏：There are / three zebras. 語調：回答數量，語氣肯定；句尾 zebras 下降。 評分：檢查 There th/r、are 不消失、three /θ/、zebras 複數 /z/，以及肯定下降。",
+      "ssml": "<speak>There are three zebras.</speak>"
+    },
+    {
+      "id": "hwg5_u04_4",
+      "en": "Bye, zebras.",
+      "zh": "再見，斑馬們。",
+      "focus": "難字：Bye /aɪ/：雙母音 /aɪ/ 要完整。；zebras z、字尾 /z/：開頭 z 與字尾 /z/ 要清楚。 重音：重讀 Bye 與 zebras。 連音：Bye 後可小停頓；zebras 要清楚，不可糊成 zebra。 節奏：Bye, / zebras. 語調：友善告別；Bye 稍明亮，zebras 下降收句。 評分：檢查 Bye /aɪ/、停頓、zebras 開頭與複數 /z/，以及友善下降語調。",
+      "ssml": "<speak>Bye, zebras.</speak>"
+    },
+    {
+      "id": "hwg5_u04_5",
+      "en": "Take care!",
+      "zh": "保重！",
+      "focus": "難字：Take 字尾 /k/：字尾 /k/ 要收。；care k、r（來源未列完整 IPA）：k 音與 r 音要清楚。 重音：重讀 Take 與 care。 連音：Take care 可連成 Take-care，但 Take 的 /k/ 不可完全消失。 節奏：Take / care! 語調：溫暖清楚地提醒與祝福，care 下降收句，不要太平。 評分：檢查 Take /k/、care 的 k/r、Take-care 連音，以及溫暖下降語調。",
+      "ssml": "<speak>Take care!</speak>"
+    },
+    {
+      "id": "hwg5_u04_6",
+      "en": "This lion is hungry!",
+      "zh": "這隻獅子餓了！",
+      "focus": "難字：This /ð/：有聲 th /ð/ 要清楚，不可唸成 dis。；lion 兩音節（來源未列完整 IPA）：兩個音節都要清楚。；is 字尾 /z/：字尾 /z/ 要自然。；hungry h、第一音節重（來源未列完整 IPA）：h 要出來，第一音節重。 重音：重讀 This、lion 與 hungry；lion 和 hungry 是核心資訊。 連音：This lion 可連成 This-lion，但 th 要保留；lion is 可連成 lion-is；is hungry 可連音，但 hungry 的 h 要清楚。 節奏：This lion / is hungry! 語調：驚訝提醒，帶緊張感但不喊糊；句尾 hungry 下降。 評分：檢查 This /ð/、lion 兩音節、is /z/、hungry h 與第一音節重，以及緊張但清楚的下降語調。",
+      "ssml": "<speak>This lion is hungry!</speak>"
+    },
+    {
+      "id": "hwg5_u04_7",
+      "en": "Rocky doesn’t like tigers.",
+      "zh": "Rocky 不喜歡老虎。",
+      "focus": "難字：Rocky r 音（來源未列完整 IPA）：r 音要清楚。；doesn’t z、字尾 /t/：z 與最後 /t/ 要出來。；like 字尾 /k/：字尾 /k/ 要收。；tigers 複數 /z/：複數字尾 /z/ 要清楚。 重音：重讀 Rocky、doesn’t、like 與 tigers。 連音：doesn’t like 可連成 doesn’t-like，但 doesn’t 的 /t/ 不可消失；like tigers 可輕連，但 like 的 /k/ 要保留。 節奏：Rocky doesn’t like / tigers. 語調：說明 Rocky 不喜歡老虎，doesn’t 與 tigers 是重點；句尾下降。 評分：檢查 Rocky r、doesn’t 的 z/t、like /k/、tigers 複數 /z/、連音與下降語調。",
+      "ssml": "<speak>Rocky doesn’t like tigers.</speak>"
+    },
+    {
+      "id": "hwg5_u04_8",
+      "en": "Does he like lions?",
+      "zh": "他喜歡獅子嗎？",
+      "focus": "難字：Does 字尾 /z/：字尾 /z/ 要清楚。；he /iː/：長音 /iː/ 要清楚。；like 字尾 /k/：字尾 /k/ 要收。；lions 複數 /z/：複數字尾 /z/ 要出來。 重音：重讀 Does、like 與 lions。 連音：Does he 可連成 Does-he；like lions 可輕連，但 like 的 /k/ 與 lions 的 /z/ 都要聽得出來。 節奏：Does he / like lions? 語調：yes/no question；確認 Rocky 是否喜歡獅子，帶疑問感，句尾 lions 上揚。 評分：檢查 Does /z/、he /iː/、like /k/、lions /z/、兩組連音與句尾上揚。",
+      "ssml": "<speak>Does he like lions?</speak>"
+    },
+    {
+      "id": "hwg5_u04_9",
+      "en": "No, he doesn’t, I guess.",
+      "zh": "不，我猜他不喜歡。",
+      "focus": "難字：No 短而清楚（來源未列完整 IPA）：要短而清楚。；he /iː/：長音 /iː/ 要清楚。；doesn’t z、字尾 /t/：z 與最後 /t/ 要出來。；I /aɪ/：雙母音 /aɪ/ 要完整。；guess /g/、字尾 /s/：/g/ 與字尾 /s/ 要收。 重音：重讀 No、doesn’t 與 guess。 連音：he doesn’t 可連成 he-doesn’t，但 /t/ 不可消失；I guess 可連音，但 guess 的 /s/ 要收。 節奏：No, / he doesn’t, / I guess. 語調：否定回答；No 下降、he doesn’t 放穩、I guess 帶一點不確定但仍下降，不作高揚疑問句。 評分：檢查 No 短清楚、he /iː/、doesn’t z/t、I /aɪ/、guess g/s、連音與三段下降。",
+      "ssml": "<speak>No, he doesn’t, I guess.</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "how": {
+      "zh": "待教師確認",
+      "tip": "h（來源未列完整 IPA）；h 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>How</emphasis></prosody></speak>"
+    },
+    "many": {
+      "zh": "待教師確認",
+      "tip": "第一音節重（來源未列完整 IPA）；第一音節要重讀。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>many</emphasis></prosody></speak>"
+    },
+    "zebras": {
+      "zh": "待教師確認",
+      "tip": "z、複數 /z/；開頭 z 與複數字尾 /z/ 都要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>zebras</emphasis></prosody></speak>"
+    },
+    "are": {
+      "zh": "待教師確認",
+      "tip": "句中輕讀（來源未列完整 IPA）；可輕讀，但不可完全消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>are</emphasis></prosody></speak>"
+    },
+    "there": {
+      "zh": "待教師確認",
+      "tip": "th、r（來源未列完整 IPA）；th 與 r 都要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>there</emphasis></prosody></speak>"
+    },
+    "one": {
+      "zh": "待教師確認",
+      "tip": "w 感（來源未列完整 IPA）；開頭的 /w/ 感要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>One</emphasis></prosody></speak>"
+    },
+    "two": {
+      "zh": "待教師確認",
+      "tip": "/uː/；長音 /uː/ 要穩。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>two</emphasis></prosody></speak>"
+    },
+    "three": {
+      "zh": "待教師確認",
+      "tip": "/θ/、r；無聲 th /θ/ 與 r 要清楚，不可唸成 tree。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>three</emphasis></prosody></speak>"
+    },
+    "bye": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Bye</emphasis></prosody></speak>"
+    },
+    "take": {
+      "zh": "待教師確認",
+      "tip": "字尾 /k/；字尾 /k/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Take</emphasis></prosody></speak>"
+    },
+    "care": {
+      "zh": "待教師確認",
+      "tip": "k、r（來源未列完整 IPA）；k 音與 r 音要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>care</emphasis></prosody></speak>"
+    },
+    "this": {
+      "zh": "待教師確認",
+      "tip": "/ð/；有聲 th /ð/ 要清楚，不可唸成 dis。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>This</emphasis></prosody></speak>"
+    },
+    "lion": {
+      "zh": "待教師確認",
+      "tip": "兩音節（來源未列完整 IPA）；兩個音節都要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>lion</emphasis></prosody></speak>"
+    },
+    "is": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；字尾 /z/ 要自然。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>is</emphasis></prosody></speak>"
+    },
+    "hungry": {
+      "zh": "待教師確認",
+      "tip": "h、第一音節重（來源未列完整 IPA）；h 要出來，第一音節重。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>hungry</emphasis></prosody></speak>"
+    },
+    "rocky": {
+      "zh": "待教師確認",
+      "tip": "r 音（來源未列完整 IPA）；r 音要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Rocky</emphasis></prosody></speak>"
+    },
+    "doesn’t": {
+      "zh": "待教師確認",
+      "tip": "z、字尾 /t/；z 與最後 /t/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>doesn’t</emphasis></prosody></speak>"
+    },
+    "like": {
+      "zh": "待教師確認",
+      "tip": "字尾 /k/；字尾 /k/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>like</emphasis></prosody></speak>"
+    },
+    "tigers": {
+      "zh": "待教師確認",
+      "tip": "複數 /z/；複數字尾 /z/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>tigers</emphasis></prosody></speak>"
+    },
+    "does": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；字尾 /z/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Does</emphasis></prosody></speak>"
+    },
+    "he": {
+      "zh": "待教師確認",
+      "tip": "/iː/；長音 /iː/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>he</emphasis></prosody></speak>"
+    },
+    "lions": {
+      "zh": "待教師確認",
+      "tip": "複數 /z/；複數字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>lions</emphasis></prosody></speak>"
+    },
+    "no": {
+      "zh": "待教師確認",
+      "tip": "短而清楚（來源未列完整 IPA）；要短而清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>No</emphasis></prosody></speak>"
+    },
+    "i": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I</emphasis></prosody></speak>"
+    },
+    "guess": {
+      "zh": "待教師確認",
+      "tip": "/g/、字尾 /s/；/g/ 與字尾 /s/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>guess</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

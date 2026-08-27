@@ -1,0 +1,159 @@
+{
+  "targetKey": "HWG7-U02",
+  "practiceData": [
+    {
+      "id": "hwg7_u02_1",
+      "en": "Where are we?",
+      "zh": "我們在哪裡？",
+      "focus": "難字：Where r 音（來源未列完整 IPA）：r 音要清楚。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可完全消失。；we 不可過短（來源未列完整 IPA）：要清楚，不要唸太短。 重音：重讀 Where 與 we。 連音：Where are 可連成 Where-are，但不可糊成 Where we；are we 可輕連，但仍要聽得出 are。 節奏：Where are / we? 語調：wh-question；角色在陌生地方帶疑惑感，句尾 we 下降，不作 yes/no 問句上揚。 評分：檢查 Where 的 r、are 不省略、we 不過短，以及 wh-question 句尾下降。",
+      "ssml": "<speak>Where are we?</speak>"
+    },
+    {
+      "id": "hwg7_u02_2",
+      "en": "You’re on a boat.",
+      "zh": "你們在船上。",
+      "focus": "難字：You’re r 音（來源未列完整 IPA）：You are 的縮寫，r 音要有。；on 與 a 連音（來源未列完整 IPA）：on a 可自然連成 on-a。；boat /oʊ/、字尾 /t/：雙母音 /oʊ/ 與字尾 /t/ 要清楚。 重音：重讀 You’re 與 boat。 連音：You’re on a 可連成 You’re-on-a，但 You’re 的 r 不可消失；on a boat 可連成 on-a-boat，但 boat 的 /t/ 要收。 節奏：You’re / on a boat. 語調：回答位置，boat 是核心資訊；語氣清楚肯定，句尾下降。 評分：檢查 You’re 的 r、on-a 連音、boat 的 /oʊ/ 與 /t/，以及肯定下降語調。",
+      "ssml": "<speak>You’re on a boat.</speak>"
+    },
+    {
+      "id": "hwg7_u02_3",
+      "en": "Where are you going?",
+      "zh": "你們要去哪裡？",
+      "focus": "難字：Where r 音（來源未列完整 IPA）：r 音要清楚。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不能省略。；going 字尾 /ŋ/：/ŋ/ 要清楚，不要在後面多加 guh。 重音：重讀 Where 與 going。 連音：Where are you 可連成 Where-are-you，但仍要聽得出 are；you going 可輕連，但 going 要完整。 節奏：Where are you / going? 語調：wh-question；可帶緊張詢問目的地的語氣，句尾 going 下降。 評分：檢查 Where 的 r、are 不省略、going 的 /ŋ/ 不加尾音，以及 wh-question 下降。",
+      "ssml": "<speak>Where are you going?</speak>"
+    },
+    {
+      "id": "hwg7_u02_4",
+      "en": "We’re going to school.",
+      "zh": "我們要去上學。",
+      "focus": "難字：We’re r 音（來源未列完整 IPA）：We are 的縮寫，r 音要有。；going 字尾 /ŋ/：/ŋ/ 要清楚。；to /tə/：可輕讀成 /tə/，但不要消失。；school /sk/、/uː/、字尾 /l/：/sk/、長音 /uː/ 與字尾 /l/ 都要清楚。 重音：重讀 We’re、going 與 school。 連音：We’re going to 可連成 We’re-going-to；to school 可輕連，但 school 不可糊掉。 節奏：We’re going / to school. 語調：回答目的地，school 是重點；語氣肯定，句尾下降。 評分：檢查 We’re 的 r、going /ŋ/、to 不消失、school 的 /sk/ /uː/ /l/，以及下降語調。",
+      "ssml": "<speak>We’re going to school.</speak>"
+    },
+    {
+      "id": "hwg7_u02_5",
+      "en": "By boat?",
+      "zh": "搭船嗎？",
+      "focus": "難字：By /aɪ/：雙母音 /aɪ/ 要清楚。；boat 字尾 /t/：字尾 /t/ 要收。 重音：重讀 By 與 boat。 連音：By boat 可連成 By-boat，但 boat 的 /t/ 要聽得見。 節奏：By / boat? 語調：省略式 yes/no question；帶驚訝與確認感，句尾 boat 上揚。 評分：檢查 By /aɪ/、boat /t/、By-boat 連音，以及確認問句句尾上揚。",
+      "ssml": "<speak>By boat?</speak>"
+    },
+    {
+      "id": "hwg7_u02_6",
+      "en": "Yes. How do you go to school?",
+      "zh": "是的。你們如何上學？",
+      "focus": "難字：Yes 字尾 /s/：字尾 /s/ 要清楚。；How h、/aʊ/：h 與雙母音 /aʊ/ 要出來。；do 連音中不省略（來源未列完整 IPA）：do you 可輕連，但 do 不可完全消失。；school /sk/、字尾 /l/：/sk/ 與字尾 /l/ 要清楚。 重音：重讀 Yes、How、go 與 school。 連音：How do you 可連成 How-do-you，但不可變成 How you；go to school 可連成 go-to-school。 節奏：Yes. // How do you / go to school? 語調：Yes 簡短下降；後半為 wh-question，句尾 school 下降，語氣自然詢問上學方式。 評分：檢查 Yes /s/、How 的 h/aʊ、do 不省略、school 的 /sk/ /l/，以及兩段下降語調。",
+      "ssml": "<speak>Yes. How do you go to school?</speak>"
+    },
+    {
+      "id": "hwg7_u02_7",
+      "en": "I go to school on foot.",
+      "zh": "我走路上學。",
+      "focus": "難字：I /aɪ/：雙母音 /aɪ/ 要完整。；school /sk/、/uː/、字尾 /l/：/sk/、長音 /uː/ 與字尾 /l/ 要清楚。；foot /ʊ/、字尾 /t/：使用短音 /ʊ/，不是 food；字尾 /t/ 要收。 重音：重讀 I、go、school 與 foot。 連音：go to school 可連成 go-to-school；on foot 可連成 on-foot，但 foot 的 /t/ 要聽得出來。 節奏：I go / to school / on foot. 語調：說明自己的上學方式，foot 是重點；語氣平穩，句尾下降。 評分：檢查 I /aɪ/、school 的 /sk/ /uː/ /l/、foot 的 /ʊ/ /t/，以及平穩下降。",
+      "ssml": "<speak>I go to school on foot.</speak>"
+    },
+    {
+      "id": "hwg7_u02_8",
+      "en": "He goes to school by car.",
+      "zh": "他搭車上學。",
+      "focus": "難字：He /iː/：長音 /iː/ 要清楚。；goes 字尾 /z/：第三人稱字尾 /z/ 要出來。；school /sk/、字尾 /l/：/sk/ 與字尾 /l/ 要清楚。；by /aɪ/：雙母音 /aɪ/ 要完整。；car r 音（來源未列完整 IPA）：r 音要自然收尾。 重音：重讀 He、goes、school 與 car。 連音：goes to school 可連成 goes-to-school，但 goes 的 /z/ 不可吞掉；by car 可輕連，但 car 的 r 要有。 節奏：He goes / to school / by car. 語調：說明第三人稱上學方式，goes 是語法重點、car 是交通方式重點；句尾下降。 評分：檢查 He /iː/、goes /z/、school /sk/ /l/、by /aɪ/、car 的 r，以及下降語調。",
+      "ssml": "<speak>He goes to school by car.</speak>"
+    }
+  ],
+  "dictionaryCandidates": {
+    "where": {
+      "zh": "待教師確認",
+      "tip": "r 音（來源未列完整 IPA）；r 音要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Where</emphasis></prosody></speak>"
+    },
+    "are": {
+      "zh": "待教師確認",
+      "tip": "句中輕讀（來源未列完整 IPA）；可以輕讀，但不可完全消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>are</emphasis></prosody></speak>"
+    },
+    "we": {
+      "zh": "待教師確認",
+      "tip": "不可過短（來源未列完整 IPA）；要清楚，不要唸太短。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>we</emphasis></prosody></speak>"
+    },
+    "you’re": {
+      "zh": "待教師確認",
+      "tip": "r 音（來源未列完整 IPA）；You are 的縮寫，r 音要有。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>You’re</emphasis></prosody></speak>"
+    },
+    "on": {
+      "zh": "待教師確認",
+      "tip": "與 a 連音（來源未列完整 IPA）；on a 可自然連成 on-a。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>on</emphasis></prosody></speak>"
+    },
+    "boat": {
+      "zh": "待教師確認",
+      "tip": "/oʊ/、字尾 /t/；雙母音 /oʊ/ 與字尾 /t/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>boat</emphasis></prosody></speak>"
+    },
+    "going": {
+      "zh": "待教師確認",
+      "tip": "字尾 /ŋ/；/ŋ/ 要清楚，不要在後面多加 guh。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>going</emphasis></prosody></speak>"
+    },
+    "we’re": {
+      "zh": "待教師確認",
+      "tip": "r 音（來源未列完整 IPA）；We are 的縮寫，r 音要有。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>We’re</emphasis></prosody></speak>"
+    },
+    "to": {
+      "zh": "待教師確認",
+      "tip": "/tə/；可輕讀成 /tə/，但不要消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>to</emphasis></prosody></speak>"
+    },
+    "school": {
+      "zh": "待教師確認",
+      "tip": "/sk/、/uː/、字尾 /l/；/sk/、長音 /uː/ 與字尾 /l/ 都要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>school</emphasis></prosody></speak>"
+    },
+    "by": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>By</emphasis></prosody></speak>"
+    },
+    "yes": {
+      "zh": "待教師確認",
+      "tip": "字尾 /s/；字尾 /s/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>Yes</emphasis></prosody></speak>"
+    },
+    "how": {
+      "zh": "待教師確認",
+      "tip": "h、/aʊ/；h 與雙母音 /aʊ/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>How</emphasis></prosody></speak>"
+    },
+    "do": {
+      "zh": "待教師確認",
+      "tip": "連音中不省略（來源未列完整 IPA）；do you 可輕連，但 do 不可完全消失。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>do</emphasis></prosody></speak>"
+    },
+    "i": {
+      "zh": "待教師確認",
+      "tip": "/aɪ/；雙母音 /aɪ/ 要完整。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>I</emphasis></prosody></speak>"
+    },
+    "foot": {
+      "zh": "待教師確認",
+      "tip": "/ʊ/、字尾 /t/；使用短音 /ʊ/，不是 food；字尾 /t/ 要收。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>foot</emphasis></prosody></speak>"
+    },
+    "he": {
+      "zh": "待教師確認",
+      "tip": "/iː/；長音 /iː/ 要清楚。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>He</emphasis></prosody></speak>"
+    },
+    "goes": {
+      "zh": "待教師確認",
+      "tip": "字尾 /z/；第三人稱字尾 /z/ 要出來。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>goes</emphasis></prosody></speak>"
+    },
+    "car": {
+      "zh": "待教師確認",
+      "tip": "r 音（來源未列完整 IPA）；r 音要自然收尾。",
+      "ssml": "<speak><prosody rate='slow'><emphasis level='strong'>car</emphasis></prosody></speak>"
+    }
+  },
+  "note": "dry run 轉接資料；未經教師確認不得貼入 public/index.html。"
+}

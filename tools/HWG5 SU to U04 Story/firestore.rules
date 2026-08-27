@@ -1,0 +1,131 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: reading_records
+    // Document ID: Firestore auto-ID
+    // Required fields:
+    //   ownerUid: authenticated anonymous student UID (immutable)
+    //   studentId: 1-12 numeric classroom identifier
+    //   theme: HWG5-HWG8
+    //   unit: SU or U01-U04
+    //   date: local display date in YYYY/MM/DD format
+    //   sentenceId: stable item identifier
+    //   targetText, transcript, feedback: bounded strings
+    //   score: 0-100 number
+    //   audioUrl: Firebase Storage download URL
+    //   audioPath: audio_records/{ownerUid}/{studentId}/{timestamp}.webm
+    //   expiresAt: seven-calendar-month expiry produced by the app
+    //   timestamp: server timestamp at creation
+    //
+    // Existing legacy records without ownerUid remain teacher-readable only.
+    // They are not migrated, rewritten, or exposed to new anonymous sessions.
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isTeacher() {
+      return isAuthenticated()
+        && request.auth.token.keys().hasAll(['email', 'email_verified'])
+        && request.auth.token.email is string
+        && request.auth.token.email == 'samchouou@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(data) {
+      return isAuthenticated()
+        && data.ownerUid is string
+        && data.ownerUid == request.auth.uid;
+    }
+
+    function uidUnchanged(data) {
+      return data.ownerUid == request.auth.uid;
+    }
+
+    function uidNotModified(data, existingData) {
+      return data.ownerUid == existingData.ownerUid;
+    }
+
+    function hasRequiredFields(data) {
+      return data.keys().hasAll([
+        'ownerUid', 'studentId', 'theme', 'unit', 'date', 'sentenceId',
+        'targetText', 'transcript', 'score', 'feedback', 'audioUrl',
+        'audioPath', 'expiresAt', 'timestamp'
+      ]);
+    }
+
+    function hasOnlyAllowedFields(data) {
+      return data.keys().hasOnly([
+        'ownerUid', 'studentId', 'theme', 'unit', 'date', 'sentenceId',
+        'targetText', 'transcript', 'score', 'feedback', 'audioUrl',
+        'audioPath', 'expiresAt', 'timestamp'
+      ]);
+    }
+
+    function isValidReadingRecord(data) {
+      return hasRequiredFields(data)
+        && hasOnlyAllowedFields(data)
+        && data.ownerUid is string
+        && data.ownerUid.size() >= 1
+        && data.ownerUid.size() <= 128
+        && data.studentId is string
+        && data.studentId.matches('^[0-9]{1,12}$')
+        && data.theme is string
+        && data.theme.matches('^HWG[5-8]$')
+        && data.unit is string
+        && data.unit in ['SU', 'U01', 'U02', 'U03', 'U04']
+        && data.date is string
+        && data.date.matches('^[0-9]{4}/[0-9]{2}/[0-9]{2}$')
+        && data.sentenceId is string
+        && data.sentenceId.matches('^[A-Za-z0-9_-]{1,64}$')
+        && data.targetText is string
+        && data.targetText.size() >= 1
+        && data.targetText.size() <= 500
+        && data.transcript is string
+        && data.transcript.size() >= 1
+        && data.transcript.size() <= 1000
+        && data.score is number
+        && data.score >= 0
+        && data.score <= 100
+        && data.feedback is string
+        && data.feedback.size() >= 1
+        && data.feedback.size() <= 500
+        && data.audioUrl is string
+        && data.audioUrl.size() >= 1
+        && data.audioUrl.size() <= 2048
+        && data.audioUrl.matches('^https://firebasestorage[.]googleapis[.]com/.*')
+        && data.audioPath is string
+        && data.audioPath.size() <= 512
+        && data.audioPath.matches('^audio_records/' + request.auth.uid + '/' + data.studentId + '/[0-9]+[.]webm$')
+        && data.expiresAt is timestamp
+        && data.expiresAt > request.time + duration.value(210, 'd')
+        && data.expiresAt <= request.time + duration.value(216, 'd')
+        && data.timestamp is timestamp
+        && data.timestamp == request.time;
+    }
+
+    match /reading_records/{recordId} {
+      allow create: if isOwner(request.resource.data)
+        && uidUnchanged(request.resource.data)
+        && isValidReadingRecord(request.resource.data);
+
+      allow get, list: if isTeacher() || isOwner(resource.data);
+
+      // Records are immutable after creation. Only the verified teacher may
+      // explicitly delete a selected record; automatic expiry is server-side.
+      allow update: if false
+        && uidNotModified(request.resource.data, resource.data)
+        && isValidReadingRecord(request.resource.data);
+      allow delete: if isTeacher();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

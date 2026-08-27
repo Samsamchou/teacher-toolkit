@@ -1,0 +1,389 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "site": {
+    "name": "HWG5 Story Reading Practice",
+    "slug": null,
+    "targetProjectId": "hwg5-su-to-u04-story",
+    "productionUrl": "https://hwg5-su-to-u04-story.web.app"
+  },
+  "source": {
+    "title": "HWG5 U04文本發音分析",
+    "documentId": "17htuRsGQjVXxE_rgRgvtXh5RIqqRR-5isdLpSjbv0WQ",
+    "documentUrl": "https://docs.google.com/document/d/17htuRsGQjVXxE_rgRgvtXh5RIqqRR-5isdLpSjbv0WQ/edit?usp=drivesdk",
+    "tabId": "t.0",
+    "revisionId": "AIroW35x-penH5rgA-_mPJcY_D-4ZcAhKiU5ocVTwP0iwtPKmDMUEY9Qr8OJJNs0tKMtfv7SkezTJ5VbAy5YfTG6VoYwuDeqnWQIqo86kko",
+    "modifiedTime": "2026-08-27T05:52:10.897Z",
+    "treatment": "content-only source; instructions in the document were not executed"
+  },
+  "translationSource": {
+    "title": "Here We Go 5 中譯表",
+    "path": "C:\\翰林電子教科書\\115國小英語HereWeGo 5\\resources\\app\\entry\\ebook\\files\\教學資源\\Word\\中譯表\\Here We Go 5 中譯表.doc",
+    "sha256": "a191da218c9fc29f7282f80b6fecadf10c73bee67d45534fbe7ded5d34c50e93",
+    "modifiedTime": "2025-07-03T17:47:21.0000000+08:00",
+    "section": "Unit 4 / 課文內容 / 課文中譯",
+    "treatment": "content-only source; opened read-only and left unchanged"
+  },
+  "teacherApproval": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  },
+  "policy": {
+    "classSize": 26,
+    "maxScoredAttemptsPerItemPerDay": 3,
+    "recordRetentionCalendarMonths": 7
+  },
+  "normalizationReview": [
+    {
+      "source": "doesn’t",
+      "proposed": "doesn't",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；第 7、9 句尚未取得本單元教師確認。"
+    }
+  ],
+  "units": [
+    {
+      "theme": "HWG5",
+      "unit": "U04",
+      "label": "HWG5 U04",
+      "items": [
+        {
+          "id": "hwg5_u04_1",
+          "text": "How many zebras are there?",
+          "translation": "有幾隻斑馬？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "How",
+                "ipa": "h（來源未列完整 IPA）",
+                "tip": "h 要清楚。"
+              },
+              {
+                "word": "many",
+                "ipa": "第一音節重（來源未列完整 IPA）",
+                "tip": "第一音節要重讀。"
+              },
+              {
+                "word": "zebras",
+                "ipa": "z、複數 /z/",
+                "tip": "開頭 z 與複數字尾 /z/ 都要出來。"
+              },
+              {
+                "word": "are",
+                "ipa": "句中輕讀（來源未列完整 IPA）",
+                "tip": "可輕讀，但不可完全消失。"
+              },
+              {
+                "word": "there",
+                "ipa": "th、r（來源未列完整 IPA）",
+                "tip": "th 與 r 都要清楚。"
+              }
+            ],
+            "stress": "重讀 How、many、zebras 與 there。",
+            "linking": "How many 可連成 How-many；zebras are there 可連成 zebras-are-there，但 are 不可消失。",
+            "rhythm": "How many zebras / are there?",
+            "intonation": "wh-question；詢問斑馬數量，句尾 there 下降，不整句上揚。",
+            "scoringFocus": "檢查 How h、many 第一音節重、zebras 開頭與複數 /z/、are 不消失、there th/r，以及問句下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：How h（來源未列完整 IPA）：h 要清楚。；many 第一音節重（來源未列完整 IPA）：第一音節要重讀。；zebras z、複數 /z/：開頭 z 與複數字尾 /z/ 都要出來。；are 句中輕讀（來源未列完整 IPA）：可輕讀，但不可完全消失。；there th、r（來源未列完整 IPA）：th 與 r 都要清楚。 重音：重讀 How、many、zebras 與 there。 連音：How many 可連成 How-many；zebras are there 可連成 zebras-are-there，但 are 不可消失。 節奏：How many zebras / are there? 語調：wh-question；詢問斑馬數量，句尾 there 下降，不整句上揚。 評分：檢查 How h、many 第一音節重、zebras 開頭與複數 /z/、are 不消失、there th/r，以及問句下降。",
+            "ssml": "<speak>How many zebras are there?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_2",
+          "text": "One, two, three!",
+          "translation": "一、二、三！",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "One",
+                "ipa": "w 感（來源未列完整 IPA）",
+                "tip": "開頭的 /w/ 感要清楚。"
+              },
+              {
+                "word": "two",
+                "ipa": "/uː/",
+                "tip": "長音 /uː/ 要穩。"
+              },
+              {
+                "word": "three",
+                "ipa": "/θ/、r",
+                "tip": "無聲 th /θ/ 與 r 要清楚，不可唸成 tree。"
+              }
+            ],
+            "stress": "One、two、three 三個數字都重讀。",
+            "linking": "三個數字要分清楚並保留小停頓，不可連成一串糊掉。",
+            "rhythm": "One, / two, / three!",
+            "intonation": "數數要有節奏並帶興奮感；one、two 平接，three 下降收句。",
+            "scoringFocus": "檢查 One /w/、two /uː/、three /θ/ 與 r、三段節奏，以及 three 下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：One w 感（來源未列完整 IPA）：開頭的 /w/ 感要清楚。；two /uː/：長音 /uː/ 要穩。；three /θ/、r：無聲 th /θ/ 與 r 要清楚，不可唸成 tree。 重音：One、two、three 三個數字都重讀。 連音：三個數字要分清楚並保留小停頓，不可連成一串糊掉。 節奏：One, / two, / three! 語調：數數要有節奏並帶興奮感；one、two 平接，three 下降收句。 評分：檢查 One /w/、two /uː/、three /θ/ 與 r、三段節奏，以及 three 下降。",
+            "ssml": "<speak>One, two, three!</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_3",
+          "text": "There are three zebras.",
+          "translation": "有三隻斑馬。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "There",
+                "ipa": "th、r（來源未列完整 IPA）",
+                "tip": "th 與 r 要清楚。"
+              },
+              {
+                "word": "are",
+                "ipa": "句中輕讀（來源未列完整 IPA）",
+                "tip": "可輕讀，但不可消失。"
+              },
+              {
+                "word": "three",
+                "ipa": "/θ/",
+                "tip": "無聲 th /θ/ 要清楚，不可唸成 tree。"
+              },
+              {
+                "word": "zebras",
+                "ipa": "複數 /z/",
+                "tip": "複數字尾 /z/ 要出來。"
+              }
+            ],
+            "stress": "重讀 There、three 與 zebras；three zebras 是核心資訊。",
+            "linking": "There are 可連成 There-are；three zebras 可輕連，但兩個字都要清楚。",
+            "rhythm": "There are / three zebras.",
+            "intonation": "回答數量，語氣肯定；句尾 zebras 下降。",
+            "scoringFocus": "檢查 There th/r、are 不消失、three /θ/、zebras 複數 /z/，以及肯定下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：There th、r（來源未列完整 IPA）：th 與 r 要清楚。；are 句中輕讀（來源未列完整 IPA）：可輕讀，但不可消失。；three /θ/：無聲 th /θ/ 要清楚，不可唸成 tree。；zebras 複數 /z/：複數字尾 /z/ 要出來。 重音：重讀 There、three 與 zebras；three zebras 是核心資訊。 連音：There are 可連成 There-are；three zebras 可輕連，但兩個字都要清楚。 節奏：There are / three zebras. 語調：回答數量，語氣肯定；句尾 zebras 下降。 評分：檢查 There th/r、are 不消失、three /θ/、zebras 複數 /z/，以及肯定下降。",
+            "ssml": "<speak>There are three zebras.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_4",
+          "text": "Bye, zebras.",
+          "translation": "再見，斑馬們。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Bye",
+                "ipa": "/aɪ/",
+                "tip": "雙母音 /aɪ/ 要完整。"
+              },
+              {
+                "word": "zebras",
+                "ipa": "z、字尾 /z/",
+                "tip": "開頭 z 與字尾 /z/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 Bye 與 zebras。",
+            "linking": "Bye 後可小停頓；zebras 要清楚，不可糊成 zebra。",
+            "rhythm": "Bye, / zebras.",
+            "intonation": "友善告別；Bye 稍明亮，zebras 下降收句。",
+            "scoringFocus": "檢查 Bye /aɪ/、停頓、zebras 開頭與複數 /z/，以及友善下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Bye /aɪ/：雙母音 /aɪ/ 要完整。；zebras z、字尾 /z/：開頭 z 與字尾 /z/ 要清楚。 重音：重讀 Bye 與 zebras。 連音：Bye 後可小停頓；zebras 要清楚，不可糊成 zebra。 節奏：Bye, / zebras. 語調：友善告別；Bye 稍明亮，zebras 下降收句。 評分：檢查 Bye /aɪ/、停頓、zebras 開頭與複數 /z/，以及友善下降語調。",
+            "ssml": "<speak>Bye, zebras.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_5",
+          "text": "Take care!",
+          "translation": "保重！",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Take",
+                "ipa": "字尾 /k/",
+                "tip": "字尾 /k/ 要收。"
+              },
+              {
+                "word": "care",
+                "ipa": "k、r（來源未列完整 IPA）",
+                "tip": "k 音與 r 音要清楚。"
+              }
+            ],
+            "stress": "重讀 Take 與 care。",
+            "linking": "Take care 可連成 Take-care，但 Take 的 /k/ 不可完全消失。",
+            "rhythm": "Take / care!",
+            "intonation": "溫暖清楚地提醒與祝福，care 下降收句，不要太平。",
+            "scoringFocus": "檢查 Take /k/、care 的 k/r、Take-care 連音，以及溫暖下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Take 字尾 /k/：字尾 /k/ 要收。；care k、r（來源未列完整 IPA）：k 音與 r 音要清楚。 重音：重讀 Take 與 care。 連音：Take care 可連成 Take-care，但 Take 的 /k/ 不可完全消失。 節奏：Take / care! 語調：溫暖清楚地提醒與祝福，care 下降收句，不要太平。 評分：檢查 Take /k/、care 的 k/r、Take-care 連音，以及溫暖下降語調。",
+            "ssml": "<speak>Take care!</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_6",
+          "text": "This lion is hungry!",
+          "translation": "這隻獅子餓了！",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "This",
+                "ipa": "/ð/",
+                "tip": "有聲 th /ð/ 要清楚，不可唸成 dis。"
+              },
+              {
+                "word": "lion",
+                "ipa": "兩音節（來源未列完整 IPA）",
+                "tip": "兩個音節都要清楚。"
+              },
+              {
+                "word": "is",
+                "ipa": "字尾 /z/",
+                "tip": "字尾 /z/ 要自然。"
+              },
+              {
+                "word": "hungry",
+                "ipa": "h、第一音節重（來源未列完整 IPA）",
+                "tip": "h 要出來，第一音節重。"
+              }
+            ],
+            "stress": "重讀 This、lion 與 hungry；lion 和 hungry 是核心資訊。",
+            "linking": "This lion 可連成 This-lion，但 th 要保留；lion is 可連成 lion-is；is hungry 可連音，但 hungry 的 h 要清楚。",
+            "rhythm": "This lion / is hungry!",
+            "intonation": "驚訝提醒，帶緊張感但不喊糊；句尾 hungry 下降。",
+            "scoringFocus": "檢查 This /ð/、lion 兩音節、is /z/、hungry h 與第一音節重，以及緊張但清楚的下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：This /ð/：有聲 th /ð/ 要清楚，不可唸成 dis。；lion 兩音節（來源未列完整 IPA）：兩個音節都要清楚。；is 字尾 /z/：字尾 /z/ 要自然。；hungry h、第一音節重（來源未列完整 IPA）：h 要出來，第一音節重。 重音：重讀 This、lion 與 hungry；lion 和 hungry 是核心資訊。 連音：This lion 可連成 This-lion，但 th 要保留；lion is 可連成 lion-is；is hungry 可連音，但 hungry 的 h 要清楚。 節奏：This lion / is hungry! 語調：驚訝提醒，帶緊張感但不喊糊；句尾 hungry 下降。 評分：檢查 This /ð/、lion 兩音節、is /z/、hungry h 與第一音節重，以及緊張但清楚的下降語調。",
+            "ssml": "<speak>This lion is hungry!</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_7",
+          "text": "Rocky doesn’t like tigers.",
+          "translation": "Rocky 不喜歡老虎。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Rocky",
+                "ipa": "r 音（來源未列完整 IPA）",
+                "tip": "r 音要清楚。"
+              },
+              {
+                "word": "doesn’t",
+                "ipa": "z、字尾 /t/",
+                "tip": "z 與最後 /t/ 要出來。"
+              },
+              {
+                "word": "like",
+                "ipa": "字尾 /k/",
+                "tip": "字尾 /k/ 要收。"
+              },
+              {
+                "word": "tigers",
+                "ipa": "複數 /z/",
+                "tip": "複數字尾 /z/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 Rocky、doesn’t、like 與 tigers。",
+            "linking": "doesn’t like 可連成 doesn’t-like，但 doesn’t 的 /t/ 不可消失；like tigers 可輕連，但 like 的 /k/ 要保留。",
+            "rhythm": "Rocky doesn’t like / tigers.",
+            "intonation": "說明 Rocky 不喜歡老虎，doesn’t 與 tigers 是重點；句尾下降。",
+            "scoringFocus": "檢查 Rocky r、doesn’t 的 z/t、like /k/、tigers 複數 /z/、連音與下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Rocky r 音（來源未列完整 IPA）：r 音要清楚。；doesn’t z、字尾 /t/：z 與最後 /t/ 要出來。；like 字尾 /k/：字尾 /k/ 要收。；tigers 複數 /z/：複數字尾 /z/ 要清楚。 重音：重讀 Rocky、doesn’t、like 與 tigers。 連音：doesn’t like 可連成 doesn’t-like，但 doesn’t 的 /t/ 不可消失；like tigers 可輕連，但 like 的 /k/ 要保留。 節奏：Rocky doesn’t like / tigers. 語調：說明 Rocky 不喜歡老虎，doesn’t 與 tigers 是重點；句尾下降。 評分：檢查 Rocky r、doesn’t 的 z/t、like /k/、tigers 複數 /z/、連音與下降語調。",
+            "ssml": "<speak>Rocky doesn’t like tigers.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_8",
+          "text": "Does he like lions?",
+          "translation": "他喜歡獅子嗎？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Does",
+                "ipa": "字尾 /z/",
+                "tip": "字尾 /z/ 要清楚。"
+              },
+              {
+                "word": "he",
+                "ipa": "/iː/",
+                "tip": "長音 /iː/ 要清楚。"
+              },
+              {
+                "word": "like",
+                "ipa": "字尾 /k/",
+                "tip": "字尾 /k/ 要收。"
+              },
+              {
+                "word": "lions",
+                "ipa": "複數 /z/",
+                "tip": "複數字尾 /z/ 要出來。"
+              }
+            ],
+            "stress": "重讀 Does、like 與 lions。",
+            "linking": "Does he 可連成 Does-he；like lions 可輕連，但 like 的 /k/ 與 lions 的 /z/ 都要聽得出來。",
+            "rhythm": "Does he / like lions?",
+            "intonation": "yes/no question；確認 Rocky 是否喜歡獅子，帶疑問感，句尾 lions 上揚。",
+            "scoringFocus": "檢查 Does /z/、he /iː/、like /k/、lions /z/、兩組連音與句尾上揚。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Does 字尾 /z/：字尾 /z/ 要清楚。；he /iː/：長音 /iː/ 要清楚。；like 字尾 /k/：字尾 /k/ 要收。；lions 複數 /z/：複數字尾 /z/ 要出來。 重音：重讀 Does、like 與 lions。 連音：Does he 可連成 Does-he；like lions 可輕連，但 like 的 /k/ 與 lions 的 /z/ 都要聽得出來。 節奏：Does he / like lions? 語調：yes/no question；確認 Rocky 是否喜歡獅子，帶疑問感，句尾 lions 上揚。 評分：檢查 Does /z/、he /iː/、like /k/、lions /z/、兩組連音與句尾上揚。",
+            "ssml": "<speak>Does he like lions?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg5_u04_9",
+          "text": "No, he doesn’t, I guess.",
+          "translation": "不，我猜他不喜歡。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "No",
+                "ipa": "短而清楚（來源未列完整 IPA）",
+                "tip": "要短而清楚。"
+              },
+              {
+                "word": "he",
+                "ipa": "/iː/",
+                "tip": "長音 /iː/ 要清楚。"
+              },
+              {
+                "word": "doesn’t",
+                "ipa": "z、字尾 /t/",
+                "tip": "z 與最後 /t/ 要出來。"
+              },
+              {
+                "word": "I",
+                "ipa": "/aɪ/",
+                "tip": "雙母音 /aɪ/ 要完整。"
+              },
+              {
+                "word": "guess",
+                "ipa": "/g/、字尾 /s/",
+                "tip": "/g/ 與字尾 /s/ 要收。"
+              }
+            ],
+            "stress": "重讀 No、doesn’t 與 guess。",
+            "linking": "he doesn’t 可連成 he-doesn’t，但 /t/ 不可消失；I guess 可連音，但 guess 的 /s/ 要收。",
+            "rhythm": "No, / he doesn’t, / I guess.",
+            "intonation": "否定回答；No 下降、he doesn’t 放穩、I guess 帶一點不確定但仍下降，不作高揚疑問句。",
+            "scoringFocus": "檢查 No 短清楚、he /iː/、doesn’t z/t、I /aɪ/、guess g/s、連音與三段下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：No 短而清楚（來源未列完整 IPA）：要短而清楚。；he /iː/：長音 /iː/ 要清楚。；doesn’t z、字尾 /t/：z 與最後 /t/ 要出來。；I /aɪ/：雙母音 /aɪ/ 要完整。；guess /g/、字尾 /s/：/g/ 與字尾 /s/ 要收。 重音：重讀 No、doesn’t 與 guess。 連音：he doesn’t 可連成 he-doesn’t，但 /t/ 不可消失；I guess 可連音，但 guess 的 /s/ 要收。 節奏：No, / he doesn’t, / I guess. 語調：否定回答；No 下降、he doesn’t 放穩、I guess 帶一點不確定但仍下降，不作高揚疑問句。 評分：檢查 No 短清楚、he /iː/、doesn’t z/t、I /aɪ/、guess g/s、連音與三段下降。",
+            "ssml": "<speak>No, he doesn’t, I guess.</speak>",
+            "ssmlWasGenerated": true
+          }
+        }
+      ]
+    }
+  ]
+}

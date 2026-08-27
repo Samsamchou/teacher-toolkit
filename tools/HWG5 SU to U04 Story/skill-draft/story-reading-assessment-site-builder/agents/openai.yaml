@@ -1,0 +1,4 @@
+interface:
+  display_name: "故事朗讀評測網站建置"
+  short_description: "重製新站或安全擴增 HWG5 正式站"
+  default_prompt: "使用 $story-reading-assessment-site-builder 依我提供的網站名稱、主題單元與句子發音分析，先建立可審核的 dry run；未經教師確認不要安裝或部署。"

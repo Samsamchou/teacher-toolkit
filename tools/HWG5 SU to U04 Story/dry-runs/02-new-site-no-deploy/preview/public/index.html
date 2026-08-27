@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Story Reading Lab - Dry Run</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#172554;background:#eff6ff}body{margin:0}.wrap{max-width:920px;margin:auto;padding:24px}.gate{background:#7f1d1d;color:#fff;padding:14px 18px;font-weight:800;border-radius:14px}.controls{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}select{font:inherit;padding:10px 14px;border:2px solid #93c5fd;border-radius:12px}.card{background:white;border:3px solid #bfdbfe;border-radius:20px;padding:20px;margin:16px 0;box-shadow:0 6px 16px #1e3a8a18}h1{color:#1d4ed8}.sentence{font-size:1.7rem;font-weight:900;color:#111827}.zh{font-size:1.1rem;color:#475569}.grid{display:grid;grid-template-columns:9rem 1fr;gap:7px 12px}.label{font-weight:800;color:#4338ca}.word{display:inline-block;background:#ede9fe;border-radius:10px;padding:6px 9px;margin:3px}.empty{padding:30px;text-align:center}small{color:#475569}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="gate">DRY RUN：只供教師審核內容；沒有錄音、AI、TTS、Firebase 或正式部署。</div>
+    <h1>Demo Story Reading Lab</h1>
+    <div class="controls"><label>主題／單元 <select id="unit"></select></label></div>
+    <section id="cards"></section>
+    <small>樣本內容不是正式題庫。教師確認後才可進入本機完整網站實作。</small>
+  </main>
+  <script src="site-content.js"></script>
+  <script>
+    const units = window.SITE_CONTENT.units;
+    const select = document.getElementById('unit');
+    const cards = document.getElementById('cards');
+    for (const [index, unit] of units.entries()) {
+      const option = document.createElement('option'); option.value = index; option.textContent = unit.theme + ' / ' + unit.unit + ' — ' + unit.label; select.append(option);
+    }
+    const safe = (value) => { const el=document.createElement('span'); el.textContent=value; return el.innerHTML; };
+    function render() {
+      const unit = units[Number(select.value || 0)];
+      cards.innerHTML = unit.items.map((item, index) => '<article class="card"><div class="sentence">' + (index+1) + '. ' + safe(item.text) + '</div><p class="zh">' + safe(item.translation) + '</p><div class="grid"><div class="label">難字</div><div>' + (item.pronunciation.difficultWords.map(w => '<span class="word">' + safe(w.word) + ' ' + safe(w.ipa) + '：' + safe(w.tip) + '</span>').join('') || '無') + '</div><div class="label">重音</div><div>' + safe(item.pronunciation.stress) + '</div><div class="label">連音</div><div>' + safe(item.pronunciation.linking) + '</div><div class="label">節奏</div><div>' + safe(item.pronunciation.rhythm) + '</div><div class="label">語調</div><div>' + safe(item.pronunciation.intonation) + '</div><div class="label">評分焦點</div><div>' + safe(item.pronunciation.scoringFocus) + '</div></div></article>').join('');
+    }
+    select.addEventListener('change', render); render();
+  </script>
+</body>
+</html>

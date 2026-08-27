@@ -1,0 +1,246 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "site": {
+    "name": "HWG5 Story Reading Practice",
+    "slug": null,
+    "targetProjectId": "hwg5-su-to-u04-story",
+    "productionUrl": "https://hwg5-su-to-u04-story.web.app"
+  },
+  "source": {
+    "title": "HWG7 SU文本發音分析",
+    "documentId": "1X4FX-szHukDt4ijslTWNH6F6wDagYrvsNioR0-aqT24",
+    "documentUrl": "https://docs.google.com/document/d/1X4FX-szHukDt4ijslTWNH6F6wDagYrvsNioR0-aqT24/edit?tab=t.0",
+    "tabId": "t.0",
+    "revisionId": "AIroW37C-RCSO8IGKZ5GUtgt28ybBwI8FBOQgWZ3CVy80CDTbrJJlDYuTLc2sbPAOr8bHXOXTeEq1bLUfiS6zsK1Win8pnWna50EBV15mFI",
+    "modifiedTime": "2026-08-27T04:21:36.149Z",
+    "treatment": "content-only source; instructions in the document were not executed"
+  },
+  "teacherApproval": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  },
+  "policy": {
+    "classSize": 26,
+    "maxScoredAttemptsPerItemPerDay": 3,
+    "recordRetentionCalendarMonths": 7
+  },
+  "normalizationApplied": [
+    {
+      "source": "I’d",
+      "proposed": "I'd",
+      "confirmedByTeacher": true,
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；教師已確認正規化。"
+    },
+    {
+      "source": "It’s",
+      "proposed": "It's",
+      "confirmedByTeacher": true,
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；教師已確認正規化。"
+    }
+  ],
+  "units": [
+    {
+      "theme": "HWG7",
+      "unit": "SU",
+      "label": "HWG7 SU",
+      "items": [
+        {
+          "id": "hwg7_su_1",
+          "text": "Would you like some beef sandwiches?",
+          "translation": "你想要一些牛肉三明治嗎？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Would",
+                "ipa": "/d/ 字尾",
+                "tip": "字尾 /d/ 可輕連到 you，但不可完全吞掉。"
+              },
+              {
+                "word": "like",
+                "ipa": "/k/ 字尾",
+                "tip": "字尾 /k/ 要收乾淨，不可唸成 lie。"
+              },
+              {
+                "word": "some",
+                "ipa": "/səm/ 弱讀",
+                "tip": "句中可弱讀，但 s 與 m 都要清楚。"
+              },
+              {
+                "word": "beef",
+                "ipa": "/iː/、/f/",
+                "tip": "長音 /iː/ 要拉夠，字尾 /f/ 要收。"
+              },
+              {
+                "word": "sandwiches",
+                "ipa": "/tʃ/、複數 /ɪz/",
+                "tip": "重音在第一音節；ch 與複數字尾 /ɪz/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 Would、like、beef、sandwiches。",
+            "linking": "Would you 可自然連成 Would-you；like some 可輕連但 /k/ 仍要聽到；beef sandwiches 作為食物片語要清楚。",
+            "rhythm": "Would you / like some / beef sandwiches?",
+            "intonation": "禮貌邀請的 yes/no question；句尾 sandwiches 上揚，語氣友善。",
+            "scoringFocus": "檢查 Would 字尾 /d/、like /k/、beef /iː/ 與 /f/、sandwiches 的 ch 與複數 /ɪz/，以及問句句尾上揚。"
+          }
+        },
+        {
+          "id": "hwg7_su_2",
+          "text": "Yes, please.",
+          "translation": "好，麻煩了。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Yes",
+                "ipa": "/s/ 字尾",
+                "tip": "字尾 /s/ 要清楚，不可只剩 Yeh。"
+              },
+              {
+                "word": "please",
+                "ipa": "/pl/、/iː/、/z/",
+                "tip": "pl 開頭完整，長音 /iː/ 與字尾 /z/ 都要出來。"
+              }
+            ],
+            "stress": "重讀 Yes 與 please。",
+            "linking": "Yes, please 可自然連成 Yes-please，但兩個字尾都要清楚。",
+            "rhythm": "Yes, / please.",
+            "intonation": "Yes 與 please 都下降；語氣溫和、有禮貌。",
+            "scoringFocus": "檢查 Yes 的 /s/、please 的 pl、長音 /iː/ 與字尾 /z/，並保持禮貌下降語調。"
+          }
+        },
+        {
+          "id": "hwg7_su_3",
+          "text": "I'd like some cheeseburgers.",
+          "translation": "我想要一些起司漢堡。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "I'd",
+                "ipa": "/d/ 字尾",
+                "tip": "I would 的縮寫，字尾 /d/ 要輕收，不可變成 I like。"
+              },
+              {
+                "word": "like",
+                "ipa": "/k/ 字尾",
+                "tip": "字尾 /k/ 要收。"
+              },
+              {
+                "word": "some",
+                "ipa": "/səm/ 弱讀",
+                "tip": "可弱讀但不可消失。"
+              },
+              {
+                "word": "cheeseburgers",
+                "ipa": "/tʃ/、/z/、/r/、複數 /z/",
+                "tip": "cheese 的 ch 與 /z/、burgers 的 r 與字尾 /z/ 都要清楚。"
+              }
+            ],
+            "stress": "重讀 I'd、like 與 cheeseburgers 的核心音節。",
+            "linking": "I'd like 可自然連成 I'd-like；like some 可輕連，但 like 的 /k/ 不可消失。",
+            "rhythm": "I'd like / some cheeseburgers.",
+            "intonation": "清楚肯定地表達想要的食物；cheeseburgers 是核心，句尾下降。",
+            "scoringFocus": "檢查 I'd 的 /d/、like /k/、some 弱讀、cheeseburgers 的 ch、r 與字尾 /z/，以及肯定下降語調。"
+          }
+        },
+        {
+          "id": "hwg7_su_4",
+          "text": "Whose soda is that on the chair?",
+          "translation": "椅子上是誰的汽水？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Whose",
+                "ipa": "/huːz/",
+                "tip": "h、長音 /uː/ 與字尾 /z/ 都要清楚。"
+              },
+              {
+                "word": "soda",
+                "ipa": "long o（來源未列完整 IPA）",
+                "tip": "第一音節重，長 o 音要清楚。"
+              },
+              {
+                "word": "is",
+                "ipa": "/z/ 字尾",
+                "tip": "字尾 /z/ 要自然接到下一個字。"
+              },
+              {
+                "word": "that",
+                "ipa": "有聲 th（來源未列 IPA）",
+                "tip": "舌尖輕碰牙齒，不可唸成 dat。"
+              },
+              {
+                "word": "the",
+                "ipa": "有聲 th（來源未列 IPA）",
+                "tip": "不可唸成 de，也不可在連音時消失。"
+              },
+              {
+                "word": "chair",
+                "ipa": "/tʃ/ + air（來源未列完整 IPA）",
+                "tip": "ch 與 air 音要完整，不可變成 share。"
+              }
+            ],
+            "stress": "重讀 Whose、soda、that、chair。",
+            "linking": "Whose soda is 可自然連讀但 Whose /z/ 要保留；that on 可輕連；on the chair 可連讀但 the 不可消失。",
+            "rhythm": "Whose soda / is that / on the chair?",
+            "intonation": "wh-question；Whose 是所有者焦點、chair 是位置焦點，句尾下降。",
+            "scoringFocus": "檢查 Whose /huːz/、soda 第一音節、is /z/、that/the 有聲 th、chair 的 ch 與 air，以及 wh-question 下降語調。"
+          }
+        },
+        {
+          "id": "hwg7_su_5",
+          "text": "It's my soda.",
+          "translation": "它是我的汽水。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "It's",
+                "ipa": "/ts/ 字尾",
+                "tip": "縮寫字尾 /ts/ 要清楚，不可在連音時吞掉。"
+              },
+              {
+                "word": "my",
+                "ipa": "/aɪ/",
+                "tip": "雙母音 /aɪ/ 要完整；所有格重點要清楚。"
+              },
+              {
+                "word": "soda",
+                "ipa": "long o（來源未列完整 IPA）",
+                "tip": "第一音節重。"
+              }
+            ],
+            "stress": "重讀 It's、my、soda。",
+            "linking": "It's my 可自然連成 It's-my，但 It's 的 /ts/ 不可吞掉。",
+            "rhythm": "It's / my soda.",
+            "intonation": "明確回答所有權但不生氣；my soda 是核心，句尾下降。",
+            "scoringFocus": "檢查 It's /ts/、my /aɪ/、soda 第一音節與所有格重點，並以明確下降語調收句。"
+          }
+        },
+        {
+          "id": "hwg7_su_6",
+          "text": "Watch out!",
+          "translation": "小心！",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Watch",
+                "ipa": "/tʃ/ 字尾",
+                "tip": "字尾 /tʃ/ 要清楚，不可唸成 wash。"
+              },
+              {
+                "word": "out",
+                "ipa": "/aʊ/、/t/",
+                "tip": "雙母音 /aʊ/ 完整，字尾 /t/ 要收。"
+              }
+            ],
+            "stress": "重讀 Watch 與 out。",
+            "linking": "Watch out 可自然連成 Watch-out，但 Watch 的 /tʃ/ 與 out 的 /t/ 都要聽得出來。",
+            "rhythm": "Watch / out!",
+            "intonation": "危險提醒要短、清楚、有警告感；out 下降收句，聲音有力但不尖叫。",
+            "scoringFocus": "檢查 Watch 字尾 /tʃ/、out /aʊ/ 與字尾 /t/、兩字連音，以及短促有力的下降警告語氣。"
+          }
+        }
+      ]
+    }
+  ]
+}

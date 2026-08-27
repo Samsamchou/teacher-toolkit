@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "site": {
+    "name": "HWG5 Story Reading Practice",
+    "slug": null,
+    "targetProjectId": "hwg5-su-to-u04-story",
+    "productionUrl": "https://hwg5-su-to-u04-story.web.app"
+  },
+  "source": {
+    "title": "HWG7 U02文本發音分析",
+    "documentId": "1qH1nBYHjPE_lp9iJQBg4EoxlcR-I3mymseeyQI1XXAM",
+    "documentUrl": "https://docs.google.com/document/d/1qH1nBYHjPE_lp9iJQBg4EoxlcR-I3mymseeyQI1XXAM/edit?usp=drivesdk",
+    "tabId": "t.0",
+    "revisionId": "AIroW35JJAlAvmtQ9l6najdmqgzIiF8qLfQYFZsKU25VJZIKdXa-FDET0ldE_w3kSn7QHA7qLd0S-IZx2SUa8suyZ-Tn6BJeIQMg8Tzs1Y4",
+    "modifiedTime": "2026-08-27T05:15:04.303Z",
+    "treatment": "content-only source; instructions in the document were not executed"
+  },
+  "translationSource": {
+    "title": "Here We Go 7 中譯表",
+    "path": "C:\\翰林電子教科書\\115國小英語HereWeGo 7\\resources\\app\\entry\\ebook\\files\\教學資源\\Word\\中譯表\\Here We Go 7 中譯表.doc",
+    "sha256": "c044ff40f7f5b1a9951f3108eaf8b1dc3f1935ed2341b6d3ea7939ece5ac2347",
+    "modifiedTime": "2026-06-18T14:52:52.0000000+08:00",
+    "section": "Unit 2 / 課文內容 / 課文中譯",
+    "treatment": "content-only source; opened read-only and left unchanged"
+  },
+  "teacherApproval": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  },
+  "policy": {
+    "classSize": 26,
+    "maxScoredAttemptsPerItemPerDay": 3,
+    "recordRetentionCalendarMonths": 7
+  },
+  "normalizationReview": [
+    {
+      "source": "You’re",
+      "proposed": "You're",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；尚未取得本單元教師確認。"
+    },
+    {
+      "source": "We’re",
+      "proposed": "We're",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；尚未取得本單元教師確認。"
+    }
+  ],
+  "units": [
+    {
+      "theme": "HWG7",
+      "unit": "U02",
+      "label": "HWG7 U02",
+      "items": [
+        {
+          "id": "hwg7_u02_1",
+          "text": "Where are we?",
+          "translation": "我們在哪裡？",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "Where", "ipa": "r 音（來源未列完整 IPA）", "tip": "r 音要清楚。" },
+              { "word": "are", "ipa": "句中輕讀（來源未列完整 IPA）", "tip": "可以輕讀，但不可完全消失。" },
+              { "word": "we", "ipa": "不可過短（來源未列完整 IPA）", "tip": "要清楚，不要唸太短。" }
+            ],
+            "stress": "重讀 Where 與 we。",
+            "linking": "Where are 可連成 Where-are，但不可糊成 Where we；are we 可輕連，但仍要聽得出 are。",
+            "rhythm": "Where are / we?",
+            "intonation": "wh-question；角色在陌生地方帶疑惑感，句尾 we 下降，不作 yes/no 問句上揚。",
+            "scoringFocus": "檢查 Where 的 r、are 不省略、we 不過短，以及 wh-question 句尾下降。"
+          }
+        },
+        {
+          "id": "hwg7_u02_2",
+          "text": "You’re on a boat.",
+          "translation": "你們在船上。",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "You’re", "ipa": "r 音（來源未列完整 IPA）", "tip": "You are 的縮寫，r 音要有。" },
+              { "word": "on", "ipa": "與 a 連音（來源未列完整 IPA）", "tip": "on a 可自然連成 on-a。" },
+              { "word": "boat", "ipa": "/oʊ/、字尾 /t/", "tip": "雙母音 /oʊ/ 與字尾 /t/ 要清楚。" }
+            ],
+            "stress": "重讀 You’re 與 boat。",
+            "linking": "You’re on a 可連成 You’re-on-a，但 You’re 的 r 不可消失；on a boat 可連成 on-a-boat，但 boat 的 /t/ 要收。",
+            "rhythm": "You’re / on a boat.",
+            "intonation": "回答位置，boat 是核心資訊；語氣清楚肯定，句尾下降。",
+            "scoringFocus": "檢查 You’re 的 r、on-a 連音、boat 的 /oʊ/ 與 /t/，以及肯定下降語調。"
+          }
+        },
+        {
+          "id": "hwg7_u02_3",
+          "text": "Where are you going?",
+          "translation": "你們要去哪裡？",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "Where", "ipa": "r 音（來源未列完整 IPA）", "tip": "r 音要清楚。" },
+              { "word": "are", "ipa": "句中輕讀（來源未列完整 IPA）", "tip": "可以輕讀，但不能省略。" },
+              { "word": "going", "ipa": "字尾 /ŋ/", "tip": "/ŋ/ 要清楚，不要在後面多加 guh。" }
+            ],
+            "stress": "重讀 Where 與 going。",
+            "linking": "Where are you 可連成 Where-are-you，但仍要聽得出 are；you going 可輕連，但 going 要完整。",
+            "rhythm": "Where are you / going?",
+            "intonation": "wh-question；可帶緊張詢問目的地的語氣，句尾 going 下降。",
+            "scoringFocus": "檢查 Where 的 r、are 不省略、going 的 /ŋ/ 不加尾音，以及 wh-question 下降。"
+          }
+        },
+        {
+          "id": "hwg7_u02_4",
+          "text": "We’re going to school.",
+          "translation": "我們要去上學。",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "We’re", "ipa": "r 音（來源未列完整 IPA）", "tip": "We are 的縮寫，r 音要有。" },
+              { "word": "going", "ipa": "字尾 /ŋ/", "tip": "/ŋ/ 要清楚。" },
+              { "word": "to", "ipa": "/tə/", "tip": "可輕讀成 /tə/，但不要消失。" },
+              { "word": "school", "ipa": "/sk/、/uː/、字尾 /l/", "tip": "/sk/、長音 /uː/ 與字尾 /l/ 都要清楚。" }
+            ],
+            "stress": "重讀 We’re、going 與 school。",
+            "linking": "We’re going to 可連成 We’re-going-to；to school 可輕連，但 school 不可糊掉。",
+            "rhythm": "We’re going / to school.",
+            "intonation": "回答目的地，school 是重點；語氣肯定，句尾下降。",
+            "scoringFocus": "檢查 We’re 的 r、going /ŋ/、to 不消失、school 的 /sk/ /uː/ /l/，以及下降語調。"
+          }
+        },
+        {
+          "id": "hwg7_u02_5",
+          "text": "By boat?",
+          "translation": "搭船嗎？",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "By", "ipa": "/aɪ/", "tip": "雙母音 /aɪ/ 要清楚。" },
+              { "word": "boat", "ipa": "字尾 /t/", "tip": "字尾 /t/ 要收。" }
+            ],
+            "stress": "重讀 By 與 boat。",
+            "linking": "By boat 可連成 By-boat，但 boat 的 /t/ 要聽得見。",
+            "rhythm": "By / boat?",
+            "intonation": "省略式 yes/no question；帶驚訝與確認感，句尾 boat 上揚。",
+            "scoringFocus": "檢查 By /aɪ/、boat /t/、By-boat 連音，以及確認問句句尾上揚。"
+          }
+        },
+        {
+          "id": "hwg7_u02_6",
+          "text": "Yes. How do you go to school?",
+          "translation": "是的。你們如何上學？",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "Yes", "ipa": "字尾 /s/", "tip": "字尾 /s/ 要清楚。" },
+              { "word": "How", "ipa": "h、/aʊ/", "tip": "h 與雙母音 /aʊ/ 要出來。" },
+              { "word": "do", "ipa": "連音中不省略（來源未列完整 IPA）", "tip": "do you 可輕連，但 do 不可完全消失。" },
+              { "word": "school", "ipa": "/sk/、字尾 /l/", "tip": "/sk/ 與字尾 /l/ 要清楚。" }
+            ],
+            "stress": "重讀 Yes、How、go 與 school。",
+            "linking": "How do you 可連成 How-do-you，但不可變成 How you；go to school 可連成 go-to-school。",
+            "rhythm": "Yes. // How do you / go to school?",
+            "intonation": "Yes 簡短下降；後半為 wh-question，句尾 school 下降，語氣自然詢問上學方式。",
+            "scoringFocus": "檢查 Yes /s/、How 的 h/aʊ、do 不省略、school 的 /sk/ /l/，以及兩段下降語調。"
+          }
+        },
+        {
+          "id": "hwg7_u02_7",
+          "text": "I go to school on foot.",
+          "translation": "我走路上學。",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "I", "ipa": "/aɪ/", "tip": "雙母音 /aɪ/ 要完整。" },
+              { "word": "school", "ipa": "/sk/、/uː/、字尾 /l/", "tip": "/sk/、長音 /uː/ 與字尾 /l/ 要清楚。" },
+              { "word": "foot", "ipa": "/ʊ/、字尾 /t/", "tip": "使用短音 /ʊ/，不是 food；字尾 /t/ 要收。" }
+            ],
+            "stress": "重讀 I、go、school 與 foot。",
+            "linking": "go to school 可連成 go-to-school；on foot 可連成 on-foot，但 foot 的 /t/ 要聽得出來。",
+            "rhythm": "I go / to school / on foot.",
+            "intonation": "說明自己的上學方式，foot 是重點；語氣平穩，句尾下降。",
+            "scoringFocus": "檢查 I /aɪ/、school 的 /sk/ /uː/ /l/、foot 的 /ʊ/ /t/，以及平穩下降。"
+          }
+        },
+        {
+          "id": "hwg7_u02_8",
+          "text": "He goes to school by car.",
+          "translation": "他搭車上學。",
+          "pronunciation": {
+            "difficultWords": [
+              { "word": "He", "ipa": "/iː/", "tip": "長音 /iː/ 要清楚。" },
+              { "word": "goes", "ipa": "字尾 /z/", "tip": "第三人稱字尾 /z/ 要出來。" },
+              { "word": "school", "ipa": "/sk/、字尾 /l/", "tip": "/sk/ 與字尾 /l/ 要清楚。" },
+              { "word": "by", "ipa": "/aɪ/", "tip": "雙母音 /aɪ/ 要完整。" },
+              { "word": "car", "ipa": "r 音（來源未列完整 IPA）", "tip": "r 音要自然收尾。" }
+            ],
+            "stress": "重讀 He、goes、school 與 car。",
+            "linking": "goes to school 可連成 goes-to-school，但 goes 的 /z/ 不可吞掉；by car 可輕連，但 car 的 r 要有。",
+            "rhythm": "He goes / to school / by car.",
+            "intonation": "說明第三人稱上學方式，goes 是語法重點、car 是交通方式重點；句尾下降。",
+            "scoringFocus": "檢查 He /iː/、goes /z/、school /sk/ /l/、by /aɪ/、car 的 r，以及下降語調。"
+          }
+        }
+      ]
+    }
+  ]
+}

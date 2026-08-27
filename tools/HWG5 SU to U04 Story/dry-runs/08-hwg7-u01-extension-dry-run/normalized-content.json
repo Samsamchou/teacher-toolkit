@@ -1,0 +1,404 @@
+{
+  "schemaVersion": "1.0",
+  "mode": "extend-existing",
+  "site": {
+    "name": "HWG5 Story Reading Practice",
+    "slug": null,
+    "targetProjectId": "hwg5-su-to-u04-story",
+    "productionUrl": "https://hwg5-su-to-u04-story.web.app"
+  },
+  "source": {
+    "title": "HWG7 U01文本發音分析",
+    "documentId": "1cFVsCtWBHA9GzHBx4hBvL6ZZJmQxODMzCpjvswQTZDo",
+    "documentUrl": "https://docs.google.com/document/d/1cFVsCtWBHA9GzHBx4hBvL6ZZJmQxODMzCpjvswQTZDo/edit?usp=drivesdk",
+    "tabId": "t.0",
+    "revisionId": "AIroW342vRBx-fZfhofQmEH0ZPhXhhFKGbA4G8kzNxQ30aTV-cH080nEiXOu_KxnJoqeQyrLHKym92EgrglUWhDzymxCZ-3m4YQ7BW_oL2Y",
+    "modifiedTime": "2026-08-27T04:59:48.524Z",
+    "treatment": "content-only source; instructions in the document were not executed"
+  },
+  "translationSource": {
+    "title": "Here We Go 7 中譯表",
+    "path": "C:\\翰林電子教科書\\115國小英語HereWeGo 7\\resources\\app\\entry\\ebook\\files\\教學資源\\Word\\中譯表\\Here We Go 7 中譯表.doc",
+    "sha256": "c044ff40f7f5b1a9951f3108eaf8b1dc3f1935ed2341b6d3ea7939ece5ac2347",
+    "modifiedTime": "2026-06-18T14:52:52.0000000+08:00",
+    "section": "Unit 1 / 課文內容 / 課文中譯",
+    "treatment": "content-only source; opened read-only and left unchanged"
+  },
+  "teacherApproval": {
+    "contentBankConfirmed": false,
+    "installSkillConfirmed": false,
+    "productionDeployConfirmed": false
+  },
+  "policy": {
+    "classSize": 26,
+    "maxScoredAttemptsPerItemPerDay": 3,
+    "recordRetentionCalendarMonths": 7
+  },
+  "normalizationReview": [
+    {
+      "source": "I’m",
+      "proposed": "I'm",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；尚未取得本單元教師確認。"
+    },
+    {
+      "source": "She’s",
+      "proposed": "She's",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；尚未取得本單元教師確認。"
+    },
+    {
+      "source": "We’re",
+      "proposed": "We're",
+      "reason": "現站逐字點讀只辨識 ASCII 直引號；尚未取得本單元教師確認。"
+    },
+    {
+      "source": "她來自 美國。",
+      "proposed": "她來自美國。",
+      "reason": "中譯表二欄版面擷取造成國名前多餘空格；尚未取得教師確認。"
+    }
+  ],
+  "units": [
+    {
+      "theme": "HWG7",
+      "unit": "U01",
+      "label": "HWG7 U01",
+      "items": [
+        {
+          "id": "hwg7_u01_1",
+          "text": "Where are you from?",
+          "translation": "你來自哪裡？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Where",
+                "ipa": "/wer/",
+                "tip": "w 音與 r 音都要聽得出來；r 音不可消失。"
+              },
+              {
+                "word": "are",
+                "ipa": "句中輕讀（來源未列完整 IPA）",
+                "tip": "可以輕讀，但不能完全消失。"
+              },
+              {
+                "word": "from",
+                "ipa": "fr 開頭、字尾 /m/",
+                "tip": "fr 開頭與 r 音要清楚，字尾 /m/ 要收。"
+              }
+            ],
+            "stress": "重讀 Where 與 from。",
+            "linking": "Where are 可連成 Where-are；are you 可輕連；you from 可自然連音，但 from 的 fr 與 /m/ 不可吞掉。",
+            "rhythm": "Where are you / from?",
+            "intonation": "wh-question；句尾 from 下降，語氣友善、自然。",
+            "scoringFocus": "檢查 Where 的 w/r、are 不可省略、from 的 fr 與字尾 /m/，以及 wh-question 句尾下降。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Where /wer/：w 音與 r 音都要聽得出來；r 音不可消失。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不能完全消失。；from fr 開頭、字尾 /m/：fr 開頭與 r 音要清楚，字尾 /m/ 要收。 重音：重讀 Where 與 from。 連音：Where are 可連成 Where-are；are you 可輕連；you from 可自然連音，但 from 的 fr 與 /m/ 不可吞掉。 節奏：Where are you / from? 語調：wh-question；句尾 from 下降，語氣友善、自然。 評分：檢查 Where 的 w/r、are 不可省略、from 的 fr 與字尾 /m/，以及 wh-question 句尾下降。",
+            "ssml": "<speak>Where are you from?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_2",
+          "text": "I’m from Taiwan.",
+          "translation": "我來自臺灣。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "I’m",
+                "ipa": "字尾 /m/",
+                "tip": "縮寫的 /m/ 要清楚。"
+              },
+              {
+                "word": "from",
+                "ipa": "fr 開頭、字尾 /m/",
+                "tip": "fr 與字尾 /m/ 都要出來。"
+              },
+              {
+                "word": "Taiwan",
+                "ipa": "Tai-WAN（來源未列完整 IPA）",
+                "tip": "Tai 的雙母音要清楚，重音在後半段 WAN。"
+              }
+            ],
+            "stress": "重讀 I’m 與 Taiwan；Taiwan 重音在 WAN。",
+            "linking": "I’m from 可連成 I’m-from；from Taiwan 可輕連，但 Taiwan 要清楚。",
+            "rhythm": "I’m / from Taiwan.",
+            "intonation": "肯定回答國家；Taiwan 是核心資訊，句尾下降。",
+            "scoringFocus": "檢查 I’m /m/、from 的 fr 與 /m/、Taiwan 後半段重音，以及肯定下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：I’m 字尾 /m/：縮寫的 /m/ 要清楚。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 都要出來。；Taiwan Tai-WAN（來源未列完整 IPA）：Tai 的雙母音要清楚，重音在後半段 WAN。 重音：重讀 I’m 與 Taiwan；Taiwan 重音在 WAN。 連音：I’m from 可連成 I’m-from；from Taiwan 可輕連，但 Taiwan 要清楚。 節奏：I’m / from Taiwan. 語調：肯定回答國家；Taiwan 是核心資訊，句尾下降。 評分：檢查 I’m /m/、from 的 fr 與 /m/、Taiwan 後半段重音，以及肯定下降語調。",
+            "ssml": "<speak>I’m from Taiwan.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_3",
+          "text": "Are you from the UK?",
+          "translation": "你來自英國嗎？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Are",
+                "ipa": "r 音（來源未列完整 IPA）",
+                "tip": "r 音要保留。"
+              },
+              {
+                "word": "from",
+                "ipa": "fr 開頭、字尾 /m/",
+                "tip": "字尾 /m/ 不可吞掉。"
+              },
+              {
+                "word": "the",
+                "ipa": "有聲 th（來源未列完整 IPA）",
+                "tip": "舌尖輕碰牙齒，不可唸成 de。"
+              },
+              {
+                "word": "UK",
+                "ipa": "U-K 逐字母",
+                "tip": "逐字母唸 U-K，K 要清楚。"
+              }
+            ],
+            "stress": "重讀 Are 與 UK。",
+            "linking": "Are you 可連成 Are-you；from the UK 可連讀，但 from 的 /m/ 與 the 都不可消失。",
+            "rhythm": "Are you / from the UK?",
+            "intonation": "yes/no question；句尾 UK 上揚，表示確認對方是否來自英國。",
+            "scoringFocus": "檢查 Are 的 r、from /m/、the 有聲 th、UK 逐字母，以及 yes/no 問句句尾上揚。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Are r 音（來源未列完整 IPA）：r 音要保留。；from fr 開頭、字尾 /m/：字尾 /m/ 不可吞掉。；the 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 de。；UK U-K 逐字母：逐字母唸 U-K，K 要清楚。 重音：重讀 Are 與 UK。 連音：Are you 可連成 Are-you；from the UK 可連讀，但 from 的 /m/ 與 the 都不可消失。 節奏：Are you / from the UK? 語調：yes/no question；句尾 UK 上揚，表示確認對方是否來自英國。 評分：檢查 Are 的 r、from /m/、the 有聲 th、UK 逐字母，以及 yes/no 問句句尾上揚。",
+            "ssml": "<speak>Are you from the UK?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_4",
+          "text": "Yes, I am.",
+          "translation": "是的，我是。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Yes",
+                "ipa": "字尾 /s/",
+                "tip": "字尾 /s/ 要收清楚。"
+              },
+              {
+                "word": "I",
+                "ipa": "不可過短（來源未列完整 IPA）",
+                "tip": "I 不要唸得太短。"
+              },
+              {
+                "word": "am",
+                "ipa": "字尾 /m/",
+                "tip": "字尾 /m/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 Yes 與 am。",
+            "linking": "Yes, I am 可自然連成 Yes-I-am，但 am 的 /m/ 不可消失。",
+            "rhythm": "Yes, / I am.",
+            "intonation": "肯定回答；Yes 與 I am 都下降，語氣自然、肯定。",
+            "scoringFocus": "檢查 Yes /s/、I 不可過短、am /m/，並以兩段下降語調作答。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Yes 字尾 /s/：字尾 /s/ 要收清楚。；I 不可過短（來源未列完整 IPA）：I 不要唸得太短。；am 字尾 /m/：字尾 /m/ 要清楚。 重音：重讀 Yes 與 am。 連音：Yes, I am 可自然連成 Yes-I-am，但 am 的 /m/ 不可消失。 節奏：Yes, / I am. 語調：肯定回答；Yes 與 I am 都下降，語氣自然、肯定。 評分：檢查 Yes /s/、I 不可過短、am /m/，並以兩段下降語調作答。",
+            "ssml": "<speak>Yes, I am.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_5",
+          "text": "She’s my friend. She’s from the USA.",
+          "translation": "她是我的朋友。她來自 美國。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "She’s",
+                "ipa": "字尾 /z/",
+                "tip": "She is 的縮寫，字尾 /z/ 要出來。"
+              },
+              {
+                "word": "my",
+                "ipa": "完整雙母音（來源未列完整 IPA）",
+                "tip": "雙母音要完整。"
+              },
+              {
+                "word": "friend",
+                "ipa": "fr 開頭、字尾 /d/",
+                "tip": "fr 開頭要清楚，字尾 /d/ 要輕收。"
+              },
+              {
+                "word": "from",
+                "ipa": "fr 開頭、字尾 /m/",
+                "tip": "fr 與字尾 /m/ 都要清楚。"
+              },
+              {
+                "word": "the",
+                "ipa": "有聲 th（來源未列完整 IPA）",
+                "tip": "不可唸成 de，也不可在連音時消失。"
+              },
+              {
+                "word": "USA",
+                "ipa": "U-S-A 逐字母",
+                "tip": "逐字母唸 U-S-A，S 要清楚。"
+              }
+            ],
+            "stress": "重讀 She’s、friend 與 USA。",
+            "linking": "She’s my 可連成 She’s-my；my friend 可輕連但 friend 的 /d/ 要聽到；She’s from the USA 可連讀，但 from 與 the 不可糊掉。",
+            "rhythm": "She’s my friend. // She’s from the USA.",
+            "intonation": "介紹朋友與國家；friend 與 USA 皆下降，語氣友善、自然。",
+            "scoringFocus": "檢查 She’s /z/、my 雙母音、friend 的 fr/d、from /m/、the 有聲 th、USA 逐字母，以及兩句下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：She’s 字尾 /z/：She is 的縮寫，字尾 /z/ 要出來。；my 完整雙母音（來源未列完整 IPA）：雙母音要完整。；friend fr 開頭、字尾 /d/：fr 開頭要清楚，字尾 /d/ 要輕收。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 都要清楚。；the 有聲 th（來源未列完整 IPA）：不可唸成 de，也不可在連音時消失。；USA U-S-A 逐字母：逐字母唸 U-S-A，S 要清楚。 重音：重讀 She’s、friend 與 USA。 連音：She’s my 可連成 She’s-my；my friend 可輕連但 friend 的 /d/ 要聽到；She’s from the USA 可連讀，但 from 與 the 不可糊掉。 節奏：She’s my friend. // She’s from the USA. 語調：介紹朋友與國家；friend 與 USA 皆下降，語氣友善、自然。 評分：檢查 She’s /z/、my 雙母音、friend 的 fr/d、from /m/、the 有聲 th、USA 逐字母，以及兩句下降語調。",
+            "ssml": "<speak>She’s my friend. She’s from the USA.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_6",
+          "text": "That looks good. Is it curry?",
+          "translation": "那看起來不錯。它是咖哩嗎？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "That",
+                "ipa": "有聲 th（來源未列完整 IPA）",
+                "tip": "舌尖輕碰牙齒，不可唸成 dat。"
+              },
+              {
+                "word": "looks",
+                "ipa": "字尾 /ks/",
+                "tip": "look + s 的字尾 /ks/ 要清楚。"
+              },
+              {
+                "word": "good",
+                "ipa": "短音 /ʊ/、字尾 /d/",
+                "tip": "不可唸成 food 的長音，字尾 /d/ 要輕收。"
+              },
+              {
+                "word": "is",
+                "ipa": "字尾 /z/",
+                "tip": "在 Is it 中可自然連成 Is-it，但 is 的 /z/ 要保留。"
+              },
+              {
+                "word": "curry",
+                "ipa": "CUR-ry（來源未列完整 IPA）",
+                "tip": "第一音節重，r 音要自然清楚。"
+              }
+            ],
+            "stress": "重讀 That、looks、good、Is 與 curry；curry 第一音節重。",
+            "linking": "That looks 與 looks good 可輕連，但 /ks/ 要保留；Is it 可連成 Is-it。",
+            "rhythm": "That looks good. // Is it curry?",
+            "intonation": "陳述句 good 下降；yes/no question curry 上揚，先表現好吃再表現好奇。",
+            "scoringFocus": "檢查 That 有聲 th、looks /ks/、good /ʊ/ 與 /d/、Is it 的 /z/ 連音、curry 重音/r，以及先降後升的語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：That 有聲 th（來源未列完整 IPA）：舌尖輕碰牙齒，不可唸成 dat。；looks 字尾 /ks/：look + s 的字尾 /ks/ 要清楚。；good 短音 /ʊ/、字尾 /d/：不可唸成 food 的長音，字尾 /d/ 要輕收。；is 字尾 /z/：在 Is it 中可自然連成 Is-it，但 is 的 /z/ 要保留。；curry CUR-ry（來源未列完整 IPA）：第一音節重，r 音要自然清楚。 重音：重讀 That、looks、good、Is 與 curry；curry 第一音節重。 連音：That looks 與 looks good 可輕連，但 /ks/ 要保留；Is it 可連成 Is-it。 節奏：That looks good. // Is it curry? 語調：陳述句 good 下降；yes/no question curry 上揚，先表現好吃再表現好奇。 評分：檢查 That 有聲 th、looks /ks/、good /ʊ/ 與 /d/、Is it 的 /z/ 連音、curry 重音/r，以及先降後升的語調。",
+            "ssml": "<speak>That looks good. Is it curry?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_7",
+          "text": "Yes, it is.",
+          "translation": "是的，它是。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Yes",
+                "ipa": "字尾 /s/",
+                "tip": "字尾 /s/ 要清楚。"
+              },
+              {
+                "word": "it",
+                "ipa": "字尾 /t/",
+                "tip": "字尾 /t/ 可輕收。"
+              },
+              {
+                "word": "is",
+                "ipa": "字尾 /z/",
+                "tip": "字尾 /z/ 要清楚，不可在連音時消失。"
+              }
+            ],
+            "stress": "重讀 Yes 與 is。",
+            "linking": "it is 可自然連成 it-is，但 is 不可消失。",
+            "rhythm": "Yes, / it is.",
+            "intonation": "肯定回答；Yes 與 it is 都下降，語氣自然、肯定。",
+            "scoringFocus": "檢查 Yes /s/、it /t/、is /z/ 與 it-is 連音，並以兩段下降語調作答。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Yes 字尾 /s/：字尾 /s/ 要清楚。；it 字尾 /t/：字尾 /t/ 可輕收。；is 字尾 /z/：字尾 /z/ 要清楚，不可在連音時消失。 重音：重讀 Yes 與 is。 連音：it is 可自然連成 it-is，但 is 不可消失。 節奏：Yes, / it is. 語調：肯定回答；Yes 與 it is 都下降，語氣自然、肯定。 評分：檢查 Yes /s/、it /t/、is /z/ 與 it-is 連音，並以兩段下降語調作答。",
+            "ssml": "<speak>Yes, it is.</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_8",
+          "text": "Where are you from?",
+          "translation": "你們來自哪裡？",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "Where",
+                "ipa": "/wer/",
+                "tip": "w 音與 r 音都要聽得出來；r 音不可消失。"
+              },
+              {
+                "word": "are",
+                "ipa": "句中輕讀（來源未列完整 IPA）",
+                "tip": "可以輕讀，但不可省略。"
+              },
+              {
+                "word": "from",
+                "ipa": "fr 開頭、字尾 /m/",
+                "tip": "fr 與字尾 /m/ 要清楚。"
+              }
+            ],
+            "stress": "重讀 Where 與 from。",
+            "linking": "Where are 可連成 Where-are；are you 可連成 are-you；you from 可自然連音，但 from 的 /m/ 要收。",
+            "rhythm": "Where are you / from?",
+            "intonation": "店家詢問多位客人來自哪裡；語氣友善、好奇，句尾下降。",
+            "scoringFocus": "檢查 Where 的 w/r、are 不可省略、from 的 fr 與 /m/，以及友善的 wh-question 下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：Where /wer/：w 音與 r 音都要聽得出來；r 音不可消失。；are 句中輕讀（來源未列完整 IPA）：可以輕讀，但不可省略。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 要清楚。 重音：重讀 Where 與 from。 連音：Where are 可連成 Where-are；are you 可連成 are-you；you from 可自然連音，但 from 的 /m/ 要收。 節奏：Where are you / from? 語調：店家詢問多位客人來自哪裡；語氣友善、好奇，句尾下降。 評分：檢查 Where 的 w/r、are 不可省略、from 的 fr 與 /m/，以及友善的 wh-question 下降語調。",
+            "ssml": "<speak>Where are you from?</speak>",
+            "ssmlWasGenerated": true
+          }
+        },
+        {
+          "id": "hwg7_u01_9",
+          "text": "We’re from Taiwan.",
+          "translation": "我們來自臺灣。",
+          "pronunciation": {
+            "difficultWords": [
+              {
+                "word": "We’re",
+                "ipa": "r 音（來源未列完整 IPA）",
+                "tip": "We are 的縮寫，r 音要有。"
+              },
+              {
+                "word": "from",
+                "ipa": "fr 開頭、字尾 /m/",
+                "tip": "fr 與字尾 /m/ 要清楚。"
+              },
+              {
+                "word": "Taiwan",
+                "ipa": "Tai-WAN（來源未列完整 IPA）",
+                "tip": "Tai 的雙母音要清楚，重音在後半段 WAN。"
+              }
+            ],
+            "stress": "重讀 We’re 與 Taiwan；Taiwan 重音在 WAN。",
+            "linking": "We’re from 可連成 We’re-from；from Taiwan 可輕連，但 Taiwan 要清楚。",
+            "rhythm": "We’re / from Taiwan.",
+            "intonation": "團體回答，語氣自然、有自信；Taiwan 是核心資訊，句尾下降。",
+            "scoringFocus": "檢查 We’re 的 r、from 的 fr 與 /m/、Taiwan 後半段重音，以及有自信的下降語調。"
+          },
+          "derived": {
+            "currentSiteFocus": "難字：We’re r 音（來源未列完整 IPA）：We are 的縮寫，r 音要有。；from fr 開頭、字尾 /m/：fr 與字尾 /m/ 要清楚。；Taiwan Tai-WAN（來源未列完整 IPA）：Tai 的雙母音要清楚，重音在後半段 WAN。 重音：重讀 We’re 與 Taiwan；Taiwan 重音在 WAN。 連音：We’re from 可連成 We’re-from；from Taiwan 可輕連，但 Taiwan 要清楚。 節奏：We’re / from Taiwan. 語調：團體回答，語氣自然、有自信；Taiwan 是核心資訊，句尾下降。 評分：檢查 We’re 的 r、from 的 fr 與 /m/、Taiwan 後半段重音，以及有自信的下降語調。",
+            "ssml": "<speak>We’re from Taiwan.</speak>",
+            "ssmlWasGenerated": true
+          }
+        }
+      ]
+    }
+  ]
+}
