@@ -6,16 +6,22 @@
 - Firebase 專案 / Firebase project：`hwg5-su-to-u04-story`
 - GitHub 主儲存庫 / GitHub repository：<https://github.com/Samsamchou/teacher-toolkit>
 - 版本化路徑 / Versioned path：`tools/HWG5 SU to U04 Story`
-- 正式程式提交 / Implementation commit：`929443062938a92a1e23255c37b094a5e74b7129`
-- 收尾文件提交 / Documentation commit：`d38d876ef2aaa43f9c38ff4e6dacb905edc33a03`
+- 本次正式程式提交 / Current implementation commit：`47f32ef3740a3f6a2e669e94dd734e78579cb4d8`
+- 既有安全修復基線 / Previous security baseline：`929443062938a92a1e23255c37b094a5e74b7129`
+- 2026-08-27 已正式部署 HWG5 與 HWG7 的 SU–U04，共 84 題；Hosting、Firestore Rules 與 Storage Rules 均已發布並讀回。
+- The 2026-08-27 production release contains 84 assessed sentences across HWG5 and HWG7 SU–U04; Hosting, Firestore Rules, and Storage Rules were released and read back.
 - 目前使用 Firebase AI Logic／Agent Platform、`gemini-3.7-flash`、結構化 JSON、reCAPTCHA Enterprise App Check，以及受 App Check 保護的 Cloud TTS Callable Function。
-- The current implementation uses Firebase AI Logic / Agent Platform, `gemini-3.7-flash`, structured JSON, reCAPTCHA Enterprise App Check, and an App Check-protected Cloud TTS callable function.
+- 教師後臺已改用 Firebase Google Authentication，只允許已驗證的 `samchouou@gmail.com`；學生使用匿名登入與 owner UID 隔離，規則採預設拒絕及嚴格欄位驗證。
+- The current implementation uses Firebase AI Logic / Agent Platform, structured JSON, reCAPTCHA Enterprise App Check, an App Check-protected Cloud TTS callable, anonymous student ownership, and verified allow-listed Google teacher access.
+- Cloud Billing 已建立每月 NT$300 的 50%／80%／100% 實際支出警示；警示只通知，不會自動停止服務。
+- Firestore 依每筆 `expiresAt` 做七個日曆月 TTL；Storage 的 `audio_records/` 沿用 215 天 lifecycle。兩者皆可能延遲執行，不保證到期瞬間刪除。
+- Google Drive 備份已核對 211 檔、1,228,022 bytes，來源／備份缺檔、多檔與 SHA-256 差異皆為 0。
 
-## 下次首要工作 / Next primary task
+## 已完成的可重複 Skill / Completed reusable skill
 
-建立一個可重複使用的 Codex Skill，暫定名稱為 `story-reading-assessment-site-builder`。Skill 必須支援以下兩種模式，並以本專案作為已驗證的基準實作。
+`story-reading-assessment-site-builder` 已安裝於 `C:\Users\User\.codex\skills\story-reading-assessment-site-builder`，並以本專案完成「擴增既有站」與「重製新站但不部署」兩種 dry run。專案內保留可版控草稿、schema、驗證腳本、發布閘門與範例。
 
-Create a reusable Codex skill, provisionally named `story-reading-assessment-site-builder`. It must support the following two modes and use this project as the verified reference implementation.
+The installed `story-reading-assessment-site-builder` supports both extending this production site and generating a new no-deploy preview, with a versioned draft retained in this project.
 
 ### 模式 A：重製新網站 / Mode A: build a new site
 
@@ -84,13 +90,15 @@ The skill should also accept natural-language input, but normalize it into the a
 
 ## 已知待改善 / Known follow-ups
 
-- 現有教師後台仍使用前端提示密碼，不是可靠的安全邊界；Skill 正式化時應將新站預設改為 Firebase Auth／教師身分宣告與安全規則。
+- 尚未以學校實際學生裝置完成麥克風錄音、TTS 播放、AI 評分、Firestore 寫入及 Storage 上傳的全流程驗收。
+- Firestore／Storage App Check 目前先維持監控；須在真實學生流程確認成功後，再由教師明確確認強制執行，避免直接鎖死正式站。
+- 教師 Google 登入入口與 Auth provider 已設定，但帳號選擇與首次登入驗收必須由教師本人完成。
 - Functions 相依套件目前有 10 個 moderate 間接弱點；不可直接使用會造成破壞性降版的 `npm audit fix --force`。
 - 保留的 `HWG5 SU to U04 Story pre-sync 20260826-1605` 是未提交的舊版復原副本；其中舊 TTS 金鑰已在 Cloud Console 刪除。未取得刪除授權前不要移除該副本。
 
 ## 下次開工入口 / Next startup entry
 
-1. 先讀本檔、`agent.md`、已確認的 RDQ 規格、`public/index.html`、`public/ai-scoring.js`、`public/ai-scoring-core.js`、`functions/index.js`、`tests/`、`retention/` 與 `usage/`。
-2. 使用 `$skill-creator` 建立 Skill；不要只寫說明文件，需包含模板、題庫 schema、驗證腳本、部署前閘門與兩種模式的範例。
-3. 以本專案做「擴增既有站」dry run，再建立一個不部署的示例新站驗證「重製新站」模式。
-4. 教師確認 Skill 行為與題庫預覽後，才安裝到個人 Codex skills 目錄並進行正式擴增／部署。
+1. 先讀本檔、`agent.md`、已確認的 RDQ、`public/`、`functions/`、`tests/`、`retention/`、`usage/` 與 `dry-runs/19-teacher-auth-security/`。
+2. 在學校實際 Chrome／iPad 上由教師本人完成 Google 教師登入，再以測試學號完成一題真實錄音、TTS、AI 評分、Firestore 紀錄與 Storage 音檔讀回。
+3. 確認學生端正式讀寫無誤後，再決定是否強制執行 Firestore／Storage App Check；變更前須顯示實際專案 ID、影響服務與復原方式。
+4. 新增單元時使用 `$story-reading-assessment-site-builder` 的模式 B；先預覽並確認教師題庫，再做隔離 dry run、回歸測試、備份與經授權的正式部署。
