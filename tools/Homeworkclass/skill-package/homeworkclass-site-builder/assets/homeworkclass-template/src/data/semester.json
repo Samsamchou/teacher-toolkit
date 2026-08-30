@@ -1,0 +1,70 @@
+{
+  "contractVersion": "homeworkclass-input-v1",
+  "semester": {
+    "id": "116-1",
+    "label": "116 學年度第一學期（範例）",
+    "siteTitle": "星河作業與課堂紀錄（範例）",
+    "startDate": "2027-08-30",
+    "endDate": "2028-01-20",
+    "timezone": "Asia/Taipei",
+    "sourceNote": "synthetic template fixture; replace only after teacher confirmation"
+  },
+  "classes": [
+    {
+      "id": "galaxy-a",
+      "label": "星河甲",
+      "shortLabel": "星甲",
+      "displayOrder": 1,
+      "accent": "#7C3AED",
+      "accentSoft": "#EDE9FE",
+      "ink": "#3B0764",
+      "seats": [1, 2, 3, 4]
+    },
+    {
+      "id": "galaxy-b",
+      "label": "星河乙",
+      "shortLabel": "星乙",
+      "displayOrder": 2,
+      "accent": "#DB2777",
+      "accentSoft": "#FCE7F3",
+      "ink": "#831843",
+      "seats": [1, 2, 4, 5]
+    },
+    {
+      "id": "galaxy-c",
+      "label": "星河丙",
+      "shortLabel": "星丙",
+      "displayOrder": 3,
+      "accent": "#047857",
+      "accentSoft": "#D1FAE5",
+      "ink": "#064E3B",
+      "seats": [1, 2, 3, 4]
+    }
+  ],
+  "subjects": [
+    { "id": "language", "label": "語文探索", "shortLabel": "語", "displayOrder": 1 },
+    { "id": "science", "label": "科學實驗", "shortLabel": "科", "displayOrder": 2 },
+    { "id": "art", "label": "創意美術", "shortLabel": "藝", "displayOrder": 3 },
+    { "id": "music", "label": "節奏音樂", "shortLabel": "樂", "displayOrder": 4 }
+  ],
+  "periods": [
+    { "id": "p1", "label": "第 1 節", "displayOrder": 1, "startTime": "08:10", "endTime": "08:50" },
+    { "id": "p2", "label": "第 2 節", "displayOrder": 2, "startTime": "09:00", "endTime": "09:40" },
+    { "id": "p3", "label": "第 3 節", "displayOrder": 3, "startTime": "10:00", "endTime": "10:40" },
+    { "id": "p4", "label": "第 4 節", "displayOrder": 4, "startTime": "10:50", "endTime": "11:30" },
+    { "id": "p5", "label": "第 5 節", "displayOrder": 5, "startTime": "11:40", "endTime": "12:20" },
+    { "id": "p6", "label": "第 6 節", "displayOrder": 6, "startTime": "13:20", "endTime": "14:00" },
+    { "id": "p7", "label": "第 7 節", "displayOrder": 7, "startTime": "14:10", "endTime": "14:50" },
+    { "id": "p8", "label": "第 8 節", "displayOrder": 8, "startTime": "15:00", "endTime": "15:40" },
+    { "id": "p9", "label": "第 9 節", "displayOrder": 9, "startTime": "15:50", "endTime": "16:30" }
+  ],
+  "schedule": [
+    { "id": "mon-p1-language-galaxy-a", "weekday": 1, "periodId": "p1", "classId": "galaxy-a", "subjectId": "language" },
+    { "id": "mon-p3-science-galaxy-b", "weekday": 1, "periodId": "p3", "classId": "galaxy-b", "subjectId": "science" },
+    { "id": "tue-p2-art-galaxy-c", "weekday": 2, "periodId": "p2", "classId": "galaxy-c", "subjectId": "art" },
+    { "id": "wed-p4-music-galaxy-a", "weekday": 3, "periodId": "p4", "classId": "galaxy-a", "subjectId": "music" },
+    { "id": "thu-p5-language-galaxy-b", "weekday": 4, "periodId": "p5", "classId": "galaxy-b", "subjectId": "language" },
+    { "id": "fri-p6-science-galaxy-c", "weekday": 5, "periodId": "p6", "classId": "galaxy-c", "subjectId": "science" },
+    { "id": "sat-p2-art-galaxy-a", "weekday": 6, "periodId": "p2", "classId": "galaxy-a", "subjectId": "art", "note": "週六範例課" }
+  ]
+}

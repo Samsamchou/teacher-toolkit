@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "path": "assets/homeworkclass-input-v1.xlsx",
+      "purpose": "Homeworkclass v1 standard blank semester input workbook",
+      "mediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "bytes": 10728,
+      "sha256": "a5747d105b938f1454bd3afb3b9a246dfe490258736ec85d7ab8ce4a6fcbd9cb"
+    }
+  ]
+}

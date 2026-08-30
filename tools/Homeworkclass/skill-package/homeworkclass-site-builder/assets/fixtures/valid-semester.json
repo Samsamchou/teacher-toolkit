@@ -1,0 +1,208 @@
+{
+  "fixture": {
+    "id": "valid-116-1-starriver",
+    "description_zh": "116-1 星河範例：3 班、12 個有效座號、4 科、9 節、7 個固定授課格。",
+    "expected": {
+      "validation_status": "NEEDS_CONFIRMATION",
+      "blocking_errors": 0,
+      "counts": {
+        "classes": 3,
+        "seats": 12,
+        "subjects": 4,
+        "periods": 9,
+        "schedule_slots": 7
+      }
+    }
+  },
+  "input": {
+    "contract_version": "homeworkclass-input-v1",
+    "semester": {
+      "semester_id": "116-1",
+      "semester_label": "116 學年度第一學期",
+      "site_title": "星河學習紀錄站",
+      "start_date": "2027-09-01",
+      "end_date": "2028-01-19",
+      "timezone": "Asia/Taipei",
+      "source_note": "隔離前向測試資料"
+    },
+    "subjects": [
+      {
+        "subject_id": "logic",
+        "subject_label": "邏輯數學",
+        "short_label": "數",
+        "display_order": 1
+      },
+      {
+        "subject_id": "nature_lab",
+        "subject_label": "自然探究",
+        "short_label": "探",
+        "display_order": 2
+      },
+      {
+        "subject_id": "story",
+        "subject_label": "故事閱讀",
+        "short_label": "閱",
+        "display_order": 3
+      },
+      {
+        "subject_id": "rhythm",
+        "subject_label": "節奏律動",
+        "short_label": "律",
+        "display_order": 4
+      }
+    ],
+    "classes": [
+      {
+        "class_id": "comet",
+        "class_label": "彗星班",
+        "short_label": "彗",
+        "display_order": 1,
+        "color_override": "#FF5C8A"
+      },
+      {
+        "class_id": "nebula",
+        "class_label": "星雲班",
+        "short_label": "雲",
+        "display_order": 2,
+        "color_override": "#5A4FE0"
+      },
+      {
+        "class_id": "aurora",
+        "class_label": "極光班",
+        "short_label": "光",
+        "display_order": 3,
+        "color_override": "#00A878"
+      }
+    ],
+    "roster": [
+      { "class_id": "comet", "seat_number": 1 },
+      { "class_id": "comet", "seat_number": 4 },
+      { "class_id": "comet", "seat_number": 7 },
+      { "class_id": "comet", "seat_number": 12 },
+      { "class_id": "nebula", "seat_number": 2 },
+      { "class_id": "nebula", "seat_number": 5 },
+      { "class_id": "nebula", "seat_number": 8 },
+      { "class_id": "aurora", "seat_number": 3 },
+      { "class_id": "aurora", "seat_number": 6 },
+      { "class_id": "aurora", "seat_number": 9 },
+      { "class_id": "aurora", "seat_number": 10 },
+      { "class_id": "aurora", "seat_number": 11 }
+    ],
+    "periods": [
+      {
+        "period_id": "p0",
+        "period_label": "晨光",
+        "display_order": 1,
+        "start_time": "07:50",
+        "end_time": "08:20"
+      },
+      {
+        "period_id": "p1",
+        "period_label": "第1節",
+        "display_order": 2,
+        "start_time": "08:30",
+        "end_time": "09:10"
+      },
+      {
+        "period_id": "p2",
+        "period_label": "第2節",
+        "display_order": 3,
+        "start_time": "09:20",
+        "end_time": "10:00"
+      },
+      {
+        "period_id": "p3",
+        "period_label": "第3節",
+        "display_order": 4,
+        "start_time": "10:20",
+        "end_time": "11:00"
+      },
+      {
+        "period_id": "p4",
+        "period_label": "第4節",
+        "display_order": 5,
+        "start_time": "11:10",
+        "end_time": "11:50"
+      },
+      {
+        "period_id": "p5",
+        "period_label": "第5節",
+        "display_order": 6,
+        "start_time": "13:20",
+        "end_time": "14:00"
+      },
+      {
+        "period_id": "p6",
+        "period_label": "第6節",
+        "display_order": 7,
+        "start_time": "14:10",
+        "end_time": "14:50"
+      },
+      {
+        "period_id": "p7",
+        "period_label": "第7節",
+        "display_order": 8,
+        "start_time": "15:00",
+        "end_time": "15:40"
+      },
+      {
+        "period_id": "p8",
+        "period_label": "第8節",
+        "display_order": 9,
+        "start_time": "15:50",
+        "end_time": "16:30"
+      }
+    ],
+    "schedule": [
+      {
+        "weekday": 1,
+        "period_id": "p0",
+        "class_id": "comet",
+        "subject_id": "story",
+        "note": "晨間共讀"
+      },
+      {
+        "weekday": 1,
+        "period_id": "p5",
+        "class_id": "nebula",
+        "subject_id": "nature_lab",
+        "note": ""
+      },
+      {
+        "weekday": 2,
+        "period_id": "p1",
+        "class_id": "aurora",
+        "subject_id": "logic",
+        "note": ""
+      },
+      {
+        "weekday": 3,
+        "period_id": "p3",
+        "class_id": "comet",
+        "subject_id": "rhythm",
+        "note": ""
+      },
+      {
+        "weekday": 4,
+        "period_id": "p8",
+        "class_id": "aurora",
+        "subject_id": "nature_lab",
+        "note": ""
+      },
+      {
+        "weekday": 5,
+        "period_id": "p2",
+        "class_id": "nebula",
+        "subject_id": "story",
+        "note": ""
+      },
+      {
+        "weekday": 5,
+        "period_id": "p7",
+        "class_id": "comet",
+        "subject_id": "logic",
+        "note": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,243 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isTeacher() {
+      return request.auth != null
+        && request.auth.uid == 'homeworkclass-teacher'
+        && request.auth.token.role == 'teacher';
+    }
+
+    function isShortString(value, maxLength) {
+      return value is string && value.size() > 0 && value.size() <= maxLength;
+    }
+
+    function isDateString(value) {
+      return value is string && value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+
+    function isIsoTimestampString(value) {
+      return value is string
+        && value.size() >= 20
+        && value.size() <= 40
+        && value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}T.*Z$');
+    }
+
+    function isTimeString(value) {
+      return value is string && value.matches('^[0-9]{2}:[0-9]{2}$');
+    }
+
+    function validSemesterId(value) {
+      return value == '__ACTIVE_SEMESTER_ID__';
+    }
+
+    function validClassId(value) {
+      return value in __VALID_CLASS_IDS__;
+    }
+
+    function validSubjectId(value) {
+      return value in __VALID_SUBJECT_IDS__;
+    }
+
+    function validPeriodId(value) {
+      return value in __VALID_PERIOD_IDS__;
+    }
+
+    function validSeat(classId, seatNumber) {
+      return seatNumber is int && (__VALID_SEAT_EXPRESSION__);
+    }
+
+    function validPeriodNumber(value) {
+      return value is int && value >= 1 && value <= 99;
+    }
+
+    function validHomeworkType(value) {
+      return value in ['textbook', 'workbook', 'online-or-worksheet', 'quiz'];
+    }
+
+    function validMissingReason(value) {
+      return value in ['excused-absence', 'unexcused', 'other'];
+    }
+
+    function validSubmissionOutcome(value) {
+      return value in ['submitted', 'still-missing', 'same-day-completed', 'later-submitted'];
+    }
+
+    function validIncidentCategory(value) {
+      return value in ['late', 'chatting', 'disorder', 'missing-materials'];
+    }
+
+    function validAssignment(documentId, data) {
+      return data.keys().hasAll([
+          'id', 'semesterId', 'classId', 'subjectId', 'assignedDate',
+          'periodId', 'period', 'homeworkType', 'content', 'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'semesterId', 'classId', 'subjectId', 'assignedDate',
+          'periodId', 'period', 'homeworkType', 'content', 'createdAt'
+        ])
+        && data.id == documentId
+        && isShortString(data.id, 200)
+        && validSemesterId(data.semesterId)
+        && validClassId(data.classId)
+        && validSubjectId(data.subjectId)
+        && isDateString(data.assignedDate)
+        && validPeriodId(data.periodId)
+        && validPeriodNumber(data.period)
+        && validHomeworkType(data.homeworkType)
+        && isShortString(data.content, 500)
+        && isIsoTimestampString(data.createdAt);
+    }
+
+    function validSubmissionEvent(documentId, data) {
+      return data.keys().hasAll([
+          'id', 'semesterId', 'assignmentId', 'classId', 'seatNumber',
+          'outcome', 'occurredOn', 'recordedAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'semesterId', 'assignmentId', 'classId', 'seatNumber',
+          'outcome', 'reason', 'note', 'occurredOn', 'recordedAt'
+        ])
+        && data.id == documentId
+        && isShortString(data.id, 200)
+        && validSemesterId(data.semesterId)
+        && isShortString(data.assignmentId, 200)
+        && validClassId(data.classId)
+        && validSeat(data.classId, data.seatNumber)
+        && validSubmissionOutcome(data.outcome)
+        && isDateString(data.occurredOn)
+        && isIsoTimestampString(data.recordedAt)
+        && (!('reason' in data) || validMissingReason(data.reason))
+        && (data.outcome != 'still-missing' || ('reason' in data && validMissingReason(data.reason)))
+        && (!('note' in data) || (data.note is string && data.note.size() <= 500))
+        && exists(/databases/$(database)/documents/assignments/$(data.assignmentId))
+        && get(/databases/$(database)/documents/assignments/$(data.assignmentId)).data.semesterId == data.semesterId
+        && get(/databases/$(database)/documents/assignments/$(data.assignmentId)).data.classId == data.classId;
+    }
+
+    function validClassroomIncident(documentId, data) {
+      return data.keys().hasAll([
+          'id', 'semesterId', 'classId', 'subjectId', 'date', 'periodId',
+          'period', 'category', 'weight', 'recordedAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'semesterId', 'classId', 'subjectId', 'date', 'periodId',
+          'period', 'category', 'seatNumber', 'note', 'weight', 'recordedAt'
+        ])
+        && data.id == documentId
+        && isShortString(data.id, 200)
+        && validSemesterId(data.semesterId)
+        && validClassId(data.classId)
+        && validSubjectId(data.subjectId)
+        && isDateString(data.date)
+        && validPeriodId(data.periodId)
+        && validPeriodNumber(data.period)
+        && validIncidentCategory(data.category)
+        && data.weight is int && data.weight >= 0 && data.weight <= 10
+        && isIsoTimestampString(data.recordedAt)
+        && (!('seatNumber' in data) || validSeat(data.classId, data.seatNumber))
+        && (!('note' in data) || (data.note is string && data.note.size() > 0 && data.note.size() <= 500))
+        && (('seatNumber' in data) || ('note' in data));
+    }
+
+    function validReplacement(data) {
+      return data is map
+        && data.keys().hasAll([
+          'id', 'periodId', 'period', 'startTime', 'endTime', 'classId', 'subjectId'
+        ])
+        && data.keys().hasOnly([
+          'id', 'periodId', 'period', 'startTime', 'endTime', 'classId', 'subjectId'
+        ])
+        && isShortString(data.id, 200)
+        && validPeriodId(data.periodId)
+        && validPeriodNumber(data.period)
+        && isTimeString(data.startTime)
+        && isTimeString(data.endTime)
+        && validClassId(data.classId)
+        && validSubjectId(data.subjectId);
+    }
+
+    function validTimetableException(documentId, data) {
+      return data.keys().hasAll(['id', 'semesterId', 'date', 'type', 'createdAt'])
+        && data.keys().hasOnly([
+          'id', 'semesterId', 'date', 'type', 'scheduleSlotId', 'replacement',
+          'holidayName', 'targetHolidayId', 'note', 'createdAt'
+        ])
+        && data.id == documentId
+        && isShortString(data.id, 200)
+        && validSemesterId(data.semesterId)
+        && isDateString(data.date)
+        && data.type in ['cancel', 'add', 'holiday', 'holiday-revoke']
+        && isIsoTimestampString(data.createdAt)
+        && (!('note' in data) || (data.note is string && data.note.size() <= 500))
+        && (
+          (data.type == 'cancel'
+            && 'scheduleSlotId' in data && isShortString(data.scheduleSlotId, 200)
+            && !('replacement' in data) && !('holidayName' in data) && !('targetHolidayId' in data))
+          || (data.type == 'add'
+            && 'replacement' in data && validReplacement(data.replacement)
+            && !('scheduleSlotId' in data) && !('holidayName' in data) && !('targetHolidayId' in data))
+          || (data.type == 'holiday'
+            && 'holidayName' in data && isShortString(data.holidayName, 100)
+            && !('scheduleSlotId' in data) && !('replacement' in data) && !('targetHolidayId' in data))
+          || (data.type == 'holiday-revoke'
+            && 'targetHolidayId' in data && isShortString(data.targetHolidayId, 200)
+            && 'note' in data && isShortString(data.note, 500)
+            && !('scheduleSlotId' in data) && !('replacement' in data) && !('holidayName' in data)
+            && exists(/databases/$(database)/documents/timetableExceptions/$(data.targetHolidayId))
+            && get(/databases/$(database)/documents/timetableExceptions/$(data.targetHolidayId)).data.semesterId == data.semesterId
+            && get(/databases/$(database)/documents/timetableExceptions/$(data.targetHolidayId)).data.type == 'holiday'
+            && get(/databases/$(database)/documents/timetableExceptions/$(data.targetHolidayId)).data.date == data.date)
+        );
+    }
+
+    function validAttentionWeights(data) {
+      return data is map
+        && data.keys().hasAll(['late', 'chatting', 'disorder', 'missing-materials', 'threshold'])
+        && data.keys().hasOnly(['late', 'chatting', 'disorder', 'missing-materials', 'threshold'])
+        && data.late is int && data.late >= 0 && data.late <= 10
+        && data.chatting is int && data.chatting >= 0 && data.chatting <= 10
+        && data.disorder is int && data.disorder >= 0 && data.disorder <= 10
+        && data['missing-materials'] is int && data['missing-materials'] >= 0 && data['missing-materials'] <= 10
+        && data.threshold is int && data.threshold >= 1 && data.threshold <= 100;
+    }
+
+    match /assignments/{documentId} {
+      allow read: if isTeacher();
+      allow create: if isTeacher() && validAssignment(documentId, request.resource.data);
+    }
+
+    match /submissionEvents/{documentId} {
+      allow read: if isTeacher();
+      allow create: if isTeacher() && validSubmissionEvent(documentId, request.resource.data);
+    }
+
+    match /classroomIncidents/{documentId} {
+      allow read: if isTeacher();
+      allow create: if isTeacher() && validClassroomIncident(documentId, request.resource.data);
+    }
+
+    match /timetableExceptions/{documentId} {
+      allow read: if isTeacher();
+      allow create: if isTeacher() && validTimetableException(documentId, request.resource.data);
+    }
+
+    match /settings/{documentId} {
+      allow read: if isTeacher() && documentId == '__ACTIVE_SEMESTER_ID__';
+      allow create, update: if isTeacher()
+        && documentId == '__ACTIVE_SEMESTER_ID__'
+        && request.resource.data.keys().hasAll(['semesterId', 'attentionWeights'])
+        && request.resource.data.keys().hasOnly(['semesterId', 'attentionWeights'])
+        && validSemesterId(request.resource.data.semesterId)
+        && validAttentionWeights(request.resource.data.attentionWeights);
+    }
+
+    match /_securityRateLimits/{documentId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

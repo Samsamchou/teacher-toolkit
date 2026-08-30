@@ -1,0 +1,24 @@
+{
+  "name": "homeworkclass-functions",
+  "private": true,
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "hash:pin": "node scripts/hash-pin.mjs",
+    "secrets:production": "node scripts/set-production-secrets.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "firebase-admin": "^14.3.0",
+    "firebase-functions": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "^7.0.2"
+  }
+}

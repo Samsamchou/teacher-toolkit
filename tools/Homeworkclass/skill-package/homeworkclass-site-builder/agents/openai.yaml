@@ -1,0 +1,5 @@
+interface:
+  display_name: "Homeworkclass 網站建置器"
+  short_description: "以課表與名單安全更新學期，或重製隔離的教師紀錄網站"
+  brand_color: "#7358ED"
+  default_prompt: "Use $homeworkclass-site-builder to validate my timetable and roster, then prepare a local semester update or isolated teacher clone without deploying."

@@ -1,0 +1,46 @@
+# Secrets and local credentials / 秘密與本機憑證
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.*
+*credentials*.json
+service-account*.json
+
+# Dependencies and generated output / 相依套件與產出
+node_modules/
+functions/node_modules/
+dist/
+functions/lib/
+coverage/
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# Keep dependency locks / 保留相依鎖定檔
+!package-lock.json
+!functions/package-lock.json
+
+# Local environments and caches / 本機環境與快取
+.venv/
+__pycache__/
+*.pyc
+.vite/
+.eslintcache
+.npm-cache/
+functions/.secret.local
+_work/
+tmp/
+
+# Editors and OS metadata / 編輯器與系統檔
+.vscode/
+.idea/
+.codex-remote-attachments/
+Thumbs.db
+.DS_Store
+desktop.ini
+~$*
+*.tmp
+*.log
