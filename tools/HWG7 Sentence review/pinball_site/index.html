@@ -941,6 +941,24 @@
             return date.toLocaleString("zh-TW", { hour12: false, month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
         }
 
+        function calculateTeacherRecordProgress(record) {
+            const inferredTurns = Array.isArray(record?.turnSummaries) ? record.turnSummaries.length : 0;
+            const completedTurns = Number.isInteger(record?.completedTurns)
+                ? Math.max(0, Math.min(12, record.completedTurns))
+                : Math.max(0, Math.min(12, inferredTurns));
+            const recordStatus = record?.recordStatus || (completedTurns >= 12 ? "completed" : "partial_ended");
+            const label = recordStatus === "completed"
+                ? "已完成"
+                : recordStatus === "partial_in_progress" ? "進行中" : "未完成";
+            return {
+                completedTurns,
+                completedRounds: Number.isInteger(record?.completedRounds) ? record.completedRounds : Math.floor(completedTurns / 2),
+                recordStatus,
+                label,
+                complete: recordStatus === "completed" && completedTurns === 12
+            };
+        }
+
         function calculateTeacherPlayerSummary(record, studentCode, playerIndex) {
             const scoreByTurn = new Map();
             for (const turn of record?.turnSummaries || []) {
@@ -965,18 +983,22 @@
             const rawMarbleScore = teamKey ? record?.scores?.[teamKey] : undefined;
             const marbleScore = Number(rawMarbleScore);
             const questionScores = [...scoreByTurn.values()];
-            const complete = questionScores.length === 6
-                && rawMarbleScore !== null
+            const marbleAvailable = rawMarbleScore !== null
                 && rawMarbleScore !== undefined
                 && rawMarbleScore !== ""
                 && Number.isFinite(marbleScore);
+            const recordProgress = calculateTeacherRecordProgress(record);
+            const complete = recordProgress.complete && questionScores.length === 6 && marbleAvailable;
+            const completedRecordDataIncomplete = recordProgress.complete && !complete;
 
             return {
                 complete,
-                speechAverage: complete
-                    ? Math.round(questionScores.reduce((sum, score) => sum + score, 0) / 6)
+                answeredCount: questionScores.length,
+                speechAverage: !completedRecordDataIncomplete && questionScores.length
+                    ? Math.round(questionScores.reduce((sum, score) => sum + score, 0) / questionScores.length)
                     : null,
-                marbleScore: complete ? marbleScore : null
+                marbleScore: !completedRecordDataIncomplete && marbleAvailable ? marbleScore : null,
+                marbleAvailable: !completedRecordDataIncomplete && marbleAvailable
             };
         }
 
@@ -1238,6 +1260,8 @@
             const [speechPlaybackUrl, setSpeechPlaybackUrl] = useState("");
             const [modelAudioStatus, setModelAudioStatus] = useState("");
             const [questionImageFailed, setQuestionImageFailed] = useState(false);
+            const [checkpointMessage, setCheckpointMessage] = useState("");
+            const [leavingGame, setLeavingGame] = useState(false);
 
             const engineRef = useRef(null);
             const runnerRef = useRef(null);
@@ -1247,6 +1271,11 @@
             const scoreRef = useRef({ pink: 0, blue: 0 });
             const launchedCountRef = useRef(0);
             const scoredCountRef = useRef(0);
+            const scoredTurnIndexesRef = useRef(new Set());
+            const marblePointsByTurnRef = useRef(new Map());
+            const checkpointStateRef = useRef({ pending: null, inFlight: null, lastSavedTurns: 0 });
+            const flushCheckpointRef = useRef(null);
+            const queueCheckpointRef = useRef(null);
             const slotPlanRef = useRef(null);
             const finishedRef = useRef(false);
             const finishRef = useRef(null);
@@ -1271,25 +1300,70 @@
             const isImagePractice = isSpeechPractice || config.questions.some(q => q.optionType === "image");
             const showQuestionStem = Boolean(currentQuestion?.stem?.trim());
 
+            const buildTurnSummaries = useCallback(completedTurns => config.questions.slice(0, completedTurns).map((question, index) => {
+                const team = index % 2 === 0 ? "pink" : "blue";
+                const studentCode = config.teams[team];
+                const entry = answersRef.current[team].find(item => item.id === question.id);
+                return {
+                    turnIndex: index,
+                    questionId: question.id,
+                    studentCode,
+                    questionType: question.type,
+                    status: entry?.status || "not_met",
+                    bestScore: Number(entry?.bestScore || 0),
+                    attemptIds: (entry?.attempts || []).map(attempt => attempt.attemptId).filter(Boolean)
+                };
+            }), [config]);
+
+            flushCheckpointRef.current = async ({ drain = false } = {}) => {
+                const state = checkpointStateRef.current;
+                if (state.inFlight) {
+                    await state.inFlight.catch(() => {});
+                    if (state.pending) return flushCheckpointRef.current({ drain });
+                    return true;
+                }
+                const record = state.pending;
+                if (!record || record.completedTurns <= state.lastSavedTurns) {
+                    state.pending = null;
+                    return true;
+                }
+                state.pending = null;
+                const request = window.HWG7AppApi.saveGameProgress(config.gameSessionId, record.result);
+                state.inFlight = request;
+                try {
+                    const saved = await request;
+                    state.lastSavedTurns = Math.max(state.lastSavedTurns, Number(saved.completedTurns) || record.completedTurns);
+                    setCheckpointMessage("");
+                    return true;
+                } catch (error) {
+                    const queued = state.pending;
+                    state.pending = !queued || queued.completedTurns < record.completedTurns ? record : queued;
+                    setCheckpointMessage("紀錄暫時排隊，系統會自動重試。");
+                    console.warn("部分遊戲進度尚未寫入", { code: error?.code || "progress_save_failed", completedTurns: record.completedTurns });
+                    return false;
+                } finally {
+                    state.inFlight = null;
+                }
+            };
+
+            queueCheckpointRef.current = (completedTurns, currentScores) => {
+                if (!isSpeechPractice || completedTurns < 1 || completedTurns >= totalTurns) return;
+                const turnSummaries = buildTurnSummaries(completedTurns);
+                if (turnSummaries.length !== completedTurns || turnSummaries.some(turn => !turn.attemptIds.length)) return;
+                const record = { completedTurns, result: { scores: currentScores, turnSummaries } };
+                const state = checkpointStateRef.current;
+                if (!state.pending || state.pending.completedTurns < completedTurns) state.pending = record;
+                void flushCheckpointRef.current().then(saved => {
+                    if (saved && state.pending && state.pending.completedTurns > state.lastSavedTurns) void flushCheckpointRef.current();
+                });
+            };
+
             const finishGame = useCallback((finalScores = scoreRef.current) => {
                 if (finishedRef.current) return;
                 finishedRef.current = true;
                 if (finalFallbackRef.current) clearTimeout(finalFallbackRef.current);
                 const playedAt = new Date();
-                const turnSummaries = config.questions.map((question, index) => {
-                    const team = index % 2 === 0 ? "pink" : "blue";
-                    const studentCode = config.teams[team];
-                    const entry = answersRef.current[team].find(item => item.id === question.id);
-                    return {
-                        turnIndex: index,
-                        questionId: question.id,
-                        studentCode,
-                        questionType: question.type,
-                        status: entry?.status || "not_met",
-                        bestScore: Number(entry?.bestScore || 0),
-                        attemptIds: (entry?.attempts || []).map(attempt => attempt.attemptId).filter(Boolean)
-                    };
-                });
+                const turnSummaries = buildTurnSummaries(totalTurns);
                 const result = {
                     id: config.gameSessionId,
                     gameSessionId: config.gameSessionId,
@@ -1318,7 +1392,7 @@
                     questionBankVersion: config.questionBankVersion || modeMeta.questionBankVersion || ""
                 };
                 onFinish(result);
-            }, [config, onFinish]);
+            }, [buildTurnSummaries, config, onFinish, totalTurns]);
 
             useEffect(() => {
                 finishRef.current = finishGame;
@@ -1412,13 +1486,23 @@
                         if (sensor && marble && !marble.hasScored) {
                             marble.hasScored = true;
                             scoredCountRef.current += 1;
+                            scoredTurnIndexesRef.current.add(marble.turnIndex);
                             const pts = SLOT_SCORES[sensor.slotIndex];
+                            marblePointsByTurnRef.current.set(marble.turnIndex, pts);
                             const nextScores = {
                                 ...scoreRef.current,
                                 [marble.team]: scoreRef.current[marble.team] + pts
                             };
                             scoreRef.current = nextScores;
                             setScores(nextScores);
+                            let completedTurns = 0;
+                            while (scoredTurnIndexesRef.current.has(completedTurns)) completedTurns += 1;
+                            const checkpointScores = { pink: 0, blue: 0 };
+                            for (let index = 0; index < completedTurns; index += 1) {
+                                const team = index % 2 === 0 ? "pink" : "blue";
+                                checkpointScores[team] += Number(marblePointsByTurnRef.current.get(index) || 0);
+                            }
+                            queueCheckpointRef.current?.(completedTurns, checkpointScores);
                             if (launchedCountRef.current >= totalTurns && scoredCountRef.current >= totalTurns) {
                                 setTimeout(() => finishRef.current && finishRef.current(nextScores), 700);
                             }
@@ -1775,10 +1859,23 @@
                     setFinalWaiting(true);
                     setFeedback("等待最後一顆彈珠計分...");
                     finalFallbackRef.current = setTimeout(() => {
-                        if (finishRef.current) finishRef.current(scoreRef.current);
+                        if (scoredCountRef.current >= totalTurns && finishRef.current) {
+                            finishRef.current(scoreRef.current);
+                        } else {
+                            setFeedback("等待最後一顆彈珠落袋計分...");
+                        }
                     }, 12000);
                 }
             }, [isLaunchReady, turnIndex, currentTeam, totalTurns]);
+
+            const handleGameHome = useCallback(async () => {
+                if (leavingGame) return;
+                setLeavingGame(true);
+                const state = checkpointStateRef.current;
+                if (state.pending || state.inFlight) setCheckpointMessage("正在保存目前紀錄...");
+                await flushCheckpointRef.current?.({ drain: true });
+                await onHome();
+            }, [leavingGame, onHome]);
 
             const optionButtonClass = (option, disabled, imageOption = false) => {
                 const isSelected = selectedOption === option;
@@ -1812,7 +1909,7 @@
                                 <p className="text-sm font-black text-purple-600">{modeMeta.label}</p>
                                 <h2 className="text-2xl font-black text-slate-900">第 {Math.min(currentRound, roundsPerPlayer)} 回合</h2>
                             </div>
-                            <button onClick={onHome} className="rounded-lg bg-slate-100 px-3 py-2 font-black text-slate-700 hover:bg-slate-200">
+                            <button onClick={handleGameHome} disabled={leavingGame} className="rounded-lg bg-slate-100 px-3 py-2 font-black text-slate-700 hover:bg-slate-200 disabled:opacity-60">
                                 <i className="fas fa-house mr-1"></i>
                                 首頁
                             </button>
@@ -1912,6 +2009,7 @@
                                         {audioStatus && <p className="text-center text-sm font-bold text-slate-500 mt-2">{audioStatus}</p>}
                                     </>
                                 )}
+                                {checkpointMessage && <p className="mt-2 rounded-lg bg-yellow-50 border border-yellow-300 px-3 py-2 text-center text-sm font-black text-yellow-800" role="status">{checkpointMessage}</p>}
                             </div>
                         ) : (
 
@@ -2173,7 +2271,7 @@
                     releaseTeacherAudio();
                     const result = await window.HWG7AppApi.teacherAction("listResults", { filters });
                     setRecords(result.records || []);
-                    setStatusMessage(`已讀取 ${result.count || 0} 局完整遊戲${result.truncated ? "（已達 500 筆上限，請縮小日期範圍）" : ""}。`);
+                    setStatusMessage(`已讀取 ${result.count || 0} 筆遊戲紀錄${result.truncated ? "（已達 500 筆上限，請縮小日期範圍）" : ""}。`);
                     setSelectedId(current => (result.records || []).some(record => record.id === current) ? current : (result.records?.[0]?.id || ""));
                 } catch (error) {
                     if (!handleSessionError(error)) setStatusMessage(error.message || "紀錄讀取失敗。");
@@ -2196,6 +2294,7 @@
             }, []);
 
             const selected = records.find(record => record.id === selectedId) || null;
+            const selectedProgress = useMemo(() => calculateTeacherRecordProgress(selected), [selected]);
             const selectedAttempts = useMemo(() => [...(selected?.attempts || [])].sort((left, right) =>
                 left.turnIndex - right.turnIndex || left.attemptNumber - right.attemptNumber
             ), [selected]);
@@ -2210,23 +2309,28 @@
             };
 
             const downloadCsv = () => {
-                const header = ["日期", "單元", "學生代碼", "題目", "題型", "回合", "嘗試", "逐字稿", "準確度", "完整度", "流暢度", "總分", "是否達標", "建議"];
-                const rows = records.flatMap(record => (record.attempts || []).map(attempt => [
-                    record.date,
-                    UNIT_BY_ID[record.unitId]?.label || record.unitId,
-                    attempt.studentCode,
-                    attempt.questionId,
-                    attempt.questionType,
-                    Number(attempt.turnIndex) + 1,
-                    attempt.attemptNumber,
-                    attempt.transcript,
-                    attempt.scores?.accuracy,
-                    attempt.scores?.completeness,
-                    attempt.scores?.fluency,
-                    attempt.scores?.total,
-                    attempt.passed ? "達標" : "未達標",
-                    attempt.feedback
-                ]));
+                const header = ["日期", "單元", "紀錄狀態", "完成題數", "學生代碼", "題目", "題型", "題序", "嘗試", "逐字稿", "準確度", "完整度", "流暢度", "總分", "是否達標", "建議"];
+                const rows = records.flatMap(record => {
+                    const progress = calculateTeacherRecordProgress(record);
+                    return (record.attempts || []).map(attempt => [
+                        record.date,
+                        UNIT_BY_ID[record.unitId]?.label || record.unitId,
+                        progress.label,
+                        `${progress.completedTurns}/12`,
+                        attempt.studentCode,
+                        attempt.questionId,
+                        attempt.questionType,
+                        Number(attempt.turnIndex) + 1,
+                        attempt.attemptNumber,
+                        attempt.transcript,
+                        attempt.scores?.accuracy,
+                        attempt.scores?.completeness,
+                        attempt.scores?.fluency,
+                        attempt.scores?.total,
+                        attempt.passed ? "達標" : "未達標",
+                        attempt.feedback
+                    ]);
+                });
                 const csv = "\uFEFF" + [header, ...rows].map(row => row.map(csvCell).join(",")).join("\r\n");
                 const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
                 const anchor = document.createElement("a");
@@ -2265,7 +2369,7 @@
                     if (error?.name === "AbortError") return;
                     if (handleSessionError(error)) return;
                     const message = error?.code === "recording_expired"
-                        ? "錄音已超過 30 天保存期限。"
+                        ? "錄音已超過個別保存期限。"
                         : error?.code === "recording_not_found"
                             ? "找不到這段錄音。"
                             : "錄音服務暫時無法提供，請稍後再試。";
@@ -2330,36 +2434,40 @@
                                 </div>
                                 <div className="mt-4 rounded-xl border-2 bg-white border-slate-200 p-3 text-sm font-black text-slate-700">{statusMessage}</div>
 
-                                <h2 className="text-xl font-black text-slate-900 mt-6 mb-3">完整遊戲</h2>
+                                <h2 className="text-xl font-black text-slate-900 mt-6 mb-3">遊戲紀錄</h2>
                                 <div className="grid gap-3 max-h-[520px] overflow-y-auto pr-1">
-                                    {!loading && records.length === 0 ? <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">目前條件沒有完整遊戲紀錄。</p> : records.map(record => (
-                                        <button key={record.id} onClick={() => setSelectedId(record.id)} className={`rounded-xl border-4 p-4 text-left transition-all ${selectedId === record.id ? "bg-yellow-100 border-yellow-400" : "bg-white border-white hover:border-cyan-300"}`}>
-                                            <p className="text-lg font-black text-slate-900">{record.students?.join("、")}</p>
-                                            <p className="text-sm font-bold text-slate-500 mt-1">{localDateTimeLabel(record.playedAt)}・{UNIT_BY_ID[record.unitId]?.label || record.unitId}</p>
-                                        </button>
-                                    ))}
+                                    {!loading && records.length === 0 ? <p className="rounded-xl bg-white border border-slate-200 p-4 font-bold text-slate-500">目前條件沒有遊戲紀錄。</p> : records.map(record => {
+                                        const progress = calculateTeacherRecordProgress(record);
+                                        return (
+                                            <button key={record.id} onClick={() => setSelectedId(record.id)} className={`rounded-xl border-4 p-4 text-left transition-all ${selectedId === record.id ? "bg-yellow-100 border-yellow-400" : "bg-white border-white hover:border-cyan-300"}`}>
+                                                <div className="flex items-center justify-between gap-2"><p className="text-lg font-black text-slate-900">{record.students?.join("、")}</p><span className={`rounded-full px-2 py-1 text-xs font-black ${progress.complete ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>{progress.label}・{progress.completedTurns}/12</span></div>
+                                                <p className="text-sm font-bold text-slate-500 mt-1">{localDateTimeLabel(record.playedAt)}・{UNIT_BY_ID[record.unitId]?.label || record.unitId}</p>
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             </aside>
 
                             <section className="rounded-2xl border-4 border-slate-200 bg-white p-4 md:p-6">
                                 {!selected ? (
-                                    <div className="min-h-[360px] flex items-center justify-center text-center rounded-2xl bg-slate-50 border-4 border-dashed border-slate-200"><p className="text-xl font-black text-slate-500">請點選左側完整遊戲查看報告。</p></div>
+                                    <div className="min-h-[360px] flex items-center justify-center text-center rounded-2xl bg-slate-50 border-4 border-dashed border-slate-200"><p className="text-xl font-black text-slate-500">請點選左側遊戲紀錄查看報告。</p></div>
                                 ) : (
                                     <div>
                                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 mb-4">
-                                            <div><h2 className="text-2xl font-black text-slate-900">{selected.students?.join("、")}</h2><p className="text-sm font-black text-purple-600">{UNIT_BY_ID[selected.unitId]?.label || selected.unitId}・{localDateTimeLabel(selected.playedAt)}</p></div>
+                                            <div><h2 className="text-2xl font-black text-slate-900">{selected.students?.join("、")}</h2><p className="text-sm font-black text-purple-600">{UNIT_BY_ID[selected.unitId]?.label || selected.unitId}・{localDateTimeLabel(selected.playedAt)}</p><p className={`mt-2 inline-block rounded-full px-3 py-1 text-sm font-black ${selectedProgress.complete ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>{selectedProgress.label}・完成 {selectedProgress.completedTurns}/12 題</p></div>
                                             <button onClick={() => setDeleteTarget(selected)} className="rounded-xl bg-red-50 border-2 border-red-200 px-4 py-2 font-black text-red-700 hover:bg-red-100"><i className="fas fa-trash-can mr-2"></i>軟刪除</button>
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-4 mb-5">
                                             {(selected.students || []).map((studentCode, index) => {
-                                                const playerSummary = playerSummaries[index] || { complete: false, speechAverage: null, marbleScore: null };
+                                                const playerSummary = playerSummaries[index] || { complete: false, answeredCount: 0, speechAverage: null, marbleScore: null, marbleAvailable: false };
+                                                const completedDataIncomplete = selectedProgress.complete && !playerSummary.complete;
                                                 return (
                                                     <div key={studentCode} className={`rounded-2xl border-4 p-4 ${index === 0 ? "bg-pink-50 border-pink-200" : "bg-cyan-50 border-cyan-200"}`} data-testid={`teacher-player-summary-${index}`}>
                                                         <p className="text-sm font-black text-slate-500">{index === 0 ? "A 玩家" : "B 玩家"}</p>
                                                         <h3 className="text-3xl font-black text-slate-900">{studentCode}</h3>
-                                                        <p className="text-3xl font-black text-purple-700 mt-3" data-testid={`speech-average-${index}`}>6 題口說平均：{playerSummary.complete ? `${playerSummary.speechAverage} 分` : "—"}</p>
-                                                        <p className="text-2xl font-black text-slate-800 mt-2" data-testid={`marble-total-${index}`}>彈珠總分：{playerSummary.complete ? `${playerSummary.marbleScore} 分` : "—"}</p>
-                                                        {!playerSummary.complete && <p className="mt-2 text-sm font-black text-red-600" data-testid={`summary-incomplete-${index}`}>資料不完整</p>}
+                                                        <p className="text-3xl font-black text-purple-700 mt-3" data-testid={`speech-average-${index}`}>{selectedProgress.complete ? "6 題口說平均" : `目前 ${playerSummary.answeredCount} 題平均`}：{completedDataIncomplete ? "—／資料不完整" : playerSummary.speechAverage === null ? "—" : `${playerSummary.speechAverage} 分`}</p>
+                                                        <p className="text-2xl font-black text-slate-800 mt-2" data-testid={`marble-total-${index}`}>{selectedProgress.complete ? "彈珠總分" : "目前彈珠總分"}：{completedDataIncomplete ? "—／資料不完整" : playerSummary.marbleAvailable ? `${playerSummary.marbleScore} 分` : "—"}</p>
+                                                        {!selectedProgress.complete && <p className="mt-2 text-sm font-black text-orange-700" data-testid={`summary-incomplete-${index}`}>本局完成 {selectedProgress.completedTurns}/12 題</p>}
                                                     </div>
                                                 );
                                             })}
@@ -2368,14 +2476,14 @@
                                         <div className="grid gap-3 max-h-[680px] overflow-y-auto pr-1">
                                             {selectedAttempts.map(attempt => (
                                                 <article key={attempt.attemptId} className="rounded-xl border-2 border-slate-200 bg-slate-50 p-4">
-                                                    <div className="flex flex-wrap items-center justify-between gap-2"><p className="font-black text-slate-900">第 {Number(attempt.turnIndex) + 1} 回合・{attempt.questionId}・{attempt.studentCode}</p><span className={`rounded-full px-3 py-1 text-sm font-black ${attempt.passed ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>第 {attempt.attemptNumber} 次・{attempt.scores?.total ?? "—"} 分</span></div>
+                                                    <div className="flex flex-wrap items-center justify-between gap-2"><p className="font-black text-slate-900">第 {Number(attempt.turnIndex) + 1} 題・{attempt.questionId}・{attempt.studentCode}</p><span className={`rounded-full px-3 py-1 text-sm font-black ${attempt.passed ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"}`}>第 {attempt.attemptNumber} 次・{attempt.scores?.total ?? "—"} 分</span></div>
                                                     <p className="mt-2 text-sm font-bold text-slate-700"><span className="font-black">逐字稿：</span>{attempt.transcript}</p>
                                                     <p className="mt-1 text-sm font-bold text-slate-600"><span className="font-black">分項：</span>準確 {attempt.scores?.accuracy ?? "—"}／完整 {attempt.scores?.completeness ?? "—"}／流暢 {attempt.scores?.fluency ?? "—"}</p>
                                                     <p className="mt-1 text-sm font-bold text-purple-700"><span className="font-black">建議：</span>{attempt.feedback}</p>
-                                                    {attempt.recordingAvailable && !audioUrls[attempt.attemptId] && <button onClick={() => loadRecording(attempt.attemptId)} disabled={audioLoadingId === attempt.attemptId} className="mt-3 rounded-lg bg-slate-900 px-4 py-2 text-sm font-black text-white disabled:bg-slate-300"><i className="fas fa-play mr-2"></i>{audioLoadingId === attempt.attemptId ? "取得錄音中" : "播放 30 天內錄音"}</button>}
+                                                    {attempt.recordingAvailable && !audioUrls[attempt.attemptId] && <button onClick={() => loadRecording(attempt.attemptId)} disabled={audioLoadingId === attempt.attemptId} className="mt-3 rounded-lg bg-slate-900 px-4 py-2 text-sm font-black text-white disabled:bg-slate-300"><i className="fas fa-play mr-2"></i>{audioLoadingId === attempt.attemptId ? "取得錄音中" : "播放保存期限內錄音"}</button>}
                                                     {audioUrls[attempt.attemptId] && <audio id={`teacher-audio-${attempt.attemptId}`} className="mt-3 w-full" controls autoPlay playsInline preload="metadata" controlsList="nodownload noplaybackrate noremoteplayback" disablePictureInPicture onContextMenu={event => event.preventDefault()} onPlay={() => setAudioMessages(previous => ({ ...previous, [attempt.attemptId]: "播放中。" }))} onEnded={() => setAudioMessages(previous => ({ ...previous, [attempt.attemptId]: "播放完畢。" }))} src={audioUrls[attempt.attemptId]} />}
                                                     {audioMessages[attempt.attemptId] && <p className="mt-2 text-xs font-black text-purple-700" role="status">{audioMessages[attempt.attemptId]}</p>}
-                                                    {!attempt.recordingAvailable && <p className="mt-2 text-xs font-bold text-slate-500">錄音已超過 30 天期限或尚不可用。</p>}
+                                                    {!attempt.recordingAvailable && <p className="mt-2 text-xs font-bold text-slate-500">錄音已超過個別保存期限或尚不可用。</p>}
                                                 </article>
                                             ))}
                                         </div>
@@ -2478,9 +2586,9 @@
                 if (result && result.syncStatus === "error") persistRecord(result);
             };
 
-            const goHome = () => {
+            const goHome = async () => {
                 if (view === "game" && config?.gameSessionId && !config?.layoutQa) {
-                    window.HWG7AppApi.abandonGame(config.gameSessionId).catch(() => {});
+                    await window.HWG7AppApi.abandonGame(config.gameSessionId).catch(() => {});
                 }
                 setView("home");
                 setConfig(null);

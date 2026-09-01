@@ -10,6 +10,8 @@
 - 評分：HWG7 使用 `a1-v2-answer-only`，HWG5 使用 `hwg5-sr-v1-answer-only`；準確度 50%＋完整度 30%＋流暢度 20%；80 分（含）達標
 - 題型二只評學生答句，不要求錄下問句；短答與完整答均可各自滿分
 - HWG5 時間題使用 `clock-en-v1` 規則：英文數字字詞與 `o'clock` 先正規化後判讀，不以模糊連寫阿拉伯數字取代學生實際語句
+- 教師紀錄：學生完成第 1 題起逐題冪等更新同一局；部分局不增加完整局數，也不改變下一局題型
+- 錄音：本次更新上線後的新錄音保存 365 天；既有錄音沿用原本 `expiresAt`
 - OpenAI 金鑰：正式環境只可使用 Firebase Secret `OPENAI_API_KEY`
 
 ## 匯出函式
@@ -17,13 +19,14 @@
 | Function ID | 用途 |
 |---|---|
 | `startGame` | 建立／恢復兩位學生的當日局次，防止同組同時開兩局。 |
-| `abandonGame` | 清除未完成局，不增加完成局數。 |
+| `abandonGame` | 結束未完成局並保留已寫入進度，不增加完成局數。 |
 | `evaluateSpeech` | 驗證錄音與回合，呼叫 OpenAI 轉錄，再以固定 v2 公式評分；題型二只評答句。 |
+| `saveGameProgress` | 每題彈珠落袋後，以同一局 ID 冪等保存 1–11 題部分進度，不增加完整局數。 |
 | `completeGame` | 驗證 12 個不重複回合並冪等完成；下一局仍從固定題型配置開始。 |
 | `teacherLogin` | 驗證六碼通行碼的 scrypt 雜湊並簽發短期 session。 |
 | `teacherRecording` | 驗證教師 session 後直接串流錄音二進位；不產生或暴露簽名網址。 |
 | `teacherApi` | 提供教師篩選、嘗試紀錄、CSV 來源資料、軟刪除與登出。 |
-| `cleanupExpiredRecordings` | 每日刪除超過 30 天的錄音。 |
+| `cleanupExpiredRecordings` | 每日依各錄音 `expiresAt` 清理；新錄音期限為 365 天。 |
 
 ## 安全邊界
 
@@ -42,6 +45,8 @@ firebase emulators:exec --project demo-hwg7-sr --only auth,functions,firestore,h
 ```
 
 2026-08-24 多單元結果：Functions `86/86`、網站 `56/56`、HWG5 專屬測試 `14/14`、HWG5 題圖版面 `45/45` 加缺圖 fallback；28 張正式題圖與 22 段 TTS 已逐檔和正式 Hosting 讀回雜湊一致。正式站 8 個 Functions 均為 `ACTIVE`，缺少 App Check 的請求為 401、錯誤來源為 403。實體 iPad Safari 麥克風仍須由教師在校內裝置完成人工驗收。
+
+2026-09-01 部分局紀錄更新：Functions `88/88`、網站 `60/60`；Emulator 已通過逐題 checkpoint、冪等／防回退、部分局保留、12 題同筆升級、教師錄音授權、Rules 拒絕、軟刪除與登出驗證；HWG7 版面 13 題 × 3 尺寸為 `39/39`，缺圖 fallback 另測通過。正式 Hosting 395 個檔案與 9 個 Functions 已部署，9/9 Functions 讀回為 `ACTIVE`；`recordings/` lifecycle 已由 30 天更新並讀回為 365 天。完整結果與正式 App Check 限制見 `../LOCAL-QA-REPORT-partial-records-20260901.md`。
 
 ## 正式部署閘門
 

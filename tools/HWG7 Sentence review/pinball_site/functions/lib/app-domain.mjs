@@ -157,36 +157,107 @@ export function decideGameCompletion({ session, rotation }) {
   return { action: "complete", resetForNextGame: true, completedGameCount };
 }
 
-export function validateCompletionSummary(value) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new DomainValidationError("result_required", "缺少完整遊戲結果。");
+export function decideProgressSave({ session, existingResult = null, completedTurns }) {
+  if (!session || typeof session !== "object") {
+    throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
   }
-  const turnSummaries = Array.isArray(value.turnSummaries) ? value.turnSummaries : [];
-  if (turnSummaries.length !== 12) {
-    throw new DomainValidationError("incomplete_game", "必須完整完成 12 次作答才能儲存本局紀錄。", 409);
+  const existingTurnCount = Number.isInteger(existingResult?.completedTurns)
+    ? existingResult.completedTurns
+    : Array.isArray(existingResult?.turnSummaries) ? existingResult.turnSummaries.length : 0;
+  if (session.status === "completed" || existingResult?.recordStatus === "completed" || existingTurnCount >= 12) {
+    return { action: "already_completed", completedTurns: 12, completedRounds: 6, recordStatus: "completed" };
   }
-  const indexes = turnSummaries.map((turn) => Number(turn?.turnIndex));
-  if (new Set(indexes).size !== 12 || !indexes.every((index) => Number.isInteger(index) && index >= 0 && index < 12)) {
-    throw new DomainValidationError("invalid_turn_summary", "遊戲回合資料不完整。");
+  if (!["active", "abandoned"].includes(session.status)) {
+    throw new DomainValidationError("game_not_active", "這一局已失效，不能更新進度。", 409);
+  }
+  if (!Number.isInteger(completedTurns) || completedTurns < 1 || completedTurns > 11) {
+    throw new DomainValidationError("invalid_progress_turns", "部分紀錄必須包含第 1 至第 11 題的連續進度。");
+  }
+  if (completedTurns <= existingTurnCount) {
+    return {
+      action: "already_saved",
+      completedTurns: existingTurnCount,
+      completedRounds: Math.floor(existingTurnCount / 2),
+      recordStatus: session.status === "abandoned" ? "partial_ended" : "partial_in_progress",
+    };
   }
   return {
-    scores: value.scores && typeof value.scores === "object" ? value.scores : {},
-    turnSummaries: turnSummaries.map((turn) => {
-      const questionId = requiredString(turn.questionId, "question_id_required", "回合缺少題目代碼。");
-      const studentCode = requiredString(turn.studentCode, "student_code_required", "回合缺少學生代碼。");
-      const questionType = requiredString(turn.questionType, "question_type_required", "回合缺少題型。");
-      const status = requiredString(turn.status, "turn_status_required", "回合缺少達標狀態。");
-      const bestScore = Number(turn.bestScore);
-      const attemptIds = Array.isArray(turn.attemptIds) ? turn.attemptIds.map(String) : [];
-      if (!/^[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{3}$/u.test(questionId)) throw new DomainValidationError("invalid_question_id", "回合題目代碼格式不正確。");
-      if (!/^\d{5}$/u.test(studentCode)) throw new DomainValidationError("invalid_student_code", "回合學生代碼格式不正確。");
-      if (![QUESTION_TYPES.READ_ALOUD, QUESTION_TYPES.QUESTION_ANSWER].includes(questionType)) throw new DomainValidationError("invalid_question_type", "回合題型不正確。");
-      if (!["passed", "not_met"].includes(status)) throw new DomainValidationError("invalid_turn_status", "回合達標狀態不正確。");
-      if (!Number.isFinite(bestScore) || bestScore < 0 || bestScore > 100) throw new DomainValidationError("invalid_best_score", "回合最佳分數不正確。");
-      if (attemptIds.length < 1 || attemptIds.length > 3 || attemptIds.some((id) => !/^[A-Za-z0-9_-]{10,180}$/u.test(id))) {
-        throw new DomainValidationError("invalid_attempt_ids", "每回合必須包含一至三筆有效評測紀錄。");
-      }
-      return { turnIndex: Number(turn.turnIndex), questionId, studentCode, questionType, status, bestScore, attemptIds };
-    }),
+    action: "save",
+    completedTurns,
+    completedRounds: Math.floor(completedTurns / 2),
+    recordStatus: session.status === "abandoned" ? "partial_ended" : "partial_in_progress",
   };
+}
+
+function validateGameScores(value, completedTurns) {
+  const source = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const pink = Number(source.pink);
+  const blue = Number(source.blue);
+  const pinkTurns = Math.ceil(completedTurns / 2);
+  const blueTurns = Math.floor(completedTurns / 2);
+  if (!Number.isInteger(pink) || pink < 0 || pink > pinkTurns * 5) {
+    throw new DomainValidationError("invalid_marble_score", "粉紅隊彈珠總分不正確。");
+  }
+  if (!Number.isInteger(blue) || blue < 0 || blue > blueTurns * 5) {
+    throw new DomainValidationError("invalid_marble_score", "藍隊彈珠總分不正確。");
+  }
+  return { pink, blue };
+}
+
+function validateGameSummary(value, { minTurns, maxTurns, exactTurns = null, incompleteMessage }) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new DomainValidationError("result_required", "缺少遊戲結果。");
+  }
+  const turnSummaries = Array.isArray(value.turnSummaries) ? value.turnSummaries : [];
+  const countIsValid = exactTurns === null
+    ? turnSummaries.length >= minTurns && turnSummaries.length <= maxTurns
+    : turnSummaries.length === exactTurns;
+  if (!countIsValid) {
+    throw new DomainValidationError("incomplete_game", incompleteMessage, 409);
+  }
+  const indexes = turnSummaries.map((turn) => Number(turn?.turnIndex));
+  if (!indexes.every((index, position) => Number.isInteger(index) && index === position)) {
+    throw new DomainValidationError("invalid_turn_summary", "遊戲題目進度必須從第 1 題起連續且不可重複。");
+  }
+  const normalizedTurns = turnSummaries.map((turn) => {
+    const questionId = requiredString(turn.questionId, "question_id_required", "回合缺少題目代碼。");
+    const studentCode = requiredString(turn.studentCode, "student_code_required", "回合缺少學生代碼。");
+    const questionType = requiredString(turn.questionType, "question_type_required", "回合缺少題型。");
+    const status = requiredString(turn.status, "turn_status_required", "回合缺少達標狀態。");
+    const bestScore = Number(turn.bestScore);
+    const attemptIds = Array.isArray(turn.attemptIds) ? turn.attemptIds.map(String) : [];
+    if (!/^[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{3}$/u.test(questionId)) throw new DomainValidationError("invalid_question_id", "回合題目代碼格式不正確。");
+    if (!/^\d{5}$/u.test(studentCode)) throw new DomainValidationError("invalid_student_code", "回合學生代碼格式不正確。");
+    if (![QUESTION_TYPES.READ_ALOUD, QUESTION_TYPES.QUESTION_ANSWER].includes(questionType)) throw new DomainValidationError("invalid_question_type", "回合題型不正確。");
+    if (!["passed", "not_met"].includes(status)) throw new DomainValidationError("invalid_turn_status", "回合達標狀態不正確。");
+    if (!Number.isFinite(bestScore) || bestScore < 0 || bestScore > 100) throw new DomainValidationError("invalid_best_score", "回合最佳分數不正確。");
+    if (attemptIds.length < 1 || attemptIds.length > 3 || new Set(attemptIds).size !== attemptIds.length || attemptIds.some((id) => !/^[A-Za-z0-9_-]{10,180}$/u.test(id))) {
+      throw new DomainValidationError("invalid_attempt_ids", "每回合必須包含一至三筆有效評測紀錄。");
+    }
+    return { turnIndex: Number(turn.turnIndex), questionId, studentCode, questionType, status, bestScore, attemptIds };
+  });
+  if (new Set(normalizedTurns.map((turn) => turn.questionId)).size !== normalizedTurns.length) {
+    throw new DomainValidationError("duplicate_question", "同一局不可重複使用題目。");
+  }
+  return {
+    scores: validateGameScores(value.scores, normalizedTurns.length),
+    turnSummaries: normalizedTurns,
+  };
+}
+
+export function validateProgressSummary(value) {
+  return validateGameSummary(value, {
+    minTurns: 1,
+    maxTurns: 11,
+    incompleteMessage: "至少完成第 1 題，且第 12 題必須使用完整遊戲結算。",
+  });
+}
+
+export function validateCompletionSummary(value) {
+  return validateGameSummary(value, {
+    minTurns: 12,
+    maxTurns: 12,
+    exactTurns: 12,
+    incompleteMessage: "必須完整完成 12 次作答才能儲存本局紀錄。",
+  });
 }

@@ -231,6 +231,7 @@ async function runLiveFullGame(appCheckToken, unitId = defaultQaUnit.unit.id) {
     }
     const results = [];
     const turnSummaries = [];
+    const checkpoints = [];
     for (let turnIndex = 0; turnIndex < manifest.length; turnIndex += 1) {
       const item = manifest[turnIndex];
       const roundIndex = Math.floor(turnIndex / 2);
@@ -267,6 +268,16 @@ async function runLiveFullGame(appCheckToken, unitId = defaultQaUnit.unit.id) {
         bestScore: evaluation.scores.total,
         attemptIds: [evaluation.attemptId],
       });
+      if (turnIndex < manifest.length - 1) {
+        const checkpoint = await post("/api/game/progress", {
+          gameSessionId: session.gameSessionId,
+          result: { scores: { pink: 0, blue: 0 }, turnSummaries: [...turnSummaries] },
+        });
+        if (checkpoint.completedTurns !== turnIndex + 1 || checkpoint.recordStatus !== "partial_in_progress") {
+          throw new Error(`第 ${turnIndex + 1} 題 checkpoint 未正確寫入。`);
+        }
+        checkpoints.push(checkpoint);
+      }
     }
     const completionBody = { gameSessionId: session.gameSessionId, result: { scores: { pink: 0, blue: 0 }, turnSummaries } };
     const completed = await post("/api/game/complete", completionBody);
@@ -279,7 +290,7 @@ async function runLiveFullGame(appCheckToken, unitId = defaultQaUnit.unit.id) {
     return {
       tested: true,
       unitId,
-      ok: completed.nextGamePattern === "fixed_round_alternation" && completed.completedGameCount === 1 && repeated.nextGamePattern === "fixed_round_alternation" && repeated.idempotent === true && next.assignment?.phase === "round_alternating_fixed_start" && abandoned.status === "abandoned" && abandoned.nextGamePattern === "fixed_round_alternation",
+      ok: checkpoints.length === 11 && completed.nextGamePattern === "fixed_round_alternation" && completed.completedGameCount === 1 && repeated.nextGamePattern === "fixed_round_alternation" && repeated.idempotent === true && next.assignment?.phase === "round_alternating_fixed_start" && abandoned.status === "abandoned" && abandoned.nextGamePattern === "fixed_round_alternation",
       completedGameCount: completed.completedGameCount,
       firstPhase: session.assignment.phase,
       repeatedIdempotent: repeated.idempotent === true,
@@ -287,6 +298,7 @@ async function runLiveFullGame(appCheckToken, unitId = defaultQaUnit.unit.id) {
       nextGameAbandoned: abandoned.status === "abandoned" && abandoned.nextGamePattern === "fixed_round_alternation",
       attemptCount: results.length,
       recordingsStored: results.filter(result => result.recordingStored).length,
+      checkpointCount: checkpoints.length,
       results,
     };
   } catch (error) {
@@ -758,7 +770,7 @@ async function main() {
     checks.liveSpeechEndToEnd = browserResult.speech.tested && browserResult.speech.ok && browserResult.speech.valid && browserResult.speech.passed && browserResult.speech.totalScore >= 80 && browserResult.speech.recordingStored && browserResult.speech.transcriptionModel === "gpt-4o-mini-transcribe" && browserResult.speech.abandoned;
   }
   if (liveFullGameManifestPath) {
-    checks.liveFullGameFixedRoundCompletion = browserResult.fullGame.tested && browserResult.fullGame.ok && browserResult.fullGame.attemptCount === 12 && browserResult.fullGame.recordingsStored === 12 && browserResult.fullGame.completedGameCount === 1 && browserResult.fullGame.repeatedIdempotent && browserResult.fullGame.nextPhase === "round_alternating_fixed_start" && browserResult.fullGame.nextGameAbandoned;
+    checks.liveFullGameFixedRoundCompletion = browserResult.fullGame.tested && browserResult.fullGame.ok && browserResult.fullGame.attemptCount === 12 && browserResult.fullGame.recordingsStored === 12 && browserResult.fullGame.checkpointCount === 11 && browserResult.fullGame.completedGameCount === 1 && browserResult.fullGame.repeatedIdempotent && browserResult.fullGame.nextPhase === "round_alternating_fixed_start" && browserResult.fullGame.nextGameAbandoned;
   }
   const report = {
     ok: Object.values(checks).every(Boolean),

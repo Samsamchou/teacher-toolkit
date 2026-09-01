@@ -8,7 +8,9 @@ const projectId = process.env.GCLOUD_PROJECT || "demo-hwg7-sr";
 const region = "asia-east1";
 const functionRoot = `http://127.0.0.1:5001/${projectId}/${region}`;
 const allowedOrigin = "http://127.0.0.1:5000";
-const bank = JSON.parse(await readFile(new URL("../data/question-bank.json", import.meta.url), "utf8"));
+const questionBanks = JSON.parse(await readFile(new URL("../data/question-bank.json", import.meta.url), "utf8"));
+const bank = questionBanks.units?.find(unit => unit.unitId === "hwg7-sr");
+if (!bank) throw new Error("HWG7 SR emulator question bank is unavailable");
 const db = getFirestore(initializeApp({ projectId }));
 const bucket = getStorage().bucket(`${projectId}.appspot.com`);
 
@@ -68,10 +70,11 @@ for (let turnIndex = 0; turnIndex < selected.length; turnIndex += 1) {
     studentCode,
     questionId: question.id,
     questionType: question.type,
+    questionBankVersion: bank.questionBankVersion,
     transcript: question.standardReadSentence || question.acceptableAnswers?.[0]?.text || "test",
     result: { scores: { accuracy: 100, completeness: 100, fluency: 100, total: 100 }, passed: true, feedback: "測試", primaryIssue: "achieved" },
     recordingPath: turnIndex === 0 ? recordingPath : null,
-    expiresAt: new Date(Date.now() + 30 * 86400000),
+    expiresAt: new Date(Date.now() + 365 * 86400000),
   });
   turnSummaries.push({
     turnIndex,
@@ -84,6 +87,28 @@ for (let turnIndex = 0; turnIndex < selected.length; turnIndex += 1) {
   });
 }
 
+const firstProgressBody = { gameSessionId: second.payload.gameSessionId, result: { scores: { pink: 5, blue: 0 }, turnSummaries: turnSummaries.slice(0, 1) } };
+const firstProgress = await post("saveGameProgress", firstProgressBody);
+expect(firstProgress.status === 200 && firstProgress.payload.completedTurns === 1 && firstProgress.payload.recordStatus === "partial_in_progress", "first-question checkpoint failed");
+const repeatedFirstProgress = await post("saveGameProgress", firstProgressBody);
+expect(repeatedFirstProgress.status === 200 && repeatedFirstProgress.payload.idempotent === true, "repeated first checkpoint was not idempotent");
+const secondProgressBody = { gameSessionId: second.payload.gameSessionId, result: { scores: { pink: 5, blue: 4 }, turnSummaries: turnSummaries.slice(0, 2) } };
+const secondProgress = await post("saveGameProgress", secondProgressBody);
+expect(secondProgress.status === 200 && secondProgress.payload.completedTurns === 2 && secondProgress.payload.completedRounds === 1, "second-question checkpoint failed");
+const regressedProgress = await post("saveGameProgress", firstProgressBody);
+expect(regressedProgress.status === 200 && regressedProgress.payload.idempotent === true && regressedProgress.payload.completedTurns === 2, "checkpoint regressed to an older question count");
+const partialSession = await db.collection("gameSessions").doc(second.payload.gameSessionId).get();
+const partialRotation = await db.collection("gameRotations").doc(partialSession.data().rotationId).get();
+expect(partialSession.data().status === "active" && partialRotation.data().completedGameCount === 0, "partial checkpoint changed complete-game accounting");
+
+const wrongLogin = await post("teacherLogin", { passcode: "135790" });
+expect(wrongLogin.status === 401, "wrong teacher login should fail");
+const login = await post("teacherLogin", { passcode: "246810" });
+expect(login.status === 200 && login.payload.teacherSessionToken, "teacher login failed");
+const token = login.payload.teacherSessionToken;
+const partialListed = await post("teacherApi", { action: "listResults", filters: { dateFrom: second.payload.date, dateTo: second.payload.date, unitId: "hwg7-sr", studentCode: "00001" } }, token);
+expect(partialListed.status === 200 && partialListed.payload.count === 1 && partialListed.payload.records[0].completedTurns === 2 && partialListed.payload.records[0].attempts.length === 2, "teacher partial record failed");
+
 const completeBody = { gameSessionId: second.payload.gameSessionId, result: { scores: { pink: 24, blue: 24 }, turnSummaries } };
 const completed = await post("completeGame", completeBody);
 expect(completed.status === 200 && completed.payload.nextGamePattern === "fixed_round_alternation" && completed.payload.completedGameCount === 1, "complete did not retain the fixed pattern");
@@ -94,13 +119,8 @@ const third = await post("startGame", { unitId: "hwg7-sr", students, requestId: 
 expect(third.status === 200 && third.payload.assignment.phase === "round_alternating_fixed_start", "next completed game did not reset to the fixed pattern");
 await post("abandonGame", { gameSessionId: third.payload.gameSessionId });
 
-const wrongLogin = await post("teacherLogin", { passcode: "135790" });
-expect(wrongLogin.status === 401, "wrong teacher login should fail");
-const login = await post("teacherLogin", { passcode: "246810" });
-expect(login.status === 200 && login.payload.teacherSessionToken, "teacher login failed");
-const token = login.payload.teacherSessionToken;
 const listed = await post("teacherApi", { action: "listResults", filters: { dateFrom: second.payload.date, dateTo: second.payload.date, unitId: "hwg7-sr", studentCode: "00001" } }, token);
-expect(listed.status === 200 && listed.payload.count === 1 && listed.payload.records[0].attempts.length === 12, "teacher filters/details failed");
+expect(listed.status === 200 && listed.payload.count === 1 && listed.payload.records[0].attempts.length === 12 && listed.payload.records[0].recordStatus === "completed" && listed.payload.records[0].completedTurns === 12, "teacher filters/details failed");
 const protectedAttemptId = `${second.payload.gameSessionId}_00_1`;
 const anonymousRecording = await postBinary("teacherRecording", { attemptId: protectedAttemptId });
 expect(anonymousRecording.status === 401, "anonymous teacher recording request should fail");
@@ -132,6 +152,10 @@ console.log(JSON.stringify({
   nextPhaseAfterComplete: third.payload.assignment.phase,
   completedGameCount: completed.payload.completedGameCount,
   idempotentRepeat: repeated.payload.idempotent,
+  firstCheckpointTurns: firstProgress.payload.completedTurns,
+  secondCheckpointTurns: secondProgress.payload.completedTurns,
+  partialTeacherAttempts: partialListed.payload.records[0].attempts.length,
+  partialDidNotComplete: partialSession.data().status === "active" && partialRotation.data().completedGameCount === 0,
   teacherFilteredRecords: listed.payload.count,
   attemptsInRecord: listed.payload.records[0].attempts.length,
   anonymousRecordingStatus: anonymousRecording.status,

@@ -8,11 +8,13 @@ import { scoreSpeechAttempt } from "./functions/lib/scoring.mjs";
 import {
     DomainValidationError,
     decideGameCompletion,
+    decideProgressSave,
     decideGameStart,
     expectedPlayerForTurn as expectedAssignedPlayerForTurn,
     pairRotationId,
     taipeiDate,
     validateCompletionSummary,
+    validateProgressSummary,
     validateStudentCodes,
     validateUnitId
 } from "./functions/lib/app-domain.mjs";
@@ -178,6 +180,12 @@ function abandonLocalGame(body) {
         const rotation = rotations.get(session.rotationId);
         if (rotation?.activeGameId === sessionId) Object.assign(rotation, { activeGameId: null, activeRequestId: null, activeStudents: null, activeAssignment: null, activeUntil: null });
     }
+    const existingResult = results.get(sessionId);
+    if (session.status === "abandoned" && existingResult && existingResult.recordStatus !== "completed") {
+        existingResult.recordStatus = "partial_ended";
+        existingResult.endedAt = session.abandonedAt || new Date().toISOString();
+        existingResult.updatedAt = existingResult.endedAt;
+    }
     return { ok: true, status: session.status, nextGamePattern: "fixed_round_alternation" };
 }
 
@@ -205,10 +213,103 @@ async function evaluateLocalSpeech(body) {
     const response = { attemptId, questionId: question.id, transcript, ...score, recordingStored: false, provider: { transcriptionModel: "gpt-4o-mini-transcribe" } };
     attempts.set(attemptId, {
         id: attemptId, gameSessionId: sessionId, unitId: session.unitId, date: session.date, turnIndex, attemptNumber,
+        questionBankVersion: session.questionBankVersion,
         studentCode: player.studentCode, questionId: question.id, questionType: question.type, transcript, result: score,
         recordingAvailable: false, createdAt: new Date().toISOString(), response
     });
     return { ok: true, consumeAttempt: true, ...response };
+}
+
+function compactLocalAttempt(attempt) {
+    return {
+        attemptId: attempt.id,
+        turnIndex: attempt.turnIndex,
+        attemptNumber: attempt.attemptNumber,
+        questionId: attempt.questionId,
+        questionType: attempt.questionType,
+        studentCode: attempt.studentCode,
+        unitId: attempt.unitId,
+        questionBankVersion: attempt.questionBankVersion,
+        transcript: attempt.result?.displayTranscript || attempt.transcript,
+        rawTranscript: attempt.result?.rawTranscript || attempt.transcript,
+        canonicalTranscript: attempt.result?.canonicalTranscript || attempt.transcript,
+        displayTranscript: attempt.result?.displayTranscript || attempt.transcript,
+        scores: attempt.result?.scores || null,
+        passed: attempt.result?.passed === true,
+        feedback: attempt.result?.feedback || "",
+        primaryIssue: attempt.result?.primaryIssue || null,
+        matchedAnswer: attempt.result?.matchedAnswer || null,
+        recordingAvailable: false,
+        recordingExpiresAt: null,
+    };
+}
+
+function verifyLocalSummary(session, summary) {
+    const { questionMap } = localBankForUnit(session.unitId);
+    const questionIds = summary.turnSummaries.map(turn => turn.questionId);
+    if (new Set(questionIds).size !== questionIds.length || questionIds.some(id => !questionMap.has(id))) {
+        throw new DomainValidationError("invalid_question_set", "遊戲進度包含重複或不存在的正式題目。", 409);
+    }
+    const attemptList = [];
+    for (const turn of summary.turnSummaries) {
+        const player = expectedPlayer(session, turn.turnIndex);
+        const question = questionMap.get(turn.questionId);
+        if (turn.studentCode !== player.studentCode || turn.questionType !== player.questionType || question.type !== player.questionType) {
+            throw new DomainValidationError("turn_assignment_mismatch", "回合學生或題型與開局分配不一致。", 409);
+        }
+        for (const attemptId of turn.attemptIds) {
+            const attempt = attempts.get(attemptId);
+            if (
+                !attempt ||
+                attempt.gameSessionId !== session.id ||
+                attempt.unitId !== session.unitId ||
+                attempt.questionBankVersion !== session.questionBankVersion ||
+                attempt.turnIndex !== turn.turnIndex ||
+                attempt.questionId !== turn.questionId ||
+                attempt.studentCode !== turn.studentCode ||
+                attempt.questionType !== turn.questionType
+            ) {
+                throw new DomainValidationError("turn_attempt_mismatch", "回合評測紀錄與題目、學生或題序不一致。", 409);
+            }
+            attemptList.push(attempt);
+        }
+    }
+    return attemptList;
+}
+
+function saveLocalGameProgress(body) {
+    const sessionId = requiredSessionId(body?.gameSessionId);
+    const summary = validateProgressSummary(body?.result);
+    const session = gameSessions.get(sessionId);
+    if (!session) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
+    const attemptList = verifyLocalSummary(session, summary);
+    const existingResult = results.get(sessionId) || null;
+    const decision = decideProgressSave({ session, existingResult, completedTurns: summary.turnSummaries.length });
+    if (["already_saved", "already_completed"].includes(decision.action)) {
+        return { ok: true, resultId: sessionId, recordStatus: decision.recordStatus, completedTurns: decision.completedTurns, completedRounds: decision.completedRounds, idempotent: true };
+    }
+    const checkpointAt = new Date().toISOString();
+    results.set(sessionId, {
+        ...(existingResult || {}),
+        id: sessionId,
+        unitId: session.unitId,
+        date: session.date,
+        students: session.students,
+        classCodes: [...new Set(session.students.map(code => code.slice(0, 3)))],
+        assignment: session.assignment,
+        questionBankVersion: session.questionBankVersion,
+        scores: summary.scores,
+        turnSummaries: summary.turnSummaries,
+        attempts: attemptList.map(compactLocalAttempt),
+        recordStatus: decision.recordStatus,
+        completedTurns: decision.completedTurns,
+        completedRounds: decision.completedRounds,
+        createdAt: existingResult?.createdAt || checkpointAt,
+        playedAt: existingResult?.playedAt || session.createdAt || checkpointAt,
+        updatedAt: checkpointAt,
+        deletedAt: existingResult?.deletedAt || null,
+    });
+    return { ok: true, resultId: sessionId, recordStatus: decision.recordStatus, completedTurns: decision.completedTurns, completedRounds: decision.completedRounds, idempotent: false };
 }
 
 function completeLocalGame(body) {
@@ -219,28 +320,22 @@ function completeLocalGame(body) {
     const rotation = rotations.get(session.rotationId);
     const decision = decideGameCompletion({ session, rotation });
     if (decision.action === "already_completed") return { ok: true, resultId: sessionId, completedGameCount: rotation?.completedGameCount ?? null, nextGamePattern: "fixed_round_alternation", idempotent: true };
-    const { questionMap } = localBankForUnit(session.unitId);
-    const questionIds = summary.turnSummaries.map(turn => turn.questionId);
-    if (new Set(questionIds).size !== 12 || questionIds.some(id => !questionMap.has(id))) throw new DomainValidationError("invalid_question_set", "完整遊戲必須包含 12 道不重複題目。", 409);
-    for (const turn of summary.turnSummaries) {
-        const player = expectedPlayer(session, turn.turnIndex);
-        if (turn.studentCode !== player.studentCode || turn.questionType !== player.questionType || questionMap.get(turn.questionId).type !== player.questionType) throw new DomainValidationError("turn_assignment_mismatch", "回合學生或題型與開局分配不一致。", 409);
-        if (turn.attemptIds.some(id => attempts.get(id)?.gameSessionId !== sessionId)) throw new DomainValidationError("attempt_session_mismatch", "口說評測紀錄與本局不一致。", 409);
-    }
+    const attemptList = verifyLocalSummary(session, summary);
     const completedAt = new Date().toISOString();
     session.status = "completed";
     session.completedAt = completedAt;
     Object.assign(rotation, { completedGameCount: decision.completedGameCount, activeGameId: null, activeRequestId: null, activeStudents: null, activeAssignment: null, activeUntil: null, lastCompletedGameId: sessionId });
-    const attemptList = [...new Set(summary.turnSummaries.flatMap(turn => turn.attemptIds))].map(id => attempts.get(id));
+    const existingResult = results.get(sessionId) || null;
     results.set(sessionId, {
-        id: sessionId, unitId: session.unitId, date: session.date, students: session.students, assignment: session.assignment,
+        ...(existingResult || {}),
+        id: sessionId, unitId: session.unitId, date: session.date, students: session.students,
+        classCodes: [...new Set(session.students.map(code => code.slice(0, 3)))], assignment: session.assignment,
+        questionBankVersion: session.questionBankVersion,
         scores: summary.scores, turnSummaries: summary.turnSummaries,
-        attempts: attemptList.map(attempt => ({
-            attemptId: attempt.id, turnIndex: attempt.turnIndex, attemptNumber: attempt.attemptNumber, questionId: attempt.questionId,
-            questionType: attempt.questionType, studentCode: attempt.studentCode, transcript: attempt.transcript, scores: attempt.result.scores,
-            passed: attempt.result.passed, feedback: attempt.result.feedback, recordingAvailable: false
-        })),
-        playedAt: completedAt, createdAt: completedAt, deletedAt: null
+        attempts: attemptList.map(compactLocalAttempt),
+        recordStatus: "completed", completedTurns: 12, completedRounds: 6, completedAt, updatedAt: completedAt,
+        playedAt: existingResult?.playedAt || completedAt, createdAt: existingResult?.createdAt || completedAt,
+        deletedAt: existingResult?.deletedAt || null
     });
     return { ok: true, resultId: sessionId, completedGameCount: decision.completedGameCount, nextGamePattern: "fixed_round_alternation", idempotent: false };
 }
@@ -341,6 +436,7 @@ const server = http.createServer(async (request, response) => {
             if (pathname === "/api/game/start") return sendJson(response, 200, startLocalGame(body));
             if (pathname === "/api/game/abandon") return sendJson(response, 200, abandonLocalGame(body));
             if (pathname === "/api/evaluate-speech") return sendJson(response, 200, await evaluateLocalSpeech(body));
+            if (pathname === "/api/game/progress") return sendJson(response, 200, saveLocalGameProgress(body));
             if (pathname === "/api/game/complete") return sendJson(response, 200, completeLocalGame(body));
             if (pathname === "/api/teacher/login") return sendJson(response, 200, await localTeacherLogin(request, body));
             if (pathname === "/api/teacher/recording") return sendJson(response, 200, localTeacherRecording(request, body));

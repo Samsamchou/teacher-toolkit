@@ -151,6 +151,11 @@ export function validateDeployment({ root = projectRoot, env = process.env } = {
   }
   requireCondition(firebase.hosting?.public === ".", "Hosting public 根目錄必須維持目前專案根目錄。");
   requireCondition(firebase.hosting?.ignore?.includes("data/*.json"), "Hosting 必須排除私有 JSON 題庫。");
+  const progressRewrite = firebase.hosting?.rewrites?.find(entry => entry.source === "/api/game/progress");
+  requireCondition(progressRewrite?.function?.functionId === "saveGameProgress" && progressRewrite?.function?.region === "asia-east1", "逐題進度 API 必須指向 asia-east1 的 saveGameProgress。");
+  const storageLifecycle = readJson(root, "storage-lifecycle.json", "Storage lifecycle");
+  const recordingDeleteRule = storageLifecycle.rule?.find(rule => rule.action?.type === "Delete" && rule.condition?.matchesPrefix?.includes("recordings/"));
+  requireCondition(recordingDeleteRule?.condition?.age === 365, "新錄音的 Storage lifecycle 必須設定為 365 天。");
   const publicHeaders = firebase.hosting?.headers
     ?.find((entry) => entry.source === "**")?.headers || [];
   const publicHeaderMap = new Map(

@@ -15,6 +15,7 @@ const [
   firebaseConfig,
   firestoreRules,
   storageRules,
+  storageLifecycle,
   deploymentGateSource,
   liveQaSource,
 ] = await Promise.all([
@@ -30,6 +31,7 @@ const [
   readFile(new URL("../firebase.json", import.meta.url), "utf8").then(JSON.parse),
   readFile(new URL("../firestore.rules", import.meta.url), "utf8"),
   readFile(new URL("../storage.rules", import.meta.url), "utf8"),
+  readFile(new URL("../storage-lifecycle.json", import.meta.url), "utf8").then(JSON.parse),
   readFile(new URL("../scripts/deployment-gate.mjs", import.meta.url), "utf8"),
   readFile(new URL("../scripts/qa-live-deployment.mjs", import.meta.url), "utf8"),
 ]);
@@ -159,4 +161,32 @@ test("teacher recording playback uses protected binary fetch and revocable Blob 
   assert.match(indexSource, /URL\.revokeObjectURL/u);
   assert.match(indexSource, /controlsList="nodownload noplaybackrate noremoteplayback"/u);
   assert.match(indexSource, /請點一下播放器的播放鍵/u);
+});
+
+test("each scored question checkpoints one monotonic teacher record without completing the game", () => {
+  const rewrite = firebaseConfig.hosting.rewrites.find(item => item.source === "/api/game/progress");
+  assert.equal(rewrite?.function?.functionId, "saveGameProgress");
+  assert.match(apiSource, /async function saveGameProgress/u);
+  assert.match(apiSource, /post\("\/api\/game\/progress"/u);
+  assert.match(serverSource, /pathname === "\/api\/game\/progress"/u);
+  assert.match(functionsSource, /export const saveGameProgress/u);
+  assert.match(functionsSource, /decideProgressSave/u);
+  assert.match(domainSource, /export function validateProgressSummary/u);
+  assert.match(indexSource, /scoredTurnIndexesRef\.current\.add\(marble\.turnIndex\)/u);
+  assert.match(indexSource, /queueCheckpointRef\.current\?\.\(completedTurns, checkpointScores\)/u);
+  assert.match(indexSource, /scoredCountRef\.current >= totalTurns && finishRef\.current/u);
+  assert.doesNotMatch(indexSource, /finalFallbackRef\.current = setTimeout\(\(\) => \{\s*if \(finishRef\.current\) finishRef\.current/u);
+  assert.match(indexSource, /if \(state\.pending\) return flushCheckpointRef\.current\(\{ drain \}\)/u);
+  assert.match(indexSource, /紀錄暫時排隊，系統會自動重試/u);
+  assert.match(deploymentGateSource, /逐題進度 API 必須指向 asia-east1 的 saveGameProgress/u);
+});
+
+test("new recordings use 365-day expiry while cleanup still follows each attempt expiresAt", () => {
+  const recordingRule = storageLifecycle.rule.find(rule => rule.condition?.matchesPrefix?.includes("recordings/"));
+  assert.equal(recordingRule?.condition?.age, 365);
+  assert.match(functionsSource, /const RECORDING_RETENTION_DAYS = 365/u);
+  assert.match(functionsSource, /retentionDays: String\(RECORDING_RETENTION_DAYS\)/u);
+  assert.match(functionsSource, /where\("expiresAt", "<=", Timestamp\.now\(\)\)/u);
+  assert.match(indexSource, /播放保存期限內錄音/u);
+  assert.match(deploymentGateSource, /Storage lifecycle 必須設定為 365 天/u);
 });

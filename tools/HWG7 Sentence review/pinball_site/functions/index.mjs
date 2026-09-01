@@ -11,11 +11,13 @@ import { buildQuestionBankRegistry } from "./lib/question-bank.mjs";
 import {
   DomainValidationError,
   decideGameCompletion,
+  decideProgressSave,
   decideGameStart,
   expectedPlayerForTurn as expectedAssignedPlayerForTurn,
   pairRotationId,
   taipeiDate,
   validateCompletionSummary,
+  validateProgressSummary,
   validateStudentCodes,
   validateUnitId,
 } from "./lib/app-domain.mjs";
@@ -50,7 +52,8 @@ const REQUIRE_APP_CHECK = defineString("REQUIRE_APP_CHECK", {
 });
 
 const REGION = "asia-east1";
-const RECORDING_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
+const RECORDING_RETENTION_DAYS = 365;
+const RECORDING_RETENTION_MS = RECORDING_RETENTION_DAYS * 24 * 60 * 60 * 1000;
 const MAX_QUERY_DAYS = 90;
 const bankDocument = JSON.parse(readFileSync(new URL("./data/question-bank.json", import.meta.url), "utf8"));
 const bankRegistry = buildQuestionBankRegistry(bankDocument);
@@ -336,13 +339,19 @@ export const abandonGame = apiEndpoint(async (request, response) => {
     const sessionSnapshot = await transaction.get(sessionRef);
     if (!sessionSnapshot.exists) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
     const session = sessionSnapshot.data();
+    const resultRef = db.collection("practiceResults").doc(sessionId);
+    const resultSnapshot = await transaction.get(resultRef);
     if (session.status !== "active") {
+      if (session.status === "abandoned" && resultSnapshot.exists && resultSnapshot.data().recordStatus !== "completed") {
+        transaction.update(resultRef, { recordStatus: "partial_ended", endedAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp() });
+      }
       status = session.status;
       return;
     }
     const rotationRef = db.collection("gameRotations").doc(session.rotationId);
     const rotationSnapshot = await transaction.get(rotationRef);
-    transaction.update(sessionRef, { status: "abandoned", abandonedAt: FieldValue.serverTimestamp() });
+    const abandonedAt = FieldValue.serverTimestamp();
+    transaction.update(sessionRef, { status: "abandoned", abandonedAt });
     if (rotationSnapshot.exists && rotationSnapshot.data().activeGameId === sessionId) {
       transaction.set(rotationRef, {
         activeGameId: null,
@@ -352,6 +361,9 @@ export const abandonGame = apiEndpoint(async (request, response) => {
         activeUntil: null,
         updatedAt: FieldValue.serverTimestamp(),
       }, { merge: true });
+    }
+    if (resultSnapshot.exists && resultSnapshot.data().recordStatus !== "completed") {
+      transaction.update(resultRef, { recordStatus: "partial_ended", endedAt: abandonedAt, updatedAt: abandonedAt });
     }
     status = "abandoned";
   });
@@ -486,7 +498,7 @@ export const evaluateSpeech = apiEndpoint(async (request, response) => {
       metadata: {
         contentType: audio.openAiMime,
         cacheControl: "private, no-store, max-age=0",
-        metadata: { expiresAt: expiresAt.toISOString(), retentionDays: "30" },
+        metadata: { expiresAt: expiresAt.toISOString(), retentionDays: String(RECORDING_RETENTION_DAYS) },
       },
     });
 
@@ -545,34 +557,135 @@ function compactAttempt(data) {
   };
 }
 
-export const completeGame = apiEndpoint(async (request, response) => {
-  const sessionId = requiredSessionId(request.body?.gameSessionId);
-  const summary = validateCompletionSummary(request.body?.result);
+async function loadVerifiedSummaryEvidence({ db, sessionId, session, summary }) {
   const questionIds = summary.turnSummaries.map(({ questionId }) => questionId);
-  if (new Set(questionIds).size !== 12 || questionIds.some((id) => !questionMap.has(id))) {
-    throw new DomainValidationError("invalid_question_set", "完整遊戲必須包含 12 道不重複的正式題目。", 409);
+  if (new Set(questionIds).size !== questionIds.length || questionIds.some((id) => !questionMap.has(id))) {
+    throw new DomainValidationError("invalid_question_set", "遊戲進度包含重複或不存在的正式題目。", 409);
   }
+  for (const questionId of questionIds) {
+    assertQuestionMatchesSession(questionMap.get(questionId), session);
+  }
+  const attemptIds = [...new Set(summary.turnSummaries.flatMap(({ attemptIds: ids }) => ids))];
+  if (!attemptIds.length) throw new DomainValidationError("attempts_required", "缺少口說評測紀錄。", 409);
+  const attemptSnapshots = await db.getAll(...attemptIds.map((id) => db.collection("practiceAttempts").doc(id)));
+  if (attemptSnapshots.some((snapshot) => !snapshot.exists)) {
+    throw new DomainValidationError("attempt_not_found", "部分口說評測紀錄尚未完成，請稍後再試。", 409);
+  }
+  const attempts = attemptSnapshots.map((snapshot) => snapshot.data());
+  if (attempts.some((attempt) =>
+    attempt.gameSessionId !== sessionId ||
+    attempt.unitId !== session.unitId ||
+    attempt.questionBankVersion !== session.questionBankVersion
+  )) {
+    throw new DomainValidationError("attempt_session_mismatch", "口說評測紀錄與本局單元或版本不一致。", 409);
+  }
+
+  for (const turn of summary.turnSummaries) {
+    const expected = expectedPlayerForTurn(session, turn.turnIndex);
+    const question = assertQuestionMatchesSession(questionMap.get(turn.questionId), session);
+    if (turn.studentCode !== expected.studentCode || turn.questionType !== expected.questionType || question.type !== expected.questionType) {
+      throw new DomainValidationError("turn_assignment_mismatch", "回合學生或題型與開局分配不一致。", 409);
+    }
+    if (!turn.attemptIds.length || turn.attemptIds.some((id) => !attemptIds.includes(id))) {
+      throw new DomainValidationError("turn_attempt_missing", "每個回合都必須有口說評測紀錄。", 409);
+    }
+    const turnAttempts = attempts.filter((attempt) => turn.attemptIds.includes(attempt.id));
+    if (
+      turnAttempts.length !== turn.attemptIds.length ||
+      turnAttempts.some((attempt) =>
+        attempt.turnIndex !== turn.turnIndex ||
+        attempt.questionId !== turn.questionId ||
+        attempt.studentCode !== turn.studentCode ||
+        attempt.questionType !== turn.questionType
+      )
+    ) {
+      throw new DomainValidationError("turn_attempt_mismatch", "回合評測紀錄與題目、學生或題序不一致。", 409);
+    }
+  }
+  return attempts;
+}
+
+export const saveGameProgress = apiEndpoint(async (request, response) => {
+  const sessionId = requiredSessionId(request.body?.gameSessionId);
+  const summary = validateProgressSummary(request.body?.result);
   const { db } = adminServices();
   const initialSessionSnapshot = await db.collection("gameSessions").doc(sessionId).get();
   if (!initialSessionSnapshot.exists) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
   const initialSession = { id: sessionId, ...initialSessionSnapshot.data() };
   assertSessionUsesCurrentBank(initialSession);
-  for (const questionId of questionIds) {
-    assertQuestionMatchesSession(questionMap.get(questionId), initialSession);
-  }
-  const attemptIds = [...new Set(summary.turnSummaries.flatMap(({ attemptIds: ids }) => ids))];
-  if (!attemptIds.length) throw new DomainValidationError("attempts_required", "缺少口說評測紀錄。", 409);
-  const attemptSnapshots = await db.getAll(...attemptIds.map((id) => db.collection("practiceAttempts").doc(id)));
-  if (attemptSnapshots.some((snapshot) => !snapshot.exists)) throw new DomainValidationError("attempt_not_found", "部分口說評測紀錄尚未完成，請稍後再試。", 409);
-  const attempts = attemptSnapshots.map((snapshot) => snapshot.data());
-  if (attempts.some((attempt) => attempt.gameSessionId !== sessionId)) throw new DomainValidationError("attempt_session_mismatch", "口說評測紀錄與本局不一致。", 409);
-  if (attempts.some((attempt) =>
-    attempt.gameSessionId !== sessionId ||
-    attempt.unitId !== initialSession.unitId ||
-    attempt.questionBankVersion !== initialSession.questionBankVersion
-  )) {
-    throw new DomainValidationError("attempt_session_mismatch", "口說評測紀錄與本局單元或版本不一致。", 409);
-  }
+  const attempts = await loadVerifiedSummaryEvidence({ db, sessionId, session: initialSession, summary });
+
+  let outcome;
+  await db.runTransaction(async (transaction) => {
+    const sessionRef = db.collection("gameSessions").doc(sessionId);
+    const resultRef = db.collection("practiceResults").doc(sessionId);
+    const sessionSnapshot = await transaction.get(sessionRef);
+    if (!sessionSnapshot.exists) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
+    const resultSnapshot = await transaction.get(resultRef);
+    const session = { id: sessionId, ...sessionSnapshot.data() };
+    const existingResult = resultSnapshot.exists ? resultSnapshot.data() : null;
+    assertSessionUsesCurrentBank(session);
+    const decision = decideProgressSave({ session, existingResult, completedTurns: summary.turnSummaries.length });
+    if (["already_saved", "already_completed"].includes(decision.action)) {
+      if (decision.recordStatus === "partial_ended" && resultSnapshot.exists && existingResult.recordStatus !== "completed") {
+        transaction.update(resultRef, { recordStatus: "partial_ended", endedAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp() });
+      }
+      outcome = {
+        resultId: sessionId,
+        recordStatus: decision.recordStatus,
+        completedTurns: decision.completedTurns,
+        completedRounds: decision.completedRounds,
+        idempotent: true,
+      };
+      return;
+    }
+
+    const checkpointAt = Timestamp.now();
+    const record = {
+      id: sessionId,
+      unitId: session.unitId,
+      date: session.date,
+      students: session.students,
+      classCodes: [...new Set(session.students.map((code) => code.slice(0, 3)))],
+      assignment: session.assignment,
+      questionBankVersion: session.questionBankVersion,
+      scores: summary.scores,
+      turnSummaries: summary.turnSummaries,
+      attempts: attempts.map(compactAttempt),
+      recordStatus: decision.recordStatus,
+      completedTurns: decision.completedTurns,
+      completedRounds: decision.completedRounds,
+      updatedAt: checkpointAt,
+    };
+    if (!resultSnapshot.exists) {
+      Object.assign(record, {
+        createdAt: checkpointAt,
+        playedAt: session.createdAt || checkpointAt,
+        deletedAt: null,
+        deletedBySession: null,
+      });
+    }
+    transaction.set(resultRef, record, { merge: true });
+    outcome = {
+      resultId: sessionId,
+      recordStatus: decision.recordStatus,
+      completedTurns: decision.completedTurns,
+      completedRounds: decision.completedRounds,
+      idempotent: false,
+    };
+  });
+  return response.status(200).json({ ok: true, ...outcome });
+});
+
+export const completeGame = apiEndpoint(async (request, response) => {
+  const sessionId = requiredSessionId(request.body?.gameSessionId);
+  const summary = validateCompletionSummary(request.body?.result);
+  const { db } = adminServices();
+  const initialSessionSnapshot = await db.collection("gameSessions").doc(sessionId).get();
+  if (!initialSessionSnapshot.exists) throw new DomainValidationError("game_not_found", "找不到這一局遊戲。", 404);
+  const initialSession = { id: sessionId, ...initialSessionSnapshot.data() };
+  assertSessionUsesCurrentBank(initialSession);
+  const attempts = await loadVerifiedSummaryEvidence({ db, sessionId, session: initialSession, summary });
 
   let outcome;
   await db.runTransaction(async (transaction) => {
@@ -590,30 +703,9 @@ export const completeGame = apiEndpoint(async (request, response) => {
       return;
     }
 
-    for (const turn of summary.turnSummaries) {
-      const expected = expectedPlayerForTurn(session, turn.turnIndex);
-      const question = assertQuestionMatchesSession(questionMap.get(turn.questionId), session);
-      if (turn.studentCode !== expected.studentCode || turn.questionType !== expected.questionType || question.type !== expected.questionType) {
-        throw new DomainValidationError("turn_assignment_mismatch", "回合學生或題型與開局分配不一致。", 409);
-      }
-      if (!turn.attemptIds.length || turn.attemptIds.some((id) => !attemptIds.includes(id))) {
-        throw new DomainValidationError("turn_attempt_missing", "每個回合都必須有口說評測紀錄。", 409);
-      }
-      const turnAttempts = attempts.filter((attempt) => turn.attemptIds.includes(attempt.id));
-      if (
-        turnAttempts.length !== turn.attemptIds.length ||
-        turnAttempts.some((attempt) =>
-          attempt.questionId !== turn.questionId ||
-          attempt.studentCode !== turn.studentCode ||
-          attempt.questionType !== turn.questionType
-        )
-      ) {
-        throw new DomainValidationError("turn_attempt_mismatch", "回合評測紀錄與題目或學生不一致。", 409);
-      }
-    }
-
     const completedAt = Timestamp.now();
     const resultRef = db.collection("practiceResults").doc(sessionId);
+    const resultSnapshot = await transaction.get(resultRef);
     transaction.update(sessionRef, { status: "completed", completedAt });
     transaction.set(rotationRef, {
       completedGameCount: decision.completedGameCount,
@@ -626,7 +718,7 @@ export const completeGame = apiEndpoint(async (request, response) => {
       lastCompletedAt: completedAt,
       updatedAt: completedAt,
     }, { merge: true });
-    transaction.create(resultRef, {
+    const completedRecord = {
       id: sessionId,
       unitId: session.unitId,
       date: session.date,
@@ -637,11 +729,16 @@ export const completeGame = apiEndpoint(async (request, response) => {
       scores: summary.scores,
       turnSummaries: summary.turnSummaries,
       attempts: attempts.map(compactAttempt),
-      createdAt: completedAt,
-      playedAt: completedAt,
-      deletedAt: null,
-      deletedBySession: null,
-    });
+      recordStatus: "completed",
+      completedTurns: 12,
+      completedRounds: 6,
+      completedAt,
+      updatedAt: completedAt,
+    };
+    if (!resultSnapshot.exists) {
+      Object.assign(completedRecord, { createdAt: completedAt, playedAt: completedAt, deletedAt: null, deletedBySession: null });
+    }
+    transaction.set(resultRef, completedRecord, { merge: true });
     outcome = { resultId: sessionId, completedGameCount: decision.completedGameCount, nextGamePattern: "fixed_round_alternation", idempotent: false };
   });
   return response.status(200).json({ ok: true, ...outcome });
@@ -726,10 +823,19 @@ function validateDateRange(filters = {}) {
 
 function teacherRecord(data) {
   const nowMs = Date.now();
+  const inferredTurns = Array.isArray(data.turnSummaries) ? data.turnSummaries.length : 0;
+  const completedTurns = Number.isInteger(data.completedTurns) ? data.completedTurns : inferredTurns;
+  const recordStatus = data.recordStatus || (completedTurns >= 12 ? "completed" : "partial_ended");
   return {
     ...data,
+    recordStatus,
+    completedTurns,
+    completedRounds: Number.isInteger(data.completedRounds) ? data.completedRounds : Math.floor(completedTurns / 2),
     createdAt: asIso(data.createdAt),
     playedAt: asIso(data.playedAt),
+    updatedAt: asIso(data.updatedAt),
+    completedAt: asIso(data.completedAt),
+    endedAt: asIso(data.endedAt),
     deletedAt: asIso(data.deletedAt),
     attempts: (data.attempts || []).map((attempt) => ({
       ...attempt,
@@ -762,7 +868,7 @@ export const teacherRecording = apiEndpoint(async (request, response) => {
   const attempt = snapshot.data();
   const expiresAtMs = new Date(asIso(attempt.expiresAt)).getTime();
   if (attempt.recordingDeletedAt || (Number.isFinite(expiresAtMs) && expiresAtMs <= Date.now())) {
-    throw new DomainValidationError("recording_expired", "這段錄音已超過 30 天保存期限。", 410);
+    throw new DomainValidationError("recording_expired", "這段錄音已超過個別保存期限。", 410);
   }
   if (!attempt.recordingPath) {
     throw new DomainValidationError("recording_not_found", "找不到這段錄音。", 404);

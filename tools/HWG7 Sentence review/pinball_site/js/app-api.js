@@ -89,6 +89,10 @@
     return post("/api/game/abandon", { gameSessionId });
   }
 
+  async function saveGameProgress(gameSessionId, result) {
+    return post("/api/game/progress", { gameSessionId, result });
+  }
+
   async function completeGame(gameSessionId, result) {
     return post("/api/game/complete", { gameSessionId, result });
   }
@@ -154,6 +158,7 @@
     post,
     startGame,
     abandonGame,
+    saveGameProgress,
     completeGame,
     teacherLogin,
     teacherAction,
