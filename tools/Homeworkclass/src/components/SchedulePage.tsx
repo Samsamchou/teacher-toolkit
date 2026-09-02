@@ -1,7 +1,9 @@
 import { addDays, parseISO } from "date-fns";
+import { Trash2 } from "lucide-react";
 import { useMemo, useState, type CSSProperties, type FormEvent } from "react";
 import { CLASSES, PERIODS, SEMESTER, SUBJECTS } from "../data/semester";
 import {
+  activeAssignments,
   activeHolidayForDate,
   createId,
   dateKey,
@@ -11,7 +13,7 @@ import {
   weekStartKey,
 } from "../domain/logic";
 import { useAppData } from "../state/AppDataContext";
-import type { HomeworkType, ScheduleSlot } from "../types";
+import type { Assignment, HomeworkType, ScheduleSlot } from "../types";
 import { ClassBadge, EmptyState, Modal, PageHeading, Panel, SubjectBadge } from "./Common";
 import { formatSchoolDate, HOMEWORK_LABELS, WEEKDAY_LABELS } from "./labels";
 
@@ -103,9 +105,13 @@ function AssignmentDialog({ slot, onClose }: { slot: DatedSlot; onClose(): void 
 }
 
 export function SchedulePage() {
-  const { snapshot } = useAppData();
+  const { snapshot, deleteAssignment } = useAppData();
   const [weekStart, setWeekStart] = useState(currentOrFirstWeek);
   const [activeSlot, setActiveSlot] = useState<DatedSlot | null>(null);
+  const [assignmentToDelete, setAssignmentToDelete] = useState<Assignment | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+  const [deleteMessage, setDeleteMessage] = useState("");
   const dates = weekDates(weekStart);
   const lastWeek = weekStartKey(SEMESTER.endDate);
 
@@ -127,13 +133,32 @@ export function SchedulePage() {
     [dates.join("|"), snapshot.timetableExceptions],
   );
   const weekLessonCount = Object.values(scheduleByDate).reduce((sum, slots) => sum + slots.length, 0);
-  const weekAssignments = snapshot.assignments
+  const weekAssignments = activeAssignments(snapshot)
     .filter((item) => dates.includes(item.assignedDate))
     .sort((a, b) => `${b.assignedDate}-${b.period}`.localeCompare(`${a.assignedDate}-${a.period}`));
 
   const moveWeek = (difference: number) => {
     const next = weekStartKey(dateKey(addDays(parseISO(weekStart), difference * 7)));
     if (next >= weekStartKey(SEMESTER.startDate) && next <= lastWeek) setWeekStart(next);
+  };
+
+  const confirmDeleteAssignment = async () => {
+    if (!assignmentToDelete) return;
+    try {
+      setDeleting(true);
+      setDeleteError("");
+      const result = await deleteAssignment(assignmentToDelete.id);
+      setDeleteMessage(
+        result.status === "already-deleted"
+          ? "這項作業已經刪除。"
+          : "作業已刪除；原作業保留為作廢紀錄。",
+      );
+      setAssignmentToDelete(null);
+    } catch (cause) {
+      setDeleteError(cause instanceof Error ? cause.message : "作業刪除失敗。");
+    } finally {
+      setDeleting(false);
+    }
   };
 
   return (
@@ -260,13 +285,28 @@ export function SchedulePage() {
             <div><p className="eyebrow">本週紀錄</p><h3>已出的作業</h3></div>
             <span className="count-bubble">{weekAssignments.length}</span>
           </div>
+          {deleteMessage ? <p className="form-success" role="status">{deleteMessage}</p> : null}
           {weekAssignments.length ? (
             <ol className="homework-timeline">
               {weekAssignments.map((assignment) => (
                 <li key={assignment.id}>
                   <span className="homework-timeline__line" aria-hidden="true" />
-                  <div>
-                    <span>{formatSchoolDate(assignment.assignedDate)}・第 {assignment.period} 節</span>
+                  <div className="homework-timeline__content">
+                    <div className="record-card-heading">
+                      <span>{formatSchoolDate(assignment.assignedDate)}・第 {assignment.period} 節</span>
+                      <button
+                        className="record-delete-button"
+                        type="button"
+                        onClick={() => {
+                          setAssignmentToDelete(assignment);
+                          setDeleteError("");
+                        }}
+                        aria-label={`刪除 ${assignment.classId} ${assignment.content}`}
+                        title="刪除作業"
+                      >
+                        <Trash2 size={18} aria-hidden="true" />
+                      </button>
+                    </div>
                     <div><ClassBadge classId={assignment.classId} /><SubjectBadge subjectId={assignment.subjectId} /></div>
                     <strong>{HOMEWORK_LABELS[assignment.homeworkType]}・{assignment.content}</strong>
                     {activeHolidayForDate(assignment.assignedDate, snapshot.timetableExceptions) ? <em className="conflict-badge">資料衝突待確認・假日當天作業</em> : null}
@@ -281,6 +321,26 @@ export function SchedulePage() {
       </div>
 
       {activeSlot ? <AssignmentDialog slot={activeSlot} onClose={() => setActiveSlot(null)} /> : null}
+      {assignmentToDelete ? (
+        <Modal
+          title="刪除這項作業？"
+          description={`${formatSchoolDate(assignmentToDelete.assignedDate)}・${assignmentToDelete.classId}・第 ${assignmentToDelete.period} 節`}
+          onClose={() => {
+            if (!deleting) setAssignmentToDelete(null);
+          }}
+          labelledBy="delete-assignment-dialog-title"
+        >
+          <div className="destructive-confirmation">
+            <strong>{HOMEWORK_LABELS[assignmentToDelete.homeworkType]}・{assignmentToDelete.content}</strong>
+            <p>原作業會保留為作廢紀錄；相關繳交歷程將移入教師回收區，30 天後永久清除且無法還原。</p>
+            {deleteError ? <p className="form-error" role="alert">{deleteError}</p> : null}
+            <div className="modal-actions">
+              <button className="button button--ghost" type="button" disabled={deleting} onClick={() => setAssignmentToDelete(null)}>取消</button>
+              <button className="button button--danger" type="button" disabled={deleting} onClick={() => void confirmDeleteAssignment()}>{deleting ? "刪除中…" : "確認刪除"}</button>
+            </div>
+          </div>
+        </Modal>
+      ) : null}
     </div>
   );
 }

@@ -18,7 +18,7 @@ import {
 } from "firebase/firestore";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
-const PROJECT_ID = "homeworkclass-rules-test";
+const PROJECT_ID = "demo-homeworkclass-rules-test";
 const TEACHER_UID = "homeworkclass-teacher";
 const NOW = "2026-08-31T03:15:00.000Z";
 
@@ -222,6 +222,28 @@ describe("submission event validation / 繳交事件驗證", () => {
     await assertFails(updateDoc(reference, { outcome: "later-submitted" }));
     await assertFails(deleteDoc(reference));
   });
+
+  it("rejects new submission events for a revoked assignment", async () => {
+    const database = teacherDb();
+    const assignmentId = "revoked-parent";
+    await assertSucceeds(
+      setDoc(doc(database, "assignments", assignmentId), assignment(assignmentId)),
+    );
+    await testEnvironment.withSecurityRulesDisabled(async (context) => {
+      await setDoc(doc(context.firestore(), "assignmentRevocations", assignmentId), {
+        id: assignmentId,
+        assignmentId,
+        deletedAt: NOW,
+      });
+    });
+
+    await assertFails(
+      setDoc(
+        doc(database, "submissionEvents", "revoked-parent-event"),
+        submissionEvent("revoked-parent-event", assignmentId),
+      ),
+    );
+  });
 });
 
 describe("classroom incident validation / 課堂事件驗證", () => {
@@ -255,6 +277,14 @@ describe("classroom incident validation / 課堂事件驗證", () => {
     await assertFails(
       setDoc(doc(database, "classroomIncidents", "no-seat-or-note"), noSubject),
     );
+  });
+
+  it("keeps classroom incidents browser-append-only", async () => {
+    const database = teacherDb();
+    const reference = doc(database, "classroomIncidents", "append-only-incident");
+    await assertSucceeds(setDoc(reference, incident("append-only-incident")));
+    await assertFails(updateDoc(reference, { weight: 2 }));
+    await assertFails(deleteDoc(reference));
   });
 });
 
@@ -406,5 +436,50 @@ describe("settings and hidden collections / 設定與隱藏集合", () => {
         failedAttempts: 1,
       }),
     );
+  });
+
+  it("lets only the teacher read deletion state and denies every browser write", async () => {
+    await testEnvironment.withSecurityRulesDisabled(async (context) => {
+      const adminDb = context.firestore();
+      await setDoc(doc(adminDb, "assignmentRevocations", "assignment-1"), {
+        id: "assignment-1",
+        assignmentId: "assignment-1",
+        deletedAt: NOW,
+      });
+      await setDoc(doc(adminDb, "deletedRecords", "incident-1"), {
+        id: "incident-1",
+        recordType: "classroom-incident",
+        originalId: "incident-1",
+        payload: incident("incident-1"),
+        deletedAt: NOW,
+        purgeAt: "2026-10-01T03:15:00.000Z",
+      });
+      await setDoc(doc(adminDb, "deletionAudits", "classroom-incident_incident-1"), {
+        id: "classroom-incident_incident-1",
+        recordType: "classroom-incident",
+        originalId: "incident-1",
+        deletedAt: NOW,
+        deletedCount: 1,
+      });
+    });
+
+    const database = teacherDb();
+    const unauthenticated = testEnvironment.unauthenticatedContext().firestore();
+    for (const [collectionName, documentId] of [
+      ["assignmentRevocations", "assignment-1"],
+      ["deletedRecords", "incident-1"],
+      ["deletionAudits", "classroom-incident_incident-1"],
+    ] as const) {
+      const reference = doc(database, collectionName, documentId);
+      await assertSucceeds(getDoc(reference));
+      await assertFails(getDoc(doc(unauthenticated, collectionName, documentId)));
+      await assertFails(updateDoc(reference, { deletedCount: 99 }));
+      await assertFails(deleteDoc(reference));
+      await assertFails(
+        setDoc(doc(database, collectionName, `${documentId}-browser`), {
+          id: `${documentId}-browser`,
+        }),
+      );
+    }
   });
 });

@@ -2,6 +2,7 @@ import { addDays, parseISO } from "date-fns";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { CLASSES, SEMESTER, SUBJECTS } from "../data/semester";
 import {
+  activeAssignments,
   activeHolidayForDate,
   assignmentsForClassWindow,
   createId,
@@ -48,11 +49,11 @@ export function SubmissionPage({ onGoSchedule }: { onGoSchedule(): void }) {
       assignmentsForClassWindow(
         classId,
         selectedDate,
-        snapshot.assignments,
+        activeAssignments(snapshot),
         snapshot.submissionEvents,
         snapshot.timetableExceptions,
       ),
-    [classId, selectedDate, snapshot.assignments, snapshot.submissionEvents, snapshot.timetableExceptions],
+    [classId, selectedDate, snapshot.assignments, snapshot.assignmentRevocations, snapshot.submissionEvents, snapshot.timetableExceptions],
   );
   const visibleAssignments = [...assignmentWindow.recent, ...assignmentWindow.olderOutstanding];
   const activeAssignment = visibleAssignments.find((item) => item.id === assignmentId) ?? visibleAssignments[0];

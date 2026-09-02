@@ -10,6 +10,8 @@ This project has both an Emulator security baseline and a read-back production d
 
 The production target is `hwclass-479d2`. The dated deployment record, rather than `.firebaserc`, is the evidence for its current state.
 
+2026-09-02 個別作業／課堂事件刪除安全流程已完成 Auth／Functions／Firestore Emulator 驗證，並依教師明確授權正式部署。`deleteTeacherRecord` 已在 `asia-east1` 以 Node.js 22、2nd Gen、256 MB、30 秒、max 5 的設定讀回為 ACTIVE；Rules 線上 SHA-256 與本機完全一致，`deletedRecords.purgeAt` TTL 為 `true`，Hosting asset 與本機 build 完全一致。本次沒有建立或刪除正式教學紀錄。
+
 ## 安全架構 / Security architecture
 
 1. 首頁只把六位數通行碼送到 callable v2 Function `verifyTeacherPin`；通行碼不進入前端原始碼、Firestore 或 Git。
@@ -20,6 +22,7 @@ The production target is `hwclass-479d2`. The dated deployment record, rather th
 6. Firestore Rules 同時要求固定 uid 與 `role: teacher`；單有其中一項仍會被拒絕。
 7. 作業、繳交、課堂事件與課表異動只能新增，瀏覽器不能更新或刪除。補交與修正必須新增事件，保留歷程。
 8. `_securityRateLimits` 對所有瀏覽器用戶拒絕讀寫；Admin SDK 在可信任的 Function 內使用，並會繞過 Security Rules，因此 Function 程式碼本身是此集合的安全邊界。
+9. 個別刪除只能呼叫 `deleteTeacherRecord`：同時驗證固定 uid／role 與正式 App Check，日期限目前學期，使用 Firestore transaction、固定 audit ID 與最多 240 筆關聯事件上限。瀏覽器仍不能直接 update／delete。
 
 1. The homepage sends the six-digit PIN only to callable v2 Function `verifyTeacherPin`; the PIN never belongs in frontend source, Firestore, or Git.
 2. The Function compares against Secret Manager value `TEACHER_PIN_BCRYPT_HASH`, then mints a custom token with fixed uid `homeworkclass-teacher` and claim `role: teacher`.
@@ -46,6 +49,9 @@ The production target is `hwclass-479d2`. The dated deployment record, rather th
 | `classroomIncidents` | Yes | Yes | No | No | valid class/subject/seat/category/weight; seat or factual note required |
 | `timetableExceptions` | Yes | Yes | No | No | valid cancel/add shape and replacement slot |
 | `settings/main` | Yes | Yes | Yes | No | only bounded attention weights and threshold |
+| `assignmentRevocations` | Yes | No | No | No | Admin SDK callable only; hides an assignment without deleting its source |
+| `deletedRecords` | Yes | No | No | No | Admin SDK callable only; 30-day purgeAt TTL payload |
+| `deletionAudits` | Yes | No | No | No | Admin SDK callable only; minimal permanent metadata |
 | `_securityRateLimits` | No | No | No | No | Admin SDK only |
 | everything else | No | No | No | No | default deny |
 
@@ -62,9 +68,12 @@ npm.cmd install
 npm.cmd --prefix functions install
 npm.cmd --prefix functions run build
 npm.cmd run test:rules
+npm.cmd run test:functions
 ```
 
-`test:rules` 需要 Firebase CLI 可啟動 Firestore Emulator，也需要該 Firebase CLI 版本支援的 Java。測試包含：未登入拒絕、錯誤 uid／role 拒絕、教師允許、欄位白名單、有效座號、作業／事件類別、國定假日／撤銷目標驗證，以及不可覆寫／刪除事件。2026-08-29 本機增量為 12/12 通過，尚未部署這次 Rules 變更。
+`test:rules` 需要 Firebase CLI 可啟動 Firestore Emulator，也需要該 Firebase CLI 版本支援的 Java。測試包含：未登入拒絕、錯誤 uid／role 拒絕、教師允許、欄位白名單、有效座號、作業／事件類別、國定假日／撤銷目標驗證、瀏覽器不可覆寫／刪除、作廢作業拒絕新繳交及三個刪除狀態集合的只讀邊界。2026-09-02 為 15/15 通過。
+
+`test:functions` 使用 `demo-homeworkclass-delete-test` 的 Auth／Functions／Firestore Emulators；3/3 通過，涵蓋作業連動刪除與冪等重試、課堂事件回收及未登入拒絕。demo 專案不會連到正式 Firebase。
 
 `test:rules` requires a Firebase CLI-compatible Java runtime. It covers unauthenticated denial, wrong uid/role denial, teacher access, field allowlists, valid seats, allowed categories, and append-only history.
 
@@ -129,6 +138,7 @@ RATE_LIMIT_IP_SALT=<teacher-generated random salt>
 3. 五次錯誤鎖 15 分鐘、30 分鐘閒置與 7 天到期仍需完整時間型驗收。
 4. 正式資料寫入、完整匯出讀回及任何資料清理需要教師另行確認。
 5. 未來 Secrets、IAM、Rules、App Check、Functions 或 Hosting 變更仍需明確授權。
+6. 2026-09-02 刪除增量的 Function、Rules、Indexes／TTL 與 Hosting 已正式部署並讀回；教師本人使用可刪除正式錯誤紀錄的端到端驗收仍未執行。
 
 ## 兩學期保存與受控刪除 / Two-semester retention and controlled deletion
 

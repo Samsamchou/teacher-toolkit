@@ -10,6 +10,16 @@ Homeworkclass is a responsive assignment and classroom-record app for one teache
 
 **重要版本界線：** 2026-08-29 新增的「國定假日／撤銷國定假日」增量已依教師授權部署 Firestore Rules 與 Hosting；教師本人登入後已讀回 Firebase 模式、國定假日表單及重新整理後工作階段。沒有為驗證而建立 append-only 正式假日／撤銷紀錄。任何後續正式變更仍須重新確認。
 
+## 2026-09-02 作業與課堂事件刪除增量（DEPLOYED_VERIFIED）
+
+- 已確認規格：`rdq/RDQ-spec-assignment-incident-deletion-20260902.md`。
+- 已完成作業作廢、關聯繳交事件原子回收、課堂事件刪除、30 天回收區、永久最小稽核、undefined 欄位清理與一般匯出排除回收資料。
+- 作用中 UI 使用 44×44 px 刪除按鈕與簡單確認視窗；回收資料無還原功能。
+- 本機／隔離驗證：production build 通過、Rules Emulator 15/15、Auth／Functions／Firestore Emulator 3/3、360／768／1440 px 無整頁溢位。
+- 完整證據與限制：`docs/local-validation-deletion-20260902.md`。
+- 教師明確要求正式站部署後，已發布並讀回 `deleteTeacherRecord`、新 Rules、`deletedRecords.purgeAt` TTL 及 Hosting。Function 為 `asia-east1`／Node.js 22／2nd Gen／ACTIVE；Rules hash 完全一致，Hosting release 與 4 個 asset hash 通過。
+- 正式瀏覽器顯示 Firebase 驗證模式且 console 0 error／warning；未登入 callable 得到 401。本回合沒有建立或刪除正式教學紀錄。完整證據：`docs/production-deployment-deletion-20260902.md`。
+
 **The production deployment is live.** The Firebase services above were deployed and read back on 2026-08-29. Live custom-token sign-in and session persistence after reload passed. See `docs/production-deployment-20260829.md` for exact evidence and remaining limits.
 
 ## 2026-08-30 可重製 Skill 交接 / Reusable Skill handoff
@@ -34,6 +44,7 @@ Homeworkclass is a responsive assignment and classroom-record app for one teache
 
 - 規格：rdq/RDQ-spec-homeworkclass-20260829.md
 - 增量規格：rdq/RDQ-spec-national-holiday-20260829.md（confirmed；本機驗收與正式部署完成）
+- 刪除增量：rdq/RDQ-spec-assignment-incident-deletion-20260902.md（confirmed；本機驗收與正式部署讀回完成）
 - 狀態：confirmed
 - RDQ 修訂：3
 - 專案根目錄：G:\我的雲端硬碟\teacher-toolkit\tools\Homeworkclass
@@ -75,8 +86,8 @@ See docs/source-manifest.md for source paths, hashes, roster counts, and the ful
 | src/services/repository.ts | demo localStorage 與 Firebase Firestore repository |
 | src/services/export.ts | CSV、XLSX、JSON 備份 |
 | src/auth/AuthContext.tsx | demo／Firebase 登入、30 分鐘共用工作階段、7 天私人工作階段 |
-| functions/src/index.ts | 6 位 PIN、bcrypt、5 次鎖 15 分鐘、custom token |
-| firestore.rules | 固定教師身分、欄位白名單、有效座號、append-only |
+| functions/src/index.ts | 6 位 PIN、bcrypt、5 次鎖 15 分鐘、custom token；受保護且冪等的作業／課堂事件刪除 transaction |
+| firestore.rules | 固定教師身分、欄位白名單、作用中資料瀏覽器 append-only、回收／作廢／稽核集合只讀 |
 | docs/security.md | Firebase 安全架構、Emulator 指令與正式部署關卡 |
 
 Source presence does not equal runtime or deployment verification.
@@ -100,7 +111,7 @@ Source presence does not equal runtime or deployment verification.
 - VITE_DATA_MODE=firebase 且 Web App 公開設定完整時才建立 Firebase repository。
 - PIN 送至 callable Function，由 bcrypt 驗證並簽發固定 uid homeworkclass-teacher、role teacher 的 custom token。
 - 同一來源 IP 連錯 5 次鎖 15 分鐘；正式 runtime 強制 App Check。
-- 作業、繳交、課堂事件與課表例外為 append-only；設定權重可有界更新。
+- 作業與課表例外為 append-only；繳交與課堂事件平時只新增。已確認刪除只能由受保護 callable 原子移入 30 天回收區；設定權重可有界更新。
 - 瀏覽器禁止 Firebase 全量還原；未來需受控、可稽核的 Admin 匯入流程。
 - 2026-08-29 已完成正式部署與登入讀回；本回合未建立或刪除正式教學紀錄。
 
@@ -128,7 +139,7 @@ Source presence does not equal runtime or deployment verification.
 
 - 報表依日期範圍、班級、座號、科目篩選。
 - CSV、XLSX 與列印摘要只輸出目前篩選；XLSX 應有作業、未補交、繳交歷程、需關注、課堂事件與課表異動六張工作表。
-- JSON 備份包含 schemaVersion 1 的完整 snapshot。
+- JSON 備份包含 schemaVersion 1 的作用中資料、作廢狀態與永久最小稽核，但排除 30 天回收 payload。
 - 第一版保存本學期及前一學期，不自動刪除。
 - 超過範圍時先匯出並讀回，再由教師確認；Firebase 清理需未來受控 Admin 流程。
 
@@ -152,6 +163,7 @@ Source presence does not equal runtime or deployment verification.
 - 前端 production audit 為 0 vulnerabilities；Functions 為 9 moderate、0 high、0 critical，皆是 Firebase 傳遞性 `uuid` 鏈，未使用會破壞性降級 `firebase-admin` 的 force fix。
 - 專案與隔離 build output 的秘密／電子郵件掃描無命中。
 - Firebase CLI 只讀核對後，依教師授權完成正式部署與逐項讀回。
+- 2026-09-02 刪除增量完成 5 files／21 tests、Rules 15/15、Function integration 3/3、兩個 production build 與秘密掃描；正式部署 Function、Rules、Indexes／TTL、Hosting 後，讀回 ACTIVE Function、exact Rules hash、TTL=true、Hosting release、4 個 exact asset hash、no-cache 與 Firebase 驗證模式。
 
 Completed:
 
@@ -202,17 +214,19 @@ Complete the remaining Function/Auth rate-limit and session Emulator matrix.
 
 既有正式版本及國定假日增量均已部署。後續優先事項：
 
-1. 由教師用第一筆實際作業驗證正式 append-only 寫入、重新載入與跨頁查詢。
-2. 逐檔下載並讀回 CSV、XLSX、列印與 JSON；保留一份可驗證的正式備份。
-3. 另行決定是否啟用 `_securityRateLimits.expiresAt` TTL 與 Firestore 產品層 App Check enforcement。
-4. 完成 30 分鐘閒置、私人裝置 7 天、五次錯誤鎖 15 分鐘的時間型驗收。
-5. 任何 Secrets、IAM、Rules、App Check、Functions、Hosting 或資料清理變更仍須另行授權。
+1. 刪除增量已上線；教師本人下一步可用確定要刪除的錯誤作業或課堂事件，驗證刪除、重新整理與 30 天回收區。不要建立虛構正式紀錄，也不要為測試刪除正確紀錄。
+2. 由教師用第一筆實際作業驗證正式 append-only 寫入、重新載入與跨頁查詢。
+3. 逐檔下載並讀回 CSV、XLSX、列印與 JSON；保留一份可驗證的正式備份。
+4. 另行決定是否啟用 `_securityRateLimits.expiresAt` TTL 與 Firestore 產品層 App Check enforcement。
+5. 完成 30 分鐘閒置、私人裝置 7 天、五次錯誤鎖 15 分鐘的時間型驗收。
+6. 任何 Secrets、IAM、Rules、App Check、Functions、Hosting 或資料清理變更仍須另行授權。
 
 ## 已知限制與風險 / Known limitations and risks
 
 - 六位 PIN 不是 MFA；校園共用 NAT 也可能讓同一出口 IP 的裝置共享鎖定。
 - demo 是單一瀏覽器 localStorage，既不安全也不耐清除，只供展示。
 - 目前沒有自動保留清理或 Firebase Admin 還原工具。
+- 刪除增量已正式部署並讀回，但教師登入後使用真實錯誤紀錄的端到端刪除尚未執行；30 天 TTL 的實際到期清理需未來觀察。
 - Firestore Rules 測試不能證明 App Check、IAM、custom-token signing 或真實裝置已在線上成功。
 - 最後一輪執行主機沒有 `D:`，所以未重新讀取來源附件計算雜湊。
 - Google Drive 會鎖住產生中的 `node_modules`；本機檢查使用非同步磁碟的隔離副本。

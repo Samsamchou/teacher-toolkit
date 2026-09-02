@@ -10,7 +10,7 @@ This model supports one teacher recording assignments, submission and make-up ev
 
 - 學生資料只使用班級與座號，不保存姓名、正式學號、家長資料或輔導資料。
 - 20 節固定課表與 155 個有效座號由版本化學期資料提供。
-- 作業、繳交事件、課堂事件及課表例外採 append-only；修正或補交新增事件，不覆寫歷史。
+- 作業與課表例外採 append-only；作業登記錯誤以作廢狀態處理。繳交與課堂事件平時只新增，僅能由受保護後端依已確認刪除契約移入 30 天回收區。
 - 目前狀態由事件歷程投影計算，不等於刪除舊紀錄。
 - settings/main 是少數可更新資料，只允許有界的需關注權重與門檻。
 - 所有日期解讀以 Asia/Taipei 的學校日期為準。
@@ -29,8 +29,11 @@ Core invariants:
       ├─ versioned weekly schedule (20 slots)
       ├─ timetableExceptions (cancel or add)
       ├─ assignments
+      │    ├─ assignmentRevocations
       │    └─ submissionEvents by valid seat
       ├─ classroomIncidents by class/seat or factual note
+      ├─ deletedRecords (30-day TTL payloads)
+      ├─ deletionAudits (permanent minimal metadata)
       └─ settings/main attentionWeights
 
 Assignment 是繳交事件的父資料。SubmissionEvent 必須引用既有 assignmentId，且 classId 必須與該作業相同。ClassroomIncident 可有座號或只有事實文字，但兩者至少一項存在。
@@ -45,8 +48,11 @@ An assignment is the parent of submission events. Each submission event must ref
 |---|---|---|
 | schemaVersion | 固定為 1 | 備份與未來 migration 的版本 |
 | assignments | assignments | 作業主檔 |
+| assignmentRevocations | assignmentRevocations | 作業作廢狀態；原作業仍保留 |
 | submissionEvents | submissionEvents | 每位座號的繳交狀態事件 |
 | classroomIncidents | classroomIncidents | 課堂事件 |
+| deletedRecords | deletedRecords | 教師限定 30 天回收 payload；不進一般匯出 |
+| deletionAudits | deletionAudits | 永久最小刪除稽核，不含內容與原因 |
 | timetableExceptions | timetableExceptions | 停課、調課、補課事件 |
 | attentionWeights | settings/main.attentionWeights | 目前權重與提示門檻 |
 | exportedAt | 只在 JSON 匯出加入 | 備份產生時間，不是操作事件 |
@@ -68,7 +74,7 @@ Firebase 路徑：assignments/{id}
 | content | string | 1–500 字元 |
 | createdAt | ISO timestamp | 寫入時間；正式 Rules 要求 UTC Z 格式 |
 
-Firebase 瀏覽器權限只允許 read 與 create；update、delete 均拒絕。若內容登記錯誤，需以後續可稽核的修正事件設計處理，不可直接竄改既有文件。
+Firebase 瀏覽器權限只允許 read 與 create；update、delete 均拒絕。若內容或日期登記錯誤，受保護的 `deleteTeacherRecord` callable 會新增同 ID 的 assignmentRevocation；原作業不改寫、不刪除，但作用中清單、繳交選單、假日衝突與一般報表都排除它。
 
 Firebase browser access permits read and create only. Existing assignment documents cannot be updated or deleted.
 
@@ -79,7 +85,7 @@ Firebase 路徑：submissionEvents/{id}
 | 欄位 / Field | 型別 / Type | 規則 / Rule |
 |---|---|---|
 | id | string | 文件 ID 必須相同 |
-| assignmentId | string | 必須引用已存在的作業 |
+| assignmentId | string | 必須引用已存在且未作廢的作業 |
 | classId | ClassId | 必須與父作業相同 |
 | seatNumber | integer | 必須是該班有效座號 |
 | outcome | submitted, still-missing, same-day-completed, later-submitted | 已交、仍未交、當天完成、日後補交 |
@@ -118,9 +124,23 @@ Firebase 路徑：classroomIncidents/{id}
 | weight | integer 0–10 | 寫入時保存的事件分值 |
 | recordedAt | ISO timestamp | 系統寫入時間 |
 
-seatNumber 與 note 至少填一項。事件只能新增，不可從瀏覽器更新或刪除。
+seatNumber 與 note 至少填一項。事件不可從瀏覽器更新或刪除；教師確認刪除後，只能由受保護 callable 在 transaction 內複製到回收區再刪除原文件。
 
 At least one of seatNumber or note is required. Incident documents are append-only.
+
+## 作廢、回收與刪除稽核 / Revocation, recycle bin, and audit
+
+`deleteTeacherRecord` 只接受固定 uid `homeworkclass-teacher` 與 `role: teacher`，正式 runtime 強制 App Check。合法刪除日期限制在目前學期 2026-08-31 至 2027-01-20。
+
+| 集合 / Collection | 保留 | 欄位摘要 | 瀏覽器權限 |
+|---|---|---|---|
+| assignmentRevocations | 永久 | id, assignmentId, deletedAt | 固定教師 read；write 拒絕 |
+| deletedRecords | 30 天 TTL | id, recordType, originalId, parentAssignmentId（如適用）, payload, deletedAt, purgeAt | 固定教師 read；write 拒絕 |
+| deletionAudits | 永久 | id, recordType, originalId, deletedAt, deletedCount | 固定教師 read；write 拒絕 |
+
+作業刪除會在單一 Firestore transaction 中建立 revocation，將所有關聯 submissionEvents 複製到 deletedRecords，再刪除作用中 submissionEvents 並寫入 audit；原 assignment 保留。為維持 Firestore 500-write 上限的安全餘裕，作用中 callable 最多處理 240 筆關聯事件，超過時整筆拒絕且不留下部分狀態。課堂事件則在同一 transaction 中複製、刪除並寫入 audit。固定 audit ID 使重試具冪等性。
+
+回收 payload 不提供還原；`purgeAt` 為伺服器刪除時間加 30 天。Firestore TTL 清理可能晚於標示時間，前端即使讀到延遲清理資料也不再顯示過期 payload。一般匯出排除 deletedRecords；永久 audit 不包含原內容或刪除原因。
 
 目前「需關注」摘要會依**現在的 settings 權重**重新計算篩選範圍內的所有事件，而不是永久鎖定事件寫入時的 weight。達門檻只顯示「需教師確認」，不產生診斷或懲處結論。
 
@@ -214,7 +234,7 @@ Demo mode does not provide a security boundary. Firebase mode is designed for au
 - CSV：單一檔案，依序包含作業明細、未補交清單、繳交歷程、需關注摘要與課堂事件。
 - XLSX：上述五張工作表；標題列凍結、篩選及橫向列印設定。
 - 列印：顯示目前篩選的教師摘要。
-- JSON：完整 AppSnapshot，含 exportedAt，供備份與 schema 驗證。
+- JSON：作用中資料、作廢狀態、永久最小稽核與 exportedAt；刻意排除 deletedRecords 回收 payload。
 - demo 還原：先檢查 schemaVersion 1 與必要陣列，再要求教師確認，然後整份取代 localStorage。
 - Firebase 還原：瀏覽器禁止；未來必須由受控後端匯入工具執行，保留稽核紀錄。
 
@@ -224,13 +244,13 @@ Demo mode does not provide a security boundary. Firebase mode is designed for au
 
 ## 保留與刪除政策 / Retention and deletion policy
 
-已確認政策為只保存本學期及前一學期。第一版不自動執行破壞性刪除：
+學期資料保留政策仍為只保存本學期及前一學期，且不自動做整學期破壞性清理：
 
 1. 先辨識超過兩學期的資料。
 2. 先提示並完成 JSON／XLSX 匯出與讀回。
 3. 由教師明確確認清理範圍。
 4. Firebase 只能使用受控 Admin 流程刪除，留下執行時間、範圍、計數及備份證據。
-5. demo 的 localStorage 不會自動過期；由使用者自行備份或清除瀏覽器資料。
+5. 個別刪除流程是獨立例外：deletedRecords 只保留 30 天；demo 讀取時也會排除到期 payload，Firebase 由 purgeAt TTL 清除。
 
 The retention target is the current and previous semester. Version 1 performs no automatic destructive cleanup. Production cleanup remains a separately authorized Admin workflow.
 

@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run src",
     "test:watch": "vitest",
-    "test:rules": "firebase emulators:exec --only firestore \"vitest run tests/firestore.rules.test.ts\"",
+    "test:rules": "firebase emulators:exec --project demo-homeworkclass-rules-test --only firestore \"vitest run tests/firestore.rules.test.ts\"",
+    "test:functions": "npm --prefix functions run build && set \"FUNCTIONS_DISCOVERY_TIMEOUT=60\" && firebase emulators:exec --project demo-homeworkclass-delete-test --only auth,functions,firestore \"node --test functions/test/delete-record.integration.test.mjs\"",
     "firebase:emulators": "firebase emulators:start",
     "seed:emulator": "node scripts/seed-emulator.mjs"
   },

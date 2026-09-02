@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  activeAssignments,
   activeHolidayForDate,
   assignmentsForClassWindow,
   attentionScores,
@@ -201,8 +202,11 @@ describe("作業日期與待補交邏輯", () => {
       holidayConflictsForDate("2026-09-10", {
         schemaVersion: 1,
         assignments: [work],
+        assignmentRevocations: [],
         submissionEvents: [],
         classroomIncidents: [incident],
+        deletedRecords: [],
+        deletionAudits: [],
         timetableExceptions: [add],
         attentionWeights: { ...DEFAULT_ATTENTION_WEIGHTS },
       }),
@@ -212,6 +216,30 @@ describe("作業日期與待補交邏輯", () => {
       addedLessons: 1,
       total: 3,
     });
+  });
+
+  it("作廢作業不再出現在有效清單或假日衝突統計", () => {
+    const work = assignment("revoked-assignment", "2026-09-10");
+    const value = {
+      schemaVersion: 1 as const,
+      assignments: [work],
+      assignmentRevocations: [
+        {
+          id: work.id,
+          assignmentId: work.id,
+          deletedAt: "2026-09-11T01:00:00.000Z",
+        },
+      ],
+      submissionEvents: [],
+      classroomIncidents: [],
+      deletedRecords: [],
+      deletionAudits: [],
+      timetableExceptions: [],
+      attentionWeights: { ...DEFAULT_ATTENTION_WEIGHTS },
+    };
+
+    expect(activeAssignments(value)).toEqual([]);
+    expect(holidayConflictsForDate("2026-09-10", value).assignments).toBe(0);
   });
 
   it("不會在學期有效日期之外產生固定課程", () => {

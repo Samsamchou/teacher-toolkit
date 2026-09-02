@@ -32,10 +32,20 @@ export const DEFAULT_ATTENTION_WEIGHTS = {
 export const EMPTY_SNAPSHOT: AppSnapshot = {
   schemaVersion: 1,
   assignments: [],
+  assignmentRevocations: [],
   submissionEvents: [],
   classroomIncidents: [],
+  deletedRecords: [],
+  deletionAudits: [],
   timetableExceptions: [],
   attentionWeights: { ...DEFAULT_ATTENTION_WEIGHTS },
+};
+
+export const activeAssignments = (snapshot: AppSnapshot) => {
+  const revokedIds = new Set(
+    snapshot.assignmentRevocations.map((item) => item.assignmentId),
+  );
+  return snapshot.assignments.filter((item) => !revokedIds.has(item.id));
 };
 
 export const dateKey = (value: Date | string) =>
@@ -77,7 +87,7 @@ export const holidayConflictsForDate = (
   date: string,
   snapshot: AppSnapshot,
 ) => {
-  const assignments = snapshot.assignments.filter(
+  const assignments = activeAssignments(snapshot).filter(
     (item) => item.assignedDate === date,
   ).length;
   const classroomIncidents = snapshot.classroomIncidents.filter(

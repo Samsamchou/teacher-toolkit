@@ -12,11 +12,12 @@ import {
   EMPTY_SNAPSHOT,
   revocationForHoliday,
 } from "../domain/logic";
-import { createRepository } from "../services/repository";
+import { createRepository, normalizeSnapshot } from "../services/repository";
 import type {
   AppSnapshot,
   Assignment,
   ClassroomIncident,
+  DeletionResult,
   SubmissionEvent,
   TimetableException,
 } from "../types";
@@ -29,6 +30,8 @@ interface AppDataContextValue {
   addAssignment(value: Assignment): Promise<void>;
   addSubmissionEvents(values: SubmissionEvent[]): Promise<void>;
   addIncident(value: ClassroomIncident): Promise<void>;
+  deleteAssignment(assignmentId: string): Promise<DeletionResult>;
+  deleteIncident(incidentId: string): Promise<DeletionResult>;
   addException(value: TimetableException): Promise<void>;
   updateWeights(value: AppSnapshot["attentionWeights"]): Promise<void>;
   restore(value: AppSnapshot): Promise<void>;
@@ -90,6 +93,18 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     }));
   };
 
+  const deleteAssignment = async (assignmentId: string) => {
+    const result = await repository.deleteRecord("assignment", assignmentId);
+    await refresh();
+    return result;
+  };
+
+  const deleteIncident = async (incidentId: string) => {
+    const result = await repository.deleteRecord("classroom-incident", incidentId);
+    await refresh();
+    return result;
+  };
+
   const addException = async (value: TimetableException) => {
     const holiday = activeHolidayForDate(value.date, snapshot.timetableExceptions);
     if (value.type === "holiday") {
@@ -125,8 +140,9 @@ export function AppDataProvider({ children }: PropsWithChildren) {
 
   const restore = async (value: AppSnapshot) => {
     if (value.schemaVersion !== 1) throw new Error("不支援的備份版本");
-    await repository.replaceAll(value);
-    setSnapshot(value);
+    const normalized = normalizeSnapshot(value);
+    await repository.replaceAll(normalized);
+    setSnapshot(normalized);
   };
 
   const value: AppDataContextValue = {
@@ -137,6 +153,8 @@ export function AppDataProvider({ children }: PropsWithChildren) {
     addAssignment,
     addSubmissionEvents,
     addIncident,
+    deleteAssignment,
+    deleteIncident,
     addException,
     updateWeights,
     restore,

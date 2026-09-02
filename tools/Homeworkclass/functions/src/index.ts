@@ -15,12 +15,26 @@ const TEACHER_UID = "homeworkclass-teacher";
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCK_DURATION_MS = 15 * 60 * 1000;
 const RATE_RECORD_TTL_MS = 24 * 60 * 60 * 1000;
+const RECYCLE_RECORD_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+const MAX_RELATED_SUBMISSION_EVENTS = 240;
+const SEMESTER_START = "2026-08-31";
+const SEMESTER_END = "2027-01-20";
 
 const teacherPinBcryptHash = defineSecret("TEACHER_PIN_BCRYPT_HASH");
 const rateLimitIpSalt = defineSecret("RATE_LIMIT_IP_SALT");
 
 interface VerifyTeacherPinInput {
   pin?: unknown;
+}
+
+interface DeleteTeacherRecordInput {
+  recordType?: unknown;
+  originalId?: unknown;
+}
+
+interface DeleteTeacherRecordResult {
+  status: "deleted" | "already-deleted";
+  deletedCount: number;
 }
 
 interface RateLimitRecord {
@@ -205,6 +219,167 @@ export const verifyTeacherPin = onCall<VerifyTeacherPinInput>(
         "internal",
         "目前無法完成登入，請稍後再試。 / Sign-in is temporarily unavailable.",
       );
+    }
+  },
+);
+
+function teacherCanDelete(
+  request: CallableRequest<DeleteTeacherRecordInput>,
+): boolean {
+  return request.auth?.uid === TEACHER_UID && request.auth.token.role === "teacher";
+}
+
+function semesterDateFromRecord(
+  recordType: "assignment" | "classroom-incident",
+  value: FirebaseFirestore.DocumentData,
+): string | undefined {
+  const candidate = recordType === "assignment" ? value.assignedDate : value.date;
+  return typeof candidate === "string" ? candidate : undefined;
+}
+
+export const deleteTeacherRecord = onCall<DeleteTeacherRecordInput>(
+  {
+    region: "asia-east1",
+    memory: "256MiB",
+    timeoutSeconds: 30,
+    maxInstances: 5,
+    enforceAppCheck: enforceAppCheckInThisRuntime,
+  },
+  async (request): Promise<DeleteTeacherRecordResult> => {
+    try {
+      if (!teacherCanDelete(request)) {
+        throw new HttpsError(
+          "permission-denied",
+          "只有已登入的授課教師可以刪除紀錄。 / Teacher access is required.",
+        );
+      }
+
+      const recordType = request.data?.recordType;
+      const originalId = request.data?.originalId;
+      if (
+        (recordType !== "assignment" && recordType !== "classroom-incident") ||
+        typeof originalId !== "string" ||
+        originalId.length === 0 ||
+        originalId.length > 200 ||
+        originalId.includes("/")
+      ) {
+        throw new HttpsError("invalid-argument", "刪除目標格式不正確。");
+      }
+
+      const database = getFirestore();
+      const auditId = `${recordType}_${originalId}`;
+      const auditReference = database.collection("deletionAudits").doc(auditId);
+      const nowMillis = Date.now();
+      const deletedAt = Timestamp.fromMillis(nowMillis);
+      const purgeAt = Timestamp.fromMillis(nowMillis + RECYCLE_RECORD_TTL_MS);
+
+      return await database.runTransaction(async (transaction) => {
+        const auditSnapshot = await transaction.get(auditReference);
+        if (auditSnapshot.exists) {
+          const previousCount = auditSnapshot.data()?.deletedCount;
+          return {
+            status: "already-deleted" as const,
+            deletedCount:
+              typeof previousCount === "number" && Number.isInteger(previousCount)
+                ? previousCount
+                : 0,
+          };
+        }
+
+        const collectionName =
+          recordType === "assignment" ? "assignments" : "classroomIncidents";
+        const originalReference = database.collection(collectionName).doc(originalId);
+        const originalSnapshot = await transaction.get(originalReference);
+        if (!originalSnapshot.exists) {
+          throw new HttpsError("not-found", "找不到要刪除的紀錄。");
+        }
+
+        const originalData = originalSnapshot.data() ?? {};
+        const recordDate = semesterDateFromRecord(recordType, originalData);
+        if (!recordDate || recordDate < SEMESTER_START || recordDate > SEMESTER_END) {
+          throw new HttpsError(
+            "failed-precondition",
+            "只能刪除本學期日期範圍內的紀錄。",
+          );
+        }
+
+        if (recordType === "assignment") {
+          const relatedQuery = database
+            .collection("submissionEvents")
+            .where("assignmentId", "==", originalId)
+            .limit(MAX_RELATED_SUBMISSION_EVENTS + 1);
+          const relatedSnapshot = await transaction.get(relatedQuery);
+          if (relatedSnapshot.size > MAX_RELATED_SUBMISSION_EVENTS) {
+            throw new HttpsError(
+              "failed-precondition",
+              "這項作業的繳交歷程過多，請使用受控維護工具處理。",
+            );
+          }
+
+          const revocationReference = database
+            .collection("assignmentRevocations")
+            .doc(originalId);
+          transaction.set(revocationReference, {
+            id: originalId,
+            assignmentId: originalId,
+            deletedAt,
+          });
+
+          relatedSnapshot.docs.forEach((submissionSnapshot) => {
+            const deletedRecordId = `submission-event_${submissionSnapshot.id}_${nowMillis}`;
+            const deletedReference = database
+              .collection("deletedRecords")
+              .doc(deletedRecordId);
+            transaction.set(deletedReference, {
+              id: deletedRecordId,
+              recordType: "submission-event",
+              originalId: submissionSnapshot.id,
+              parentAssignmentId: originalId,
+              payload: submissionSnapshot.data(),
+              deletedAt,
+              purgeAt,
+            });
+            transaction.delete(submissionSnapshot.ref);
+          });
+
+          transaction.set(auditReference, {
+            id: auditId,
+            recordType,
+            originalId,
+            deletedAt,
+            deletedCount: relatedSnapshot.size,
+          });
+          return { status: "deleted", deletedCount: relatedSnapshot.size };
+        }
+
+        const deletedRecordId = `classroom-incident_${originalId}_${nowMillis}`;
+        const deletedReference = database
+          .collection("deletedRecords")
+          .doc(deletedRecordId);
+        transaction.set(deletedReference, {
+          id: deletedRecordId,
+          recordType: "classroom-incident",
+          originalId,
+          payload: originalData,
+          deletedAt,
+          purgeAt,
+        });
+        transaction.delete(originalReference);
+        transaction.set(auditReference, {
+          id: auditId,
+          recordType,
+          originalId,
+          deletedAt,
+          deletedCount: 1,
+        });
+        return { status: "deleted", deletedCount: 1 };
+      });
+    } catch (error) {
+      if (error instanceof HttpsError) throw error;
+      logger.error("Teacher record deletion failed unexpectedly.", {
+        errorType: error instanceof Error ? error.name : typeof error,
+      });
+      throw new HttpsError("internal", "目前無法刪除紀錄，請稍後再試。");
     }
   },
 );

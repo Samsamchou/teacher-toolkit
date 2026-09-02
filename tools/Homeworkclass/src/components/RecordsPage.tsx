@@ -2,6 +2,7 @@ import { addDays, parseISO } from "date-fns";
 import { useMemo, useRef, useState } from "react";
 import { CLASSES, SEMESTER, SUBJECTS, WEEKLY_SCHEDULE } from "../data/semester";
 import {
+  activeAssignments,
   activeHolidayForDate,
   dateKey,
   holidayConflictsForDate,
@@ -22,6 +23,8 @@ import {
   SUBJECT_IDS,
   type AppSnapshot,
   type ClassId,
+  type DeletedIncidentRecord,
+  type DeletedSubmissionRecord,
   type SubjectId,
   type TimetableException,
 } from "../types";
@@ -36,6 +39,7 @@ import {
 } from "./labels";
 
 const firstWeekEnd = dateKey(addDays(parseISO(SEMESTER.startDate), 4));
+const recycleRetentionMs = 30 * 24 * 60 * 60 * 1000;
 
 const exceptionSlot = (item: TimetableException) =>
   item.type === "cancel"
@@ -89,14 +93,18 @@ export function RecordsPage() {
   const [exporting, setExporting] = useState(false);
   const restoreInputRef = useRef<HTMLInputElement>(null);
   const seatNumber = seatFilter ? Number(seatFilter) : undefined;
+  const currentAssignments = useMemo(
+    () => activeAssignments(snapshot),
+    [snapshot.assignments, snapshot.assignmentRevocations],
+  );
 
   const assignmentMap = useMemo(
-    () => new Map(snapshot.assignments.map((assignment) => [assignment.id, assignment])),
-    [snapshot.assignments],
+    () => new Map(currentAssignments.map((assignment) => [assignment.id, assignment])),
+    [currentAssignments],
   );
   const filteredAssignments = useMemo(
     () =>
-      snapshot.assignments
+      currentAssignments
         .filter(
           (item) =>
             (!classFilter || item.classId === classFilter) &&
@@ -105,18 +113,18 @@ export function RecordsPage() {
             item.assignedDate <= dateTo,
         )
         .sort((a, b) => `${b.assignedDate}-${b.period}`.localeCompare(`${a.assignedDate}-${a.period}`)),
-    [classFilter, dateFrom, dateTo, snapshot.assignments, subjectFilter],
+    [classFilter, currentAssignments, dateFrom, dateTo, subjectFilter],
   );
 
   const outstandingCandidateAssignments = useMemo(
     () =>
-      snapshot.assignments.filter(
+      currentAssignments.filter(
         (item) =>
           (!classFilter || item.classId === classFilter) &&
           (!subjectFilter || item.subjectId === subjectFilter) &&
           item.assignedDate <= dateTo,
       ),
-    [classFilter, dateTo, snapshot.assignments, subjectFilter],
+    [classFilter, currentAssignments, dateTo, subjectFilter],
   );
 
   const outstandingRows = useMemo(
@@ -231,6 +239,47 @@ export function RecordsPage() {
 
   const needsAttention = attentionRows.filter((row) => row.score >= snapshot.attentionWeights.threshold);
   const uniqueOutstandingStudents = new Set(outstandingRows.map((row) => `${row.assignment.classId}-${row.seat}`)).size;
+  const nowMillis = Date.now();
+  const deletionAuditMap = new Map(
+    snapshot.deletionAudits.map((item) => [item.id, item]),
+  );
+  const recycleAssignments = snapshot.assignmentRevocations
+    .map((revocation) => ({
+      revocation,
+      assignment: snapshot.assignments.find(
+        (item) => item.id === revocation.assignmentId,
+      ),
+      purgeAt: new Date(
+        Date.parse(revocation.deletedAt) + recycleRetentionMs,
+      ).toISOString(),
+      audit: deletionAuditMap.get(`assignment_${revocation.assignmentId}`),
+    }))
+    .filter((item) => Date.parse(item.purgeAt) > nowMillis)
+    .sort((a, b) => b.revocation.deletedAt.localeCompare(a.revocation.deletedAt));
+  const recycleIncidents = snapshot.deletedRecords
+    .filter(
+      (item): item is DeletedIncidentRecord =>
+        item.recordType === "classroom-incident" &&
+        Date.parse(item.purgeAt) > nowMillis,
+    )
+    .sort((a, b) => b.deletedAt.localeCompare(a.deletedAt));
+  const recycleSubmissions = snapshot.deletedRecords
+    .filter(
+      (item): item is DeletedSubmissionRecord =>
+        item.recordType === "submission-event" &&
+        Date.parse(item.purgeAt) > nowMillis,
+    )
+    .sort((a, b) => b.payload.recordedAt.localeCompare(a.payload.recordedAt));
+  const recycleSubmissionsByAssignment = new Map<string, DeletedSubmissionRecord[]>();
+  recycleSubmissions.forEach((record) => {
+    const current = recycleSubmissionsByAssignment.get(record.parentAssignmentId) ?? [];
+    current.push(record);
+    recycleSubmissionsByAssignment.set(record.parentAssignmentId, current);
+  });
+  const recycleCount = recycleAssignments.length + recycleIncidents.length;
+  const deletionAudits = [...snapshot.deletionAudits].sort((a, b) =>
+    b.deletedAt.localeCompare(a.deletedAt),
+  );
 
   const report = useMemo<ReportExport>(() => ({
     title: `英語作業與課堂紀錄_${dateFrom}_${dateTo}`,
@@ -653,8 +702,83 @@ export function RecordsPage() {
         ) : <EmptyState icon="↔" title="此範圍沒有課表異動">停課、補課、國定假日與撤銷紀錄會顯示在這裡及匯出檔中。</EmptyState>}
       </Panel>
 
+      <Panel className="report-section recycle-panel no-print">
+        <div className="panel-heading"><div><p className="eyebrow">僅教師可見・無法還原</p><h3>30 天回收區</h3></div><span className="count-bubble">{recycleCount}</span></div>
+        <InlineNotice tone="warning" title="回收資料不會進入報表或 JSON 備份">
+          課堂事件與作業連動的繳交歷程會在刪除後保留 30 天，再由系統永久清除；作業本身保留最小作廢狀態，避免舊資料重新出現。
+        </InlineNotice>
+        {recycleCount ? (
+          <div className="recycle-grid">
+            {recycleAssignments.map(({ revocation, assignment, purgeAt, audit }) => {
+              const relatedRecords = recycleSubmissionsByAssignment.get(revocation.assignmentId) ?? [];
+              return <article className="recycle-card" key={`assignment-${revocation.id}`}>
+                <div className="recycle-card__heading"><span>作業已作廢</span><em>不可還原</em></div>
+                {assignment ? (
+                  <>
+                    <div className="recycle-card__badges"><ClassBadge classId={assignment.classId} /><SubjectBadge subjectId={assignment.subjectId} /></div>
+                    <strong>{HOMEWORK_LABELS[assignment.homeworkType]}・{assignment.content}</strong>
+                    <p>{formatSchoolDate(assignment.assignedDate)}・第 {assignment.period} 節</p>
+                  </>
+                ) : <strong>找不到原作業內容</strong>}
+                <small>刪除於 {formatDateTime(revocation.deletedAt)}・連動 {audit?.deletedCount ?? 0} 筆繳交歷程</small>
+                <small>連動回收資料清除時間：{formatDateTime(purgeAt)}</small>
+                {relatedRecords.length ? (
+                  <details className="recycle-card__events">
+                    <summary>查看連動繳交歷程（{relatedRecords.length}）</summary>
+                    <ul>
+                      {relatedRecords.map((record) => {
+                        const event = record.payload;
+                        return (
+                          <li key={record.id}>
+                            <strong>{event.seatNumber} 號・{OUTCOME_LABELS[event.outcome]}</strong>
+                            <span>{event.occurredOn}{event.reason ? `・${REASON_LABELS[event.reason]}` : ""}</span>
+                            {event.note ? <small>{event.note}</small> : null}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </details>
+                ) : null}
+              </article>;
+            })}
+            {recycleIncidents.map((record) => {
+              const incident = record.payload;
+              return (
+                <article className="recycle-card" key={record.id}>
+                  <div className="recycle-card__heading"><span>課堂事件已刪除</span><em>不可還原</em></div>
+                  <div className="recycle-card__badges"><ClassBadge classId={incident.classId} /><SubjectBadge subjectId={incident.subjectId} /></div>
+                  <strong>{incident.seatNumber ? `${incident.seatNumber} 號・` : ""}{INCIDENT_LABELS[incident.category]}</strong>
+                  <p>{incident.note || "未填備註"}</p>
+                  <small>{formatSchoolDate(incident.date)}・第 {incident.period} 節・刪除於 {formatDateTime(record.deletedAt)}</small>
+                  <small>永久清除時間：{formatDateTime(record.purgeAt)}</small>
+                </article>
+              );
+            })}
+          </div>
+        ) : <EmptyState icon="♲" title="回收區目前是空的">刪除的課堂事件與近期作廢作業會暫時顯示在這裡。</EmptyState>}
+
+        <details className="recycle-audit">
+          <summary>永久稽核摘要（{deletionAudits.length}）</summary>
+          {deletionAudits.length ? (
+            <div className="table-scroll" role="region" aria-label="刪除稽核摘要，可水平捲動" tabIndex={0}>
+              <table className="data-table">
+                <thead><tr><th>類型</th><th>原始 ID</th><th>刪除時間</th><th>連動筆數</th></tr></thead>
+                <tbody>{deletionAudits.map((audit) => (
+                  <tr key={audit.id}>
+                    <td>{audit.recordType === "assignment" ? "作業作廢" : "課堂事件刪除"}</td>
+                    <td><code>{audit.originalId}</code></td>
+                    <td>{formatDateTime(audit.deletedAt)}</td>
+                    <td>{audit.deletedCount}</td>
+                  </tr>
+                ))}</tbody>
+              </table>
+            </div>
+          ) : <p>尚無刪除稽核紀錄。</p>}
+        </details>
+      </Panel>
+
       <Panel className="backup-panel no-print">
-        <div><p className="eyebrow">可攜與復原</p><h3>完整資料備份</h3><p>報表匯出只含目前篩選範圍；JSON 備份則包含全部作業、歷程、課堂事件、課表例外與門檻設定。</p></div>
+        <div><p className="eyebrow">可攜與復原</p><h3>完整資料備份</h3><p>報表匯出只含目前篩選範圍；JSON 備份包含全部有效資料、作廢狀態、刪除稽核與設定，但不包含 30 天回收資料。</p></div>
         <div className="backup-actions">
           <button className="button button--dark" type="button" onClick={() => downloadJsonBackup(snapshot)}>下載 JSON 完整備份</button>
           {mode === "demo" ? (
@@ -668,7 +792,7 @@ export function RecordsPage() {
             </button>
           )}
         </div>
-        {mode === "firebase" ? <small className="backup-mode-note">Firebase 正式資料為 append-only；瀏覽器不會刪除或覆寫既有集合。</small> : null}
+        {mode === "firebase" ? <small className="backup-mode-note">Firebase 瀏覽器規則仍禁止直接刪除；刪除只會透過已驗證的受控後端執行。</small> : null}
       </Panel>
     </div>
   );

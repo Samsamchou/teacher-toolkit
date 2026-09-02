@@ -109,6 +109,46 @@ export interface ClassroomIncident {
   recordedAt: string;
 }
 
+export interface AssignmentRevocation {
+  id: string;
+  assignmentId: string;
+  deletedAt: string;
+}
+
+export interface DeletedSubmissionRecord {
+  id: string;
+  recordType: "submission-event";
+  originalId: string;
+  parentAssignmentId: string;
+  payload: SubmissionEvent;
+  deletedAt: string;
+  purgeAt: string;
+}
+
+export interface DeletedIncidentRecord {
+  id: string;
+  recordType: "classroom-incident";
+  originalId: string;
+  payload: ClassroomIncident;
+  deletedAt: string;
+  purgeAt: string;
+}
+
+export type DeletedRecord = DeletedSubmissionRecord | DeletedIncidentRecord;
+
+export interface DeletionAudit {
+  id: string;
+  recordType: "assignment" | "classroom-incident";
+  originalId: string;
+  deletedAt: string;
+  deletedCount: number;
+}
+
+export interface DeletionResult {
+  status: "deleted" | "already-deleted";
+  deletedCount: number;
+}
+
 export type TimetableExceptionType =
   | "cancel"
   | "add"
@@ -138,8 +178,11 @@ export interface AttentionWeights {
 export interface AppSnapshot {
   schemaVersion: 1;
   assignments: Assignment[];
+  assignmentRevocations: AssignmentRevocation[];
   submissionEvents: SubmissionEvent[];
   classroomIncidents: ClassroomIncident[];
+  deletedRecords: DeletedRecord[];
+  deletionAudits: DeletionAudit[];
   timetableExceptions: TimetableException[];
   attentionWeights: AttentionWeights;
   exportedAt?: string;

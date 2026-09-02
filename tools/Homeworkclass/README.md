@@ -10,6 +10,8 @@ This responsive web app is designed for one elementary English teacher. It uses 
 
 2026-08-29 新增的「國定假日／撤銷國定假日」已完成本機驗收，並依教師明確授權正式部署 Firestore Rules 與 Hosting。教師本人登入後已讀回 Firebase 模式、設定頁國定假日表單及重新整理後工作階段；沒有建立虛構的正式假日或撤銷紀錄。
 
+2026-09-02「作業作廢／課堂事件刪除／30 天回收區」增量已完成本機與 Emulator 驗證，並依教師明確授權部署 `asia-east1-deleteTeacherRecord`、Firestore Rules、`deletedRecords.purgeAt` TTL 與 Hosting。正式 Rules、Function、TTL、Hosting release、4 個靜態檔案雜湊及 Firebase 驗證模式均已讀回；本次沒有建立或刪除正式教學紀錄。
+
 The production site is live at `https://hwclass-479d2.web.app`. Firestore, Rules/Indexes, App Check, Secret Manager, a second-generation callable Function, Firebase Authentication, minimal custom-token IAM, and Hosting were deployed and read back on 2026-08-29. Live teacher sign-in and session persistence after reload passed. Built-in sign-in providers remain disabled, and this verification did not create or delete production teaching records.
 
 正式需求以 [第 3 版 confirmed RDQ](rdq/RDQ-spec-homeworkclass-20260829.md) 為準。
@@ -53,6 +55,7 @@ Each class has a distinct dopamine-inspired color. Color is never the only ident
 5. **查詢與提示**：依日期範圍、班級、座號及科目查詢；預設權重為遲到 1、聊天 1、未帶用品 1、不守秩序 2，達 4 分只提示「需教師確認」，不自動診斷或懲處。
 6. **匯出與備份**：提供篩選範圍的 CSV、XLSX、列印摘要，以及全資料 JSON 備份。
 7. **國定假日**：可在學期任一日期建立整日不上課；同日舊資料保留並標示衝突，撤銷以必填原因新增歷程，不刪除原假日或其他紀錄。
+8. **受控刪除**：錯誤作業以作廢狀態保留原件並原子回收關聯繳交歷程；課堂事件移入教師限定的 30 天回收區。回收資料不可還原，永久稽核只留類型、原始 ID、時間與筆數。
 
 1. Assign homework from a dated timetable slot.
 2. Track each valid seat and calculate totals from the roster.
@@ -71,7 +74,7 @@ Each class has a distinct dopamine-inspired color. Color is never the only ident
 
 In demo mode, any six-digit value only satisfies the local format check. It is not authentication. Data stays on that browser and can be lost when site storage is cleared.
 
-In Firebase mode, browser writes use authenticated Firestore access. Assignment, submission, classroom-incident, and timetable-exception documents are append-only. Browser-based cloud restore is intentionally disabled.
+In Firebase mode, browser writes use authenticated Firestore access. Normal assignment, submission, classroom-incident, and timetable-exception writes remain append-only. Confirmed deletions can only run through the App Check- and teacher-protected callable; browsers still cannot directly update or delete Firestore documents. Browser-based cloud restore is intentionally disabled.
 
 ## 通行碼與工作階段 / PIN and session policy
 
@@ -116,7 +119,7 @@ The Rules suite requires a Firebase CLI-compatible Java runtime and the local Fi
 ## 匯出、備份與保留 / Export, backup, and retention
 
 - CSV、XLSX 與列印摘要只包含目前篩選範圍。
-- JSON 備份包含 schemaVersion 1 的完整作業、繳交事件、課堂事件、課表例外與權重設定。
+- JSON 備份包含 schemaVersion 1 的作用中資料、作業作廢狀態、最小刪除稽核、課表例外與權重設定；30 天回收 payload 刻意排除。
 - demo 模式可在確認後以 JSON 整份還原；Firebase 模式不得從瀏覽器覆寫雲端歷程，未來須使用受控且可稽核的 Admin 匯入流程。
 - 保留政策為本學期及前一學期。第一版不自動刪除；超過範圍時先提示匯出，再由教師明確確認受控清理。
 
@@ -135,9 +138,10 @@ The Rules suite requires a Firebase CLI-compatible Java runtime and the local Fi
 - [已確認 RDQ / Confirmed RDQ](rdq/RDQ-spec-homeworkclass-20260829.md)
 - [國定假日增量 RDQ](rdq/RDQ-spec-national-holiday-20260829.md)
 - [國定假日增量正式部署紀錄](docs/production-deployment-national-holiday-20260829.md)
+- [作業／課堂事件刪除增量正式部署紀錄](docs/production-deployment-deletion-20260902.md)
 
 ## Firebase 正式環境變更原則 / Production change control
 
-本次正式部署已依教師逐項授權完成。後續若要輪替秘密、放寬 Rules、變更 App Check／IAM／Functions、清理資料或重新部署，仍須先確認範圍與取得明確授權；需要再次驗證身分時由教師本人操作。基礎部署見 [2026-08-29 正式部署紀錄](docs/production-deployment-20260829.md)，國定假日增量見 [同日增量部署紀錄](docs/production-deployment-national-holiday-20260829.md)。
+本次正式部署已依教師逐項授權完成。後續若要輪替秘密、放寬 Rules、變更 App Check／IAM／Functions、清理資料或重新部署，仍須先確認範圍與取得明確授權；需要再次驗證身分時由教師本人操作。基礎部署見 [2026-08-29 正式部署紀錄](docs/production-deployment-20260829.md)，國定假日增量見 [同日增量部署紀錄](docs/production-deployment-national-holiday-20260829.md)，受控刪除增量見 [2026-09-02 部署紀錄](docs/production-deployment-deletion-20260902.md)。
 
 Future production changes still require explicit teacher authorization. See the dated production deployment record for the evidence that supports the current live status.

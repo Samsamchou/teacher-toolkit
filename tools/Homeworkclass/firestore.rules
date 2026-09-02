@@ -114,6 +114,7 @@ service cloud.firestore {
         && (!('note' in data)
           || (data.note is string && data.note.size() <= 500))
         && exists(/databases/$(database)/documents/assignments/$(data.assignmentId))
+        && !exists(/databases/$(database)/documents/assignmentRevocations/$(data.assignmentId))
         && get(/databases/$(database)/documents/assignments/$(data.assignmentId)).data.classId == data.classId;
     }
 
@@ -256,6 +257,23 @@ service cloud.firestore {
     match /settings/{documentId} {
       allow read: if isTeacher() && documentId == 'main';
       allow create, update: if isTeacher() && validSettings(documentId, request.resource.data);
+    }
+
+    // Deletion state is written only by the authenticated callable function.
+    // 刪除狀態僅由已驗證的 callable function 寫入；瀏覽器只能讀取。
+    match /assignmentRevocations/{documentId} {
+      allow read: if isTeacher();
+      allow write: if false;
+    }
+
+    match /deletedRecords/{documentId} {
+      allow read: if isTeacher();
+      allow write: if false;
+    }
+
+    match /deletionAudits/{documentId} {
+      allow read: if isTeacher();
+      allow write: if false;
     }
 
     // Admin SDK only; stores salted hashes, never raw IP addresses.

@@ -117,11 +117,23 @@ export const downloadXlsxReport = async (report: ReportExport) => {
   );
 };
 
+export const createJsonBackupValue = (
+  snapshot: AppSnapshot,
+  exportedAt = new Date().toISOString(),
+) => {
+  const { deletedRecords: _recycleBin, ...preserved } = snapshot;
+  return { ...preserved, exportedAt };
+};
+
+export const createJsonBackupContent = (
+  snapshot: AppSnapshot,
+  exportedAt?: string,
+) => JSON.stringify(createJsonBackupValue(snapshot, exportedAt), null, 2);
+
 export const downloadJsonBackup = (snapshot: AppSnapshot) => {
-  const value: AppSnapshot = { ...snapshot, exportedAt: new Date().toISOString() };
   const date = new Date().toISOString().slice(0, 10);
   saveBlob(
-    new Blob([JSON.stringify(value, null, 2)], { type: "application/json;charset=utf-8" }),
+    new Blob([createJsonBackupContent(snapshot)], { type: "application/json;charset=utf-8" }),
     `英語作業與課堂紀錄_完整備份_${date}.json`,
   );
 };

@@ -10,6 +10,26 @@
 - [ ] means not run, not passed, or still requires teacher/live-environment verification.
 - Source code, a submitted command, or an Emulator pass is never production deployment evidence.
 
+## 2026-09-02 刪除增量證據（DEPLOYED_VERIFIED）
+
+| 檢查 / Check | 結果 / Result | 證據或限制 / Evidence or limitation |
+|---|---|---|
+| confirmed RDQ | **通過 / Passed** | `rdq/RDQ-spec-assignment-incident-deletion-20260902.md`；作業作廢、課堂事件刪除、30 天回收與最小稽核 |
+| `npm test` | **通過 / Passed** | 5 files、21 tests；含作廢投影、連動回收、到期清理、undefined 省略與 JSON 排除回收 payload |
+| `npm run build` | **通過 / Passed** | TypeScript＋Vite 2152 modules；只有既有大型 chunk 警告 |
+| Functions build | **通過 / Passed** | TypeScript exit 0；載入 `verifyTeacherPin` 與 `deleteTeacherRecord` |
+| Rules Emulator | **通過 / Passed** | 15/15；含瀏覽器刪除拒絕、隱藏集合固定教師只讀、作廢作業拒絕新繳交 |
+| Auth／Functions／Firestore Emulator | **通過 / Passed** | 3/3；作業連動 2 筆繳交原子回收、冪等重試、課堂事件回收、未登入拒絕 |
+| 匯出資料界線 | **通過 / Passed** | CSV／XLSX／列印由作用中投影建立；JSON 純函式測得保留 revocation／audit 且排除 deletedRecords |
+| 瀏覽器 UI | **通過 / Passed** | 作業與課堂事件刪除按鈕實測 44×44；確認視窗開啟後取消，未刪除瀏覽器資料 |
+| 360／768／1440 px | **通過 / Passed** | 三種 viewport 均無整頁水平溢位；360 px modal 完整落在 viewport，確認按鈕高 44 px |
+| 鍵盤完整驗收 | **未完成 / Open** | 原生 button 與 focus-visible 樣式存在；專用鍵盤啟動、焦點循環及 Escape 關閉尚未完成 |
+| 前端 production audit | **通過 / Passed** | 0 vulnerabilities |
+| Functions production audit | **待上游修正 / Upstream open** | 9 moderate、0 high、0 critical；Firebase 傳遞性相依鏈，未執行破壞性 force fix |
+| Firebase 正式部署 | **已部署並讀回 / Deployed and read back** | `deleteTeacherRecord` ACTIVE、Rules hash 完全一致、`deletedRecords.purgeAt` TTL=true、Hosting release 與 4 個 asset hash 通過；正式資料未刪除 |
+
+本機紀錄見 `docs/local-validation-deletion-20260902.md`，正式證據見 `docs/production-deployment-deletion-20260902.md`。Google Drive 的 `node_modules` 為受鎖定同步佔位內容，因此自動驗證在不含正式資料與秘密的本機 Temp 隔離副本完成。
+
 ## 2026-08-29 證據快照 / Evidence snapshot
 
 | 檢查 / Check | 結果 / Result | 證據或限制 / Evidence or limitation |
@@ -78,6 +98,8 @@ Local build commands were run from an isolated mirror because Google Drive locks
 - [x] 假日名稱與撤銷原因必填；重複有效假日被阻擋，撤銷以 append-only 新事件保留原因。
 - [x] 撤銷後固定課與先前補課恢復；瀏覽器假資料測得本週 21 節、8/31 共 7 個時段。
 - [x] 假日仍允許後臺補交登記，既有作業與課堂事件保持可查。
+- [x] 已出的作業有 44×44 刪除按鈕與確認視窗；作廢後原 assignment 保留，但作用中畫面、繳交選單與一般報表排除。
+- [x] 作業關聯繳交事件由 callable transaction 原子移入 30 天回收區；Emulator 驗證冪等重試不重複搬移。
 
 ### 繳交與補交 / Submission and make-up
 
@@ -98,6 +120,8 @@ Local build commands were run from an isolated mirror because Google Drive locks
 - [ ] 未補交清單可回查作業日期、科目、內容、原因與狀態日期。
 - [x] 繳交歷程可回查原始未交與補交事件。
 - [x] 需關注提示附分數、事件次數、類別與最近日期，並保留教師最後判斷。
+- [x] 已登記事件有 44×44 刪除按鈕與確認視窗；刪除後作用中歷程與分數排除，payload 進入 30 天回收區。
+- [x] 已選有效座號且備註空白時，Firestore 寫入前會省略 undefined note；單元與 Rules 測試通過。
 
 ## D. 響應式、無障礙與列印 / Responsive, accessibility, and print
 
@@ -119,7 +143,7 @@ Local build commands were run from an isolated mirror because Google Drive locks
 - [ ] XLSX 可讀回六張工作表：作業明細、未補交清單、繳交歷程、需關注摘要、課堂事件、課表異動。
 - [ ] XLSX 標題、凍結列、篩選、欄寬與空資料提示正確。
 - [ ] 列印摘要與目前日期、班級、座號、科目篩選一致。
-- [ ] JSON 備份含 schemaVersion 1、全部四種資料陣列、權重與 exportedAt。
+- [x] JSON 純函式測得含 schemaVersion 1、作用中資料、作廢狀態、最小稽核與 exportedAt，且排除 30 天回收 payload。
 - [ ] demo 還原前要求確認；不支援的 schema 拒絕。
 - [ ] 完成一次「先備份 → 增加假資料 → 還原 → 計數及事件逐筆相同」讀回驗證。
 - [x] Firebase repository 原始碼明確拒絕瀏覽器 replaceAll。
@@ -136,11 +160,12 @@ Local build commands were run from an isolated mirror because Google Drive locks
 - [x] Function 常數為連錯 5 次鎖 15 分鐘；成功後刪除該 IP 失敗計數。
 - [x] 共用裝置閒置 30 分鐘、私人裝置 7 天及手動登出邏輯存在。
 - [x] Rules 要求固定 uid homeworkclass-teacher 與 role: teacher 同時成立。
-- [x] assignments、submissionEvents、classroomIncidents、timetableExceptions 的 update／delete 由 Rules 拒絕。
+- [x] assignments、submissionEvents、classroomIncidents、timetableExceptions 的瀏覽器 update／delete 由 Rules 拒絕；刪除只可由已驗證 callable 的 Admin SDK 執行。
+- [x] assignmentRevocations、deletedRecords、deletionAudits 只允許固定教師讀取，所有瀏覽器寫入拒絕；作廢作業不可新增 submissionEvent。
 - [x] _securityRateLimits 對瀏覽器預設拒絕，原始 IP 不應寫入資料庫。
 - [ ] Functions Emulator 驗證正確 PIN、錯誤 PIN、第五次鎖定、15 分鐘後恢復、成功清除計數。
 - [ ] Auth Emulator 驗證登入、重新整理、共用／私人工作階段及手動登出。
-- [x] Firestore Rules suite 11/11 通過：未登入、錯 uid、錯 role、欄位白名單、缺號、父作業班級及 append-only。
+- [x] Firestore Rules suite 15/15 通過：未登入、錯 uid、錯 role、欄位白名單、缺號、父作業班級、append-only、作廢父作業與隱藏集合權限。
 - [x] seed script 在無 FIRESTORE_EMULATOR_HOST 時安全拒絕，loopback Emulator 實寫 6 筆假資料。
 - [x] 搜尋專案原始碼與隔離 build output，未發現 PIN、hash、salt、token、私鑰、Firebase API key 值或電子郵件。
 
@@ -162,11 +187,13 @@ Local build commands were run from an isolated mirror because Google Drive locks
 - [x] 教師本人建立 TEACHER_PIN_BCRYPT_HASH 與 RATE_LIMIT_IP_SALT；值未進入聊天、命令參數、原始碼或 Git。
 - [x] runtime service account 在自身資源取得最小 custom-token signing 權限；未下載 service-account key。
 - [ ] 為 _securityRateLimits.expiresAt 啟用 TTL 並核對 24 小時清理行為。
-- [x] Rules 12/12、建置、依賴與秘密掃描完成；本次只部署 Rules 與 Hosting，未變更 Indexes／Functions。
+- [x] 2026-08-29 國定假日增量只部署 Rules 與 Hosting；2026-09-02 刪除增量另行授權並部署 Function、Rules、Indexes／TTL 與 Hosting。
 - [x] 教師明確授權正式部署與必要的最小 IAM 變更。
 - [x] 部署後讀回 project、Rules／indexes、Function region／memory／timeout／maxInstances、App Check 與 Hosting headers。
 - [x] 正式通行碼登入、Authentication 初始化、重新整理後工作階段及手動後臺導覽通過。
 - [x] 國定假日增量部署後，教師本人重新登入並讀回設定頁「國定假日」、必填假日名稱與選填備註；重新整理後仍在教師後臺。
+- [x] 刪除增量部署後，讀回 `deleteTeacherRecord` ACTIVE、Rules exact hash、`deletedRecords.purgeAt` TTL、Hosting release／assets／headers 與 Firebase 驗證模式；未登入 callable 得到 401。
+- [ ] 教師本人以確定可刪除的正式錯誤紀錄驗證刪除、重新整理與 30 天回收區；本次不建立或刪除虛構教學紀錄。
 - [ ] 正式站建立真實國定假日後，再讀回條件式「撤銷國定假日」按鈕與正式寫入；本次不建立虛構 append-only 紀錄。
 - [ ] 30 分鐘閒置、7 天期限、五次錯誤鎖定、正式資料寫入與完整匯出仍待時間型／實際資料驗收。
 - [x] 正式網址與 2026-08-29 部署紀錄已保存；讀回成功後才標記已部署。
@@ -182,6 +209,7 @@ The production deployment and live sign-in readback are complete. TTL, Firestore
 - [x] 已回填 2026-08-29 自動測試、建置、Rules、seed、audit、正式部署、登入與瀏覽器證據。
 - [x] `docs/production-deployment-20260829.md` 記錄正式網址、安全設定、讀回與未完成項目。
 - [x] `docs/production-deployment-national-holiday-20260829.md` 記錄本次 Rules／Hosting、artifact 雜湊、正式 asset 與待教師登入項目。
+- [x] `docs/production-deployment-deletion-20260902.md` 記錄 Function、Rules、TTL、Hosting release、asset 雜湊、負向 callable 與瀏覽器讀回。
 
 ## 發布前最低完成條件 / Minimum release criteria
 
