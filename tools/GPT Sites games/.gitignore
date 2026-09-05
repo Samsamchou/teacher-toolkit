@@ -1,0 +1,33 @@
+# 秘密與本機憑證 / Secrets and local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+service-account*.json
+serviceAccount*.json
+
+# 快取與本機環境 / Caches and local environments
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.log
+
+# 系統中繼資料 / OS metadata
+Thumbs.db
+.DS_Store
+
+# Build and test runtime / 建置與測試執行檔
+dist/
+.firebase/
+playwright-report/
+test-results/
+.npm-cache/
+
+# Preserve reproducible dependency versions / 保存可重現的套件版本
+!package-lock.json
+!functions/package-lock.json

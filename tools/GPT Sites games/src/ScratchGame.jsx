@@ -1,0 +1,74 @@
+import React,{useEffect,useRef,useState,useLayoutEffect} from 'react';
+import { ArrowLeft,ArrowRight,Maximize,Minimize,PenLine,Hand,Minus,Square,RectangleHorizontal,Circle,Eraser,Trash2,Undo2,Sparkles,RotateCcw,X } from 'lucide-react';
+import Preferences,{characterNames} from './Preferences';
+import {sound} from './sound';
+import { REVEAL_MS,fitSize } from './model.mjs';
+const tools=[['scratch',Hand,'Scratch'],['pen',PenLine,'Write'],['line',Minus,'Line'],['square',Square,'Square'],['rectangle',RectangleHorizontal,'Rectangle'],['circle',Circle,'Circle'],['eraser',Eraser,'Eraser']];
+const colors=['#24483e','#ffffff','#ed7057','#e8b93d','#427bb4','#8761ae'];
+function ink(ctx,stroke){
+  const {points:p,tool,color,size}=stroke;if(!p.length)return;
+  ctx.save();ctx.lineWidth=size;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=color;ctx.fillStyle=color;ctx.globalCompositeOperation=tool==='eraser'?'destination-out':'source-over';
+  const a=p[0],b=p[p.length-1];ctx.beginPath();
+  if(tool==='pen'||tool==='eraser'){ctx.moveTo(a.x,a.y);if(p.length===1){ctx.arc(a.x,a.y,size/2,0,Math.PI*2);ctx.fill();}else{p.slice(1).forEach(q=>ctx.lineTo(q.x,q.y));ctx.stroke();}}
+  else if(tool==='line'){ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  else if(tool==='rectangle')ctx.strokeRect(a.x,a.y,b.x-a.x,b.y-a.y);
+  else if(tool==='square'){const s=Math.min(Math.abs(b.x-a.x),Math.abs(b.y-a.y));ctx.strokeRect(a.x,a.y,Math.sign(b.x-a.x)*s,Math.sign(b.y-a.y)*s);}
+  else if(tool==='circle'){const radius=Math.hypot(b.x-a.x,b.y-a.y)/2;ctx.arc((a.x+b.x)/2,(a.y+b.y)/2,radius,0,Math.PI*2);ctx.stroke();}
+  ctx.restore();
+}
+function erase(ctx,points,size){ink(ctx,{tool:'eraser',points,size,color:'#000'});}
+function paintCover(canvas){
+  const ctx=canvas.getContext('2d'),{width:w,height:h}=canvas;ctx.globalCompositeOperation='source-over';ctx.fillStyle='#ffe13d';ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#eea828';const step=Math.min(w,h)/13;for(let y=step/2;y<h;y+=step)for(let x=step/2;x<w;x+=step){ctx.beginPath();ctx.arc(x,y,Math.max(1,step*.035),0,Math.PI*2);ctx.fill();}
+  const s=Math.min(w,h);ctx.fillStyle='#ff7fb3';ctx.beginPath();ctx.arc(w/2,h/2-s*.045,s*.17,0,Math.PI*2);ctx.fill();ctx.fillStyle='#24483e';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`500 ${s*.18}px Georgia`;ctx.fillText('?',w/2,h/2-s*.04);
+  ctx.font=`600 ${s*.055}px system-ui`;ctx.fillStyle='#4521b3';ctx.fillText('SCRATCH TO DISCOVER',w/2,h/2+s*.19);
+}
+export default function ScratchGame({images,lessonName,onExit,preferences,onPreferences}){
+  const [index,setIndex]=useState(0),[tool,setTool]=useState('scratch'),[color,setColor]=useState(colors[0]),[size,setSize]=useState(6),[open,setOpen]=useState(false),[full,setFull]=useState(false),[auto,setAuto]=useState(false),[progress,setProgress]=useState(0),[revealed,setRevealed]=useState(false),[bounds,setBounds]=useState({width:800,height:500}),[notice,setNotice]=useState('');
+  const root=useRef(),area=useRef(),cover=useRef(),drawing=useRef(),active=useRef(null),states=useRef(new Map()),raf=useRef(),autoRef=useRef(false);
+  const [revealElapsed,setRevealElapsed]=useState(null),[confirmAction,setConfirmAction]=useState(null),[celebrating,setCelebrating]=useState(false),[showPreferences,setShowPreferences]=useState(false),[celebrationElapsed,setCelebrationElapsed]=useState(null);
+  const celebrationTimer=useRef(),celebrationStart=useRef(0);
+  function endCelebration(){clearTimeout(celebrationTimer.current);if(celebrationStart.current)setCelebrationElapsed(Math.round(performance.now()-celebrationStart.current));setCelebrating(false);sound.stopVictory();}
+  function celebrate(){sound.stopScratch();setCelebrating(true);celebrationStart.current=performance.now();sound.victory();clearTimeout(celebrationTimer.current);celebrationTimer.current=setTimeout(endCelebration,6000);}
+  useEffect(()=>()=>{sound.stopAll();clearTimeout(celebrationTimer.current);},[]);
+  useEffect(()=>{const quiet=()=>{if(document.hidden){sound.stopAll();endCelebration();}};document.addEventListener('visibilitychange',quiet);return()=>document.removeEventListener('visibilitychange',quiet);},[]);
+
+  const image=images[index];const iw=image.width,ih=image.height;const factor=1400/Math.max(iw,ih);const w=Math.max(1,Math.round(iw*factor)),h=Math.max(1,Math.round(ih*factor));
+  const display=fitSize(iw,ih,Math.max(1,bounds.width-32),Math.max(1,bounds.height-32));
+  function session(){if(!states.current.has(image.id))states.current.set(image.id,{scratches:[],strokes:[],revealed:false});return states.current.get(image.id);}
+  function redrawInk(preview){const c=drawing.current;if(!c)return;const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);session().strokes.forEach(s=>ink(ctx,s));if(preview)ink(ctx,preview);}
+  useLayoutEffect(()=>{const ob=new ResizeObserver(([entry])=>setBounds({width:entry.contentRect.width,height:entry.contentRect.height}));ob.observe(area.current);return()=>ob.disconnect();},[]);
+  useLayoutEffect(()=>{
+    paintCover(cover.current);const s=session();if(s.revealed)cover.current.getContext('2d').clearRect(0,0,w,h);else s.scratches.forEach(st=>erase(cover.current.getContext('2d'),st.points,st.size));
+    redrawInk();setRevealed(s.revealed);setProgress(s.revealed?1:0);
+  },[index,w,h]);
+  useEffect(()=>{const change=()=>setFull(document.fullscreenElement===root.current);document.addEventListener('fullscreenchange',change);return()=>{document.removeEventListener('fullscreenchange',change);cancelAnimationFrame(raf.current);};},[]);
+  useEffect(()=>{function guard(e){e.preventDefault();e.returnValue='';}window.addEventListener('beforeunload',guard);return()=>window.removeEventListener('beforeunload',guard);},[]);
+  function point(e){const r=drawing.current.getBoundingClientRect();return{x:(e.clientX-r.left)*w/r.width,y:(e.clientY-r.top)*h/r.height};}
+  function down(e){if(autoRef.current||celebrating||showPreferences||active.current||e.button!==0)return;sound.unlock();e.preventDefault();e.currentTarget.setPointerCapture(e.pointerId);const p=point(e);active.current={pointerId:e.pointerId,tool,color,size:Math.min(w,h)*(tool==='scratch'?size*2.5:size)/500,points:[p]};if(tool==='scratch'){erase(cover.current.getContext('2d'),[p],active.current.size);}else redrawInk(active.current);}
+  function move(e){const stroke=active.current;if(!stroke||stroke.pointerId!==e.pointerId)return;e.preventDefault();const events=e.nativeEvent.getCoalescedEvents?.()||[e];for(const ev of events){const p=point(ev),last=stroke.points.at(-1);stroke.points.push(p);if(stroke.tool==='scratch'){erase(cover.current.getContext('2d'),[last,p],stroke.size);if(!revealed&&Math.hypot(p.x-last.x,p.y-last.y)>.5)sound.pulse();}}if(stroke.tool!=='scratch')redrawInk(stroke);}
+  function up(e){sound.stopScratch();const st=active.current;if(!st||st.pointerId!==e.pointerId)return;if(st.tool==='scratch'){session().scratches.push(st);if(!revealed){const pixels=cover.current.getContext('2d').getImageData(0,0,w,h).data;let hidden=false;for(let i=3;i<pixels.length;i+=4){if(pixels[i]){hidden=true;break;}}if(!hidden){session().revealed=true;setRevealed(true);setProgress(1);celebrate();}}}else session().strokes.push(st);active.current=null;if(e.currentTarget.hasPointerCapture(e.pointerId))e.currentTarget.releasePointerCapture(e.pointerId);}
+  async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await root.current.requestFullscreen();}catch{setNotice('Fullscreen is unavailable here. Try opening the game directly in Chrome or Edge.');}}
+  function reveal(){
+    if(autoRef.current||revealed)return;sound.unlock().then(ok=>{if(ok&&autoRef.current)sound.startScratch();});autoRef.current=true;setAuto(true);setTool('scratch');setOpen(false);
+    const start=performance.now(),ctx=cover.current.getContext('2d');const rows=14,spacing=h/(rows-1),radius=Math.max(spacing*1.35,5);let last=null;
+    function frame(now){if(!document.hidden)sound.startScratch();const p=Math.min(1,(now-start)/REVEAL_MS);const total=p*rows;const row=Math.min(rows-1,Math.floor(total));const across=total-row;const x=(row%2===0?across:1-across)*w;const y=row*spacing;
+      // Fill skipped path portions too, so a slow display cannot leave gaps.
+      const previous=last?.total||0;for(let t=previous;t<=total;t+=.02){const r=Math.min(rows-1,Math.floor(t));const a=t-r;const pt={x:(r%2===0?a:1-a)*w,y:r*spacing};if(last)erase(ctx,[last,pt],radius);else erase(ctx,[pt],radius);last={...pt,total:t};}
+      const pt={x,y};if(last)erase(ctx,[last,pt],radius);last={...pt,total};setProgress(p);
+      if(p<1)raf.current=requestAnimationFrame(frame);else{ctx.clearRect(0,0,w,h);session().revealed=true;setRevealElapsed(Math.round(now-start));setRevealed(true);setAuto(false);autoRef.current=false;celebrate();}
+    }raf.current=requestAnimationFrame(frame);
+  }
+  function reset(){endCelebration();sound.stopAll();setConfirmAction('reset');}
+  function exit(){if(!autoRef.current){endCelebration();sound.stopAll();setConfirmAction('exit');}}
+  async function confirm(){const action=confirmAction;setConfirmAction(null);if(action==='reset'){session().scratches=[];session().revealed=false;paintCover(cover.current);setRevealed(false);setProgress(0);setRevealElapsed(null);}else{if(document.fullscreenElement)await document.exitFullscreen().catch(()=>{});onExit();}}
+  return <div className="game-screen" ref={root} data-reveal-elapsed-ms={revealElapsed} data-celebration-active={celebrating} data-celebration-elapsed-ms={celebrationElapsed}>
+    <div className="game-top"><button className="text-button" onClick={exit} disabled={auto}><ArrowLeft size={17}/> Back to lesson</button><div className="game-title"><span className="eyebrow">SCRATCH & REVEAL</span><strong>Picture discovery</strong></div><div className="game-top-actions"><button className="icon-button" aria-label="Sound and display" title="Sound and display" disabled={auto} onClick={()=>{sound.stopAll();endCelebration();setShowPreferences(true);}}><span aria-hidden="true">♫</span></button><button className="icon-button" aria-label={full?'Exit fullscreen':'Enter fullscreen'} title="Fullscreen" onClick={fullscreen}>{full?<Minimize size={24}/>:<Maximize size={24}/>}</button></div></div>
+    <div className="drawing-dock"><button className={`dock-toggle ${open?'selected':''}`} aria-label="Drawing tools" aria-expanded={open} onClick={()=>setOpen(!open)}><PenLine size={20}/></button>{open&&<div className="tool-panel"><div className="tool-grid">{tools.map(([id,Icon,label])=><button key={id} title={label} aria-label={label} aria-pressed={tool===id} className={`tool-button ${tool===id?'selected':''}`} onClick={()=>setTool(id)} disabled={auto}><Icon size={18}/></button>)}</div><div className="tool-divider"/><div className="swatches">{colors.map(c=><button key={c} aria-label={`Color ${c}`} className={`swatch ${c===color?'active':''}`} style={{background:c}} onClick={()=>setColor(c)}/>)}</div><label className="size-label">Size <input aria-label="Tool size" type="range" min="3" max="24" value={size} onChange={e=>setSize(+e.target.value)}/></label><div className="tool-bottom"><button title="Undo drawing" aria-label="Undo drawing" onClick={()=>{session().strokes.pop();redrawInk();}}><Undo2 size={17}/></button><button title="Clear drawings" aria-label="Clear drawings" onClick={()=>{session().strokes=[];redrawInk();}}><Trash2 size={17}/></button><span>Drawings only</span></div></div>}</div>
+    <div className="game-area" ref={area}><div className={`scratch-board mode-${tool}`} style={{width:display.width,height:display.height}}><img src={image.url} alt="Lesson image hidden beneath the scratch cover" draggable="false"/><canvas ref={cover} width={w} height={h} className="cover-canvas" data-testid="scratch-cover"/><canvas ref={drawing} width={w} height={h} className="drawing-canvas" aria-label="Scratch and draw on the image" onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}/></div>{celebrating&&<div className={`celebration ${preferences.reduced?'reduced':''}`} role="status" aria-label="Celebration: four friends say great job!">{characterNames.map(name=><img key={name} className={`celebration-character party-${name}`} src={`/celebration/${name}.png`} alt={name+' celebration character'}/>)}{Array.from({length:32},(_,i)=><i key={i} className="confetti-piece" style={{'--color':['#ff4191','#ffe13d','#32c7ff','#55dcaf'][i%4],'--x':(i%2===0?(i*7)%18:82+(i*7)%18)+'%','--fall':(1.7+i%5*.3)+'s','--delay':-(i%7)*.3+'s'}}/>)}<div className="party-label">GREAT JOB!</div><button className="button secondary skip-celebration" onClick={endCelebration}>Skip celebration</button></div>}</div>
+    {notice&&<div role="alert" className="game-notice">{notice}<button aria-label="Dismiss" onClick={()=>setNotice('')}><X size={16}/></button></div>}
+    <div className="game-bottom"><div className="game-help"><span className="mode-dot"/>{auto?'The mystery is unfolding…':tool==='scratch'?'Drag to scratch. Let curiosity lead.':`${tools.find(t=>t[0]===tool)?.[2]} mode · switch to the hand to scratch`}</div><div className="page-controls"><button aria-label="Previous image" className="icon-button" disabled={index===0||auto} onClick={()=>{endCelebration();sound.stopAll();setIndex(index-1);}}><ArrowLeft size={18}/></button><span>{String(index+1).padStart(2,'0')} <i>/ {String(images.length).padStart(2,'0')}</i></span><button aria-label="Next image" className="icon-button" disabled={index===images.length-1||auto} onClick={()=>{endCelebration();sound.stopAll();setIndex(index+1);}}><ArrowRight size={18}/></button></div><div className="reveal-controls"><button className="icon-button" aria-label="Cover image again" title="Cover again" onClick={reset} disabled={auto}><RotateCcw size={18}/></button><button className="button reveal-button" onClick={reveal} disabled={auto||revealed}><Sparkles size={18}/>{auto?`Revealing… ${Math.round(progress*100)}%`:revealed?'Fully revealed':'Reveal all'}{!auto&&!revealed&&<span>8s</span>}</button></div></div>
+    {showPreferences&&<Preferences english value={preferences} onChange={onPreferences} onClose={()=>setShowPreferences(false)}/>}
+    {confirmAction&&<div className="modal-backdrop"><div className="modal" role="dialog" aria-modal="true" aria-labelledby="round-confirm-title"><h2 id="round-confirm-title">{confirmAction==='exit'?'Back to your lesson?':'Cover this image again?'}</h2><p>{confirmAction==='exit'?'Your saved lesson stays. This round’s scratches and drawings will be cleared.':'Your drawings will stay. The scratch cover will start fresh.'}</p><div className="modal-actions"><button className="button secondary" autoFocus onClick={()=>setConfirmAction(null)}>Keep playing</button><button className="button primary" onClick={confirm}>{confirmAction==='exit'?'Leave game':'Cover image'}</button></div></div></div>}
+  </div>;
+}

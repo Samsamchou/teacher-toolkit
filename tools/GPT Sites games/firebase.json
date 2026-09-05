@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "gamesinclass-5d9d1",
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{ "source": "/api/teacher-login", "function": {"functionId":"teacherLogin","region":"asia-east1"} }, { "source": "**", "destination": "/index.html" }],
+    "headers": [{"source":"**","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"X-Frame-Options","value":"DENY"}]}]
+  },
+  "functions": [{"source":"functions","codebase":"classroom-games","ignore":["node_modules",".git","*.log"]}],
+  "firestore": { "rules": "firestore.rules" },
+  "storage": { "rules": "storage.rules" },
+  "emulators": { "firestore": { "port": 8186 }, "storage": { "port": 9296 }, "ui": { "enabled": false }, "singleProjectMode": true }
+}

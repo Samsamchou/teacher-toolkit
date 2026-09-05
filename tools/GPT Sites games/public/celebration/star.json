@@ -1,0 +1,13 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in (explicit user choice)",
+  "reportedModel": null,
+  "prompt": "Create ONE polished isolated game celebration character asset: a cheerful golden yellow five-point STAR character with a joyful smiling face, tiny pink cheeks, little blue shoes and small waving arms. Original adorable 3D soft vinyl toy aesthetic for elementary classroom children, rounded puffy forms, satin plastic, exquisite tiny bevels, soft studio lighting, playful candy dopamine palette, front three-quarter view. Character centered fills 80% square composition with room around limbs, complete body. Genuinely transparent alpha background, no scene, no ground plane, no text, no watermark, no border, no confetti outside subject. Consistent cohesive toy collection style, clear readable silhouette at small sizes. 1024x1024 PNG ordinary medium quality.",
+  "requestedSize": "1024x1024",
+  "actualSize": "1254x1254",
+  "requestedQuality": "medium",
+  "source": "C:\\Users\\User\\.codex\\generated_images\\01a07160-33fe-7801-bbd4-8237580fe3f4\\exec-8ab3cd81-0d3b-4c41-bc03-2acb873dd494.png",
+  "output": "star.png",
+  "sha256": "c3e2d9309220e3c85a4c6a3f03934b3cc9d2ab89b3b9f54419d042d2bbd41ed7",
+  "fileTimestamp": "2026-09-05T13:28:43.896Z"
+}

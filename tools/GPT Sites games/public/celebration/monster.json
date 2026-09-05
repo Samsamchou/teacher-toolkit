@@ -1,0 +1,13 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in (explicit user choice)",
+  "reportedModel": null,
+  "prompt": "Create ONE polished isolated game celebration character asset: a cute friendly MINT GREEN little MONSTER character with two small lavender horns, big friendly eyes, pink cheeks, tiny feet, happy raised arms; no scary features. Original adorable 3D soft vinyl toy aesthetic for elementary classroom children, rounded puffy forms, satin plastic, exquisite tiny bevels, soft studio lighting, playful candy dopamine palette, front three-quarter view. Character centered fills 80% square composition with room around limbs, complete body. Genuinely transparent alpha background, no scene, no ground plane, no text, no watermark, no border, no confetti outside subject. Consistent cohesive toy collection style, clear readable silhouette at small sizes. 1024x1024 PNG ordinary medium quality.",
+  "requestedSize": "1024x1024",
+  "actualSize": "1254x1254",
+  "requestedQuality": "medium",
+  "source": "C:\\Users\\User\\.codex\\generated_images\\01a07160-33fe-7801-bbd4-8237580fe3f4\\exec-eb1b7e6a-01b6-43c6-9d0b-650aa9713496.png",
+  "output": "monster.png",
+  "sha256": "0357936c107c73ec19d34dd66a56b1a9534ef5b6295f9fb4bbd76f918ced7633",
+  "fileTimestamp": "2026-09-05T13:30:07.465Z"
+}

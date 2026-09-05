@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function teacher(uid) {
+      return request.auth != null && uid == 'classroom-owner' && request.auth.uid == uid
+        && request.auth.token.classroomTeacher == true
+        && request.auth.token.firebase.sign_in_provider == 'custom'
+        && request.auth.token.auth_time > request.time.toMillis() / 1000 - 28800;
+    }
+    match /teachers/{uid}/{collection}/{id} {
+      allow read, delete: if teacher(uid) && collection in ['images', 'lessons', 'games'];
+      allow create, update: if teacher(uid) && (
+        (collection == 'images' && request.resource.data.keys().hasOnly(['id','name','type','size','width','height','createdAt','path'])
+          && request.resource.data.id == id && request.resource.data.name is string
+          && request.resource.data.path == 'teachers/' + uid + '/images/' + id
+          && request.resource.data.type in ['image/png','image/jpeg','image/webp']
+          && request.resource.data.size > 0 && request.resource.data.size <= 20971520)
+        || (collection == 'lessons' && request.resource.data.keys().hasOnly(['id','name','gameId','imageIds','updatedAt'])
+          && request.resource.data.id == id && request.resource.data.name is string
+          && request.resource.data.gameId is string && request.resource.data.imageIds is list)
+        || (collection == 'games' && request.resource.data.keys().hasOnly(['id','name','description','url','order','hidden','builtin'])
+          && request.resource.data.id == id && request.resource.data.name is string
+          && request.resource.data.url is string && request.resource.data.hidden is bool)
+      );
+    }
+  }
+}

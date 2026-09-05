@@ -1,0 +1,13 @@
+{
+  "tool": "image_gen.imagegen",
+  "mode": "built-in (explicit user choice)",
+  "reportedModel": null,
+  "prompt": "Create ONE polished isolated game celebration character asset: a cheerful pastel-bright RAINBOW character, thick candy pink yellow sky-blue mint rainbow arches between two small smiling white clouds. Original adorable 3D soft vinyl toy aesthetic for elementary classroom children, rounded puffy forms, satin plastic, exquisite tiny bevels, soft studio lighting, playful candy dopamine palette, front three-quarter view. Character centered fills 80% square composition with room around limbs, complete body. Genuinely transparent alpha background, no scene, no ground plane, no text, no watermark, no border, no confetti outside subject. Consistent cohesive toy collection style, clear readable silhouette at small sizes. 1024x1024 PNG ordinary medium quality.",
+  "requestedSize": "1024x1024",
+  "actualSize": "1254x1254",
+  "requestedQuality": "medium",
+  "source": "C:\\Users\\User\\.codex\\generated_images\\01a07160-33fe-7801-bbd4-8237580fe3f4\\exec-34ffc668-42f9-4d9f-87bb-5139af5a7c34.png",
+  "output": "rainbow.png",
+  "sha256": "77e3068c2daa485eb1a1b803622efb5dbb20c7eb0bd35f54cd131ba8b1c96ef0",
+  "fileTimestamp": "2026-09-05T13:29:27.393Z"
+}
