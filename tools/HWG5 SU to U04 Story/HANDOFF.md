@@ -6,16 +6,19 @@
 - Firebase 專案 / Firebase project：`hwg5-su-to-u04-story`
 - GitHub 主儲存庫 / GitHub repository：<https://github.com/Samsamchou/teacher-toolkit>
 - 版本化路徑 / Versioned path：`tools/HWG5 SU to U04 Story`
-- 本次正式程式提交 / Current implementation commit：`47f32ef3740a3f6a2e669e94dd734e78579cb4d8`
+- 本次正式程式提交 / Current implementation commit：`a3e4f52d4aeab59768d21fc18e1ccc54ce9a2353`（已確認包含於 GitHub `origin/main` 的 `15ce08e5b22247721267d32e3eb1fd72316673fd`）
+- 84 題擴增基線 / 84-sentence expansion baseline：`47f32ef3740a3f6a2e669e94dd734e78579cb4d8`
 - 既有安全修復基線 / Previous security baseline：`929443062938a92a1e23255c37b094a5e74b7129`
 - 2026-08-27 已正式部署 HWG5 與 HWG7 的 SU–U04，共 84 題；Hosting、Firestore Rules 與 Storage Rules 均已發布並讀回。
 - The 2026-08-27 production release contains 84 assessed sentences across HWG5 and HWG7 SU–U04; Hosting, Firestore Rules, and Storage Rules were released and read back.
+- 2026-09-07 已只重新部署 Hosting，修復 iPad Safari 第二題錄音／評分失敗：完整等待錄音結尾、驗證並解碼瀏覽器音訊後統一轉成單聲道 PCM WAV、隔離每題狀態、只對可恢復錯誤有限退避重送，並提供不扣次數的記憶體內「重新送出評分」。
+- The 2026-09-07 Hosting-only release fixes sequential iPad Safari recording failures with complete final-chunk handling, browser-audio validation and WAV normalization, per-question state isolation, bounded retry for transient errors, and an in-memory no-penalty resubmit action.
 - 目前使用 Firebase AI Logic／Agent Platform、`gemini-3.7-flash`、結構化 JSON、reCAPTCHA Enterprise App Check，以及受 App Check 保護的 Cloud TTS Callable Function。
 - 教師後臺已改用 Firebase Google Authentication，只允許已驗證的 `samchouou@gmail.com`；學生使用匿名登入與 owner UID 隔離，規則採預設拒絕及嚴格欄位驗證。
 - The current implementation uses Firebase AI Logic / Agent Platform, structured JSON, reCAPTCHA Enterprise App Check, an App Check-protected Cloud TTS callable, anonymous student ownership, and verified allow-listed Google teacher access.
 - Cloud Billing 已建立每月 NT$300 的 50%／80%／100% 實際支出警示；警示只通知，不會自動停止服務。
 - Firestore 依每筆 `expiresAt` 做七個日曆月 TTL；Storage 的 `audio_records/` 沿用 215 天 lifecycle。兩者皆可能延遲執行，不保證到期瞬間刪除。
-- Google Drive 備份已核對 211 檔、1,228,022 bytes，來源／備份缺檔、多檔與 SHA-256 差異皆為 0。
+- Google Drive 備份已核對 217 個納管檔案、1,277,026 bytes，來源／備份缺檔、多檔與 SHA-256 差異皆為 0。
 
 ## 已完成的可重複 Skill / Completed reusable skill
 
@@ -90,7 +93,8 @@ The skill should also accept natural-language input, but normalize it into the a
 
 ## 已知待改善 / Known follow-ups
 
-- 尚未以學校實際學生裝置完成麥克風錄音、TTS 播放、AI 評分、Firestore 寫入及 Storage 上傳的全流程驗收。
+- 2026-09-07 本機 41／41 測試、Firestore／Storage emulator、Hosting smoke test，以及 22 工作階段／四題連錄模擬皆通過；正式首頁與兩個 JavaScript 模組 HTTP 200，SHA-256 與本機完全一致。
+- 尚未以學校實際 iPad＋Safari 連續完成至少四題，驗證本次第二題錄音修復、記憶體內重新送評、TTS、AI 評分、Firestore 寫入及 Storage 音檔讀回。
 - Firestore／Storage App Check 目前先維持監控；須在真實學生流程確認成功後，再由教師明確確認強制執行，避免直接鎖死正式站。
 - 教師 Google 登入入口與 Auth provider 已設定，但帳號選擇與首次登入驗收必須由教師本人完成。
 - Functions 相依套件目前有 10 個 moderate 間接弱點；不可直接使用會造成破壞性降版的 `npm audit fix --force`。
@@ -99,6 +103,7 @@ The skill should also accept natural-language input, but normalize it into the a
 ## 下次開工入口 / Next startup entry
 
 1. 先讀本檔、`agent.md`、已確認的 RDQ、`public/`、`functions/`、`tests/`、`retention/`、`usage/` 與 `dry-runs/19-teacher-auth-security/`。
-2. 在學校實際 Chrome／iPad 上由教師本人完成 Google 教師登入，再以測試學號完成一題真實錄音、TTS、AI 評分、Firestore 紀錄與 Storage 音檔讀回。
-3. 確認學生端正式讀寫無誤後，再決定是否強制執行 Firestore／Storage App Check；變更前須顯示實際專案 ID、影響服務與復原方式。
-4. 新增單元時使用 `$story-reading-assessment-site-builder` 的模式 B；先預覽並確認教師題庫，再做隔離 dry run、回歸測試、備份與經授權的正式部署。
+2. 在學校實際 iPad＋Safari 以測試學號連續完成至少四題，特別確認第二題之後仍可錄音；若評分暫時失敗，先使用「重新送出評分（不必重錄）」並確認不扣每日三次。
+3. 由教師本人登入後臺，逐筆確認學生畫面成績、Firestore 紀錄與 Storage WAV 音檔；本機 22 工作階段模擬不能取代 22 台真實裝置的正式 AI 併發驗收。
+4. 確認學生端正式讀寫無誤後，再決定是否強制執行 Firestore／Storage App Check；變更前須顯示實際專案 ID、影響服務與復原方式。
+5. 新增單元時使用 `$story-reading-assessment-site-builder` 的模式 B；先預覽並確認教師題庫，再做隔離 dry run、回歸測試、備份與經授權的正式部署。

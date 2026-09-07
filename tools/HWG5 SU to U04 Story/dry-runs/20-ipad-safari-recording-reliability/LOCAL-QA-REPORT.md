@@ -94,7 +94,7 @@ firebase emulators:exec --only hosting "node tests/hosting-smoke.mjs"
 - 尚未在學校實際 iPad＋Safari 連續錄製四題。
 - 22 工作階段測試是本機模擬，不等同 22 台裝置同時呼叫正式 AI 服務。
 - 尚未以真實學生錄音呼叫正式 Firebase AI、Storage 或 Firestore 寫入。
-- Google Drive 指定專案備份已更新：本機與備份皆為 217 個納管檔案、1,275,347 bytes；缺檔、多檔與 SHA-256 差異皆為 0。
-- GitHub 尚未推送；公開遠端推送需另行確認，且只可處理 `tools/HWG5 SU to U04 Story`。
+- Google Drive 指定專案備份已更新：本機與備份皆為 217 個納管檔案、1,277,026 bytes；缺檔、多檔與 SHA-256 差異皆為 0。
+- 本專案 10 檔實作提交 `a3e4f52d4aeab59768d21fc18e1ccc54ce9a2353` 已讀回包含於 GitHub `origin/main` 的 `15ce08e5b22247721267d32e3eb1fd72316673fd`；本報告與 HANDOFF 的最終收尾更新已於本機精準提交，尚待獨立推送。
 
 正式站已發布；下一關是由教師使用學校 iPad＋Safari 連續完成至少四題，並確認學生畫面、教師後台及音檔讀回。
