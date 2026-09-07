@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-09-07T11:19:16.373Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a clean classroom quiz version of this exact teaching flashcard using only the transparent masked regions. Remove the Chinese weekday characters after the existing English abbreviation 'Wed.', remove the top-left Unit 1 ribbon, and remove all text, branding, and page numbering from the bottom footer. Fill those areas seamlessly with the matching white background. Preserve the calendar, date number 15, exact English text 'Wed.', colors, shadows, proportions, and full frame. Do not alter or retype 'Wed.'. Do not add any text. No crop, no stretch.",
+  "requested_size": "1488x1072",
+  "requested_quality": "medium",
+  "requested_format": "jpeg",
+  "requested_background": "opaque",
+  "output_file": "04-wednesday-no-chinese.jpg",
+  "output_index": 1,
+  "output_sha256": "da10179c0c088577cf584a3c87c28816ffca3357a24af833b28508687a002f2b",
+  "detected_format": "jpeg",
+  "detected_width": null,
+  "detected_height": null,
+  "request_id": "req_1105890f34714f02b242678974fe8101",
+  "usage": {
+    "input_tokens": 1636,
+    "input_tokens_details": {
+      "image_tokens": 1518,
+      "text_tokens": 118
+    },
+    "output_tokens": 1510,
+    "output_tokens_details": {
+      "image_tokens": 1510,
+      "text_tokens": 0
+    },
+    "total_tokens": 3146
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "04_Wednesday.jpg",
+      "sha256": "08e9014e46cf4d5121e27a5ec30806fc604eb80de7d6b9ada18bb9846d33e587",
+      "format": "jpeg",
+      "width": null,
+      "height": null
+    }
+  ],
+  "mask": {
+    "file": "04_Wednesday-mask.png",
+    "sha256": "3cb0d4f37f577a25f72ff69764d5bdb8cdd5fea72d9952faa52b58228acbaf0e",
+    "format": "png",
+    "width": 1600,
+    "height": 1151
+  }
+}

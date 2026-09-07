@@ -36,14 +36,29 @@
     "localLanBaseUrl": "",
     "description": "Teacher projection QR carries only book, unit, and lesson. A local preview must use a same-WiFi LAN address; production uses the current Hosting origin automatically."
   },
-  "quizSource": {
-    "file": "./hwg7-u01-l1-vocabulary-quiz.json",
-    "revision": 3,
-    "sourceOfTruth": "../../question-bank/HWG7-U01-L1-vocabulary-quiz-r3.json"
-  },
+  "quizSources": [
+    {
+      "quizId": "hwg7-u01-l1-vocabulary",
+      "file": "./hwg7-u01-l1-vocabulary-quiz.json",
+      "revision": 3,
+      "sourceOfTruth": "../../question-bank/HWG7-U01-L1-vocabulary-quiz-r3.json",
+      "questionCounts": { "type-a": 10, "type-b": 8 }
+    },
+    {
+      "quizId": "hwg5-u01-l1-vocabulary",
+      "file": "./hwg5-u01-l1-vocabulary-quiz.json",
+      "revision": 1,
+      "sourceOfTruth": "../../question-bank/HWG5-U01-L1-vocabulary-quiz-r1.json",
+      "questionCounts": { "type-a": 7, "type-b": 7 }
+    }
+  ],
   "studentIdPolicy": {
     "pattern": "^[3-6](0[1-9]|[1-9]\\d)(0[1-9]|[12]\\d|30)$",
     "example": "60101",
+    "examplesByBook": {
+      "hwg5": "50101",
+      "hwg7": "60101"
+    },
     "description": "年級 1 碼＋班級 2 碼＋座號 2 碼；座號 01–30。系統只保存匿名 Student ID，不保存姓名。"
   },
   "rewardConfig": {
@@ -173,6 +188,15 @@
         "body": "This Lesson Card is ready for the teacher to add or replace materials in Lesson Studio."
       }
     },
+    "hwg5-u01-l01-vocabulary": {
+      "warmup": {
+        "body": "Today we will learn the days of the week. Look, listen, choose, and celebrate every success!"
+      },
+      "vocabularyQuiz": {
+        "quizEnabled": true,
+        "quizId": "hwg5-u01-l1-vocabulary"
+      }
+    },
     "hwg7-u01-l01-live": {
       "warmup": {
         "body": "Today we will learn ten landmark-food countries. Listen, look, choose, and celebrate every success!"
@@ -210,6 +234,12 @@
     }
   },
   "contentOverrides": [
+    {
+      "bookId": "hwg5",
+      "unitId": "u01",
+      "lessonNumber": 1,
+      "contentProfile": "hwg5-u01-l01-vocabulary"
+    },
     {
       "bookId": "hwg7",
       "unitId": "u01",

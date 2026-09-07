@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-09-07T11:22:50.222Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a clean classroom quiz version of this exact teaching flashcard using only the transparent masked regions. Remove the Chinese weekday characters after the existing English abbreviation 'Sat.', remove the top-left Unit 1 ribbon, and remove all text, branding, and page numbering from the bottom footer. Fill those areas seamlessly with the matching white background. Preserve the calendar, date number 18, exact English text 'Sat.', colors, shadows, proportions, and full frame. Do not alter or retype 'Sat.'. Do not add any text. No crop, no stretch.",
+  "requested_size": "1488x1072",
+  "requested_quality": "medium",
+  "requested_format": "jpeg",
+  "requested_background": "opaque",
+  "output_file": "07-saturday-no-chinese.jpg",
+  "output_index": 1,
+  "output_sha256": "c3da88708fb0e2c58863dcb44251072b9affd89fc8bd43644a5282cbf6a43188",
+  "detected_format": "jpeg",
+  "detected_width": null,
+  "detected_height": null,
+  "request_id": "req_f3e3b7f839064117a0d299edd2f4b6d4",
+  "usage": {
+    "input_tokens": 1636,
+    "input_tokens_details": {
+      "image_tokens": 1518,
+      "text_tokens": 118
+    },
+    "output_tokens": 1510,
+    "output_tokens_details": {
+      "image_tokens": 1510,
+      "text_tokens": 0
+    },
+    "total_tokens": 3146
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "07_Saturday.jpg",
+      "sha256": "f1c7895c66e04f085218de2eeb53209f7472ef1f2389f2dc6134be4c014bc62b",
+      "format": "jpeg",
+      "width": null,
+      "height": null
+    }
+  ],
+  "mask": {
+    "file": "07_Saturday-mask.png",
+    "sha256": "a87eeeb06c54d6263f3782bfeecff80e6ece90a0777c10e549d434c303c3028e",
+    "format": "png",
+    "width": 1600,
+    "height": 1151
+  }
+}

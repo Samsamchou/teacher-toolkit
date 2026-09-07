@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.2",
+  "revision": 1,
+  "reviewStatus": "approved_teacher_2026-09-07",
+  "approval": {
+    "confirmedBy": "teacher",
+    "confirmedAt": "2026-09-07",
+    "evidence": "核准 7 張圖片與 14 題題庫",
+    "scope": "7 processed images, 7 Look and Choose questions, and 7 Listen and Choose questions"
+  },
+  "lesson": {
+    "series": "Here We Go 5",
+    "unit": "Unit 1",
+    "lesson": "Lesson 1",
+    "quizId": "hwg5-u01-l1-vocabulary",
+    "title": "Vocabulary Quiz"
+  },
+  "runtimePolicy": {
+    "reviewOptionOrder": "fixed",
+    "studentOptionOrder": "shuffle-on-each-new-attempt",
+    "optionsPerQuestion": 4,
+    "questionSetOrder": ["type-a", "type-b"],
+    "questionOrderWithinSet": "Sunday-to-Saturday",
+    "firstAnswerDeterminesPracticeScore": true,
+    "wrongAnswerMayRetry": true,
+    "celebrationOnFirstCorrectOnly": true
+  },
+  "assets": {
+    "images": {
+      "sourceRoot": "HWG5 單字圖卡/HWG5U1",
+      "processingPolicy": {
+        "sourceFormat": "JPG",
+        "outputFormat": "JPG",
+        "maxWidth": 1920,
+        "maxHeight": 1080,
+        "outputWidth": 1488,
+        "outputHeight": 1072,
+        "crop": "never",
+        "stretch": "never",
+        "upscale": "never",
+        "preserveOriginalJpg": true,
+        "editMethod": "OpenAI Images API masked edit with gpt-image-2",
+        "removeChineseText": true,
+        "removeSourceFooterAndRibbon": true,
+        "visualQaStatus": "passed_2026-09-07"
+      },
+      "processedRoot": "generated-images/20260907/hwg5-u01-weekdays-no-chinese",
+      "items": {
+        "01_Sunday.jpg": {"sourceBytes": 491885, "sourceSha256": "3b7c6fd9022415c65036e11a548a5b66b10a3b89921eb994a38ceab233e25e33", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "01-sunday-no-chinese.jpg", "processedBytes": 80386, "processedSha256": "4fce3223451dcfb25519491ae784ed1e67df700fdca3067b296e1a3d2186db04", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "01-sunday-no-chinese.jpg.json", "editRequestId": "req_8d2f4eccf6ce4e09817242ce8ee02710", "expectedAnswer": "Sunday", "plannedWebsitePath": "/assets/hwg5-u01/days/01-sunday.jpg"},
+        "02_Monday.jpg": {"sourceBytes": 477044, "sourceSha256": "ad6b6deb97771150961c8d906dc4e376399049dedaa41965eb7a2c62712cdaad", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "02-monday-no-chinese.jpg", "processedBytes": 79608, "processedSha256": "953fe453956f11c508d77f0b493aa26b6c4487bbf13185f88d0ea346c1b71236", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "02-monday-no-chinese.jpg.json", "editRequestId": "req_47c39e8d617d4489a1165bffd83db5b7", "expectedAnswer": "Monday", "plannedWebsitePath": "/assets/hwg5-u01/days/02-monday.jpg"},
+        "03_Tuesday.jpg": {"sourceBytes": 470720, "sourceSha256": "acdc511a1d266a97b4f212489d12eeff8167be69f162bae011c46e564203060e", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "03-tuesday-no-chinese.jpg", "processedBytes": 79782, "processedSha256": "63d612911d30ee7209ee1d214ea4832d833a4d50b04953fea039777826c3ff52", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "03-tuesday-no-chinese.jpg.json", "editRequestId": "req_89d8058606524133a1c5103a64a11285", "expectedAnswer": "Tuesday", "plannedWebsitePath": "/assets/hwg5-u01/days/03-tuesday.jpg"},
+        "04_Wednesday.jpg": {"sourceBytes": 479371, "sourceSha256": "08e9014e46cf4d5121e27a5ec30806fc604eb80de7d6b9ada18bb9846d33e587", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "04-wednesday-no-chinese.jpg", "processedBytes": 79833, "processedSha256": "da10179c0c088577cf584a3c87c28816ffca3357a24af833b28508687a002f2b", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "04-wednesday-no-chinese.jpg.json", "editRequestId": "req_1105890f34714f02b242678974fe8101", "expectedAnswer": "Wednesday", "plannedWebsitePath": "/assets/hwg5-u01/days/04-wednesday.jpg"},
+        "05_Thursday.jpg": {"sourceBytes": 478485, "sourceSha256": "24c503ea1b9beefe6b84e33af0ccd566097cdc21ad92326be8c5d082ba8beb46", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "05-thursday-no-chinese.jpg", "processedBytes": 80824, "processedSha256": "165f6251a51c26df396e992d661af4995230c659633308303317a42a0bb6add1", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "05-thursday-no-chinese.jpg.json", "editRequestId": "req_5bb8152df2bc429ea4cbb55153a16d21", "expectedAnswer": "Thursday", "plannedWebsitePath": "/assets/hwg5-u01/days/05-thursday.jpg"},
+        "06_Friday.jpg": {"sourceBytes": 472575, "sourceSha256": "6f7c0185408d059227bc074e4f83b8f6c98fc6d7e929282450199088a59ba8ac", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "06-friday-no-chinese.jpg", "processedBytes": 77020, "processedSha256": "d3d83d3d0538255563f5c2f3683f7d1c905f233047e33e8f2820203ec5e86364", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "06-friday-no-chinese.jpg.json", "editRequestId": "req_9eab40b599de43639f8c46817645ed33", "expectedAnswer": "Friday", "plannedWebsitePath": "/assets/hwg5-u01/days/06-friday.jpg"},
+        "07_Saturday.jpg": {"sourceBytes": 499465, "sourceSha256": "f1c7895c66e04f085218de2eeb53209f7472ef1f2389f2dc6134be4c014bc62b", "sourceWidth": 1600, "sourceHeight": 1151, "processedFilename": "07-saturday-no-chinese.jpg", "processedBytes": 82710, "processedSha256": "c3da88708fb0e2c58863dcb44251072b9affd89fc8bd43644a5282cbf6a43188", "processedWidth": 1488, "processedHeight": 1072, "provenanceFilename": "07-saturday-no-chinese.jpg.json", "editRequestId": "req_f3e3b7f839064117a0d299edd2f4b6d4", "expectedAnswer": "Saturday", "plannedWebsitePath": "/assets/hwg5-u01/days/07-saturday.jpg"}
+      }
+    },
+    "audio": {
+      "sourceRoot": "HWG5 單字圖卡/HWG5U1/mp3",
+      "preserveOriginalMp3": true,
+      "contentAuditStatus": "approved_by_teacher_with_question_bank_2026-09-07",
+      "items": {
+        "01_Sunday.mp3": {"sourceBytes": 24630, "sourceSha256": "f85a5a4810329be1eb168e60c548ab9dfb8e5c077ece79a76d8cce91c28d93cb", "expectedUtterance": "Sunday", "plannedWebsitePath": "/assets/hwg5-u01/audio/01-sunday.mp3"},
+        "02_Monday.mp3": {"sourceBytes": 23845, "sourceSha256": "0fcf012efec38b97319c9dddcb2bfaf1327411818b6924d08fd9e5b4f14f1403", "expectedUtterance": "Monday", "plannedWebsitePath": "/assets/hwg5-u01/audio/02-monday.mp3"},
+        "03_Tuesday.mp3": {"sourceBytes": 24628, "sourceSha256": "be3a037618d19533e7e89825bb26889d0565b5ae3e8ddcbd5888b8d7ddde647f", "expectedUtterance": "Tuesday", "plannedWebsitePath": "/assets/hwg5-u01/audio/03-tuesday.mp3"},
+        "04_Wednesday.mp3": {"sourceBytes": 21759, "sourceSha256": "b700e16a6bd26898fe91dcd141ce4ddbac7989a9a46440a661e3486571a4f347", "expectedUtterance": "Wednesday", "plannedWebsitePath": "/assets/hwg5-u01/audio/04-wednesday.mp3"},
+        "05_Thursday.mp3": {"sourceBytes": 27239, "sourceSha256": "e8022abbdf5ed734e726907ba3da08b286b393b143bcb5bb28278ced2fc4f5e2", "expectedUtterance": "Thursday", "plannedWebsitePath": "/assets/hwg5-u01/audio/05-thursday.mp3"},
+        "06_Friday.mp3": {"sourceBytes": 25571, "sourceSha256": "dc7f68d747e88a5f38f05fa39ae1e3797edb5c2e9041c5f32fbd214edd87e8a1", "expectedUtterance": "Friday", "plannedWebsitePath": "/assets/hwg5-u01/audio/06-friday.mp3"},
+        "07_Saturday.mp3": {"sourceBytes": 27684, "sourceSha256": "6d96acc5d140f67b87970b20f0e83a68c6b3498e94638af850198456cfce7ee8", "expectedUtterance": "Saturday", "plannedWebsitePath": "/assets/hwg5-u01/audio/07-saturday.mp3"}
+      }
+    }
+  },
+  "questionSets": [
+    {
+      "id": "type-a",
+      "label": "Look and Choose",
+      "prompt": "Look at the picture. What day is it?",
+      "questions": [
+        {"id": "hwg5-u01-l1-a01", "assetFilename": "01_Sunday.jpg", "options": ["Monday", "Sunday", "Friday", "Wednesday"], "correctAnswer": "Sunday", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-a02", "assetFilename": "02_Monday.jpg", "options": ["Thursday", "Saturday", "Monday", "Tuesday"], "correctAnswer": "Monday", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-a03", "assetFilename": "03_Tuesday.jpg", "options": ["Tuesday", "Wednesday", "Sunday", "Friday"], "correctAnswer": "Tuesday", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-a04", "assetFilename": "04_Wednesday.jpg", "options": ["Monday", "Thursday", "Saturday", "Wednesday"], "correctAnswer": "Wednesday", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-a05", "assetFilename": "05_Thursday.jpg", "options": ["Sunday", "Thursday", "Tuesday", "Saturday"], "correctAnswer": "Thursday", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-a06", "assetFilename": "06_Friday.jpg", "options": ["Wednesday", "Monday", "Friday", "Sunday"], "correctAnswer": "Friday", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-a07", "assetFilename": "07_Saturday.jpg", "options": ["Saturday", "Tuesday", "Thursday", "Friday"], "correctAnswer": "Saturday", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true}
+      ]
+    },
+    {
+      "id": "type-b",
+      "label": "Listen and Choose",
+      "prompt": "Listen. What day do you hear?",
+      "questions": [
+        {"id": "hwg5-u01-l1-b01", "assetFilename": "01_Sunday.mp3", "options": ["Thursday", "Tuesday", "Sunday", "Saturday"], "correctAnswer": "Sunday", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-b02", "assetFilename": "02_Monday.mp3", "options": ["Monday", "Friday", "Wednesday", "Sunday"], "correctAnswer": "Monday", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-b03", "assetFilename": "03_Tuesday.mp3", "options": ["Saturday", "Tuesday", "Thursday", "Monday"], "correctAnswer": "Tuesday", "correctOptionNumberInReview": 2, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-b04", "assetFilename": "04_Wednesday.mp3", "options": ["Friday", "Sunday", "Monday", "Wednesday"], "correctAnswer": "Wednesday", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-b05", "assetFilename": "05_Thursday.mp3", "options": ["Thursday", "Saturday", "Tuesday", "Wednesday"], "correctAnswer": "Thursday", "correctOptionNumberInReview": 1, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-b06", "assetFilename": "06_Friday.mp3", "options": ["Sunday", "Wednesday", "Friday", "Monday"], "correctAnswer": "Friday", "correctOptionNumberInReview": 3, "runtimeShuffleOptions": true},
+        {"id": "hwg5-u01-l1-b07", "assetFilename": "07_Saturday.mp3", "options": ["Tuesday", "Thursday", "Sunday", "Saturday"], "correctAnswer": "Saturday", "correctOptionNumberInReview": 4, "runtimeShuffleOptions": true}
+      ]
+    }
+  ]
+}

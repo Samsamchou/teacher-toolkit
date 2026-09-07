@@ -12,7 +12,7 @@ import {
   findLessonByStudentEntry,
   lessonCountForBook,
   lessonCountForUnit,
-  questionBank,
+  questionBankForQuizId,
   source,
   standardLessonCount,
   stepTypes
@@ -572,12 +572,13 @@ function StudentQuizPage({ lesson, soundOn, onSoundChange, onSaveResult }) {
     return <main className="student-quiz-page"><StudentPageHeader soundOn={soundOn} onSoundChange={onSoundChange} /><section className="empty-state"><h1>找不到這一節課。</h1><p>請重新掃描老師投影的 QR Code。</p></section></main>;
   }
   const quizStep = lesson.steps.find((step) => step.type === "vocabularyQuiz" && step.enabled && step.content?.quizEnabled);
+  const quizBank = quizStep ? questionBankForQuizId(quizStep.content?.quizId) : null;
   return (
     <main className="student-quiz-page" style={themeStyle(lesson.theme)}>
       <StudentPageHeader soundOn={soundOn} onSoundChange={onSoundChange} />
       <div className="student-quiz-content">
         <p className="eyebrow">{lesson.book} · {lesson.unit} · Lesson {lesson.lessonNumber}</p>
-        {quizStep ? <QuizExperience lesson={lesson} bank={questionBank} soundOn={soundOn} onSaveResult={onSaveResult} studentOnly /> : <section className="empty-state"><h1>這節課尚未開放 Vocabulary Quiz。</h1><p>請等待老師開啟本節題庫後，再重新掃描 QR Code。</p></section>}
+        {quizStep && quizBank ? <QuizExperience lesson={lesson} bank={quizBank} soundOn={soundOn} onSaveResult={onSaveResult} studentOnly /> : <section className="empty-state"><h1>這節課尚未開放 Vocabulary Quiz。</h1><p>請等待老師開啟本節題庫後，再重新掃描 QR Code。</p></section>}
       </div>
     </main>
   );
@@ -1542,7 +1543,11 @@ function StepRenderer({ step, mode, lesson, soundOn, onSaveResult }) {
   if (!step.content.quizEnabled) {
     return <ContentCard icon="🏆" title={step.title}><p>這張 Lesson Card 尚未指定 Quiz 題庫。請在 Lesson Studio 啟用後再使用。</p></ContentCard>;
   }
-  return <QuizExperience lesson={lesson} bank={questionBank} soundOn={soundOn} onSaveResult={onSaveResult} />;
+  const quizBank = questionBankForQuizId(step.content?.quizId);
+  if (!quizBank) {
+    return <ContentCard icon="🏆" title={step.title}><p>找不到這張 Lesson Card 指定的 Quiz 題庫，請回到 Teacher Studio 檢查設定。</p></ContentCard>;
+  }
+  return <QuizExperience lesson={lesson} bank={quizBank} soundOn={soundOn} onSaveResult={onSaveResult} />;
 }
 
 function ContentCard({ icon, title, children }) {
@@ -1789,6 +1794,7 @@ function WebPracticeStep({ step }) {
 
 function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = false }) {
   const questionSets = bank.questionSets;
+  const studentIdExample = source.studentIdPolicy.examplesByBook?.[lesson.bookId] || source.studentIdPolicy.example;
   const [phase, setPhase] = useState("gate");
   const [studentId, setStudentId] = useState("");
   const [gateError, setGateError] = useState("");
@@ -1828,7 +1834,7 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
   function startQuiz() {
     const normalized = studentId.trim();
     if (!validateStudentId(normalized)) {
-      setGateError(`請輸入五碼學號，例如 ${source.studentIdPolicy.example}；座號須為 01–30。`);
+      setGateError(`請輸入五碼學號，例如 ${studentIdExample}；座號須為 01–30。`);
       return;
     }
     setStudentId(normalized);
@@ -1983,7 +1989,7 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
         <div className="quiz-gate-content">
           <span className="quiz-kicker">Vocabulary Quiz</span>
           <h2>Ready to play?</h2>
-          <label className="student-id-field"><span>輸入學號</span><input className="student-id-input" inputMode="numeric" maxLength="5" value={studentId} onChange={(event) => setStudentId(event.target.value.replace(/\D/g, ""))} placeholder={source.studentIdPolicy.example} /></label>
+          <label className="student-id-field"><span>輸入學號</span><input className="student-id-input" inputMode="numeric" maxLength="5" value={studentId} onChange={(event) => setStudentId(event.target.value.replace(/\D/g, ""))} placeholder={studentIdExample} /></label>
           {studentIdLabel ? <p className="student-id-preview"><strong>{studentId}</strong><span>{studentIdLabel}</span></p> : null}
           {gateError ? <p className="form-error">{gateError}</p> : null}
           <button className="primary-button large-button" onClick={startQuiz}>Start Vocabulary Quiz</button>
@@ -2002,7 +2008,7 @@ function QuizExperience({ lesson, bank, soundOn, onSaveResult, studentOnly = fal
       <QuizMascot />
       <div className="quiz-header"><div><span className="quiz-kicker">{currentSet.label}</span><h2>{currentSet.prompt}</h2></div><div className="quiz-stats"><strong>{studentId}</strong><span>{completedInSet + 1} / {currentSet.questions.length}</span></div></div>
       <div className="quiz-progress-track"><span style={{ width: `${(completedInSet / currentSet.questions.length) * 100}%` }} /></div>
-      {currentSet.id === "type-a" ? <div className="quiz-image-wrap"><img src={bank.assets.images.items[currentQuestion.assetFilename].plannedWebsitePath} alt="Look and choose country" /></div> : <AudioQuestion source={bank.assets.audio.items[currentQuestion.assetFilename].plannedWebsitePath} />}
+      {currentSet.id === "type-a" ? <div className="quiz-image-wrap"><img src={bank.assets.images.items[currentQuestion.assetFilename].plannedWebsitePath} alt="Look and choose vocabulary picture" /></div> : <AudioQuestion source={bank.assets.audio.items[currentQuestion.assetFilename].plannedWebsitePath} />}
       <div className="option-grid">{shuffledOptions.map((option) => <button key={option} className="quiz-option" disabled={locked || saving} onClick={() => chooseAnswer(option)}>{option}</button>)}</div>
       {feedback ? <p className={`quiz-feedback ${feedback.kind}`}>{feedback.message}</p> : null}
       <div className="score-strip"><span>Practice Score（first answer）: {summarizeResponses(questionSets, responses).practiceScore} / {questionSets.reduce((total, set) => total + set.questions.length, 0)}</span><span>Slot Reward: {calculateSlotScore(rewardSessions)}</span></div>
@@ -2020,7 +2026,7 @@ function AudioQuestion({ source }) {
       <span>🔊</span>
       <div>
         <strong>Listen carefully.</strong>
-        <p>可重複播放音檔，再選出國家。</p>
+        <p>可重複播放音檔，再選出正確答案。</p>
       </div>
       <audio controls src={source} preload="metadata" />
     </div>

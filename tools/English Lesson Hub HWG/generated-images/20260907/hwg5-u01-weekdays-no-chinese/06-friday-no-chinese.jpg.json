@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-09-07T11:21:40.571Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a clean classroom quiz version of this exact teaching flashcard using only the transparent masked regions. Remove the Chinese weekday characters after the existing English abbreviation 'Fri.', remove the top-left Unit 1 ribbon, and remove all text, branding, and page numbering from the bottom footer. Fill those areas seamlessly with the matching white background. Preserve the calendar, date number 17, exact English text 'Fri.', colors, shadows, proportions, and full frame. Do not alter or retype 'Fri.'. Do not add any text. No crop, no stretch.",
+  "requested_size": "1488x1072",
+  "requested_quality": "medium",
+  "requested_format": "jpeg",
+  "requested_background": "opaque",
+  "output_file": "06-friday-no-chinese.jpg",
+  "output_index": 1,
+  "output_sha256": "d3d83d3d0538255563f5c2f3683f7d1c905f233047e33e8f2820203ec5e86364",
+  "detected_format": "jpeg",
+  "detected_width": null,
+  "detected_height": null,
+  "request_id": "req_9eab40b599de43639f8c46817645ed33",
+  "usage": {
+    "input_tokens": 1636,
+    "input_tokens_details": {
+      "image_tokens": 1518,
+      "text_tokens": 118
+    },
+    "output_tokens": 1510,
+    "output_tokens_details": {
+      "image_tokens": 1510,
+      "text_tokens": 0
+    },
+    "total_tokens": 3146
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "06_Friday.jpg",
+      "sha256": "6f7c0185408d059227bc074e4f83b8f6c98fc6d7e929282450199088a59ba8ac",
+      "format": "jpeg",
+      "width": null,
+      "height": null
+    }
+  ],
+  "mask": {
+    "file": "06_Friday-mask.png",
+    "sha256": "28b6060f92d7fe37dbf3be288c8dbc90b9d07483de47b01035b4707dc905cef3",
+    "format": "png",
+    "width": 1600,
+    "height": 1151
+  }
+}

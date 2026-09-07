@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-07",
+  "status": "PASS",
+  "projectId": "hwg7teaching",
+  "hostingSite": "lesson-hub-v03",
+  "url": "https://lesson-hub-v03.web.app/?mode=student&book=hwg5&unit=u01&lesson=1",
+  "deployedTargets": ["hosting:lesson-hub-v03", "firestore:rules"],
+  "deploymentExitCode": 0,
+  "verifiedSourceFiles": 63,
+  "verifiedHostingFiles": 56,
+  "hostingHashMatches": 56,
+  "hostingHashFailures": [],
+  "entrySha256": "016a5209f8af1a07b84f4ca4713d471a89b776953fc788511ab3cdb60a25c937",
+  "javascript": "assets/index-BwXyPSY-.js",
+  "javascriptSha256": "2bc0071b05e24344baa6e0a922a731ace259363b00ce55b089662fa90d6dccf4",
+  "firestoreStorageEmulatorTests": { "passed": 8, "failed": 0 },
+  "productionBrowserReport": "production-browser-qa.json",
+  "productionScreenshot": "production-first-question-1920x1080.png",
+  "productionPracticeResultWritten": false,
+  "productionLessonDocumentsModified": false
+}

@@ -54,6 +54,30 @@ test("anonymous student can create only an owned valid record, read only that Se
   await assertFails(setDoc(doc(alice, "practiceResults/session-b"), practiceRecord("anon-someone-else", { sessionId: "session-b" })));
 });
 
+test("HWG5 anonymous 14-question results save and re-read; incorrect bank totals and scores are rejected", async () => {
+  const student = env.authenticatedContext("anon-hwg5", { firebase: { sign_in_provider: "anonymous" } }).firestore();
+  const record = practiceRecord("anon-hwg5", {
+    studentId: "50101", quizId: "hwg5-u01-l1-vocabulary", lessonId: "hwg5-u01-l01",
+    lessonTitle: "HWG5 Unit 1 · Lesson 1", bookId: "hwg5",
+    practiceScore: 12, practiceMaxScore: 14, finalCorrectCount: 14, accuracy: 86,
+    typeA: { totalQuestions: 7, firstAttemptCorrectCount: 7, finalCorrectCount: 7 },
+    typeB: { totalQuestions: 7, firstAttemptCorrectCount: 5, finalCorrectCount: 7 }
+  });
+  const ref = doc(student, "practiceResults/session-a");
+  for (const changes of [
+    { practiceMaxScore: 18 }, { practiceScore: 15 }, { practiceScore: 13 },
+    { finalCorrectCount: 15 }, { quizId: "unknown-quiz" },
+    { quizId: "hwg7-u01-l1-vocabulary" },
+    { typeA: { totalQuestions: 8, firstAttemptCorrectCount: 7, finalCorrectCount: 7 } }
+  ]) await assertFails(setDoc(ref, { ...record, ...changes }));
+  await assertSucceeds(setDoc(ref, record));
+  assert.equal((await assertSucceeds(getDoc(ref))).data().practiceMaxScore, 14);
+  await assertFails(setDoc(ref, record));
+  await assertFails(getDocs(collection(student, "practiceResults")));
+  await assertFails(deleteDoc(ref));
+  await assertFails(setDoc(doc(env.unauthenticatedContext().firestore(), "practiceResults/no-auth"), { ...record, sessionId: "no-auth" }));
+});
+
 test("no browser identity can list, delete, or read another student's Results", async () => {
   await env.withSecurityRulesDisabled(async (context) => setDoc(doc(context.firestore(), "practiceResults/session-a"), practiceRecord("anon-alice")));
   const alice = env.authenticatedContext("anon-alice", { firebase: { sign_in_provider: "anonymous" } }).firestore();

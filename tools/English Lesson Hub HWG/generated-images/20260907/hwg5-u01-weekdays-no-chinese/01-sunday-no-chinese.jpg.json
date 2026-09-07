@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-09-07T11:11:27.260Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Perform a precise masked cleanup of this teaching flashcard. Remove the Chinese weekday characters after the existing English abbreviation 'Sun.' and remove all text, branding, and page numbering from the masked bottom footer. Reconstruct seamless blank white calendar paper and a clean white footer matching the surrounding image. Preserve everything outside the transparent mask unchanged, especially the exact English text 'Sun.', the date number 12, the calendar, Unit 1 ribbon, colors, shadows, and complete frame. Do not alter, retype, or add any English text. Do not add any new text. No crop, no stretch.",
+  "requested_size": "1488x1072",
+  "requested_quality": "medium",
+  "requested_format": "jpeg",
+  "requested_background": "opaque",
+  "output_file": "01-sunday-no-chinese.jpg",
+  "output_index": 1,
+  "output_sha256": "4fce3223451dcfb25519491ae784ed1e67df700fdca3067b296e1a3d2186db04",
+  "detected_format": "jpeg",
+  "detected_width": null,
+  "detected_height": null,
+  "request_id": "req_8d2f4eccf6ce4e09817242ce8ee02710",
+  "usage": {
+    "input_tokens": 1645,
+    "input_tokens_details": {
+      "image_tokens": 1518,
+      "text_tokens": 127
+    },
+    "output_tokens": 1510,
+    "output_tokens_details": {
+      "image_tokens": 1510,
+      "text_tokens": 0
+    },
+    "total_tokens": 3155
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "01_Sunday.jpg",
+      "sha256": "3b7c6fd9022415c65036e11a548a5b66b10a3b89921eb994a38ceab233e25e33",
+      "format": "jpeg",
+      "width": null,
+      "height": null
+    }
+  ],
+  "mask": {
+    "file": "01_Sunday-mask.png",
+    "sha256": "8b0719c8b337f9b898543673fe0165c93a524c248c21674857293d2b6b6a5864",
+    "format": "png",
+    "width": 1600,
+    "height": 1151
+  }
+}

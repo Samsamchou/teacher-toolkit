@@ -2,6 +2,7 @@ const LEGACY_EBOOK_URL_PATTERN = /^https:\/\/h5\.hle\.com\.tw\/toolbar\/release\
 const LEGACY_FLAT_LESSON_PATTERN = /^(hwg[57])-(u0[1-4])$/i;
 const REMOVED_STARTER_LESSON_PATTERN = /^hwg[57]-starter-l0[45]$/i;
 const TARGET_POWERPOINT_LESSON_ID = "hwg5-starter-l01";
+const TARGET_VOCABULARY_QUIZ_LESSON_ID = "hwg5-u01-l01";
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -64,6 +65,34 @@ function withTargetPowerPointStep(seed, storedSteps) {
   return existingSteps;
 }
 
+function withTargetVocabularyQuizStep(seed, storedSteps) {
+  const existingSteps = Array.isArray(storedSteps) ? clone(storedSteps) : [];
+  const targetStep = (seed?.steps || []).find((step) => step?.type === "vocabularyQuiz");
+  if (
+    seed?.id !== TARGET_VOCABULARY_QUIZ_LESSON_ID
+    || !targetStep?.content?.quizEnabled
+    || !targetStep.content.quizId
+  ) return existingSteps;
+
+  const quizIndex = existingSteps.findIndex((step) => step?.type === "vocabularyQuiz");
+  if (quizIndex < 0) {
+    existingSteps.push(clone(targetStep));
+    return existingSteps;
+  }
+
+  const current = existingSteps[quizIndex];
+  existingSteps[quizIndex] = {
+    ...current,
+    enabled: true,
+    content: {
+      ...(current.content || {}),
+      quizEnabled: true,
+      quizId: targetStep.content.quizId
+    }
+  };
+  return existingSteps;
+}
+
 function withOfficialMediaDefaults(seedSteps, storedSteps) {
   const seedsByType = new Map((Array.isArray(seedSteps) ? seedSteps : []).map((step) => [step?.type, step]));
   return (Array.isArray(storedSteps) ? storedSteps : []).map((step) => {
@@ -111,7 +140,8 @@ function mergeCanonicalLesson(seed, stored, originalId) {
   };
   const stepsWithPresentation = withMissingPresentationStep(seed, storedCopy.steps);
   const stepsWithTargetPowerPoint = withTargetPowerPointStep(seed, stepsWithPresentation);
-  merged.steps = withoutStoredDownloadTokens(withOfficialMediaDefaults(seed.steps, stepsWithTargetPowerPoint));
+  const stepsWithTargetVocabularyQuiz = withTargetVocabularyQuizStep(seed, stepsWithTargetPowerPoint);
+  merged.steps = withoutStoredDownloadTokens(withOfficialMediaDefaults(seed.steps, stepsWithTargetVocabularyQuiz));
   if (originalId !== seed.id) {
     merged.migratedFromLessonId = originalId;
   }

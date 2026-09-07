@@ -1,5 +1,19 @@
 import source from "../../config/site-source.json" with { type: "json" };
-import questionBank from "../../config/hwg7-u01-l1-vocabulary-quiz.json" with { type: "json" };
+import hwg7QuestionBank from "../../config/hwg7-u01-l1-vocabulary-quiz.json" with { type: "json" };
+import hwg5QuestionBank from "../../config/hwg5-u01-l1-vocabulary-quiz.json" with { type: "json" };
+
+export const DEFAULT_QUESTION_BANK_ID = hwg7QuestionBank.lesson.quizId;
+export const questionBank = hwg7QuestionBank;
+export const questionBanks = Object.freeze({
+  [hwg7QuestionBank.lesson.quizId]: hwg7QuestionBank,
+  [hwg5QuestionBank.lesson.quizId]: hwg5QuestionBank
+});
+
+export function questionBankForQuizId(quizId) {
+  const normalized = String(quizId || "").trim();
+  if (!normalized) return questionBanks[DEFAULT_QUESTION_BANK_ID];
+  return questionBanks[normalized] || null;
+}
 
 export const TARGET_POWERPOINT_LESSON_ID = "hwg5-starter-l01";
 export const TARGET_ONLINE_PRESENTATION_EMBED_URL =
@@ -29,8 +43,10 @@ function mergedContent(baseContent, profileContent) {
   };
 }
 
-function slidesFromQuestionBank() {
-  return Object.values(questionBank.assets.images.items).map(
+function slidesFromQuestionBank(quizId) {
+  const bank = questionBankForQuizId(quizId);
+  if (!bank) return [];
+  return Object.values(bank.assets.images.items).map(
     (item) => item.plannedWebsitePath
   );
 }
@@ -78,10 +94,11 @@ function contentProfileFor(bookId, unitId, lessonNumber) {
 
 export function buildSteps(profileName) {
   const profile = source.contentProfiles[profileName] || {};
+  const profileQuizId = profile.vocabularyQuiz?.quizId;
   return source.defaultFlow.map((template, index) => {
     const content = mergedContent(template.content, profile[template.type]);
     if (template.type === "imageSlides" && content.slidesFromQuestionBank) {
-      content.slides = slidesFromQuestionBank();
+      content.slides = slidesFromQuestionBank(profileQuizId);
     }
     return {
       ...clone(template),
@@ -194,4 +211,4 @@ export const stepTypes = [
   { value: "vocabularyQuiz", label: "Vocabulary Quiz" }
 ];
 
-export { questionBank, source };
+export { source };

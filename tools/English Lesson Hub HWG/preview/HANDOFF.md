@@ -418,3 +418,25 @@
 
 1. 原生全螢幕切換無法由自動化穩定觸發；教師可在實際投影時手動按一次「全螢幕」，確認 Chrome 原生全螢幕呈現。
 2. 隔離 Headless Chrome 的 App Check 曾因 403 節流停止重試；一般教師 Chrome 已實際通過 App Check、進題、錄音與 AI 評分，不應在節流期間反覆建立全新瀏覽器設定檔。
+
+## 2026-09-07 HWG5 Unit 1 Lesson 1 Vocabulary Quiz（程式與測試完成，未部署）
+
+- 教師已核准 7 張無中文星期圖片與 14 題題庫；題庫 `hwg5-u01-l1-vocabulary` 含 Look and Choose 7 題、Listen and Choose 7 題，均依 Sunday–Saturday 排列，審核稿固定四個選項、正式作答時逐題打散。
+- 僅 HWG5 Unit 1 Lesson 1 啟用新題庫；既有 HWG7 Unit 1 Lesson 1 題庫完整保留。題庫改採 `quizId` 路由，避免兩個 Lesson 互相讀錯資料。
+- 既有 14 Steps Lesson 遷移測試證實只更新原 Vocabulary Quiz Step，另外 13 Steps 保留；若舊設定沒有 Quiz Step，才會新增到最後。
+- 7 張網站圖片存於 `public/assets/hwg5-u01/days/`，7 個原始 MP3 的網站副本存於 `public/assets/hwg5-u01/audio/`；原始圖卡與 MP3 均未覆寫。
+- 題庫／審核稿一致性與來源雜湊檢查通過；網站資料驗證通過（2 books、10 units、46 lessons、2 quiz sources）。乾淨隔離副本通過 79／79 項 Node 測試與 Vite 正式建置。
+- 1920×1080 Headless Chrome 實際開啟學生網址，確認 HWG5 路由、學號示例 `50101`、Sunday 第一題、四個打散選項、1488×1072 圖片完整解碼；7 個 MP3 均 HTTP 200 且可由 Chrome 解碼。驗收未完成作答，沒有送出 Firestore 成績。
+- Chrome 擴充控制橋連續逾時，因此本輪以 Headless Chrome 取代自動 UI 操作；不能把它描述為教師實體投影或真人聽覺驗收。
+- 本輪沒有部署 Firebase Hosting／Functions／規則，也沒有提交或推送 Git。下一步需教師另行明確授權正式部署。
+
+## 2026-09-07 HWG5 Unit 1 Lesson 1 Vocabulary Quiz（正式部署完成）
+
+- 教師本輪明確授權「正式部署 Firebase」。已發布至專案 `hwg7teaching` 的 Hosting target `lesson-hub-v03`，正式站為 https://lesson-hub-v03.web.app 。
+- 學生入口：https://lesson-hub-v03.web.app/?mode=student&book=hwg5&unit=u01&lesson=1 。包含 Look and Choose 7 題及 Listen and Choose 7 題。
+- 部署前比對來源、設定與 public 素材共 63 檔，與先前通過 79 項網站測試及正式建置的乾淨副本完全相同。
+- 部署檢查發現舊 Firestore 規則固定滿分 18，會拒絕新 HWG5 成績；已改為依核准 quizId 驗證 HWG5 7＋7／HWG7 10＋8 題，並驗證分類計數與總分相符。補上 HWG5 合法寫入、讀回、錯誤滿分／計數／分數、未登入及不可覆寫等測試；Firestore／Storage Emulator 共 8／8 通過。
+- 正式發布範圍：`hosting:lesson-hub-v03,firestore:rules`。Firebase CLI 回報規則編譯、規則發布及 Hosting release 全部成功。Functions、Storage 規則、正式成績及雲端 Lesson 文件未修改。
+- 正式 HTTP 讀回 56／56 個網站檔案皆為 200，SHA-256 與建置逐檔一致；Hosting runtime projectId 確認為 `hwg7teaching`。入口 `index.html` SHA-256：`016a5209f8af1a07b84f4ca4713d471a89b776953fc788511ab3cdb60a25c937`；主程式 `assets/index-BwXyPSY-.js` SHA-256：`2bc0071b05e24344baa6e0a922a731ace259363b00ce55b089662fa90d6dccf4`。
+- 正式 1920×1080 Chrome 驗收通過：學號示例 50101、第一題 Sunday 完整圖片、四個隨機選項、滿分 14，無頁面捲動；7 個 MP3 全部 HTTP 200 並可解碼。截圖經目視檢查。成績寫入測試在 Emulator 完成；正式站未提交測試成績，勿描述為已在正式 Results 讀回新成績。
+- 正式驗收檔：`audit/hwg5-u01-l1-vocabulary-quiz/production-browser-qa.json`、`production-first-question-1920x1080.png`、`production-release.json`。本輪未 Git commit／push。

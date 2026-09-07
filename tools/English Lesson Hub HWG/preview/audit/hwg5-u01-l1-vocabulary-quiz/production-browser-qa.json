@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "targetUrl": "https://lesson-hub-v03.web.app/?mode=student&book=hwg5&unit=u01&lesson=1",
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "gate": {
+    "title": "English Lesson Hub V03 Preview",
+    "bodyText": "EL\nEnglish Lesson Hub\nVocabulary Quiz\n🔊\n\nHWG5 · UNIT 1 · LESSON 1\n\nVOCABULARY QUIZ\nReady to play?\n輸入學號\nStart Vocabulary Quiz",
+    "placeholder": "50101",
+    "hasStartButton": true,
+    "scrollWidth": 1920,
+    "clientWidth": 1920,
+    "scrollHeight": 1080,
+    "clientHeight": 1080
+  },
+  "firstQuestion": {
+    "label": "Look and Choose",
+    "prompt": "Look at the picture. What day is it?",
+    "image": {
+      "src": "/assets/hwg5-u01/days/01-sunday.jpg",
+      "complete": true,
+      "naturalWidth": 1488,
+      "naturalHeight": 1072,
+      "renderedWidth": 458,
+      "renderedHeight": 330
+    },
+    "options": [
+      "Friday",
+      "Monday",
+      "Sunday",
+      "Wednesday"
+    ],
+    "audio": [
+      {
+        "path": "/assets/hwg5-u01/audio/01-sunday.mp3",
+        "status": 200,
+        "bytes": 24630,
+        "durationSeconds": 0.948
+      },
+      {
+        "path": "/assets/hwg5-u01/audio/02-monday.mp3",
+        "status": 200,
+        "bytes": 23845,
+        "durationSeconds": 1.015
+      },
+      {
+        "path": "/assets/hwg5-u01/audio/03-tuesday.mp3",
+        "status": 200,
+        "bytes": 24628,
+        "durationSeconds": 1.015
+      },
+      {
+        "path": "/assets/hwg5-u01/audio/04-wednesday.mp3",
+        "status": 200,
+        "bytes": 21759,
+        "durationSeconds": 0.88
+      },
+      {
+        "path": "/assets/hwg5-u01/audio/05-thursday.mp3",
+        "status": 200,
+        "bytes": 27239,
+        "durationSeconds": 1.083
+      },
+      {
+        "path": "/assets/hwg5-u01/audio/06-friday.mp3",
+        "status": 200,
+        "bytes": 25571,
+        "durationSeconds": 1.083
+      },
+      {
+        "path": "/assets/hwg5-u01/audio/07-saturday.mp3",
+        "status": 200,
+        "bytes": 27684,
+        "durationSeconds": 1.083
+      }
+    ],
+    "bodyText": "EL\nEnglish Lesson Hub\nVocabulary Quiz\n🔊\n\nHWG5 · UNIT 1 · LESSON 1\n\nLOOK AND CHOOSE\nLook at the picture. What day is it?\n50101\n1 / 7\nFriday\nMonday\nSunday\nWednesday\nPractice Score（first answer）: 0 / 14\nSlot Reward: 0",
+    "scrollWidth": 1920,
+    "clientWidth": 1920,
+    "scrollHeight": 1080,
+    "clientHeight": 1080
+  },
+  "firestoreSubmissionPerformed": false,
+  "screenshotPath": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English Lesson Hub HWG\\preview\\audit\\hwg5-u01-l1-vocabulary-quiz\\production-first-question-1920x1080.png"
+}

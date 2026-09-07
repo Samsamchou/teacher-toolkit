@@ -4,6 +4,7 @@ HWG5 與 HWG7 的教師備課與學生 Vocabulary Quiz 網站。HWG5、HWG7 各�
 
 ## 已完成的教學與學生流程
 
+- HWG5 Unit 1 Lesson 1 已上線星期題庫：Look and Choose 7 題、Listen and Choose 7 題；圖片已移除中文，原始圖卡與音檔保留。[學生測驗入口](https://lesson-hub-v03.web.app/?mode=student&book=hwg5&unit=u01&lesson=1)。
 - HWG7 Unit 1 Lesson 1 保留原有 Type A 10 題、Type B 8 題題庫、圖片／音檔和穩定教師端電子書目錄。
 - 圖片維持原始 PNG 不動；網站使用不裁切、不拉伸的 JPG 版本。音檔為原始副本。
 - 教師模式保留手動 Next 的課堂流程；電子書只會以新分頁開啟，學生端完全不顯示電子書。
