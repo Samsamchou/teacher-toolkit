@@ -1,6 +1,9 @@
 # Classroom Club / 上課互動遊戲大集合
 
-第一版已完成本機實作與驗證；尚未部署、尚未設定正式通行碼。 / First release implemented and locally tested; production deployment and passcode setup are pending.
+第一版已於 2026-09-07 正式部署至 Firebase，六碼通行碼已安全設定。 / First release was deployed to Firebase on 2026-09-07, with the six-digit passcode configured securely.
+
+- 正式站 / Production: https://gamesinclass-5d9d1.web.app
+- Firebase Console: https://console.firebase.google.com/project/gamesinclass-5d9d1/overview
 
 ## 已完成 / Features
 - 英文卡片式首頁；遊戲入口可新增、改名、排序、隱藏。 / English game hub with editable game links.
@@ -22,20 +25,20 @@
 - 雲端同步尚未啟用；本機預覽不能當成跨裝置同步成功的證據。 / Local preview does not verify cloud sync.
 - 重新啟動使用相同暫存目錄；請以本專案 src 原始碼為準，不在暫存目錄改正式來源。 / Edit authoritative source here, not the cache.
 
-## Firebase / 部署目標
+## Firebase / 正式部署
 
 - Project / 專案：gamesinclass-5d9d1
-- 預定 Hosting site / Planned site：gamesinclass-5d9d1
+- Hosting site：gamesinclass-5d9d1
 - 使用者升級後，已於 2026-09-05 在控制台讀取確認 Blaze。 / Blaze verified in the console.
 - Firebase Auth custom token + Cloud Functions + private Firestore/Storage rules.
 - 通行碼在伺服器驗證，僅 Secret Manager 保存加鹽 scrypt 驗證值。限制登入嘗試、工作階段最長 8 小時。 / Server-side verification, throttling and eight-hour sessions.
-- 正式發布另行確認，詳 DEPLOYMENT.md；此輪沒有改動正式雲端資源。 / See DEPLOYMENT.md; no production mutations in this implementation.
+- Hosting、teacherLogin Function、Firestore 規則與 Storage 規則均已正式發布；完整紀錄見 DEPLOYMENT.md 與 DEPLOYMENT-RECEIPT-20260907.md。 / Hosting, teacherLogin, Firestore rules and Storage rules are live.
 
 ## 驗證與限制 / Validation and limits
 
-詳 QA-20260905.md。功能測試 7/7、權限測試 6/6、正式建置成功；前後端 production dependency audit 均為 0 vulnerabilities。 / See QA report.
+原始功能驗證詳 QA-20260905.md；正式部署前重新執行功能測試 10/10、權限測試 6/6與 production build，全部通過。正式站 11/11 個檔案的 SHA-256 均與本機部署成品相符。 / Pre-deployment tests and production file verification passed.
 
-已實測批次 51 張、總數 57；備份還原後 114 張、課堂順序保留、重開頁面仍有資料；揭曉實測 8.386 秒。實際觸控螢幕、全螢幕與正式跨裝置登入仍待驗收。 / Hardware and cloud checks remain pending.
+已實測批次 51 張、總數 57；備份還原後 114 張、課堂順序保留、重開頁面仍有資料；揭曉實測 8.386 秒。正式站仍需教師以有效通行碼完成一次登入、上傳與跨裝置讀取驗收。 / A valid-passcode login, upload and cross-device production check remain for the teacher.
 
 React/Vite、Firebase、IndexedDB、Canvas、JSZip；不連接 AI 服務。畫面裝飾是 CSS，示範素材是程式生成的幾何測試圖。 / No AI runtime service; CSS and geometric fixtures.
 
@@ -45,10 +48,10 @@ React/Vite、Firebase、IndexedDB、Canvas、JSZip；不連接 AI 服務。畫�
 僅參考互動，未複製其程式或素材。 / Interaction reference only.
 
 RDQ 兩輪 8 題已確認，規格位於 rdq/RDQ-spec-classroom-games-20260905.md。
-沿用 teacher-toolkit 父層 Git，僅處理此子目錄，保留其他專案變更。本次沒有 commit/push。 / Parent Git repository; no commit/push in this turn.
+沿用 teacher-toolkit 父層 Git；版本控制與部署文件只處理此子目錄，保留其他專案變更。 / This project uses the parent teacher-toolkit repository while preserving unrelated project changes.
 
 ## 2026-09-05 糖果樂園改版 / Candy redesign
 
 最新規格覆蓋前文「英文介面」敘述：首頁與管理區為英文大字＋繁體中文小字，上課遊戲純英文。加入三段字級、刮擦與勝利音效、四角色 6 秒慶祝、跳過與減少動態。
 四款角色與完整生成提示：public/celebration/*.png 與同名 .json；使用內建 image_gen，生成素材一次後由網頁播放。
-詳 rdq/RDQ-spec-candy-bilingual-celebration-20260905.md、QA-candy-20260905.md。正式部署仍未執行。
+詳 rdq/RDQ-spec-candy-bilingual-celebration-20260905.md、QA-candy-20260905.md。此版本已於 2026-09-07 正式部署。
