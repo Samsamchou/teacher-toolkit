@@ -268,6 +268,7 @@
         window.HWG_AI_SCORING_READY = new Promise((resolve) => {
             window.__resolveHwgAiScoring = resolve;
         });
+        window.HWG_RECORDING_RELIABILITY_READY = import("./recording-reliability-core.js");
         // 👉 2. Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyA7GQLo5iiuS3cxlaHR3aNbFk7RW_lcQZU",
@@ -292,16 +293,15 @@
         const ITEMS_PER_PAGE = 4;
         const MAX_SCORED_ATTEMPTS_PER_ITEM = 3;
         const RECORD_RETENTION_MONTHS = 7;
+        const MAX_RECORDING_MS = 45000;
         const AUTHORIZED_TEACHER_EMAIL = "samchouou@gmail.com";
 
-        let audioContext = null;
-        let activeMediaStream = null;
-        let mediaRecorder = null;
-        let audioChunks = [];
+        let activeRecordingSession = null;
+        let isStartingRecording = false;
         let isRecording = false;
-        let recordingSentenceId = null;
-        let audioLevelReq = null;
-        let lastSpeakTime = 0;
+        let isFinalizingRecording = false;
+        let isScoringRecording = false;
+        let pendingRecordingStore = null;
 
         let deleteTargetStudentId = "";
         let currentTeacherDate = "";
@@ -732,6 +732,10 @@
             selectTheme('HWG5');
             selectUnit('SU');
         });
+        window.addEventListener('pagehide', () => {
+            clearPendingRecording();
+            discardActiveRecording();
+        });
 
         // 登入流程
         async function login() {
@@ -748,6 +752,7 @@
                 return;
             }
 
+            clearPendingRecording();
             try {
                 const studentUser = await ensureAnonymousStudentSession();
                 currentOwnerUid = studentUser.uid;
@@ -774,6 +779,10 @@
         }
 
         function showView(viewId) {
+            if (viewId !== 'view-practice') {
+                clearPendingRecording();
+                discardActiveRecording();
+            }
             ['view-home', 'view-practice', 'view-dashboard', 'view-teacher'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
@@ -833,8 +842,13 @@
         }
 
         function changePage(delta) {
+            if (isStartingRecording || isRecording || isFinalizingRecording || isScoringRecording) {
+                alert("請先完成目前這一題的錄音與評分。");
+                return;
+            }
             const totalPages = Math.ceil(practiceData.length / ITEMS_PER_PAGE);
             if (currentPage + delta >= 0 && currentPage + delta < totalPages) {
+                clearPendingRecording();
                 currentPage += delta;
                 renderPage();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -905,184 +919,434 @@
         // ==========================================
         // VAD 與錄音系統
         // ==========================================
+        async function getRecordingHelpers() {
+            return Promise.race([
+                window.HWG_RECORDING_RELIABILITY_READY,
+                timeout(15000, "錄音模組載入逾時")
+            ]);
+        }
+
+        async function getPendingRecordingStore() {
+            if (!pendingRecordingStore) {
+                const helpers = await getRecordingHelpers();
+                pendingRecordingStore = helpers.createEphemeralRecordingStore();
+            }
+            return pendingRecordingStore;
+        }
+
+        function createRecordingId() {
+            if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+            return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+        }
+
+        function updateRecordingStatus(sentenceId, message, colorClass = "text-gray-500", animate = false) {
+            const statusEl = document.getElementById(`status-${sentenceId}`);
+            if (!statusEl) return;
+            statusEl.innerText = message;
+            statusEl.className = `text-base font-black text-center mt-2 block ${colorClass}${animate ? " animate-pulse" : ""}`;
+        }
+
+        function updateRecordButton(sentenceId, { recording = false, finalizing = false } = {}) {
+            const button = document.getElementById(`btn-record-${sentenceId}`);
+            if (!button) return;
+            button.disabled = finalizing;
+            button.innerHTML = recording ? "⏹️ 停止錄音" : (finalizing ? "⏳ 整理錄音中" : "🎤 開始錄音");
+            button.classList.toggle("recording-pulse", recording);
+            button.classList.toggle("opacity-60", finalizing);
+        }
+
+        function clearPendingRecording() {
+            const pending = pendingRecordingStore?.get();
+            if (!pending) return;
+            const resultEl = document.getElementById(`result-${pending.sentenceId}`);
+            if (resultEl?.dataset.pendingAttempt === pending.attemptId) {
+                resultEl.replaceChildren();
+                resultEl.classList.add("hidden");
+                delete resultEl.dataset.pendingAttempt;
+            }
+            pendingRecordingStore.clear(pending.attemptId);
+        }
+
+        async function releaseRecordingResources(session) {
+            if (!session) return;
+            if (session.animationFrame) cancelAnimationFrame(session.animationFrame);
+            session.stream?.getTracks().forEach((track) => track.stop());
+            if (session.audioContext && session.audioContext.state !== "closed") {
+                try { await session.audioContext.close(); } catch { /* 資源已由瀏覽器釋放 */ }
+            }
+        }
+
+        function discardActiveRecording() {
+            const session = activeRecordingSession;
+            if (!session) return;
+            session.discard = true;
+            if (session.recorder?.state === "recording") {
+                try { session.recorder.stop(); } catch { releaseRecordingResources(session); }
+            } else {
+                releaseRecordingResources(session);
+            }
+            isRecording = false;
+        }
+
+        function checkAudioLevel(session) {
+            if (!isRecording || activeRecordingSession !== session || session.recorder.state !== "recording") return;
+            if (Date.now() - session.startedAt >= MAX_RECORDING_MS) {
+                updateRecordingStatus(session.sentenceId, "⏱️ 已達錄音上限，正在整理錄音...", "text-blue-600");
+                stopRecording();
+                return;
+            }
+            session.analyser.getByteFrequencyData(session.levelData);
+            let sum = 0;
+            for (let index = 0; index < session.levelData.length; index += 1) sum += session.levelData[index];
+            const average = sum / session.levelData.length;
+            if (average > 15) {
+                session.hasSpoken = true;
+                session.lastSpeakTime = Date.now();
+                updateRecordingStatus(session.sentenceId, "🗣️ 收到聲音，請繼續唸...", "text-green-500", true);
+            } else if (session.hasSpoken && Date.now() - session.lastSpeakTime > 4000) {
+                stopRecording();
+                return;
+            } else if (!session.hasSpoken) {
+                updateRecordingStatus(session.sentenceId, "🎧 正在聆聽，請開始唸...", "text-gray-500");
+            }
+            session.animationFrame = requestAnimationFrame(() => checkAudioLevel(session));
+        }
+
         async function toggleRecord(id) {
-            if (isRecording) { stopRecording(); return; }
-            if (!(await canStartScoring(id))) return;
-            recordingSentenceId = id;
+            if (isRecording) {
+                if (activeRecordingSession?.sentenceId === id) stopRecording();
+                return;
+            }
+            if (isStartingRecording || isFinalizingRecording || isScoringRecording) return;
+            isStartingRecording = true;
+            let session = null;
+            let provisionalStream = null;
+            let provisionalAudioContext = null;
             try {
-                activeMediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const source = audioContext.createMediaStreamSource(activeMediaStream);
+                if (!(await canStartScoring(id))) return;
+                clearPendingRecording();
+                const helpers = await getRecordingHelpers();
+                const stream = provisionalStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const audioContext = provisionalAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+                if (document.getElementById("view-practice").classList.contains("hidden")) {
+                    stream.getTracks().forEach((track) => track.stop());
+                    await audioContext.close();
+                    return;
+                }
+                const source = audioContext.createMediaStreamSource(stream);
                 const analyser = audioContext.createAnalyser();
                 analyser.fftSize = 256;
                 source.connect(analyser);
-                const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-                let hasSpoken = false;
-                lastSpeakTime = Date.now();
-
-                const checkAudioLevel = () => {
-                    if (!isRecording) return;
-                    analyser.getByteFrequencyData(dataArray);
-                    let sum = 0;
-                    for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
-                    let average = sum / dataArray.length;
-
-                    const statusEl = document.getElementById(`status-${recordingSentenceId}`);
-                    if (average > 15) {
-                        hasSpoken = true;
-                        lastSpeakTime = Date.now();
-                        statusEl.innerText = "🗣️ 收到聲音，請繼續唸...";
-                        statusEl.className = "text-base font-black text-center mt-2 text-green-500 animate-pulse";
-                    } else if (hasSpoken && Date.now() - lastSpeakTime > 4000) {
-                        console.log("偵測到靜音，自動停止錄音");
-                        stopRecording();
-                        return;
-                    } else if (!hasSpoken) {
-                        statusEl.innerText = "🎧 正在聆聽，請開始唸...";
-                        statusEl.className = "text-base font-black text-center mt-2 text-gray-500";
-                    }
-                    audioLevelReq = requestAnimationFrame(checkAudioLevel);
+                const preferredMimeType = helpers.chooseRecorderMimeType(window.MediaRecorder);
+                const recorder = preferredMimeType
+                    ? new MediaRecorder(stream, { mimeType: preferredMimeType })
+                    : new MediaRecorder(stream);
+                session = {
+                    sessionId: createRecordingId(),
+                    sentenceId: id,
+                    recorder,
+                    stream,
+                    audioContext,
+                    analyser,
+                    levelData: new Uint8Array(analyser.frequencyBinCount),
+                    chunks: [],
+                    startedAt: Date.now(),
+                    lastSpeakTime: Date.now(),
+                    hasSpoken: false,
+                    animationFrame: null,
+                    recorderError: null,
+                    discard: false
                 };
 
-                let options = {};
-                if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
-                    options = { mimeType: 'audio/webm;codecs=opus' };
-                } else if (MediaRecorder.isTypeSupported('audio/webm')) {
-                    options = { mimeType: 'audio/webm' };
-                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
-                    options = { mimeType: 'audio/mp4' };
-                }
+                recorder.addEventListener("dataavailable", (event) => {
+                    if (event.data?.size > 0) session.chunks.push(event.data);
+                });
+                recorder.addEventListener("error", (event) => {
+                    session.recorderError = event.error || new Error("錄音器發生錯誤。");
+                    if (recorder.state === "recording") stopRecording();
+                });
+                recorder.addEventListener("stop", () => {
+                    processAudioRecording(session).catch(() => {
+                        updateRecordingStatus(id, "⚠️ 錄音整理失敗，請重新錄音。", "text-red-600");
+                    });
+                }, { once: true });
 
-                mediaRecorder = new MediaRecorder(activeMediaStream, options);
-                audioChunks = [];
-                mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
-                mediaRecorder.onstop = processAudioRecording;
-                
-                mediaRecorder.start(100);
+                activeRecordingSession = session;
+                provisionalStream = null;
+                provisionalAudioContext = null;
+                recorder.start();
                 isRecording = true;
-                
-                const btn = document.getElementById(`btn-record-${id}`);
-                btn.innerHTML = "⏹️ 停止錄音";
-                btn.classList.add('recording-pulse');
-                
-                const statusEl = document.getElementById(`status-${id}`);
-                statusEl.innerText = "🎧 準備就緒，請說話...";
-                statusEl.className = "text-base font-black text-center mt-2 text-gray-500 block";
-
-                checkAudioLevel();
-
-            } catch (err) {
-                alert("無法存取麥克風，請檢查權限設定！");
-                console.error(err);
+                updateRecordButton(id, { recording: true });
+                updateRecordingStatus(id, "🎧 準備就緒，請說話...", "text-gray-500");
+                checkAudioLevel(session);
+            } catch (error) {
+                if (session) await releaseRecordingResources(session);
+                provisionalStream?.getTracks().forEach((track) => track.stop());
+                if (provisionalAudioContext?.state !== "closed") {
+                    try { await provisionalAudioContext.close(); } catch { /* 已釋放 */ }
+                }
+                activeRecordingSession = null;
+                isRecording = false;
+                isFinalizingRecording = false;
+                updateRecordButton(id);
+                alert("無法開始錄音，請檢查 Safari 的麥克風權限後再試一次。");
+            } finally {
+                isStartingRecording = false;
             }
         }
 
         function stopRecording() {
-            if (mediaRecorder && isRecording) {
-                mediaRecorder.stop();
-                isRecording = false;
-                if (audioLevelReq) cancelAnimationFrame(audioLevelReq);
-                if (audioContext) audioContext.close();
-                activeMediaStream.getTracks().forEach(track => track.stop());
-                
-                const btn = document.getElementById(`btn-record-${recordingSentenceId}`);
-                if(btn){
-                    btn.innerHTML = "🎤 開始錄音";
-                    btn.classList.remove('recording-pulse');
-                }
-                const statusEl = document.getElementById(`status-${recordingSentenceId}`);
-                if(statusEl) statusEl.classList.add('hidden');
+            const session = activeRecordingSession;
+            if (!session || !isRecording || session.recorder.state !== "recording") return;
+            isRecording = false;
+            isFinalizingRecording = true;
+            if (session.animationFrame) cancelAnimationFrame(session.animationFrame);
+            updateRecordButton(session.sentenceId, { finalizing: true });
+            updateRecordingStatus(session.sentenceId, "⏳ 正在完整整理錄音，請稍候...", "text-blue-600", true);
+            try {
+                // 不使用 timeslice；Safari 會在 stop 前完成最後一個可獨立播放的 MP4/WebM Blob。
+                session.recorder.stop();
+            } catch {
+                isFinalizingRecording = false;
+                releaseRecordingResources(session);
+                updateRecordButton(session.sentenceId);
+                updateRecordingStatus(session.sentenceId, "⚠️ 錄音停止失敗，請重新錄音。", "text-red-600");
             }
         }
 
-        const timeout = (ms) => new Promise((resolve, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
+        const timeout = (ms, message = "作業逾時") => new Promise((resolve, reject) => {
+            const error = new Error(message);
+            error.name = "TimeoutError";
+            error.code = "client/timeout";
+            setTimeout(() => reject(error), ms);
+        });
 
-        // ==========================================
-        // 🚀 AI 評分核心（Firebase AI Logic + App Check）
-        // ==========================================
-        async function processAudioRecording() {
-            if (audioChunks.length === 0) return;
-            const recordMime = mediaRecorder.mimeType || 'audio/webm';
-            const audioBlob = new Blob(audioChunks, { type: recordMime });
-            showLoading("AI 教練批改中...");
-            
-            const sid = recordingSentenceId;
-            const targetSentenceObj = practiceData.find(x => x.id === sid);
-            const targetText = targetSentenceObj.en;
-            const focusRule = targetSentenceObj.focus;
+        function blobToBase64(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onerror = () => reject(new Error("無法讀取錄音內容。"));
+                reader.onloadend = () => resolve(String(reader.result || "").split(",")[1] || "");
+                reader.readAsDataURL(blob);
+            });
+        }
 
+        function audioValidationMessage(reason) {
+            const messages = {
+                "missing-audio": "沒有收到錄音內容，請重新錄音。",
+                "audio-too-small": "錄音內容太短或不完整，請重新錄音。",
+                "audio-too-short": "錄音時間太短，請完整唸完句子。",
+                "audio-too-large": "錄音檔太大，請縮短錄音後再試一次。",
+                "unsupported-mime": "這台 iPad 產生的錄音格式暫時不支援。",
+                "invalid-container": "Safari 沒有完整封裝這次錄音，請重新錄音。",
+                "mime-container-mismatch": "錄音格式標示不一致，請重新錄音。"
+            };
+            return messages[reason] || "錄音內容無法驗證，請重新錄音。";
+        }
+
+        async function processAudioRecording(session) {
+            if (activeRecordingSession !== session) return;
+            let resourcesReleased = false;
             try {
-                const base64Audio = await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
-                    reader.readAsDataURL(audioBlob);
+                if (session.discard) return;
+                if (session.recorderError) throw session.recorderError;
+                const helpers = await getRecordingHelpers();
+                const declaredMime = session.recorder.mimeType || session.chunks[0]?.type || "";
+                const cleanMime = helpers.normalizeAudioMimeType(declaredMime);
+                const capturedBlob = new Blob(session.chunks, { type: cleanMime || declaredMime });
+                const elapsedDuration = Math.max(0, (Date.now() - session.startedAt) / 1000);
+                const capturedInspection = await helpers.inspectRecordedAudioBlob(capturedBlob, {
+                    durationSeconds: elapsedDuration
+                });
+                if (!capturedInspection.ok) {
+                    updateRecordingStatus(session.sentenceId, `⚠️ ${audioValidationMessage(capturedInspection.reason)}`, "text-red-600");
+                    return;
+                }
+
+                // Safari 的 MP4/WebM 先在裝置端真正解碼，再統一為 Gemini 支援的單聲道 PCM WAV。
+                const decodedAudio = await session.audioContext.decodeAudioData(await capturedBlob.arrayBuffer());
+                const channels = Array.from(
+                    { length: decodedAudio.numberOfChannels },
+                    (_, channel) => decodedAudio.getChannelData(channel)
+                );
+                const wavBuffer = helpers.encodeMonoPcm16Wav(channels, decodedAudio.sampleRate);
+                const audioBlob = new Blob([wavBuffer], { type: "audio/wav" });
+                // stop 事件與解碼皆完成；此時才安全釋放 Safari 的錄音資源。
+                await releaseRecordingResources(session);
+                resourcesReleased = true;
+                const inspection = await helpers.inspectRecordedAudioBlob(audioBlob, {
+                    durationSeconds: decodedAudio.duration
+                });
+                if (session.discard) return;
+                if (!inspection.ok) {
+                    updateRecordingStatus(session.sentenceId, `⚠️ ${audioValidationMessage(inspection.reason)}`, "text-red-600");
+                    return;
+                }
+
+                const targetSentence = practiceData.find((item) => item.id === session.sentenceId);
+                if (!targetSentence) throw new Error("找不到目前題目。");
+                const store = await getPendingRecordingStore();
+                const attempt = {
+                    attemptId: createRecordingId(),
+                    sentenceId: session.sentenceId,
+                    blob: audioBlob,
+                    mimeType: inspection.mimeType,
+                    targetText: targetSentence.en,
+                    focusRule: targetSentence.focus,
+                    ownerUid: currentOwnerUid,
+                    studentId: currentStudentId,
+                    theme: currentTheme,
+                    unit: currentUnit,
+                    recordDate: todayRecordDate(),
+                    base64Audio: ""
+                };
+                store.set(attempt);
+                await scoreRecordingAttempt(attempt);
+            } catch {
+                updateRecordingStatus(session.sentenceId, "⚠️ 錄音沒有完整建立，請重新錄音。", "text-red-600");
+            } finally {
+                if (!resourcesReleased) await releaseRecordingResources(session);
+                if (activeRecordingSession === session) activeRecordingSession = null;
+                isFinalizingRecording = false;
+                updateRecordButton(session.sentenceId);
+            }
+        }
+
+        function safeScoringFailureMessage(errorInfo) {
+            if (errorInfo.category === "invalid-request") {
+                return "錄音已保留，但評分服務無法讀取這次音訊。請重新送出；若仍失敗再重新錄音。";
+            }
+            if (errorInfo.category === "rate-limited") {
+                return "錄音已保留，目前同時評分的人較多，請稍後重新送出。";
+            }
+            if (["network", "timeout", "server"].includes(errorInfo.category)) {
+                return "錄音已保留，網路或評分服務暫時不穩定，請重新送出。";
+            }
+            return "錄音已保留，評分暫時未完成，請重新送出。";
+        }
+
+        function displayScoringFailure(attempt, errorInfo) {
+            updateRecordingStatus(attempt.sentenceId, "✅ 錄音成功；AI 評分暫時失敗。", "text-amber-600");
+            const resultEl = document.getElementById(`result-${attempt.sentenceId}`);
+            if (!resultEl) return;
+            resultEl.dataset.pendingAttempt = attempt.attemptId;
+            resultEl.innerHTML = `
+                <div class="bg-amber-50 rounded-3xl p-5 border-3 border-amber-300 text-center">
+                    <p class="text-xl font-black text-amber-800 mb-2">🎙️ 你的錄音還在這個分頁中</p>
+                    <p class="text-base font-bold text-gray-700 mb-4">${escapeHtml(safeScoringFailureMessage(errorInfo))}</p>
+                    <button onclick="retryPendingScoring('${attempt.sentenceId}')" class="btn-dopamine bg-amber-500 text-white border-2 border-amber-600 px-6 py-3 rounded-2xl font-black text-lg">
+                        🔄 重新送出評分（不必重錄）
+                    </button>
+                    <p class="text-sm font-bold text-gray-500 mt-3">這次失敗不會扣除每日三次評分機會。</p>
+                </div>`;
+            resultEl.classList.remove("hidden");
+        }
+
+        async function persistSuccessfulRecording(attempt, aiResult, helpers) {
+            let audioUrl = "";
+            const expiresAt = new Date();
+            expiresAt.setMonth(expiresAt.getMonth() + RECORD_RETENTION_MONTHS);
+            try {
+                if (window.storage && window.db) {
+                    if (!attempt.ownerUid) throw new Error("學生驗證狀態已失效。請回首頁重新進入。");
+                    const extension = helpers.audioFileExtension(attempt.mimeType);
+                    const audioPath = `audio_records/${attempt.ownerUid}/${attempt.studentId}/${Date.now()}-${attempt.attemptId}.${extension}`;
+                    const fileRef = window.storage.ref(audioPath);
+                    await Promise.race([
+                        fileRef.put(attempt.blob, { customMetadata: { expiresAt: expiresAt.toISOString() } }),
+                        timeout(15000, "音檔保存逾時")
+                    ]);
+                    audioUrl = await fileRef.getDownloadURL();
+                    await Promise.race([
+                        window.db.collection("reading_records").add({
+                            ownerUid: attempt.ownerUid,
+                            studentId: attempt.studentId,
+                            theme: attempt.theme,
+                            unit: attempt.unit,
+                            date: attempt.recordDate,
+                            sentenceId: attempt.sentenceId,
+                            targetText: attempt.targetText,
+                            transcript: aiResult.transcript,
+                            score: aiResult.total_score,
+                            feedback: aiResult.feedback,
+                            audioUrl,
+                            audioPath,
+                            expiresAt,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        }),
+                        timeout(5000, "成績保存逾時")
+                    ]);
+                }
+            } catch {
+                console.warn("評分完成，但雲端紀錄未能完整保存。", { category: "record-persistence" });
+            }
+        }
+
+        async function scoreRecordingAttempt(attempt) {
+            if (isScoringRecording) return;
+            isScoringRecording = true;
+            showLoading("AI 教練批改中...", "錄音已完成，正在安全送出評分 🚀");
+            updateRecordingStatus(attempt.sentenceId, "🤖 錄音完成，正在評分...", "text-indigo-600", true);
+            try {
+                const helpers = await getRecordingHelpers();
+                if (!attempt.base64Audio) attempt.base64Audio = await blobToBase64(attempt.blob);
+                if (!attempt.base64Audio) throw new Error("錄音內容讀取失敗。");
+                const aiScoring = await Promise.race([
+                    window.HWG_AI_SCORING_READY,
+                    timeout(15000, "AI 評分服務載入逾時")
+                ]);
+                if (!aiScoring) throw new Error("AI 評分服務尚未完成初始化。");
+
+                const aiResult = await helpers.retryWithBackoff(() => Promise.race([
+                    aiScoring.scoreAudio({
+                        base64Audio: attempt.base64Audio,
+                        mimeType: attempt.mimeType,
+                        targetText: attempt.targetText,
+                        focusRule: attempt.focusRule
+                    }),
+                    timeout(60000, "AI 評分逾時")
+                ]), {
+                    maxRetries: 2,
+                    onRetry({ retryNumber }) {
+                        document.getElementById("loading-desc").innerText = `服務暫時忙碌，正在第 ${retryNumber} 次重新送出...`;
+                    }
                 });
 
-                const aiScoring = await Promise.race([window.HWG_AI_SCORING_READY, timeout(15000)]);
-                if (!aiScoring) {
-                    const initMessage = window.HWG_AI_INIT_ERROR?.message || "Firebase AI Logic 尚未完成初始化。";
-                    throw new Error(initMessage);
-                }
-
-                const cleanMime = recordMime.split(';')[0] || "audio/webm";
-                const aiResult = await Promise.race([
-                    aiScoring.scoreAudio({
-                        base64Audio,
-                        mimeType: cleanMime,
-                        targetText,
-                        focusRule
-                    }),
-                    timeout(60000)
-                ]);
-                markSuccessfulAttempt(sid);
-
-                // 備份音檔至 Storage 與 Firestore (15 秒寬限)
-                let audioUrl = "";
-                const todayDateStr = todayRecordDate();
-                const expiresAt = new Date();
-                expiresAt.setMonth(expiresAt.getMonth() + RECORD_RETENTION_MONTHS);
-                try {
-                    if (window.storage && window.db) {
-                        if (!currentOwnerUid) throw new Error("學生驗證狀態已失效。請回首頁重新進入。");
-                        const audioPath = `audio_records/${currentOwnerUid}/${currentStudentId}/${Date.now()}.webm`;
-                        const fileRef = window.storage.ref(audioPath);
-                        await Promise.race([
-                            fileRef.put(audioBlob, { customMetadata: { expiresAt: expiresAt.toISOString() } }),
-                            timeout(15000)
-                        ]);
-                        audioUrl = await fileRef.getDownloadURL();
-                        
-                        await Promise.race([
-                            window.db.collection("reading_records").add({
-                                ownerUid: currentOwnerUid,
-                                studentId: currentStudentId, 
-                                theme: currentTheme, 
-                                unit: currentUnit, 
-                                date: todayDateStr, 
-                                sentenceId: sid,
-                                targetText: targetText, 
-                                transcript: aiResult.transcript, 
-                                score: aiResult.total_score,
-                                feedback: aiResult.feedback, 
-                                audioUrl: audioUrl,
-                                audioPath: audioPath,
-                                expiresAt: expiresAt,
-                                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                            }), timeout(5000)
-                        ]);
-                    }
-                } catch (dbErr) {
-                    console.warn("備份失敗，但仍正常顯示成績:", dbErr);
-                }
-
-                displayResult(sid, aiResult, targetText);
-
-            } catch (err) {
-                console.error("AI 分析失敗:", err);
-                alert("🚨 AI 評分失敗原因：\n" + (err.message || err));
+                markSuccessfulAttempt(attempt.sentenceId);
+                await persistSuccessfulRecording(attempt, aiResult, helpers);
+                displayResult(attempt.sentenceId, aiResult, attempt.targetText);
+                updateRecordingStatus(attempt.sentenceId, "✅ 評分完成！", "text-green-600");
+                pendingRecordingStore?.clear(attempt.attemptId);
+            } catch (error) {
+                const helpers = await getRecordingHelpers();
+                const errorInfo = helpers.classifyScoringError(error);
+                console.warn("AI 評分暫時未完成。", {
+                    category: errorInfo.category,
+                    status: errorInfo.status,
+                    code: errorInfo.code,
+                    mimeType: attempt.mimeType,
+                    bytes: attempt.blob.size
+                });
+                displayScoringFailure(attempt, errorInfo);
+            } finally {
+                isScoringRecording = false;
+                hideLoading();
             }
-            hideLoading();
+        }
+
+        async function retryPendingScoring(sentenceId) {
+            if (isRecording || isFinalizingRecording || isScoringRecording) return;
+            const store = await getPendingRecordingStore();
+            const attempt = store.getForSentence(sentenceId);
+            if (!attempt) {
+                updateRecordingStatus(sentenceId, "暫存錄音已清除，請重新錄音。", "text-red-600");
+                return;
+            }
+            if (!(await canStartScoring(sentenceId))) {
+                store.clear(attempt.attemptId);
+                return;
+            }
+            await scoreRecordingAttempt(attempt);
         }
 
         function displayResult(sid, aiResult, targetText) {
@@ -1396,8 +1660,9 @@
         // ==========================================
         // UI 輔助功能
         // ==========================================
-        function showLoading(title) {
+        function showLoading(title, description = "正在仔細聽你的發音，請稍候 🚀") {
             document.getElementById('loading-title').innerText = title;
+            document.getElementById('loading-desc').innerText = description;
             document.getElementById('global-loading').classList.remove('hidden');
         }
         function hideLoading() {

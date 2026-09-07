@@ -20,7 +20,7 @@ test("學生使用匿名驗證並以 ownerUid 限制查詢與音檔路徑", () =
   assert.match(indexHtml, /signInAnonymously\(\)/);
   assert.match(indexHtml, /\.where\("ownerUid", "==", currentOwnerUid\)/);
   assert.match(indexHtml, /ownerUid: currentOwnerUid/);
-  assert.match(indexHtml, /audio_records\/\$\{currentOwnerUid\}\/\$\{currentStudentId\}/);
+  assert.match(indexHtml, /audio_records\/\$\{attempt\.ownerUid\}\/\$\{attempt\.studentId\}/);
 });
 
 test("預設 Firebase App 也使用 reCAPTCHA Enterprise App Check", () => {

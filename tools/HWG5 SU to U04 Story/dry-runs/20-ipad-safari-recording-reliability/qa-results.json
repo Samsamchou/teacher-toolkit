@@ -1,0 +1,74 @@
+{
+  "generatedAt": "2026-09-07T13:23:06+08:00",
+  "status": "production-deployed-awaiting-real-ipad-validation",
+  "productionDeploymentPerformed": true,
+  "firebaseProjectId": "hwg5-su-to-u04-story",
+  "observedClassroom": {
+    "devices": 22,
+    "platform": "school iPad with Safari",
+    "affectedStudents": 3,
+    "observedError": "HTTP 400 invalid argument (AI/fetch-error) after recording"
+  },
+  "verification": {
+    "syntaxCheck": "pass",
+    "automatedTests": {
+      "total": 41,
+      "passed": 41,
+      "failed": 0,
+      "skipped": 0,
+      "firestoreEmulator": true,
+      "storageEmulator": true
+    },
+    "hostingSmoke": [
+      { "path": "/", "status": 200, "bytes": 160598 },
+      { "path": "/recording-reliability-core.js", "status": 200, "bytes": 9704 },
+      { "path": "/ai-scoring.js", "status": 200, "bytes": 4515 }
+    ],
+    "simulatedConcurrentSessions": 22,
+    "simulatedSequentialSentences": 4,
+    "realIpadSafariTest": false,
+    "realProductionAiCall": false
+  },
+  "productionHosting": {
+    "url": "https://hwg5-su-to-u04-story.web.app",
+    "scope": "hosting-only",
+    "firebaseReportedFiles": 5,
+    "firebaseUploadedFiles": 2,
+    "readBack": [
+      {
+        "path": "/",
+        "status": 200,
+        "bytes": 160598,
+        "sha256": "E5A2D15EF9E583B878F9CD1BE368D509EDA50B847C8A202A781E58D748AD53CE",
+        "matchesLocal": true
+      },
+      {
+        "path": "/recording-reliability-core.js",
+        "status": 200,
+        "bytes": 9704,
+        "sha256": "A8BB7B6932628741328BA8F93329DD563ACA1E3E7E85DF6634CC24F56BC45018",
+        "matchesLocal": true
+      },
+      {
+        "path": "/ai-scoring.js",
+        "status": 200,
+        "bytes": 4515,
+        "sha256": "ED3BE9E7AAB88CBD2A1C4AF40D4BA43E564E51917BCFE62318982B2B15458D8F",
+        "matchesLocal": true
+      }
+    ]
+  },
+  "retentionChanged": false,
+  "existingRecordsMutated": false,
+  "googleDriveBackupUpdated": true,
+  "googleDriveBackupVerification": {
+    "sourceFiles": 217,
+    "destinationFiles": 217,
+    "sourceBytes": 1275347,
+    "destinationBytes": 1275347,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "sha256Differences": 0
+  },
+  "githubPushed": false
+}
