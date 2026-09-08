@@ -4,8 +4,10 @@ import test from "node:test";
 
 const indexHtml = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
 const firebaseConfig = JSON.parse(readFileSync(new URL("../firebase.json", import.meta.url), "utf8"));
+const firestoreIndexes = JSON.parse(readFileSync(new URL("../firestore.indexes.json", import.meta.url), "utf8"));
 const firestoreRules = readFileSync(new URL("../firestore.rules", import.meta.url), "utf8");
 const storageRules = readFileSync(new URL("../storage.rules", import.meta.url), "utf8");
+const recordingCore = readFileSync(new URL("../public/recording-reliability-core.js", import.meta.url), "utf8");
 
 test("教師後臺不再使用前端固定密碼", () => {
   assert.doesNotMatch(indexHtml, /prompt\(["']請輸入教師密碼/);
@@ -20,7 +22,8 @@ test("學生使用匿名驗證並以 ownerUid 限制查詢與音檔路徑", () =
   assert.match(indexHtml, /signInAnonymously\(\)/);
   assert.match(indexHtml, /\.where\("ownerUid", "==", currentOwnerUid\)/);
   assert.match(indexHtml, /ownerUid: currentOwnerUid/);
-  assert.match(indexHtml, /audio_records\/\$\{attempt\.ownerUid\}\/\$\{attempt\.studentId\}/);
+  assert.match(recordingCore, /audio_records\/\$\{ownerUid\}\/\$\{studentId\}\/\$\{nowMs\}-\$\{attemptId\}\.wav/);
+  assert.match(indexHtml, /\.doc\(state\.recordId\)/);
 });
 
 test("預設 Firebase App 也使用 reCAPTCHA Enterprise App Check", () => {
@@ -33,6 +36,11 @@ test("預設 Firebase App 也使用 reCAPTCHA Enterprise App Check", () => {
 test("Firebase 設定納入 Firestore 與 Storage Rules", () => {
   assert.equal(firebaseConfig.firestore.rules, "firestore.rules");
   assert.equal(firebaseConfig.storage.rules, "storage.rules");
+  assert.ok(firestoreIndexes.fieldOverrides.some((entry) =>
+    entry.collectionGroup === "persistence_events"
+      && entry.fieldPath === "expiresAt"
+      && entry.ttl === true
+  ));
 });
 
 test("Rules 採預設拒絕、教師驗證與嚴格資料模型", () => {
@@ -43,6 +51,9 @@ test("Rules 採預設拒絕、教師驗證與嚴格資料模型", () => {
   assert.match(firestoreRules, /match \/\{document=\*\*\}[\s\S]*allow read, write: if false/);
 
   assert.match(storageRules, /request\.resource\.size <= 10 \* 1024 \* 1024/);
-  assert.match(storageRules, /request\.resource\.contentType\.matches\('\^audio\/\.\*'\)/);
+  assert.match(storageRules, /request\.resource\.contentType == 'audio\/wav'/);
+  assert.match(storageRules, /request\.resource\.contentType\.matches\('\^audio\/webm/);
+  assert.match(storageRules, /request\.resource\.metadata\.keys\(\)\.hasOnly/);
+  assert.match(firestoreRules, /match \/persistence_events\/\{eventId\}/);
   assert.match(storageRules, /match \/\{allPaths=\*\*\}[\s\S]*allow read, write: if false/);
 });

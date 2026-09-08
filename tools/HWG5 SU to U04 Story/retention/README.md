@@ -3,14 +3,16 @@
 ## 應用程式欄位 / Application fields
 
 - 新增的 `reading_records` 文件包含 `expiresAt`，值為建立日後七個日曆月。
+- 匿名保存失敗事件 `persistence_events` 也使用同一個七個日曆月 `expiresAt`；不含學號、owner UID、音訊、逐字稿或原始錯誤。
 - 新增的 Storage 物件包含 `expiresAt` 自訂中繼資料及 Firestore `audioPath`。
 - 不回寫、不搬移或刪除未滿七個月的既有資料。
 
 ## Firestore TTL
 
-- Collection group：`reading_records`
+- Collection groups：`reading_records`、`persistence_events`
 - TTL field：`expiresAt`
-- 已於 2026-08-26 部署；控制台最終讀回為「可用／提供中」、偏移 `0 秒`。
+- `reading_records` 已於 2026-08-26 部署；2026-09-08 15:15 讀回為 `ACTIVE`。
+- `persistence_events` 已於 2026-09-08 部署；15:56 收工讀回為 `ACTIVE`，背景啟用已完成。
 - TTL 刪除是非即時的背景作業；到期後可能延遲。
 
 ## Cloud Storage lifecycle
@@ -23,6 +25,6 @@
 
 ## 驗證 / Verification
 
-- Firestore CLI 已讀回 `reading_records.expiresAt` 的 `ttl: true`。
+- 正式 Rules 與 Hosting 已於 2026-09-08 發布並讀回；TTL 最新證據見 `dry-runs/21-hwg7-su-cloud-persistence-fix/production-after.json`。
 - Cloud Console 已讀回 Storage 規則；其他 Storage 前綴不在此規則範圍內。
 - Firebase TTL 與 Storage lifecycle 都是背景作業，不保證在到期瞬間刪除。

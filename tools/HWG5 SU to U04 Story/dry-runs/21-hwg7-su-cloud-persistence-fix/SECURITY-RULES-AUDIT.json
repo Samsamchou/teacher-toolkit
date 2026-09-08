@@ -1,0 +1,12 @@
+{
+  "score": 4,
+  "summary": "規則採預設拒絕、嚴格 schema、owner UID 隔離、固定 bucket／音檔路徑、不可更新文件及教師白名單；Emulator 紅隊案例全部通過。唯一保留的低度風險是匿名登入者仍可建立受限且會到期的無個資失敗事件，而 Rules 本身無法提供可靠速率限制。",
+  "findings": [
+    {
+      "check": "Storage Abuse",
+      "severity": "minor",
+      "issue": "persistence_events 允許任何已登入使用者建立小型事件；在 App Check 尚未強制時，惡意使用者仍可能大量建立事件並增加用量。",
+      "recommendation": "維持嚴格欄位、大小、固定文件 ID 與七個月 TTL；完成真實 iPad 驗收後，再由教師另行確認 App Check enforcement，或把遙測改由受保護後端彙總。"
+    }
+  ]
+}

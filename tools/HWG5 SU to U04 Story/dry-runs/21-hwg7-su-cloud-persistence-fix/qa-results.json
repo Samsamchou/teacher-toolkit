@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-09-08T14:13:14+08:00",
+  "status": "local-ready-awaiting-production-deployment-approval",
+  "firebaseProjectId": "hwg5-su-to-u04-story",
+  "productionDeploymentPerformed": false,
+  "cloudMutationPerformed": false,
+  "existingRecordsMutated": false,
+  "googleDriveBackupUpdated": false,
+  "gitCommitCreated": false,
+  "githubPushed": false,
+  "verification": {
+    "firestoreEdition": "STANDARD",
+    "firestoreDatabase": "(default)",
+    "firestoreLocation": "asia-east1",
+    "syntaxCheck": "pass",
+    "automatedTests": {
+      "total": 51,
+      "passed": 51,
+      "failed": 0,
+      "skipped": 0,
+      "firestoreEmulator": true,
+      "storageEmulator": true
+    },
+    "simulatedConcurrentStudents": 22,
+    "simulatedSequentialSentencesPerStudent": 4,
+    "localHttpSmoke": [
+      { "path": "/", "status": 200, "bytes": 173165 },
+      { "path": "/recording-reliability-core.js", "status": 200, "bytes": 17352 },
+      { "path": "/ai-scoring.js", "status": 200, "bytes": 4515 }
+    ],
+    "browserPreview": {
+      "viewport": "1024x768",
+      "rendered": true,
+      "productionLoginUsed": false,
+      "microphoneUsed": false,
+      "productionWriteUsed": false
+    },
+    "securityAuditScore": 4,
+    "secretScan": "pass",
+    "realIpadSafariTest": false,
+    "realProductionAiCall": false
+  },
+  "retention": {
+    "readingRecords": "seven calendar months",
+    "persistenceEvents": "seven calendar months after index deployment",
+    "storageAudioRecords": "existing 215-day lifecycle",
+    "existingUnderSevenMonthsChanged": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "phase": "before",
+  "project": "hwg5-su-to-u04-story",
+  "time": "2026-09-08T07:12:22.291Z",
+  "rules": [
+    {
+      "service": "cloud.firestore",
+      "rulesetName": "projects/hwg5-su-to-u04-story/rulesets/e043d2cd-36ca-49fd-9ff7-4cc825bbb27b",
+      "sha256": "1ce2f92daa7af4f22879b2145518149ceb17a85a0b459687be9dfadb57de4876",
+      "matchesLocal": false
+    },
+    {
+      "service": "firebase.storage",
+      "rulesetName": "projects/hwg5-su-to-u04-story/rulesets/8d823c11-1a0f-4394-b1df-382a5c128277",
+      "sha256": "42a29f43aa3421046404720eb0a456e498ca45fe4e5b36e727b08a895e21a013",
+      "matchesLocal": false
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "name": "projects/hwg5-su-to-u04-story/databases/(default)/collectionGroups/reading_records/fields/expiresAt",
+      "indexConfig": {
+        "ancestorField": "projects/hwg5-su-to-u04-story/databases/(default)/collectionGroups/__default__/fields/*"
+      },
+      "ttlConfig": {
+        "state": "ACTIVE"
+      }
+    }
+  ],
+  "hosting": {
+    "name": "projects/hwg5-su-to-u04-story/sites/hwg5-su-to-u04-story/channels/live",
+    "releaseName": "projects/hwg5-su-to-u04-story/sites/hwg5-su-to-u04-story/channels/live/releases/1788758546383000",
+    "versionName": "projects/hwg5-su-to-u04-story/sites/hwg5-su-to-u04-story/versions/2d1c2162838f2654",
+    "releaseTime": "2026-09-07T05:22:26.383Z"
+  }
+}

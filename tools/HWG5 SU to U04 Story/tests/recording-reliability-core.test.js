@@ -2,12 +2,16 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
     audioFileExtension,
+    classifyPersistenceError,
     chooseRecorderMimeType,
     classifyScoringError,
     createEphemeralRecordingStore,
+    createPrivacySafeFailureEvent,
+    createRecordingPersistenceState,
     encodeMonoPcm16Wav,
     inspectRecordedAudioBlob,
     normalizeAudioMimeType,
+    persistScoredRecording,
     retryWithBackoff
 } from "../public/recording-reliability-core.js";
 
@@ -139,4 +143,177 @@ test("失敗錄音不會被錯誤的完成事件清除，新錄音可明確取�
 test("Storage 副檔名跟隨實際音訊 MIME", () => {
     assert.equal(audioFileExtension("audio/mp4"), "m4a");
     assert.equal(audioFileExtension("audio/webm;codecs=opus"), "webm");
+});
+
+test("新版保存狀態固定使用 attemptId、WAV 路徑與七個月到期日", () => {
+    const state = createRecordingPersistenceState({
+        attemptId: "123e4567-e89b-12d3-a456-426614174000",
+        ownerUid: "student-a",
+        studentId: "007",
+        mimeType: "audio/wav"
+    }, { nowMs: Date.UTC(2026, 8, 8, 4, 0, 0) });
+
+    assert.equal(state.recordId, "123e4567-e89b-12d3-a456-426614174000");
+    assert.equal(
+        state.audioPath,
+        "audio_records/student-a/007/1788840000000-123e4567-e89b-12d3-a456-426614174000.wav"
+    );
+    assert.equal(state.expiresAt.toISOString(), "2027-04-08T04:00:00.000Z");
+    assert.equal(state.audioStored, false);
+    assert.equal(state.recordStored, false);
+});
+
+test("Storage 失敗時保留狀態，手動重新儲存不需要重新評分", async () => {
+    const state = createRecordingPersistenceState({
+        attemptId: "attempt-storage-01",
+        ownerUid: "student-a",
+        studentId: "007",
+        mimeType: "audio/wav"
+    }, { nowMs: 1_788_840_000_000 });
+    let uploadCalls = 0;
+    let recordCalls = 0;
+    const operations = {
+        state,
+        uploadAudio: async () => {
+            uploadCalls += 1;
+            if (uploadCalls === 1) {
+                throw Object.assign(new Error("denied"), { code: "storage/unauthorized" });
+            }
+            return { audioUrl: "https://example.invalid/audio.wav" };
+        },
+        probeAudio: async () => ({ exists: false, matches: false, audioUrl: "" }),
+        writeRecord: async () => { recordCalls += 1; },
+        probeRecord: async () => ({ exists: false, matches: false })
+    };
+
+    await assert.rejects(() => persistScoredRecording(operations), (error) => {
+        assert.equal(error.stage, "storage");
+        assert.equal(classifyPersistenceError(error).category, "permission");
+        return true;
+    });
+    assert.equal(state.audioStored, false);
+    assert.equal(state.recordStored, false);
+    assert.equal(recordCalls, 0);
+
+    await persistScoredRecording(operations);
+    assert.equal(uploadCalls, 2);
+    assert.equal(recordCalls, 1);
+    assert.equal(state.audioStored, true);
+    assert.equal(state.recordStored, true);
+});
+
+test("上傳或寫入已成功但回應逾時時，讀回固定位置而不重複建立", async () => {
+    const state = createRecordingPersistenceState({
+        attemptId: "attempt-timeout-01",
+        ownerUid: "student-a",
+        studentId: "007",
+        mimeType: "audio/wav"
+    }, { nowMs: 1_788_840_000_001 });
+    let remoteAudio = false;
+    let remoteRecord = false;
+    let uploadCalls = 0;
+    let recordCalls = 0;
+
+    await persistScoredRecording({
+        state,
+        uploadAudio: async () => {
+            uploadCalls += 1;
+            remoteAudio = true;
+            throw Object.assign(new Error("upload timeout"), { name: "TimeoutError" });
+        },
+        probeAudio: async () => ({
+            exists: remoteAudio,
+            matches: remoteAudio,
+            audioUrl: remoteAudio ? "https://example.invalid/fixed.wav" : ""
+        }),
+        writeRecord: async () => {
+            recordCalls += 1;
+            remoteRecord = true;
+            throw Object.assign(new Error("write timeout"), { name: "TimeoutError" });
+        },
+        probeRecord: async () => ({ exists: remoteRecord, matches: remoteRecord })
+    });
+
+    assert.equal(uploadCalls, 1);
+    assert.equal(recordCalls, 1);
+    assert.equal(state.audioUrl, "https://example.invalid/fixed.wav");
+    assert.equal(state.audioStored, true);
+    assert.equal(state.recordStored, true);
+});
+
+test("固定路徑若已有不同內容會停止，不覆寫也不新增紀錄", async () => {
+    const state = createRecordingPersistenceState({
+        attemptId: "attempt-conflict-01",
+        ownerUid: "student-a",
+        studentId: "007",
+        mimeType: "audio/wav"
+    }, { nowMs: 1_788_840_000_002 });
+    state.audioWriteStarted = true;
+    let uploadCalls = 0;
+    let recordCalls = 0;
+
+    await assert.rejects(() => persistScoredRecording({
+        state,
+        uploadAudio: async () => {
+            uploadCalls += 1;
+            return { audioUrl: "https://example.invalid/new.wav" };
+        },
+        probeAudio: async () => ({
+            exists: true,
+            matches: false,
+            audioUrl: "https://example.invalid/existing.wav"
+        }),
+        writeRecord: async () => { recordCalls += 1; },
+        probeRecord: async () => ({ exists: false, matches: false })
+    }), (error) => {
+        assert.equal(classifyPersistenceError(error).category, "conflict");
+        return true;
+    });
+    assert.equal(uploadCalls, 0);
+    assert.equal(recordCalls, 0);
+});
+
+test("22 位學生各四題並行保存時，固定路徑與文件 ID 互不重複", async () => {
+    const jobs = Array.from({ length: 22 * 4 }, (_, index) => {
+        const student = Math.floor(index / 4) + 1;
+        const question = (index % 4) + 1;
+        const attemptId = `attempt-${String(student).padStart(2, "0")}-${question}-abcdefgh`;
+        return createRecordingPersistenceState({
+            attemptId,
+            ownerUid: `student-${String(student).padStart(2, "0")}`,
+            studentId: String(student).padStart(3, "0"),
+            mimeType: "audio/wav"
+        }, { nowMs: 1_788_840_000_000 + index });
+    });
+
+    await Promise.all(jobs.map((state) => persistScoredRecording({
+        state,
+        uploadAudio: async () => ({ audioUrl: `https://example.invalid/${state.recordId}.wav` }),
+        probeAudio: async () => ({ exists: false, matches: false, audioUrl: "" }),
+        writeRecord: async () => {},
+        probeRecord: async () => ({ exists: false, matches: false })
+    })));
+
+    assert.equal(new Set(jobs.map((state) => state.audioPath)).size, 88);
+    assert.equal(new Set(jobs.map((state) => state.recordId)).size, 88);
+    assert.ok(jobs.every((state) => state.audioStored && state.recordStored));
+});
+
+test("匿名失敗事件只包含允許的非個資欄位", () => {
+    const event = createPrivacySafeFailureEvent({
+        stage: "storage",
+        error: Object.assign(new Error("student 50108 secret details"), { code: "storage/unauthorized" }),
+        mimeType: "audio/wav; codecs=1",
+        bytes: 4096,
+        date: "2026/09/08"
+    });
+    assert.deepEqual(Object.keys(event).sort(), ["bytes", "category", "date", "mimeType", "stage"]);
+    assert.deepEqual(event, {
+        stage: "storage",
+        category: "permission",
+        mimeType: "audio/wav",
+        bytes: 4096,
+        date: "2026/09/08"
+    });
+    assert.doesNotMatch(JSON.stringify(event), /50108|secret|unauthorized/i);
 });

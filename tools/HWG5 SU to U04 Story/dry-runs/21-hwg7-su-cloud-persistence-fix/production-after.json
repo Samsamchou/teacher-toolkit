@@ -1,0 +1,68 @@
+{
+  "phase": "after",
+  "project": "hwg5-su-to-u04-story",
+  "time": "2026-09-08T07:56:23.205Z",
+  "rules": [
+    {
+      "service": "cloud.firestore",
+      "rulesetName": "projects/hwg5-su-to-u04-story/rulesets/3c3d2af3-f828-4dc5-b766-dd01d6636254",
+      "sha256": "d6c05f97a966bf49bfeb6301a477854ed46352ec7b19f56b17389b13bddbc1db",
+      "matchesLocal": true
+    },
+    {
+      "service": "firebase.storage",
+      "rulesetName": "projects/hwg5-su-to-u04-story/rulesets/9a22a268-cfd5-4265-bd65-e056c8c6ad21",
+      "sha256": "e61cde704c612e267dce77a61e5a65ca1bec637f2c733584c5aa796dfb0741d4",
+      "matchesLocal": true
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "name": "projects/hwg5-su-to-u04-story/databases/(default)/collectionGroups/persistence_events/fields/expiresAt",
+      "indexConfig": {
+        "ancestorField": "projects/hwg5-su-to-u04-story/databases/(default)/collectionGroups/__default__/fields/*"
+      },
+      "ttlConfig": {
+        "state": "ACTIVE"
+      }
+    },
+    {
+      "name": "projects/hwg5-su-to-u04-story/databases/(default)/collectionGroups/reading_records/fields/expiresAt",
+      "indexConfig": {
+        "ancestorField": "projects/hwg5-su-to-u04-story/databases/(default)/collectionGroups/__default__/fields/*"
+      },
+      "ttlConfig": {
+        "state": "ACTIVE"
+      }
+    }
+  ],
+  "hosting": {
+    "name": "projects/hwg5-su-to-u04-story/sites/hwg5-su-to-u04-story/channels/live",
+    "releaseName": "projects/hwg5-su-to-u04-story/sites/hwg5-su-to-u04-story/channels/live/releases/1788851706014000",
+    "versionName": "projects/hwg5-su-to-u04-story/sites/hwg5-su-to-u04-story/versions/2ee6742503027299",
+    "releaseTime": "2026-09-08T07:15:06.014Z"
+  },
+  "http": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "bytes": 173823,
+      "sha256": "46693d56441dd26772ccd8f68486d7d8d50fa2cea4bd0fc0136e4e1c644a1579",
+      "matchesLocal": true
+    },
+    {
+      "file": "recording-reliability-core.js",
+      "status": 200,
+      "bytes": 17352,
+      "sha256": "6d9b4042d23d54cc7b326acb13383cb09c8904d4e0b04edc7ab35c20218c16dd",
+      "matchesLocal": true
+    },
+    {
+      "file": "ai-scoring.js",
+      "status": 200,
+      "bytes": 4515,
+      "sha256": "ed3be9e7aab88cbd2a1c4af40d4ba43e564e51917bcfe62318982b2b15458d8f",
+      "matchesLocal": true
+    }
+  ]
+}

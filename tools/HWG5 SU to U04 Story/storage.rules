@@ -18,20 +18,45 @@ service firebase.storage {
       return isAuthenticated() && request.auth.uid == ownerUid;
     }
 
+    function hasValidExpiryMetadata() {
+      return request.resource.metadata.keys().hasAll(['expiresAt'])
+        && request.resource.metadata.expiresAt is string
+        && request.resource.metadata.expiresAt.size() == 24
+        && request.resource.metadata.expiresAt.matches(
+          '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[.][0-9]{3}Z$'
+        );
+    }
+
+    function isLegacyWebm(fileName) {
+      return fileName.matches('^[0-9]+[.]webm$')
+        && request.resource.contentType.matches('^audio/webm(;.*)?$')
+        && request.resource.metadata.keys().hasOnly(['expiresAt']);
+    }
+
+    function isCurrentWav(fileName) {
+      return fileName.matches('^[0-9]{13}-[A-Za-z0-9_-]{8,80}[.]wav$')
+        && request.resource.contentType == 'audio/wav'
+        && request.resource.size >= 512
+        && request.resource.metadata.keys().hasAll(['expiresAt', 'attemptId'])
+        && request.resource.metadata.keys().hasOnly(['expiresAt', 'attemptId'])
+        && request.resource.metadata.attemptId is string
+        && request.resource.metadata.attemptId.matches('^[A-Za-z0-9_-]{8,80}$')
+        && fileName.matches(
+          '^[0-9]{13}-' + request.resource.metadata.attemptId + '[.]wav$'
+        );
+    }
+
     function isValidAudioCreate(ownerUid, studentId, fileName) {
       return isOwner(ownerUid)
         && ownerUid.size() >= 1
         && ownerUid.size() <= 128
+        && ownerUid.matches('^[A-Za-z0-9:_-]+$')
         && studentId.matches('^[0-9]{1,12}$')
-        && fileName.matches('^[0-9]+[.]webm$')
         && request.resource.size > 0
         && request.resource.size <= 10 * 1024 * 1024
         && request.resource.contentType is string
-        && request.resource.contentType.matches('^audio/.*')
-        && request.resource.metadata.keys().hasAll(['expiresAt'])
-        && request.resource.metadata.expiresAt is string
-        && request.resource.metadata.expiresAt.size() <= 64
-        && request.resource.metadata.expiresAt.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}T.*Z$');
+        && hasValidExpiryMetadata()
+        && (isLegacyWebm(fileName) || isCurrentWav(fileName));
     }
 
     match /audio_records/{ownerUid}/{studentId}/{fileName} {

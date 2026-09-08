@@ -6,7 +6,7 @@ service cloud.firestore {
     // Assumed Data Model
     // ===============================================================
     // Collection: reading_records
-    // Document ID: legacy auto-ID or current deterministic attemptId
+    // Document ID: Firestore auto-ID
     // Required fields:
     //   ownerUid: authenticated anonymous student UID (immutable)
     //   studentId: 1-12 numeric classroom identifier
@@ -17,21 +17,9 @@ service cloud.firestore {
     //   targetText, transcript, feedback: bounded strings
     //   score: 0-100 number
     //   audioUrl: Firebase Storage download URL
-    //   audioPath: legacy timestamp.webm or current timestamp-attemptId.wav
+    //   audioPath: audio_records/{ownerUid}/{studentId}/{timestamp}.webm
     //   expiresAt: seven-calendar-month expiry produced by the app
     //   timestamp: server timestamp at creation
-    //
-    // Collection: persistence_events
-    // Document ID: random attemptId plus ai/storage/firestore stage
-    // Required fields:
-    //   stage: ai, storage, or firestore
-    //   category: bounded non-sensitive error category
-    //   mimeType: allow-listed audio MIME or an empty string
-    //   bytes: 0-10 MiB integer
-    //   date: local display date in YYYY/MM/DD format
-    //   expiresAt: seven-calendar-month expiry produced by the app
-    //   timestamp: server timestamp at creation
-    // No audio, transcript, owner UID, student ID, credential, or raw error.
     //
     // Existing legacy records without ownerUid remain teacher-readable only.
     // They are not migrated, rewritten, or exposed to new anonymous sessions.
@@ -79,31 +67,7 @@ service cloud.firestore {
       ]);
     }
 
-    function isLegacyWebmPath(data) {
-      return data.audioPath.matches(
-        '^audio_records/' + request.auth.uid + '/' + data.studentId + '/[0-9]+[.]webm$'
-      );
-    }
-
-    function isCurrentWavPath(data, recordId) {
-      return recordId.matches('^[A-Za-z0-9_-]{8,80}$')
-        && data.audioPath.matches(
-          '^audio_records/' + request.auth.uid + '/' + data.studentId
-          + '/[0-9]{13}-' + recordId + '[.]wav$'
-        );
-    }
-
-    function isValidAudioUrl(url) {
-      return url is string
-        && url.size() >= 1
-        && url.size() <= 2048
-        && url.matches(
-          '^https://firebasestorage[.]googleapis[.]com/v0/b/'
-          + 'hwg5-su-to-u04-story[.]firebasestorage[.]app/o/.*$'
-        );
-    }
-
-    function isValidReadingRecord(data, recordId) {
+    function isValidReadingRecord(data) {
       return hasRequiredFields(data)
         && hasOnlyAllowedFields(data)
         && data.ownerUid is string
@@ -131,11 +95,13 @@ service cloud.firestore {
         && data.feedback is string
         && data.feedback.size() >= 1
         && data.feedback.size() <= 500
-        && isValidAudioUrl(data.audioUrl)
+        && data.audioUrl is string
+        && data.audioUrl.size() >= 1
+        && data.audioUrl.size() <= 2048
+        && data.audioUrl.matches('^https://firebasestorage[.]googleapis[.]com/.*')
         && data.audioPath is string
-        && data.audioPath.size() >= 1
         && data.audioPath.size() <= 512
-        && (isLegacyWebmPath(data) || isCurrentWavPath(data, recordId))
+        && data.audioPath.matches('^audio_records/' + request.auth.uid + '/' + data.studentId + '/[0-9]+[.]webm$')
         && data.expiresAt is timestamp
         && data.expiresAt > request.time + duration.value(210, 'd')
         && data.expiresAt <= request.time + duration.value(216, 'd')
@@ -146,7 +112,7 @@ service cloud.firestore {
     match /reading_records/{recordId} {
       allow create: if isOwner(request.resource.data)
         && uidUnchanged(request.resource.data)
-        && isValidReadingRecord(request.resource.data, recordId);
+        && isValidReadingRecord(request.resource.data);
 
       allow get, list: if isTeacher() || isOwner(resource.data);
 
@@ -154,46 +120,8 @@ service cloud.firestore {
       // explicitly delete a selected record; automatic expiry is server-side.
       allow update: if false
         && uidNotModified(request.resource.data, resource.data)
-        && isValidReadingRecord(request.resource.data, recordId);
+        && isValidReadingRecord(request.resource.data);
       allow delete: if isTeacher();
-    }
-
-    function isValidPersistenceEvent(data, eventId) {
-      return eventId.matches('^[A-Za-z0-9_-]{8,80}-(ai|storage|firestore)$')
-        && data.keys().hasAll([
-          'stage', 'category', 'mimeType', 'bytes', 'date', 'expiresAt', 'timestamp'
-        ])
-        && data.keys().hasOnly([
-          'stage', 'category', 'mimeType', 'bytes', 'date', 'expiresAt', 'timestamp'
-        ])
-        && data.stage is string
-        && data.stage in ['ai', 'storage', 'firestore']
-        && eventId.matches('^[A-Za-z0-9_-]{8,80}-' + data.stage + '$')
-        && data.category is string
-        && data.category in [
-          'invalid-request', 'rate-limited', 'network', 'timeout', 'server',
-          'permission', 'quota', 'conflict', 'unknown'
-        ]
-        && data.mimeType is string
-        && data.mimeType in ['', 'audio/wav', 'audio/webm', 'audio/mp4', 'audio/m4a']
-        && data.bytes is int
-        && data.bytes >= 0
-        && data.bytes <= 10 * 1024 * 1024
-        && data.date is string
-        && data.date.matches('^[0-9]{4}/[0-9]{2}/[0-9]{2}$')
-        && data.expiresAt is timestamp
-        && data.expiresAt > request.time + duration.value(210, 'd')
-        && data.expiresAt <= request.time + duration.value(216, 'd')
-        && data.timestamp is timestamp
-        && data.timestamp == request.time;
-    }
-
-    match /persistence_events/{eventId} {
-      allow create: if isAuthenticated()
-        && isValidPersistenceEvent(request.resource.data, eventId);
-      allow get, list, delete: if isTeacher();
-      allow update: if false
-        && isValidPersistenceEvent(request.resource.data, eventId);
     }
 
     match /{document=**} {

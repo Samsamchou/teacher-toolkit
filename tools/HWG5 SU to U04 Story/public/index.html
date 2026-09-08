@@ -246,6 +246,9 @@
             </div>
             <div class="p-4 border-b-2 border-gray-100 bg-gray-50">
                 <input type="date" id="teacher-date-picker" class="w-full px-4 py-3 rounded-2xl border-3 border-gray-300 font-black text-gray-700 focus:border-indigo-500 outline-none text-lg" onchange="loadTeacherDateData()">
+                <div id="teacher-persistence-summary" class="mt-3 rounded-xl border border-indigo-100 bg-indigo-50 p-3 text-sm font-bold text-indigo-800" role="status">
+                    ☁️ 選擇日期後顯示匿名保存異常統計
+                </div>
             </div>
             <div id="teacher-student-list" class="flex-1 overflow-y-auto p-2 no-scrollbar"></div>
         </div>
@@ -1242,43 +1245,209 @@
             resultEl.classList.remove("hidden");
         }
 
-        async function persistSuccessfulRecording(attempt, aiResult, helpers) {
-            let audioUrl = "";
+        function retentionExpiryFromNow() {
             const expiresAt = new Date();
             expiresAt.setMonth(expiresAt.getMonth() + RECORD_RETENTION_MONTHS);
+            return expiresAt;
+        }
+
+        async function reportProcessingFailure(attempt, stage, error, helpers) {
+            if (!window.db || !attempt?.attemptId) return;
             try {
-                if (window.storage && window.db) {
-                    if (!attempt.ownerUid) throw new Error("學生驗證狀態已失效。請回首頁重新進入。");
-                    const extension = helpers.audioFileExtension(attempt.mimeType);
-                    const audioPath = `audio_records/${attempt.ownerUid}/${attempt.studentId}/${Date.now()}-${attempt.attemptId}.${extension}`;
-                    const fileRef = window.storage.ref(audioPath);
-                    await Promise.race([
-                        fileRef.put(attempt.blob, { customMetadata: { expiresAt: expiresAt.toISOString() } }),
-                        timeout(15000, "音檔保存逾時")
-                    ]);
-                    audioUrl = await fileRef.getDownloadURL();
-                    await Promise.race([
-                        window.db.collection("reading_records").add({
-                            ownerUid: attempt.ownerUid,
-                            studentId: attempt.studentId,
-                            theme: attempt.theme,
-                            unit: attempt.unit,
-                            date: attempt.recordDate,
-                            sentenceId: attempt.sentenceId,
-                            targetText: attempt.targetText,
-                            transcript: aiResult.transcript,
-                            score: aiResult.total_score,
-                            feedback: aiResult.feedback,
-                            audioUrl,
-                            audioPath,
+                const event = helpers.createPrivacySafeFailureEvent({
+                    stage,
+                    error,
+                    mimeType: attempt.mimeType,
+                    bytes: attempt.blob?.size,
+                    date: attempt.recordDate
+                });
+                const expiresAt = attempt.persistence?.expiresAt || retentionExpiryFromNow();
+                await Promise.race([
+                    window.db.collection("persistence_events")
+                        .doc(`${attempt.attemptId}-${stage}`)
+                        .set({
+                            ...event,
                             expiresAt,
                             timestamp: firebase.firestore.FieldValue.serverTimestamp()
                         }),
-                        timeout(5000, "成績保存逾時")
-                    ]);
-                }
+                    timeout(3000, "匿名異常統計逾時")
+                ]);
             } catch {
-                console.warn("評分完成，但雲端紀錄未能完整保存。", { category: "record-persistence" });
+                // 遙測是輔助資訊，失敗時不可阻擋學生重試，也不可輸出原始例外或個資。
+            }
+        }
+
+        async function probePersistedAudio(attempt, state, helpers) {
+            const fileRef = window.storage.ref(state.audioPath);
+            try {
+                const metadata = await Promise.race([
+                    fileRef.getMetadata(),
+                    timeout(5000, "音檔確認逾時")
+                ]);
+                const matches = metadata?.customMetadata?.attemptId === attempt.attemptId
+                    && helpers.normalizeAudioMimeType(metadata?.contentType) === attempt.mimeType
+                    && Number(metadata?.size) === attempt.blob.size
+                    && metadata?.customMetadata?.expiresAt === state.expiresAt.toISOString();
+                const audioUrl = matches
+                    ? await Promise.race([
+                        fileRef.getDownloadURL(),
+                        timeout(5000, "音檔下載位置確認逾時")
+                    ])
+                    : "";
+                return {
+                    exists: true,
+                    matches,
+                    audioUrl
+                };
+            } catch (error) {
+                if (String(error?.code || "").toLowerCase() === "storage/object-not-found") {
+                    return { exists: false, matches: false, audioUrl: "" };
+                }
+                throw error;
+            }
+        }
+
+        function recordMatchesAttempt(data, attempt, state) {
+            return Boolean(data
+                && data.ownerUid === attempt.ownerUid
+                && data.studentId === attempt.studentId
+                && data.theme === attempt.theme
+                && data.unit === attempt.unit
+                && data.date === attempt.recordDate
+                && data.sentenceId === attempt.sentenceId
+                && data.audioPath === state.audioPath
+                && data.audioUrl === state.audioUrl
+                && data.score === attempt.aiResult.total_score);
+        }
+
+        async function persistSuccessfulRecording(attempt, helpers) {
+            if (!window.storage || !window.db) {
+                throw new helpers.RecordingPersistenceError(
+                    "storage",
+                    Object.assign(new Error("雲端保存服務尚未初始化。"), { code: "persistence/unavailable" })
+                );
+            }
+            if (!attempt.ownerUid) {
+                throw new helpers.RecordingPersistenceError(
+                    "firestore",
+                    Object.assign(new Error("學生驗證狀態已失效。"), { code: "permission-denied" })
+                );
+            }
+            if (!attempt.aiResult) throw new Error("缺少已完成的 AI 評分結果。");
+            if (!attempt.persistence) {
+                attempt.persistence = helpers.createRecordingPersistenceState(attempt, {
+                    retentionMonths: RECORD_RETENTION_MONTHS
+                });
+            }
+            const state = attempt.persistence;
+            const recordRef = window.db.collection("reading_records").doc(state.recordId);
+
+            return helpers.retryWithBackoff(() => helpers.persistScoredRecording({
+                state,
+                uploadAudio: async () => {
+                    const fileRef = window.storage.ref(state.audioPath);
+                    await Promise.race([
+                        fileRef.put(attempt.blob, {
+                            contentType: attempt.mimeType,
+                            customMetadata: {
+                                expiresAt: state.expiresAt.toISOString(),
+                                attemptId: attempt.attemptId
+                            }
+                        }),
+                        timeout(45000, "音檔保存逾時")
+                    ]);
+                    return {
+                        audioUrl: await Promise.race([
+                            fileRef.getDownloadURL(),
+                            timeout(5000, "音檔下載位置讀取逾時")
+                        ])
+                    };
+                },
+                probeAudio: () => probePersistedAudio(attempt, state, helpers),
+                writeRecord: async () => Promise.race([
+                    recordRef.set({
+                        ownerUid: attempt.ownerUid,
+                        studentId: attempt.studentId,
+                        theme: attempt.theme,
+                        unit: attempt.unit,
+                        date: attempt.recordDate,
+                        sentenceId: attempt.sentenceId,
+                        targetText: attempt.targetText,
+                        transcript: attempt.aiResult.transcript,
+                        score: attempt.aiResult.total_score,
+                        feedback: attempt.aiResult.feedback,
+                        audioUrl: state.audioUrl,
+                        audioPath: state.audioPath,
+                        expiresAt: state.expiresAt,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    }),
+                    timeout(10000, "成績保存逾時")
+                ]),
+                probeRecord: async () => {
+                    const snapshot = await Promise.race([
+                        recordRef.get({ source: "server" }),
+                        timeout(5000, "成績確認逾時")
+                    ]);
+                    if (snapshot.metadata.fromCache || snapshot.metadata.hasPendingWrites) {
+                        throw Object.assign(new Error("成績尚未取得伺服器保存確認"), { code: "unavailable" });
+                    }
+                    return {
+                        exists: snapshot.exists,
+                        matches: snapshot.exists && recordMatchesAttempt(snapshot.data(), attempt, state)
+                    };
+                }
+            }), {
+                maxRetries: 2,
+                baseDelayMs: 1000,
+                shouldRetry: (error) => helpers.classifyPersistenceError(error).retryable,
+                onRetry({ retryNumber }) {
+                    document.getElementById("loading-desc").innerText = `雲端保存暫時忙碌，正在第 ${retryNumber} 次確認...`;
+                }
+            });
+        }
+
+        function safePersistenceFailureMessage(errorInfo) {
+            const stageName = errorInfo.stage === "storage" ? "音檔" : "成績";
+            if (errorInfo.category === "permission") return `${stageName}尚未獲准保存，網站設定需要修正。`;
+            if (errorInfo.category === "quota") return `${stageName}服務目前繁忙或達到用量限制，請稍後再儲存。`;
+            if (errorInfo.category === "conflict") return `${stageName}的固定位置已有不同內容，請保留本頁並通知老師。`;
+            if (["network", "timeout", "server"].includes(errorInfo.category)) {
+                return `${stageName}因網路或服務暫時不穩而尚未保存，請重新儲存。`;
+            }
+            return `${stageName}尚未完整保存，請重新儲存。`;
+        }
+
+        function displayPersistenceFailure(attempt, errorInfo) {
+            updateRecordingStatus(attempt.sentenceId, "⚠️ AI 評分完成；雲端保存尚未完成。", "text-amber-600");
+            displayResult(attempt.sentenceId, attempt.aiResult, attempt.targetText, {
+                persistencePending: true,
+                attemptId: attempt.attemptId,
+                persistenceMessage: safePersistenceFailureMessage(errorInfo)
+            });
+        }
+
+        async function persistAndFinalizeAttempt(attempt, helpers) {
+            try {
+                await persistSuccessfulRecording(attempt, helpers);
+                if (!attempt.persistence.finalized) {
+                    markSuccessfulAttempt(attempt.sentenceId);
+                    attempt.persistence.finalized = true;
+                }
+                displayResult(attempt.sentenceId, attempt.aiResult, attempt.targetText);
+                updateRecordingStatus(attempt.sentenceId, "✅ 評分與雲端保存完成！", "text-green-600");
+                pendingRecordingStore?.clear(attempt.attemptId);
+                return true;
+            } catch (error) {
+                const errorInfo = helpers.classifyPersistenceError(error);
+                console.warn("AI 評分已完成，但雲端保存尚未完成。", {
+                    stage: errorInfo.stage,
+                    category: errorInfo.category,
+                    mimeType: attempt.mimeType,
+                    bytes: attempt.blob.size
+                });
+                reportProcessingFailure(attempt, errorInfo.stage, error, helpers);
+                displayPersistenceFailure(attempt, errorInfo);
+                return false;
             }
         }
 
@@ -1297,26 +1466,41 @@
                 ]);
                 if (!aiScoring) throw new Error("AI 評分服務尚未完成初始化。");
 
-                const aiResult = await helpers.retryWithBackoff(() => Promise.race([
-                    aiScoring.scoreAudio({
-                        base64Audio: attempt.base64Audio,
+                let aiResult;
+                try {
+                    aiResult = await helpers.retryWithBackoff(() => Promise.race([
+                        aiScoring.scoreAudio({
+                            base64Audio: attempt.base64Audio,
+                            mimeType: attempt.mimeType,
+                            targetText: attempt.targetText,
+                            focusRule: attempt.focusRule
+                        }),
+                        timeout(60000, "AI 評分逾時")
+                    ]), {
+                        maxRetries: 2,
+                        onRetry({ retryNumber }) {
+                            document.getElementById("loading-desc").innerText = `服務暫時忙碌，正在第 ${retryNumber} 次重新送出...`;
+                        }
+                    });
+                } catch (error) {
+                    const errorInfo = helpers.classifyScoringError(error);
+                    console.warn("AI 評分暫時未完成。", {
+                        category: errorInfo.category,
+                        status: errorInfo.status,
+                        code: errorInfo.code,
                         mimeType: attempt.mimeType,
-                        targetText: attempt.targetText,
-                        focusRule: attempt.focusRule
-                    }),
-                    timeout(60000, "AI 評分逾時")
-                ]), {
-                    maxRetries: 2,
-                    onRetry({ retryNumber }) {
-                        document.getElementById("loading-desc").innerText = `服務暫時忙碌，正在第 ${retryNumber} 次重新送出...`;
-                    }
-                });
+                        bytes: attempt.blob.size
+                    });
+                    reportProcessingFailure(attempt, "ai", error, helpers);
+                    displayScoringFailure(attempt, errorInfo);
+                    return;
+                }
 
-                markSuccessfulAttempt(attempt.sentenceId);
-                await persistSuccessfulRecording(attempt, aiResult, helpers);
-                displayResult(attempt.sentenceId, aiResult, attempt.targetText);
-                updateRecordingStatus(attempt.sentenceId, "✅ 評分完成！", "text-green-600");
-                pendingRecordingStore?.clear(attempt.attemptId);
+                attempt.aiResult = aiResult;
+                updateRecordingStatus(attempt.sentenceId, "☁️ AI 評分完成，正在保存音檔與成績...", "text-indigo-600", true);
+                document.getElementById("loading-title").innerText = "AI 評分完成，正在雲端保存...";
+                document.getElementById("loading-desc").innerText = "完成兩項保存後才會計入今日次數。";
+                await persistAndFinalizeAttempt(attempt, helpers);
             } catch (error) {
                 const helpers = await getRecordingHelpers();
                 const errorInfo = helpers.classifyScoringError(error);
@@ -1327,6 +1511,7 @@
                     mimeType: attempt.mimeType,
                     bytes: attempt.blob.size
                 });
+                reportProcessingFailure(attempt, "ai", error, helpers);
                 displayScoringFailure(attempt, errorInfo);
             } finally {
                 isScoringRecording = false;
@@ -1342,6 +1527,10 @@
                 updateRecordingStatus(sentenceId, "暫存錄音已清除，請重新錄音。", "text-red-600");
                 return;
             }
+            if (attempt.aiResult) {
+                await retryPendingPersistence(sentenceId);
+                return;
+            }
             if (!(await canStartScoring(sentenceId))) {
                 store.clear(attempt.attemptId);
                 return;
@@ -1349,10 +1538,30 @@
             await scoreRecordingAttempt(attempt);
         }
 
-        function displayResult(sid, aiResult, targetText) {
+        async function retryPendingPersistence(sentenceId) {
+            if (isRecording || isFinalizingRecording || isScoringRecording) return;
+            const store = await getPendingRecordingStore();
+            const attempt = store.getForSentence(sentenceId);
+            if (!attempt?.aiResult) {
+                updateRecordingStatus(sentenceId, "暫存的評分或錄音已清除，請重新錄音。", "text-red-600");
+                return;
+            }
+            isScoringRecording = true;
+            showLoading("重新儲存紀錄中...", "使用同一份錄音與評分，不會扣除新的次數。☁️");
+            try {
+                const helpers = await getRecordingHelpers();
+                await persistAndFinalizeAttempt(attempt, helpers);
+            } finally {
+                isScoringRecording = false;
+                hideLoading();
+            }
+        }
+
+        function displayResult(sid, aiResult, targetText, options = {}) {
             const resultEl = document.getElementById(`result-${sid}`);
             const usedAttempts = Math.min(localAttemptCount(sid), MAX_SCORED_ATTEMPTS_PER_ITEM);
             const remainingAttempts = Math.max(0, MAX_SCORED_ATTEMPTS_PER_ITEM - usedAttempts);
+            const persistencePending = options.persistencePending === true;
             
             const targetWords = targetText.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(' ');
             let transcriptHtml = aiResult.transcript.split(' ').map(w => {
@@ -1400,11 +1609,22 @@
                         <div class="font-black text-base mb-1.5 text-blue-600 flex items-center gap-1.5"><span>✨</span> 教練點評</div>
                         <p class="font-bold text-base sm:text-lg leading-relaxed">${escapeHtml(aiResult.feedback)}</p>
                     </div>
-                    <div role="status" class="mt-4 rounded-2xl border-2 ${remainingAttempts > 0 ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-red-200 bg-red-50 text-red-700'} p-4 text-center font-black">
-                        今天這一題還可評分 ${remainingAttempts} 次（每日最多 ${MAX_SCORED_ATTEMPTS_PER_ITEM} 次）
-                    </div>
+                    ${persistencePending ? `
+                        <div role="alert" class="mt-4 rounded-2xl border-3 border-amber-400 bg-amber-50 p-5 text-center text-amber-900">
+                            <p class="text-xl font-black mb-2">☁️ AI 評分完成，但雲端紀錄尚未保存</p>
+                            <p class="font-bold mb-4">${escapeHtml(options.persistenceMessage || "請重新儲存紀錄。")}</p>
+                            <button onclick="retryPendingPersistence('${sid}')" class="btn-dopamine bg-amber-500 text-white border-2 border-amber-600 px-6 py-3 rounded-2xl font-black text-lg">
+                                🔄 重新儲存紀錄（不重新評分）
+                            </button>
+                            <p class="text-sm font-bold text-gray-600 mt-3">錄音只暫存在這個分頁；請勿重新整理或關閉。本次尚未計入每日三次。</p>
+                        </div>` : `
+                        <div role="status" class="mt-4 rounded-2xl border-2 ${remainingAttempts > 0 ? 'border-amber-200 bg-amber-50 text-amber-800' : 'border-red-200 bg-red-50 text-red-700'} p-4 text-center font-black">
+                            今天這一題還可評分 ${remainingAttempts} 次（每日最多 ${MAX_SCORED_ATTEMPTS_PER_ITEM} 次）
+                        </div>`}
                 </div>
             `;
+            if (persistencePending) resultEl.dataset.pendingAttempt = options.attemptId || "";
+            else delete resultEl.dataset.pendingAttempt;
             resultEl.classList.remove('hidden');
         }
 
@@ -1510,6 +1730,7 @@
             const dateVal = document.getElementById('teacher-date-picker').value;
             if(!dateVal) return;
             currentTeacherDate = dateVal.replace(/-/g, '/');
+            loadTeacherPersistenceSummary(currentTeacherDate);
             
             const listContainer = document.getElementById('teacher-student-list');
             listContainer.innerHTML = '<div class="p-4 text-gray-400 text-center font-black text-lg">讀取中...</div>';
@@ -1664,6 +1885,40 @@
             document.getElementById('loading-title').innerText = title;
             document.getElementById('loading-desc').innerText = description;
             document.getElementById('global-loading').classList.remove('hidden');
+        }
+
+        async function loadTeacherPersistenceSummary(date) {
+            const container = document.getElementById("teacher-persistence-summary");
+            if (!container) return;
+            container.textContent = "☁️ 讀取匿名保存異常中...";
+            try {
+                const snapshot = await window.db.collection("persistence_events")
+                    .where("date", "==", date)
+                    .get();
+                const stageLabels = { ai: "AI", storage: "音檔", firestore: "成績" };
+                const counts = { ai: 0, storage: 0, firestore: 0 };
+                const categories = {};
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (Object.prototype.hasOwnProperty.call(counts, data.stage)) counts[data.stage] += 1;
+                    const key = String(data.category || "unknown");
+                    categories[key] = (categories[key] || 0) + 1;
+                });
+                const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
+                if (total === 0) {
+                    container.textContent = "☁️ 本日沒有匿名保存失敗事件";
+                    return;
+                }
+                const stageText = Object.entries(counts)
+                    .map(([stage, count]) => `${stageLabels[stage]} ${count}`)
+                    .join("｜");
+                const categoryText = Object.entries(categories)
+                    .map(([category, count]) => `${category} ${count}`)
+                    .join("、");
+                container.textContent = `⚠️ 本日保存異常 ${total} 次：${stageText}（${categoryText}）`;
+            } catch {
+                container.textContent = "⚠️ 匿名保存異常統計暫時無法讀取";
+            }
         }
         function hideLoading() {
             document.getElementById('global-loading').classList.add('hidden');

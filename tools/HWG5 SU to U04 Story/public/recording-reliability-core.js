@@ -206,6 +206,200 @@ export function audioFileExtension(mimeType) {
     return "audio";
 }
 
+const PERSISTENCE_STAGES = new Set(["ai", "storage", "firestore"]);
+const SAFE_FAILURE_CATEGORIES = new Set([
+    "invalid-request",
+    "rate-limited",
+    "network",
+    "timeout",
+    "server",
+    "permission",
+    "quota",
+    "conflict",
+    "unknown"
+]);
+
+export class RecordingPersistenceError extends Error {
+    constructor(stage, cause, category = "") {
+        super(`錄音保存階段失敗：${stage}`);
+        this.name = "RecordingPersistenceError";
+        this.stage = stage;
+        this.category = category;
+        this.cause = cause;
+        this.code = cause?.code || "";
+        this.status = cause?.status ?? null;
+    }
+}
+
+function persistenceError(stage, cause, category = "") {
+    if (cause instanceof RecordingPersistenceError) return cause;
+    return new RecordingPersistenceError(stage, cause, category);
+}
+
+export function createRecordingPersistenceState(attempt, options = {}) {
+    const attemptId = String(attempt?.attemptId || "");
+    const ownerUid = String(attempt?.ownerUid || "");
+    const studentId = String(attempt?.studentId || "");
+    const mimeType = normalizeAudioMimeType(attempt?.mimeType);
+    if (!attemptId.match(/^[A-Za-z0-9_-]{8,80}$/)) throw new Error("錄音嘗試識別碼格式不正確。");
+    if (!ownerUid.match(/^[A-Za-z0-9:_-]{1,128}$/)) throw new Error("學生驗證識別碼格式不正確。");
+    if (!studentId.match(/^[0-9]{1,12}$/)) throw new Error("學生學號格式不正確。");
+    if (mimeType !== "audio/wav") throw new Error("新版雲端保存只接受已驗證的 WAV 錄音。");
+
+    const nowMs = Number(options.nowMs ?? Date.now());
+    if (!Number.isInteger(nowMs) || nowMs < 1_000_000_000_000 || nowMs > 9_999_999_999_999) {
+        throw new Error("錄音保存時間格式不正確。");
+    }
+    const retentionMonths = Number(options.retentionMonths ?? 7);
+    if (!Number.isInteger(retentionMonths) || retentionMonths < 1 || retentionMonths > 12) {
+        throw new Error("錄音保存月數格式不正確。");
+    }
+
+    const expiresAt = new Date(nowMs);
+    expiresAt.setMonth(expiresAt.getMonth() + retentionMonths);
+    return {
+        attemptId,
+        recordId: attemptId,
+        audioPath: `audio_records/${ownerUid}/${studentId}/${nowMs}-${attemptId}.wav`,
+        audioUrl: "",
+        audioStored: false,
+        recordStored: false,
+        audioWriteStarted: false,
+        recordWriteStarted: false,
+        createdAtMs: nowMs,
+        expiresAt
+    };
+}
+
+async function recoverAudioFromProbe(state, probeAudio) {
+    if (typeof probeAudio !== "function") return false;
+    let result;
+    try {
+        result = await probeAudio(state);
+    } catch {
+        return false;
+    }
+    if (!result?.exists) return false;
+    if (result.matches !== true || typeof result.audioUrl !== "string" || !result.audioUrl) {
+        throw persistenceError("storage", new Error("固定音檔路徑已有不相符內容。"), "conflict");
+    }
+    state.audioStored = true;
+    state.audioUrl = result.audioUrl;
+    return true;
+}
+
+async function recoverRecordFromProbe(state, probeRecord) {
+    if (typeof probeRecord !== "function") return false;
+    let result;
+    try {
+        result = await probeRecord(state);
+    } catch {
+        return false;
+    }
+    if (!result?.exists) return false;
+    if (result.matches !== true) {
+        throw persistenceError("firestore", new Error("固定成績文件已有不相符內容。"), "conflict");
+    }
+    state.recordStored = true;
+    return true;
+}
+
+export async function persistScoredRecording({
+    state,
+    uploadAudio,
+    probeAudio,
+    writeRecord,
+    probeRecord
+}) {
+    if (!state?.attemptId || !state?.audioPath || !state?.recordId) {
+        throw persistenceError("storage", new Error("錄音保存狀態不完整。"));
+    }
+    if (typeof uploadAudio !== "function" || typeof writeRecord !== "function") {
+        throw persistenceError("storage", new Error("雲端保存服務尚未初始化。"));
+    }
+
+    if (!state.audioStored) {
+        if (state.audioWriteStarted) await recoverAudioFromProbe(state, probeAudio);
+        if (!state.audioStored) {
+            state.audioWriteStarted = true;
+            try {
+                const result = await uploadAudio(state);
+                if (typeof result?.audioUrl !== "string" || !result.audioUrl) {
+                    throw new Error("音檔已送出，但沒有取得下載位置。");
+                }
+                state.audioStored = true;
+                state.audioUrl = result.audioUrl;
+            } catch (error) {
+                if (!(await recoverAudioFromProbe(state, probeAudio))) {
+                    throw persistenceError("storage", error);
+                }
+            }
+        }
+    }
+
+    if (!state.recordStored) {
+        if (state.recordWriteStarted) await recoverRecordFromProbe(state, probeRecord);
+        if (!state.recordStored) {
+            state.recordWriteStarted = true;
+            try {
+                await writeRecord(state);
+                state.recordStored = true;
+            } catch (error) {
+                if (!(await recoverRecordFromProbe(state, probeRecord))) {
+                    throw persistenceError("firestore", error);
+                }
+            }
+        }
+    }
+
+    return state;
+}
+
+export function classifyPersistenceError(error) {
+    const wrapped = error instanceof RecordingPersistenceError ? error : null;
+    const source = wrapped?.cause || error;
+    const stage = PERSISTENCE_STAGES.has(wrapped?.stage) ? wrapped.stage : "firestore";
+    const code = String(source?.code || wrapped?.code || "").toLowerCase();
+    const message = String(source?.message || source || "");
+    const status = numericStatus(source);
+    let category = SAFE_FAILURE_CATEGORIES.has(wrapped?.category) ? wrapped.category : "unknown";
+    if (category === "unknown") {
+        if (/unauthorized|permission-denied|unauthenticated/.test(code)) category = "permission";
+        else if (/quota-exceeded|resource-exhausted/.test(code) || status === 429) category = "quota";
+        else if (/retry-limit-exceeded|deadline-exceeded|timeout/.test(code) || /timeout|逾時/i.test(message)) category = "timeout";
+        else if (source instanceof TypeError || /network|failed to fetch|load failed/i.test(message)) category = "network";
+        else if (/unavailable|internal|unknown/.test(code) || (status !== null && status >= 500)) category = "server";
+    }
+    return {
+        stage,
+        category,
+        retryable: ["network", "timeout", "quota", "server"].includes(category),
+        status,
+        code
+    };
+}
+
+export function createPrivacySafeFailureEvent({ stage, error, mimeType, bytes, date }) {
+    if (!PERSISTENCE_STAGES.has(stage)) throw new Error("遙測階段不正確。");
+    const classified = stage === "ai"
+        ? { ...classifyScoringError(error), stage }
+        : classifyPersistenceError(error);
+    const category = SAFE_FAILURE_CATEGORIES.has(classified.category) ? classified.category : "unknown";
+    const normalizedMimeType = normalizeAudioMimeType(mimeType);
+    const normalizedBytes = Math.max(0, Math.min(MAX_RECORDED_AUDIO_BYTES, Math.round(Number(bytes) || 0)));
+    const normalizedDate = String(date || "");
+    if (!normalizedDate.match(/^[0-9]{4}\/[0-9]{2}\/[0-9]{2}$/)) throw new Error("遙測日期格式不正確。");
+    return Object.freeze({
+        stage,
+        category,
+        mimeType: ["audio/wav", "audio/webm", "audio/mp4", "audio/m4a"].includes(normalizedMimeType)
+            ? normalizedMimeType
+            : "",
+        bytes: normalizedBytes,
+        date: normalizedDate
+    });
+}
+
 export function createEphemeralRecordingStore() {
     let current = null;
     return Object.freeze({
