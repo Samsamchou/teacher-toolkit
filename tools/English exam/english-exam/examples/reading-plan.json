@@ -1,0 +1,8 @@
+{
+  "mode":"reading_writing", "total_points":2,
+  "bloom_points":{"記憶":1,"理解":1,"應用":0,"分析":0},
+  "items":[
+    {"id":"R1","points":1,"bloom":"記憶","reason":"辨認自製來源的單字意思","source":"DEMO-01 lesson.md: cat","source_status":"verified_for_item","question":"cat 的意思是？","options":{"A":"貓","B":"狗"},"answer":"A"},
+    {"id":"R2","points":1,"bloom":"理解","reason":"從自製短文理解Alex擁有的動物","source":"DEMO-01 lesson.md: reading","source_status":"verified_for_item","question":"What does Alex have?","options":{"A":"A dog.","B":"A cat."},"answer":"B"}
+  ],"approvals":{}
+}

@@ -1,0 +1,7 @@
+{
+  "mode":"listening", "total_points":1,
+  "bloom_points":{"記憶":1,"理解":0,"應用":0,"分析":0},
+  "items":[{"id":"L1","points":1,"bloom":"記憶","reason":"辨認自製來源的字音與意思","source":"DEMO-01 lesson.md: cat","source_status":"verified_for_item","question":"聽音選意思","options":{"A":"貓","B":"狗"},"answer":"A","phonics_target":"cat","expected_readings":1}],
+  "events":[{"event_id":"E1","item_id":"L1","kind":"speech","role":"target","voice":"DEMO_ROLE","text":"cat"}],
+  "approvals":{}
+}
