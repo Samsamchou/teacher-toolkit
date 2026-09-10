@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-09-10T10:57:42.241Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "Original premium cheerful illustrated video game environment inspired by the eastern coast of Taiwan, wide panoramic composition. Emerald layered coastal mountains sweep in from the upper left, turquoise Pacific Ocean at the right, a curving pale peach beach and rounded grey pebbles in the lower foreground. Bright clear azure sky, puffy ivory clouds, a tiny sailboat on the horizon. Contemporary hand-painted cartoon game art, sophisticated candy colors, clean cel-shaded shapes with gentle texture, playful and inviting for elementary students. Camera looking slightly downward across a broad spacious beach. Keep the bottom 55 percent calm uncluttered pale warm sand for animated characters and collectible objects to be overlaid. Landscape fills image edge to edge. No people, no animals, no trash, no text, no letters, no logos, no UI, no border. Clear silhouettes, beautiful Taiwan east coast mountain and sea atmosphere, accessible high contrast scenery with subdued foreground.",
+  "requested_size": "1536x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "east-coast.png",
+  "output_index": 1,
+  "output_sha256": "838722005fbb0fc24a7b40f003f5533f363550038012d6c1f56167c8db7fab60",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1024,
+  "request_id": "req_5e7c73e14cbc4d8fbc2cf051129e9cf0",
+  "usage": {
+    "input_tokens": 190,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 190
+    },
+    "output_tokens": 1372,
+    "output_tokens_details": {
+      "image_tokens": 1372,
+      "text_tokens": 0
+    },
+    "total_tokens": 1562
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-09-10T12:00:58.648Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "One clearly recognizable discarded thin disposable plastic grocery carrier bag, loosely crumpled and lying on its side, three-quarter view from slightly above. The bag is pale translucent sky-blue polyethylene, glossy thin film with many realistic wrinkles and folded gussets. Wide sagging open mouth, two floppy loop handles with unmistakable large see-through holes, one handle lying over the other. Irregular puffed collapsed bag body extends diagonally to lower right. It must immediately look like a used supermarket plastic shopping bag, never a shirt, vest, dress, tote fabric or backpack. Charming polished cartoon game collectible with softly dimensional shading, clean dark teal outlines, realistic object anatomy, readable at small size. A single isolated complete object centered with generous margin on a plain warm ivory background. No words, logos, labels, characters, additional items, beach scenery, border or text. Broad horizontal silhouette, width greater than height.",
+  "requested_size": "1024x1024",
+  "requested_quality": "low",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "plastic-bag-v2.png",
+  "output_index": 1,
+  "output_sha256": "d8e6280b54ee43a7dd9c1d7a97b9865645bb669afba890c3f37607130a23a084",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_935ea8a56a8a4ca59ea4e4080819d2ba",
+  "usage": {
+    "input_tokens": 187,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 187
+    },
+    "output_tokens": 196,
+    "output_tokens_details": {
+      "image_tokens": 196,
+      "text_tokens": 0
+    },
+    "total_tokens": 383
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null,
+  "accepted_by_user": "可以，採用第二版",
+  "integration_note": "Unmodified copy of approved draft; original image and generation record retained."
+}

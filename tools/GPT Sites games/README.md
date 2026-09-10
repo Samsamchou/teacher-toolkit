@@ -5,6 +5,15 @@
 - 正式站 / Production: https://gamesinclass-5d9d1.web.app
 - Firebase Console: https://console.firebase.google.com/project/gamesinclass-5d9d1/overview
 
+## 2026-09-10 淨灘遊戲正式版 / Beach Cleanup release
+
+- 淨灘遊戲與五個角色的肩膀、撿拾動作修正版已正式發布。 / Beach Cleanup and corrected character arms are live.
+- 兩組六回合、A–E 路徑；手動點選垃圾或約 25 秒自動探索，海浪、微風與背景音樂。 / Two teams, six rounds, manual or automatic coastal exploration.
+- 20 項測試及建置通過；正式站 16 個檔案雜湊一致。 / 20 tests passed; all 16 deployed files match.
+- 教師已親自確認原六碼登入、登出成功；未更改通行碼。 / Teacher confirmed successful sign-in and sign-out.
+- 最新驗證：DEPLOYMENT-20260910.md；角色驗證：BEACH-CHARACTERS-20260910.md。 / See the dated deployment and character records.
+- 下方早期部署與待驗證敘述保留作歷史；登入狀態以本節為準。 / This section supersedes earlier login status.
+
 ## 已完成 / Features
 - 英文卡片式首頁；遊戲入口可新增、改名、排序、隱藏。 / English game hub with editable game links.
 - 共用私人圖片庫、每個遊戲獨立的課堂清單。第一版實作 Scratch & Reveal。 / Shared private library and per-game lessons; Scratch & Reveal is the first built-in game.

@@ -25,7 +25,7 @@ export function validateManifest(m) {
   for (const lesson of m.lessons) {
     if (typeof lesson.name !== 'string' || !lesson.name.trim() || typeof lesson.gameId !== 'string' || !Array.isArray(lesson.imageIds) || lesson.imageIds.some(id => !ids.has(id))) throw new Error('A lesson in this backup references a missing image.');
   }
-  for (const game of m.games) if (typeof game.name !== 'string' || !game.name.trim() || (game.id !== 'scratch' && !safeUrl(game.url))) throw new Error('Invalid game in backup.');
+  for (const game of m.games) if (typeof game.name !== 'string' || !game.name.trim() || (!['scratch','beach'].includes(game.id) && !safeUrl(game.url))) throw new Error('Invalid game in backup.');
   return m;
 }
 export function fitSize(iw, ih, bw, bh) { const s = Math.min(bw/iw, bh/ih); return { width: iw*s, height: ih*s }; }

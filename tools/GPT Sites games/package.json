@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1 --mode demo",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test tests/model.test.mjs tests/sound.test.mjs",
+    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs",
     "test:rules": "firebase emulators:exec --only firestore,storage --project demo-classroom-games \"node --test tests/rules.test.mjs\""
   },
   "dependencies": {
