@@ -1,0 +1,410 @@
+{
+  "date": "2026-09-12T09:05:03.349Z",
+  "base": "https://gamesinclass-5d9d1.web.app",
+  "dist": "C:\\Users\\User\\AppData\\Local\\Temp\\gsg-release-spin-20260912-170156\\dist",
+  "passed": true,
+  "fileCount": 49,
+  "matched": 49,
+  "homeStatus": 200,
+  "spaFallbackStatus": 200,
+  "loginGetStatus": 405,
+  "headers": {
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "referrer-policy": "strict-origin-when-cross-origin"
+  },
+  "files": [
+    {
+      "path": "assets/index-C4KRn1X3.css",
+      "status": 200,
+      "bytes": 82924,
+      "sha256": "4e0aa7d2de31860ab98224c73b0fbef0058197e2ab4528b59df2cccfa9cb9f43",
+      "expected": "4e0aa7d2de31860ab98224c73b0fbef0058197e2ab4528b59df2cccfa9cb9f43",
+      "match": true
+    },
+    {
+      "path": "assets/index-CF-FbeJ4.js",
+      "status": 200,
+      "bytes": 968216,
+      "sha256": "9856805139b95d2491748aa5e92ee2f7902d7c2b0b24b1564979e02002029a1d",
+      "expected": "9856805139b95d2491748aa5e92ee2f7902d7c2b0b24b1564979e02002029a1d",
+      "match": true
+    },
+    {
+      "path": "beach/east-coast.png",
+      "status": 200,
+      "bytes": 2258930,
+      "sha256": "838722005fbb0fc24a7b40f003f5533f363550038012d6c1f56167c8db7fab60",
+      "expected": "838722005fbb0fc24a7b40f003f5533f363550038012d6c1f56167c8db7fab60",
+      "match": true
+    },
+    {
+      "path": "beach/east-coast.png.json",
+      "status": 200,
+      "bytes": 1964,
+      "sha256": "e61c5ce2e0a602acfc2d6bd2456d4e70c2210f08cc01ea59a303032788f52e38",
+      "expected": "e61c5ce2e0a602acfc2d6bd2456d4e70c2210f08cc01ea59a303032788f52e38",
+      "match": true
+    },
+    {
+      "path": "beach/plastic-bag-draft.svg",
+      "status": 200,
+      "bytes": 932,
+      "sha256": "2bd5d6745875e6b15fcd3e2406f8cec9c854cba28ec2d29612839f3177008066",
+      "expected": "2bd5d6745875e6b15fcd3e2406f8cec9c854cba28ec2d29612839f3177008066",
+      "match": true
+    },
+    {
+      "path": "beach/plastic-bag-v2.png",
+      "status": 200,
+      "bytes": 1068120,
+      "sha256": "d8e6280b54ee43a7dd9c1d7a97b9865645bb669afba890c3f37607130a23a084",
+      "expected": "d8e6280b54ee43a7dd9c1d7a97b9865645bb669afba890c3f37607130a23a084",
+      "match": true
+    },
+    {
+      "path": "beach/plastic-bag-v2.png.json",
+      "status": 200,
+      "bytes": 2158,
+      "sha256": "d54e08aedd637ed45daa6efb0d67b389559ae2fa52fb4e99b79d1f14c5f91838",
+      "expected": "d54e08aedd637ed45daa6efb0d67b389559ae2fa52fb4e99b79d1f14c5f91838",
+      "match": true
+    },
+    {
+      "path": "celebration/monster.json",
+      "status": 200,
+      "bytes": 1296,
+      "sha256": "0e1abd3205309d01522a5804b21d7b3d7687739b7b33d2dd2719af1caec3a423",
+      "expected": "0e1abd3205309d01522a5804b21d7b3d7687739b7b33d2dd2719af1caec3a423",
+      "match": true
+    },
+    {
+      "path": "celebration/monster.png",
+      "status": 200,
+      "bytes": 1201123,
+      "sha256": "0357936c107c73ec19d34dd66a56b1a9534ef5b6295f9fb4bbd76f918ced7633",
+      "expected": "0357936c107c73ec19d34dd66a56b1a9534ef5b6295f9fb4bbd76f918ced7633",
+      "match": true
+    },
+    {
+      "path": "celebration/rainbow.json",
+      "status": 200,
+      "bytes": 1269,
+      "sha256": "735dd5bc310fe7b0e7a44e0db5cf6dcd650ee7de8f18bf93b3710e11e8cf3277",
+      "expected": "735dd5bc310fe7b0e7a44e0db5cf6dcd650ee7de8f18bf93b3710e11e8cf3277",
+      "match": true
+    },
+    {
+      "path": "celebration/rainbow.png",
+      "status": 200,
+      "bytes": 1108455,
+      "sha256": "77e3068c2daa485eb1a1b803622efb5dbb20c7eb0bd35f54cd131ba8b1c96ef0",
+      "expected": "77e3068c2daa485eb1a1b803622efb5dbb20c7eb0bd35f54cd131ba8b1c96ef0",
+      "match": true
+    },
+    {
+      "path": "celebration/star.json",
+      "status": 200,
+      "bytes": 1267,
+      "sha256": "eb5fa32ab8bc48e937de18baabd6eadd40d06dec5766a933a355b74083f0ee76",
+      "expected": "eb5fa32ab8bc48e937de18baabd6eadd40d06dec5766a933a355b74083f0ee76",
+      "match": true
+    },
+    {
+      "path": "celebration/star.png",
+      "status": 200,
+      "bytes": 979951,
+      "sha256": "c3e2d9309220e3c85a4c6a3f03934b3cc9d2ab89b3b9f54419d042d2bbd41ed7",
+      "expected": "c3e2d9309220e3c85a4c6a3f03934b3cc9d2ab89b3b9f54419d042d2bbd41ed7",
+      "match": true
+    },
+    {
+      "path": "celebration/trophy.json",
+      "status": 200,
+      "bytes": 1265,
+      "sha256": "1cfce6f36c592bd8cbb57204e80c26b6d7366c0b49fa3a6f8c3f3a0e58b7a986",
+      "expected": "1cfce6f36c592bd8cbb57204e80c26b6d7366c0b49fa3a6f8c3f3a0e58b7a986",
+      "match": true
+    },
+    {
+      "path": "celebration/trophy.png",
+      "status": 200,
+      "bytes": 1029354,
+      "sha256": "c4f5c237571f6eaec1d4f0ad116a58268abd4e6d0b90702b29caf9018154e5cf",
+      "expected": "c4f5c237571f6eaec1d4f0ad116a58268abd4e6d0b90702b29caf9018154e5cf",
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 572,
+      "sha256": "df4b4248c072689227f6c4d214efd8b91af502989e9265b4e17380b60a2c6a32",
+      "expected": "df4b4248c072689227f6c4d214efd8b91af502989e9265b4e17380b60a2c6a32",
+      "match": true
+    },
+    {
+      "path": "spin/audio/answer-no-3.wav",
+      "status": 200,
+      "bytes": 160532,
+      "sha256": "8fe7a89541a960c77b7bf45951e54947ca10904cdee3b8c171c25eda4a0c250a",
+      "expected": "8fe7a89541a960c77b7bf45951e54947ca10904cdee3b8c171c25eda4a0c250a",
+      "match": true
+    },
+    {
+      "path": "spin/audio/answer-no-stem.wav",
+      "status": 200,
+      "bytes": 148630,
+      "sha256": "dadbd22054e87156817ba8eb485ca6e5005a25a796dcc3e2d6af8d2e5f62645b",
+      "expected": "dadbd22054e87156817ba8eb485ca6e5005a25a796dcc3e2d6af8d2e5f62645b",
+      "match": true
+    },
+    {
+      "path": "spin/audio/answer-yes.wav",
+      "status": 200,
+      "bytes": 94390,
+      "sha256": "a65f7e13194c39ba658d333521e4608898595531ebcd87a3330e483074ca0d1f",
+      "expected": "a65f7e13194c39ba658d333521e4608898595531ebcd87a3330e483074ca0d1f",
+      "match": true
+    },
+    {
+      "path": "spin/audio/manifest.json",
+      "status": 200,
+      "bytes": 1745,
+      "sha256": "cf6760017d4292a18f32716ee0dfe644e2db79cba4aa38f03ff73c082ef438a0",
+      "expected": "cf6760017d4292a18f32716ee0dfe644e2db79cba4aa38f03ff73c082ef438a0",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-0.wav",
+      "status": 200,
+      "bytes": 86228,
+      "sha256": "df465dd81f0f9210b4cf0a8d3707079fb63b0e260dfb85190370231ba735da21",
+      "expected": "df465dd81f0f9210b4cf0a8d3707079fb63b0e260dfb85190370231ba735da21",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-1.wav",
+      "status": 200,
+      "bytes": 85126,
+      "sha256": "289d62e79b5a98876f8dca37ccdbd95d39514d7ca88089636593781da551a269",
+      "expected": "289d62e79b5a98876f8dca37ccdbd95d39514d7ca88089636593781da551a269",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-2.wav",
+      "status": 200,
+      "bytes": 89974,
+      "sha256": "4cd2f1442a4bc0fccc82f782a3bd23f9cdf616f02ac0d51f8f9173dad2bc98b8",
+      "expected": "4cd2f1442a4bc0fccc82f782a3bd23f9cdf616f02ac0d51f8f9173dad2bc98b8",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-3.wav",
+      "status": 200,
+      "bytes": 89090,
+      "sha256": "c894876e625794d293e16cb8dccefc0dfe69ec72a214f76d9d66f5f90cbe7738",
+      "expected": "c894876e625794d293e16cb8dccefc0dfe69ec72a214f76d9d66f5f90cbe7738",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-4.wav",
+      "status": 200,
+      "bytes": 90418,
+      "sha256": "19ea3f4bc2107c7ebc0d5757ac3fc5b3a1e9dc022becb7ca897ebc092327512b",
+      "expected": "19ea3f4bc2107c7ebc0d5757ac3fc5b3a1e9dc022becb7ca897ebc092327512b",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-5.wav",
+      "status": 200,
+      "bytes": 88210,
+      "sha256": "d026578ec35df6633ef6486504b49634a8fdb0c9b5c7e4f22616de11af2f1389",
+      "expected": "d026578ec35df6633ef6486504b49634a8fdb0c9b5c7e4f22616de11af2f1389",
+      "match": true
+    },
+    {
+      "path": "spin/audio/question-6.wav",
+      "status": 200,
+      "bytes": 90856,
+      "sha256": "9084e52d312310148d809fd5191fe12e6f3929e1f52117e62073259989384024",
+      "expected": "9084e52d312310148d809fd5191fe12e6f3929e1f52117e62073259989384024",
+      "match": true
+    },
+    {
+      "path": "spin/dice-faces.json",
+      "status": 200,
+      "bytes": 1529,
+      "sha256": "850d44920c58c2bcc1c12bc251a15ea48876650a883b13929b65aeb3ae1b23e7",
+      "expected": "850d44920c58c2bcc1c12bc251a15ea48876650a883b13929b65aeb3ae1b23e7",
+      "match": true
+    },
+    {
+      "path": "spin/dice-faces.png",
+      "status": 200,
+      "bytes": 1629606,
+      "sha256": "53bb35b7e6f4214340f538876f37746d9d4f1edfec53e596bb2e5a8f9d724e76",
+      "expected": "53bb35b7e6f4214340f538876f37746d9d4f1edfec53e596bb2e5a8f9d724e76",
+      "match": true
+    },
+    {
+      "path": "spin/fonts/ComicRelief-Bold.ttf",
+      "status": 200,
+      "bytes": 94684,
+      "sha256": "33aee007212b696afd57d50c901135cd723cd188f7ad98f3a1c572ea64e8f0d5",
+      "expected": "33aee007212b696afd57d50c901135cd723cd188f7ad98f3a1c572ea64e8f0d5",
+      "match": true
+    },
+    {
+      "path": "spin/fonts/ComicRelief-Regular.ttf",
+      "status": 200,
+      "bytes": 80324,
+      "sha256": "9ef4958ab06385d91f635f83a15569786b243f9d010cfb3f9a5cdda593c7bc22",
+      "expected": "9ef4958ab06385d91f635f83a15569786b243f9d010cfb3f9a5cdda593c7bc22",
+      "match": true
+    },
+    {
+      "path": "spin/fonts/manifest.json",
+      "status": 200,
+      "bytes": 485,
+      "sha256": "4513bad3720dcb80d589a97555925ff4f82df40cee1e7a073ac3029885c81f42",
+      "expected": "4513bad3720dcb80d589a97555925ff4f82df40cee1e7a073ac3029885c81f42",
+      "match": true
+    },
+    {
+      "path": "spin/fonts/OFL.txt",
+      "status": 200,
+      "bytes": 4396,
+      "sha256": "009b3056cef5c9bcaff872bfb0e27fa4a0f8cc6f6984cc490caf5618748d766b",
+      "expected": "009b3056cef5c9bcaff872bfb0e27fa4a0f8cc6f6984cc490caf5618748d766b",
+      "match": true
+    },
+    {
+      "path": "spin/mascot.json",
+      "status": 200,
+      "bytes": 1372,
+      "sha256": "7d98ce05a0faf49ac94af5a5a4a62da8980c97722ac10ab18ae7176c14e1185c",
+      "expected": "7d98ce05a0faf49ac94af5a5a4a62da8980c97722ac10ab18ae7176c14e1185c",
+      "match": true
+    },
+    {
+      "path": "spin/mascot.png",
+      "status": 200,
+      "bytes": 1021501,
+      "sha256": "61ef3b60f8728a7efe2b680b91b12acbdecd6618beca9da434577ece24545c11",
+      "expected": "61ef3b60f8728a7efe2b680b91b12acbdecd6618beca9da434577ece24545c11",
+      "match": true
+    },
+    {
+      "path": "spin/pointer.json",
+      "status": 200,
+      "bytes": 1465,
+      "sha256": "c1cac47161769c6adae6c38489d0e82157717b98d205f78c590c84fc45aac06d",
+      "expected": "c1cac47161769c6adae6c38489d0e82157717b98d205f78c590c84fc45aac06d",
+      "match": true
+    },
+    {
+      "path": "spin/pointer.png",
+      "status": 200,
+      "bytes": 204891,
+      "sha256": "6b0402d5b9289bfd2a81536ba3ff6f6a64df259b66e04628929d5f2c78be4221",
+      "expected": "6b0402d5b9289bfd2a81536ba3ff6f6a64df259b66e04628929d5f2c78be4221",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/1.gif",
+      "status": 200,
+      "bytes": 2903443,
+      "sha256": "d71ffbab8110d313fa273c4194661625f9680bc6563d79e5cd74beb041cc943e",
+      "expected": "d71ffbab8110d313fa273c4194661625f9680bc6563d79e5cd74beb041cc943e",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/2.gif",
+      "status": 200,
+      "bytes": 2510792,
+      "sha256": "dc011008c502c065b4350e231e488496be77e5d5a0bbffe66cd0ae3c491bc394",
+      "expected": "dc011008c502c065b4350e231e488496be77e5d5a0bbffe66cd0ae3c491bc394",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/3.gif",
+      "status": 200,
+      "bytes": 4892694,
+      "sha256": "765acdf7949b941dbe1ee49aca482a9bd1dc27d7273874456f6c63e07a82f31a",
+      "expected": "765acdf7949b941dbe1ee49aca482a9bd1dc27d7273874456f6c63e07a82f31a",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/4.gif",
+      "status": 200,
+      "bytes": 7156134,
+      "sha256": "ce4502b798772bb272c62c89fae14cf1a2e0b088ade8a20b06a486e40c8ebb7b",
+      "expected": "ce4502b798772bb272c62c89fae14cf1a2e0b088ade8a20b06a486e40c8ebb7b",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/5.gif",
+      "status": 200,
+      "bytes": 6777092,
+      "sha256": "1ec85a85c805e4381ceddccb1f43260cf96420096cf7844a2d3d9b200c23baa7",
+      "expected": "1ec85a85c805e4381ceddccb1f43260cf96420096cf7844a2d3d9b200c23baa7",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/6.gif",
+      "status": 200,
+      "bytes": 14040959,
+      "sha256": "945fef54af8d8f5311a6fc49164e904a0ca844e4380ceb17197be9bedcb78cfc",
+      "expected": "945fef54af8d8f5311a6fc49164e904a0ca844e4380ceb17197be9bedcb78cfc",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/7.gif",
+      "status": 200,
+      "bytes": 2298318,
+      "sha256": "c359abc012668c1585352e047e94502658e004e3fe1f9cd03dc51a8371e409cc",
+      "expected": "c359abc012668c1585352e047e94502658e004e3fe1f9cd03dc51a8371e409cc",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/8.gif",
+      "status": 200,
+      "bytes": 1575578,
+      "sha256": "2f948f3721eeb731d080bb2fd1be834a55e57ee65a4e4e9ac606a09fea056454",
+      "expected": "2f948f3721eeb731d080bb2fd1be834a55e57ee65a4e4e9ac606a09fea056454",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/animation-metadata.json",
+      "status": 200,
+      "bytes": 733,
+      "sha256": "f6ec022a7a554c8f8c37a1bb1dc06fa0d93585fa2ba1e7f50a2f2bad5b463ffb",
+      "expected": "f6ec022a7a554c8f8c37a1bb1dc06fa0d93585fa2ba1e7f50a2f2bad5b463ffb",
+      "match": true
+    },
+    {
+      "path": "spin/tasks/source-manifest.json",
+      "status": 200,
+      "bytes": 1911,
+      "sha256": "7c8272f63f88efd79eb643d17d8bdc63cb1a5bb076b02ad0290508677ec1d2d8",
+      "expected": "7c8272f63f88efd79eb643d17d8bdc63cb1a5bb076b02ad0290508677ec1d2d8",
+      "match": true
+    },
+    {
+      "path": "spin/wheel.json",
+      "status": 200,
+      "bytes": 1635,
+      "sha256": "c6bc068b1b1fa779b0189e4932284029fd5a9a820413f0ffe285e3af4dc1c395",
+      "expected": "c6bc068b1b1fa779b0189e4932284029fd5a9a820413f0ffe285e3af4dc1c395",
+      "match": true
+    },
+    {
+      "path": "spin/wheel.png",
+      "status": 200,
+      "bytes": 1117005,
+      "sha256": "733bb290a98588869d44eecb7669f9a2120668471bf270502c24703b402fb5e7",
+      "expected": "733bb290a98588869d44eecb7669f9a2120668471bf270502c24703b402fb5e7",
+      "match": true
+    }
+  ]
+}

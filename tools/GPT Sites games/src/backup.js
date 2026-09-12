@@ -34,6 +34,6 @@ export async function restoreBackup(backup,progress){
     for(let i=0;i<files.length;i++){progress(`Restoring image ${i+1} of ${files.length}…`);const record=await data.addImage(files[i]);mapping.set(m.images[i].id,record.id);created.push(['images',record.id]);}
     for(const l of m.lessons){const id=crypto.randomUUID();await data.put('lessons',{id,name:l.name,gameId:l.gameId,imageIds:l.imageIds.map(x=>mapping.get(x)),updatedAt:Date.now()});created.push(['lessons',id]);}
     const existing=await data.list('games');
-    for(const g of m.games.filter(g=>!['scratch','beach'].includes(g.id))){const id=crypto.randomUUID();await data.put('games',{id,name:g.name,description:String(g.description||''),url:safeUrl(g.url),order:existing.length+created.length,hidden:!!g.hidden,builtin:false});created.push(['games',id]);}
+    for(const g of m.games.filter(g=>!['scratch','beach','spin'].includes(g.id))){const id=crypto.randomUUID();await data.put('games',{id,name:g.name,description:String(g.description||''),url:safeUrl(g.url),order:existing.length+created.length,hidden:!!g.hidden,builtin:false});created.push(['games',id]);}
   }catch(e){let failed=0;for(const [type,id] of created.reverse())await data.remove(type,id).catch(()=>failed++);throw new Error(failed?'Import stopped. Some imported items could not be rolled back; please review your library.':`Import cancelled; existing items are unchanged. ${e.message}`);}
 }

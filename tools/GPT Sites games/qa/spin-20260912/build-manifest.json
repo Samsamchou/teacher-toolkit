@@ -1,0 +1,172 @@
+[
+  {
+    "path": "index.html",
+    "bytes": 572,
+    "sha256": "25e91cc4946113bba256a5fe89c7356069916dfb5cbd84075ddea443658a5e02"
+  },
+  {
+    "path": "assets/index-DN6iB6XL.js",
+    "bytes": 966391,
+    "sha256": "d7a92daa5fd691b75bc168d4596dcbf4132ceaa49ac9c151c6bf67cc0c921fb0"
+  },
+  {
+    "path": "assets/index-fTOB_x4A.css",
+    "bytes": 76233,
+    "sha256": "9e5ddc0bd320734ca22929ae89ff24d7383f9b7432d9221a5666fbc5ef5f861a"
+  },
+  {
+    "path": "beach/east-coast.png",
+    "bytes": 2258930,
+    "sha256": "838722005fbb0fc24a7b40f003f5533f363550038012d6c1f56167c8db7fab60"
+  },
+  {
+    "path": "beach/east-coast.png.json",
+    "bytes": 1964,
+    "sha256": "e61c5ce2e0a602acfc2d6bd2456d4e70c2210f08cc01ea59a303032788f52e38"
+  },
+  {
+    "path": "beach/plastic-bag-draft.svg",
+    "bytes": 932,
+    "sha256": "2bd5d6745875e6b15fcd3e2406f8cec9c854cba28ec2d29612839f3177008066"
+  },
+  {
+    "path": "beach/plastic-bag-v2.png",
+    "bytes": 1068120,
+    "sha256": "d8e6280b54ee43a7dd9c1d7a97b9865645bb669afba890c3f37607130a23a084"
+  },
+  {
+    "path": "beach/plastic-bag-v2.png.json",
+    "bytes": 2158,
+    "sha256": "d54e08aedd637ed45daa6efb0d67b389559ae2fa52fb4e99b79d1f14c5f91838"
+  },
+  {
+    "path": "celebration/monster.json",
+    "bytes": 1296,
+    "sha256": "0e1abd3205309d01522a5804b21d7b3d7687739b7b33d2dd2719af1caec3a423"
+  },
+  {
+    "path": "celebration/monster.png",
+    "bytes": 1201123,
+    "sha256": "0357936c107c73ec19d34dd66a56b1a9534ef5b6295f9fb4bbd76f918ced7633"
+  },
+  {
+    "path": "celebration/rainbow.json",
+    "bytes": 1269,
+    "sha256": "735dd5bc310fe7b0e7a44e0db5cf6dcd650ee7de8f18bf93b3710e11e8cf3277"
+  },
+  {
+    "path": "celebration/rainbow.png",
+    "bytes": 1108455,
+    "sha256": "77e3068c2daa485eb1a1b803622efb5dbb20c7eb0bd35f54cd131ba8b1c96ef0"
+  },
+  {
+    "path": "celebration/star.json",
+    "bytes": 1267,
+    "sha256": "eb5fa32ab8bc48e937de18baabd6eadd40d06dec5766a933a355b74083f0ee76"
+  },
+  {
+    "path": "celebration/star.png",
+    "bytes": 979951,
+    "sha256": "c3e2d9309220e3c85a4c6a3f03934b3cc9d2ab89b3b9f54419d042d2bbd41ed7"
+  },
+  {
+    "path": "celebration/trophy.json",
+    "bytes": 1265,
+    "sha256": "1cfce6f36c592bd8cbb57204e80c26b6d7366c0b49fa3a6f8c3f3a0e58b7a986"
+  },
+  {
+    "path": "celebration/trophy.png",
+    "bytes": 1029354,
+    "sha256": "c4f5c237571f6eaec1d4f0ad116a58268abd4e6d0b90702b29caf9018154e5cf"
+  },
+  {
+    "path": "spin/dice-faces.json",
+    "bytes": 1529,
+    "sha256": "850d44920c58c2bcc1c12bc251a15ea48876650a883b13929b65aeb3ae1b23e7"
+  },
+  {
+    "path": "spin/dice-faces.png",
+    "bytes": 1629606,
+    "sha256": "53bb35b7e6f4214340f538876f37746d9d4f1edfec53e596bb2e5a8f9d724e76"
+  },
+  {
+    "path": "spin/mascot.json",
+    "bytes": 1372,
+    "sha256": "7d98ce05a0faf49ac94af5a5a4a62da8980c97722ac10ab18ae7176c14e1185c"
+  },
+  {
+    "path": "spin/mascot.png",
+    "bytes": 1021501,
+    "sha256": "61ef3b60f8728a7efe2b680b91b12acbdecd6618beca9da434577ece24545c11"
+  },
+  {
+    "path": "spin/pointer.json",
+    "bytes": 1465,
+    "sha256": "c1cac47161769c6adae6c38489d0e82157717b98d205f78c590c84fc45aac06d"
+  },
+  {
+    "path": "spin/pointer.png",
+    "bytes": 204891,
+    "sha256": "6b0402d5b9289bfd2a81536ba3ff6f6a64df259b66e04628929d5f2c78be4221"
+  },
+  {
+    "path": "spin/wheel.json",
+    "bytes": 1635,
+    "sha256": "c6bc068b1b1fa779b0189e4932284029fd5a9a820413f0ffe285e3af4dc1c395"
+  },
+  {
+    "path": "spin/wheel.png",
+    "bytes": 1117005,
+    "sha256": "733bb290a98588869d44eecb7669f9a2120668471bf270502c24703b402fb5e7"
+  },
+  {
+    "path": "spin/tasks/1.gif",
+    "bytes": 2903443,
+    "sha256": "d71ffbab8110d313fa273c4194661625f9680bc6563d79e5cd74beb041cc943e"
+  },
+  {
+    "path": "spin/tasks/2.gif",
+    "bytes": 2510792,
+    "sha256": "dc011008c502c065b4350e231e488496be77e5d5a0bbffe66cd0ae3c491bc394"
+  },
+  {
+    "path": "spin/tasks/3.gif",
+    "bytes": 4892694,
+    "sha256": "765acdf7949b941dbe1ee49aca482a9bd1dc27d7273874456f6c63e07a82f31a"
+  },
+  {
+    "path": "spin/tasks/4.gif",
+    "bytes": 7156134,
+    "sha256": "ce4502b798772bb272c62c89fae14cf1a2e0b088ade8a20b06a486e40c8ebb7b"
+  },
+  {
+    "path": "spin/tasks/5.gif",
+    "bytes": 6777092,
+    "sha256": "1ec85a85c805e4381ceddccb1f43260cf96420096cf7844a2d3d9b200c23baa7"
+  },
+  {
+    "path": "spin/tasks/6.gif",
+    "bytes": 14040959,
+    "sha256": "945fef54af8d8f5311a6fc49164e904a0ca844e4380ceb17197be9bedcb78cfc"
+  },
+  {
+    "path": "spin/tasks/7.gif",
+    "bytes": 2298318,
+    "sha256": "c359abc012668c1585352e047e94502658e004e3fe1f9cd03dc51a8371e409cc"
+  },
+  {
+    "path": "spin/tasks/8.gif",
+    "bytes": 1575578,
+    "sha256": "2f948f3721eeb731d080bb2fd1be834a55e57ee65a4e4e9ac606a09fea056454"
+  },
+  {
+    "path": "spin/tasks/animation-metadata.json",
+    "bytes": 733,
+    "sha256": "f6ec022a7a554c8f8c37a1bb1dc06fa0d93585fa2ba1e7f50a2f2bad5b463ffb"
+  },
+  {
+    "path": "spin/tasks/source-manifest.json",
+    "bytes": 1911,
+    "sha256": "7c8272f63f88efd79eb643d17d8bdc63cb1a5bb076b02ad0290508677ec1d2d8"
+  }
+]

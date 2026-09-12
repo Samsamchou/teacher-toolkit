@@ -1,0 +1,17 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": null,
+  "endpoint": "built-in image_gen",
+  "prompt": "Create one transparent-background PNG game pointer asset, square canvas. A beautifully rendered polished golden and deep indigo arrow / paperclip spinner hand for a children's colorful classroom wheel. Straight vertical pointing UP to twelve o'clock. EXACT pivot center at canvas center (50%,50%): circular navy and gold pivot hub centered there. Thin elongated pointer extends from hub to y=5% with clear gold triangular arrow tip. Very short counterweight ends at y=59%. Overall pointer narrow width <=15% of canvas, circular hub diameter 16%. Symmetric about x=50%, no perspective tilt, top-down orthographic view. Actual transparent empty background throughout including lower 40% canvas. Soft bevel highlights, crisp premium toy finish. No text, no wheel, no shadows beyond object. Medium quality.",
+  "quality_requested_in_prompt": "medium",
+  "generation_timestamp": "2026-09-12T07:30:20.522Z",
+  "record_timestamp": "2026-09-12T08:01:52.850Z",
+  "output_filename": "pointer.png",
+  "width": 1254,
+  "height": 1254,
+  "sha256": "6b0402d5b9289bfd2a81536ba3ff6f6a64df259b66e04628929d5f2c78be4221",
+  "request_id": null,
+  "tool_execution_id": "8d8f8dd4-27fc-49c7-a3a8-e30f5777e093",
+  "usage": null,
+  "note": "User explicitly selected built-in Image module. Model, request ID and usage were not exposed by the tool. Original generation retained unchanged."
+}

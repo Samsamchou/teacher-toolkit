@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "fullMatch": {
+    "teams": 2,
+    "turns": 12,
+    "totals": [
+      17,
+      28
+    ],
+    "tasks": [
+      "Jump ×3",
+      "Do silly dance",
+      "Wiggle",
+      "Blink ×3",
+      "Make a face",
+      "Stretch ×3",
+      "Spin",
+      "Squat ×3",
+      "Blink ×3",
+      "Wiggle",
+      "Make a face",
+      "Spin"
+    ]
+  },
+  "testedTeamCounts": [
+    2,
+    6
+  ],
+  "taskRequests": 15,
+  "uniqueTaskRequests": 8,
+  "errors": [],
+  "checks": [
+    "6000ms spinner",
+    "pointer and abbreviation match",
+    "retry preserves content",
+    "eight unique tasks",
+    "dice raw 0 gives 1 and raw 5 gives 6",
+    "one award per roll",
+    "all six rounds",
+    "8000ms celebration",
+    "early finish tie",
+    "pause during end confirmation",
+    "1024x768 touch",
+    "390px no horizontal overflow",
+    "failed GIF retry preserves task and score",
+    "fullscreen entry and exit"
+  ]
+}

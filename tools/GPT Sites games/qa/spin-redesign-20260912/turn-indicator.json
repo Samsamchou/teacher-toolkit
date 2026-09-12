@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "sequence": [
+    "Team 1",
+    "Team 2",
+    "Team 1"
+  ],
+  "records": [
+    [
+      {
+        "team": "spin-team-0",
+        "color": "rgb(255, 227, 106)",
+        "animation": "sr-turn-float",
+        "playState": "running"
+      },
+      {
+        "team": "spin-team-1",
+        "color": "rgb(255, 253, 248)",
+        "animation": "none"
+      }
+    ],
+    [
+      {
+        "team": "spin-team-0",
+        "color": "rgb(255, 253, 248)",
+        "animation": "none"
+      },
+      {
+        "team": "spin-team-1",
+        "color": "rgb(255, 227, 106)",
+        "animation": "sr-turn-float",
+        "playState": "running"
+      }
+    ],
+    [
+      {
+        "team": "spin-team-0",
+        "color": "rgb(255, 227, 106)",
+        "animation": "sr-turn-float",
+        "playState": "running"
+      },
+      {
+        "team": "spin-team-1",
+        "color": "rgb(255, 253, 248)",
+        "animation": "none"
+      }
+    ]
+  ],
+  "endedWithNoActive": true
+}

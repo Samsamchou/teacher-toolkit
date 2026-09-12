@@ -1,0 +1,17 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": null,
+  "endpoint": "built-in image_gen",
+  "prompt": "One square PNG texture atlas for a beautiful 3D game dice. Exactly a 3-column by 2-row grid of six square dice face textures, each cell equal sized, touching edge to edge with NO gutters, NO labels, NO surrounding margin. Camera strictly orthographic straight-on face, no perspective, no visible sides. Each cell has glossy warm ivory enamel with softly beveled rounded corners and navy inset circular pips. Top row left to right: one centered pip; two diagonal pips; three diagonal pips. Bottom row left to right: four corner pips; four corner plus one center pip (5); three left column plus three right column pips (6). Standard die pip arrangement, no other marks. Cream uniform background reaches edges in every cell. Precisely aligned uniform 3x2 cells. Premium toy product-render lighting. Used as six face textures on an actual CSS 3D cube. Medium quality.",
+  "quality_requested_in_prompt": "medium",
+  "generation_timestamp": "2026-09-12T07:31:01.887Z",
+  "record_timestamp": "2026-09-12T08:01:52.894Z",
+  "output_filename": "dice-faces.png",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "53bb35b7e6f4214340f538876f37746d9d4f1edfec53e596bb2e5a8f9d724e76",
+  "request_id": null,
+  "tool_execution_id": "9114ba8b-9cd6-4e66-a9c2-2aa739f71a8d",
+  "usage": null,
+  "note": "User explicitly selected built-in Image module. Model, request ID and usage were not exposed by the tool. Original generation retained unchanged."
+}

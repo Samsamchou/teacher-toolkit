@@ -1,0 +1,56 @@
+{
+  "provided_by": "teacher",
+  "unchanged": true,
+  "count": 8,
+  "total_bytes": 42155010,
+  "tasks": [
+    {
+      "file": "1.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\1.gif",
+      "bytes": 2903443,
+      "sha256": "d71ffbab8110d313fa273c4194661625f9680bc6563d79e5cd74beb041cc943e"
+    },
+    {
+      "file": "2.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\2.gif",
+      "bytes": 2510792,
+      "sha256": "dc011008c502c065b4350e231e488496be77e5d5a0bbffe66cd0ae3c491bc394"
+    },
+    {
+      "file": "3.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\3.gif",
+      "bytes": 4892694,
+      "sha256": "765acdf7949b941dbe1ee49aca482a9bd1dc27d7273874456f6c63e07a82f31a"
+    },
+    {
+      "file": "4.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\4.gif",
+      "bytes": 7156134,
+      "sha256": "ce4502b798772bb272c62c89fae14cf1a2e0b088ade8a20b06a486e40c8ebb7b"
+    },
+    {
+      "file": "5.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\5.gif",
+      "bytes": 6777092,
+      "sha256": "1ec85a85c805e4381ceddccb1f43260cf96420096cf7844a2d3d9b200c23baa7"
+    },
+    {
+      "file": "6.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\6.gif",
+      "bytes": 14040959,
+      "sha256": "945fef54af8d8f5311a6fc49164e904a0ca844e4380ceb17197be9bedcb78cfc"
+    },
+    {
+      "file": "7.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\7.gif",
+      "bytes": 2298318,
+      "sha256": "c359abc012668c1585352e047e94502658e004e3fe1f9cd03dc51a8371e409cc"
+    },
+    {
+      "file": "8.gif",
+      "source": "D:\\115 上學期 備課\\HWG5\\U01\\115檔案\\8 tasks\\8.gif",
+      "bytes": 1575578,
+      "sha256": "2f948f3721eeb731d080bb2fd1be834a55e57ee65a4e4e9ac606a09fea056454"
+    }
+  ]
+}

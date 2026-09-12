@@ -1,0 +1,17 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": null,
+  "endpoint": "built-in image_gen",
+  "prompt": "One transparent-background PNG sprite for elementary classroom game feedback. An original adorable golden five-point star mascot with tiny navy eyes, warm smile, coral cheeks, little teal sneakers and two short arms, giving encouraging thumbs up with one hand and holding a tiny rainbow trophy in the other. Full body centered, lots of transparent breathing room. Premium soft 3D toy render, candy pastel palette matching ivory navy gold dice, approachable for grade 5 children. A few small separate sparkling stars nearby. No words, no letters, no background, no ground plane. Useful both for gentle Try again encouragement and cheerful winner celebration by animating the sprite in a website. Medium quality.",
+  "quality_requested_in_prompt": "medium",
+  "generation_timestamp": "2026-09-12T07:32:07.746Z",
+  "record_timestamp": "2026-09-12T08:01:52.925Z",
+  "output_filename": "mascot.png",
+  "width": 1245,
+  "height": 1263,
+  "sha256": "61ef3b60f8728a7efe2b680b91b12acbdecd6618beca9da434577ece24545c11",
+  "request_id": null,
+  "tool_execution_id": "52242798-0630-4a3a-b807-2c28b36c66b5",
+  "usage": null,
+  "note": "User explicitly selected built-in Image module. Model, request ID and usage were not exposed by the tool. Original generation retained unchanged."
+}

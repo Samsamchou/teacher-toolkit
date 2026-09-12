@@ -1,0 +1,55 @@
+{
+  "voice": "Microsoft Zira Desktop",
+  "locale": "en-US",
+  "synthesisRate": 0,
+  "playbackRate": 0.8,
+  "preservesPitch": true,
+  "created": "2026-09-12T16:25:02.1519729+08:00",
+  "clips": [
+    {
+      "file": "question-0.wav",
+      "text": "Is it Sunday today?",
+      "sha256": "df465dd81f0f9210b4cf0a8d3707079fb63b0e260dfb85190370231ba735da21"
+    },
+    {
+      "file": "question-1.wav",
+      "text": "Is it Monday today?",
+      "sha256": "289d62e79b5a98876f8dca37ccdbd95d39514d7ca88089636593781da551a269"
+    },
+    {
+      "file": "question-2.wav",
+      "text": "Is it Tuesday today?",
+      "sha256": "4cd2f1442a4bc0fccc82f782a3bd23f9cdf616f02ac0d51f8f9173dad2bc98b8"
+    },
+    {
+      "file": "question-3.wav",
+      "text": "Is it Wednesday today?",
+      "sha256": "c894876e625794d293e16cb8dccefc0dfe69ec72a214f76d9d66f5f90cbe7738"
+    },
+    {
+      "file": "question-4.wav",
+      "text": "Is it Thursday today?",
+      "sha256": "19ea3f4bc2107c7ebc0d5757ac3fc5b3a1e9dc022becb7ca897ebc092327512b"
+    },
+    {
+      "file": "question-5.wav",
+      "text": "Is it Friday today?",
+      "sha256": "d026578ec35df6633ef6486504b49634a8fdb0c9b5c7e4f22616de11af2f1389"
+    },
+    {
+      "file": "question-6.wav",
+      "text": "Is it Saturday today?",
+      "sha256": "9084e52d312310148d809fd5191fe12e6f3929e1f52117e62073259989384024"
+    },
+    {
+      "file": "answer-yes.wav",
+      "text": "Yes, it is.",
+      "sha256": "a65f7e13194c39ba658d333521e4608898595531ebcd87a3330e483074ca0d1f"
+    },
+    {
+      "file": "answer-no-stem.wav",
+      "text": "No, it isn't. It's...",
+      "sha256": "dadbd22054e87156817ba8eb485ca6e5005a25a796dcc3e2d6af8d2e5f62645b"
+    }
+  ]
+}

@@ -1,5 +1,15 @@
 # Classroom Club / 上課互動遊戲大集合
 
+## 2026-09-12 新增轉盤遊戲（已正式部署）
+
+正式站：https://gamesinclass-5d9d1.web.app 。本次Hosting發布成功，49/49檔案線上雜湊一致，正式登入頁正常；沿用原六碼通行碼。完整紀錄：`DEPLOYMENT-20260912.md`。
+
+同日追加：八個 GIF 已置中放大約 22%，按鈕移至右下方，正式更新後 49/49 檔案雜湊一致。已改用Comic Relief與多巴胺配色、放大各組分數，問答加入固定美式0.8倍速朗讀；否定答句不朗讀空格答案。詳 `SPIN-REDESIGN-20260912.md`。
+
+五年級 HWG5 Unit One：**Spin, ask, answer, do and roll**。2–6組、六回合、6秒中心轉針、星期問答、8個不提前重複的動作GIF、3D骰子加分、提前結束與8秒慶祝。
+
+本機預覽：http://127.0.0.1:5182/ ，在首頁選同名遊戲。重新啟動：`scripts/spin-preview.ps1`。30項測試、正式建置及完整瀏覽器流程通過，詳 `SPIN-IMPLEMENTATION-20260912.md` 與 `qa/spin-20260912/`。下方9月10日內容保留作歷史紀錄；最新正式版本以本節與9月12日部署紀錄為準。
+
 第一版已於 2026-09-07 正式部署至 Firebase，六碼通行碼已安全設定。 / First release was deployed to Firebase on 2026-09-07, with the six-digit passcode configured securely.
 
 - 正式站 / Production: https://gamesinclass-5d9d1.web.app
