@@ -1,0 +1,15 @@
+{
+  "questions": 15,
+  "options": 45,
+  "distractors": 30,
+  "distractorsInBasic1200ByLemma": true,
+  "answerDistribution": {
+    "A": 5,
+    "B": 5,
+    "C": 5
+  },
+  "sentencesFromUser": true,
+  "actualVideoTimingsVerified": 0,
+  "referenceIntervals": 15,
+  "productionHtmlModified": false
+}

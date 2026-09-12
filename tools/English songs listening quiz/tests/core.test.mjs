@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('..',import.meta.url));
+const html=fs.readFileSync(root+'/public/index.html','utf8');
+for(const s of html.matchAll(/<script(?:[^>]*)>([\s\S]*?)<\/script>/g)){if(!s[0].includes('application/json'))new vm.Script(s[1]);}
+const core=html.match(/<script id="quiz-core">([\s\S]*?)<\/script>/)[1];
+const ctx=vm.createContext({});vm.runInContext(core+';globalThis.api={SegmentController,summarizeAnswers,latestSessions,validateBank};',ctx);
+const {SegmentController,summarizeAnswers,latestSessions}=ctx.api;
+let pauses=0,plays=0,seek=[];
+const p={loadVideoById:x=>seek.push(x.startSeconds),playVideo:()=>plays++,pauseVideo:()=>pauses++,seekTo:x=>seek.push(x)};
+const c=new SegmentController(p,()=>{});c.start([{start:.2,end:1},{start:1.2,end:2}],'video');
+c.sample(0,1);c.sample(.7,1);assert.equal(c.phase,'listening');c.sample(1.03,1);assert.equal(c.phase,'stopping');assert.equal(c.answer(),false);c.confirmStopped(2);assert.equal(c.phase,'answering');
+assert.equal(c.replay(),true);assert.equal(c.answer(),false);c.sample(.2,1);c.sample(.8,1);c.sample(1.04,1);c.confirmStopped(2);assert.equal(c.index,0);assert.equal(c.answer(),true);assert.equal(c.index,1);c.sample(1.5,1);c.sample(2.03,1);c.confirmStopped(2);c.answer();assert.equal(c.phase,'outro');c.sample(2.8,1);assert.equal(c.phase,'outro');c.sample(3,0);assert.equal(c.phase,'complete');
+const a=[{questionIndex:0,sentence:'First sentence',attempts:[0,2],outcome:'correct'},{questionIndex:1,sentence:'Second sentence',attempts:[0,1],outcome:'wrong'}];
+const s=summarizeAnswers(a,15);assert.equal(s.score,6.67);assert.equal(s.wrongCount,1);assert.equal(s.unansweredCount,13);assert.equal(s.wrongSentences,'2. Second sentence');
+assert.equal(summarizeAnswers(Array.from({length:15},()=>({outcome:'correct'})),15).score,100);
+assert.equal(latestSessions([{sessionId:'x',revision:1,score:0},{sessionId:'x',revision:2,score:20},{sessionId:'x',revision:2,score:20},{sessionId:'y',revision:1,score:0}]).length,2);
+console.log('PASS syntax, pause confirmation, replay lock, continuous outro, second-attempt full credit, decimal score, wrong sentences, session deduplication');

@@ -1,0 +1,65 @@
+{
+  "date": "2026-09-12",
+  "source": "C:\\Users\\User\\Documents\\Codex\\2026-09-12\\referenced-chatgpt-conversation-this-is-an\\outputs\\song-listening-quiz",
+  "target": "G:/我的雲端硬碟/teacher-toolkit/tools/English songs listening quiz",
+  "verifiedFiles": 14,
+  "note": "Hashes record the migration baseline before local edits. Original source remains a recovery snapshot.",
+  "files": [
+    {
+      "file": ".gitignore",
+      "sha256": "d4a6127903be1e0ebe703c3f5175770521274b75cbb47056a26a07af7d15fbe1"
+    },
+    {
+      "file": "firebase.json",
+      "sha256": "8ab60ca03e0d5f4649e5b134d926fcdd38da7377d3a143d5a78d552a189c3779"
+    },
+    {
+      "file": "firebase.test.json",
+      "sha256": "7a8b98a270240ac62d977339b5395a234ab07badb194fff6f58360fb26d2ed0f"
+    },
+    {
+      "file": "firestore.rules",
+      "sha256": "9efd7f25b7f6ffe7ca46e4453afea11696bd1a5288322119dd92ca5c3f1ecd0f"
+    },
+    {
+      "file": "package.json",
+      "sha256": "7c19e980127897349d23bb776b389dbe98d9a588c4a3f38e01a7d25596fb3382"
+    },
+    {
+      "file": "preview-desktop.png",
+      "sha256": "41fe303bc796a340f6a87e69e2fb2ac29ea4eddbfda223c9d5d2a1c579f0d09d"
+    },
+    {
+      "file": "preview-live-question.png",
+      "sha256": "90df5596886e753ebf17610e04f284e453360e9dce812c67a38581cf26ac0c23"
+    },
+    {
+      "file": "preview-tablet.png",
+      "sha256": "b5355d1a2f4d655cd2b537ab7e5553afed31184d03ac68fca4907348c89730cd"
+    },
+    {
+      "file": "public\\index.html",
+      "sha256": "e2bf22fc925f825033d0a366d8852d983bfbd6688975fcdf59a35eb814e46d55"
+    },
+    {
+      "file": "README.md",
+      "sha256": "e56d19ccf15c12dced7b857949ea597faa63378253bfec3f3c47e7e88606f4d4"
+    },
+    {
+      "file": "server.mjs",
+      "sha256": "f6a46a3bfdc539bdaae6f3d4af747cad85edf1371ae03c1f1ab4ac6cf6f7bd46"
+    },
+    {
+      "file": "TEST-REPORT.md",
+      "sha256": "53c48fa8fafd0459d8c11c265986abcb3b4144c72af9888fbabec29365d22d34"
+    },
+    {
+      "file": "tests\\core.test.mjs",
+      "sha256": "47d25e50aa854aff0c808e6273df7219a77fb80b2a18310d4d6151e02badf6c4"
+    },
+    {
+      "file": "tests\\rules.test.mjs",
+      "sha256": "c5d5eeebda13f8602c50e8b2bbb683da7eaabcead3f1ba8917cdd7fa3186bd81"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function teacher() {
+   return request.auth != null && request.auth.token.firebase.sign_in_provider == 'password'
+    && request.auth.token.email == 'teacher@example.com';
+  }
+  function validSnapshot(d) {
+   return d.keys().hasAll(['schemaVersion','sessionId','revision','ownerUid','quizId','quizTitle','studentId','score','correctCount','wrongCount','answeredCount','unansweredCount','totalQuestions','wrongSentences','status','recordedAt','submittedAt'])
+    && d.keys().hasOnly(['schemaVersion','sessionId','revision','ownerUid','quizId','quizTitle','studentId','score','correctCount','wrongCount','answeredCount','unansweredCount','totalQuestions','wrongSentences','status','recordedAt','submittedAt'])
+    && d.schemaVersion == 2 && d.ownerUid == request.auth.uid
+    && d.sessionId is string && d.sessionId.matches('^[A-Za-z0-9_-]{1,100}$')
+    && d.revision is int && d.revision > 0 && d.revision < 100000
+    && d.quizId is string && d.quizId.matches('^[A-Za-z0-9_-]{1,100}$')
+    && d.quizTitle is string && d.quizTitle.size() > 0 && d.quizTitle.size() <= 150
+    && d.studentId is string && d.studentId.matches('^[A-Za-z0-9_-]{1,30}$')
+    && d.totalQuestions is int && d.totalQuestions >= 1 && d.totalQuestions <= 100
+    && d.correctCount is int && d.correctCount >= 0
+    && d.wrongCount is int && d.wrongCount >= 0
+    && d.answeredCount is int && d.answeredCount == d.correctCount + d.wrongCount
+    && d.unansweredCount is int && d.unansweredCount >= 0
+    && d.answeredCount + d.unansweredCount == d.totalQuestions
+    && d.score is number && d.score >= 0 && d.score <= 100
+    && d.score >= d.correctCount * 100.0 / d.totalQuestions - 0.005
+    && d.score < d.correctCount * 100.0 / d.totalQuestions + 0.005
+    && d.wrongSentences is string && d.wrongSentences.size() <= 31000
+    && ((d.wrongCount == 0 && d.wrongSentences == '') || (d.wrongCount > 0 && d.wrongSentences.size() > 0))
+    && d.status in ['in_progress','paused','ended_early','completed']
+    && (d.status != 'completed' || d.unansweredCount == 0)
+    && d.recordedAt is string && d.recordedAt.size() <= 40
+    && d.submittedAt == request.time;
+  }
+  match /quizResults/{resultId} {
+   allow read: if teacher();
+   allow create: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'anonymous'
+    && validSnapshot(request.resource.data);
+   allow update, delete: if false;
+  }
+  match /{document=**} { allow read, write: if false; }
+ }
+}

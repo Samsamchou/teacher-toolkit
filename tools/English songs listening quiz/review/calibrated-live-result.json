@@ -1,0 +1,126 @@
+{
+  "checks": [
+    {
+      "question": 1,
+      "expectedEnd": 3.68,
+      "actualTime": 3.68,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "replay": 1,
+      "time": 3.703322,
+      "attempts": 0
+    },
+    {
+      "question": 2,
+      "expectedEnd": 8.16,
+      "actualTime": 8.169295,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 3,
+      "expectedEnd": 13.46,
+      "actualTime": 13.479318,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 4,
+      "expectedEnd": 22.2,
+      "actualTime": 22.275711,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 5,
+      "expectedEnd": 28.94,
+      "actualTime": 28.94,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 6,
+      "expectedEnd": 31.74,
+      "actualTime": 31.769831,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 7,
+      "expectedEnd": 36.12,
+      "actualTime": 36.165206,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 8,
+      "expectedEnd": 43.9,
+      "actualTime": 43.918966,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 9,
+      "expectedEnd": 47.68,
+      "actualTime": 47.730486,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 10,
+      "expectedEnd": 57.26,
+      "actualTime": 57.359671,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 11,
+      "expectedEnd": 66.88,
+      "actualTime": 66.930341,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 12,
+      "expectedEnd": 68.58,
+      "actualTime": 68.58,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 13,
+      "expectedEnd": 77.86,
+      "actualTime": 77.932819,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 14,
+      "expectedEnd": 82.7,
+      "actualTime": 82.722136,
+      "state": 2,
+      "phase": "answering"
+    },
+    {
+      "question": 15,
+      "expectedEnd": 173.56,
+      "actualTime": 173.617376,
+      "state": 2,
+      "phase": "answering"
+    }
+  ],
+  "beforeEnd": {
+    "active": true,
+    "phase": "outro",
+    "time": 173.56
+  },
+  "end": {
+    "active": false,
+    "time": 292.701,
+    "duration": 292.701,
+    "prompt": "本次總分 100.00 分｜答對 15 題・答錯 0 題・未作答 0 題"
+  },
+  "errors": []
+}
