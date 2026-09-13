@@ -1,0 +1,59 @@
+{
+  "hosting": {
+    "status": 200,
+    "sha256": "82b86b7fff3c7425b0ccf0d12563ff2a8f447fbf0b4c79feb9fc915d27eea67b",
+    "schemaVersion": 4,
+    "columnCount": 9,
+    "verifiedAt": "2026-09-13T05:21:33.653Z"
+  },
+  "cloud": {
+    "functionState": "ACTIVE",
+    "runtime": "nodejs22",
+    "serviceAccount": "872667027875-compute@developer.gserviceaccount.com",
+    "jobName": "projects/yestredayoncemore/locations/asia-east1/jobs/firebase-schedule-purgeExpiredQuizResults-asia-east1",
+    "jobState": "ENABLED",
+    "schedule": "0 4 * * *",
+    "timeZone": "Asia/Taipei",
+    "lastAttemptTime": "2026-09-13T05:28:08.995839Z",
+    "lastStatus": {},
+    "manualRunRequestedAt": "2026-09-13T05:28:07.022Z",
+    "checkedAt": "2026-09-13T05:28:48.956Z",
+    "cleanupSummaries": [
+      {
+        "timestamp": "2026-09-13T05:28:10.101229Z",
+        "deletedResults": 0,
+        "missingDateGroups": 0,
+        "deletedMarkers": 0
+      }
+    ],
+    "errorCount": 0
+  },
+  "dryRun": {
+    "dryRun": true,
+    "writesPerformed": 0,
+    "readResultCount": 35,
+    "readMarkerCount": 0,
+    "eligibleResultCount": 0,
+    "eligibleMarkerCount": 0,
+    "missingDateGroups": 0,
+    "runtimeServiceAccountRoles": [
+      "roles/editor"
+    ],
+    "checkedAt": "2026-09-13T05:22:20.642Z"
+  },
+  "billingEnabled": true,
+  "containerArtifactRetentionDays": 7,
+  "manualRunPerformed": true,
+  "manualRunBlockedByApprovalReview": false,
+  "rulesAssertionsPassed": 195,
+  "emulatorCleanupPassed": true,
+  "browserRecoveryAndSingleDeletePassed": true,
+  "manualRunPreviouslyBlocked": true,
+  "manualRunAuthorization": "使用者明確回覆：核准立即清除到期資料",
+  "manualRunResult": {
+    "timestamp": "2026-09-13T05:28:10.101229Z",
+    "deletedResults": 0,
+    "missingDateGroups": 0,
+    "deletedMarkers": 0
+  }
+}

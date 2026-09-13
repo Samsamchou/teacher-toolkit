@@ -1,0 +1,9 @@
+process.env.FIRESTORE_EMULATOR_HOST='127.0.0.1:8188';process.env.GCLOUD_PROJECT='demo-song-quiz';
+const deps=require;const {initializeApp}=deps('firebase-admin/app');const {getFirestore,Timestamp}=deps('firebase-admin/firestore');const {runCleanup}=require('./retention-engine.cjs');const assert=require('node:assert/strict');
+(async()=>{initializeApp({projectId:'demo-song-quiz'});const db=getFirestore();const now=new Date('2027-11-13T00:00:00Z');
+const fixtures={expired1:{ownerUid:'u',sessionId:'old',startedAt:'2026-09-01T00:00:00Z'},expired2:{ownerUid:'u',sessionId:'old',startedAt:'2026-09-01T00:00:00Z',recordedAt:'2027-11-12T00:00:00Z'},keep:{ownerUid:'u',sessionId:'fresh',startedAt:'2027-10-01T00:00:00Z'},legacy:{recordedAt:'2026-01-01T00:00:00Z'},marked:{ownerUid:'u',sessionId:'deleted',startedAt:'2027-10-01T00:00:00Z'}};
+for(const [id,r] of Object.entries(fixtures))await db.collection('quizResults').doc(id).set(r);
+await db.collection('quizDeletedSessions').doc('u_deleted').set({expiresAt:Timestamp.fromDate(new Date('2028-12-01T00:00:00Z'))});await db.collection('quizDeletedSessions').doc('expired_marker').set({expiresAt:Timestamp.fromDate(new Date('2027-01-01T00:00:00Z'))});
+const result=await runCleanup(db,now);assert.deepEqual(result,{deletedResults:4,deletedMarkers:1,missingDateGroups:0});assert.deepEqual((await db.collection('quizResults').get()).docs.map(d=>d.id),['keep']);assert.equal((await db.collection('quizDeletedSessions').doc('u_deleted').get()).exists,true);
+const again=await runCleanup(db,now);assert.equal(again.deletedResults,0);assert.equal(again.deletedMarkers,0);
+console.log('PASS real Firestore Emulator cleanup: all expired snapshots, legacy fallback, marked session, expired marker, keep other practice, idempotent rerun');await db.terminate();})().catch(e=>{console.error(e);process.exitCode=1;});

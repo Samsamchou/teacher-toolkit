@@ -1,0 +1,16 @@
+{
+  "sourcePath": "D:\\115 上學期 備課\\國際歌謠\\G6\\San Francisco\\San Francisco  Scott Mckenzie (HD Sound)(Lyrics).mp4",
+  "sourceSha256": "dd296d0839f7e6d773d3719d007bb44be77d835276f26f84fc73051ad1d36186",
+  "outputSha256": "349135fb437a336a2a2d1c7b5fba5011105a3f02cbb65bf9d519761f2cbcb546",
+  "crop": "1280:620:0:0",
+  "audio": "stream copied AAC",
+  "durationSeconds": 179.07,
+  "questionCount": 16,
+  "teacherApproved": true,
+  "manualTimingVerified": false,
+  "decodedAudioSha256": "7a01e784c433066d0ef25b53e3517affc58c03740d6e5bc79c01c5d019a97333",
+  "originalAndOutputDecodedAudioMatch": true,
+  "visualQA": "9 evenly sampled frames: no bottom lyric text",
+  "teacherApprovalDate": "2026-09-13",
+  "productionMediaPath": "/media/san-francisco.mp4"
+}

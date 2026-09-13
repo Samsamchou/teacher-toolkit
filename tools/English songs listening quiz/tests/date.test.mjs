@@ -1,0 +1,7 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';
+const html=fs.readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
+const core=html.match(/<script id="quiz-core">([\s\S]*?)<\/script>/)[1];const ctx=vm.createContext({});vm.runInContext(core+';globalThis.api={taipeiDate,dateSessions};',ctx);const {taipeiDate,dateSessions}=ctx.api;
+assert.equal(taipeiDate('2026-09-12T15:59:59Z'),'2026-09-12');assert.equal(taipeiDate('2026-09-12T16:00:00Z'),'2026-09-13');
+const data=[{sessionId:'s1',revision:1,score:0,quizId:'old',startedAt:'2026-09-12T15:50:00Z',recordedAt:'2026-09-12T15:50:00Z'},{sessionId:'s1',revision:3,score:50,quizId:'old',startedAt:'2026-09-12T15:50:00Z',recordedAt:'2026-09-14T01:00:00Z'},{sessionId:'s2',revision:2,score:25,quizId:'different',recordedAt:'2026-09-13T01:00:00Z'},{sessionId:'s2',revision:1,score:0,quizId:'different',recordedAt:'2026-09-12T01:00:00Z'},{documentId:'legacy',score:10,submittedAt:{toDate:()=>new Date('2026-09-12T00:00:00Z')}},{documentId:'missing',score:0}];
+const a=dateSessions(data,'2026-09-12');assert.equal(a.length,3);assert.equal(a[0].score,50);assert.equal(a[1].score,25);assert.match(a[1].dateBasis,/最早可用紀錄/);assert.match(a[2].dateBasis,/提交時間/);assert.equal(dateSessions(data,'2026-09-13').length,0);assert.equal(dateSessions(data,'unknown').length,1);
+console.log('PASS Taiwan midnight, start-vs-upload date, all versions, latest session, legacy fallbacks, undated records');

@@ -6,9 +6,13 @@ service cloud.firestore {
     && request.auth.token.email == 'teacher@example.com';
   }
   function validSnapshot(d) {
-   return d.keys().hasAll(['schemaVersion','sessionId','revision','ownerUid','quizId','quizTitle','studentId','score','correctCount','wrongCount','answeredCount','unansweredCount','totalQuestions','wrongSentences','status','recordedAt','submittedAt'])
-    && d.keys().hasOnly(['schemaVersion','sessionId','revision','ownerUid','quizId','quizTitle','studentId','score','correctCount','wrongCount','answeredCount','unansweredCount','totalQuestions','wrongSentences','status','recordedAt','submittedAt'])
-    && d.schemaVersion == 2 && d.ownerUid == request.auth.uid
+   return d.keys().hasAll(['schemaVersion','sessionId','revision','ownerUid','quizId','quizTitle','studentId','score','correctCount','wrongCount','answeredCount','unansweredCount','totalQuestions','wrongSentences','status','recordedAt','submittedAt','startedAt','expiresAt','retryDetails','retryDetailsRecorded'])
+    && d.keys().hasOnly(['schemaVersion','sessionId','revision','ownerUid','quizId','quizTitle','studentId','score','correctCount','wrongCount','answeredCount','unansweredCount','totalQuestions','wrongSentences','status','recordedAt','submittedAt','startedAt','expiresAt','retryDetails','retryDetailsRecorded'])
+    && d.schemaVersion == 4 && d.startedAt is string && d.startedAt.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[.][0-9]{3}Z$') && d.startedAt <= d.recordedAt
+    && d.expiresAt is timestamp && d.expiresAt > request.time && d.expiresAt <= request.time + duration.value(428, 'd')
+    && d.retryDetails is string && d.retryDetails.size() <= 50000 && d.retryDetailsRecorded is bool
+    && (d.retryDetailsRecorded || d.retryDetails == '')
+    && d.ownerUid == request.auth.uid
     && d.sessionId is string && d.sessionId.matches('^[A-Za-z0-9_-]{1,100}$')
     && d.revision is int && d.revision > 0 && d.revision < 100000
     && d.quizId is string && d.quizId.matches('^[A-Za-z0-9_-]{1,100}$')
@@ -30,11 +34,24 @@ service cloud.firestore {
     && d.recordedAt is string && d.recordedAt.size() <= 40
     && d.submittedAt == request.time;
   }
+  function deletionKey(d, id) {
+   return ('ownerUid' in d && 'sessionId' in d) ? d.ownerUid + '_' + d.sessionId : 'legacy_' + id;
+  }
+  match /quizDeletedSessions/{markerId} {
+   allow get: if teacher() || (request.auth != null && markerId.matches('^' + request.auth.uid + '_.*$'));
+   allow list: if teacher();
+   allow create: if teacher() && request.resource.data.keys().hasAll(['deletedAt','expiresAt'])
+    && request.resource.data.keys().hasOnly(['deletedAt','expiresAt'])
+    && request.resource.data.deletedAt == request.time && request.resource.data.expiresAt is timestamp;
+   allow update, delete: if false;
+  }
   match /quizResults/{resultId} {
    allow read: if teacher();
    allow create: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'anonymous'
-    && validSnapshot(request.resource.data);
-   allow update, delete: if false;
+    && validSnapshot(request.resource.data)
+    && !exists(/databases/$(database)/documents/quizDeletedSessions/$(deletionKey(request.resource.data,resultId)));
+   allow update: if false;
+   allow delete: if teacher() && exists(/databases/$(database)/documents/quizDeletedSessions/$(deletionKey(resource.data,resultId)));
   }
   match /{document=**} { allow read, write: if false; }
  }

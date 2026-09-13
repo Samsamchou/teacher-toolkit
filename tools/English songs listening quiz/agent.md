@@ -7,7 +7,7 @@
 - 正式工作目錄 / Active root: G:\我的雲端硬碟\teacher-toolkit\tools\English songs listening quiz.
 - 本網站主要對象為五、六年級 / This site currently serves Grades 5–6.
 - 首頁 → 年級歌單 → 歌曲聽力練習 / Home → grade playlist → listening practice.
-- 五年級收錄 Yesterday Once More；六年級目前不自行加入歌曲 / Grade 5 includes Yesterday Once More; Grade 6 awaits teacher content.
+- 五年級收錄 Yesterday Once More；六年級收錄老師核准的 San Francisco（16題） / Grade 5 includes Yesterday Once More; Grade 6 includes teacher-approved San Francisco.
 - 使用父層 teacher-toolkit Git；不建立巢狀 Git / Use the parent repository; no nested Git repository.
 - 先完成本機修改與教師驗收，最後才部署到 yestredayoncemore / Finish local changes and teacher acceptance before deployment to yestredayoncemore.
 - 不將密碼或私鑰寫入檔案 / Never store passwords or private keys in files.

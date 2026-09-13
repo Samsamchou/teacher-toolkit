@@ -1,0 +1,1744 @@
+{
+  "quizId": "san-francisco-g6-cloze-v1",
+  "quizTitle": "San Francisco · 六年級聽力練習",
+  "mediaType": "file",
+  "videoSrc": "/media/san-francisco.mp4",
+  "teacherBankApproval": true,
+  "timingVerified": false,
+  "actualAudioAligned": true,
+  "status": "teacher_approved_for_production",
+  "questions": [
+    {
+      "id": 1,
+      "target": "going",
+      "sentence": "If you're going to San Francisco",
+      "cloze": "If you're ＿＿＿＿＿ to San Francisco",
+      "choices": [
+        "doing",
+        "going",
+        "looking"
+      ],
+      "answerIndex": 1,
+      "start": 4.46,
+      "end": 12.84,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "doing",
+          "lemma": "do",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        },
+        {
+          "word": "going",
+          "lemma": "go",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        },
+        {
+          "word": "looking",
+          "lemma": "look",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 4.58,
+        "firstEnd": 12.76,
+        "secondStart": 4.58,
+        "secondEnd": 12.76,
+        "endDifference": 0.0,
+        "words": [
+          {
+            "word": " If",
+            "start": 4.58,
+            "end": 5.94,
+            "probability": 0.10984306782484055,
+            "tokens": [
+              1002
+            ]
+          },
+          {
+            "word": " you're",
+            "start": 5.94,
+            "end": 6.62,
+            "probability": 0.9521300792694092,
+            "tokens": [
+              345,
+              821
+            ]
+          },
+          {
+            "word": " going",
+            "start": 6.62,
+            "end": 7.3,
+            "probability": 0.9620821475982666,
+            "tokens": [
+              1016
+            ]
+          },
+          {
+            "word": " to",
+            "start": 7.3,
+            "end": 8.82,
+            "probability": 0.9389863014221191,
+            "tokens": [
+              284
+            ]
+          },
+          {
+            "word": " San",
+            "start": 8.82,
+            "end": 9.62,
+            "probability": 0.9277613162994385,
+            "tokens": [
+              2986
+            ]
+          },
+          {
+            "word": " Francisco.",
+            "start": 9.62,
+            "end": 12.76,
+            "probability": 0.5013360492885113,
+            "tokens": [
+              6033,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 2,
+      "target": "flowers",
+      "sentence": "Be sure to wear some flowers in your hair",
+      "cloze": "Be sure to wear some ＿＿＿＿＿ in your hair",
+      "choices": [
+        "flowers",
+        "friends",
+        "floors"
+      ],
+      "answerIndex": 0,
+      "start": 13.68,
+      "end": 20.02,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "flowers",
+          "lemma": "flower",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        },
+        {
+          "word": "friends",
+          "lemma": "friend",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        },
+        {
+          "word": "floors",
+          "lemma": "floor",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 13.8,
+        "firstEnd": 19.94,
+        "secondStart": 13.8,
+        "secondEnd": 19.94,
+        "endDifference": 0.0,
+        "words": [
+          {
+            "word": " Be",
+            "start": 13.8,
+            "end": 14.36,
+            "probability": 0.9686638712882996,
+            "tokens": [
+              1355
+            ]
+          },
+          {
+            "word": " sure",
+            "start": 14.36,
+            "end": 14.84,
+            "probability": 0.9935997724533081,
+            "tokens": [
+              1654
+            ]
+          },
+          {
+            "word": " to",
+            "start": 14.84,
+            "end": 15.32,
+            "probability": 0.9931968450546265,
+            "tokens": [
+              284
+            ]
+          },
+          {
+            "word": " wear",
+            "start": 15.32,
+            "end": 16.34,
+            "probability": 0.930306613445282,
+            "tokens": [
+              5806
+            ]
+          },
+          {
+            "word": " some",
+            "start": 16.34,
+            "end": 17.4,
+            "probability": 0.9402561187744141,
+            "tokens": [
+              617
+            ]
+          },
+          {
+            "word": " flowers",
+            "start": 17.4,
+            "end": 18.24,
+            "probability": 0.9970667958259583,
+            "tokens": [
+              12734
+            ]
+          },
+          {
+            "word": " in",
+            "start": 18.24,
+            "end": 18.88,
+            "probability": 0.9688847661018372,
+            "tokens": [
+              287
+            ]
+          },
+          {
+            "word": " your",
+            "start": 18.88,
+            "end": 19.44,
+            "probability": 0.9935899972915649,
+            "tokens": [
+              534
+            ]
+          },
+          {
+            "word": " hair.",
+            "start": 19.44,
+            "end": 19.94,
+            "probability": 0.8470530807971954,
+            "tokens": [
+              4190,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 3,
+      "target": "If",
+      "sentence": "If you're going to San Francisco",
+      "cloze": "＿＿＿＿＿ you're going to San Francisco",
+      "choices": [
+        "Of",
+        "Off",
+        "If"
+      ],
+      "answerIndex": 2,
+      "start": 21.56,
+      "end": 30.0,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "Of",
+          "lemma": "of",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "Off",
+          "lemma": "off",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "If",
+          "lemma": "if",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 21.7,
+        "firstEnd": 29.9,
+        "secondStart": 21.68,
+        "secondEnd": 29.92,
+        "endDifference": 0.02,
+        "words": [
+          {
+            "word": " If",
+            "start": 21.68,
+            "end": 23.08,
+            "probability": 0.22069068253040314,
+            "tokens": [
+              1002
+            ]
+          },
+          {
+            "word": " you're",
+            "start": 23.08,
+            "end": 23.8,
+            "probability": 0.9042879045009613,
+            "tokens": [
+              345,
+              821
+            ]
+          },
+          {
+            "word": " going",
+            "start": 23.8,
+            "end": 24.72,
+            "probability": 0.9043486714363098,
+            "tokens": [
+              1016
+            ]
+          },
+          {
+            "word": " to",
+            "start": 24.72,
+            "end": 25.98,
+            "probability": 0.9224319458007812,
+            "tokens": [
+              284
+            ]
+          },
+          {
+            "word": " San",
+            "start": 25.98,
+            "end": 26.72,
+            "probability": 0.9866192936897278,
+            "tokens": [
+              2986
+            ]
+          },
+          {
+            "word": " Francisco.",
+            "start": 26.72,
+            "end": 29.92,
+            "probability": 0.5094901584088802,
+            "tokens": [
+              6033,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 4,
+      "target": "meet",
+      "sentence": "You're gonna meet some gentle people there",
+      "cloze": "You're gonna ＿＿＿＿＿ some gentle people there",
+      "choices": [
+        "make",
+        "meet",
+        "need"
+      ],
+      "answerIndex": 1,
+      "start": 30.44,
+      "end": 38.84,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "make",
+          "lemma": "make",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "meet",
+          "lemma": "meet",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "need",
+          "lemma": "need",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 30.66,
+        "firstEnd": 38.76,
+        "secondStart": 30.56,
+        "secondEnd": 38.76,
+        "endDifference": 0.0,
+        "words": [
+          {
+            "word": " You're",
+            "start": 30.56,
+            "end": 31.68,
+            "probability": 0.8836024403572083,
+            "tokens": [
+              921,
+              821
+            ]
+          },
+          {
+            "word": " gonna",
+            "start": 31.68,
+            "end": 32.08,
+            "probability": 0.8104960918426514,
+            "tokens": [
+              8066
+            ]
+          },
+          {
+            "word": " meet",
+            "start": 32.08,
+            "end": 33.26,
+            "probability": 0.8424230813980103,
+            "tokens": [
+              1826
+            ]
+          },
+          {
+            "word": " some",
+            "start": 33.26,
+            "end": 34.78,
+            "probability": 0.9326033592224121,
+            "tokens": [
+              617
+            ]
+          },
+          {
+            "word": " gentle",
+            "start": 34.78,
+            "end": 35.54,
+            "probability": 0.960780918598175,
+            "tokens": [
+              10296
+            ]
+          },
+          {
+            "word": " people",
+            "start": 35.54,
+            "end": 36.24,
+            "probability": 0.99036705493927,
+            "tokens": [
+              661
+            ]
+          },
+          {
+            "word": " there.",
+            "start": 36.24,
+            "end": 38.76,
+            "probability": 0.9207753539085388,
+            "tokens": [
+              612,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 5,
+      "target": "come",
+      "sentence": "For those who come to San Francisco",
+      "cloze": "For those who ＿＿＿＿＿ to San Francisco",
+      "choices": [
+        "come",
+        "call",
+        "count"
+      ],
+      "answerIndex": 0,
+      "start": 39.18,
+      "end": 49.3,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "come",
+          "lemma": "come",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "call",
+          "lemma": "call",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "count",
+          "lemma": "count",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 40.0,
+        "firstEnd": 49.22,
+        "secondStart": 39.3,
+        "secondEnd": 49.18,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " For",
+            "start": 39.3,
+            "end": 41.86,
+            "probability": 0.09121515601873398,
+            "tokens": [
+              1114
+            ]
+          },
+          {
+            "word": " those",
+            "start": 41.86,
+            "end": 42.5,
+            "probability": 0.8856797814369202,
+            "tokens": [
+              883
+            ]
+          },
+          {
+            "word": " who",
+            "start": 42.5,
+            "end": 42.9,
+            "probability": 0.968478798866272,
+            "tokens": [
+              508
+            ]
+          },
+          {
+            "word": " come",
+            "start": 42.9,
+            "end": 44.14,
+            "probability": 0.8651530742645264,
+            "tokens": [
+              1282
+            ]
+          },
+          {
+            "word": " to",
+            "start": 44.14,
+            "end": 45.2,
+            "probability": 0.9155966639518738,
+            "tokens": [
+              284
+            ]
+          },
+          {
+            "word": " San",
+            "start": 45.2,
+            "end": 46.1,
+            "probability": 0.9859975576400757,
+            "tokens": [
+              2986
+            ]
+          },
+          {
+            "word": " Francisco.",
+            "start": 46.1,
+            "end": 49.18,
+            "probability": 0.5256434455513954,
+            "tokens": [
+              6033,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 6,
+      "target": "Summer",
+      "sentence": "Summer time will be a loving there",
+      "cloze": "＿＿＿＿＿ time will be a loving there",
+      "choices": [
+        "Winter",
+        "Sunday",
+        "Summer"
+      ],
+      "answerIndex": 2,
+      "start": 50.0,
+      "end": 57.92,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "Winter",
+          "lemma": "winter",
+          "pdfPage": 59,
+          "printedPage": 58,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "Sunday",
+          "lemma": "sunday",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "Summer",
+          "lemma": "summer",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 50.12,
+        "firstEnd": 57.84,
+        "secondStart": 50.3,
+        "secondEnd": 57.8,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " Summer",
+            "start": 50.3,
+            "end": 51.1,
+            "probability": 0.8762246966362,
+            "tokens": [
+              10216
+            ]
+          },
+          {
+            "word": " time",
+            "start": 51.1,
+            "end": 52.74,
+            "probability": 0.20234912633895874,
+            "tokens": [
+              640
+            ]
+          },
+          {
+            "word": " will",
+            "start": 52.74,
+            "end": 53.92,
+            "probability": 0.8821706771850586,
+            "tokens": [
+              481
+            ]
+          },
+          {
+            "word": " be",
+            "start": 53.92,
+            "end": 54.58,
+            "probability": 0.9943073391914368,
+            "tokens": [
+              307
+            ]
+          },
+          {
+            "word": " a",
+            "start": 54.58,
+            "end": 54.94,
+            "probability": 0.629102885723114,
+            "tokens": [
+              257
+            ]
+          },
+          {
+            "word": " love-in",
+            "start": 54.94,
+            "end": 55.66,
+            "probability": 0.33037836849689484,
+            "tokens": [
+              1842,
+              12,
+              259
+            ]
+          },
+          {
+            "word": " there.",
+            "start": 55.66,
+            "end": 57.8,
+            "probability": 0.4808327881619334,
+            "tokens": [
+              612,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending",
+      "teacherTextRevision": "2026-09-13: love-in → loving，老師指定修訂；原始對齊證據保留。"
+    },
+    {
+      "id": 7,
+      "target": "streets",
+      "sentence": "In the streets of San Francisco",
+      "cloze": "In the ＿＿＿＿＿ of San Francisco",
+      "choices": [
+        "stars",
+        "streets",
+        "stores"
+      ],
+      "answerIndex": 1,
+      "start": 58.28,
+      "end": 66.38,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "stars",
+          "lemma": "star",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        },
+        {
+          "word": "streets",
+          "lemma": "street",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        },
+        {
+          "word": "stores",
+          "lemma": "store",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "詞根的規則屈折形式"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 59.0,
+        "firstEnd": 66.26,
+        "secondStart": 58.4,
+        "secondEnd": 66.3,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " In",
+            "start": 58.4,
+            "end": 59.52,
+            "probability": 0.6309133172035217,
+            "tokens": [
+              554
+            ]
+          },
+          {
+            "word": " the",
+            "start": 59.52,
+            "end": 60.02,
+            "probability": 0.9854362607002258,
+            "tokens": [
+              262
+            ]
+          },
+          {
+            "word": " streets",
+            "start": 60.02,
+            "end": 61.46,
+            "probability": 0.9764561653137207,
+            "tokens": [
+              6483
+            ]
+          },
+          {
+            "word": " of",
+            "start": 61.46,
+            "end": 62.26,
+            "probability": 0.9121822714805603,
+            "tokens": [
+              286
+            ]
+          },
+          {
+            "word": " San",
+            "start": 62.26,
+            "end": 63.12,
+            "probability": 0.99826580286026,
+            "tokens": [
+              2986
+            ]
+          },
+          {
+            "word": " Francisco.",
+            "start": 63.12,
+            "end": 66.3,
+            "probability": 0.5784684345126152,
+            "tokens": [
+              6033,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 8,
+      "target": "hair",
+      "sentence": "Gentle people with flowers in their hair",
+      "cloze": "Gentle people with flowers in their ＿＿＿＿＿",
+      "choices": [
+        "hair",
+        "hand",
+        "head"
+      ],
+      "answerIndex": 0,
+      "start": 66.82,
+      "end": 75.02,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "hair",
+          "lemma": "hair",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "hand",
+          "lemma": "hand",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "head",
+          "lemma": "head",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 67.24,
+        "firstEnd": 74.18,
+        "secondStart": 66.94,
+        "secondEnd": 74.94,
+        "endDifference": 0.76,
+        "words": [
+          {
+            "word": " Gentle",
+            "start": 66.94,
+            "end": 68.02,
+            "probability": 0.886344313621521,
+            "tokens": [
+              25066
+            ]
+          },
+          {
+            "word": " people",
+            "start": 68.02,
+            "end": 69.2,
+            "probability": 0.9634594321250916,
+            "tokens": [
+              661
+            ]
+          },
+          {
+            "word": " with",
+            "start": 69.2,
+            "end": 70.92,
+            "probability": 0.8357653021812439,
+            "tokens": [
+              351
+            ]
+          },
+          {
+            "word": " flowers",
+            "start": 70.92,
+            "end": 71.9,
+            "probability": 0.9928024411201477,
+            "tokens": [
+              12734
+            ]
+          },
+          {
+            "word": " in",
+            "start": 71.9,
+            "end": 72.36,
+            "probability": 0.9823505878448486,
+            "tokens": [
+              287
+            ]
+          },
+          {
+            "word": " their",
+            "start": 72.36,
+            "end": 73.0,
+            "probability": 0.9852241277694702,
+            "tokens": [
+              511
+            ]
+          },
+          {
+            "word": " hair.",
+            "start": 73.0,
+            "end": 74.94,
+            "probability": 0.4848574809730053,
+            "tokens": [
+              4190,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending",
+      "teacherConfirmedFinalWord": "hair",
+      "teacherFinalWordConfirmedAt": "2026-09-13",
+      "teacherTimingNote": "已確認尾字hair；秒數未變，不推定為人工秒數測量。"
+    },
+    {
+      "id": 9,
+      "target": "across",
+      "sentence": "All across the nation",
+      "cloze": "All ＿＿＿＿＿ the nation",
+      "choices": [
+        "around",
+        "along",
+        "across"
+      ],
+      "answerIndex": 2,
+      "start": 75.88,
+      "end": 81.6,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "around",
+          "lemma": "around",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "along",
+          "lemma": "along",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "across",
+          "lemma": "across",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 76.0,
+        "firstEnd": 81.48,
+        "secondStart": 76.7,
+        "secondEnd": 81.52,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " All",
+            "start": 76.7,
+            "end": 78.1,
+            "probability": 0.3424564003944397,
+            "tokens": [
+              1439
+            ]
+          },
+          {
+            "word": " across",
+            "start": 78.1,
+            "end": 78.68,
+            "probability": 0.9749687910079956,
+            "tokens": [
+              1973
+            ]
+          },
+          {
+            "word": " the",
+            "start": 78.68,
+            "end": 79.02,
+            "probability": 0.9891646504402161,
+            "tokens": [
+              262
+            ]
+          },
+          {
+            "word": " nation.",
+            "start": 79.02,
+            "end": 81.52,
+            "probability": 0.5322541259229183,
+            "tokens": [
+              3277,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 10,
+      "target": "strange",
+      "sentence": "Such a strange vibration",
+      "cloze": "Such a ＿＿＿＿＿ vibration",
+      "choices": [
+        "strong",
+        "strange",
+        "small"
+      ],
+      "answerIndex": 1,
+      "start": 81.6,
+      "end": 85.68,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "strong",
+          "lemma": "strong",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "strange",
+          "lemma": "strange",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "small",
+          "lemma": "small",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 81.52,
+        "firstEnd": 85.6,
+        "secondStart": 81.8,
+        "secondEnd": 85.56,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " Such",
+            "start": 81.8,
+            "end": 82.28,
+            "probability": 0.9880311489105225,
+            "tokens": [
+              8013
+            ]
+          },
+          {
+            "word": " a",
+            "start": 82.28,
+            "end": 82.48,
+            "probability": 0.9818918108940125,
+            "tokens": [
+              257
+            ]
+          },
+          {
+            "word": " strange",
+            "start": 82.48,
+            "end": 83.0,
+            "probability": 0.9855321049690247,
+            "tokens": [
+              6283
+            ]
+          },
+          {
+            "word": " vibration.",
+            "start": 83.0,
+            "end": 85.56,
+            "probability": 0.8633936643600464,
+            "tokens": [
+              30999,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 11,
+      "target": "People",
+      "sentence": "People in motion",
+      "cloze": "＿＿＿＿＿ in motion",
+      "choices": [
+        "People",
+        "Purple",
+        "Pencil"
+      ],
+      "answerIndex": 0,
+      "start": 86.42,
+      "end": 89.84,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "People",
+          "lemma": "people",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "Purple",
+          "lemma": "purple",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "Pencil",
+          "lemma": "pencil",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 86.54,
+        "firstEnd": 89.76,
+        "secondStart": 86.96,
+        "secondEnd": 89.76,
+        "endDifference": 0.0,
+        "words": [
+          {
+            "word": " People",
+            "start": 86.96,
+            "end": 87.24,
+            "probability": 0.9720631837844849,
+            "tokens": [
+              4380
+            ]
+          },
+          {
+            "word": " in",
+            "start": 87.24,
+            "end": 87.54,
+            "probability": 0.8872575163841248,
+            "tokens": [
+              287
+            ]
+          },
+          {
+            "word": " motion.",
+            "start": 87.54,
+            "end": 89.76,
+            "probability": 0.9086279273033142,
+            "tokens": [
+              6268,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 12,
+      "target": "whole",
+      "sentence": "There's a whole generation",
+      "cloze": "There's a ＿＿＿＿＿ generation",
+      "choices": [
+        "white",
+        "warm",
+        "whole"
+      ],
+      "answerIndex": 2,
+      "start": 90.18,
+      "end": 96.06,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "white",
+          "lemma": "white",
+          "pdfPage": 59,
+          "printedPage": 58,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "warm",
+          "lemma": "warm",
+          "pdfPage": 59,
+          "printedPage": 58,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "whole",
+          "lemma": "whole",
+          "pdfPage": 61,
+          "printedPage": 60,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表二 其他常用800字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 91.0,
+        "firstEnd": 95.9,
+        "secondStart": 90.3,
+        "secondEnd": 95.98,
+        "endDifference": 0.08,
+        "words": [
+          {
+            "word": " There's",
+            "start": 90.3,
+            "end": 92.98,
+            "probability": 0.7317453622817993,
+            "tokens": [
+              1318,
+              338
+            ]
+          },
+          {
+            "word": " a",
+            "start": 92.98,
+            "end": 93.14,
+            "probability": 0.9921272993087769,
+            "tokens": [
+              257
+            ]
+          },
+          {
+            "word": " whole",
+            "start": 93.14,
+            "end": 93.44,
+            "probability": 0.9783576726913452,
+            "tokens": [
+              2187
+            ]
+          },
+          {
+            "word": " generation.",
+            "start": 93.44,
+            "end": 95.98,
+            "probability": 0.5017529688775539,
+            "tokens": [
+              5270,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 13,
+      "target": "new",
+      "sentence": "With a new explanation",
+      "cloze": "With a ＿＿＿＿＿ explanation",
+      "choices": [
+        "now",
+        "new",
+        "near"
+      ],
+      "answerIndex": 1,
+      "start": 96.2,
+      "end": 100.28,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "now",
+          "lemma": "now",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "new",
+          "lemma": "new",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "near",
+          "lemma": "near",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 96.36,
+        "firstEnd": 100.2,
+        "secondStart": 96.32,
+        "secondEnd": 100.14,
+        "endDifference": 0.06,
+        "words": [
+          {
+            "word": " With",
+            "start": 96.32,
+            "end": 97.06,
+            "probability": 0.9549340605735779,
+            "tokens": [
+              2080
+            ]
+          },
+          {
+            "word": " a",
+            "start": 97.06,
+            "end": 97.3,
+            "probability": 0.9748809933662415,
+            "tokens": [
+              257
+            ]
+          },
+          {
+            "word": " new",
+            "start": 97.3,
+            "end": 97.64,
+            "probability": 0.996012806892395,
+            "tokens": [
+              649
+            ]
+          },
+          {
+            "word": " explanation.",
+            "start": 97.64,
+            "end": 100.14,
+            "probability": 0.9107862114906311,
+            "tokens": [
+              7468,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 14,
+      "target": "in",
+      "sentence": "People in motion",
+      "cloze": "People ＿＿＿＿＿ motion",
+      "choices": [
+        "in",
+        "on",
+        "at"
+      ],
+      "answerIndex": 0,
+      "start": 101.44,
+      "end": 104.68,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "in",
+          "lemma": "in",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "on",
+          "lemma": "on",
+          "pdfPage": 57,
+          "printedPage": 56,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "at",
+          "lemma": "at",
+          "pdfPage": 56,
+          "printedPage": 55,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 101.56,
+        "firstEnd": 104.6,
+        "secondStart": 101.74,
+        "secondEnd": 104.56,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " People",
+            "start": 101.74,
+            "end": 102.04,
+            "probability": 0.9750208258628845,
+            "tokens": [
+              4380
+            ]
+          },
+          {
+            "word": " in",
+            "start": 102.04,
+            "end": 102.38,
+            "probability": 0.9845935702323914,
+            "tokens": [
+              287
+            ]
+          },
+          {
+            "word": " motion.",
+            "start": 102.38,
+            "end": 104.56,
+            "probability": 0.9269200563430786,
+            "tokens": [
+              6268,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 15,
+      "target": "wear",
+      "sentence": "Be sure to wear some flowers in your hair",
+      "cloze": "Be sure to ＿＿＿＿＿ some flowers in your hair",
+      "choices": [
+        "walk",
+        "wait",
+        "wear"
+      ],
+      "answerIndex": 2,
+      "start": 116.92,
+      "end": 126.28,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "walk",
+          "lemma": "walk",
+          "pdfPage": 59,
+          "printedPage": 58,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "wait",
+          "lemma": "wait",
+          "pdfPage": 59,
+          "printedPage": 58,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "wear",
+          "lemma": "wear",
+          "pdfPage": 59,
+          "printedPage": 58,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 117.06,
+        "firstEnd": 126.2,
+        "secondStart": 117.04,
+        "secondEnd": 126.16,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " Be",
+            "start": 117.04,
+            "end": 118.44,
+            "probability": 0.988788902759552,
+            "tokens": [
+              1355
+            ]
+          },
+          {
+            "word": " sure",
+            "start": 118.44,
+            "end": 118.92,
+            "probability": 0.9969869256019592,
+            "tokens": [
+              1654
+            ]
+          },
+          {
+            "word": " to",
+            "start": 118.92,
+            "end": 119.4,
+            "probability": 0.9949302077293396,
+            "tokens": [
+              284
+            ]
+          },
+          {
+            "word": " wear",
+            "start": 119.4,
+            "end": 120.64,
+            "probability": 0.9889139533042908,
+            "tokens": [
+              5806
+            ]
+          },
+          {
+            "word": " some",
+            "start": 120.64,
+            "end": 121.68,
+            "probability": 0.9269052147865295,
+            "tokens": [
+              617
+            ]
+          },
+          {
+            "word": " flowers",
+            "start": 121.68,
+            "end": 122.54,
+            "probability": 0.9992365837097168,
+            "tokens": [
+              12734
+            ]
+          },
+          {
+            "word": " in",
+            "start": 122.54,
+            "end": 123.04,
+            "probability": 0.9926224946975708,
+            "tokens": [
+              287
+            ]
+          },
+          {
+            "word": " your",
+            "start": 123.04,
+            "end": 123.58,
+            "probability": 0.9922322034835815,
+            "tokens": [
+              534
+            ]
+          },
+          {
+            "word": " hair.",
+            "start": 123.58,
+            "end": 126.16,
+            "probability": 0.9647112488746643,
+            "tokens": [
+              4190,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending"
+    },
+    {
+      "id": 16,
+      "target": "time",
+      "sentence": "Summer time will be a loving there",
+      "cloze": "Summer ＿＿＿＿＿ will be a loving there",
+      "choices": [
+        "team",
+        "time",
+        "town"
+      ],
+      "answerIndex": 1,
+      "start": 156.24,
+      "end": 164.54,
+      "timingVerified": false,
+      "choiceEvidence": [
+        {
+          "word": "team",
+          "lemma": "team",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "time",
+          "lemma": "time",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        },
+        {
+          "word": "town",
+          "lemma": "town",
+          "pdfPage": 58,
+          "printedPage": 57,
+          "sourceUrl": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+          "table": "表一 基本1200字",
+          "form": "原形"
+        }
+      ],
+      "timingEvidence": {
+        "firstStart": 156.36,
+        "firstEnd": 164.46,
+        "secondStart": 156.44,
+        "secondEnd": 164.42,
+        "endDifference": 0.04,
+        "words": [
+          {
+            "word": " Summer",
+            "start": 156.44,
+            "end": 157.16,
+            "probability": 0.6842173933982849,
+            "tokens": [
+              10216
+            ]
+          },
+          {
+            "word": " time",
+            "start": 157.16,
+            "end": 158.58,
+            "probability": 0.26460930705070496,
+            "tokens": [
+              640
+            ]
+          },
+          {
+            "word": " will",
+            "start": 158.58,
+            "end": 160.28,
+            "probability": 0.603063702583313,
+            "tokens": [
+              481
+            ]
+          },
+          {
+            "word": " be",
+            "start": 160.28,
+            "end": 160.9,
+            "probability": 0.9944985508918762,
+            "tokens": [
+              307
+            ]
+          },
+          {
+            "word": " a",
+            "start": 160.9,
+            "end": 161.22,
+            "probability": 0.5197703242301941,
+            "tokens": [
+              257
+            ]
+          },
+          {
+            "word": " love-in",
+            "start": 161.22,
+            "end": 161.88,
+            "probability": 0.3493143357336521,
+            "tokens": [
+              1842,
+              12,
+              259
+            ]
+          },
+          {
+            "word": " there.",
+            "start": 161.88,
+            "end": 164.42,
+            "probability": 0.44855548115447164,
+            "tokens": [
+              612,
+              13
+            ]
+          }
+        ]
+      },
+      "timingStatus": "two_pass_audio_alignment_teacher_review_pending",
+      "teacherTextRevision": "2026-09-13: love-in → loving，老師指定修訂；原始對齊證據保留。"
+    }
+  ],
+  "teacherApprovalDate": "2026-09-13",
+  "teacherApprovalNote": "老師明確要求加入六年級歌單並正式部署；保留自動校時與原始證據狀態。"
+}
