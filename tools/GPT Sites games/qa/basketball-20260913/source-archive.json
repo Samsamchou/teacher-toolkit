@@ -1,0 +1,320 @@
+{
+  "storage": "Original files retained in GDrive workspace; excluded from this Git commit",
+  "files": [
+    {
+      "path": "參考遊戲/Video_260913091733_免費導出.mp4",
+      "bytes": 91711855,
+      "sha256": "2a45e756a7baf24240c86d2d38883a62bf5fc23349b7e21c0ba813617631c242"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/contact.jpg",
+      "bytes": 1034916,
+      "sha256": "27ca14426edf22c5bbf9859e24ad160c94bebe5ddb8d1f75b0331779479310bf"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/detail-112.png",
+      "bytes": 1931735,
+      "sha256": "7d6afdb3be43fd959e2796bd6333529f4253802218397227b02bb6653f0ca799"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/detail-120.png",
+      "bytes": 3137031,
+      "sha256": "6fc35bef264bc331ab8d3a69a76ff3953c3e27ca01d27a21134ad616e1e50abf"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/detail-144.png",
+      "bytes": 2418603,
+      "sha256": "636edf5f03282fe9453d83d7a2c86467feff5225343c5633fa7ebc1d8d7528ad"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/detail-168.png",
+      "bytes": 3153960,
+      "sha256": "c7287659ba157eaa9bf90495d772a3a274c612c7067d8113ec177bdfe2534451"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/detail-55.png",
+      "bytes": 2824316,
+      "sha256": "bf72b20883f7ee4ffaac8c5db8941d5c08e92530a6ad0fa41be656f37b6f933c"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/detail-80.png",
+      "bytes": 1311359,
+      "sha256": "9c8bee44ee1ac04f16acb89217c6b9a7b79106ff3888ade59b1711be41c06a9c"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-001.jpg",
+      "bytes": 35146,
+      "sha256": "a44f99b79eee9adcb636ab05a27bd4dff0cf5de88637e786f7cc607f66dd334a"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-002.jpg",
+      "bytes": 55468,
+      "sha256": "7e7434992b20efefb1ad13f4674a7defd1dbec6d7933670f41916746114bf7a5"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-003.jpg",
+      "bytes": 92187,
+      "sha256": "6ec9ea4060a9a7c3cba26428a54342702e1d9de43c9e870a299dc788d78e57cd"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-004.jpg",
+      "bytes": 96325,
+      "sha256": "a534e46fe5e3a95a4a74469b131326b355a9f11d4359269c710f1daef2425468"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-005.jpg",
+      "bytes": 96332,
+      "sha256": "da3f012502f6ca6a41c5820a621e17f7c28697569075687cda3236fb74c75f39"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-006.jpg",
+      "bytes": 95982,
+      "sha256": "aee8e066d56486ec4843b7fdc02b9c32406560e4ed6522f607cd65da3d973c8b"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-007.jpg",
+      "bytes": 86587,
+      "sha256": "1eda7c00f83903eb1d03f1d141bf1f57b892662d2a4d02b30119563ce157f6f7"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-008.jpg",
+      "bytes": 117452,
+      "sha256": "d9000621176698c482436d6c222fbb0eb05173a04c34d25abf01737c86f105e5"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-009.jpg",
+      "bytes": 66272,
+      "sha256": "26b1ec589e6f692692c3ff07fa2e8ddbc34c11c485567b337ab220f08dd75320"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-010.jpg",
+      "bytes": 77422,
+      "sha256": "c639986440ed35cee24545b9a4a492eb0305266a39ace84742450d774c1ab87e"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-011.jpg",
+      "bytes": 80014,
+      "sha256": "3c7f16080020f39d53f099fea534d0fe61334e8b04d843db38e26eb469cc70ce"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-012.jpg",
+      "bytes": 77786,
+      "sha256": "e1bab2ce30dc01798406a8f78ce8ec4c9da69ef4f5e167998e5dc0aec37d87eb"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-013.jpg",
+      "bytes": 80061,
+      "sha256": "6657148a51ba4f5a7e53c9b7f2fba25b5a23432f2225d003d4dc5263de326750"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-014.jpg",
+      "bytes": 76429,
+      "sha256": "4a2ed1eb431b27fe6b792b66d9a8663723e5776b30eab07c0812ab7f30d1ed20"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-015.jpg",
+      "bytes": 78993,
+      "sha256": "6a0396cc077efd7ee8a49d447f53a69cd6ee2a07d790a4b174b8cc8f438a5839"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-016.jpg",
+      "bytes": 79358,
+      "sha256": "c17fd82f84b2796415babf89836acee8ab29dbaf0699915b9c942f71c38f29fa"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-017.jpg",
+      "bytes": 51895,
+      "sha256": "3855007116971caff7db680627fc18f96fce687387343cb8e3ce142c390d465a"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-018.jpg",
+      "bytes": 78604,
+      "sha256": "fa5e76ba9ba7ee326f509eab70d9971f79012734bc2eecb10133419364d60688"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-019.jpg",
+      "bytes": 65726,
+      "sha256": "26ae8299d48d5f11ee9f8bb2b03addfabc483ac2a67833332722431a8649fe7b"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-020.jpg",
+      "bytes": 75283,
+      "sha256": "748ee884460c4396c236960de5ae73f5a54a90e7e309550e86946de900997254"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-021.jpg",
+      "bytes": 54970,
+      "sha256": "477fec0e9729c5b783b9f11e5d5bcea20f51358f19d4f682efa32545cb1bc1c1"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-022.jpg",
+      "bytes": 80768,
+      "sha256": "5500847e8bcf489cdca9683591615de8bb4bedabd2ddd197c1ad5876bf5a356d"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/frame-023.jpg",
+      "bytes": 43172,
+      "sha256": "edbdf38d05141e779936b6cced3292285ba8acabfbba1690ba1acfb9965b21a9"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/key-details.jpg",
+      "bytes": 285472,
+      "sha256": "a3fa1f7116ab3124cb62567feb692dbdfba45c0b7f3b5d428e2410025c39a69a"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-01.jpg",
+      "bytes": 27679,
+      "sha256": "f1f278dc7e11fc8da4c052295f095b889d21a13c482b336e498deaac0625e8ad"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-02.jpg",
+      "bytes": 38435,
+      "sha256": "296dd6e9077b1d1f78e6bec545a7ff0fe2f3164e450c4dd9129877e637c2275e"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-03.jpg",
+      "bytes": 49144,
+      "sha256": "ae5294379fec1c3e4f67238b7d37bd2ee40d2212cac481830a1c699c9b342bb7"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-04.jpg",
+      "bytes": 49308,
+      "sha256": "ebac15fea9e4136f6fbe56f520e5dfed61c77cfa13697d7202cc9b88835c7323"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-05.jpg",
+      "bytes": 49828,
+      "sha256": "0b99289190dd106e3e343c5f11e30bcb3f0acc58c6a8e1eb2d956e8fb25b40e3"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-06.jpg",
+      "bytes": 39053,
+      "sha256": "b12a3c1e6b4742d7359c0059fdcd2c8a30c6f68862563fab892eb13ef34883ab"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-07.jpg",
+      "bytes": 24424,
+      "sha256": "e5ebc729f27e70b902f9a15172632023dab87979d00ef09e598243b3747eced8"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-08.jpg",
+      "bytes": 19272,
+      "sha256": "8b2a445970b95e5bd2f4d789a2b39973a17de23dcdc70fb2c45b3fb88d314bad"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-09.jpg",
+      "bytes": 15259,
+      "sha256": "8103c7a2f233a88fc39e77f6a081cdb08948377d4bca7efb415c7c390f1395b8"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-10.jpg",
+      "bytes": 13566,
+      "sha256": "c9cd45b03af4e77283a98436d3489ebbba53557ebf3e8021c8b6def85eca528d"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-11.jpg",
+      "bytes": 12089,
+      "sha256": "7d842768c3ecc1e70c6110c11c4ed5e6ccde3a2bdb96e9a759279813c9355fa0"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-12.jpg",
+      "bytes": 10355,
+      "sha256": "9f9b268d48835c20bcf12099e6f955cc8c1b96cbe5de99a85a906459a196247b"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-13.jpg",
+      "bytes": 9434,
+      "sha256": "fc09bed9a29e1288ee262963136aa4c405aebe489c4e1cf722854da2950a66da"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-14.jpg",
+      "bytes": 9014,
+      "sha256": "044cef5f9ee98d1bbe66b2fee33718aa2857f6518f9b02853baa17f51b9b7df0"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-15.jpg",
+      "bytes": 8670,
+      "sha256": "635e721e67ce5d664c708bd4c5619e6c5ef94cd46eb6a25e00b5f200f56e1c0b"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-16.jpg",
+      "bytes": 8084,
+      "sha256": "71a973c2b48f0ffc4277411992a05737aedb13c41867db559107ab70ab40c9e2"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-17.jpg",
+      "bytes": 7811,
+      "sha256": "438cf4cec797f21e16ae05e9d9a74389f366e53b8c9e7c057fae62bda91a9309"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-18.jpg",
+      "bytes": 7812,
+      "sha256": "c2908761db7d760895130a4336a6888c1868367b1e6736f9967d270f2be9577e"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-19.jpg",
+      "bytes": 7787,
+      "sha256": "2226935e29075470dfe59b38457bc3dbb5f479bc85c89dd7e23da2cecc6d2e59"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-20.jpg",
+      "bytes": 8000,
+      "sha256": "7768b1530ce5a98697e227ab5dfc8ee3239dd5a1e8b0499bbeb661a9ce87e48c"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-21.jpg",
+      "bytes": 8279,
+      "sha256": "6b4472eb88ce3eef6ee9d465f5e96145bd2c3f0c5391fa96f066dc68219f821a"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-22.jpg",
+      "bytes": 7888,
+      "sha256": "31a2b301d83c4aceffc5006aea1591e0159fbe3a248b100973b7d2fe6bca2467"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-23.jpg",
+      "bytes": 8011,
+      "sha256": "3d1b1a82db6c610804a25f25e2e15be83ecf822c1003c15fd6aa7dc45409b7f3"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-24.jpg",
+      "bytes": 8135,
+      "sha256": "7ca3e9f4eb7c633b8733dee1efac7b021e9065036f4eb8bceaee5badb9b71327"
+    },
+    {
+      "path": "qa/basketball-reference-20260913/motion-contact.jpg",
+      "bytes": 588652,
+      "sha256": "ba50f385826b26dcba6846343f4bd4b5235cb4c56f665f10acfcd69606e0094e"
+    },
+    {
+      "path": "generated-images/basketball-20260913/rejected/fox-penguin-rejected-alpha.json",
+      "bytes": 1392,
+      "sha256": "44ab60cf1e0b6b8587440962696a73c5604b718e71e8d1c5b62edb75ff7a7a6f"
+    },
+    {
+      "path": "generated-images/basketball-20260913/rejected/fox-penguin-rejected-alpha.png",
+      "bytes": 2587360,
+      "sha256": "7961d97cfd904a7feded510076f420b9bdfbb8ba8df13eb883b775f50f8e85c9"
+    },
+    {
+      "path": "generated-images/basketball-20260913/rejected/fox-penguin-rejected-catlike.json",
+      "bytes": 1882,
+      "sha256": "1f3f5454b4a861daf50704415342db087da6305b206dab733c67f400aa0980e2"
+    },
+    {
+      "path": "generated-images/basketball-20260913/rejected/fox-penguin-rejected-catlike.png",
+      "bytes": 2469140,
+      "sha256": "70baf13d77ed218ab6c49a55a69dffc39c98e31e0b7f91a18336db4406fa0a06"
+    },
+    {
+      "path": "generated-images/basketball-20260913/rejected/fox-penguin-rejected-checkerboard.json",
+      "bytes": 1468,
+      "sha256": "1d19549b856cdd083da17d65aff4395949e170672f5a3a9771e3b8a0aa195b70"
+    },
+    {
+      "path": "generated-images/basketball-20260913/rejected/fox-penguin-rejected-checkerboard.png",
+      "bytes": 2707063,
+      "sha256": "56d1db6c3ccc2b8f5e1e3c7daf8e903a78dc12d4772e38ba3ff498690d5be7e0"
+    }
+  ]
+}

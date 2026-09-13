@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-13",
+  "url": "http://127.0.0.1:5183/",
+  "browser": "Codex in-app browser",
+  "full_match": {
+    "teams": 6,
+    "rounds": 5,
+    "orders": [[3,5,1,6,2,4],[6,4,2,1,5,3],[2,3,4,5,6,1],[5,1,3,2,4,6],[4,6,5,3,1,2]],
+    "shots": 30,
+    "made": 16,
+    "missed": 14,
+    "scores": [3,5,6,5,5,5],
+    "winner": 3,
+    "no_finale_after_24_turns": true
+  },
+  "verified": ["free team selection", "completed team lock", "all teams before next round", "rename", "unique animal selection", "four point shot", "score preserving added round", "zero point skip", "refresh recovery", "refresh during flight resolves once", "restart confirmation", "two team tie", "six team tie", "15 second timeout skips without points", "master mute", "fullscreen", "1024x768 visual layout"],
+  "console_errors_observed": 0,
+  "touch_injection": "Unsupported by browser; actual touchscreen not verified",
+  "audio": "Synthesized replacement; original audio and classroom listening not verified",
+  "screenshots": "Inspected in tool conversation; no screenshot files claimed",
+  "deployment": "Not performed"
+}

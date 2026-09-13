@@ -1,5 +1,11 @@
 # Classroom Club / 上課互動遊戲大集合
 
+## 2026-09-13 動物投籃（已正式部署）
+
+新增 Animal Basketball：2–6 組、六種動物、老師每回合自由選組且每組一次、動態真實機率、追加回合保留分數。內建 Image 繪製六角色共 24 姿勢。50 項測試及建置通過，六組五回合完整流程已驗證。
+
+試玩：http://127.0.0.1:5183/ 。啟動：`scripts/basketball-preview.ps1`。完整規則、原片差異及未驗收項目見 [實作紀錄](BASKETBALL-IMPLEMENTATION-20260913.md)。正式站：https://gamesinclass-5d9d1.web.app 。本次 Hosting 已發布，57／57 線上檔案雜湊一致，登入頁正常。包含角色待機晃動、球場現場合成聲及延長至 6.6 秒的結算音效。詳 [部署紀錄](DEPLOYMENT-20260913.md)。實體觸控與教室聽感待教師驗收。
+
 ## 2026-09-12 新增轉盤遊戲（已正式部署）
 
 正式站：https://gamesinclass-5d9d1.web.app 。本次Hosting發布成功，49/49檔案線上雜湊一致，正式登入頁正常；沿用原六碼通行碼。完整紀錄：`DEPLOYMENT-20260912.md`。

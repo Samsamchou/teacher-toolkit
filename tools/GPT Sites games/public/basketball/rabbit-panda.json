@@ -1,0 +1,16 @@
+{
+  "tool": "built-in Image",
+  "model": null,
+  "endpoint": null,
+  "model_note": "The built-in tool did not report the underlying model or API endpoint.",
+  "prompt": "Create a NEW production game sprite atlas matching the art style and grid of the reference: landscape 1536x1024 PNG with true TRANSPARENT alpha background. Exactly 8 separate full-body sprites in invisible strict 4 columns x 2 rows. Top row: same adorable fluffy white RABBIT with tall ears, lavender basketball uniform; bottom row: same adorable chubby black-and-white PANDA with golden yellow uniform. Each character's identity and uniform perfectly consistent across four columns. Columns: 1 ready bent knees empty paws extended forward holding imaginary ball (no ball drawn), 2 basketball shooting follow-through BOTH arms reaching diagonally upper LEFT, 3 jumping joyful celebration both arms up, 4 gentle disappointed miss reaction, shoulders down, cute encouraging face. All face three-quarter LEFT. Premium detailed hand-painted animated movie mascots, expressive eyes, fabric and fur detail, crisp contours, generous white sticker outline and fine purple rim. Exactly two arms/two legs, rabbit ears and all feet completely inside each cell. Uniform sprite size, generous transparent margins, no overlap between cells, invisible grid, no text/numbers/ball/logos/shadows on ground. Transparent background essential. Match reference visual quality, NOT cat or dog.",
+  "size": "1536x1024",
+  "quality": "visual requirement: polished final illustration; no API quality parameter supplied",
+  "timestamp": "2026-09-13T02:20:14.820Z",
+  "output_filename": "rabbit-panda.png",
+  "source_filename": "exec-d4b9353f-94bd-44c6-8ec2-892526341347.png",
+  "sha256": "ab2c0bc8b1d3e76740733bd28ff65a2513462d07188606c02a41d5358e697d83",
+  "request_id": null,
+  "usage": null,
+  "notes": ""
+}

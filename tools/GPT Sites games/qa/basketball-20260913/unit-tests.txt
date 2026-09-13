@@ -1,0 +1,62 @@
+
+> classroom-game-collection@1.0.0 test
+> node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs
+
+✔ Three audio buses use independent volumes; master mute suppresses all and restores values (2.8682ms)
+✔ Pausing and disposal cancel every scheduled basketball voice and music loop (4.8983ms)
+✔ Every supported team count and initial round count completes exactly once per team per round (31.09ms)
+✔ Invalid team counts, duplicate animals, empty names and invalid rounds are rejected (0.8482ms)
+✔ Shot resolution uses displayed threshold exactly, and never silently guarantees a shot (0.4511ms)
+✔ A deterministic full probability sweep agrees with the displayed percentage (47.4739ms)
+✔ Rapid repeated shots and resolutions cannot award points twice (0.5089ms)
+✔ Skipping a selected team consumes one turn without points (0.553ms)
+✔ Leading team is challenged, trailing team gets help, existing scores stay intact (0.7873ms)
+✔ Power-ups are single-use per turn, focus capped at 95%, range unlocks four (0.2585ms)
+✔ Disabled power-ups cannot be invoked through reducer (0.1883ms)
+✔ Final results require last team of last round, ties share winners (1.2281ms)
+✔ Additional rounds retain all scores and restart at first team (0.4229ms)
+✔ All normal phases recover without losing or duplicating points (0.9174ms)
+✔ Recovery rejects corrupt probabilities, arbitrary scores, duplicate teams and malformed JSON values (0.4786ms)
+✔ Recovered multi-round focus and range histories preserve exact points (0.4841ms)
+✔ Invalid random values and out-of-phase actions do not change the match (0.1196ms)
+✔ Basketball is recognized as built-in by backup validation (0.1774ms)
+✔ Teacher may use different arbitrary orders each round, each team exactly once (1.2171ms)
+✔ No skip before selecting a team, restore keeps current-round team availability (0.1884ms)
+✔ Coastal music uses one graph, ducks questions, and stops all layers when paused (16.3841ms)
+✔ Mute blocks new event sounds; background and action volumes are independent (8.6541ms)
+✔ Every route contains seven event types and its computed score (67.0398ms)
+✔ 12 turns give each team six trails and alternate the starting team (2.0307ms)
+✔ Character choice never changes the plan or scoring (8.8676ms)
+✔ Auto route takes 25 seconds, pauses without scoring and completes only once (2.3874ms)
+✔ Manual can pick out of order within a section; locks during actions and cannot skip hazards (1.8712ms)
+✔ Complete a full 6-round competition and apply separately recorded corrections (3.6193ms)
+✔ Early finish does not count an unfinished route (0.7427ms)
+✔ Beach lessons and both built-in games can be backed up (0.7302ms)
+✔ lesson order moves one selected image without dropping or duplicating it (4.7568ms)
+✔ external game links refuse script and data URLs (1.0377ms)
+✔ image upload rejects unsupported, empty and oversized files (0.4415ms)
+✔ backups permit more than 50 images and reject dangling lesson images (1.6469ms)
+✔ portrait and landscape fit without cropping or stretching (0.7881ms)
+✔ passcode verifier uses salted scrypt and fails closed (131.8543ms)
+✔ login throttle blocks sixth attempt and resets only after its window (0.2915ms)
+✔ stationary pointer becomes silent within 150 ms; repeated movement reuses one source (165.9737ms)
+✔ muting interrupts scratch and victory, and suppresses new playback (1.9081ms)
+✔ revealing uses a continuous source until stopped; volume updates do not restart it (0.4807ms)
+✔ celebration audio spans exactly eight seconds and mute stops all voices (3.2247ms)
+✔ retry speaks the requested English prompt and uses encouraging rising notes (2.8681ms)
+✔ all 2–6 team matches complete six turns each and score exactly once (4.9384ms)
+✔ all sector centers match fixed artwork and two Sunday sectors (0.742ms)
+✔ retry and premature actions preserve question, task, score and turn (1.9601ms)
+✔ task bag exhausts once before reuse across teams (17.3575ms)
+✔ ending during roll discards it and rejects delayed timer award (0.4318ms)
+✔ tie includes every tied team, not only the first (0.3354ms)
+✔ invalid random outcomes and invalid team counts cannot enter state (0.8037ms)
+✔ backup validator recognizes spin builtin with a local hash link (0.6615ms)
+ℹ tests 50
+ℹ suites 0
+ℹ pass 50
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 565.0793

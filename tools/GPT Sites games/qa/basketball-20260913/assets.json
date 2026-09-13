@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "images": [
+    {
+      "file": "cat-dog.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "f7c41fdb579ec1b6ffdac426ce46032b145f6fc013018e1631330c5d8830c46d",
+      "bytes": 2475954,
+      "transparent_pixels": 791397,
+      "poses": 8
+    },
+    {
+      "file": "rabbit-panda.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "ab2c0bc8b1d3e76740733bd28ff65a2513462d07188606c02a41d5358e697d83",
+      "bytes": 2451808,
+      "transparent_pixels": 833055,
+      "poses": 8
+    },
+    {
+      "file": "fox-penguin.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sha256": "8ffd81c987adcd6bacfa1374ec991ad8d6a3a570ee47144a70bdd3f82d97f4f8",
+      "bytes": 2404380,
+      "transparent_pixels": 871232,
+      "poses": 8
+    },
+    {
+      "file": "court.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "75988f6077ad976a25d15b1b78aaafc654e9a5389c0e510e8709d96fce64f2d4",
+      "bytes": 3183724
+    }
+  ],
+  "animals": 6,
+  "poses": 24
+}
