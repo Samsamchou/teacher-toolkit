@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "roomId": "BF7635C21DDE9175",
+  "studentUrl": "http://127.0.0.1:5184/join?room=BF7635C21DDE9175",
+  "results": [
+    {
+      "width": 1366,
+      "height": 768,
+      "pictureWidth": 784.796875,
+      "recordWidth": 523.203125,
+      "bottom": 760.53125,
+      "nextBottom": 743.375,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "pictureWidth": 822,
+      "recordWidth": 548,
+      "bottom": 974.90625,
+      "nextBottom": 894.140625,
+      "overflow": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "pictureWidth": 1110,
+      "recordWidth": 740,
+      "bottom": 983.6875,
+      "nextBottom": 987.8414306640625,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "font": 28.75,
+      "puzzleWidth": 611.375,
+      "imageWidth": 329.1875,
+      "overflow": false,
+      "clipped": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "font": 28.75,
+      "puzzleWidth": 721.9375,
+      "imageWidth": 527.90625,
+      "overflow": false,
+      "clipped": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "font": 26.25,
+      "puzzleWidth": 358,
+      "imageWidth": 358,
+      "overflow": false,
+      "clipped": false
+    }
+  ],
+  "reducedMotion": true,
+  "disabledNextAnimationStopped": true
+}

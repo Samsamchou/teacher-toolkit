@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-15T10:58:15.712Z",
+  "pass": true,
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "sha256": "eba9a2d08aac5a3a895cffb66ed2552839abb728aca7f3989cdf51348ce826f3",
+      "pass": true
+    },
+    {
+      "file": "assets/index-BMda5d0w.js",
+      "status": 200,
+      "sha256": "bdf0930d147d9eb07411cf1ecb5a2861aa909ea37f85fdda5ade22791256076f",
+      "pass": true
+    },
+    {
+      "file": "assets/index-CFIVgu1A.css",
+      "status": 200,
+      "sha256": "8ccef1146faa7675e86cdc435948b58da7245795813c5be9a42b1a90250bfbba",
+      "pass": true
+    }
+  ],
+  "scope": "Three changed Hosting files; full 57-file scan timed out",
+  "authenticatedDeletionTested": false
+}

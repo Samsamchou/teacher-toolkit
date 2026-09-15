@@ -44,3 +44,12 @@
 ## 收工保存範圍
 
 GitHub 僅保存活動原始碼、測試與文字驗證紀錄。七張學生來源圖、functions/unscramble-assets 與含圖 QA 截圖保留於 GDrive 本機掛載專案，未公開上傳 GitHub。從 GitHub 另行還原部署時，需從本專案 GDrive 複製 functions/unscramble-assets/1.png–7.png；正式 Firebase 已包含圖片。GDrive 伺服器端同步狀態未另驗。
+
+## 多巴胺版面、音效與右鍵刪除正式部署
+
+- 使用者明確回覆「確認，部署正式站」；Hosting 發布成功，CLI exit 0。發布副本：C:\Users\User\AppData\Local\Temp\gsg-release-dopamine-20260915。
+- 教師60/40大圖、學號+50%、正確答案+25%；學生35/65作答區與字卡+25%；多巴胺配色、浮動Next、背景音效與講解靜音、紀錄右鍵／⋯刪除均已上線。
+- 本次只部署Hosting，沿用liveActivity、teacherLogin與Firestore／Storage規則；未操作正式場次或作答資料。
+- 本次更新的3個檔案（index.html、index-BMda5d0w.js、index-CFIVgu1A.css）HTTP200及SHA-256全部一致。完整57檔掃描因下載逾時未完成，不宣稱本次57檔皆重新驗證。
+- Chrome正式教師登入頁、學生加入頁正常，無執行錯誤、無學生頁橫向溢出。正式教師登入後的操作與教室音效待使用者實測。
+- 證據：qa/unscramble-dopamine-20260915/production-verification.json、production-browser.json；本地57項程式、16項流程、5項刪除及版面／音訊檢查已保存。

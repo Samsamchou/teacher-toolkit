@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "files": [
+    {
+      "file": "src/UnscrambleLive.jsx",
+      "sha256": "a964d2714c24023aecd64def68bb2ee027dd92820fb1c2c188ab5ab23ec2a45c"
+    },
+    {
+      "file": "src/unscramble.css",
+      "sha256": "9150ae5eac22b3b86cedab3b22caa63aa9ee432bc925329d038ca7c9f7d5514f"
+    },
+    {
+      "file": "src/UnscrambleSound.jsx",
+      "sha256": "80801d31f99c1ca5bfa907c118dea14b9c22ebe77b0202f59b2d940aa8c3fd97"
+    },
+    {
+      "file": "src/unscramble-audio.mjs",
+      "sha256": "0beeb7e9f84b5149e70bd2a6968e93455122e5ba8343e7df34097f36dd86f6db"
+    },
+    {
+      "file": "tests/unscramble-dopamine.mjs",
+      "sha256": "d265c28fe0bc17c5b934c215a8cb8c848ce5f38473dddfc935e76d21c3fda1c0"
+    },
+    {
+      "file": "tests/unscramble-layout.mjs",
+      "sha256": "87db9f4f390fb4d0e4b6851d260ec8ea7db2552ffe55800be871238d5d0cae51"
+    },
+    {
+      "file": "tests/unscramble-audio-browser.mjs",
+      "sha256": "84398abd5733d2a9ba1c9e2062be6afc2b398d6cd79abebf36086cbfe1aeffd7"
+    },
+    {
+      "file": "tests/unscramble-record-delete.mjs",
+      "sha256": "8df520981bbe5c08192a861a1cec56fdb11d1883966fc78a655f1a55798501ea"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "peak": 0.03430771082639694,
+  "rms": 0.0035702532347253527,
+  "renderSeconds": 11,
+  "checks": [
+    "Offline rendering is non-silent and does not clip",
+    "User gesture starts music",
+    "Lecture mute stops new notes",
+    "Resume restarts music",
+    "Disposal stops scheduling"
+  ],
+  "classroomListeningTested": false
+}
