@@ -1,7 +1,10 @@
-import React,{useState,useEffect,useRef} from 'react';
+import React,{useState,useEffect,useRef,useContext,createContext} from 'react';
 import QRCode from 'qrcode';
 import {activity,LOCAL_LIVE,readSaved,saveLocal,downloadRecords} from './unscramble-api';
 import './unscramble.css';
+import {createPictureCache,preparePicture,pictureUploadPayload,imageBlob,imageSize} from './unscramble-images.mjs';
+const PictureCache=createContext(null);
+function PictureScope({children}){const ref=useRef(null);if(!ref.current)ref.current=createPictureCache();useEffect(()=>()=>ref.current.clear(),[]);return <PictureCache.Provider value={ref.current}>{children}</PictureCache.Provider>;}
 import {unlockAudio} from './unscramble-audio.mjs';
 import {useClassSound,SoundControls} from './UnscrambleSound';
 export const LIVE_GAME={id:'unscramble',name:'Unscramble Live',description:'Build sentences together. Every group, in sync.',url:'#unscramble',order:4,hidden:false,builtin:true};
@@ -13,11 +16,14 @@ function usePoll(action,payload,student=false){
  useEffect(()=>{let live=true,timer,active=false,terminal=false;const tick=async()=>{if(active)return;active=true;try{const data=await activity(action,ref.current,student);if(live){setValue(data.room);setError('');setOnline(true);terminal=data.room.phase==='ended';}}catch(e){if(live){setError(e.message);setOnline(false);}}finally{active=false;if(live&&!terminal)timer=setTimeout(tick,1000);}};tick();return()=>{live=false;clearTimeout(timer);};},[action,payload.roomId,payload.groupId,student]);
  return {value,setValue,error,online};
 }
-function Picture({imageId,credentials,alt='Question picture'}){
+function Picture({imageId,credentials,variant='full',alt='Question picture'}){
+ const cache=useContext(PictureCache);
  const [url,setUrl]=useState(''),[error,setError]=useState(''),[retry,setRetry]=useState(0);
- useEffect(()=>{let alive=true,objectUrl;setUrl('');setError('');if(imageId)activity(credentials?'studentImage':'image',{...credentials,imageId},!!credentials).then(d=>{
-  const raw=atob(d.base64),bytes=Uint8Array.from(raw,c=>c.charCodeAt(0));objectUrl=URL.createObjectURL(new Blob([bytes],{type:d.type}));if(alive)setUrl(objectUrl);else URL.revokeObjectURL(objectUrl);
- }).catch(e=>{if(alive)setError(e.message);});return()=>{alive=false;if(objectUrl)URL.revokeObjectURL(objectUrl);};},[imageId,credentials?.roomId,retry]);
+ useEffect(()=>{let alive=true,objectUrl;setUrl('');setError('');if(imageId){
+  const key=JSON.stringify([credentials?.roomId,credentials?.groupId,credentials?.token,imageId,variant]);
+  const fetcher=async()=>imageBlob(await activity(credentials?'studentImage':'image',{...credentials,imageId,variant},!!credentials));
+  (cache?cache.get(key,fetcher):fetcher()).then(blob=>{if(alive){objectUrl=URL.createObjectURL(blob);setUrl(objectUrl);}}).catch(e=>{if(alive)setError(e.message);});
+ }return()=>{alive=false;if(objectUrl)URL.revokeObjectURL(objectUrl);};},[imageId,variant,credentials?.roomId,credentials?.groupId,credentials?.token,retry,cache]);
  return <div className="ul-picture">{url?<img src={url} alt={alt}/>:error?<button onClick={()=>setRetry(x=>x+1)}>Retry picture / 重載圖片</button>:<span>{imageId?'Loading picture…':'Add a picture / 加入圖片'}</span>}</div>;
 }
 function QR({roomId}){const [src,setSrc]=useState(''),[zoom,setZoom]=useState(false);const link=`${location.origin}/join?room=${roomId}`;useEffect(()=>{QRCode.toDataURL(link,{width:220,margin:2,errorCorrectionLevel:'M'}).then(setSrc);},[link]);return <><div className="ul-qr">{src&&<button className="ul-qr-expand" aria-label="放大加入 QR Code" onClick={()=>setZoom(true)}><img src={src} alt="Scan to join this activity"/></button>}<strong>Scan & join</strong><a href={link} target="_blank" rel="noreferrer">學生加入連結 ↗</a><small>{roomId}</small></div>{zoom&&<div className="ul-modal" role="dialog" aria-label="加入活動 QR Code"><div className="ul-qr-large"><h2>Scan & join</h2><img src={src} alt="Large activity QR Code"/><a href={link} target="_blank" rel="noreferrer">學生加入連結 ↗</a><p>輸入同組所有學號，以空格分隔。</p><button onClick={()=>setZoom(false)}>關閉 QR Code</button></div></div>}</>;}
@@ -37,8 +43,10 @@ function RecordRow({record,onOpen,onDelete,busy}){
  {menu&&<div ref={menuRef} className="ul-record-menu" role="menu" aria-label="互動練習紀錄選單" style={{left:menu.x,top:menu.y}} onContextMenu={e=>e.preventDefault()}><small>{record.className}</small><button role="menuitem" className="ul-danger" disabled={busy} onClick={()=>{setMenu(null);onDelete();}}>刪除此互動練習紀錄</button></div>}
  </article>;
 }
-export default function UnscrambleTeacher({onExit}){
- const [decks,setDecks]=useState([]),[rooms,setRooms]=useState([]),[editor,setEditor]=useState(null),[roomId,setRoomId]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[create,setCreate]=useState(null),[className,setClassName]=useState(''),[maxGroups,setMaxGroups]=useState(8),[filter,setFilter]=useState('');
+export default function UnscrambleTeacher(props){return <PictureScope><TeacherDashboard {...props}/></PictureScope>;}
+function TeacherDashboard({onExit}){
+ const preparedCache=useRef(new Map());
+ const [decks,setDecks]=useState([]),[rooms,setRooms]=useState([]),[editor,setEditor]=useState(null),[roomId,setRoomId]=useState(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[create,setCreate]=useState(null),[className,setClassName]=useState(''),[maxGroups,setMaxGroups]=useState(8),[filter,setFilter]=useState(''),[optimizing,setOptimizing]=useState(null);
  async function work(fn){setBusy(true);setError('');try{await fn();}catch(e){setError(e.message);}finally{setBusy(false);}}
  async function refresh(){const [d,r]=await Promise.all([activity('listDecks'),activity('listRooms')]);setDecks(d.decks);setRooms(r.rooms);}
  async function deleteRecord(record){await work(async()=>{
@@ -49,29 +57,57 @@ export default function UnscrambleTeacher({onExit}){
   await activity('deleteRoom',{roomId:room.id});await refresh();
  });}
  useEffect(()=>{work(refresh);},[]);
+ if(optimizing)return <OptimizeDeck cache={preparedCache.current} deck={optimizing} onBack={()=>setOptimizing(null)} onSaved={()=>{setOptimizing(null);work(refresh);}}/>;
  if(roomId)return <TeacherRoom roomId={roomId} onBack={()=>{setRoomId(null);work(refresh);}}/>;
  if(editor)return <DeckEditor initial={editor} onBack={()=>setEditor(null)} onSaved={()=>{setEditor(null);work(refresh);}}/>;
  return <main className="ul-app"><header className="ul-header"><button onClick={onExit}>← Classroom Club</button><div className="ul-wordmark">UNSCRAMBLE <b>LIVE</b></div><span className="ul-pill">TEACHER</span></header>{LOCAL_LIVE&&<div className="ul-local">本地驗證環境 · Firebase 模擬器 · 尚未發布正式站</div>}
  <section className="ul-hero"><div><span className="ul-eyebrow">ONE CLASS. EVERY VOICE.</span><h1>Words come<br/><em>together.</em></h1><p>句子重組・即時互動<br/>保存題組，換張圖，再開一堂新課。</p></div><div className="ul-hero-tiles" aria-hidden="true"><i>Who's</i><i>she?</i><i>She's</i><i>my</i><i>sister.</i><b>10 GROUPS · LIVE</b></div></section>
  <section className="ul-section"><div className="ul-section-title"><h2><Heading en="Question sets" zh="我的題組"/></h2><div className="ul-actions"><button disabled={busy} onClick={()=>work(async()=>{await activity('seed');await refresh();})}>載入七題家人題組</button><button className="ul-primary" onClick={()=>setEditor({name:'新題組',questions:[{prompt:'',answer:'',imageId:''}]})}>＋ 新增題組</button></div></div>
  {error&&<p role="alert" className="ul-error">{error}</p>}{busy&&<p role="status">儲存／讀取中…</p>}
- <div className="ul-deck-grid">{decks.map(d=><article className="ul-deck" key={d.id}><Picture imageId={d.questions[0].imageId}/><div><span className="ul-eyebrow">{d.questions.length} QUESTIONS</span><h3>{d.name}</h3><p>{date(d.updatedAt)}</p><div className="ul-actions"><button onClick={()=>setEditor(structuredClone(d))}>編輯</button><button onClick={()=>setEditor({...structuredClone(d),id:undefined,version:undefined,name:`${d.name}（副本）`})}>複製題組</button><button className="ul-primary" onClick={()=>{setCreate(d);setClassName('');}}>建立新場次 →</button></div></div></article>)}</div>{!busy&&!decks.length&&<p className="ul-empty">先載入已提供的七題，或建立自己的圖片題組。</p>}</section>
+ <div className="ul-deck-grid">{decks.map(d=><article className="ul-deck" key={d.id}><Picture imageId={d.questions[0].imageId} variant="thumbnail"/><div><span className="ul-eyebrow">{d.questions.length} QUESTIONS</span><h3>{d.name}</h3><p>{date(d.updatedAt)}</p><div className="ul-actions"><button onClick={()=>setEditor(structuredClone(d))}>編輯</button><button disabled={busy} onClick={()=>setOptimizing(d)}>圖片容量預覽</button><button onClick={()=>setEditor({...structuredClone(d),id:undefined,version:undefined,name:`${d.name}（副本）`})}>複製題組</button><button className="ul-primary" onClick={()=>{setCreate(d);setClassName('');}}>建立新場次 →</button></div></div></article>)}</div>{!busy&&!decks.length&&<p className="ul-empty">先載入已提供的七題，或建立自己的圖片題組。</p>}</section>
  <section className="ul-section"><div className="ul-section-title"><h2><Heading en="Class records" zh="上課紀錄"/></h2><input aria-label="搜尋活動紀錄" placeholder="搜尋日期、班級或題組" value={filter} onChange={e=>setFilter(e.target.value)}/></div><div className="ul-record-list">{rooms.filter(r=>`${date(r.createdAt)} ${r.className} ${r.title}`.includes(filter)).map(r=><RecordRow key={r.id} record={r} busy={busy} onOpen={()=>setRoomId(r.id)} onDelete={()=>deleteRecord(r)}/>)}</div></section>
  {create&&<div className="ul-modal"><form onSubmit={e=>{e.preventDefault();work(async()=>{const d=await activity('createRoom',{deckId:create.id,className,maxGroups});setRoomId(d.room.id);setCreate(null);});}}><h2>建立新場次</h2><p>{create.name} · {create.questions.length} 題</p><label>班級／活動名稱<input autoFocus required aria-label="班級名稱" value={className} onChange={e=>setClassName(e.target.value)}/></label><label>組數<select aria-label="組數" value={maxGroups} onChange={e=>setMaxGroups(Number(e.target.value))}>{[2,3,4,5,6,7,8,9,10].map(n=><option key={n}>{n}</option>)}</select></label>{error&&<p role="alert">{error}</p>}<div className="ul-actions"><button type="button" onClick={()=>setCreate(null)}>取消</button><button className="ul-primary" disabled={busy}>建立場次</button></div></form></div>}
  </main>;
 }
+function LocalPicture({blob,label}){
+ const [url,setUrl]=useState('');useEffect(()=>{const next=URL.createObjectURL(blob);setUrl(next);return()=>URL.revokeObjectURL(next);},[blob]);
+ return <figure><figcaption>{label}</figcaption><a href={url} target="_blank" rel="noreferrer"><img src={url} alt={label}/></a></figure>;
+}
+function OptimizeDeck({deck,onBack,onSaved,cache}){
+ const [rows,setRows]=useState([]),[busy,setBusy]=useState(false),[error,setError]=useState(''),[status,setStatus]=useState(''),[done,setDone]=useState(null);
+ async function preview(){setBusy(true);setError('');setRows([]);const result=[];try{
+  const ids=[...new Set(deck.questions.map(q=>q.imageId))];
+  for(const imageId of ids){setStatus(`讀取與比較 ${result.length+1} / ${ids.length}`);
+   if(cache.has(imageId)){result.push(cache.get(imageId));continue;}
+   const original=imageBlob(await activity('image',{imageId}));
+   const prepared=imageId.startsWith('opt-')?{full:original,thumbnail:imageBlob(await activity('image',{imageId,variant:'thumbnail'})),stats:{originalBytes:original.size,bytes:original.size,type:original.type},existing:true}:await preparePicture(original);
+   const row={imageId,original,prepared};result.push(row);cache.set(imageId,row);while(cache.size>8)cache.delete(cache.keys().next().value);
+  }setRows(result);setStatus('比較完成；題組資料尚未更新。點圖片可開啟大圖檢查。');
+ }catch(e){setError(e.message);}finally{setBusy(false);}}
+ async function apply(){if(!confirm(`備份並更新「${deck.name}」的圖片？名稱、句子與歷史場次將保留。`))return;
+  setBusy(true);setError('');try{const replacements={};
+   for(const row of rows){setStatus(`上傳副本 ${Object.keys(replacements).length+1} / ${rows.length}`);replacements[row.imageId]=row.prepared.existing?row.imageId:(await activity('uploadImage',await pictureUploadPayload(row.prepared))).imageId;}
+   const result=await activity('optimizeDeckImages',{deckId:deck.id,version:deck.version,replacements});
+   // Confirm the saved references through a fresh read, not just the write response.
+   const saved=(await activity('listDecks')).decks.find(d=>d.id===deck.id);
+   if(!saved||saved.version!==result.deck.version||saved.name!==deck.name||JSON.stringify(saved.questions)!==JSON.stringify(result.deck.questions))throw new Error('已送出更新，請重新開啟題組確認保存狀態。');
+   setDone(result.backupId);setStatus('圖片已更新並讀回確認。');
+  }catch(e){setError(e.message);}finally{setBusy(false);}}
+ return <main className="ul-app"><header className="ul-header"><button disabled={busy} onClick={done?onSaved:onBack}>← 返回題組</button><h1>圖片容量預覽</h1></header><section className="ul-section"><h2>{deck.name}</h2><p>先比較清晰度與容量，再備份及更新。原圖、名稱、句子與歷史場次均保留。</p><p>1920px、WebP 品質 90%；150–400 KB 為目標，不逐步降低品質硬壓容量。已優化的圖片直接沿用。</p>
+ <button disabled={busy||!!done} onClick={preview}>產生比較預覽</button><p role="status">{status}</p>{error&&<p role="alert" className="ul-error">{error}</p>}
+ {rows.map(row=><article className="ul-image-comparison" key={row.imageId}><h3>第 {deck.questions.flatMap((q,i)=>q.imageId===row.imageId?[i+1]:[]).join('、')} 題</h3><p>{imageSize(row.original.size)} → {imageSize(row.prepared.full.size)} · 縮圖 {imageSize(row.prepared.thumbnail.size)} · {row.prepared.full.type}</p><div><LocalPicture blob={row.original} label="原圖"/><LocalPicture blob={row.prepared.full} label="作答大圖"/></div></article>)}
+ {rows.length>0&&!done&&<button className="ul-primary" disabled={busy} onClick={apply}>確認清晰度，備份並更新此題組</button>}{done&&<p>備份編號：{done}</p>}</section></main>;
+}
 function DeckEditor({initial,onBack,onSaved}){
- const [deck,setDeck]=useState(initial),[index,setIndex]=useState(0),[step,setStep]=useState(1),[busy,setBusy]=useState(false),[error,setError]=useState('');const q=deck.questions[index];
+ const [deck,setDeck]=useState(initial),[index,setIndex]=useState(0),[step,setStep]=useState(1),[busy,setBusy]=useState(false),[error,setError]=useState(''),[imageStats,setImageStats]=useState({});const q=deck.questions[index];
  function update(patch){setDeck(d=>({...d,questions:d.questions.map((x,i)=>i===index?{...x,...patch}:x)}));}
  async function upload(file){if(!file)return;setBusy(true);setError('');try{
-  if(!['image/png','image/jpeg','image/webp'].includes(file.type))throw new Error('請選 PNG、JPG 或 WebP 圖片。');
-  if(file.size>6*1024*1024)throw new Error('請使用小於 6 MB 的圖片。');
-  const base64=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file);});
-  const data=await activity('uploadImage',{base64,type:file.type});update({imageId:data.imageId});
+  const targetIndex=index,prepared=await preparePicture(file),data=await activity('uploadImage',await pictureUploadPayload(prepared));
+  setDeck(d=>({...d,questions:d.questions.map((x,i)=>i===targetIndex?{...x,imageId:data.imageId}:x)}));setImageStats(x=>({...x,[data.imageId]:prepared.stats}));
  }catch(e){setError(e.message);}finally{setBusy(false);}}
  return <main className="ul-app"><header className="ul-header"><button onClick={()=>{if(confirm('離開編輯？尚未儲存的修改不會保留。'))onBack();}}>← 返回題組</button><h1>Prepare a set <small>編輯題組</small></h1><button className="ul-primary" disabled={busy} onClick={async()=>{setBusy(true);setError('');try{await activity('saveDeck',{deck});onSaved();}catch(e){setError(e.message);}finally{setBusy(false);}}}>儲存題組</button></header>
- <section className="ul-section"><label>題組名稱<input aria-label="題組名稱" value={deck.name} onChange={e=>setDeck({...deck,name:e.target.value})}/></label>{error&&<p role="alert" className="ul-error">{error}</p>}<div className="ul-editor-layout"><nav className="ul-question-nav">{deck.questions.map((x,i)=><button className={index===i?'active':''} key={i} onClick={()=>{setIndex(i);setStep(1);}}>Q{i+1} {x.imageId&&x.prompt&&x.answer?'✓':'○'}</button>)}<button onClick={()=>{setDeck(d=>({...d,questions:[...d.questions,{prompt:'',answer:'',imageId:''}]}));setIndex(deck.questions.length);setStep(1);}}>＋ 加題</button></nav>
- <div className="ul-editor-card"><div className="ul-tabs"><button className={step===1?'active':''} onClick={()=>setStep(1)}>1 · 題目圖片</button><button className={step===2?'active':''} onClick={()=>setStep(2)}>2 · 模式與句子</button></div><h2>Question {index+1}</h2>{step===1?<><Picture imageId={q.imageId}/><label className="ul-upload">上傳／更換圖片<input aria-label="題目圖片" type="file" accept="image/png,image/jpeg,image/webp" disabled={busy} onChange={e=>{upload(e.target.files[0]);e.target.value='';}}/></label><button className="ul-primary" disabled={!q.imageId||busy} onClick={()=>setStep(2)}>Next → 設定句子</button></>:<><div className="ul-mode">✦ 句子重組 · Unscramble</div><p>兩句字卡會混合；縮寫與標點保持完整。</p><label>問句<input aria-label="問句" value={q.prompt} onChange={e=>update({prompt:e.target.value})} placeholder="Who's she?"/></label><label>答句<input aria-label="答句" value={q.answer} onChange={e=>update({answer:e.target.value})} placeholder="She's my sister."/></label><div className="ul-word-preview">{`${q.prompt} ${q.answer}`.split(/\s+/).filter(Boolean).map((w,i)=><span key={i}>{w}</span>)}</div><p className="ul-muted">書寫白板條、口說評分、塗鴉：後續階段</p></>}
+ <section className="ul-section"><label>題組名稱<input aria-label="題組名稱" value={deck.name} onChange={e=>setDeck({...deck,name:e.target.value})}/></label>{error&&<p role="alert" className="ul-error">{error}</p>}<div className="ul-editor-layout"><nav className="ul-question-nav">{deck.questions.map((x,i)=><button className={index===i?'active':''} key={i} disabled={busy} onClick={()=>{setIndex(i);setStep(1);}}>Q{i+1} {x.imageId&&x.prompt&&x.answer?'✓':'○'}</button>)}<button onClick={()=>{setDeck(d=>({...d,questions:[...d.questions,{prompt:'',answer:'',imageId:''}]}));setIndex(deck.questions.length);setStep(1);}}>＋ 加題</button></nav>
+ <div className="ul-editor-card"><div className="ul-tabs"><button className={step===1?'active':''} onClick={()=>setStep(1)}>1 · 題目圖片</button><button className={step===2?'active':''} onClick={()=>setStep(2)}>2 · 模式與句子</button></div><h2>Question {index+1}</h2>{step===1?<><Picture imageId={q.imageId}/><p role="status">{busy?'圖片處理／儲存中…':imageStats[q.imageId]?`原圖 ${imageSize(imageStats[q.imageId].originalBytes)} → ${imageSize(imageStats[q.imageId].bytes)} · ${imageStats[q.imageId].type} · ${imageStats[q.imageId].width} × ${imageStats[q.imageId].height}`:'自動產生清晰小圖，不裁切、不放大；150–400 KB 為參考目標。'}</p><label className="ul-upload">上傳／更換圖片<input aria-label="題目圖片" type="file" accept="image/png,image/jpeg,image/webp" disabled={busy} onChange={e=>{upload(e.target.files[0]);e.target.value='';}}/></label><button className="ul-primary" disabled={!q.imageId||busy} onClick={()=>setStep(2)}>Next → 設定句子</button></>:<><div className="ul-mode">✦ 句子重組 · Unscramble</div><p>兩句字卡會混合；縮寫與標點保持完整。</p><label>問句<input aria-label="問句" value={q.prompt} onChange={e=>update({prompt:e.target.value})} placeholder="Who's she?"/></label><label>答句<input aria-label="答句" value={q.answer} onChange={e=>update({answer:e.target.value})} placeholder="She's my sister."/></label><div className="ul-word-preview">{`${q.prompt} ${q.answer}`.split(/\s+/).filter(Boolean).map((w,i)=><span key={i}>{w}</span>)}</div><p className="ul-muted">書寫白板條、口說評分、塗鴉：後續階段</p></>}
  <button className="ul-danger" disabled={deck.questions.length===1||busy} onClick={()=>{if(confirm(`刪除第 ${index+1} 題？`)){setDeck(d=>({...d,questions:d.questions.filter((_,i)=>i!==index)}));setIndex(Math.max(0,index-1));}}}>刪除此題</button></div></div></section></main>;
 }
 function GroupRecords({room,index}){
@@ -93,10 +129,12 @@ function TeacherRoom({roomId,onBack}){
  <section className="ul-section"><div className="ul-section-title"><h2>Live answers <small>第 {review+1} 題各組作答紀錄</small></h2><div className="ul-actions"><select aria-label="查看題目紀錄" value={review} onChange={e=>setRecordIndex(Number(e.target.value))}>{room.questions.map((_,i)=><option key={i} value={i}>第 {i+1} 題</option>)}</select><button onClick={()=>downloadRecords(room)}>匯出 CSV</button>{room.phase==='ended'&&<button className="ul-danger" onClick={async()=>{if(confirm('永久刪除此場學號與作答紀錄？題組仍保留。')){try{await activity('deleteRoom',{roomId});onBack();}catch(e){setActionError(e.message);}}}}>刪除此場紀錄</button>}</div></div><GroupRecords room={room} index={review}/></section>
  </main>;
 }
-export function UnscrambleStudent(){
+export function UnscrambleStudent(){return <PictureScope><StudentJoin/></PictureScope>;}
+function StudentJoin(){
+ const pictureCache=useContext(PictureCache);
  const initialRoom=new URLSearchParams(location.search).get('room')||'';
  const [roomId,setRoomId]=useState(initialRoom),[entry,setEntry]=useState(()=>readSaved(`ul-entry:${initialRoom}`)),[numbers,setNumbers]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);
- if(entry)return <StudentPlay credentials={entry} onLeave={()=>{if(confirm('離開本組畫面？仍可用這台裝置重新加入。')){setEntry(null);}}}/>;
+ if(entry)return <StudentPlay credentials={entry} onLeave={()=>{if(confirm('離開本組畫面？仍可用這台裝置重新加入。')){pictureCache?.clear();setEntry(null);}}}/>;
  async function join(e){e.preventDefault();unlockAudio();setBusy(true);setError('');try{const key=`ul-nonce:${roomId}`;let joinNonce=readSaved(key);if(!joinNonce){joinNonce=uid();if(!saveLocal(key,joinNonce))throw new Error('請允許瀏覽器儲存，才能安全接回原組。');}const data=await activity('join',{roomId,members:numbers,joinNonce},true);const value={roomId,groupId:data.groupId,token:data.token};if(!saveLocal(`ul-entry:${roomId}`,value))throw new Error('無法保存加入資料，請保持此頁並聯絡老師。');setEntry(value);}catch(e){setError(e.message);}finally{setBusy(false);}}
  return <main className="ul-app ul-join"><div className="ul-wordmark">UNSCRAMBLE <b>LIVE</b></div><form onSubmit={join}><span className="ul-eyebrow">LET'S BUILD IT TOGETHER</span><h1>Hello,<br/><em>team!</em></h1><p>輸入同組所有學號，以空格分隔。</p>{!initialRoom&&<label>Activity code<input aria-label="活動代碼" required value={roomId} onChange={e=>setRoomId(e.target.value.trim().toUpperCase())}/></label>}<label>Student numbers<textarea aria-label="同組學號" required placeholder="40200 40230 40215" value={numbers} onChange={e=>setNumbers(e.target.value.replace(/[^0-9\s]/g,''))}/></label><p className="ul-muted">每組使用一台平板 · 學號與作答會保存在本場紀錄</p>{error&&<p role="alert" className="ul-error">{error}</p>}<button className="ul-primary" disabled={busy||!numbers.trim()}>{busy?'Joining…':'Join activity →'}</button></form></main>;
 }

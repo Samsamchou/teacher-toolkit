@@ -1,0 +1,56 @@
+{
+  "name": "家人句型｜七題示範",
+  "questions": 7,
+  "backupId": "family-20260915-v1",
+  "verifiedBy": "Production UI: 圖片已更新並讀回確認。",
+  "sizeSource": "Production comparison UI, KiB displayed as KB rounded to one decimal",
+  "images": [
+    {
+      "question": 1,
+      "originalKiB": 607.9,
+      "optimizedKiB": 62.2,
+      "thumbnailKiB": 9.8
+    },
+    {
+      "question": 2,
+      "originalKiB": 574.7,
+      "optimizedKiB": 61.6,
+      "thumbnailKiB": 9.8
+    },
+    {
+      "question": 3,
+      "originalKiB": 715.6,
+      "optimizedKiB": 74.5,
+      "thumbnailKiB": 11.4
+    },
+    {
+      "question": 4,
+      "originalKiB": 1356.4,
+      "optimizedKiB": 85.0,
+      "thumbnailKiB": 11.0
+    },
+    {
+      "question": 5,
+      "originalKiB": 2279.8,
+      "optimizedKiB": 178.9,
+      "thumbnailKiB": 17.8
+    },
+    {
+      "question": 6,
+      "originalKiB": 599.2,
+      "optimizedKiB": 62.1,
+      "thumbnailKiB": 10.0
+    },
+    {
+      "question": 7,
+      "originalKiB": 664.6,
+      "optimizedKiB": 71.5,
+      "thumbnailKiB": 11.1
+    }
+  ],
+  "totalsKiB": {
+    "originalKiB": 6798.2,
+    "optimizedKiB": 595.8,
+    "thumbnailKiB": 80.9
+  }
+}

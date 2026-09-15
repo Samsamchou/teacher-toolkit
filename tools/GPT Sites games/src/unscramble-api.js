@@ -3,10 +3,10 @@ export const LOCAL_LIVE=import.meta.env.DEV&&DEMO;
 export async function activity(action,payload={},student=false){
  const headers={'Content-Type':'application/json'};
  if(!student)headers.Authorization=`Bearer ${LOCAL_LIVE?'local-teacher':await getTeacherToken()}`;
- const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),20000);
+ const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),action==='optimizeDeckImages'?120000:['image','studentImage','uploadImage'].includes(action)?60000:20000);
  try{
   const res=await fetch('/api/live-activity',{method:'POST',headers,body:JSON.stringify({action,...payload}),signal:controller.signal});
-  const data=await res.json().catch(()=>({message:'The activity service is unavailable.'}));
+  let data;try{data=await res.json();}catch(error){if(error.name==='AbortError')throw error;throw new Error('回應未完整載入，請重試。圖片與題組尚未確認更新。');}
   if(!res.ok){const err=new Error(data.message||'Please retry.');err.status=res.status;throw err;}return data;
  }catch(e){if(e.name==='AbortError'||e instanceof TypeError){const err=new Error('Connection interrupted. Your answer is kept. Please retry.');err.network=true;throw err;}throw e;}finally{clearTimeout(timer);}
 }

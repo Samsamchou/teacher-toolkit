@@ -1,0 +1,57 @@
+{
+  "passed": true,
+  "at": "2026-09-15T13:59:47.693Z",
+  "version": "2026.09.15-unscramble-images.2",
+  "results": [
+    {
+      "file": "/index.html",
+      "status": 200,
+      "bytes": 572,
+      "sha256": "bc674a94a35b05bf78b0e7b79a9edf7392b94bcf1981e50c61fe156de61ca93f",
+      "matches": true
+    },
+    {
+      "file": "/release.json",
+      "status": 200,
+      "bytes": 996,
+      "sha256": "352fa36b16f98a70481a688537f2293e968b947ed26611511ed201e1ecb13165",
+      "matches": true
+    },
+    {
+      "file": "/assets/index-CPPU5DGI.js",
+      "status": 200,
+      "bytes": 1076339,
+      "sha256": "ce11582deea0e1f427ad163bb5bc61f7d1948f51711ab80c53b73faa76135d77",
+      "matches": true
+    },
+    {
+      "file": "/assets/index-SKv8yr38.css",
+      "status": 200,
+      "bytes": 132992,
+      "sha256": "a1018b304383c51173b77d4068c3d7ee701885f8595fd8b802c6f5a390f35e3f",
+      "matches": true
+    },
+    {
+      "route": "/unscramble",
+      "status": 200,
+      "nosniff": "nosniff"
+    },
+    {
+      "route": "/join",
+      "status": 200,
+      "nosniff": "nosniff"
+    },
+    {
+      "action": "listDecks",
+      "unauthenticatedStatus": 401
+    },
+    {
+      "action": "image",
+      "unauthenticatedStatus": 401
+    },
+    {
+      "action": "optimizeDeckImages",
+      "unauthenticatedStatus": 401
+    }
+  ]
+}

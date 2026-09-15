@@ -1,0 +1,30 @@
+{
+  "release": "C:\\Users\\User\\AppData\\Local\\Temp\\gsg-release-unscramble-images-20260915",
+  "files": [
+    {
+      "file": "functions/index.mjs",
+      "sha256": "0bed2045d93c23e134c52df8cbfb8f00e93fef1e7f63017b0a02e646eb892cdd"
+    },
+    {
+      "file": "functions/unscramble-service.mjs",
+      "sha256": "b26627da179aeb28d10713695b3f7939a889b96167fae1a72f6975a6076c7f78"
+    },
+    {
+      "file": "functions/unscramble-model.mjs",
+      "sha256": "9dba50130f9aa24a93506b3761e0edaac31c4ed20b542e3225e74e9e3449044a"
+    },
+    {
+      "file": "functions/pin.mjs",
+      "sha256": "0e368f0928330641f6bf454d4dff701ce67727db17fc057a4ec3619905267bab"
+    },
+    {
+      "file": "functions/package.json",
+      "sha256": "2ebe728d16bc67881de4c5cab5051a6f25313af145cae8c908586346165d6116"
+    },
+    {
+      "file": "functions/package-lock.json",
+      "sha256": "2c92412b300dbddf57db98c415df1cdb70dec586908aab5cfce7a6c1698431fa"
+    }
+  ],
+  "matched": true
+}

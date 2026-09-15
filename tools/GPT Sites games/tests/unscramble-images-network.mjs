@@ -1,0 +1,8 @@
+import {chromium} from '@playwright/test';import fs from 'node:fs/promises';
+const out='qa/unscramble-image-fastload-20260915',r=JSON.parse(await fs.readFile(out+'/results.json')),sample=r.images[4],b=await chromium.launch({headless:true,channel:'chrome'}),p=await b.newPage();await fs.writeFile(out+'/network-harness.html','<!doctype html><title>Local image timing</title>');await p.goto('http://127.0.0.1:5184/'+out+'/network-harness.html');
+const cdp=await p.context().newCDPSession(p);await cdp.send('Network.enable');await cdp.send('Network.emulateNetworkConditions',{offline:false,latency:80,downloadThroughput:250000,uploadThroughput:125000});
+const results=[];
+try{for(let repeat=1;repeat<=2;repeat++)for(const [variant,imageId,size] of [['original',sample.sourceId,'full'],['optimized',sample.targetId,'full'],['thumbnail',sample.targetId,'thumbnail']]){
+ const ms=await p.evaluate(async({imageId,size})=>{const start=performance.now(),r=await fetch('/api/live-activity',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer local-teacher'},body:JSON.stringify({action:'image',imageId,variant:size})}),d=await r.json(),img=new Image();img.src=`data:${d.type};base64,${d.base64}`;await img.decode();return performance.now()-start;},{imageId,size});results.push({repeat,variant,downloadAndDecodeMs:ms});console.log(repeat,variant,ms.toFixed(0));}
+ await fs.writeFile(out+'/network-results.json',JSON.stringify({environment:'Local Chrome CDP throttling; 2 Mbps download, 1 Mbps upload, 80ms latency; no production cold-start or classroom Wi-Fi represented',question:5,results},null,2));
+}finally{await b.close();}

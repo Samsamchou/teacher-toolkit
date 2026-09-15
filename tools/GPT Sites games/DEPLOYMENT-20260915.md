@@ -64,3 +64,38 @@ GitHub 僅保存活動原始碼、測試與文字驗證紀錄。七張學生來�
 - 僅 Hosting 發布；未修改通行碼、後端、資料規則、正式活動紀錄，未提交或推送 Git。
 - 正式檔案驗證紀錄：qa/spin-fastload-production-20260915/http.json；公開頁面：browser.json。
 - 最終核對：17／17 項正式檔案 HTTP 200 且 SHA-256 全部一致，包含八段 MP4、四張 WebP、版本清單及入口程式／樣式。第 5 段影片以實際播放 URL 重查成功；带驗證查詢參數的下載曾逾時。
+
+## 句子重組圖片優化正式發布
+
+- 使用者明確授權「確認部署」。版本 2026.09.15-unscramble-images.1。
+- Hosting 71 檔發布成功，classroom-games:liveActivity（asia-east1 / Node 22）更新成功；Firebase CLI exit 0。
+- 發布副本：C:\Users\User\AppData\Local\Temp\gsg-release-unscramble-images-20260915。
+- 初次後端發現程序在 10 秒逾時，未發布；以 Firebase CLI 支援的 FUNCTIONS_DISCOVERY_TIMEOUT=60 重試成功。
+- 正式 index.html、release.json、入口 JS/CSS 四檔 HTTP 200 且 SHA-256 與核准版本一致；教師、學生入口 HTTP 200；三個教師 API 未登入均拒絕 401。
+- teacherLogin、通行碼與 Firestore/Storage rules 未重新部署；未 commit / push。
+- 證據：qa/unscramble-image-production-20260915/http-verification.json、release-source-verification.json。
+- 使用者已親自登入，正式兩組圖片備份更新完成；最終結果附於下方。
+
+### 正式大原圖下載逾時修正
+
+- 正式登入後原圖第 3 張回應 HTTP 200，但本機 20 秒計時器中止下載（Network.loadingFailed: net::ERR_ABORTED）；原先 JSON 錯誤處理吞掉 AbortError，造成不正確的 atob 錯誤。當時沒有更新題組。
+- 圖片下載／上傳期限改為 60 秒；保留普通活動指令 20 秒、題組備份更新 120 秒。JSON 中止回傳可重試網路錯誤，無完整圖片資料不再視為成功。
+- 新增 3 項回歸測試通過；正式版本升為 2026.09.15-unscramble-images.2，Hosting 更新成功（CLI exit 0），後端未再次更動。
+- 第二版發布副本：C:\Users\User\AppData\Local\Temp\gsg-release-unscramble-images2-20260915。
+
+## 正式兩組圖片更新完成
+
+兩組各七題已由教師登入後，透過正式「圖片容量預覽」完成比較、備份、更新與新讀取確認。大小來自正式頁面顯示值（KiB 以 KB 顯示並四捨五入至一位），下表為約數。
+
+| 題組 | 原圖合計 | 作答大圖合計 | 減少 | 題組原版備份編號 |
+|---|---:|---:|---:|---|
+| 115 SF3 U01 4甲 | 9.39 MiB | 0.68 MiB | 92.8% | be23595dc8d0c0e47a4e7338-v6 |
+| 家人句型｜七題示範 | 6.64 MiB | 0.58 MiB | 91.2% | family-20260915-v1 |
+
+- 共 14 張 WebP 大圖，重新整理後逐題確認皆完整解碼為 1920 × 1080。
+- 兩個題組封面皆完整載入 480 × 270 縮圖；名稱與題數保留。
+- 兩組均顯示「圖片已更新並讀回確認」，並取得上述備份編號。原圖另外保留於私人備份路徑；歷史場次原圖連結未替換。
+- 既有 0915402 場次的九組、七題，更新前後逐題比較畫面上的學號、最後作答、正誤結果及次數，字串完全一致。驗證報告只保存比對結果，不另輸出學號。
+- 正式跨實體裝置同步、教室音效仍須由教師下次上課實測；本次完成正式教師頁操作、圖片持續保存及歷史畫面讀回，沒有把瀏覽器核對當作實體平板驗收。
+- 最終單元測試 64/64（含三項傳輸逾時修正），先前十組模擬器回歸 16/16、規則 8/8 通過。這次未 commit / push。
+- 證據：qa/unscramble-image-production-20260915/ 下的 http-verification.json、deck-4a-migration.json、deck-family-migration.json、production-readback.json、unit-tests-final.txt。

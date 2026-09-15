@@ -1,0 +1,89 @@
+{
+  "generatedAt": "2026-09-15T13:34:08.914Z",
+  "environment": "local Firebase emulators only",
+  "roomId": "14E9893CBF31EC7E",
+  "results": [
+    {
+      "name": "Teacher-only API rejects an unauthenticated caller",
+      "passed": true,
+      "ms": 24
+    },
+    {
+      "name": "Import seven source images and open saved question set",
+      "passed": true,
+      "ms": 3769
+    },
+    {
+      "name": "Duplicate, rename and replace a picture without modifying the original set",
+      "passed": true,
+      "ms": 1622
+    },
+    {
+      "name": "Teacher creates a new ten-group class and QR join link",
+      "passed": true,
+      "ms": 980
+    },
+    {
+      "name": "Ten independent student contexts join with two or three identifiers; preview remains locked",
+      "passed": true,
+      "ms": 20020
+    },
+    {
+      "name": "Duplicate members, eleventh group, cross-group access and teacher mutations are rejected",
+      "passed": true,
+      "ms": 115
+    },
+    {
+      "name": "Teacher Next unlocks all ten students and pictures are visible",
+      "passed": true,
+      "ms": 1600
+    },
+    {
+      "name": "Wrong animation, correction, five-attempt cap and nine simultaneous correct records",
+      "passed": true,
+      "ms": 16719
+    },
+    {
+      "name": "Idempotent retry after a lost response never uses another attempt",
+      "passed": true,
+      "ms": 66
+    },
+    {
+      "name": "Changing the picture locks all tablets, projects prior records and rejects a late answer",
+      "passed": true,
+      "ms": 2089
+    },
+    {
+      "name": "Offline draft survives reload, retry writes exactly once and reconnect retains the group",
+      "passed": true,
+      "ms": 2301
+    },
+    {
+      "name": "Teacher answer masking affects projection only; all seven questions can finish",
+      "passed": true,
+      "ms": 17258
+    },
+    {
+      "name": "CSV export includes membership, all attempts and unanswered items; reload preserves records",
+      "passed": true,
+      "ms": 2244
+    },
+    {
+      "name": "A second class uses a separate room snapshot and cannot access the first class",
+      "passed": true,
+      "ms": 228
+    },
+    {
+      "name": "Independent music defaults, volume controls, lecture mute and history dialog",
+      "passed": true,
+      "ms": 773
+    },
+    {
+      "name": "Tablet portrait, landscape and desktop have no horizontal overflow or runtime errors",
+      "passed": true,
+      "ms": 606
+    }
+  ],
+  "browserErrors": [],
+  "passed": true
+}

@@ -1,0 +1,27 @@
+[2026-09-15T13:39:52.778Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a482 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+[2026-09-15T13:39:52.817Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a483 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+[2026-09-15T13:39:52.942Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a485 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+[2026-09-15T13:39:52.962Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a486 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+[2026-09-15T13:39:53.097Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a488 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+[2026-09-15T13:39:53.142Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a489 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+✔ live activity documents and private activity pictures cannot be read or changed directly by clients (1075.8016ms)
+✔ signed-in passcode session can save and read a lesson (134.544ms)
+✔ anonymous, wrong account, expired session and missing claims cannot read or list (324.3775ms)
+[2026-09-15T13:39:53.669Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a491 error. Code: 7 Message: 7 PERMISSION_DENIED: No matching allow statements
+[2026-09-15T13:39:53.699Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a492 error. Code: 7 Message: 7 PERMISSION_DENIED:
+false for 'create' @ L12, false for 'update' @ L12
+✔ client cannot edit login throttle or another owner namespace (68.262ms)
+[2026-09-15T13:39:53.738Z]  @firebase/firestore: Firestore (12.18.0): GrpcConnection RPC 'Write' stream 0x6958a493 error. Code: 7 Message: 7 PERMISSION_DENIED:
+false for 'create' @ L12, false for 'update' @ L12
+✔ image records must point to the private owner path (38.589ms)
+✔ storage admits teacher images but rejects anonymous reads and SVG uploads (114.4169ms)
+✔ existing storage objects cannot be overwritten (25.6849ms)
+✔ optimized pictures, thumbnails and original backups remain private even for direct teacher clients (569.1106ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2612.4586

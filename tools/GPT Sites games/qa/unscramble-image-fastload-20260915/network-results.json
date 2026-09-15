@@ -1,0 +1,36 @@
+{
+  "environment": "Local Chrome CDP throttling; 2 Mbps download, 1 Mbps upload, 80ms latency; no production cold-start or classroom Wi-Fi represented",
+  "question": 5,
+  "results": [
+    {
+      "repeat": 1,
+      "variant": "original",
+      "downloadAndDecodeMs": 12908.800000000745
+    },
+    {
+      "repeat": 1,
+      "variant": "optimized",
+      "downloadAndDecodeMs": 1163.699999999255
+    },
+    {
+      "repeat": 1,
+      "variant": "thumbnail",
+      "downloadAndDecodeMs": 222.29999999701977
+    },
+    {
+      "repeat": 2,
+      "variant": "original",
+      "downloadAndDecodeMs": 12712.10000000149
+    },
+    {
+      "repeat": 2,
+      "variant": "optimized",
+      "downloadAndDecodeMs": 1119.5
+    },
+    {
+      "repeat": 2,
+      "variant": "thumbnail",
+      "downloadAndDecodeMs": 228.09999999776483
+    }
+  ]
+}

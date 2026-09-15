@@ -1,0 +1,56 @@
+{
+  "name": "115 SF3 U01 4甲",
+  "questions": 7,
+  "backupId": "be23595dc8d0c0e47a4e7338-v6",
+  "verifiedBy": "Production UI: 圖片已更新並讀回確認。",
+  "sizeSource": "Production comparison UI, KiB displayed as KB rounded to one decimal",
+  "images": [
+    {
+      "question": 1,
+      "originalKiB": 982.0,
+      "optimizedKiB": 76.4,
+      "thumbnailKiB": 10.9
+    },
+    {
+      "question": 2,
+      "originalKiB": 863.2,
+      "optimizedKiB": 66.3,
+      "thumbnailKiB": 9.3
+    },
+    {
+      "question": 3,
+      "originalKiB": 1310.6,
+      "optimizedKiB": 76.8,
+      "thumbnailKiB": 10.5
+    },
+    {
+      "question": 4,
+      "originalKiB": 746.5,
+      "optimizedKiB": 64.8,
+      "thumbnailKiB": 9.5
+    },
+    {
+      "question": 5,
+      "originalKiB": 1768.3,
+      "optimizedKiB": 117.4,
+      "thumbnailKiB": 12.9
+    },
+    {
+      "question": 6,
+      "originalKiB": 2063.2,
+      "optimizedKiB": 142.3,
+      "thumbnailKiB": 16.5
+    },
+    {
+      "question": 7,
+      "originalKiB": 1883.9,
+      "optimizedKiB": 148.5,
+      "thumbnailKiB": 15.4
+    }
+  ],
+  "totalsKiB": {
+    "originalKiB": 9617.7,
+    "optimizedKiB": 692.5,
+    "thumbnailKiB": 85.0
+  }
+}

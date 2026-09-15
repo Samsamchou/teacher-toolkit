@@ -1,0 +1,191 @@
+{
+  "passed": true,
+  "environment": "local Chrome and Firebase emulators; seven local reference images, not both production decks",
+  "checks": [
+    "Seven real reference images compressed, no upscaling, smaller fallback, server readback and duplicate upload IDs verified",
+    "Small image does not upscale or increase in size",
+    "Cache deduplicates concurrent reads, separates scopes, clears and retries failures",
+    "Migration creates hash-verified original backups and atomic deck backup; sentences, names and historical room unchanged; stale version rejected",
+    "Missing replacement fails without changing saved deck; teacher/student image authorization enforced",
+    "Real editor Q1 → Q2 → Q1 uses memory cache without repeated download",
+    "Editor upload compresses automatically and shows original/optimized size",
+    "Comparison interface rendered without browser errors"
+  ],
+  "images": [
+    {
+      "question": 1,
+      "originalBytes": 622490,
+      "bytes": 63680,
+      "thumbnailBytes": 9996,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-1",
+      "targetId": "opt-a05960c2366a891c0b62a4e6abc20f4516f2d3451bc2e0099cb562befd525aa8",
+      "sha256": "48c0380ff3eb4272ce71254b201039bc2e60aa7c5296080ccda393ec45e9d1c2",
+      "wireBytes": {
+        "original": 830020,
+        "full": 84941,
+        "thumbnail": 13361
+      },
+      "localMs": {
+        "original": 380.22410000000036,
+        "full": 22.673800000000483,
+        "thumbnail": 26.264900000000125
+      }
+    },
+    {
+      "question": 2,
+      "originalBytes": 588526,
+      "bytes": 63054,
+      "thumbnailBytes": 10032,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-2",
+      "targetId": "opt-91a5e68b334b25d074b6471294c7e9c6213ecd3d56fafc8877652cdd83226517",
+      "sha256": "6ad218302d00ca7acc148b7bd12a4a87b3f5eb635b352f3f5038cab93566fa96",
+      "wireBytes": {
+        "original": 784736,
+        "full": 84105,
+        "thumbnail": 13409
+      },
+      "localMs": {
+        "original": 68.80370000000039,
+        "full": 27.930899999999383,
+        "thumbnail": 26.048000000000684
+      }
+    },
+    {
+      "question": 3,
+      "originalBytes": 732794,
+      "bytes": 76310,
+      "thumbnailBytes": 11638,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-3",
+      "targetId": "opt-827c23bfc1f3fdb96669ee43c843cfe506fa5da0118eff8136759712d81fd19d",
+      "sha256": "53f2e14c87337ba710d4639c91bbf2e134f4b869fc56e14a2783199eeb612723",
+      "wireBytes": {
+        "original": 977092,
+        "full": 101781,
+        "thumbnail": 15553
+      },
+      "localMs": {
+        "original": 75.84979999999996,
+        "full": 19.406600000000253,
+        "thumbnail": 19.86909999999989
+      }
+    },
+    {
+      "question": 4,
+      "originalBytes": 1388990,
+      "bytes": 87048,
+      "thumbnailBytes": 11292,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-4",
+      "targetId": "opt-232346733ffe23b8301f44a663bcb53d57a6476930e7f985c71ff0e6ebf49280",
+      "sha256": "2a5a3382b096351f0ddf90e4b43f37b7895c40e1d2bbe4459bcf040353233071",
+      "wireBytes": {
+        "original": 1852020,
+        "full": 116097,
+        "thumbnail": 15089
+      },
+      "localMs": {
+        "original": 107.96379999999954,
+        "full": 23.450699999999415,
+        "thumbnail": 20.25749999999971
+      }
+    },
+    {
+      "question": 5,
+      "originalBytes": 2334482,
+      "bytes": 183186,
+      "thumbnailBytes": 18196,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-5",
+      "targetId": "opt-a0db6e29d8eb65e7b16d245181931e4fdd328db775fd6428d4b9c927100f12fe",
+      "sha256": "b7a055f170c8836b2067fe316dd1f3cae19b516933f87983c46e421181f5d57e",
+      "wireBytes": {
+        "original": 3112676,
+        "full": 244281,
+        "thumbnail": 24297
+      },
+      "localMs": {
+        "original": 101.1304999999993,
+        "full": 64.20279999999912,
+        "thumbnail": 20.08969999999863
+      }
+    },
+    {
+      "question": 6,
+      "originalBytes": 613621,
+      "bytes": 63632,
+      "thumbnailBytes": 10228,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-6",
+      "targetId": "opt-0b51b15238d144e5737c74130f5777bb5ba00152882c9e1967024b6a0439fd48",
+      "sha256": "dad14dbc220467f82161dc6685b5922c3371c69c5429a015407a9f160e7a2675",
+      "wireBytes": {
+        "original": 818196,
+        "full": 84877,
+        "thumbnail": 13673
+      },
+      "localMs": {
+        "original": 55.13010000000031,
+        "full": 24.742599999999584,
+        "thumbnail": 19.72860000000037
+      }
+    },
+    {
+      "question": 7,
+      "originalBytes": 680594,
+      "bytes": 73214,
+      "thumbnailBytes": 11368,
+      "type": "image/webp",
+      "width": 1920,
+      "height": 1080,
+      "originalWidth": 2160,
+      "originalHeight": 1215,
+      "keptOriginal": false,
+      "sourceId": "family-20260915-7",
+      "targetId": "opt-e233cc4a1b34e19b9a312a4a73a1a117159843de8e4d2452bbc1354fdea4525e",
+      "sha256": "068b22673962dac75fb1332a133cc502f19f57986296b403b37346623a8e5f78",
+      "wireBytes": {
+        "original": 907492,
+        "full": 97653,
+        "thumbnail": 15193
+      },
+      "localMs": {
+        "original": 76.66520000000128,
+        "full": 22.8762999999999,
+        "thumbnail": 27.824799999998504
+      }
+    }
+  ]
+}

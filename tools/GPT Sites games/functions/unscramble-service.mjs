@@ -10,11 +10,11 @@ export function createActivityService({db,bucket,verifyTeacher}){
  const deckRef=x=>db.doc(`liveDecks/${cleanId(x)}`),roomRef=x=>db.doc(`liveRooms/${cleanId(x)}`);
  async function getRoom(roomId){const s=await roomRef(roomId).get();requireValue(s.exists,'Activity not found or removed.',404);return s.data();}
  function student(room,b){const g=room.groups[b.groupId];requireValue(g&&typeof b.token==='string'&&hash(b.token)===g.tokenHash,'Please rejoin with your original device.',403);return g;}
- async function imageSave(bytes,type,imageId=id()){
+ async function imageSave(bytes,type,imageId=id(),folder='live-images'){
   requireValue(['image/png','image/jpeg','image/webp'].includes(type)&&bytes.length>0&&bytes.length<=6*1024*1024,'Use a PNG, JPG or WebP smaller than 6 MB.');
   const magic=type==='image/png'?bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])):type==='image/jpeg'?bytes[0]===255&&bytes[1]===216:bytes.subarray(0,4).toString()==='RIFF'&&bytes.subarray(8,12).toString()==='WEBP';
   requireValue(magic,'The image file does not match its format.');
-  await bucket.file(`live-images/${imageId}`).save(bytes,{resumable:false,metadata:{contentType:type,cacheControl:'private, max-age=0'}});return imageId;
+  await bucket.file(`${folder}/${imageId}`).save(bytes,{resumable:false,metadata:{contentType:type,cacheControl:'private, max-age=0'}});return imageId;
  }
  return async function handle(b,authorization){
   requireValue(b&&typeof b.action==='string','Choose an activity action.');
@@ -31,11 +31,42 @@ export function createActivityService({db,bucket,verifyTeacher}){
     const deck={id:ref.id,name:'家人句型｜七題示範',questions,updatedAt:time(),version:1};
     await db.runTransaction(async tx=>{const existing=await tx.get(ref);if(!existing.exists)tx.create(ref,deck);});return {deck:(await ref.get()).data()};
    }
-   case 'uploadImage': return {imageId:await imageSave(Buffer.from(b.base64||'','base64'),b.type)};
+   case 'uploadImage': {
+    const bytes=Buffer.from(b.base64||'','base64'),thumbnail=b.thumbnail;
+    const imageId=thumbnail?'opt-'+hash(Buffer.concat([bytes,Buffer.from(thumbnail.base64||'','base64')])):id();
+    // Immutable content-addressed derivatives never replace an original object.
+    if(thumbnail)await imageSave(Buffer.from(thumbnail.base64||'','base64'),thumbnail.type,imageId,'live-thumbnails');
+    await imageSave(bytes,b.type,imageId);return {imageId};
+   }
+   case 'optimizeDeckImages': {
+    const ref=deckRef(b.deckId),snap=await ref.get();requireValue(snap.exists,'Question set not found.',404);
+    const old=snap.data();requireValue(old.version===b.version,'This set changed. Preview it again.',409);
+    requireValue(b.replacements&&typeof b.replacements==='object'&&!Array.isArray(b.replacements),'Missing image replacements.');
+    const sources=[...new Set(old.questions.map(q=>q.imageId))];
+    requireValue(Object.keys(b.replacements).length===sources.length,'Preview every image before updating.');
+    const backupImages={};
+    for(const source of sources){
+     const target=cleanId(b.replacements[source]);requireValue(target.startsWith('opt-'),'Use an optimized image copy.');
+     const checks=await Promise.all([bucket.file(`live-images/${source}`).exists(),bucket.file(`live-images/${target}`).exists(),bucket.file(`live-thumbnails/${target}`).exists()]);
+     requireValue(checks.every(([exists])=>exists),'A picture is missing; the original question set is unchanged.');
+     const file=bucket.file(`live-images/${source}`),[original]=await file.download(),digest=hash(original),backupPath=`live-image-backups/${digest}`;
+     if(!(await bucket.file(backupPath).exists())[0])await file.copy(bucket.file(backupPath));
+     const [readback]=await bucket.file(backupPath).download();requireValue(hash(readback)===digest,'Original backup could not be verified.',503);
+     backupImages[source]={path:backupPath,sha256:digest,bytes:original.length};
+    }
+    const backupRef=db.doc(`liveDeckImageBackups/${ref.id}-v${old.version}`);
+    return await db.runTransaction(async tx=>{
+     const current=await tx.get(ref);requireValue(current.exists&&current.data().version===b.version,'This set changed. Preview it again.',409);
+     const backup=await tx.get(backupRef);requireValue(!backup.exists,'This version already has a backup. Reopen the set.',409);
+     const previous=current.data(),deck={...previous,questions:previous.questions.map(q=>({...q,imageId:b.replacements[q.imageId]})),version:previous.version+1,updatedAt:time()};
+     tx.create(backupRef,{deck:previous,createdAt:time(),replacements:b.replacements,backupImages,originalsRetained:true});tx.set(ref,deck);
+     return {deck,backupId:backupRef.id};
+    });
+   }
    case 'image': case 'studentImage':{
     cleanId(b.imageId);
     if(b.action==='studentImage'){const room=await getRoom(b.roomId);student(room,b);requireValue(room.questions[room.questionIndex].imageId===b.imageId,'That picture is not active.',403);}
-    const file=bucket.file(`live-images/${b.imageId}`);const [data]=await file.download();const [meta]=await file.getMetadata();return {base64:data.toString('base64'),type:meta.contentType};
+    let file=bucket.file(`live-images/${b.imageId}`);if(b.variant==='thumbnail'){const thumbnail=bucket.file(`live-thumbnails/${b.imageId}`);if((await thumbnail.exists())[0])file=thumbnail;}const [data]=await file.download();const [meta]=await file.getMetadata();return {base64:data.toString('base64'),type:meta.contentType};
    }
    case 'saveDeck':{
     const content=validateDeck(b.deck);const ref=deckRef(b.deck.id||id());

@@ -1,0 +1,46 @@
+{
+  "version": "2026.09.15-unscramble-images.2",
+  "environment": "Production site, teacher personally authenticated, verified through UI",
+  "decks": [
+    {
+      "name": "115 SF3 U01 4甲",
+      "questions": 7,
+      "decodedImages": 7,
+      "fullSize": [
+        1920,
+        1080
+      ],
+      "thumbnailSize": [
+        480,
+        270
+      ],
+      "backupId": "be23595dc8d0c0e47a4e7338-v6"
+    },
+    {
+      "name": "家人句型｜七題示範",
+      "questions": 7,
+      "decodedImages": 7,
+      "fullSize": [
+        1920,
+        1080
+      ],
+      "thumbnailSize": [
+        480,
+        270
+      ],
+      "backupId": "family-20260915-v1"
+    }
+  ],
+  "persistedAfterReload": true,
+  "history": {
+    "className": "0915402",
+    "groups": 9,
+    "questionsCompared": 7,
+    "projectionTextBeforeAfterIdentical": true,
+    "comparisonFields": "Visible membership, latest answers, results and attempt counts for each question; no raw student IDs exported into this report"
+  },
+  "notPerformed": [
+    "Physical tablet cross-device synchronization and classroom audio validation",
+    "Git commit/push"
+  ]
+}
