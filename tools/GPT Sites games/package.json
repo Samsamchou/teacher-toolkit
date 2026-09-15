@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --mode demo",
-    "build": "vite build",
+    "build": "node scripts/check-unified-release.mjs && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs tests/unscramble.test.mjs",
+    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs tests/unscramble.test.mjs tests/spin-download.test.mjs",
     "test:rules": "firebase emulators:exec --only firestore,storage --project demo-classroom-games \"node --test tests/rules.test.mjs\"",
     "test:live": "node tests/unscramble-integration.mjs"
   },

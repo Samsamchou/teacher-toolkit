@@ -1,0 +1,13 @@
+{
+  "version": "2026.09.15-fastload.1",
+  "sources": {
+    "main.jsx": "ecf7c45848b22d35f841bfdc26553301cb0331c7c9d455797d22f96a846ca82d",
+    "SpinGame.jsx": "5dd44be0a1454f2f23239c5e6f92df02a9d6e55979b141bd19c808fd0b41501a",
+    "spin-model.mjs": "ae845d8bd50f1e88585f94db816a5c72b07bccfed8b75ae50004b8392150b02e",
+    "spin-dopamine.css": "f727e8440b8875b87c56f95fe1e8342667bef23b90aa3e4fc182e224ac9966dc",
+    "UnscrambleLive.jsx": "a964d2714c24023aecd64def68bb2ee027dd92820fb1c2c188ab5ab23ec2a45c",
+    "unscramble.css": "9150ae5eac22b3b86cedab3b22caa63aa9ee432bc925329d038ca7c9f7d5514f",
+    "BasketballGame.jsx": "32ce6bf638c80b06ff000469a876cf0d301599b59ac519fb332277dc5433ea11",
+    "BeachGame.jsx": "4eaa54f01677b1f52dedebbd8a73089201aca735cc3cc45cf1e60031929d5256"
+  }
+}

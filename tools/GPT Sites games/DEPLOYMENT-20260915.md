@@ -53,3 +53,14 @@ GitHub 僅保存活動原始碼、測試與文字驗證紀錄。七張學生來�
 - 本次更新的3個檔案（index.html、index-BMda5d0w.js、index-CFIVgu1A.css）HTTP200及SHA-256全部一致。完整57檔掃描因下載逾時未完成，不宣稱本次57檔皆重新驗證。
 - Chrome正式教師登入頁、學生加入頁正常，無執行錯誤、無學生頁橫向溢出。正式教師登入後的操作與教室音效待使用者實測。
 - 證據：qa/unscramble-dopamine-20260915/production-verification.json、production-browser.json；本地57項程式、16項流程、5項刪除及版面／音訊檢查已保存。
+
+## 2026-09-15 Spin 載入修復整合版正式發布
+
+- 使用者明確要求「部署正式站」，Firebase Hosting CLI 回報 Deploy complete，exit 0。
+- 版本：2026.09.15-fastload.1；新的完整發布副本：C:\Users\User\AppData\Local\Temp\gsg-release-fastload-20260915。
+- 61 項測試及整合來源／12 項媒體 SHA-256 檢查通過後建置。入口：index-UUfZGf1E.js、index-Dkd5ldzs.css。
+- 更新原 GIF 的 MP4 播放副本、必要素材載入、進度／逾時／重試；保留自由選組和句子重組新版。Hosting 更新 17 個檔案，完整發布共 71 檔。
+- 正式教師登入頁及學生加入頁正常，無 JavaScript 執行錯誤。未代替教師登入；登入後遊戲操作已在同源本機整合版本驗證，正式教室操作仍由教師實測。
+- 僅 Hosting 發布；未修改通行碼、後端、資料規則、正式活動紀錄，未提交或推送 Git。
+- 正式檔案驗證紀錄：qa/spin-fastload-production-20260915/http.json；公開頁面：browser.json。
+- 最終核對：17／17 項正式檔案 HTTP 200 且 SHA-256 全部一致，包含八段 MP4、四張 WebP、版本清單及入口程式／樣式。第 5 段影片以實際播放 URL 重查成功；带驗證查詢參數的下載曾逾時。

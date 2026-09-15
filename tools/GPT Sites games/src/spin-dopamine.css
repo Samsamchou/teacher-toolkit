@@ -105,3 +105,5 @@
  .sr-score{display:flex;flex-direction:column;text-align:center;padding:6px 3px;gap:3px}
  .sr-score>span{font-size:18px}.sr-score strong{font-size:38px}.sr-score small{font-size:10px}
 }
+
+.sr-task-frame video{display:block;width:100%;height:100%;object-fit:contain}.sr-art-placeholder{display:grid;place-items:center;min-height:300px;font-size:1.5rem}.sr-version{font-size:11px;letter-spacing:0;white-space:nowrap}

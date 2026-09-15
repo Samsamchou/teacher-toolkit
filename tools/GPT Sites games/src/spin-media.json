@@ -1,0 +1,162 @@
+{
+  "wheel": {
+    "url": "/spin/optimized/wheel.webp",
+    "bytes": 789728,
+    "source_sha256": "733bb290a98588869d44eecb7669f9a2120668471bf270502c24703b402fb5e7",
+    "sha256": "eedfbf2618e33aebfb16c7003435909b7a4591c07ce18782989a3d30ce6b484a"
+  },
+  "pointer": {
+    "url": "/spin/optimized/pointer.webp",
+    "bytes": 127314,
+    "source_sha256": "6b0402d5b9289bfd2a81536ba3ff6f6a64df259b66e04628929d5f2c78be4221",
+    "sha256": "d85843b864885473f7ab70a8c459b6e8306921e44f3f93401a564cb5e0fbb123"
+  },
+  "dice-faces": {
+    "url": "/spin/optimized/dice-faces.webp",
+    "bytes": 987700,
+    "source_sha256": "53bb35b7e6f4214340f538876f37746d9d4f1edfec53e596bb2e5a8f9d724e76",
+    "sha256": "facce34665b34fc8bb878ef2fbddaae6c15584bb4fc9502a9eb52b6310a52cb7"
+  },
+  "mascot": {
+    "url": "/spin/optimized/mascot.webp",
+    "bytes": 703760,
+    "source_sha256": "61ef3b60f8728a7efe2b680b91b12acbdecd6618beca9da434577ece24545c11",
+    "sha256": "144e39563e3af8e1be599ebd1bcacc1b5b2882b3a9b9547ad3afba40e921c123"
+  },
+  "task-1": {
+    "url": "/spin/optimized/task-1.mp4",
+    "bytes": 942969,
+    "source_bytes": 2903443,
+    "source_sha256": "d71ffbab8110d313fa273c4194661625f9680bc6563d79e5cd74beb041cc943e",
+    "sha256": "63c4e9d377b75af874ac47a9311a17dad9f121e1265917b3c5256681f1b3f357",
+    "duration": 5.74,
+    "frames": 57,
+    "crop": [
+      65,
+      300,
+      662,
+      653
+    ],
+    "width": 662,
+    "height": 654
+  },
+  "task-2": {
+    "url": "/spin/optimized/task-2.mp4",
+    "bytes": 583117,
+    "source_bytes": 2510792,
+    "source_sha256": "dc011008c502c065b4350e231e488496be77e5d5a0bbffe66cd0ae3c491bc394",
+    "sha256": "5438c93c9230afa6f12c1674dabadbfcd34d45f44e7e6dfccf1a572a541c98fa",
+    "duration": 5.74,
+    "frames": 86,
+    "crop": [
+      70,
+      398,
+      666,
+      666
+    ],
+    "width": 666,
+    "height": 666
+  },
+  "task-3": {
+    "url": "/spin/optimized/task-3.mp4",
+    "bytes": 940859,
+    "source_bytes": 4892694,
+    "source_sha256": "765acdf7949b941dbe1ee49aca482a9bd1dc27d7273874456f6c63e07a82f31a",
+    "sha256": "14f67a29dbd5fc5cbcb2b9330a82afa8bc68a750623cd77dd90bf6fc3a952ff3",
+    "duration": 5.74,
+    "frames": 86,
+    "crop": [
+      59,
+      327,
+      657,
+      657
+    ],
+    "width": 658,
+    "height": 658
+  },
+  "task-4": {
+    "url": "/spin/optimized/task-4.mp4",
+    "bytes": 1904902,
+    "source_bytes": 7156134,
+    "source_sha256": "ce4502b798772bb272c62c89fae14cf1a2e0b088ade8a20b06a486e40c8ebb7b",
+    "sha256": "dd0ae482bbd0ec88baa1041def67a9649edbb868efa56e2842e8c7f0794f137d",
+    "duration": 5.74,
+    "frames": 86,
+    "crop": [
+      78,
+      344,
+      639,
+      643
+    ],
+    "width": 640,
+    "height": 644
+  },
+  "task-5": {
+    "url": "/spin/optimized/task-5.mp4",
+    "bytes": 1577635,
+    "source_bytes": 6777092,
+    "source_sha256": "1ec85a85c805e4381ceddccb1f43260cf96420096cf7844a2d3d9b200c23baa7",
+    "sha256": "8bf160743ebddc4a1a03d31110be73680ccac2cf6ce95bf5679ba1440f46b774",
+    "duration": 5.74,
+    "frames": 78,
+    "crop": [
+      83,
+      275,
+      635,
+      635
+    ],
+    "width": 636,
+    "height": 636
+  },
+  "task-6": {
+    "url": "/spin/optimized/task-6.mp4",
+    "bytes": 3719698,
+    "source_bytes": 14040959,
+    "source_sha256": "945fef54af8d8f5311a6fc49164e904a0ca844e4380ceb17197be9bedcb78cfc",
+    "sha256": "7aafce9def60f9047ab0224e321058e3ccddff0723e4bf381590bd2217ba12c9",
+    "duration": 5.74,
+    "frames": 86,
+    "crop": [
+      81,
+      302,
+      641,
+      637
+    ],
+    "width": 642,
+    "height": 638
+  },
+  "task-7": {
+    "url": "/spin/optimized/task-7.mp4",
+    "bytes": 444440,
+    "source_bytes": 2298318,
+    "source_sha256": "c359abc012668c1585352e047e94502658e004e3fe1f9cd03dc51a8371e409cc",
+    "sha256": "75ddb9a68f9594100fd44f307e3c7bedf378a46e986dedaccc192db770179e4e",
+    "duration": 5.74,
+    "frames": 86,
+    "crop": [
+      81,
+      298,
+      638,
+      638
+    ],
+    "width": 638,
+    "height": 638
+  },
+  "task-8": {
+    "url": "/spin/optimized/task-8.mp4",
+    "bytes": 633200,
+    "source_bytes": 1575578,
+    "source_sha256": "2f948f3721eeb731d080bb2fd1be834a55e57ee65a4e4e9ac606a09fea056454",
+    "sha256": "e4253f427ecb9dc63c62ba015243b6dd6a700490c7bf40173852b594775eb299",
+    "duration": 5.74,
+    "frames": 86,
+    "crop": [
+      68,
+      298,
+      665,
+      665
+    ],
+    "width": 666,
+    "height": 666
+  }
+}

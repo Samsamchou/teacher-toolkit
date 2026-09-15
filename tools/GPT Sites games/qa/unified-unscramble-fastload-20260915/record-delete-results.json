@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "environment": "local emulators only",
+  "results": [
+    "Cancel right-click deletion preserves saved record",
+    "Confirmed right-click deletes the selected ended record",
+    "Tablet menu confirms ending an active room before deletion",
+    "Other rooms and the saved question set remain unchanged",
+    "Keyboard menu and Escape work"
+  ]
+}

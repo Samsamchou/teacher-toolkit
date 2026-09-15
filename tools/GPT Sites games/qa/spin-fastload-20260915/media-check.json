@@ -1,0 +1,66 @@
+[
+  {
+    "task": 1,
+    "original_seconds": 5.74,
+    "video_seconds": 5.66,
+    "video_frames": 57,
+    "original_frames": 57,
+    "bytes": 942969
+  },
+  {
+    "task": 2,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 86,
+    "original_frames": 86,
+    "bytes": 583117
+  },
+  {
+    "task": 3,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 86,
+    "original_frames": 86,
+    "bytes": 940859
+  },
+  {
+    "task": 4,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 86,
+    "original_frames": 86,
+    "bytes": 1904902
+  },
+  {
+    "task": 5,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 78,
+    "original_frames": 78,
+    "bytes": 1577635
+  },
+  {
+    "task": 6,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 86,
+    "original_frames": 86,
+    "bytes": 3719698
+  },
+  {
+    "task": 7,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 86,
+    "original_frames": 86,
+    "bytes": 444440
+  },
+  {
+    "task": 8,
+    "original_seconds": 5.74,
+    "video_seconds": 5.73,
+    "video_frames": 86,
+    "original_frames": 86,
+    "bytes": 633200
+  }
+]

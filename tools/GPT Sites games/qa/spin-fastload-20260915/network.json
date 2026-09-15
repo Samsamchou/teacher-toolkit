@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "startupMs": 5554,
+  "network": "1.6 Mbps, 150ms latency, cache disabled",
+  "requests": [
+    "http://127.0.0.1:5192/spin/optimized/wheel.webp",
+    "http://127.0.0.1:5192/spin/optimized/pointer.webp",
+    "http://127.0.0.1:5192/spin/fonts/ComicRelief-Regular.ttf",
+    "http://127.0.0.1:5192/spin/optimized/wheel.webp",
+    "http://127.0.0.1:5192/spin/optimized/pointer.webp",
+    "http://127.0.0.1:5192/spin/optimized/task-1.mp4",
+    "http://127.0.0.1:5192/spin/optimized/dice-faces.webp",
+    "http://127.0.0.1:5192/spin/optimized/mascot.webp"
+  ],
+  "videoPlaying": true
+}

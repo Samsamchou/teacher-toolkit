@@ -24,7 +24,7 @@ for(let i=0;i<12;i++){
  await expect(p.locator('.sr-answer')).toContainText("It's ___.");
  if(i===0){const q=await p.getByTestId('spin-question').textContent();await p.getByRole('button',{name:'Try again',exact:true}).click();await expect(p.getByTestId('spin-question')).toHaveText(q);await expect(p.getByTestId('spin-score-0')).toHaveText('0');await p.clock.runFor(1800);await p.screenshot({path:`${out}/question-desktop.png`});}
  await p.getByRole('button',{name:'Right',exact:true}).click();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeEnabled({timeout:20000});
- tasks.push(await p.getByTestId('spin-task').getAttribute('alt'));
+ tasks.push(await p.getByTestId('spin-task').getAttribute('aria-label'));
  if(i===0){const src=await p.getByTestId('spin-task').getAttribute('src');await p.getByRole('button',{name:'Try again',exact:true}).click();await expect(p.getByTestId('spin-task')).toHaveAttribute('src',src);await p.clock.runFor(1800);await p.screenshot({path:`${out}/task-desktop.png`});}
  await p.getByRole('button',{name:'Good job',exact:true}).click();
  if(i===0)await p.screenshot({path:`${out}/dice-desktop.png`});
@@ -56,7 +56,7 @@ await p.clock.runFor(8100);await expect(p.locator('.sr-game')).toHaveAttribute('
 await p.setViewportSize({width:1024,height:768});await p.screenshot({path:`${out}/early-finish-tablet.png`});
 // A failed GIF must never allow a score or discard the task. Recover in place.
 await p.getByRole('button',{name:'Play again',exact:true}).click();await p.getByRole('button',{name:'Leave game',exact:true}).click();
-await p.reload();let blockTasks=true;await p.route('**/spin/tasks/*.gif',r=>blockTasks?r.abort():r.continue());
+await p.reload();let blockTasks=true;await p.route('**/spin/optimized/task-*.mp4',r=>blockTasks?r.abort():r.continue());
 await p.getByRole('button',{name:/Spin, ask, answer, do and roll/}).click();await p.getByRole('button',{name:/Let’s play!/}).click();await p.getByRole('button',{name:'Choose Team 1',exact:true}).click();await p.getByRole('button',{name:'Spin!',exact:true}).click();await p.clock.runFor(6050);await p.getByRole('button',{name:'Right',exact:true}).click();await expect(p.getByRole('button',{name:'Retry loading',exact:true})).toBeVisible();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeDisabled();const taskName=await p.locator('.sr-task-badge').textContent();blockTasks=false;await p.getByRole('button',{name:'Retry loading',exact:true}).click();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeEnabled();await expect(p.locator('.sr-task-badge')).toHaveText(taskName);await expect(p.getByTestId('spin-score-0')).toHaveText('0');await p.screenshot({path:`${out}/task-tablet.png`});
 await p.getByRole('button',{name:'Fullscreen',exact:true}).click();expect(await p.evaluate(()=>!!document.fullscreenElement)).toBe(true);await p.getByRole('button',{name:'Fullscreen',exact:true}).click();expect(await p.evaluate(()=>!!document.fullscreenElement)).toBe(false);
 expect(errors).toEqual([]);

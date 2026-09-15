@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "loginStatus": 200,
+  "errors": [],
+  "checks": [
+    "Teacher login visible",
+    "Student join visible"
+  ],
+  "limit": "Authenticated gameplay validated locally; production teacher login not performed."
+}

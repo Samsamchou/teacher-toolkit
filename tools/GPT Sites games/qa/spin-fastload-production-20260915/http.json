@@ -1,0 +1,162 @@
+{
+  "date": "2026-09-15T12:44:34.064Z",
+  "base": "https://gamesinclass-5d9d1.web.app",
+  "version": "2026.09.15-fastload.1",
+  "passed": true,
+  "files": [
+    {
+      "file": "release.json",
+      "status": 200,
+      "bytes": 782,
+      "sha256": "d98a86f9f7bb68602ec1f13fff43e6139045089430e4480b0a62cf3158e0cfa7",
+      "expected": "d98a86f9f7bb68602ec1f13fff43e6139045089430e4480b0a62cf3158e0cfa7",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "bytes": 572,
+      "sha256": "0b222a69aac8ea55091773ae2a6993b2980558b037d7b292fb1009f4ebb0840e",
+      "expected": "0b222a69aac8ea55091773ae2a6993b2980558b037d7b292fb1009f4ebb0840e",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "assets/index-Dkd5ldzs.css",
+      "status": 200,
+      "bytes": 132570,
+      "sha256": "2d0f0b829f0fe6c63e1f3594e80b2d0d83c8a93f23125aa43e8fa3ba02f628ed",
+      "expected": "2d0f0b829f0fe6c63e1f3594e80b2d0d83c8a93f23125aa43e8fa3ba02f628ed",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/wheel.webp",
+      "status": 200,
+      "bytes": 789728,
+      "sha256": "eedfbf2618e33aebfb16c7003435909b7a4591c07ce18782989a3d30ce6b484a",
+      "expected": "eedfbf2618e33aebfb16c7003435909b7a4591c07ce18782989a3d30ce6b484a",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/pointer.webp",
+      "status": 200,
+      "bytes": 127314,
+      "sha256": "d85843b864885473f7ab70a8c459b6e8306921e44f3f93401a564cb5e0fbb123",
+      "expected": "d85843b864885473f7ab70a8c459b6e8306921e44f3f93401a564cb5e0fbb123",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "assets/index-UUfZGf1E.js",
+      "status": 200,
+      "bytes": 1069995,
+      "sha256": "969867c4efed99431f30e11459cf845fd5d7912b49a8164e36a7d146af0ad760",
+      "expected": "969867c4efed99431f30e11459cf845fd5d7912b49a8164e36a7d146af0ad760",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/dice-faces.webp",
+      "status": 200,
+      "bytes": 987700,
+      "sha256": "facce34665b34fc8bb878ef2fbddaae6c15584bb4fc9502a9eb52b6310a52cb7",
+      "expected": "facce34665b34fc8bb878ef2fbddaae6c15584bb4fc9502a9eb52b6310a52cb7",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-2.mp4",
+      "status": 200,
+      "bytes": 583117,
+      "sha256": "5438c93c9230afa6f12c1674dabadbfcd34d45f44e7e6dfccf1a572a541c98fa",
+      "expected": "5438c93c9230afa6f12c1674dabadbfcd34d45f44e7e6dfccf1a572a541c98fa",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-3.mp4",
+      "status": 200,
+      "bytes": 940859,
+      "sha256": "14f67a29dbd5fc5cbcb2b9330a82afa8bc68a750623cd77dd90bf6fc3a952ff3",
+      "expected": "14f67a29dbd5fc5cbcb2b9330a82afa8bc68a750623cd77dd90bf6fc3a952ff3",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/mascot.webp",
+      "status": 200,
+      "bytes": 703760,
+      "sha256": "144e39563e3af8e1be599ebd1bcacc1b5b2882b3a9b9547ad3afba40e921c123",
+      "expected": "144e39563e3af8e1be599ebd1bcacc1b5b2882b3a9b9547ad3afba40e921c123",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-4.mp4",
+      "status": 200,
+      "bytes": 1904902,
+      "sha256": "dd0ae482bbd0ec88baa1041def67a9649edbb868efa56e2842e8c7f0794f137d",
+      "expected": "dd0ae482bbd0ec88baa1041def67a9649edbb868efa56e2842e8c7f0794f137d",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-1.mp4",
+      "status": 200,
+      "bytes": 942969,
+      "sha256": "63c4e9d377b75af874ac47a9311a17dad9f121e1265917b3c5256681f1b3f357",
+      "expected": "63c4e9d377b75af874ac47a9311a17dad9f121e1265917b3c5256681f1b3f357",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-7.mp4",
+      "status": 200,
+      "bytes": 444440,
+      "sha256": "75ddb9a68f9594100fd44f307e3c7bedf378a46e986dedaccc192db770179e4e",
+      "expected": "75ddb9a68f9594100fd44f307e3c7bedf378a46e986dedaccc192db770179e4e",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-8.mp4",
+      "status": 200,
+      "bytes": 633200,
+      "sha256": "e4253f427ecb9dc63c62ba015243b6dd6a700490c7bf40173852b594775eb299",
+      "expected": "e4253f427ecb9dc63c62ba015243b6dd6a700490c7bf40173852b594775eb299",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/manifest.json",
+      "status": 200,
+      "bytes": 4545,
+      "sha256": "5009b62408f98baaac7660e6a9e731d96e65a5646d6f1cc613704d196bed6a01",
+      "expected": "5009b62408f98baaac7660e6a9e731d96e65a5646d6f1cc613704d196bed6a01",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-6.mp4",
+      "status": 200,
+      "bytes": 3719698,
+      "sha256": "7aafce9def60f9047ab0224e321058e3ccddff0723e4bf381590bd2217ba12c9",
+      "expected": "7aafce9def60f9047ab0224e321058e3ccddff0723e4bf381590bd2217ba12c9",
+      "cacheControl": "no-cache",
+      "match": true
+    },
+    {
+      "file": "spin/optimized/task-5.mp4",
+      "status": 200,
+      "bytes": 1577635,
+      "sha256": "8bf160743ebddc4a1a03d31110be73680ccac2cf6ce95bf5679ba1440f46b774",
+      "expected": "8bf160743ebddc4a1a03d31110be73680ccac2cf6ce95bf5679ba1440f46b774",
+      "match": true,
+      "cacheControl": "no-cache",
+      "retried": true
+    }
+  ]
+}
