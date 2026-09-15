@@ -1,0 +1,16 @@
+{
+  "status": "local_validation_passed_awaiting_user_review",
+  "productionDeployed": false,
+  "unitTests": 57,
+  "firestoreStorageRulesTests": 7,
+  "browserIntegrationScenarios": 15,
+  "concurrencyScenarios": 5,
+  "independentStudentContexts": 8,
+  "sourceImages": 7,
+  "referenceImagesUnchanged": true,
+  "persistenceVerifiedWithFreshEmulatorImport": true,
+  "localPreview": "http://127.0.0.1:5184/unscramble",
+  "sourceRoot": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\GPT Sites games",
+  "runtime": "C:\\Users\\User\\AppData\\Local\\Temp\\gsg-unscramble-20260915",
+  "validatedAt": "2026-09-15T02:40:31.907143+00:00"
+}

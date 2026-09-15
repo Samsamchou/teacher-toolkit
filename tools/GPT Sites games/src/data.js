@@ -32,6 +32,7 @@ export async function login(pin) {
   await signInWithCustomToken(auth, data.token);
 }
 export async function logout() { if (!DEMO) await signOut(auth); }
+export async function getTeacherToken(){if(!auth?.currentUser)throw new Error('Please sign in as the teacher.');return auth.currentUser.getIdToken();}
 const cloudCollection = type => collection(db, 'teachers', OWNER, type);
 export async function list(type) {
   if (DEMO) return (await local).getAll(type);

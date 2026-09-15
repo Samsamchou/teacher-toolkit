@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "size": "1366x768",
+      "height": 768,
+      "bottom": 668.09375,
+      "overflow": false
+    },
+    {
+      "size": "1440x1000",
+      "height": 1000,
+      "bottom": 818.59375,
+      "overflow": false
+    },
+    {
+      "size": "1920x1080",
+      "height": 1080,
+      "bottom": 890.5625,
+      "overflow": false
+    }
+  ],
+  "qrEnlargement": true
+}

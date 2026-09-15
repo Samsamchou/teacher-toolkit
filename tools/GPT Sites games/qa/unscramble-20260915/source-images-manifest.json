@@ -1,0 +1,75 @@
+{
+  "unchangedOriginals": true,
+  "images": [
+    {
+      "question": 1,
+      "source": "Unscramble 參考\\png圖\\1.png",
+      "packaged": "functions\\unscramble-assets\\1.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 622490,
+      "sha256": "4c4de96bfaa0962fb60102ea607b2538bc791d4db98d9fe2551b6e43304e8503",
+      "identical": true
+    },
+    {
+      "question": 2,
+      "source": "Unscramble 參考\\png圖\\2.png",
+      "packaged": "functions\\unscramble-assets\\2.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 588526,
+      "sha256": "09fcf2d4b6e26f0b51e819a90f69756353591fbf07d7fe88a6da176068bf051b",
+      "identical": true
+    },
+    {
+      "question": 3,
+      "source": "Unscramble 參考\\png圖\\3.png",
+      "packaged": "functions\\unscramble-assets\\3.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 732794,
+      "sha256": "34be03dc316c012d08869a7744c610c8f4b4582378a58c9464fd6f3548ceeba9",
+      "identical": true
+    },
+    {
+      "question": 4,
+      "source": "Unscramble 參考\\png圖\\4.png",
+      "packaged": "functions\\unscramble-assets\\4.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 1388990,
+      "sha256": "f04b638b4004e270160810e175540b29d56f79a5e4259e3ae216628a8eafb95b",
+      "identical": true
+    },
+    {
+      "question": 5,
+      "source": "Unscramble 參考\\png圖\\5.png",
+      "packaged": "functions\\unscramble-assets\\5.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 2334482,
+      "sha256": "2f402d21bb120d8b5692d8ed549d1a74e937675f314749bdf0c19dd3cb75dd3c",
+      "identical": true
+    },
+    {
+      "question": 6,
+      "source": "Unscramble 參考\\png圖\\6.png",
+      "packaged": "functions\\unscramble-assets\\6.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 613621,
+      "sha256": "2b48ba4b714cf823acd3c1f9b3ebfaf56950851bd661cc6904e5495fe0dd6062",
+      "identical": true
+    },
+    {
+      "question": 7,
+      "source": "Unscramble 參考\\png圖\\7.png",
+      "packaged": "functions\\unscramble-assets\\7.png",
+      "width": 2160,
+      "height": 1215,
+      "bytes": 680594,
+      "sha256": "307e1a07af4f92f3e9602b3731f31327c9c5dcd538aab9bef743874f33609e53",
+      "identical": true
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-09-15T02:37:10.291Z",
+  "environment": "local Firebase emulators only",
+  "roomId": "A984F652B2381CA3",
+  "results": [
+    {
+      "name": "Teacher-only API rejects an unauthenticated caller",
+      "passed": true,
+      "ms": 20
+    },
+    {
+      "name": "Import seven source images and open saved question set",
+      "passed": true,
+      "ms": 847
+    },
+    {
+      "name": "Duplicate, rename and replace a picture without modifying the original set",
+      "passed": true,
+      "ms": 591
+    },
+    {
+      "name": "Teacher creates a new eight-group class and QR join link",
+      "passed": true,
+      "ms": 519
+    },
+    {
+      "name": "Eight independent student contexts join with two or three identifiers; preview remains locked",
+      "passed": true,
+      "ms": 4564
+    },
+    {
+      "name": "Duplicate members, ninth group, cross-group access and teacher mutations are rejected",
+      "passed": true,
+      "ms": 65
+    },
+    {
+      "name": "Teacher Next unlocks all eight students and pictures are visible",
+      "passed": true,
+      "ms": 922
+    },
+    {
+      "name": "Wrong animation, correction, five-attempt cap and seven simultaneous correct records",
+      "passed": true,
+      "ms": 16797
+    },
+    {
+      "name": "Idempotent retry after a lost response never uses another attempt",
+      "passed": true,
+      "ms": 62
+    },
+    {
+      "name": "Changing the picture locks all tablets, projects prior records and rejects a late answer",
+      "passed": true,
+      "ms": 1502
+    },
+    {
+      "name": "Offline draft survives reload, retry writes exactly once and reconnect retains the group",
+      "passed": true,
+      "ms": 2717
+    },
+    {
+      "name": "Teacher answer masking affects projection only; all seven questions can finish",
+      "passed": true,
+      "ms": 17894
+    },
+    {
+      "name": "CSV export includes membership, all attempts and unanswered items; reload preserves records",
+      "passed": true,
+      "ms": 718
+    },
+    {
+      "name": "A second class uses a separate room snapshot and cannot access the first class",
+      "passed": true,
+      "ms": 166
+    },
+    {
+      "name": "Tablet portrait, landscape and desktop have no horizontal overflow or runtime errors",
+      "passed": true,
+      "ms": 238
+    }
+  ],
+  "browserErrors": [],
+  "passed": true
+}

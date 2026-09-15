@@ -7,14 +7,16 @@
     "dev": "vite --host 127.0.0.1 --mode demo",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs",
-    "test:rules": "firebase emulators:exec --only firestore,storage --project demo-classroom-games \"node --test tests/rules.test.mjs\""
+    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs tests/unscramble.test.mjs",
+    "test:rules": "firebase emulators:exec --only firestore,storage --project demo-classroom-games \"node --test tests/rules.test.mjs\"",
+    "test:live": "node tests/unscramble-integration.mjs"
   },
   "dependencies": {
     "firebase": "^12.18.0",
     "idb": "^8.0.3",
     "jszip": "^3.10.1",
     "lucide-react": "^1.41.0",
+    "qrcode": "^1.5.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
@@ -22,6 +24,7 @@
     "@firebase/rules-unit-testing": "^5.0.2",
     "@playwright/test": "^1.63.0",
     "@vitejs/plugin-react": "^6.1.1",
-    "vite": "^8.2.2"
+    "vite": "^8.2.2",
+    "firebase-admin": "^14.4.0"
   }
 }

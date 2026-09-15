@@ -4,8 +4,17 @@ import {initializeApp} from 'firebase-admin/app';
 import {getAuth} from 'firebase-admin/auth';
 import {getFirestore} from 'firebase-admin/firestore';
 import {createHmac} from 'node:crypto';
+import {getStorage} from 'firebase-admin/storage';
+import {createActivityService,activityHttp} from './unscramble-service.mjs';
+import {ActivityError} from './unscramble-model.mjs';
 import {verifyPin,nextLimit} from './pin.mjs';
 initializeApp();
+const liveService=createActivityService({db:getFirestore(),bucket:getStorage().bucket(),verifyTeacher:async authorization=>{
+ try{const token=await getAuth().verifyIdToken((authorization||'').replace(/^Bearer /,''));
+ if(token.uid!=='classroom-owner'||token.classroomTeacher!==true||token.firebase?.sign_in_provider!=='custom'||Date.now()/1000-token.auth_time>=28800)throw new Error('teacher');
+ }catch{throw new ActivityError('Please sign in as the teacher.',401);}
+}});
+export const liveActivity=onRequest({region:'asia-east1',maxInstances:3,concurrency:40,timeoutSeconds:60,memory:'256MiB',cors:false},activityHttp(liveService));
 const teacherPin=defineSecret('CLASSROOM_TEACHER_PIN');
 export const teacherLogin=onRequest({region:'asia-east1',secrets:[teacherPin],maxInstances:2,concurrency:10,timeoutSeconds:20,memory:'256MiB',cors:false},async(req,res)=>{
   res.set('Cache-Control','no-store');res.set('X-Content-Type-Options','nosniff');

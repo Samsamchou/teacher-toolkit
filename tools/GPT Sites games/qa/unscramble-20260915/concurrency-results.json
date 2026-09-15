@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "results": [
+    "Lost join response retries to the same group.",
+    "A member cannot join on a second device.",
+    "12 concurrent retries of one submission count exactly once.",
+    "10 simultaneous new submissions cannot exceed the five-attempt cap.",
+    "Concurrent teacher edits reject a stale version; active sessions retain their original question snapshot."
+  ],
+  "at": "2026-09-15T02:33:35.358Z"
+}

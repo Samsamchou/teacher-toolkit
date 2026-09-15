@@ -1,5 +1,13 @@
 # Classroom Club / 上課互動遊戲大集合
 
+## 2026-09-15 句子重組即時活動（已正式部署）
+
+已部署 Hosting 與新增 liveActivity 至 gamesinclass-5d9d1。57／57 線上檔案雜湊一致，教師登入頁、學生加入頁與 API 權限檢查通過。
+
+正式入口：https://gamesinclass-5d9d1.web.app/unscramble 。教師使用原通行碼登入，按「載入七題家人題組」，再建立 2–10 組場次。題組可保存、複製及換圖；每個班級另建場次保存紀錄。實體平板同步、正式登入後的紀錄保存及教室音效仍待教師驗收。
+
+詳 [部署紀錄](DEPLOYMENT-20260915.md)、[本地交付紀錄](UNSCRAMBLE-IMPLEMENTATION-20260915.md) 與 `rdq/RDQ-spec-live-unscramble-20260915.md`。本地預覽 http://127.0.0.1:5184/unscramble ，啟動 `scripts/unscramble-preview.ps1`。
+
 ## 2026-09-13 動物投籃（已正式部署）
 
 新增 Animal Basketball：2–6 組、六種動物、老師每回合自由選組且每組一次、動態真實機率、追加回合保留分數。內建 Image 繪製六角色共 24 姿勢。50 項測試及建置通過，六組五回合完整流程已驗證。

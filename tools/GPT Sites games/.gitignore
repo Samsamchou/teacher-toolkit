@@ -31,3 +31,7 @@ test-results/
 # Preserve reproducible dependency versions / 保存可重現的套件版本
 !package-lock.json
 !functions/package-lock.json
+
+# Local emulator state (never commit activity identifiers or local sessions)
+emulator-data/
+firebase-export-*/
