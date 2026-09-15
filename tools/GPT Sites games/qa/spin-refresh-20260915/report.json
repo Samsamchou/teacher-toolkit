@@ -1,0 +1,217 @@
+{
+  "passed": true,
+  "rounds": 6,
+  "teams": 6,
+  "turns": 36,
+  "tasks": [
+    "Wiggle",
+    "Do silly dance",
+    "Squat ×3",
+    "Spin",
+    "Make a face",
+    "Jump ×3",
+    "Stretch ×3",
+    "Blink ×3",
+    "Stretch ×3",
+    "Wiggle",
+    "Blink ×3",
+    "Squat ×3",
+    "Spin",
+    "Do silly dance",
+    "Jump ×3",
+    "Make a face",
+    "Squat ×3",
+    "Do silly dance",
+    "Stretch ×3",
+    "Wiggle",
+    "Make a face",
+    "Jump ×3",
+    "Spin",
+    "Blink ×3",
+    "Make a face",
+    "Squat ×3",
+    "Stretch ×3",
+    "Do silly dance",
+    "Jump ×3",
+    "Wiggle",
+    "Blink ×3",
+    "Spin",
+    "Stretch ×3",
+    "Blink ×3",
+    "Wiggle",
+    "Make a face"
+  ],
+  "sizes": [
+    {
+      "kind": "wheel",
+      "width": 1024,
+      "height": 768,
+      "wheel": {
+        "x": 238.5,
+        "y": 201,
+        "width": 547,
+        "height": 547
+      },
+      "button": {
+        "x": 825,
+        "y": 679,
+        "width": 165,
+        "height": 65
+      }
+    },
+    {
+      "kind": "wheel",
+      "width": 1440,
+      "height": 1000,
+      "wheel": {
+        "x": 339.71875,
+        "y": 219.453125,
+        "width": 760.546875,
+        "height": 760.546875
+      },
+      "button": {
+        "x": 1241,
+        "y": 911,
+        "width": 165,
+        "height": 65
+      }
+    },
+    {
+      "kind": "wheel",
+      "width": 1920,
+      "height": 1080,
+      "wheel": {
+        "x": 542.5,
+        "y": 225,
+        "width": 835,
+        "height": 835
+      },
+      "button": {
+        "x": 1721,
+        "y": 991,
+        "width": 165,
+        "height": 65
+      }
+    },
+    {
+      "kind": "wheel",
+      "width": 768,
+      "height": 1024,
+      "wheel": {
+        "x": 36,
+        "y": 233.578125,
+        "width": 696,
+        "height": 696
+      },
+      "button": {
+        "x": 569,
+        "y": 935,
+        "width": 165,
+        "height": 65
+      }
+    },
+    {
+      "kind": "wheel",
+      "width": 390,
+      "height": 844,
+      "wheel": {
+        "x": 15.59375,
+        "y": 346.40625,
+        "width": 358.796875,
+        "height": 358.796875
+      },
+      "button": {
+        "x": 174.40625,
+        "y": 739.203125,
+        "width": 200,
+        "height": 61
+      }
+    },
+    {
+      "kind": "task",
+      "width": 1024,
+      "height": 768,
+      "frame": {
+        "x": 241.5,
+        "y": 204,
+        "width": 541,
+        "height": 541
+      },
+      "btn": {
+        "x": 819.390625,
+        "y": 678,
+        "width": 167.609375,
+        "height": 57
+      }
+    },
+    {
+      "kind": "task",
+      "width": 1440,
+      "height": 1000,
+      "frame": {
+        "x": 342.71875,
+        "y": 222.453125,
+        "width": 754.546875,
+        "height": 754.546875
+      },
+      "btn": {
+        "x": 1164.671875,
+        "y": 910,
+        "width": 238.328125,
+        "height": 57
+      }
+    },
+    {
+      "kind": "task",
+      "width": 1920,
+      "height": 1080,
+      "frame": {
+        "x": 545.5,
+        "y": 228,
+        "width": 829,
+        "height": 829
+      },
+      "btn": {
+        "x": 1563.0625,
+        "y": 990,
+        "width": 319.9375,
+        "height": 57
+      }
+    },
+    {
+      "kind": "task",
+      "width": 768,
+      "height": 1024,
+      "frame": {
+        "x": 169.796875,
+        "y": 404.59375,
+        "width": 428.390625,
+        "height": 428.390625
+      },
+      "btn": {
+        "x": 606.90625,
+        "y": 934,
+        "width": 124.09375,
+        "height": 57
+      }
+    },
+    {
+      "kind": "task",
+      "width": 390,
+      "height": 844,
+      "frame": {
+        "x": 25,
+        "y": 444.40625,
+        "width": 340,
+        "height": 340
+      },
+      "btn": {
+        "x": 203.828125,
+        "y": 794.40625,
+        "width": 112.6875,
+        "height": 54
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,7 +1,7 @@
-param([int]$Port = 5182)
+param([int]$Port = 5192)
 $ErrorActionPreference = 'Stop'
 $spinSource = Split-Path -Parent $PSScriptRoot
-$spinRuntime = Join-Path $env:TEMP 'gsg-spin-20260912'
+$spinRuntime = Join-Path $env:TEMP 'gsg-spin-20260915'
 New-Item -ItemType Directory -Path $spinRuntime -Force | Out-Null
 foreach ($name in @('src','public','tests','index.html','vite.config.js','package.json','package-lock.json')) {
     Copy-Item -LiteralPath (Join-Path $spinSource $name) -Destination $spinRuntime -Recurse -Force

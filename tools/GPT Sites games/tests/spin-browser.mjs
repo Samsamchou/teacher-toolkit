@@ -1,19 +1,19 @@
 import {chromium,expect} from '@playwright/test';
 import fs from 'node:fs/promises';
-const out=process.env.SPIN_QA_DIR||'qa/spin-20260912';await fs.mkdir(out,{recursive:true});
+const out=process.env.SPIN_QA_DIR||'qa/spin-regression-20260915';await fs.mkdir(out,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true});
 const p=await browser.newPage({viewport:{width:1440,height:1000},hasTouch:true});
 await p.addInitScript(()=>{window.clickTrace=[];document.addEventListener('click',e=>window.clickTrace.push({label:e.target.closest('button')?.getAttribute('aria-label')||e.target.closest('button')?.textContent,tag:e.target.tagName,phase:document.querySelector('.sr-game')?.dataset.phase}),true);});
 await p.addInitScript(()=>{const original=crypto.getRandomValues.bind(crypto);crypto.getRandomValues=array=>{if(window.forcedDiceRandom!==undefined){array.fill(window.forcedDiceRandom);return array;}return original(array);};});
 const errors=[],tasks=[],requests=[];p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(r.url().includes('/spin/tasks/'))requests.push(r.url());});
-await p.goto('http://127.0.0.1:5182');await p.getByRole('button',{name:/Spin, ask, answer, do and roll/}).click();
+await p.goto(process.env.SPIN_BASE_URL||'http://127.0.0.1:5192');await p.getByRole('button',{name:/Spin, ask, answer, do and roll/}).click();
 await expect(p.getByRole('button',{name:/Let’s play!/})).toBeEnabled();
 await p.screenshot({path:`${out}/setup-desktop.png`});
 await p.getByRole('button',{name:/Let’s play!/}).click();await expect(p.locator('.sr-score')).toHaveCount(2);
 await p.screenshot({path:`${out}/wheel-desktop.png`});
 await p.clock.install();const totals=[0,0];
 for(let i=0;i<12;i++){
- console.log('Turn',i+1);
+ console.log('Turn',i+1);await p.getByRole('button',{name:`Choose Team ${i%2+1}`,exact:true}).click();
  await p.getByRole('button',{name:'Spin!',exact:true}).click();
  await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','spinning');
  const angle=await p.locator('.sr-pointer').evaluate(el=>Number(el.style.transform.match(/rotate\(([^d]+)/)[1]));
@@ -49,7 +49,7 @@ await expect(p.locator('.sr-results')).toHaveAttribute('data-celebrating','true'
 await p.screenshot({path:`${out}/results.png`});await p.clock.runFor(7750);await expect(p.locator('.sr-results')).toHaveAttribute('data-celebrating','true');await p.clock.runFor(300);await expect(p.locator('.sr-results')).toHaveAttribute('data-celebrating','false');
 await p.getByRole('button',{name:'Play again',exact:true}).click();await p.getByRole('group',{name:'Number of teams'}).getByRole('button',{name:'6',exact:true}).click();await p.getByRole('button',{name:/Let’s play!/}).click();
 await p.setViewportSize({width:1024,height:768});await p.screenshot({path:`${out}/wheel-tablet.png`});await expect(p.locator('.sr-score')).toHaveCount(6);
-await p.getByRole('button',{name:'Spin!',exact:true}).tap();await p.clock.runFor(2000);await p.getByRole('button',{name:'End early',exact:true}).click();await p.clock.runFor(10000);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','spinning');await p.getByRole('button',{name:'Keep playing',exact:true}).click();await p.clock.runFor(3800);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','spinning');await p.clock.runFor(250);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','question');
+await p.getByRole('button',{name:'Choose Team 1',exact:true}).click();await p.getByRole('button',{name:'Spin!',exact:true}).tap();await p.clock.runFor(2000);await p.getByRole('button',{name:'End early',exact:true}).click();await p.clock.runFor(10000);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','spinning');await p.getByRole('button',{name:'Keep playing',exact:true}).click();await p.clock.runFor(3800);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','spinning');await p.clock.runFor(250);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','question');
 await p.screenshot({path:`${out}/question-tablet.png`});await p.setViewportSize({width:390,height:844});await p.screenshot({path:`${out}/question-phone.png`});expect(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 await p.getByRole('button',{name:'End early',exact:true}).click();await p.getByRole('button',{name:'Finish now',exact:true}).click();await expect(p.locator('.sr-results h2')).toHaveText('Everyone wins!');await expect(p.locator('.sr-ranking')).toContainText('0 / 6 turns');
 await p.clock.runFor(8100);await expect(p.locator('.sr-game')).toHaveAttribute('data-phase','finished');
@@ -57,7 +57,7 @@ await p.setViewportSize({width:1024,height:768});await p.screenshot({path:`${out
 // A failed GIF must never allow a score or discard the task. Recover in place.
 await p.getByRole('button',{name:'Play again',exact:true}).click();await p.getByRole('button',{name:'Leave game',exact:true}).click();
 await p.reload();let blockTasks=true;await p.route('**/spin/tasks/*.gif',r=>blockTasks?r.abort():r.continue());
-await p.getByRole('button',{name:/Spin, ask, answer, do and roll/}).click();await p.getByRole('button',{name:/Let’s play!/}).click();await p.getByRole('button',{name:'Spin!',exact:true}).click();await p.clock.runFor(6050);await p.getByRole('button',{name:'Right',exact:true}).click();await expect(p.getByRole('button',{name:'Retry loading',exact:true})).toBeVisible();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeDisabled();const taskName=await p.locator('.sr-task-badge').textContent();blockTasks=false;await p.getByRole('button',{name:'Retry loading',exact:true}).click();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeEnabled();await expect(p.locator('.sr-task-badge')).toHaveText(taskName);await expect(p.getByTestId('spin-score-0')).toHaveText('0');await p.screenshot({path:`${out}/task-tablet.png`});
+await p.getByRole('button',{name:/Spin, ask, answer, do and roll/}).click();await p.getByRole('button',{name:/Let’s play!/}).click();await p.getByRole('button',{name:'Choose Team 1',exact:true}).click();await p.getByRole('button',{name:'Spin!',exact:true}).click();await p.clock.runFor(6050);await p.getByRole('button',{name:'Right',exact:true}).click();await expect(p.getByRole('button',{name:'Retry loading',exact:true})).toBeVisible();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeDisabled();const taskName=await p.locator('.sr-task-badge').textContent();blockTasks=false;await p.getByRole('button',{name:'Retry loading',exact:true}).click();await expect(p.getByRole('button',{name:'Good job',exact:true})).toBeEnabled();await expect(p.locator('.sr-task-badge')).toHaveText(taskName);await expect(p.getByTestId('spin-score-0')).toHaveText('0');await p.screenshot({path:`${out}/task-tablet.png`});
 await p.getByRole('button',{name:'Fullscreen',exact:true}).click();expect(await p.evaluate(()=>!!document.fullscreenElement)).toBe(true);await p.getByRole('button',{name:'Fullscreen',exact:true}).click();expect(await p.evaluate(()=>!!document.fullscreenElement)).toBe(false);
 expect(errors).toEqual([]);
 await fs.writeFile(`${out}/browser-report.json`,JSON.stringify({passed:true,fullMatch:{teams:2,turns:12,totals,tasks},testedTeamCounts:[2,6],taskRequests:requests.length,uniqueTaskRequests:new Set(requests).size,errors,checks:['6000ms spinner','pointer and abbreviation match','retry preserves content','eight unique tasks','dice raw 0 gives 1 and raw 5 gives 6','one award per roll','all six rounds','8000ms celebration','early finish tie','pause during end confirmation','1024x768 touch','390px no horizontal overflow','failed GIF retry preserves task and score','fullscreen entry and exit']},null,2));

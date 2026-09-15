@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "home": 200,
+  "checks": [
+    {
+      "path": "/unscramble",
+      "status": 200
+    },
+    {
+      "path": "/join",
+      "status": 200
+    },
+    {
+      "path": "/api/live-activity",
+      "status": 405
+    }
+  ],
+  "errors": [],
+  "authenticated": false
+}

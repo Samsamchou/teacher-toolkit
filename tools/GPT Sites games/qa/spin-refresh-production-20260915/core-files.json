@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "8f8499801eb71d3ee05319dd7644698fe41922c1bddd9b5530ecd20a4adfdd3c",
+      "expected": "8f8499801eb71d3ee05319dd7644698fe41922c1bddd9b5530ecd20a4adfdd3c",
+      "match": true
+    },
+    {
+      "path": "assets/index-DBSqxO3c.js",
+      "status": 200,
+      "sha256": "8fb25554bd990ae8f76ba9088671c12f5ed26860d3224a1fc312103c3f08206e",
+      "expected": "8fb25554bd990ae8f76ba9088671c12f5ed26860d3224a1fc312103c3f08206e",
+      "match": true
+    },
+    {
+      "path": "assets/index-ixkLB9z6.css",
+      "status": 200,
+      "sha256": "72a78b415695a2f136dd1d8da2fab7c15a14b034890c8817c722ecce90dc705e",
+      "expected": "72a78b415695a2f136dd1d8da2fab7c15a14b034890c8817c722ecce90dc705e",
+      "match": true
+    }
+  ],
+  "gifHeaders": [
+    {
+      "path": "spin/tasks/1.gif",
+      "status": 200,
+      "bytes": "2862953"
+    },
+    {
+      "path": "spin/tasks/2.gif",
+      "status": 200,
+      "bytes": "2402112"
+    },
+    {
+      "path": "spin/tasks/3.gif",
+      "status": 200,
+      "bytes": "1213840"
+    },
+    {
+      "path": "spin/tasks/4.gif",
+      "status": 200,
+      "bytes": "4291499"
+    },
+    {
+      "path": "spin/tasks/5.gif",
+      "status": 200,
+      "bytes": "3567998"
+    },
+    {
+      "path": "spin/tasks/6.gif",
+      "status": 200,
+      "bytes": "13991500"
+    },
+    {
+      "path": "spin/tasks/7.gif",
+      "status": 200,
+      "bytes": "1024435"
+    },
+    {
+      "path": "spin/tasks/8.gif",
+      "status": 200,
+      "bytes": "1321991"
+    }
+  ],
+  "full57FileAudit": "incomplete: full downloads exceeded timeouts; do not claim all hashes verified"
+}
