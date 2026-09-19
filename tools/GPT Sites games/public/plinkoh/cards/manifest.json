@@ -1,0 +1,42 @@
+{
+  "format": "hand-authored-svg",
+  "version": "2026.09.19-card-art.1",
+  "cards": [
+    {
+      "id": "double-pegs",
+      "url": "/plinkoh/cards/double-pegs.svg",
+      "description": "Peg points +1 become +2",
+      "sha256": "ff0a9c1802fb50776c035d44931c327874ac564fdb9a04921b305b0dcb0fb864"
+    },
+    {
+      "id": "double-slot",
+      "url": "/plinkoh/cards/double-slot.svg",
+      "description": "Landing slot 20 becomes 40",
+      "sha256": "d2431c3a3ced8f6262aa46bcb63b2e0c4b2beebbfc4267131b02cadba58f2365"
+    },
+    {
+      "id": "bonus-10",
+      "url": "/plinkoh/cards/bonus-10.svg",
+      "description": "Add 10 to the score: 30 becomes 40",
+      "sha256": "c27e98ee53261ec51e3edb659a0b8ab2baddf24b1a860bccc01fa249f3eba962"
+    },
+    {
+      "id": "second-chance",
+      "url": "/plinkoh/cards/second-chance.svg",
+      "description": "Drop ball 1 and ball 2; keep the higher 50-point result",
+      "sha256": "cafc49b81323695cf1921aed0074a74c0b70f49a273ca9b03fd19adf57496bc2"
+    },
+    {
+      "id": "big-ball",
+      "url": "/plinkoh/cards/big-ball.svg",
+      "description": "The same ball grows from radius 1 to 1.4",
+      "sha256": "a7c843062e606df418c834426b1bbb8c07a7b17f8a876a7de878fbcd2ade4242"
+    },
+    {
+      "id": "safe-landing",
+      "url": "/plinkoh/cards/safe-landing.svg",
+      "description": "A 12-point score becomes the minimum 20 points",
+      "sha256": "c016f0d6e2617d556057bb3c89464642162f28a46a684db3f8796f5ecfc20ff9"
+    }
+  ]
+}

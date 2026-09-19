@@ -1,0 +1,17 @@
+import {chromium,expect} from '@playwright/test';import fs from 'node:fs/promises';
+const out='qa/plinkoh-powerups-20260919';await fs.mkdir(out,{recursive:true});const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage({viewport:{width:1366,height:768}});const errors=[];p.on('pageerror',e=>errors.push(e.message));const checks=[];
+const phase=value=>expect(p.locator('.po-shell')).toHaveAttribute('data-phase',value,{timeout:30000});const read=()=>p.evaluate(()=>JSON.parse(localStorage.getItem('classroom-plinkoh-v1')));
+async function fixture(card,{legacy=false,count=2,uses=0}={}){await p.goto('http://127.0.0.1:5194');await p.evaluate(async({card,legacy,count,uses})=>{const m=await import('/src/plinkoh-model.mjs');let s;for(let seed=1;seed<200;seed++){s=m.reduce(m.reduce(m.reduce(m.newGame({count},seed),{type:'INTRO_DONE'}),{type:'SELECT',id:0}),{type:'INTRO_DONE'});if(!card||s.cardTurn.offer.includes(card))break;}if(legacy){s.version=1;delete s.cardTurn;delete s.cardUses;s.phase='READY';}else if(uses){s.cardUses[0]=uses;s.phase='SELECT_TEAM';s.selected=null;s=m.reduce(m.reduce(s,{type:'SELECT',id:0}),{type:'INTRO_DONE'});}localStorage.setItem(m.STORAGE_KEY,JSON.stringify(s));}, {card,legacy,count,uses});await p.getByRole('button',{name:/Plink-oh!/}).click();await p.getByRole('button',{name:/Resume ·/}).click();await expect(p.locator('.po-shell')).toHaveAttribute('data-audio','ready');}
+
+for(const mode of ['skip','hidden','exit','muted','reduced']){
+ await p.goto('http://127.0.0.1:5194');await p.evaluate(mode=>localStorage.setItem('club-preferences-v2',JSON.stringify({muted:mode==='muted',reduced:mode==='reduced'})),mode);await fixture('bonus-10');await p.getByRole('button',{name:/No card/}).click();
+ await p.evaluate(async()=>{const {PlinkOhAudio}=await import('/src/PlinkOhAudio.js');const win=PlinkOhAudio.prototype.win;PlinkOhAudio.prototype.win=function(id){window.a=this;return win.call(this,id)};});
+ await p.getByRole('button',{name:'Ⅱ Menu',exact:true}).click();await p.getByRole('button',{name:'End game',exact:true}).click();await p.getByRole('button',{name:'Confirm',exact:true}).click();await phase('FINISHED');
+ if(mode==='skip'){await p.getByRole('button',{name:'Skip celebration',exact:true}).click();await expect(p.locator('.po-results')).toHaveAttribute('data-celebrating','false');expect(await p.evaluate(()=>!window.a.winNode)).toBe(true);}
+ if(mode==='hidden'){await p.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));});await expect(p.locator('.po-results')).toHaveAttribute('data-celebrating','false');expect(await p.evaluate(()=>window.a.nodes.size)).toBe(0);await p.evaluate(()=>{delete document.hidden;});}
+ if(mode==='exit'){await p.locator('.po-results').getByRole('button',{name:'Classroom Club',exact:true}).click();expect(await p.evaluate(()=>window.a.disposed&&window.a.nodes.size===0)).toBe(true);}
+ if(mode==='muted'){expect(await p.evaluate(()=>!window.a.winNode&&window.a.buses.sounds.gain.value===0)).toBe(true);}
+ if(mode==='reduced'){expect(await p.locator('.po-winners svg').first().evaluate(e=>getComputedStyle(e).animationName)).toBe('none');}
+ checks.push(mode);
+}
+expect(errors).toEqual([]);await fs.writeFile(out+'/victory-controls-report.json',JSON.stringify({passed:true,checks,errors},null,2));console.log(JSON.stringify({passed:true,checks}));await b.close();

@@ -1,5 +1,5 @@
-export class ActivityError extends Error { constructor(message,status=400){super(message);this.status=status;} }
-export const requireValue=(condition,message,status=400)=>{if(!condition)throw new ActivityError(message,status);};
+export class ActivityError extends Error { constructor(message,status=400,code='INVALID_REQUEST'){super(message);this.status=status;this.code=code;} }
+export const requireValue=(condition,message,status=400,code='INVALID_REQUEST')=>{if(!condition)throw new ActivityError(message,status,code);};
 export const normalize=text=>String(text).replace(/[’‘]/g,"'").trim().replace(/\s+/g,' ');
 export const words=text=>normalize(text).split(' ').filter(Boolean);
 export function members(value){
@@ -7,6 +7,8 @@ export function members(value){
  const ids=value.trim().split(/\s+/);requireValue(ids.length>0&&ids[0],'Enter your student numbers.');
  requireValue(new Set(ids).size===ids.length,'A student number is repeated.');return ids;
 }
+export const memberKey=value=>[...value].sort().join('\u0000');
+export const sameMembers=(left,right)=>Array.isArray(left)&&Array.isArray(right)&&memberKey(left)===memberKey(right);
 export function validateDeck(input){
  requireValue(typeof input?.name==='string'&&input.name.trim()&&input.name.length<=150,'Give the question set a name (up to 150 characters).');
  requireValue(Array.isArray(input.questions)&&input.questions.length>0&&input.questions.length<=50,'Use 1–50 questions.');
@@ -36,4 +38,4 @@ export function publicRoom(room,groupId){
  return {id:room.id,title:room.title,className:room.className,phase:room.phase,questionIndex:room.questionIndex,questionCount:room.questions.length,revision:room.revision,imageId:question.imageId,
   tokens:[...words(question.prompt),...words(question.answer)].sort(),group:{id:group.id,number:group.number,members:group.members,attempts:group.attempts},maxAttempts:5};
 }
-export function teacherRoom(room){return {...room,groups:Object.fromEntries(Object.entries(room.groups).map(([id,{tokenHash,...g}])=>[id,g]))};}
+export function teacherRoom(room){return {...room,groups:Object.fromEntries(Object.entries(room.groups).map(([id,{tokenHash,login,lastReleaseId,...g}])=>[id,{...g,loginStatus:login?.status||'active',loginVersion:Number.isInteger(login?.version)?login.version:1}]))};}

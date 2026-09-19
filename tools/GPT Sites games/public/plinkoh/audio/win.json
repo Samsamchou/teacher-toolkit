@@ -1,0 +1,17 @@
+{
+  "eventId": "win",
+  "seconds": 5.0,
+  "sampleRate": 48000,
+  "channels": 2,
+  "frames": 240000,
+  "sha256": "e73cbc40f847e3112f17140b3c52711c0c1305cacc0b902fd66448e064c63eb5",
+  "bytes": 960044,
+  "rms": 0.17459014409496942,
+  "peak": 0.86,
+  "source": "Original deterministic PCM synthesis: brass-like harmonic fanfare, clap bursts, filtered noise bed. No external samples.",
+  "evidence": "EXTENSION approved by RDQ",
+  "generator": "scripts/plinkoh-win-audio.py",
+  "createdAt": "2026-09-19T13:53:54.760663+00:00",
+  "abStatus": "pending teacher listening",
+  "stop": "5 seconds, skip, pause, exit, restart; master mute honored"
+}

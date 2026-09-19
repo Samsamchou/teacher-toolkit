@@ -1,5 +1,12 @@
 # Classroom Club / 上課互動遊戲大集合
 
+## 2026-09-19 Plink-oh! 歡樂落球（本機完成，未部署）
+
+新增內建落球遊戲：2–15組、預設六回合、老師自由選組、真實碰撞加分、同裝置進度恢復。遊戲純英文，管理區英中雙語。先於本機試玩及驗收音效，正式站尚未更新。
+
+預覽 http://127.0.0.1:5194/ ，重新啟動 `scripts/plinkoh-preview.ps1`。音效 A/B 及有聲錄影入口： http://127.0.0.1:5194/qa/plinkoh-20260919/index.html 。詳 [本機交付](PLINKOH-IMPLEMENTATION-20260919.md) 與 [參考差異](qa/plinkoh-20260919/reference-gap.md)。候選音效仍待教師聽辨，不宣稱已完整復刻原版聲音。
+
+
 ## 2026-09-15 Spin 載入修復整合版（已正式部署）
 
 版本 2026.09.15-fastload.1：保留原 GIF、MP4 播放副本縮小約 74.5%、開始僅等待必要素材、下載進度與逾時重試、自由選組及句子重組最新版整合。61 項測試通過，17／17 項正式檔案雜湊一致。詳 [修復交接](SPIN-FASTLOAD-20260915.md) 與 [正式部署紀錄](DEPLOYMENT-20260915.md)。
@@ -21,6 +28,9 @@
 正式入口：https://gamesinclass-5d9d1.web.app/unscramble 。教師使用原通行碼登入，按「載入七題家人題組」，再建立 2–10 組場次。題組可保存、複製及換圖；每個班級另建場次保存紀錄。實體平板同步、正式登入後的紀錄保存及教室音效仍待教師驗收。
 
 詳 [部署紀錄](DEPLOYMENT-20260915.md)、[本地交付紀錄](UNSCRAMBLE-IMPLEMENTATION-20260915.md) 與 `rdq/RDQ-spec-live-unscramble-20260915.md`。本地預覽 http://127.0.0.1:5184/unscramble ，啟動 `scripts/unscramble-preview.ps1`。
+## 2026-09-19 句子重組重登與 15 組（已正式部署）
+
+正式版本 `2026.09.19-unscramble-rejoin.3` 將新場次範圍擴充為 2–15 組。教師可解除單一組別的登入，讓完全相同的組員接回原組、作答次數與歷次紀錄；每次接回會建立新的登入憑證，先前各代登入與加入請求持續失效。Hosting 與 `classroom-games:liveActivity` 已部署，未變更正式題組資料、Firestore／Storage 規則或 `teacherLogin`。詳 [正式部署紀錄](DEPLOYMENT-UNSCRAMBLE-REJOIN-20260919.md)。
 
 ## 2026-09-13 動物投籃（已正式部署）
 
@@ -109,3 +119,9 @@ RDQ 兩輪 8 題已確認，規格位於 rdq/RDQ-spec-classroom-games-20260905.m
 版本 `2026.09.15-unscramble-images.2`：上傳自動 WebP／480px 縮圖、私人記憶體快取、容量比較、原圖及题組備份。正式兩組共 14 張圖片已更新，重新整理後圖片正常；原九組七題的顯示紀錄前後一致。另修正大原圖下載 20 秒逾時被誤報解碼錯誤，圖片傳輸改為 60 秒。
 
 詳細容量、備份編號及驗證範圍見 `UNSCRAMBLE-IMAGE-FASTLOAD-20260915.md` 與 `DEPLOYMENT-20260915.md`。
+
+## 2026-09-19 Plink-oh! Power-ups + Winner（本機）
+已新增六張三選一卡牌、每組三次額度、Second Chance 雙球刷新恢復、五秒慶祝音效及動畫。舊局沿用原規則，新局啟用卡牌。詳見 [改版交付](PLINKOH-POWERUPS-IMPLEMENTATION-20260919.md) 與 [QA 檢視](qa/plinkoh-powerups-20260919/index.html)。未部署。
+
+## 2026-09-19 Plink-oh! 六卡插畫已正式發布
+版本 `2026.09.19-plinkoh-cards.1` 已依明確授權發布至 [正式站](https://gamesinclass-5d9d1.web.app/)。六張 SVG 改為具體遊戲動作與得分結果插畫；包含先前完成的卡牌功能及五秒 Winner。詳見 [發布紀錄](DEPLOYMENT-PLINKOH-CARDS-20260919.md) 與 [六卡圖像總覽](qa/plinkoh-card-art-20260919/index.html)。

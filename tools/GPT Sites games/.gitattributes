@@ -1,0 +1,20 @@
+# Preserve release-manifest byte hashes across Windows and Git checkouts.
+src/main.jsx -text
+src/SpinGame.jsx -text
+src/spin-model.mjs -text
+src/spin-dopamine.css -text
+src/UnscrambleLive.jsx -text
+src/unscramble.css -text
+src/BasketballGame.jsx -text
+src/BeachGame.jsx -text
+src/unscramble-api.js -text
+src/unscramble-images.mjs -text
+src/model.mjs -text
+src/backup.js -text
+src/PlinkOhGame.jsx -text
+src/PlinkOhAudio.js -text
+src/plinkoh-model.mjs -text
+src/plinkoh-physics.mjs -text
+src/plinkoh.css -text
+src/plinkoh-cards.mjs -text
+public/plinkoh/cards/*.svg -text

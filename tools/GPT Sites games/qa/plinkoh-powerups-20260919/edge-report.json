@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "audio failure surfaced and retry recovered",
+    "touch selection and drop",
+    "pause and exit release all voices",
+    "built-in edit protection",
+    "existing entry Scratch & Reveal",
+    "existing entry Beach Cleanup",
+    "existing entry Spin, ask, answer, do and roll",
+    "existing entry Animal Basketball",
+    "join route renders",
+    "unscramble route renders"
+  ],
+  "errors": []
+}

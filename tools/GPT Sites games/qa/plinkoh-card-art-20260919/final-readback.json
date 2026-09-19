@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "sourceFiles": 18,
+  "svgCount": 6,
+  "productionVerifiedFiles": 13,
+  "browserLayouts": 18,
+  "productionEntry": 200,
+  "tests": 92
+}

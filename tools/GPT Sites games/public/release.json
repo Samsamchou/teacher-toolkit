@@ -1,15 +1,27 @@
 {
-  "version": "2026.09.15-unscramble-images.2",
+  "version": "2026.09.19-plinkoh-cards.1",
   "sources": {
-    "main.jsx": "ecf7c45848b22d35f841bfdc26553301cb0331c7c9d455797d22f96a846ca82d",
+    "main.jsx": "535331b3b869588df3e3d9f08c0565ce369a1f4bd355d635464f8f8cebc15c2d",
     "SpinGame.jsx": "5dd44be0a1454f2f23239c5e6f92df02a9d6e55979b141bd19c808fd0b41501a",
     "spin-model.mjs": "ae845d8bd50f1e88585f94db816a5c72b07bccfed8b75ae50004b8392150b02e",
     "spin-dopamine.css": "f727e8440b8875b87c56f95fe1e8342667bef23b90aa3e4fc182e224ac9966dc",
-    "UnscrambleLive.jsx": "483c98fa5d83bb5c22a39cb313e6578f70ae9f9f8268501aa363bf572f2b34ef",
-    "unscramble.css": "4541fcd90f8ef76b3c2e59afa6246efd0faf2d0b9562eef6df6b2d1ba06e19ff",
+    "UnscrambleLive.jsx": "266ae90c66b32d459f21051a17b6547024b3dc065c61cb97e5277e026568c376",
+    "unscramble.css": "c3ef4b58a7049a1640e4377ce5bd646d88894f8dd20fb037e41dd02c49a6574e",
     "BasketballGame.jsx": "32ce6bf638c80b06ff000469a876cf0d301599b59ac519fb332277dc5433ea11",
     "BeachGame.jsx": "4eaa54f01677b1f52dedebbd8a73089201aca735cc3cc45cf1e60031929d5256",
-    "unscramble-api.js": "7c888d7d4527311e439dffe6b6b97a9f7017db3277e0c3b29d7d6b24f5d12fd7",
-    "unscramble-images.mjs": "5fca49fb54ba87d48a8dc375de569ffbbb7d6d95fe50b963693da47cbb505335"
-  }
+    "unscramble-api.js": "d462b9fe26f53cf0e0ade89ad505b50293e370ee21f94f1fc5015ea6bc0c4e06",
+    "unscramble-images.mjs": "5fca49fb54ba87d48a8dc375de569ffbbb7d6d95fe50b963693da47cbb505335",
+    "model.mjs": "974c2a93e8eff47c385873d1b49b24b399a355bd09f5f516bbc3dd53fc0b664e",
+    "backup.js": "278711d5f93b0392b0dbad6c72874ae9b37acc4e374018d0cc3e6aafece99d0d",
+    "PlinkOhGame.jsx": "7727f6fe6813f0afff028a3bf8e6593d6da8595822235755deacc6ccb34e69af",
+    "PlinkOhAudio.js": "60530c2dabdd6e9192c7528c351f993fbb529e24c1d49dd0719e2ad674b6d74f",
+    "plinkoh-model.mjs": "2df67d42df34a64e8a7f000d38b819d07eb1398afd6e2d01b5a6912ac649f1ff",
+    "plinkoh-physics.mjs": "c8e95c5dc1cfd4974649b0b872147b6de7db35763e3e396d579544776692b641",
+    "plinkoh.css": "e290c66aedbcdf3c77ee2f398f1b74a9a359bab068d27e03db27835d994b5783",
+    "plinkoh-cards.mjs": "3ed7fe971d0fa981c8f5b34c72913c01f6d494ffe6ab839673ed92124a1dc430"
+  },
+  "baseVersion": "2026.09.19-unscramble-rejoin.3",
+  "status": "hosting-release",
+  "cardArtVersion": "2026.09.19-card-art.1",
+  "cardArtManifestSha256": "dd339e630326f9ed4d9ad6100a34483a3841a621bf46fea3b20b4390bc3474dd"
 }

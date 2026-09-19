@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "site": "https://gamesinclass-5d9d1.web.app/",
+  "version": "2026.09.19-plinkoh-cards.1",
+  "files": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "sha256": "75f99a63f134815337064f40f1d5b2c4036eb7aac5eaef98edcbc01bc1507366",
+      "bytes": 572
+    },
+    {
+      "file": "release.json",
+      "status": 200,
+      "sha256": "7eb0ba2c01501870bfd9b9b2d75c3d21663e90733a6449a60cc275908871ed4e",
+      "bytes": 1946
+    },
+    {
+      "file": "assets/index-CKDn0XMY.js",
+      "status": 200,
+      "sha256": "19704bbf763db6950852233e5f7949e3a391a702d13c4e2e52d6322202f90dd3",
+      "bytes": 1121459
+    },
+    {
+      "file": "assets/index-D9aacrE9.css",
+      "status": 200,
+      "sha256": "623d14f2d35b184f73dbc031c0ac1b5f9b94b70600a1d8fc918281cc2c6e3bca",
+      "bytes": 147660
+    },
+    {
+      "file": "plinkoh/cards/big-ball.svg",
+      "status": 200,
+      "sha256": "a7c843062e606df418c834426b1bbb8c07a7b17f8a876a7de878fbcd2ade4242",
+      "bytes": 2566
+    },
+    {
+      "file": "plinkoh/cards/bonus-10.svg",
+      "status": 200,
+      "sha256": "c27e98ee53261ec51e3edb659a0b8ab2baddf24b1a860bccc01fa249f3eba962",
+      "bytes": 2413
+    },
+    {
+      "file": "plinkoh/cards/double-pegs.svg",
+      "status": 200,
+      "sha256": "ff0a9c1802fb50776c035d44931c327874ac564fdb9a04921b305b0dcb0fb864",
+      "bytes": 2987
+    },
+    {
+      "file": "plinkoh/cards/double-slot.svg",
+      "status": 200,
+      "sha256": "d2431c3a3ced8f6262aa46bcb63b2e0c4b2beebbfc4267131b02cadba58f2365",
+      "bytes": 2973
+    },
+    {
+      "file": "plinkoh/cards/manifest.json",
+      "status": 200,
+      "sha256": "dd339e630326f9ed4d9ad6100a34483a3841a621bf46fea3b20b4390bc3474dd",
+      "bytes": 1521
+    },
+    {
+      "file": "plinkoh/cards/safe-landing.svg",
+      "status": 200,
+      "sha256": "c016f0d6e2617d556057bb3c89464642162f28a46a684db3f8796f5ecfc20ff9",
+      "bytes": 2293
+    },
+    {
+      "file": "plinkoh/cards/second-chance.svg",
+      "status": 200,
+      "sha256": "cafc49b81323695cf1921aed0074a74c0b70f49a273ca9b03fd19adf57496bc2",
+      "bytes": 3064
+    },
+    {
+      "file": "plinkoh/audio/win.wav",
+      "status": 200,
+      "sha256": "e73cbc40f847e3112f17140b3c52711c0c1305cacc0b902fd66448e064c63eb5",
+      "bytes": 960044
+    },
+    {
+      "file": "plinkoh/audio/win.json",
+      "status": 200,
+      "sha256": "fa3a361226b5fd9709a92c998217d5cf628dade7025dacaf3759184115e29849",
+      "bytes": 655
+    }
+  ],
+  "scope": "Hosting files fetched from production and compared with built distribution; authenticated teacher gameplay not claimed"
+}

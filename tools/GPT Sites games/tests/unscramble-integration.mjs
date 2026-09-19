@@ -9,7 +9,7 @@ async function api(action,payload={},student=false){const r=await fetch(base+'/a
 const browser=await chromium.launch({headless:true,channel:'chrome'});const teacherContext=await browser.newContext({viewport:{width:1440,height:1000}}),teacher=await teacherContext.newPage();
 const students=[],contexts=[];let roomId,deck,credentials;
 function watch(p){p.on('pageerror',e=>browserErrors.push(e.message));}watch(teacher);
-async function clearFeedback(p){const f=p.locator('.ul-feedback');if(await f.isVisible())await f.click();}
+async function clearFeedback(p){await p.evaluate(()=>document.querySelector('.ul-feedback')?.click());}
 async function arrange(p,lines){await clearFeedback(p);await p.getByRole('button',{name:'Reset',exact:true}).click();for(let row=0;row<2;row++){await p.getByRole('button',{name:row?'2 · Answer':'1 · Question',exact:true}).click();for(const word of lines[row])await p.getByTestId('wordbank').getByRole('button',{name:word,exact:true}).first().click();}}
 async function answer(p,lines){await arrange(p,lines);await p.getByRole('button',{name:'Check answer →',exact:true}).click();}
 const correct=i=>[deck.questions[i].prompt.split(' '),deck.questions[i].answer.split(' ')];

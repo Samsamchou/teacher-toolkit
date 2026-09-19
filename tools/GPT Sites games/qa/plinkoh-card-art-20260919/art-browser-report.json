@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "layouts": [
+    {
+      "id": "double-pegs",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "id": "double-pegs",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "double-pegs",
+      "width": 820,
+      "height": 600
+    },
+    {
+      "id": "double-slot",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "id": "double-slot",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "double-slot",
+      "width": 820,
+      "height": 600
+    },
+    {
+      "id": "bonus-10",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "id": "bonus-10",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "bonus-10",
+      "width": 820,
+      "height": 600
+    },
+    {
+      "id": "second-chance",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "id": "second-chance",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "second-chance",
+      "width": 820,
+      "height": 600
+    },
+    {
+      "id": "big-ball",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "id": "big-ball",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "big-ball",
+      "width": 820,
+      "height": 600
+    },
+    {
+      "id": "safe-landing",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "id": "safe-landing",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "safe-landing",
+      "width": 820,
+      "height": 600
+    }
+  ],
+  "errors": [],
+  "cardsLoaded": 6
+}

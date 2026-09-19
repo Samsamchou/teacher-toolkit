@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "skip",
+    "hidden",
+    "exit",
+    "muted",
+    "reduced"
+  ],
+  "errors": []
+}

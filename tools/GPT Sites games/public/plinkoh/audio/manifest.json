@@ -1,0 +1,272 @@
+{
+  "source": "參考遊戲/plink oh.mp4",
+  "sourceSha256": "bce91c6b1ef61aee77ad93d72223b5ebd6f579ce549e6fe50d70adc6a1732dab",
+  "sampleRate": 48000,
+  "channels": 1,
+  "status": "local audition candidates, NOT approved fidelity",
+  "cues": [
+    {
+      "eventId": "ui",
+      "label": "UI confirmation",
+      "sourceTime": [
+        21.018,
+        21.208000000000002
+      ],
+      "sourceStatus": "candidate isolated",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "trim, fades, bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/ui-reference.wav",
+      "url": "/plinkoh/audio/ui.wav",
+      "referenceStats": {
+        "sha256": "77a5f3f599f3c812fbde88ed93390c3d7c3228d31aeb2912f4a958336d0dbdb0",
+        "bytes": 18284,
+        "seconds": 0.19,
+        "rms": 0.04172811349678444,
+        "peak": 0.151336669921875
+      },
+      "sha256": "4cd3f978aed739a6bc292c8297a4281edd2580183f5f039ab853e4b2ef44601c",
+      "bytes": 18284,
+      "seconds": 0.19,
+      "rms": 0.08345622699356887,
+      "peak": 0.30267333984375,
+      "spectralCentroidHz": 444.03350743383635,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "ui event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "peg",
+      "label": "Ordinary peg",
+      "sourceTime": [
+        99.635,
+        99.955
+      ],
+      "sourceStatus": "mixed candidate",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "spectral subtraction of preceding noise estimate; fades; bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/peg-reference.wav",
+      "url": "/plinkoh/audio/peg.wav",
+      "referenceStats": {
+        "sha256": "b699ea64d45b36fe2808e4ff50061e2001da6687d87576d97ac9a8f274b95adc",
+        "bytes": 30764,
+        "seconds": 0.32,
+        "rms": 0.02675451888189425,
+        "peak": 0.25042724609375
+      },
+      "sha256": "27ea11e26d12a0d6ae8a6fd0ee6212ac32e5b839e8c8cb74f88fe9a5d01a199a",
+      "bytes": 30764,
+      "seconds": 0.32,
+      "rms": 0.049728839538188435,
+      "peak": 0.4900816411948985,
+      "spectralCentroidHz": 1511.168769597558,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "peg event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "pink",
+      "label": "Pink peg",
+      "sourceTime": [
+        146.028,
+        146.34799999999998
+      ],
+      "sourceStatus": "mixed candidate",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "spectral subtraction of preceding noise estimate; fades; bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/pink-reference.wav",
+      "url": "/plinkoh/audio/pink.wav",
+      "referenceStats": {
+        "sha256": "54354e423dbad2ac24622a2c179fcdf1e05c3d6527eefa96f5c0b5d6b03e0231",
+        "bytes": 30762,
+        "seconds": 0.31997916666666665,
+        "rms": 0.03187394349519245,
+        "peak": 0.2470703125
+      },
+      "sha256": "b5bd1411d4ed3411be8ac1566633d8d55e541e73e25d95efa3df74f77bf5d335",
+      "bytes": 30762,
+      "seconds": 0.31997916666666665,
+      "rms": 0.06292012339962355,
+      "peak": 0.48651348539551514,
+      "spectralCentroidHz": 1467.3922100585417,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "pink event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "reveal",
+      "label": "Score reveal",
+      "sourceTime": [
+        103.02,
+        103.7
+      ],
+      "sourceStatus": "mixed candidate",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "spectral subtraction of preceding noise estimate; fades; bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/reveal-reference.wav",
+      "url": "/plinkoh/audio/reveal.wav",
+      "referenceStats": {
+        "sha256": "cd99d8d073a748aa6e484fbb5e05b8e7c592e91d1555a05f5f47c7e7391a9865",
+        "bytes": 65324,
+        "seconds": 0.68,
+        "rms": 0.010839498057026706,
+        "peak": 0.045806884765625
+      },
+      "sha256": "2721382e1dfdfdcb147310d0593797883c06cdba75a9636b6e75965a43da5756",
+      "bytes": 65324,
+      "seconds": 0.68,
+      "rms": 0.007577347261320001,
+      "peak": 0.051848612121008254,
+      "spectralCentroidHz": 1167.8589020988986,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "reveal event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "transfer",
+      "label": "Score transfer",
+      "sourceTime": [
+        104.05,
+        104.45
+      ],
+      "sourceStatus": "mixed candidate",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "spectral subtraction of preceding noise estimate; fades; bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/transfer-reference.wav",
+      "url": "/plinkoh/audio/transfer.wav",
+      "referenceStats": {
+        "sha256": "019a48c886fb1dab7f0d7f69a0cddfad9bfe745779caea6be956a73e8b9421f5",
+        "bytes": 38444,
+        "seconds": 0.4,
+        "rms": 0.012148667839183483,
+        "peak": 0.0716552734375
+      },
+      "sha256": "23ec0fb8d159aa58838025f4061431b66794fcd777b9357af1f0ff0e51b464ce",
+      "bytes": 38444,
+      "seconds": 0.4,
+      "rms": 0.016786273811095903,
+      "peak": 0.12214061489525668,
+      "spectralCentroidHz": 1982.1238932442213,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "transfer event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "team",
+      "label": "Team entrance",
+      "sourceTime": [
+        124.85,
+        125.44999999999999
+      ],
+      "sourceStatus": "mixed candidate",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "spectral subtraction of preceding noise estimate; fades; bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/team-reference.wav",
+      "url": "/plinkoh/audio/team.wav",
+      "referenceStats": {
+        "sha256": "d426987304b5b0cabbb317ffb49695ee0a82499617ee2798da63db85102a45e0",
+        "bytes": 57642,
+        "seconds": 0.5999791666666666,
+        "rms": 0.01307852250657585,
+        "peak": 0.047271728515625
+      },
+      "sha256": "7474c8bbc80e3192e2490dd481fdae993cc5833512265a65416bca129626659a",
+      "bytes": 57642,
+      "seconds": 0.5999791666666666,
+      "rms": 0.008952219330819394,
+      "peak": 0.04870600280372782,
+      "spectralCentroidHz": 1403.4775457353605,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "team event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "round",
+      "label": "Round entrance",
+      "sourceTime": [
+        123.5,
+        124.4
+      ],
+      "sourceStatus": "mixed candidate",
+      "evidence": "INFERRED event mapping; MEASURED signal",
+      "processing": "spectral subtraction of preceding noise estimate; fades; bounded normalization",
+      "reference": "/qa/plinkoh-20260919/audio/round-reference.wav",
+      "url": "/plinkoh/audio/round.wav",
+      "referenceStats": {
+        "sha256": "a5615bc98495de09b6ad367481c8b77b8e5e18ebb7bda9e492a3bdbf593b11b9",
+        "bytes": 86444,
+        "seconds": 0.9,
+        "rms": 0.011691525135393096,
+        "peak": 0.04412841796875
+      },
+      "sha256": "e58f5cadb9ba78bed2707d06d211d506d911c7df0a792de205d70ad7d3ab4ff8",
+      "bytes": 86444,
+      "seconds": 0.9,
+      "rms": 0.008514358734111167,
+      "peak": 0.04816989146601387,
+      "spectralCentroidHz": 899.2009667655981,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; reference-derived local evaluation candidate; publication clearance not established",
+      "trigger": "round event with unique event id",
+      "overlap": true,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.6
+    },
+    {
+      "eventId": "music",
+      "label": "Background music loop candidate",
+      "sourceTime": [
+        84.7,
+        88.7
+      ],
+      "sourceStatus": "mixed harmonic-filtered candidate",
+      "processing": "temporal median harmonic mask and 150ms edge fades; audible loop/residuals need listening",
+      "evidence": "INFERRED separation; MEASURED signal",
+      "reference": "/qa/plinkoh-20260919/audio/music-reference.wav",
+      "url": "/plinkoh/audio/music.wav",
+      "referenceStats": {
+        "sha256": "e1a40c14c3d1f9a29161e8ba9a11611592d62ab89f5fec7031459cc13b2f17ed",
+        "bytes": 384044,
+        "seconds": 4.0,
+        "rms": 0.009289611067902118,
+        "peak": 0.044647216796875
+      },
+      "sha256": "92a5f0e26ba2d024b35598e3b339c5b95c00ed1588675b2585b2973fae34ab72",
+      "bytes": 384044,
+      "seconds": 4.0,
+      "rms": 0.02136909187936765,
+      "peak": 0.10772813099976508,
+      "abStatus": "pending teacher listening",
+      "rights": "user supplied video; local evaluation only; publication clearance not established",
+      "trigger": "active game",
+      "overlap": false,
+      "stop": "pause, hidden, restart, exit",
+      "volume": 0.28
+    }
+  ],
+  "unmapped": [
+    "drop",
+    "wall",
+    "landing",
+    "victory",
+    "special effects"
+  ],
+  "unmappedPolicy": "No invented cue; silent until supported by evidence."
+}

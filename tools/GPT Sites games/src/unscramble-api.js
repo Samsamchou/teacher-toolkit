@@ -7,11 +7,17 @@ export async function activity(action,payload={},student=false){
  try{
   const res=await fetch('/api/live-activity',{method:'POST',headers,body:JSON.stringify({action,...payload}),signal:controller.signal});
   let data;try{data=await res.json();}catch(error){if(error.name==='AbortError')throw error;throw new Error('回應未完整載入，請重試。圖片與題組尚未確認更新。');}
-  if(!res.ok){const err=new Error(data.message||'Please retry.');err.status=res.status;throw err;}return data;
- }catch(e){if(e.name==='AbortError'||e instanceof TypeError){const err=new Error('Connection interrupted. Your answer is kept. Please retry.');err.network=true;throw err;}throw e;}finally{clearTimeout(timer);}
+  if(!res.ok){const err=new Error(data.message||'Please retry.');err.status=res.status;err.code=data.code||'REQUEST_FAILED';throw err;}return data;
+ }catch(e){if(e.name==='AbortError'||e instanceof TypeError){const err=new Error('Connection interrupted. Your answer is kept. Please retry.');err.network=true;err.code='NETWORK_ERROR';throw err;}throw e;}finally{clearTimeout(timer);}
 }
 export function readSaved(key,fallback=null){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}}
 export function saveLocal(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}
+export function removeLocal(key){try{localStorage.removeItem(key);return true;}catch{return false;}}
+export function sameLogin(a,b){return !!a&&!!b&&a.roomId===b.roomId&&a.groupId===b.groupId&&a.token===b.token;}
+export function pendingBelongsTo(pending,credentials,attemptId=null){return sameLogin(pending,credentials)&&(!attemptId||pending.attemptId===attemptId);}
+export function removePendingIfOwned(roomId,credentials,attemptId=null){const key=`ul-pending:${roomId}`,pending=readSaved(key);return pendingBelongsTo(pending,credentials,attemptId)?removeLocal(key):false;}
+export function nonceValue(record){return typeof record==='string'?record:record?.value;}
+export function removeNonceIfOwned(roomId,credentials,allowLegacy=false){const key=`ul-nonce:${roomId}`,record=readSaved(key);if(!record)return false;if(typeof record==='string')return allowLegacy?removeLocal(key):false;return sameLogin(record,credentials)?removeLocal(key):false;}
 export function csvForRoom(room){
  const cells=x=>'"'+String(x??'').replace(/^[=+\-@]/,"'$&").replace(/"/g,'""')+'"';
  const rows=[['場次','日期','班級','題組','組別','學號','題號','次數','問句','答句','結果','提交時間']];
