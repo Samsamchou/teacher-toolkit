@@ -1,0 +1,14 @@
+{
+  "passed": 7,
+  "results": [
+    "15 independent browser students draw and submit",
+    "teacher replay loads drawing and eraser",
+    "teacher returns and grades from UI",
+    "refresh preserves group and score; three student viewports fit",
+    "unsubmitted handwriting survives browser refresh",
+    "early finish celebrates for ten seconds then holds standings",
+    "history contains final snapshots without replay"
+  ],
+  "errors": [],
+  "roomId": "52AE088644A10141"
+}

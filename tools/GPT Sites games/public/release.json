@@ -1,7 +1,7 @@
 {
-  "version": "2026.09.19-plinkoh-cards.1",
+  "version": "2026.09.20-vocabulary.1",
   "sources": {
-    "main.jsx": "535331b3b869588df3e3d9f08c0565ce369a1f4bd355d635464f8f8cebc15c2d",
+    "main.jsx": "0e170893eb851595a9b53bb6030b2d8af4a458f8db68b1afcc57b3112a71cfc4",
     "SpinGame.jsx": "5dd44be0a1454f2f23239c5e6f92df02a9d6e55979b141bd19c808fd0b41501a",
     "spin-model.mjs": "ae845d8bd50f1e88585f94db816a5c72b07bccfed8b75ae50004b8392150b02e",
     "spin-dopamine.css": "f727e8440b8875b87c56f95fe1e8342667bef23b90aa3e4fc182e224ac9966dc",
@@ -11,17 +11,23 @@
     "BeachGame.jsx": "4eaa54f01677b1f52dedebbd8a73089201aca735cc3cc45cf1e60031929d5256",
     "unscramble-api.js": "d462b9fe26f53cf0e0ade89ad505b50293e370ee21f94f1fc5015ea6bc0c4e06",
     "unscramble-images.mjs": "5fca49fb54ba87d48a8dc375de569ffbbb7d6d95fe50b963693da47cbb505335",
-    "model.mjs": "974c2a93e8eff47c385873d1b49b24b399a355bd09f5f516bbc3dd53fc0b664e",
-    "backup.js": "278711d5f93b0392b0dbad6c72874ae9b37acc4e374018d0cc3e6aafece99d0d",
+    "model.mjs": "00a8cd87294ca54b594e4b22cdb68cd29677d593cec529d65ead70c4004926a6",
+    "backup.js": "c5974b5b597783f84834ee2c724f936dcbbc63f91ce1f167a68321199c63d1a9",
     "PlinkOhGame.jsx": "7727f6fe6813f0afff028a3bf8e6593d6da8595822235755deacc6ccb34e69af",
     "PlinkOhAudio.js": "60530c2dabdd6e9192c7528c351f993fbb529e24c1d49dd0719e2ad674b6d74f",
     "plinkoh-model.mjs": "2df67d42df34a64e8a7f000d38b819d07eb1398afd6e2d01b5a6912ac649f1ff",
     "plinkoh-physics.mjs": "c8e95c5dc1cfd4974649b0b872147b6de7db35763e3e396d579544776692b641",
     "plinkoh.css": "e290c66aedbcdf3c77ee2f398f1b74a9a359bab068d27e03db27835d994b5783",
-    "plinkoh-cards.mjs": "3ed7fe971d0fa981c8f5b34c72913c01f6d494ffe6ab839673ed92124a1dc430"
+    "plinkoh-cards.mjs": "3ed7fe971d0fa981c8f5b34c72913c01f6d494ffe6ab839673ed92124a1dc430",
+    "VocabularyLive.jsx": "c8d22dd5cf77daecbb12c1f575be69a97a2f0c07ae0a700123746c8be56d253d",
+    "VocabularyPanels.jsx": "119edc21297fb6475fd5e4b0399d89c26050ae2e303366b42746b73704ec7db7",
+    "VocabularyBoard.jsx": "86dd2a4146289974be17d1cc5ee2d6d156bb12f48303c204c7b8ece2e08cd434",
+    "vocabulary.css": "46b79ea8a5609ee24183d75ca7bdaa99cebb0970fff3dd126ed337e71236ce4f",
+    "vocabulary-api.js": "7087a20664935e9182734c32574f73330875725a557f7f927caede1a6049343d",
+    "vocabulary-drawing.mjs": "861d8a3b4dd1ad916a3d2d01023e1b79655dddebc95998584bb2c45d83e1fd7c"
   },
   "baseVersion": "2026.09.19-unscramble-rejoin.3",
-  "status": "hosting-release",
+  "status": "production",
   "cardArtVersion": "2026.09.19-card-art.1",
   "cardArtManifestSha256": "dd339e630326f9ed4d9ad6100a34483a3841a621bf46fea3b20b4390bc3474dd"
 }

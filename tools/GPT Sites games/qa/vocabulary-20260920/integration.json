@@ -1,0 +1,73 @@
+{
+  "passed": 17,
+  "results": [
+    {
+      "name": "teacher APIs require authentication",
+      "pass": true
+    },
+    {
+      "name": "five SF1 U01 filenames map to five exact answers",
+      "pass": true
+    },
+    {
+      "name": "private default template and image read back",
+      "pass": true
+    },
+    {
+      "name": "create room and 15 independent groups preserve leading zeros",
+      "pass": true
+    },
+    {
+      "name": "students receive shuffled stable options without answer or other members",
+      "pass": true
+    },
+    {
+      "name": "preview locks drawing; opening permits 15 simultaneous drafts",
+      "pass": true
+    },
+    {
+      "name": "stroke sequence preserves erasing and ignores stale batches",
+      "pass": true
+    },
+    {
+      "name": "foreign group token and inactive image are denied",
+      "pass": true
+    },
+    {
+      "name": "duplicate submit, return, stale epoch rejection, rewrite and final grade",
+      "pass": true
+    },
+    {
+      "name": "all five grades and concurrent scoring remain exact",
+      "pass": true
+    },
+    {
+      "name": "rejoin keeps drawing and invalidates every old credential",
+      "pass": true
+    },
+    {
+      "name": "skipping requires explicit incomplete confirmation and records zeros",
+      "pass": true
+    },
+    {
+      "name": "cross-class snapshot is immutable after deck copy and edits",
+      "pass": true
+    },
+    {
+      "name": "early finish persists every image then removes all replay data",
+      "pass": true
+    },
+    {
+      "name": "single-room deletion preserves decks and another room",
+      "pass": true
+    },
+    {
+      "name": "normal last-question finish and empty group totals",
+      "pass": true
+    },
+    {
+      "name": "all five questions accumulate exact totals with tied champions",
+      "pass": true
+    }
+  ]
+}

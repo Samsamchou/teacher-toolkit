@@ -18,3 +18,9 @@ src/plinkoh-physics.mjs -text
 src/plinkoh.css -text
 src/plinkoh-cards.mjs -text
 public/plinkoh/cards/*.svg -text
+src/VocabularyBoard.jsx -text
+src/VocabularyLive.jsx -text
+src/VocabularyPanels.jsx -text
+src/vocabulary-api.js -text
+src/vocabulary-drawing.mjs -text
+src/vocabulary.css -text

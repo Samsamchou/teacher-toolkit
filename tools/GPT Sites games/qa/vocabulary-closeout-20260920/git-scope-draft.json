@@ -1,0 +1,192 @@
+{
+  "at": "2026-09-20T14:21:59.112Z",
+  "state": "scope approval pending; no staging, commit or push",
+  "branch": "main",
+  "head": "8f4dcec4357a676ff1d3034880ef0bd103d31954",
+  "remote": "8f4dcec4357a676ff1d3034880ef0bd103d31954",
+  "staged": "",
+  "count": 34,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 775,
+      "sha256": "76193dec1ecf55d7528fa49067a151458eb325dc37920e6e8cead73d96c269c7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 13864,
+      "sha256": "6cde0ec65ad77582ac1919d41930db2be17b1c8756ac05e2aeeb87e5f3d5d587"
+    },
+    {
+      "path": "firebase.json",
+      "bytes": 1800,
+      "sha256": "65f79a013129ea0780eb8021f1f515f1a7a30272ec665433c86aed35f28a1f53"
+    },
+    {
+      "path": "functions/index.mjs",
+      "bytes": 4174,
+      "sha256": "89c1d8a098992ae29b164dc7c399d0b5fe11744bd7fdf58a33db0ee45a517127"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1706,
+      "sha256": "7dfaccc35d9aaeb67fd445fc6b8797a8b182fa9a8534e9fcbe988c88170c79c5"
+    },
+    {
+      "path": "public/release.json",
+      "bytes": 2477,
+      "sha256": "9d57e17a6a9fd3bc4e8b003e28e4d85de82d7622e47092bc3d6970930cd67300"
+    },
+    {
+      "path": "src/backup.js",
+      "bytes": 3418,
+      "sha256": "c5974b5b597783f84834ee2c724f936dcbbc63f91ce1f167a68321199c63d1a9"
+    },
+    {
+      "path": "src/main.jsx",
+      "bytes": 31800,
+      "sha256": "0e170893eb851595a9b53bb6030b2d8af4a458f8db68b1afcc57b3112a71cfc4"
+    },
+    {
+      "path": "src/model.mjs",
+      "bytes": 2675,
+      "sha256": "00a8cd87294ca54b594e4b22cdb68cd29677d593cec529d65ead70c4004926a6"
+    },
+    {
+      "path": "vite.config.js",
+      "bytes": 327,
+      "sha256": "709f2c56f5fd798300cced237a4e57eda77706bcbdd216b6cd3b5274fd241297"
+    },
+    {
+      "path": "CLOSEOUT-VOCABULARY-20260920.md",
+      "bytes": 2629,
+      "sha256": "1f2f212b2ac68a7986b289ed04eccaecae8fc75d66a826568c7e423bd33dde0f"
+    },
+    {
+      "path": "DEPLOYMENT-VOCABULARY-20260920.md",
+      "bytes": 2027,
+      "sha256": "c3e9fcd3ab36af3b6c24f3bf67ca45a9d6bc01ede0fff95938aa97af08cd161e"
+    },
+    {
+      "path": "VOCABULARY-IMPLEMENTATION-20260920.md",
+      "bytes": 4034,
+      "sha256": "36c0d59155f1b2be628f28ddbfcc5ef9a4f510bfd5027a5c0d9a9d8b92a755f4"
+    },
+    {
+      "path": "functions/vocabulary-base.mjs",
+      "bytes": 17943,
+      "sha256": "14c65220ca58e16732d4852b388938fc059f0873306474bf53737945739b81dd"
+    },
+    {
+      "path": "functions/vocabulary-model.mjs",
+      "bytes": 3532,
+      "sha256": "a8ccaca7975dc111af22924b591f772bf9dcc9e557f7ef4fd5dfec0ae30c9056"
+    },
+    {
+      "path": "functions/vocabulary-service.mjs",
+      "bytes": 11848,
+      "sha256": "6dc645cab2326bd0a1b2537b629cccea4dfabb3eb425f5b71e6971c809d5cfe5"
+    },
+    {
+      "path": "rdq/RDQ-spec-vocabulary-live-20260920.md",
+      "bytes": 6239,
+      "sha256": "3555aa28d97e720dc9196e09f2dbc1950bae9f9315cfd8ff5dbd2bba40978c4a"
+    },
+    {
+      "path": "src/VocabularyBoard.jsx",
+      "bytes": 10972,
+      "sha256": "86dd2a4146289974be17d1cc5ee2d6d156bb12f48303c204c7b8ece2e08cd434"
+    },
+    {
+      "path": "src/VocabularyLive.jsx",
+      "bytes": 20428,
+      "sha256": "c8d22dd5cf77daecbb12c1f575be69a97a2f0c07ae0a700123746c8be56d253d"
+    },
+    {
+      "path": "src/VocabularyPanels.jsx",
+      "bytes": 17371,
+      "sha256": "119edc21297fb6475fd5e4b0399d89c26050ae2e303366b42746b73704ec7db7"
+    },
+    {
+      "path": "src/vocabulary-api.js",
+      "bytes": 3286,
+      "sha256": "7087a20664935e9182734c32574f73330875725a557f7f927caede1a6049343d"
+    },
+    {
+      "path": "src/vocabulary-drawing.mjs",
+      "bytes": 1097,
+      "sha256": "861d8a3b4dd1ad916a3d2d01023e1b79655dddebc95998584bb2c45d83e1fd7c"
+    },
+    {
+      "path": "src/vocabulary.css",
+      "bytes": 8694,
+      "sha256": "46b79ea8a5609ee24183d75ca7bdaa99cebb0970fff3dd126ed337e71236ce4f"
+    },
+    {
+      "path": "scripts/vocabulary-closeout.mjs",
+      "bytes": 2888,
+      "sha256": "fb3be7c7575d8ab1c4b9c032434afa12475e1f719b70ddffe1b4fd2f25bec0db"
+    },
+    {
+      "path": "scripts/vocabulary-local-server.mjs",
+      "bytes": 1662,
+      "sha256": "cf7449706658a15643d8417b72378381b6ee840ab2a9f8e6f9675dd66bcef43e"
+    },
+    {
+      "path": "scripts/vocabulary-preview.ps1",
+      "bytes": 3614,
+      "sha256": "787bf0a944d0d5929852285f90833ea7b45c6b6b5371ca50c942cbcedc5139b5"
+    },
+    {
+      "path": "scripts/verify-vocabulary-production.mjs",
+      "bytes": 2525,
+      "sha256": "3e2b3c3d21dc8f54ec16209cd787538d99cd77c234528db0360fa525dc0c6815"
+    },
+    {
+      "path": "tests/vocabulary-browser.mjs",
+      "bytes": 8362,
+      "sha256": "78287608570b09e9d5be997779ca185b3ca87aaa32269f76d133ba888a9620ca"
+    },
+    {
+      "path": "tests/vocabulary-integration.mjs",
+      "bytes": 10236,
+      "sha256": "2fd6dd632d2988699c47496d7733f361aa711b5dbe821aa45503801e4227fbb7"
+    },
+    {
+      "path": "tests/vocabulary-rules.test.mjs",
+      "bytes": 1701,
+      "sha256": "d14c3757854b7441e545c127856b596580c252a2381c9af894acb8a2a1d78020"
+    },
+    {
+      "path": "qa/vocabulary-20260920/QA.md",
+      "bytes": 2023,
+      "sha256": "2376afc791ce35a87693f07d63b64bc61f971e465343e17965e238833a66f3e6"
+    },
+    {
+      "path": "qa/vocabulary-20260920/browser.json",
+      "bytes": 477,
+      "sha256": "f7b2c678b6298e53df2cf210e015828566a3d1ece1755227e508bd929967b42c"
+    },
+    {
+      "path": "qa/vocabulary-20260920/integration.json",
+      "bytes": 1849,
+      "sha256": "02679cd848f5f532c31013ece563238f56a1b45cbc9ff5581c8d3e9d7702d4f9"
+    },
+    {
+      "path": "qa/vocabulary-production-20260920/verification.json",
+      "bytes": 1265,
+      "sha256": "8472bdbddc61886fda24dbe407781030316f4d617e9b8bb50aba97637149725c"
+    }
+  ],
+  "excluded": [
+    "private source images and functions assets",
+    "QA screenshots and recordings",
+    "other projects and pre-existing untracked files",
+    "one-time derive/refine/integrate helper scripts",
+    "credentials and local settings"
+  ],
+  "generatedEvidence": [
+    "qa/vocabulary-closeout-20260920/git-scope-draft.json",
+    "qa/vocabulary-closeout-20260920/note-readback.json"
+  ]
+}

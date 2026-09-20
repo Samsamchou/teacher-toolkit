@@ -1,5 +1,11 @@
 # Classroom Club / 上課互動遊戲大集合
 
+## 2026-09-20 VOCABULARY LIVE（已正式部署）
+
+正式入口：https://gamesinclass-5d9d1.web.app/vocabulary 。版本 `2026.09.20-vocabulary.1`，Hosting 與新後端 `vocabularyActivity` 已發布。五題 SF1 U01：Mike、Ken、Emma、Wendy、Alan；Comic Relief 三選項、五色手寫與橡皮擦、即時縮圖、筆跡重播、教師 1–5 分、累積總分、10 秒結算慶祝及歷史最終截圖。
+
+原通行碼登入後，開啟活動並按「載入 SF1 U01 五題圖卡」。本機 92 項回歸、17 項整合及 15 組瀏覽器流程通過；正式四個檔案雜湊、三個 API 防線、三種瀏覽器尺寸通過。正式登入後跨平板作答與教室音效仍待實機驗收。詳 [部署紀錄](DEPLOYMENT-VOCABULARY-20260920.md)、[操作說明](VOCABULARY-IMPLEMENTATION-20260920.md) 及 [收工交接](CLOSEOUT-VOCABULARY-20260920.md)。下方舊版內容保留為歷史。
+
 ## 2026-09-19 Plink-oh! 歡樂落球（本機完成，未部署）
 
 新增內建落球遊戲：2–15組、預設六回合、老師自由選組、真實碰撞加分、同裝置進度恢復。遊戲純英文，管理區英中雙語。先於本機試玩及驗收音效，正式站尚未更新。

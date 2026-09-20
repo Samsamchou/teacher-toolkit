@@ -1,0 +1,59 @@
+{
+  "at": "2026-09-20T14:04:53.602Z",
+  "files": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "54897ff2f5615422b2688a53dc35cd6c50caef309e812904f4fad5e8cdd7a336"
+    },
+    {
+      "path": "release.json",
+      "status": 200,
+      "sha256": "9d57e17a6a9fd3bc4e8b003e28e4d85de82d7622e47092bc3d6970930cd67300"
+    },
+    {
+      "path": "assets/index-UOtBEenx.js",
+      "status": 200,
+      "sha256": "0caebc987ed6dbb517e093274e2aac80e548c425998d6aeeab72e11a41430885"
+    },
+    {
+      "path": "assets/index-CQfVr9HJ.css",
+      "status": 200,
+      "sha256": "90de50f2692de70380a038bbf015584da20761e2d66ba1c4692d6074ca50034e"
+    }
+  ],
+  "guards": [
+    {
+      "label": "method",
+      "status": 405,
+      "code": "METHOD_NOT_ALLOWED"
+    },
+    {
+      "label": "unauthenticated teacher",
+      "status": 401,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "label": "missing room",
+      "status": 404,
+      "code": "ROOM_REMOVED"
+    }
+  ],
+  "browser": [
+    {
+      "name": "teacher",
+      "path": "/vocabulary",
+      "errors": []
+    },
+    {
+      "name": "student",
+      "path": "/vocabulary-join",
+      "errors": []
+    },
+    {
+      "name": "phone",
+      "path": "/vocabulary-join",
+      "errors": []
+    }
+  ]
+}
