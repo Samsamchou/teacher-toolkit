@@ -172,3 +172,40 @@ npm run test:rules
 獨立firebase.retention.json使後續只部署網站時不意外更動排程。
 
 發布狀態與手動觸發結果另存 retention-release-verification.json。
+
+# iPad 播放復原與教師診斷｜2026-09-20
+
+## 現場問題與修正
+
+2026-09-14 實體課堂共 19 台 iPad；約 7 台無法正常開始或繼續播放，其中 5 台重新整理後恢復，2 台持續無法使用。這是修正前基線。
+
+San Francisco 保留原始 `public/media/san-francisco.mp4`，並新增：
+
+- 一般版 `public/media/san-francisco-ipad-v1.mp4`：23,086,075 bytes。
+- 輕量版 `public/media/san-francisco-ipad-lite-v1.mp4`：15,531,286 bytes。
+
+播放停滯時先自動重試目前影片；仍未恢復才切換輕量版。復原後從目前題目的目標句句首重新播放，已使用的作答次數、題目進度及成績不會重設。切換分頁、鎖定螢幕或 Safari 中斷播放時，也會保留進度並提供句首續播。另加入舊 Safari UUID、dialog 及 `replaceChildren()` 行為相容處理；目前語法支援底線為 Safari 13.1／iPadOS 13.4。
+
+## 教師播放診斷
+
+教師後台在成績表之外增加同日期的播放診斷摘要，可查看自動重試、切換輕量版、恢復成功、未恢復及離開頁面的次數。診斷只保存白名單欄位，不保存學生學號、IP、Cookie、完整 User-Agent 或原始錯誤訊息；匿名學生只能新增，指定教師才能讀取，前端不能更新或刪除。
+
+`quizPlaybackDiagnostics` 與練習資料同樣保存 14 個曆月。每日清除函式以事件、提交或建立時間中的最早可用期限判定，離線補送不延長保存期限。
+
+## 2026-09-20 正式發布
+
+- 正式網址：<https://yestredayoncemore.web.app/>
+- Hosting 版本：`ef76b7e61e570a71`，發布時間 2026-09-20 11:58（臺灣時間）。
+- 清除函式：`purgeExpiredQuizResults`，Node.js 22，asia-east1，狀態 ACTIVE，hash `d5d7d660b96ec81027c742fabe6780262f71f8de`。
+- 線上 `index.html`、一般版與輕量版影片完整 SHA-256 均與本機一致；兩支影片各 20 個並行 Range 請求全數回傳 HTTP 206。
+- 桌面 Edge 自動化及正式站冒煙測試已通過；實體 iPad 修正後課堂複驗仍須由教師完成。
+
+## 建議發布順序
+
+```powershell
+firebase deploy --only firestore:rules --config firebase.json --project yestredayoncemore --account u9431818@gmail.com --non-interactive
+firebase deploy --only "functions:song-quiz-retention" --config firebase.retention.json --project yestredayoncemore --account u9431818@gmail.com --non-interactive
+firebase deploy --only hosting --config firebase.json --project yestredayoncemore --account u9431818@gmail.com --non-interactive
+```
+
+Google Drive 路徑若無法安裝 Functions 相依套件，先把 `functions-retention` 與 `firebase.retention.json` 複製到本機乾淨目錄，依 `package-lock.json` 執行 `npm ci`，核對來源 hash 後再部署。Firebase CLI 函式探索超過預設 10 秒時，可在該次命令設定 `FUNCTIONS_DISCOVERY_TIMEOUT=60`。

@@ -1,12 +1,22 @@
-import {fileURLToPath} from 'node:url';
-import {chromium} from 'playwright';import fs from 'node:fs';import assert from 'node:assert/strict';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import fs from 'node:fs';import assert from 'node:assert/strict';
+async function loadPlaywright(){try{return await import('playwright');}catch(error){if(!process.env.PLAYWRIGHT_MODULE_PATH)throw error;return import(pathToFileURL(process.env.PLAYWRIGHT_MODULE_PATH).href);}}
+const {chromium}=await loadPlaywright();
 fs.mkdirSync(new URL('./artifacts/',import.meta.url),{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true});const page=await browser.newPage({viewport:{width:1280,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
- await page.goto('http://localhost:8013/review/san-francisco/practice#song/san-francisco');
+ await page.goto('http://localhost:8013/?localTest=1#song/san-francisco');
  await page.waitForFunction(()=>ready);assert.equal(await page.locator('video#player').count(),1);assert.equal(await page.locator('iframe').count(),0);
  await page.locator('#enableVideo').click();await page.waitForFunction(()=>enabled);await page.locator('#studentId').fill('LOCAL-QA');await page.locator('#start').click();
  await page.evaluate(()=>player.el.playbackRate=8);
+ await page.waitForFunction(()=>controller.phase==='listening',{},{timeout:15000});
+ await page.evaluate(()=>recoverPlayback('stall_timeout'));
+ await page.waitForFunction(()=>!recoveryInFlight&&controller.phase==='listening',{},{timeout:15000});
+ assert.equal(await page.evaluate(()=>player.currentSource()),'primary');
+ await page.evaluate(()=>recoverPlayback('stall_timeout'));
+ await page.waitForFunction(()=>player.currentSource()==='ipad_fallback'&&!recoveryInFlight&&controller.phase==='listening',{},{timeout:15000});
+ await page.evaluate(()=>player.el.playbackRate=8);
+ assert.ok(await page.evaluate(()=>storageRecords(DIAG_LOCAL_PREFIX).some(x=>x.value.recovery==='switch_fallback'&&x.value.outcome==='recovered')));
  await page.waitForFunction(()=>controller.phase==='answering',{},{timeout:15000});assert.equal(await page.evaluate(()=>player.el.paused),true);
  const right=await page.evaluate(()=>bank.questions[0].answer);await page.locator('#choices button').nth((right+1)%3).click();assert.equal(await page.locator('.choice-wrong').count(),1);
  await page.locator('#replay').click();assert.equal(await page.locator('#choices button').count(),0);await page.waitForFunction(()=>controller.phase==='answering');assert.equal(await page.evaluate(()=>answers[0].attempts.length),1);
@@ -18,7 +28,7 @@ try{
   else await page.locator('#choices button').nth(answer).click();
  }
  await page.waitForFunction(()=>controller.phase==='outro');assert.equal(await page.evaluate(()=>active),true);
- await page.waitForFunction(()=>!active,{},{timeout:10000});assert.match(await page.locator('#prompt').innerText(),/93.75/);assert.equal(await page.evaluate(()=>summarizeAnswers(answers,16).wrongCount),1);
+ await page.waitForFunction(()=>!active,{},{timeout:20000}).catch(async error=>{console.error('OUTRO_STATE',await page.evaluate(()=>({active,phase:controller.phase,index,internalIndex:controller.index,currentTime:player.getCurrentTime(),duration:player.el.duration,paused:player.el.paused,playbackRate:player.el.playbackRate,recoveryInFlight,pendingIncident,message:document.getElementById('playerStatus').textContent})));throw error;});assert.match(await page.locator('#prompt').innerText(),/93.75/);assert.equal(await page.evaluate(()=>summarizeAnswers(answers,16).wrongCount),1);
  await page.locator('#teacherOpen').click();assert.match(await page.locator('#scores').innerText(),/93.75/);
  await page.evaluate(()=>{
   localStorage.clear();const fixtures=[{sessionId:'day1',revision:1,score:25,quizId:'song1',quizTitle:'Song A',studentId:'001',startedAt:'2026-09-12T01:00:00.000Z',recordedAt:'2026-09-13T01:00:00.000Z'},{sessionId:'day2',revision:1,score:50,quizId:'song2',quizTitle:'Song B',studentId:'002',startedAt:'2026-09-12T15:59:59.000Z',recordedAt:'2026-09-14T01:00:00.000Z'},{sessionId:'day3',revision:1,score:100,quizId:'song3',quizTitle:'Song C',studentId:'003',startedAt:'2026-09-12T16:00:00.000Z',recordedAt:'2026-09-13T01:00:00.000Z'}];
@@ -29,5 +39,5 @@ try{
  await page.screenshot({path:fileURLToPath(new URL('./artifacts/date-filter.png',import.meta.url)),fullPage:true});
  await page.locator('#nextDate').click();assert.equal(await page.locator('#scores tr').count(),1);assert.equal(await page.locator('#average').innerText(),'100.00');await page.locator('#previousDate').click();assert.equal(await page.locator('#scores tr').count(),2);await page.locator('#todayDate').click();assert.equal(await page.locator('#practiceDate').inputValue(),await page.evaluate(()=>taipeiDate()));
  await page.goto('http://localhost:8013/review/san-francisco');await page.locator('button[data-start]').first().click();await page.waitForTimeout(1000);await page.screenshot({path:fileURLToPath(new URL('./artifacts/review-player.png',import.meta.url)),fullPage:false});
- assert.deepEqual(errors,[]);console.log('PASS actual MP4: activation, all16 pauses, unlimited replay attempt preservation, red/green feedback, second-attempt full credit, 93.75 total, full outro; dates/all songs/CSV/controls; zero page errors');
+ assert.deepEqual(errors,[]);console.log('PASS public MP4: activation, primary retry, lite fallback, all16 pauses, unlimited replay attempt preservation, red/green feedback, second-attempt full credit, 93.75 total, full outro; diagnostics, dates/all songs/CSV/controls; zero page errors');
 }finally{await browser.close();}

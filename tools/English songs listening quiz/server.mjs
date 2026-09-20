@@ -1,7 +1,7 @@
 import http from 'node:http';
 import {readFile,stat} from 'node:fs/promises';
 import {createReadStream} from 'node:fs';
-const paths={'/media/san-francisco.mp4':'public/media/san-francisco.mp4','/':'public/index.html','/index.html':'public/index.html','/review':'review/timing-preview.html','/review/san-francisco':'review/san-francisco/index.html','/review/san-francisco/practice':'review/san-francisco/practice.html','/review/san-francisco/bank.json':'review/san-francisco/question-bank.json','/review/san-francisco/media.mp4':'review/san-francisco/media.mp4'};
+const paths={'/media/san-francisco.mp4':'public/media/san-francisco.mp4','/media/san-francisco-ipad-v1.mp4':'public/media/san-francisco-ipad-v1.mp4','/media/san-francisco-ipad-lite-v1.mp4':'public/media/san-francisco-ipad-lite-v1.mp4','/':'public/index.html','/index.html':'public/index.html','/review':'review/timing-preview.html','/review/san-francisco':'review/san-francisco/index.html','/review/san-francisco/practice':'review/san-francisco/practice.html','/review/san-francisco/bank.json':'review/san-francisco/question-bank.json','/review/san-francisco/media.mp4':'review/san-francisco/media.mp4'};
 http.createServer(async(req,res)=>{
  const path=new URL(req.url,'http://localhost').pathname,target=paths[path];
  if(!target||!['GET','HEAD'].includes(req.method)){res.writeHead(404);res.end('Not found');return;}

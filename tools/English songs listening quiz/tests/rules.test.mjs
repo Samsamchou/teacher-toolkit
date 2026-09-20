@@ -1,9 +1,10 @@
 import {initializeTestEnvironment,assertSucceeds,assertFails} from '@firebase/rules-unit-testing';
-import {setDoc,doc,getDoc,updateDoc,deleteDoc,serverTimestamp,Timestamp,writeBatch} from 'firebase/firestore';
+import {setDoc,doc,getDoc,getDocs,collection,updateDoc,deleteDoc,serverTimestamp,Timestamp,writeBatch} from 'firebase/firestore';
 const env=await initializeTestEnvironment({projectId:'demo-song-quiz',firestore:{host:'127.0.0.1',port:8188}});
 const anon=env.authenticatedContext('student',{firebase:{sign_in_provider:'anonymous'}}).firestore(),teacher=env.authenticatedContext('teacher',{email:'teacher@example.com',firebase:{sign_in_provider:'password'}}).firestore(),other=env.authenticatedContext('other',{email:'other@example.com',firebase:{sign_in_provider:'password'}}).firestore(),guest=env.unauthenticatedContext().firestore();let count=0;
 const expiry=Timestamp.fromMillis(Date.now()+400*86400000);
 const p={schemaVersion:4,sessionId:'session',revision:1,ownerUid:'student',quizId:'test',quizTitle:'test',studentId:'001',score:6.25,correctCount:1,wrongCount:1,answeredCount:2,unansweredCount:14,totalQuestions:16,wrongSentences:'2. Test sentence',retryDetails:'1. Test\n第一次選錯：A. old → 第二次答對：B. new',retryDetailsRecorded:true,status:'ended_early',startedAt:new Date().toISOString(),recordedAt:new Date().toISOString(),expiresAt:expiry,submittedAt:serverTimestamp()};
+const diagnostic={schemaVersion:1,incidentId:'incident-1',ownerUid:'student',quizId:'san-francisco-g6-cloze-v1',mediaSource:'primary',stage:'initial_load',code:'load_timeout',recovery:'switch_fallback',outcome:'recovered',iPadOSMajor:16,safariMajor:16,occurredAt:new Date().toISOString(),expiresAt:expiry,submittedAt:serverTimestamp()};
 try{
  await assertSucceeds(setDoc(doc(anon,'quizResults','valid'),p));count++;
  await assertSucceeds(getDoc(doc(teacher,'quizResults','valid')));count++;
@@ -24,8 +25,16 @@ try{
  await assertFails(deleteDoc(doc(teacher,'quizResults','other-practice')));count++;
  await assertSucceeds(getDoc(doc(teacher,'quizResults','other-practice')));count++;
  await assertFails(deleteDoc(doc(teacher,'quizDeletedSessions','student_session')));count++;
+ await assertSucceeds(setDoc(doc(anon,'quizPlaybackDiagnostics','diagnostic-valid'),diagnostic));count++;
+ await assertSucceeds(getDoc(doc(teacher,'quizPlaybackDiagnostics','diagnostic-valid')));count++;
+ await assertSucceeds(getDocs(collection(teacher,'quizPlaybackDiagnostics')));count++;
+ for(const db of [anon,other,guest]){await assertFails(getDoc(doc(db,'quizPlaybackDiagnostics','diagnostic-valid')));count++;await assertFails(getDocs(collection(db,'quizPlaybackDiagnostics')));count++;}
+ for(const db of [teacher,other,guest]){await assertFails(setDoc(doc(db,'quizPlaybackDiagnostics','diagnostic-bad-'+count),diagnostic));count++;}
+ for(const db of [anon,teacher]){await assertFails(updateDoc(doc(db,'quizPlaybackDiagnostics','diagnostic-valid'),{outcome:'unrecovered'}));count++;await assertFails(deleteDoc(doc(db,'quizPlaybackDiagnostics','diagnostic-valid')));count++;}
+ const invalidDiagnostics=[{schemaVersion:2},{ownerUid:'other'},{studentId:'001'},{ip:'192.0.2.1'},{cookie:'secret'},{userAgent:'raw browser details'},{mediaSource:'mobile'},{stage:'idle'},{code:'raw exception text'},{recovery:'reload_page'},{outcome:'pending'},{iPadOSMajor:-1},{iPadOSMajor:100},{iPadOSMajor:16.5},{safariMajor:-1},{safariMajor:100},{safariMajor:16.5},{occurredAt:'2026-09-20'},{expiresAt:Timestamp.fromMillis(0)},{expiresAt:Timestamp.fromMillis(Date.now()+500*86400000)},{submittedAt:new Date(0)}];
+ for(const patch of invalidDiagnostics){await assertFails(setDoc(doc(anon,'quizPlaybackDiagnostics','diagnostic-invalid-'+count),{...diagnostic,...patch}));count++;}
  await env.withSecurityRulesDisabled(async ctx=>{await setDoc(doc(ctx.firestore(),'quizResults','legacy'),{quizId:'old',studentId:'001',score:0});});
  await assertSucceeds(setDoc(doc(teacher,'quizDeletedSessions','legacy_legacy'),marker));count++;
  await assertSucceeds(deleteDoc(doc(teacher,'quizResults','legacy')));count++;
- console.log(`PASS ${count} rules assertions including teacher single-practice delete, other sessions preserved, anonymous denial, replay rejection, expired records, legacy delete`);
+ console.log(`PASS ${count} rules assertions including teacher single-practice delete, other sessions preserved, anonymous denial, replay rejection, expired records, legacy delete, and strict playback diagnostics`);
 }finally{await env.cleanup();}

@@ -34,6 +34,24 @@ service cloud.firestore {
     && d.recordedAt is string && d.recordedAt.size() <= 40
     && d.submittedAt == request.time;
   }
+  function validPlaybackDiagnostic(d) {
+   return d.keys().hasAll(['schemaVersion','incidentId','ownerUid','quizId','mediaSource','stage','code','recovery','outcome','iPadOSMajor','safariMajor','occurredAt','expiresAt','submittedAt'])
+    && d.keys().hasOnly(['schemaVersion','incidentId','ownerUid','quizId','mediaSource','stage','code','recovery','outcome','iPadOSMajor','safariMajor','occurredAt','expiresAt','submittedAt'])
+    && d.schemaVersion == 1
+    && d.incidentId is string && d.incidentId.matches('^[A-Za-z0-9_-]{1,100}$')
+    && d.ownerUid == request.auth.uid
+    && d.quizId is string && d.quizId.matches('^[A-Za-z0-9_-]{1,100}$')
+    && d.mediaSource in ['primary','ipad_fallback']
+    && d.stage in ['activation','initial_load','question_playback','replay','resume','outro']
+    && d.code in ['autoplay_blocked','load_timeout','stall_timeout','media_aborted','media_network','media_decode','media_unsupported','seek_mismatch','unexpected_end','play_rejected']
+    && d.recovery in ['retry_primary','switch_fallback','manual_resume','none']
+    && d.outcome in ['recovered','unrecovered','page_left']
+    && d.iPadOSMajor is int && d.iPadOSMajor >= 0 && d.iPadOSMajor <= 99
+    && d.safariMajor is int && d.safariMajor >= 0 && d.safariMajor <= 99
+    && d.occurredAt is string && d.occurredAt.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[.][0-9]{3}Z$')
+    && d.expiresAt is timestamp && d.expiresAt > request.time && d.expiresAt <= request.time + duration.value(428, 'd')
+    && d.submittedAt == request.time;
+  }
   function deletionKey(d, id) {
    return ('ownerUid' in d && 'sessionId' in d) ? d.ownerUid + '_' + d.sessionId : 'legacy_' + id;
   }
@@ -52,6 +70,12 @@ service cloud.firestore {
     && !exists(/databases/$(database)/documents/quizDeletedSessions/$(deletionKey(request.resource.data,resultId)));
    allow update: if false;
    allow delete: if teacher() && exists(/databases/$(database)/documents/quizDeletedSessions/$(deletionKey(resource.data,resultId)));
+  }
+  match /quizPlaybackDiagnostics/{diagnosticId} {
+   allow read: if teacher();
+   allow create: if request.auth != null && request.auth.token.firebase.sign_in_provider == 'anonymous'
+    && validPlaybackDiagnostic(request.resource.data);
+   allow update, delete: if false;
   }
   match /{document=**} { allow read, write: if false; }
  }
