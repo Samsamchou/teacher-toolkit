@@ -1,0 +1,6 @@
+interface:
+  display_name: "節奏單字朗讀影片製作"
+  short_description: "依正式黑板圖卡樣式，製作可換圖片與單字的雙聲線節奏朗讀影片"
+  default_prompt: "使用 $rhythm-vocabulary-video，將我提供的圖片與單字製作成正式版樣式的0.85倍雙聲線節奏朗讀MP4。"
+policy:
+  allow_implicit_invocation: true

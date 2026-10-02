@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "status": "teacher_accepted_formal",
+  "recorded_date": "2026-10-02",
+  "timezone": "Asia/Taipei",
+  "human_acceptance_quote": "此最新版本確認為正式版",
+  "acceptance_scope": "v05 clean full MP4; permission to plan the reusable skill separately, not approval of an unwritten skill specification",
+  "video": "productions/nine-subjects-20261002/v05-full-B085-clean/nine-subjects-full-B-085-clean.mp4",
+  "sha256": "86018bccea0363d11067e6747099dc808362fee8afed2c3c2cf70550ccf974b5",
+  "bytes": 23222162,
+  "drive_url": "https://drive.google.com/file/d/1GiERGOog1qI2Sw6CxJrFOW1tJORyOfNn/view?usp=drivesdk",
+  "reference_duration_sec": 90.16666666666667,
+  "reference_frames": 2705,
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "video_codec": "h264",
+  "pixel_format": "yuv420p",
+  "audio_codec": "aac",
+  "audio_sample_rate": 48000,
+  "visual_policy": "Existing chalkboard; animated picture card and English word beneath it; overview cards at transitions; no added role, title, round, speed or question-number overlays",
+  "teacher_voice": "marin",
+  "childlike_voice": "coral",
+  "speech_order": [
+    "teacher",
+    "child"
+  ],
+  "speech_speed": 0.85,
+  "preserve_pitch": true,
+  "bpm": 93.6734693877551,
+  "rounds": 2,
+  "reference_image_count": 9,
+  "reference_utterance_count": 36,
+  "reference_word_order": [
+    "art",
+    "music",
+    "English",
+    "Chinese",
+    "PE",
+    "computer",
+    "science",
+    "social studies",
+    "math"
+  ],
+  "new_theme_timing_policy": "Recompute from intact speech and reviewed acoustic anchors; do not reuse the reference duration or nine-word-specific anchor windows",
+  "image_policy": "Local processing only; preserve handwriting, drawings and colors; conservative cleanup and square padding, no generative redrawing",
+  "technical_evidence": [
+    "productions/nine-subjects-20261002/v05-full-B085-clean/QA-clean-video.json",
+    "productions/nine-subjects-20261002/v05-full-B085-clean/QA-preview-browser.json"
+  ],
+  "historical_qa_note": "Existing QA snapshots describe the production-time pending acceptance; this explicit human acceptance record is authoritative for v05 status. Older v04 is not separately promoted.",
+  "accepted_layout_variants": {
+    "eight_cards_per_round": {
+      "acceptance_record": "productions/sixteen-subjects-01-20261002/v02-grid4x2-lowercase/segment-01/TEACHER_ACCEPTANCE.json",
+      "video": "productions/sixteen-subjects-01-20261002/v02-grid4x2-lowercase/segment-01/video.mp4",
+      "sha256": "d3ff22b536ac4c70ceb9a818248eb0b0a787d5006dfe0829f160a76cd117f28e",
+      "status": "teacher_accepted_formal",
+      "overview_columns": 4,
+      "overview_rows": 2,
+      "display_case": "ordinary lowercase; Chinese and English initial uppercase; PE uppercase"
+    }
+  },
+  "latest_accepted_variant_record": "productions/sixteen-subjects-01-20261002/v02-grid4x2-lowercase/segment-01/TEACHER_ACCEPTANCE.json",
+  "variant_note": "Original top-level nine-card reference remains accepted and unchanged. The eight-card variant has separate explicit teacher acceptance."
+}

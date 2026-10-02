@@ -1,0 +1,23 @@
+# Secrets and private local credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.*
+*credentials*.json
+
+# Local dependencies, caches and temporary diagnostic data
+node_modules/
+.venv/
+.cache/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.log
+*.tmp
+Thumbs.db
+.DS_Store
+
+# Keep teaching sources, supplied images, derived media and analysis evidence.

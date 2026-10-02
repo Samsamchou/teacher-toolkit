@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "mapping_approved": false,
+  "mode": "auto",
+  "round_word_policy": "same-order",
+  "speech_speed": 0.85,
+  "bpm": 93.6734693877551,
+  "font": "C:/Windows/Fonts/comicbd.ttf",
+  "voices": {
+    "teacher": "marin",
+    "child": "coral"
+  },
+  "board": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 listen read aloud videos\\productions\\nine-subjects-20261002\\v05-full-B085-clean\\board-from-reference-frame0.png",
+    "sha256": "91d65aabb905f5ab7d4407a1548be78f7f94b4b6fc76cb6691850b4e22e107d3"
+  },
+  "drum_bar": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 listen read aloud videos\\productions\\nine-subjects-20261002\\v04-full-B085\\drum-bar-unphased.wav",
+    "sha256": "36a916ac14664e48acd8bcf280b9487f28c8eb91c066219a5d9f6c42b9ffce5a",
+    "bpm": 93.6734693877551
+  },
+  "voice_bank": {
+    "path": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 listen read aloud videos\\skills\\rhythm-vocabulary-video\\assets\\accepted-voice-bank.json",
+    "sha256": "bb6b7c0a710f778ed5d7c6b3d6d903c13b3a5220bace1ad546fecc2e1ef6e139"
+  }
+}
