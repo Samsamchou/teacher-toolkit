@@ -1,6 +1,6 @@
 # 已確認 Git 同步範圍 / Approved Git scope
 
-日期：2026-10-02，Asia/Taipei。狀態：**教師已明確授權此25檔提交並推送既有main；提交前記錄，尚未執行**。
+日期：2026-10-02，Asia/Taipei。狀態：**已完成核准25檔內容提交／推送；遠端main核對 `710f78c05ba9b21a5ba4642a9d3601318806b774` 相符**。
 
 既有儲存庫：Samsamchou/teacher-toolkit；分支 main。父層混有其他專案改動，本清單僅納入目前專案的25個程式／文件檔。
 
@@ -46,11 +46,11 @@
 
 去識別技能副本15檔完整納入，只有圖片說明中的學生名稱範例改為student01代碼；其餘14檔與正式技能逐位元相同。其中設定與聲音庫僅保存非秘密的本機路徑／雜湊，實際黑板、節拍、聲音需從已確認的私人GDrive材料取得。Git是程式／流程備份，完整影片材料保留在GDrive；Git副本不能單獨重建既有影片。
 
-## 執行前條件 / Before committing
+## 授權與同步核對 / Authorization and verification
 
 1. 已完成：教師明確同意此25檔範圍及推送至既有main，無需再次詢問。
-2. 重新核對目前工作樹、清單 SHA 與索引，若檔案有新改動，先讀回差異。
-3. 只 stage 此清單，讀回 staged diff／檔名，再提交並推送；不得包含其他專案。
-4. 若 GitHub 需要登入，由教師親自完成。推送後核對遠端實際 SHA，再更新收工及 Obsidian 狀態。
+2. 已完成：提交前核對25檔SHA，索引為空；只有3份同步狀態文件因本次明確授權而更新，程式未變。
+3. 已完成：逐檔stage、staged diff／bytes與diff --check均通過；首個提交恰為25檔，遠端main SHA與提交相符。
+4. 文件補記僅使用同一清單內的README、CLOSEOUT與本文件3檔；最終包含補記的HEAD以Git log、Obsidian及analysis/git-sync-20261002/final-receipt.json為準。本次未要求登入、變更remote或改寫歷史。
 
 逐檔 bytes／SHA-256：`analysis/closeout-20261002/git-scope-manifest.json`（此驗證檔留在 GDrive）。

@@ -48,4 +48,4 @@
 - 核對紀錄：`analysis/closeout-20261002/verification.json`，兩支MP4與15檔技能／ZIP雜湊一致。
 - 16圖新版既有媒體18/18、完整靜音1×瀏覽器播放7/7、音軌保留5/5、技能回歸7/7通過，並已取得教師驗收。
 - 原始素材、圖片、影片、聲音及QA保留GDrive；兩支正式MP4已讀回雲端名稱、格式、容量及所在資料夾。遠端未提供SHA，整個專案及新交接文件的服務端同步未獨立驗證。
-- 沿用父層teacher-toolkit Git，main。教師已明確授權 `rdq/GIT-SCOPE-listen-read-aloud-20261002.md` 所列25檔提交／推送；實際結果在完成後更新此段與工作筆記，不建立巢狀Git。
+- GitHub已完成核准25檔內容提交並推送main；內容提交 `710f78c05ba9b21a5ba4642a9d3601318806b774`，遠端SHA已讀回相同。此段與收工／範圍文件補記沿用核准檔案；最新HEAD以Git log、Obsidian及 `analysis/git-sync-20261002/final-receipt.json` 為準。未納入學生作品、音影片或其他專案。
