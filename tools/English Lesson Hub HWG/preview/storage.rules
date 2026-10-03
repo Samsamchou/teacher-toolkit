@@ -41,6 +41,25 @@ service firebase.storage {
       allow delete: if anonymousTeacherMediaUploader();
     }
 
+    // v2 grants can only be issued by the verified teacher callable.
+    match /liveMediaV2/{ownerUid}/{assetId}/{variant} {
+      function uploadGrant() {
+        return firestore.get(/databases/(default)/documents/liveMediaUploadsV2/$(assetId)).data;
+      }
+      allow create: if request.auth != null
+        && resource == null
+        && request.auth.uid == ownerUid
+        && request.auth.token.firebase.sign_in_provider == 'anonymous'
+        && variant in ['original', 'playback']
+        && uploadGrant().ownerUid == ownerUid
+        && uploadGrant().active == true
+        && request.time < uploadGrant().expiresAt
+        && variant in uploadGrant().variants
+        && request.resource.size == uploadGrant().variants[variant].bytes
+        && request.resource.contentType == uploadGrant().variants[variant].mime;
+      allow read, update, delete: if false;
+    }
+
     match /{allPaths=**} {
       allow read, write: if false;
     }

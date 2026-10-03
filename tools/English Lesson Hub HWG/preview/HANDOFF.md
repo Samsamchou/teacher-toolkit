@@ -1,5 +1,131 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
+## 2026-09-26 22:51 課堂錯題、上傳影片、落球、音樂與工具列正式發布
+
+使用者確認 [本輪 RDQ 規格](../rdq/RDQ-spec-classroom-followup-20260926.md) 的 1A／2A／3A 及建議，之後另行明確授權正式部署。全班錯題與錯題 CSV 依「部分＋全錯」人數由多至少排序，前三個非零人數層級以紅／淺紅／粉紅區分，同分並列，原題號、學號、每選項作答及評分明細保留；學生個別報告仍用原題序。教師上傳影片的內建播放、暫停與進度改成全班同步控制，等候後端確認時不再被上一秒舊快照撤銷；素材仍透過既有授權讀取。落球 1–5 在球盤頂端一按即落，新回合固定紅柱 −1／紫柱 +1，碰撞分、音效及落格分分開顯示；舊回合照舊規則，歷史分數不重算。教師背景音樂在所有教材投影片自動暫停、題目頁自動播放；音量及瀏覽器阻擋時的啟用提示保留。工具列 Eyes Up Front 藍色、公布答案綠色、開放作答紫色，其餘動作分色並保留文字辨識。
+
+在隔離副本 `C:\Users\User\AppData\Local\Temp\lesson-hub-audio-20260926` 驗證：網站單元 189/189、Functions 10/10、Vite 建置通過；本機 Firestore 模擬器 4/4，涵蓋報告、遊戲、影片指令與多選題；原專案 `npm run validate` 為 PASS／46 堂課／errors 0。本機 Chrome 合成課堂的落球專項驗收通過：頂部 1–5 點一次即落、只扣一次機會、暫停及重整不重扣、390px 手機無橫向溢出及頁面錯誤；平板／手機截圖存於 [QA 證據](qa/classroom-followup-20260926)。完整三遊戲舊腳本在籃球頁舊標籤處逾時，本輪僅宣稱落球專項通過；無頭瀏覽器也不能證明實際碰柱音效已聽到。
+
+正式部署只更新 `teacher-access:liveV2` 與 `hosting:lesson-hub-v03`。第一次後端指令因 Firebase 預設登入帳號缺少 `iam.serviceAccounts.ActAs` 而在預檢階段遭拒，未變更服務；以已登入、具既有 Owner/ActAs 權限的帳號作單次 `--account` 指定後成功，沒有切換全域預設登入或增加 IAM 權限。`liveV2` 由 `livev2-00008-vop` 更新為 `livev2-00009-wuq` 且 Ready；v2／素材／影片／圖片搜尋旗標仍 true，Worker URL 存在。`liveMediaV2` 及 `liveImageSearchV2` 維持 `livemediav2-00005-boj`／`liveimagesearchv2-00004-nuq`。Hosting CLI 顯示 97 檔、release complete；正式 `/lab` 與本次入口 JS、課堂 JS、CSS 均 HTTP 200 且 SHA-256 與隔離建置相同。完整逐檔雜湊見 [正式部署紀錄](../rdq/DEPLOYMENT-classroom-followup-20260926.md)。沒有部署 Firestore／Storage 規則、其他 Functions 或 Worker，沒有執行課程、素材或歷史資料寫入，也未 Git commit／push。
+
+本機 Chrome 無登入唯讀開啟正式 `/lab` 為 HTTP 200，顯示 English Lesson Hub 與雲端教師入口，沒有頁面 JavaScript 錯誤。教師仍需在正式站真機確認上傳影片連續播放逾 3 秒、暫停／跳轉與兩台 Safari 同步、碰柱實際音效，以及投影片／題目頁背景音樂切換；HTTP、模擬器與前次音效實機回報均不能替代這些新版驗收。正式入口：https://lesson-hub-v03.web.app/lab 。
+
+## 2026-09-26 20:05 即時評分音效與教師背景音樂正式發布
+
+使用者確認 [RDQ 音效規格](../rdq/RDQ-spec-live-audio-feedback-20260926.md) 的 1A／2A／3A 與四項建議，並明確授權「程式完成與測試之後直接正式部署」。學生三種結果採原創 WebAudio 提示音；伺服器只在本人成功交卷回覆傳回本次 `attemptId` 與 `full`／`partial`／`wrong`，輪詢快照不帶結果或正解；母音題完成自動交卷也傳回同格式。每次嘗試僅播一次，學生可關閉音效；待評／不計分不播。教師背景音樂只在教師頁手動開啟，預設關閉、20% 音量、可暫停／調音量／循環；本機或 YouTube 教材播放時自動暫停，Google Drive 跨網域無法觀測播放狀態，因此整張 Drive 影片投影片保守暫停背景音樂。原曲是 Pixabay 的 [Upbeat Happy Corporate（kornevmusic）](https://pixabay.com/music/corporate-upbeat-happy-corporate-487426/)，[授權摘要](https://pixabay.com/service/license-summary/)；前三支 YouTube 只作風格參考，未擷取原音。素材來源與 SHA-256 記在 `public/live-audio/upbeat-happy-corporate-487426.source.json`。
+
+隔離建置副本 `C:\Users\User\AppData\Local\Temp\lesson-hub-audio-20260926` 與工作區 11 個實作檔 SHA-256 相同。正式雲端 preflight 6/6 通過；`npm test` 180/180、Functions 10/10、相關 Firestore emulator 整合各 1/1、本機 HTTP 合成教室三種結果／母音自動交卷／重送不洩漏測試通過。`npm run validate` 在隔離副本因缺少相鄰 `question-bank` 來源檔而回報找不到檔案；在原始專案執行同一腳本 `status: PASS`、`errors: []`。`npm run check:functions` 與正式 Vite 建置通過。瀏覽器自動操作在測試期間逾時，未宣稱 Safari／實際喇叭已驗收。
+
+部署時先將上輪已驗證的完整 `functions/.env.hwg7teaching` 複製至隔離副本，核對 v2／素材／影片／圖片搜尋旗標與 Worker URL 存在；從舊正式 bundle 讀取相同的公開 App Check 站台鍵，僅放入本次建置程序環境，未寫入專案。第一次 `--only functions:liveV2` 因漏寫 codebase 被 CLI 於部署前拒絕，沒有變更；接著只部署 `functions:teacher-access:liveV2`，正式讀回 `livev2-00008-vop` Ready，v2／素材／影片／圖片搜尋旗標皆 true、Worker 已設定。`liveMediaV2` 仍為 `livemediav2-00005-boj`、`liveImageSearchV2` 仍為 `liveimagesearchv2-00004-nuq`，皆 Ready 且旗標正常。再只部署 `hosting:lesson-hub-v03`（97 檔，CLI 顯示 release complete）。正式 `/lab`、`LiveApp-D5wimKHm.js`、`LiveApp-PMhWEOEF.css`、MP3 及來源紀錄 HTTP 200、SHA-256 與建置副本逐檔相同。未修改課程、歷史紀錄、Firestore／Storage 規則、其他 Functions 或 Secret；未 Git commit／push。
+
+教師於 2026-09-26 回報已確認三種作答音效，以及教材影片播放時背景音樂的暫停／恢復。這是教師實機回報，不延伸宣稱兩台 Safari、母音題或 Drive 跨網域投影片均逐項驗收。後續「所有教材投影片都暫停、問題頁自動播放」屬新一輪需求，見 [新 RDQ 規格](../rdq/RDQ-spec-classroom-followup-20260926.md)，不得與本次已部署版本混淆。
+
+## 2026-09-26 教材投影片版面及雲端圖片正式修復
+
+教師回報教材投影片上傳後及母音題既有圖片均顯示「雲端素材尚未啟用」。正式讀回確認 `liveMediaV2` 的 `LIVE_MEDIA_ENABLED`／`LIVE_VIDEO_ENABLED` 與 `liveImageSearchV2` 的圖片搜尋旗標皆為 false；前次修復使用的隔離部署副本 `functions/.env.hwg7teaching` 只含 `LIVE_V2_ENABLED`，造成這些服務更新時旗標遺失。已將 2026-09-24 已驗證的非機密完整旗標設定複製回隔離副本，並逐項比對目前仍運作的影片派送服務設定一致。未修改教師通行碼、Secret、Firestore／Storage 規則或課程／素材文件。
+
+已只更新 `teacher-access:liveMediaV2` 與 `teacher-access:liveImageSearchV2`；正式讀回皆 ACTIVE：`livemediav2-00005-boj`、`liveimagesearchv2-00004-nuq`，v2／素材／影片／圖片搜尋旗標皆 true。第一次 Firebase 函式規格載入在 10 秒逾時，使用本機 CLI 支援的 `FUNCTIONS_DISCOVERY_TIMEOUT=60000` 重試後成功。下次部署任何 live Functions 前，須先用 `scripts/live-cloud-preflight.mjs` 檢查完整旗標；不要再次從只含 v2 單一旗標的副本部署。
+
+`src/live/LiveApp.jsx` 為教材投影片加專用 `lh-slide-canvas`，`src/live/compact.css` 將標題限於響應式 22–32px、縮小畫布留白，圖片／影片可用最高 `min(72vh,760px)` 的區域；互動題使用原本題幹版面。已發布 95 檔到 `lesson-hub-v03`。正式 `/lab`、`LiveApp-ChI8H3vu.js`、`LiveApp-B7LY7dtd.css` HTTP 200 且 SHA-256 與建置副本相同。Hosting Releases 管理 API 讀回回應 403，因此本次以 CLI「release complete」與公開檔案雜湊作發布證據，未記錄無法核實的版本 ID。
+
+隔離副本設定預檢全通過、網站測試 186/186、Functions 10/10、Vite 建置成功；原專案位置題庫資料驗證 `errors: []`。本機瀏覽器預覽確認標題卡片高度約 96px，未對正式站建立或改寫測試課程。已請教師於正式站自行重新整理、解鎖，回報母音題既有三圖及教材投影片新圖片上傳是否恢復；這一步尚待真人回覆，不能稱正式圖片流程已驗收。規格卡見 [RDQ](../rdq/RDQ-spec-slide-media-recovery-20260926.md)。未 Git commit／push。
+
+## 2026-09-25 固定教師課程庫修復完成（23:10 後端補強）
+
+使用者授權修復及部署，並親自解鎖正式站確認「已看到原課程」。根因為舊版以瀏覽器匿名 UID 篩選課程，換瀏覽器或匿名身分後清單為空，並非課程被刪除。已於驗證真實教師工作階段後，由後端私人設定 `liveTeacherWorkspacesV2/primary` 解析固定教師歸屬；前端不可指定歸屬。學生身分、教師通行碼、App Check 及媒體權限檢查保留。此為本站同一通行碼的固定教師課程庫，不是多教師獨立帳號系統。
+
+安全接回原歸屬的 2 堂課；修復時 `HWG7 U02 words` 為 v218、8 頁（5 題＋3 投影片）。檢查 10 個素材紀錄及 20 個 Storage 物件存在；設定前後課程與素材內容雜湊相同。只新增私人歸屬設定，未重寫原課程、版本、歷史課堂或媒體；其他歸屬的 2 堂課未合併。私人備份留在本機 Temp 的 `lesson-hub-teacher-recovery-20260925/teacher-workspace-1790348227706.json`，勿公開或提交 Git。
+
+正式 Hosting 為 `b129e60ca4450054`（2026-09-25T14:59:39.032Z，95 檔）；線上 index／LiveApp JS／CSS HTTP 與雜湊已核對。後端最新讀回 ACTIVE：`livev2-00007-wix`、`livemediav2-00004-yap`；圖片搜尋沿用本輪 `liveimagesearchv2-00003-vip`。最後只补部署 liveV2／liveMediaV2：新素材保留真實上傳者 ownerUid 與 Storage 路徑，另以 workspaceOwnerUid 管理固定教師權限，確保既有 FFmpeg worker 相容；舊素材仍依 ownerUid 相容讀取。未更動 worker、安全規則或其他服務。
+
+最終 staging `npm test` 186/186、Functions 10/10、相關 Firestore／Storage 整合 10/10 通過（測試集合可能重複涵蓋 Functions，不加總成獨立案例數）。整合涵蓋跨瀏覽器課程／版本／媒體讀取、拒絕冒用及未授權學生、上傳者隔離、真實 FFmpeg 轉檔、報告歷史快照。部署前四個後端來源檔與 staging 雜湊一致。新影片跨瀏覽器流程為模擬器驗證，尚未新增正式影片做真機驗收；既有課程可見已由教師確認。前次舊音訊整合測試問題仍見下方紀錄，未宣称全站所有整合測試通過。
+
+未 Git commit／push，未刪除任何資料。正式入口 https://lesson-hub-v03.web.app/lab 。換瀏覽器時需重新親自輸入本站教師通行碼，不應因未解鎖的空清單重建課程。課程修復完成，下一步可選擇驗收新影片上傳與另一瀏覽器讀回。
+
+## 2026-09-25 22:12 母音片語空格修正正式發布
+
+使用者明確授權前後端部署。已先更新 `hwg7teaching` 的 `teacher-access:liveV2`，讀回 ACTIVE／`livev2-00005-rap`；再發布 `lesson-hub-v03` Hosting `b4c74811d368dcb7`（95 檔，2026-09-25T14:12:12.187Z）。正式入口 https://lesson-hub-v03.web.app/lab 。僅更新上述兩項，未修改正式課程、歷史資料、安全規則或其他 Functions。
+
+162 單元＋10 Functions 測試、雲端建置、preflight 與來源／staging 比對通過。額外 Firestore 整合 4/5 通過：母音點選、多人隔離、草稿及改名通過；舊音訊測試在 `tests/live-cloud.integration.mjs:162` 使用 `report.responses.sort` 失敗，目前 report API 不含該欄位，本次沒有擴改音訊測試或功能。不可稱整合全數通過。
+
+正式 `/lab` HTTP 200；線上 index 與 LiveApp JS／CSS 均 HTTP 200、SHA-256 與建置相同：index `0d203cb7f6c51a835b28c3dfa54bcf4ac59b8de9f9101751972d97b80f2b44b7`；`LiveApp-DdkXFtFF.js` `5dfba3e6811a6029628ca209cb740cc92380febc5c31c146f88c4465ed01f7a4`；`LiveApp-T-ahxTni.css` `8bf1a242021e5a553d1310dced508b31b8bb0ef6ec230b3826e947b74f82fb49`。
+
+教師下一步：重新整理後，將舊題 bybike／bybus 手動补成 by bike／by bus，確認母音標記及學生間隔；不必重傳圖片。舊題不自動猜測分詞，歷史紀錄不改。正式登入後及 iPad 真機尚待教師驗收。本次未 Git commit／push。下方未部署段落為歷史狀態。
+
+## 2026-09-25 母音片語空格修正（本機，尚未部署）
+
+教師要求 bybike 顯示為 by bike。編輯器原本會刪除空格，後端也禁止空格；已改為支援含空格最多 24 字元、至少兩個字母的片語。教師與學生端空格呈現不可點選的間隔；只修改空格會依字母順序保留／重定位正解，修改字母仍清空標記。舊題與歷史快照不自動轉換；教師需將 bybike／bybus 改填 by bike／by bus。部署須同時更新 liveV2 與 Hosting，不能只發布前端；本次未重新部署，正式版仍為下方 20:35 版本。
+
+## 2026-09-25 20:35 最新正式版與收工
+
+正式 https://lesson-hub-v03.web.app/lab 為 Hosting `a14e86ef739f550a`，收工重新查證一致。新課程先命名、既有課程儲存名稱、緊湊題幹與 28–36px 選項已上線；最後一輪只部署 Hosting，不改評分後端或歷史資料。160 單元＋2 相關整合、建置／安全／46 課資料檢查通過；本機教師／學生／預覽單行題幹約 91px、選項 36px，名稱重整讀回及正解綠色通過。正式 index／JS／CSS 雜湊吻合。完整證據見 [最新部署紀錄](../rdq/DEPLOYMENT-course-name-compact-20260925.md)。
+
+下一步：課堂結束後重新整理正式頁，驗收 iPad Safari、實際投影、長文字與觸控畫筆、錯題報告。前輪兩台跨 Wi-Fi Safari 影片播放／暫停／跳秒已由教師回報通過，不等於最新版 UI 真機驗收。原預覽是舊前端，後續用正式入口。共用 repo `main` 混有其他專案，本次未 stage／commit／push；HEAD `24157d756e52864c5af87f21ead9e83af8a80c1c` 不含未提交更新。GDrive 本機保存，遠端同步未獨立驗證。電腦維持運作、不停止其他工作。
+
+## 2026-09-25 19:29 正式發布完成
+
+使用者明確授權「正式部署」。正式 https://lesson-hub-v03.web.app/lab 已更新為 Hosting 53c31ec9bfe0dbe8（95 files），必要 liveV2 後端 ACTIVE／livev2-00004-xoj。包含太空背景與前輪課堂標註／錯題報告；157 單元＋10 Functions＋7 整合、原題庫及安全檢查通過，線上 index／JS／CSS／背景 SHA256 相同。未動其他服務、規則或資料，未 Git 提交。正式登入後與新版 iPad 真機驗收仍待教師執行；下方「未部署」是歷史狀態。詳細版本、復原與限制見 [正式發布紀錄](../rdq/DEPLOYMENT-formal-space-academy-20260925.md)。
+
+## 2026-09-25 太空學院視覺（本機，未部署）
+
+RDQ 1A／2A 全採納，並依教師追加要求使用內建 ImageGen 生成原創背景。/lab 備課、授課、學生端共用星空、行星與立體卡片；題目實色底，等待輕微動態、作答靜態，支援減少動態。157 單元＋10 Functions 與建置通過；真機及發布另行驗收。詳見 [太空主題交接](../rdq/IMPLEMENTATION-space-academy-20260925.md)。
+
+## 2026-09-25 課堂標註與錯題報告（本機新版，未部署）
+
+已依教師確認實作原選項綠色正解、覆蓋式畫筆／橡皮擦與依題自動同步、水平排序、學號答題燈號、學生逐題／全班錯題對照與歷史報告入口。153 單元＋10 Functions＋7 Firestore 整合及本機建置通過；Chrome 合成課堂 844476 已完成兩題與報告讀回。Safari/iPad 真機、窄螢幕及實際列印仍待驗收；此次沒有雲端部署或 Git 提交。以 [本輪交接](../rdq/IMPLEMENTATION-classroom-review-20260925.md) 為準。上次 US$1 雲端試部署已結束，不是本輪發布授權。
+
+## 2026-09-25 兩台Safari核心驗收完成（尚未發布正式站）
+
+教師親自解鎖後，建立獨立QA課堂384412；兩台不同Wi-Fi的Safari加入、影片有聲播放/暫停/跳至5秒、未選禁送、提交前無正解標記，由教師回報通過。代理教師端讀回2位參與者99999/66666、2筆作答與逐選項評分明細，實際為0/3及2/3；未測全選正解3/3真機案例。教師手動確認結束，phase=complete；已返回備課停止教師輪詢並請關閉學生頁。課程與合成紀錄保留，沒有發布或重新部署；實際費用未結算。完整證據與未驗項目見 [真機驗收紀錄](../rdq/CLOUD-TRIAL-DEVICE-QA-20260925.md)。
+
+## 2026-09-25 15:05 受控雲端預覽更新（最新）
+
+使用者同意US$1管理預算、1教師＋2學生裝置、30分鐘、1支10MB以下影片、不測AI。已核實既有雲端配置並只更新liveV2（revision livev2-00003-kul）與既有預覽（version c526995137d22cd1；92檔；到期2026-10-02 15:05台灣時間）。正式live仍bb89a7c8ef3fdef6，未更新；影片worker、其他Functions與安全規則未改。146單元＋10Functions＋6整合測試通過，首頁與LiveApp JS/CSS線上雜湊一致。Chrome已開啟教師驗證入口，等待教師本人輸入通行碼後接續兩平板、跨Wi-Fi、影片與作答驗收。費用未結算，US$1非硬上限。以 [受控試部署紀錄](../rdq/CLOUD-TRIAL-20260925.md) 為準；先前「雲端未備齊」來自本機缺值，不應重建雲端資源。
+
+## 2026-09-25 研究優先：暫不修改網站
+
+使用者確認截圖 12 項研究範圍及三項建議，要求研究整理完才改站；此次序優先於先前邊研究邊做樣板。指定帳號已由使用者回報登入，但瀏覽橋接仍 timeout，實際建題／畫面對照為 0/12。已保存[確認規格](../rdq/RDQ-spec-wayground-research-first-20260925.md)及[官方文件初稿／實測清單](../rdq/WAYGROUND-RESEARCH-12-TYPES-20260925.md)。本輪只寫研究文件，未改產品程式、預覽或正式站；不要把文件初稿當成研究完成。
+
+## 2026-09-25 第二次預覽：題型編輯樣板與背景效能
+
+原預覽已更新，正式站未改。籃球背景改用 384 KB WebP（原 3.18 MB），角色圖亦壓縮；新增選項卡片、替代答案欄、排序控制、拖放區域視覺調整、獨立媒體入口與評量側欄。121 單元、四題型／響應式、三遊戲、母音題及課堂閉環回歸通過。固定慢網模擬背景下載約 16.4 秒 → 2.1 秒，非校園實測。**Wayground 控制連線仍逾時，u9431818@gmail.com 尚未登入建題，不能稱為完整復刻。** 詳細證據與下一步見 [本輪交接](../rdq/IMPLEMENTATION-studio-performance-20260925.md)。
+
+## 2026-09-25 新版預覽已發布，師生三圖顯示已驗收
+
+指定帳號 `u9431818@gmail.com` 已加入 Firebase CLI；連到真實 v2 後端的新版前端已發布至原 [Hosting 預覽](https://lesson-hub-v03--wayground-v2-20260924-my8u1xpl.web.app/lab)，84 檔、到期 2026-10-02 09:16:54（台灣時間）。首頁、互動 JS／CSS 與籃球圖片線上雜湊均吻合建置；Chrome 雲端 Teacher-led 入口無頁面錯誤。教師本人回報老師端與一般學生端的母音題三張圖片均顯示；其他課堂功能與 iPad 尚待驗收。正式站的 live channel 發布時間維持 2026-09-07。見[部署讀回](../rdq/DEPLOYMENT-wayground-v2-preview-20260924.md)及[圖片驗收紀錄](../qa/preview-20260925/MANUAL-QA.md)。
+
+## 2026-09-25 收工：最新前端待預覽部署
+
+已保存晚間修正與八張本機 QA 截圖。Firebase CLI 收工讀回仍只列出非指定帳號，最新前端未更新至預覽；正式 Hosting 未發布。下一次由教師加入指定帳號後接續已授權的預覽更新與真實圖片／師生驗收。兩把金鑰與後端已完成，不須重做。共用 Git 混有其他專案變更，本次未提交／推送。見[本次收工交接](../rdq/CLOSEOUT-20260925-preview-pending.md)。
+
+## 2026-09-24 晚間圖片／編輯器／課間遊戲修正，預覽前端待更新
+
+母音題改為每字獨立圖片上傳與狀態提示；後端三字完整檢查保留、未完成草稿可先存。題目編輯器分色分區，題目移除 Slides／Canva 連結、私有備註與「教材／題幹」，分數和時間改為選單。籃球、Plink-oh!、拉霸依來源素材、舞台與動畫做單人適配，保留教師控制與分數隔離；詳細來源見 [SOURCE.md](public/live-games/SOURCE.md)。121 單元、10 Functions、9 規則、草稿雲端整合與三款遊戲平板／手機瀏覽器回歸通過。六個 v2 Functions 已更新；兩項圖片相關 IAM 權限已依教師同意授予且讀回。Hosting 預覽仍是本次前端修改之前的版本，因 Firebase CLI 當時僅登入非指定帳號而暫停更新；正式站未改。精確閘門與教師手動登入步驟見[最新部署交接](../rdq/DEPLOYMENT-wayground-v2-preview-20260924.md)。真實圖片、教師通行碼、兩裝置課堂與 iPad 仍待教師驗收。
+
+## 2026-09-24 Teacher-led v2 雲端預覽已部署，正式站待教師驗收
+
+兩個金鑰已由教師設定，指定帳號部署了六個 v2 Functions、私有 Cloud Run/FFmpeg、App Check 與安全規則；真實 Hosting 預覽已連到同專案 v2 後端。正式 live Hosting 尚未更新，教師通行碼與兩裝置課堂驗收仍待本人操作。精確網址、測試證據、保留限制和正式發布閘門見[最新部署交接](../rdq/DEPLOYMENT-wayground-v2-preview-20260924.md)。以下舊段落的「未部署／金鑰不存在」均為當時歷史狀態，不代表現在。
+
+## 2026-09-24 點選母音拼讀字母（本機完成，正式部署待人工閘門）
+
+Teacher-led v2 已新增固定三字三圖、教師標記正確字母位置的題型；學生紅光／綠光與對錯符號、減少動畫、斷線恢復、後端隱藏答案及一次 2 次遊戲機會均已實作。108 單元、10 Functions、循序 19 模擬器測試、正式建置及完整瀏覽器流程通過；教師報告讀回 1/1 學習分。四張 QA 截圖見 [vowel-letters-20260924](../qa/vowel-letters-20260924/)。詳細實作、當前金鑰狀態、官方費率與教師手動輸入時點見 [本次部署閘門](../rdq/IMPLEMENTATION-vowel-letter-selection-20260924.md)。兩個新 Secret 目前不存在，尚未啟用 App Check／雲端 worker，**未部署新版**。下方收工段落是先前歷史狀態。
+
+## 2026-09-24 收工暫停：晚間從金鑰權限接續
+
+使用者已改為授權「部署、設定金鑰」，但隨後要求先收工；本次尚未部署新版、未成功設定兩個新 Secret，也未更動 IAM。403 原因為 Firebase 預設帳號不符；已只讀驗證 u9431818@gmail.com 具有必要 Secret／Service Usage 權限，晚間指令必須明確帶 --account，金鑰由使用者在隱藏提示輸入。Cloud Run／Cloud Build／AI 按量費用尚待確認，App Check 尚待設定。見[收工交接與精確接續指令](../rdq/CLOSEOUT-20260924-deployment-paused.md)。下方「未部署」仍為事實，但較早「不部署」是歷史授權狀態。
+
+## 2026-09-24 單人課間遊戲（未部署）
+
+RDQ 已確認並實作三款單人改編版：每題答對／通過 2 次、答錯 1 次，錄音 80 分、文字雲有效提交 2 次；待評不誤判、改判補差額、跨題保留、教師中斷與重連防重領。遊戲分數獨立，來源專案與正式站未改動。105 單元＋10 Functions＋18 模擬器測試及三款遊戲／原閉環瀏覽器回歸通過。見[單人遊戲交接](../rdq/IMPLEMENTATION-single-player-rewards-20260924.md)與[確認規格](../rdq/RDQ-spec-single-player-rewards-20260924.md)。不部署、不設定金鑰；真實 iPad／音效／課堂網路待教師驗收。
+
+## 2026-09-24 Pixabay＋Cloud Run/FFmpeg（未部署）
+
+使用者已確認服務選型並要求先不部署。已加入 v2 私有素材、Pixabay 後端與 Cloud Run worker 程式；97 單元＋10 Functions＋16 模擬器測試通過。沒有建立雲端資源、設定正式金鑰或改寫正式資料。實際雲端／容器／真機驗證尚待授權，詳見[第三階段交接與部署前清單](../rdq/IMPLEMENTATION-wayground-phase3-20260924.md)。
+
+## 2026-09-24 Teacher-led v2 本機開發（未部署）
+
+已接續雲端 v2、錄音評分流程、FFmpeg 本機影片轉檔、關閉狀態的 Pixabay 搜尋 adapter 與自由畫布。詳細狀態／未完成項目見 [第二階段交接](../rdq/IMPLEMENTATION-wayground-phase2-20260924.md)。不可把下方歷史「已上線」解讀成 v2 已部署；正式站仍維持原版本。
+
 ## 已上線
 
 - Firebase 專案：`hwg7teaching`
@@ -440,3 +566,70 @@
 - 正式 HTTP 讀回 56／56 個網站檔案皆為 200，SHA-256 與建置逐檔一致；Hosting runtime projectId 確認為 `hwg7teaching`。入口 `index.html` SHA-256：`016a5209f8af1a07b84f4ca4713d471a89b776953fc788511ab3cdb60a25c937`；主程式 `assets/index-BwXyPSY-.js` SHA-256：`2bc0071b05e24344baa6e0a922a731ace259363b00ce55b089662fa90d6dccf4`。
 - 正式 1920×1080 Chrome 驗收通過：學號示例 50101、第一題 Sunday 完整圖片、四個隨機選項、滿分 14，無頁面捲動；7 個 MP3 全部 HTTP 200 並可解碼。截圖經目視檢查。成績寫入測試在 Emulator 完成；正式站未提交測試成績，勿描述為已在正式 Results 讀回新成績。
 - 正式驗收檔：`audit/hwg5-u01-l1-vocabulary-quiz/production-browser-qa.json`、`production-first-question-1920x1080.png`、`production-release.json`。本輪未 Git commit／push。
+
+## 2026-09-27 題目媒體／拉霸／影片專注模式（本機完成，未部署）
+- 已確認 1B／2A／3A 與全部建議；規格：`../rdq/RDQ-spec-classroom-media-focus-20260927.md`。
+- 新舊題目圖片縮半且保留原圖、題幹與答案 1:2／圖文 1:2、點圖放大；圖片音檔共存；各組拉霸滾輪音效、右上大字加分與回合總分；教師播片自動學生 Eyes Up Front，暫停／结束保持專注直到教師解除或換頁。
+- 193/193 網站測試、10/10 Functions、7/7 模擬器整合、Chrome 雙瀏覽器及 46 堂課資料驗證通過，22 檔與驗證副本雜湊一致。
+- 詳細交接：`../rdq/IMPLEMENTATION-classroom-media-focus-20260927.md`；成果與紀錄：`../qa/classroom-media-focus-20260927/`。
+- 尚未部署、未批次更改正式舊圖、未 Git commit／push。部署需另行授權；之後教師親自解鎖課程庫執行舊圖升級，再做實體 iPad／教室喇叭驗收。
+
+## 2026-09-27 題目媒體／拉霸／影片專注模式（正式部署完成）
+- 使用者明確「確認部署」後，已發布 `hwg7teaching` 的 `hosting:lesson-hub-v03`（101 檔）及 `teacher-access` 的 `liveV2`／`liveMediaV2`。正式入口：https://lesson-hub-v03.web.app/lab 。此紀錄取代上方本機完成階段的「未部署」狀態。
+- 後端 `livev2-00010-kaz`、`livemediav2-00006-zoc` 均 Ready；正式入口與 JS/CSS、插圖、音效共 7 檔 HTTP 200 且 SHA-256 與建置一致。正式 Chrome 雲端介面及教師登入入口 smoke 通過，無 JavaScript 頁面錯誤。
+- 正式舊圖尚未批次升級；教師需親自解鎖課程庫執行「將舊題目圖片縮半」，並於實際 iPad／教室喇叭驗收。未驗收正式私有課程及外部 YouTube 實播。
+- 詳細部署紀錄：`../rdq/DEPLOYMENT-classroom-media-focus-20260927.md`；7 個部署驗證檔案：`../qa/classroom-media-focus-20260927/production/`。未 Git stage／commit／push，未更新 Obsidian，未關機。
+- 登入安全待辦：本次 CLI 帳號查詢意外將登入權杖回傳至工具輸出，已告知使用者；應由使用者撤銷受影響授權並重新登入。專案紀錄不含權杖值。
+
+## 2026-09-27 收工保存 / Closeout
+- 本次正式部署後交接與 Obsidian 四區已保存並讀回；詳見 ../rdq/CLOSEOUT-classroom-media-focus-20260927.md。Git 混合工作区未 stage／commit／push，實機驗收、舊圖升級及登入授權撤銷待辦保留。電腦與其他工作維持運作。
+
+
+## 2026-10-01 全對才進遊戲／無限重試（正式部署完成）
+- 使用者「先這樣，直接開始」確認 RDQ，再以「直接部署正式站」授權發布。規格：`../rdq/RDQ-spec-mastery-retry-20261001.md`。
+- 除塗鴉／文字雲／開放式／錄音外，10 種客觀題須全對才獲兩次遊戲機會。未全對保留答案無限重試；倒數歸零可改，但教師鎖題／公布／換頁停止作答，同題不重複發獎。
+- Try Again／Great 英文語音與兩張同角色 256×256 透明小超人搭配短暫動畫；全對 1.5 秒後顯示遊戲，提示不蓋答案。保留靜音／減少動畫，輪詢、重送、刷新不重播。四個網站素材共 40,708 bytes，原始 PNG／WAV 與來源記錄保留。
+- 207/207 網站、10/10 Functions、8/8 Firestore 整合、Chrome 師生獨立瀏覽器 10 種題型、46 堂課資料驗證、安全／正式部署檢查與 Vite 建置通過；33 個交付檔與測試／發布副本雜湊一致。
+- 已發布 `hwg7teaching` 的 Hosting `lesson-hub-v03`（109 檔）及 `teacher-access:liveV2`。後端 `livev2-00011-laf` Ready；109/109 正式檔案 HTTP 200 且 SHA-256 一致，正式 Chrome 雲端介面／教師入口／兩圖兩音解碼通過。請重新整理 https://lesson-hub-v03.web.app/lab 。
+- 詳細交接：`../rdq/IMPLEMENTATION-mastery-retry-20261001.md`；部署：`../rdq/DEPLOYMENT-mastery-retry-20261001.md`；QA：`../qa/mastery-retry-20261001/`；本機試聽：http://127.0.0.1:5191/qa-mastery/ 。
+- 正式私人課程與教室 iPad／喇叭未由自動化驗收，未提交正式測試資料。未發布規則／Secrets／Worker／liveMediaV2，未 Git stage／commit／push，未執行收工或 Obsidian 同步。既有舊圖升級與實機待辦保留。
+
+<!-- lesson-hub-mastery-closeout-20261001 -->
+## 2026-10-01 收工保存 / Closeout
+- 本次正式部署後交接與 Obsidian 四區已保存、讀回；詳見 ../rdq/CLOSEOUT-mastery-retry-20261001.md。33 個來源檔／4 個原始素材核對一致，正式入口與四個回饋素材 5/5 讀回一致；後端 livev2-00011-laf ACTIVE。Git 混合工作區未 stage／commit／push，HEAD 與遠端 main 皆 24157d756e52864c5af87f21ead9e83af8a80c1c；範圍確認與教室 iPad／喇叭驗收待處理。GDrive 雲端服務端同步未另驗，電腦與其他工作維持運作。
+
+## 2026-10-01 教材投影片畫布完善版本（本機完成，未部署）
+- 使用者「先這樣，直接開始」確認 RDQ 推薦選項及建議，已實作 16:9 畫布、上方集中工具列、Comic Relief 正文方塊／選字格式／四段字級、圖片整合入口、音檔上傳錄音、MP4／YouTube／Canva／Google Slides 與五主題。
+- 舊教材顯示新配置並保留內容／素材／連結／原稿；原稿還原雜湊一致。轉題保留來源並建立可編輯的隱藏副本，學生圖左文右及22／24／28／32px，完成正解後由教師確認顯示；學生快照不含原稿及教師備註。
+- 網站217/217、Functions10/10、本機 Firestore／Storage10/10、Vite建置、共用模型、教師安全及46堂課來源資料驗證通過；Chrome兩套操作檢查17組、四種寬度、模擬觸控與全螢幕通過。模擬器驗證需使用 `--test-concurrency=1`，避免規則測試清空資料庫干擾保存測試。
+- 交接：`../rdq/IMPLEMENTATION-slide-canvas-20261001.md`；規格：`../rdq/RDQ-spec-slide-canvas-20261001.md`；QA／來源雜湊：`../qa/slide-canvas-20261001/`。本機預覽：http://127.0.0.1:5192/lab 。
+- 未部署、未改寫正式舊課程、未 Git stage／commit／push、未收工或 Obsidian 同步；自動化使用合成素材／假麥克風／外部預覽與搜尋測試資料，實際共享內容及iPad／喇叭／投影仍待教師驗收。正式發布須另行授權並一起更新 Hosting 與 liveV2；既有正式版本及實機待辦保留。
+## 2026-10-01 Comic Relief 投影修正／YouTube 修剪（本機完成，未部署）
+
+- 已修正預覽字型資源失敗，Comic Relief 400／700 與授權文件放入專案；編輯、投影與學生題幹實際字形共 6 個節點確認為 Comic Relief。
+- 加入 YouTube 後自動開啟修剪；可設定起訖分、秒與拖曳時間軸，片段至少 5 秒。選取既有影片可按「✂ 修剪影片」重改；保存、復原、轉題、教師同步與學生題幹保留範圍，到終點停止，重播由起點開始。
+- 223/223 網站、10/10 Functions、11/11 本機 Firestore／Storage，共244項通過；Chrome操作6組、3種寬度、實際字型、待播不跳轉及課堂片段終點通過。公開 YouTube 00:05–00:10 實播讀回起點約5.0787、終點約10.0172秒；學校裝置及正式私有教材仍由教師驗收。
+- 交接：`../rdq/IMPLEMENTATION-youtube-trim-20261001.md`；證據與來源／驗證副本雜湊：`../qa/slide-canvas-youtube-trim-20261001/`。本機預覽：http://127.0.0.1:5192/lab ，重新整理即可使用。
+- 原教材與前一輪 QA 保留；未部署、未 Git stage／commit／push、未收工或 Obsidian 同步。正式發布須另行授權並一起更新 Hosting 與 liveV2。
+
+## 2026-10-01 教材畫布／Comic Relief／YouTube 修剪（正式部署完成）
+
+- 使用者以「開始部署正式站」明確授權，已發布至 https://lesson-hub-v03.web.app/lab 。此紀錄取代上方兩階段的未部署狀態。
+- 更新 `hwg7teaching` 的 `hosting:lesson-hub-v03`（101 檔）及 `functions:teacher-access:liveV2`；後端 `livev2-00012-lap` ACTIVE／Ready，建立與就緒版本一致。
+- 畫布上方工具列、五主題、正文／選字格式、整合媒體、轉題字級、Comic Relief 自帶一般／粗體字型與 YouTube 最短 5 秒起訖修剪一併上線。35 個來源檔與測試／發布副本一致，既有 public 素材 60/60 保留。
+- 正式雲端建置、教師存取與部署閘門通過，244 項測試及本機 Chrome／公開 YouTube 實播證據保留。發布與正式讀回詳見 `../rdq/DEPLOYMENT-slide-canvas-youtube-trim-20261001.md`、`../qa/slide-canvas-youtube-trim-20261001/production/`。
+- 正式 101/101 檔案 HTTP 200＋SHA-256 一致；Chrome 雲端入口與 runtime 專案通過，正式字型資源實際字形確認 Regular／Bold。QA 主動攔截匿名 Auth／reCAPTCHA 的非讀取請求，截圖的 Auth 網路提示由此造成；未驗收正式教師登入或私人教材，未送出課程寫入。
+- 原稿與既有教材內容保留；未批次更改正式課程／作答資料。未發布規則、Secrets、Worker、其他 Functions，未 Git stage／commit／push，未執行收工或 Obsidian 同步。教師私有教材、iPad／喇叭與實際投影仍待教師驗收。
+
+
+<!-- lesson-hub-slide-canvas-closeout-20261001 -->
+## 2026-10-01 教材畫布／Comic Relief／YouTube 修剪：收工保存
+- 專案交接與 Obsidian 四區已保存、讀回，原有筆記全文／frontmatter 保留；詳見 ../rdq/CLOSEOUT-slide-canvas-youtube-trim-20261001.md。
+- 收工再次核對35個來源／發布ZIP與正式入口、主JS／CSS、兩字型共5項一致；livev2-00012-lap維持ACTIVE／Ready。前一輪244項測試與101/101正式發布核對保留。
+- Git main與遠端同為24157d756e52864c5af87f21ead9e83af8a80c1c，索引0，未stage／commit／push。187檔同步候選見 ../rdq/GIT-SCOPE-slide-canvas-20261001.md；混合工作區與舊Live基線須先確認範圍。
+- GDrive掛載副本已保存，雲端服務端同步未另驗。教師私有課程／iPad／教室喇叭／投影、既有舊圖升級及CLI授權待辦保留；電腦與其他工作維持運作。
+## 2026-10-03 教材畫布187檔Git同步授權
+
+- 使用者指定依`../rdq/GIT-SCOPE-slide-canvas-20261001.md`的187個路徑提交並推送。
+- 本次提交10/1教材畫布／YouTube修剪與其所需Live基線，接在既有`353016c9482268feffdd3f5672aecded77f59e39`之後。四個後來接入新遊戲的共用程式檔採10/1驗證副本，10/3新遊戲來源及本機變更保留。
+- 提交快照另行建置與測試；最終提交編號、遠端讀回及工作區保留核對見`../qa/git-sync-slide-canvas-20261003/result.json`。

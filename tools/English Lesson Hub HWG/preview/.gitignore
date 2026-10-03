@@ -1,4 +1,5 @@
 node_modules/
+.live-lab/
 dist/
 .vite/
 playwright-report/

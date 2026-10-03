@@ -1,0 +1,11 @@
+{
+  "file": "try-again.webp",
+  "width": 256,
+  "height": 256,
+  "quality": 82,
+  "bytes": 13642,
+  "sha256": "6f872c309d2ae6c7313bb272db83aa939598b0e3c34f13841f035ed92a201e31",
+  "sourceSha256": "11b089293ca393a753dd5af2c15d1df9e1d04942f063a5d59ab32228bf1ca547",
+  "process": "FFmpeg WebP export, 256x256 Lanczos, preserves generated alpha",
+  "source": "generated-assets/mastery-feedback-20261001/try-again.png"
+}

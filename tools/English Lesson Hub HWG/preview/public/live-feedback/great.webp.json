@@ -1,0 +1,11 @@
+{
+  "file": "great.webp",
+  "width": 256,
+  "height": 256,
+  "quality": 82,
+  "bytes": 15458,
+  "sha256": "0e1637e3f56f4447844d6bae49a51faab8d6c5823584559111ca0bc387bdefff",
+  "sourceSha256": "a2e6defcbe7556c5bce8aa311e55f4baf988d2218b9d6e9262b9c23a50a16fee",
+  "process": "FFmpeg WebP export, 256x256 Lanczos, preserves generated alpha",
+  "source": "generated-assets/mastery-feedback-20261001/great.png"
+}

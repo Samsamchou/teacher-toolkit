@@ -1,0 +1,10 @@
+{
+  "name":"lesson-live-video-worker",
+  "private":true,
+  "version":"0.1.0",
+  "type":"module",
+  "engines":{"node":"22"},
+  "scripts":{"start":"node worker/server.mjs"},
+  "dependencies":{"firebase-admin":"^14.2.0","google-auth-library":"10.9.1"},
+  "overrides":{"uuid":"11.1.1"}
+}

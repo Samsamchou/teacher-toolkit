@@ -62,3 +62,8 @@ test("existing video and PDF flow remains direct anonymous upload", async () => 
   await assertSucceeds(deleteObject(video));
   await assertSucceeds(deleteObject(pdf));
 });
+test('v2 audio denies direct browser reads, writes and listing',async()=>{
+  const storage=anonymousStorage('v2-student'),object=ref(storage,'liveAudioV2/v2-student/attempt-0001/audio');
+  await assertFails(uploadBytes(object,new Uint8Array([1,2,3]),{contentType:'audio/webm'}));
+  await assertFails(getBytes(object));await assertFails(listAll(ref(storage,'liveAudioV2')));
+});

@@ -1,0 +1,72 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import { createLiveService } from '../functions/src/live-service.mjs';
+import { newBlock } from '../src/live/domain.mjs';
+import { parityBlock } from '../src/live/parity.mjs';
+import { applyTheme, formatRuns, restoreOriginal, slideToQuestion } from '../src/live/slide-canvas.mjs';
+if (!/^(localhost|127\.0\.0\.1):\d+$/.test(process.env.FIRESTORE_EMULATOR_HOST || '')) throw new Error('Local Firestore emulator required; production access refused');
+const require = createRequire(new URL('../functions/index.cjs', import.meta.url));
+const { initializeApp, deleteApp } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
+
+test('canvas preserves legacy versions in Firestore and only exposes teaching content to students', async () => {
+  const tag = crypto.randomUUID(), teacher = `canvas-teacher-${tag}`, other = `canvas-other-${tag}`;
+  const app = initializeApp({ projectId: 'demo-lesson-hub' }, `canvas-${tag}`), db = getFirestore(app);
+  const service = createLiveService({ db, requireTeacher: async request => { if (![teacher, other].includes(request.auth.uid)) throw new Error('teacher only'); } });
+  const call = (uid, action, code, payload = {}) => service({ auth: { uid, token: { firebase: { sign_in_provider: 'anonymous' } } }, data: { action, code, payload } });
+  const assetId = `cloud-${crypto.randomUUID()}`, id = `canvas-deck-${tag}`, deckRef = db.collection('liveDecksV2').doc(`${teacher}_${id}`);
+  let room;
+  try {
+    await db.collection('liveMediaV2').doc(assetId).set({ ownerUid: teacher, status: 'ready', kind: 'image' });
+    const source = { ...newBlock('slide', 'original-slide'), title: 'Monday 星期一', text: 'I like Monday.\n二水國小', notes: 'PRIVATE TEACHER NOTE', media: [{ id: assetId, kind: 'image', name: 'Synthetic picture' }], embed: 'https://www.canva.com/design/abc123/view' };
+    delete source.slideCanvas;
+    const legacy = { id, title: 'Synthetic canvas persistence QA', blocks: [source] };
+    let saved = await call(teacher, 'saveDeck', null, { deck: legacy, expectedVersion: 0 });
+    assert.deepEqual(saved.deck, { ...legacy, version: 1 });
+    const edited = applyTheme(source, 'forest');
+    const body = edited.slideCanvas.elements.find(e => e.id === 'legacy-body');
+    body.runs = formatRuns(body.runs, 7, 13, { color: '#ff0000', bold: true, size: 80 });
+    saved = await call(teacher, 'saveDeck', null, { deck: { ...legacy, blocks: [edited] }, expectedVersion: 1 });
+    assert.equal(saved.deck.version, 2);
+    const readback = (await call(teacher, 'decks')).decks.find(d => d.id === id);
+    assert.deepEqual(readback.blocks[0], edited);
+    assert.deepEqual(JSON.parse((await deckRef.get()).data().json).blocks[0], edited);
+    assert.deepEqual((await call(teacher, 'previousDeck', null, { id })).deck, { ...legacy, version: 1 });
+    assert.deepEqual(restoreOriginal(edited), source);
+    assert.equal((await call(other, 'decks')).decks.some(d => d.id === id), false);
+    await assert.rejects(call(other, 'saveDeck', null, { deck: saved.deck, expectedVersion: 0 }), /不屬於/);
+    await assert.rejects(call(teacher, 'saveDeck', null, { deck: saved.deck, expectedVersion: 1 }), /衝突/);
+
+    const converted = slideToQuestion(edited, parityBlock(newBlock('choice', 'question-copy')));
+    saved = await call(teacher, 'saveDeck', null, { deck: { ...legacy, blocks: [edited, converted] }, expectedVersion: 2 });
+    assert.equal(saved.deck.version, 3);
+    let hiddenRoom = await call(teacher, 'create', null, { deck: saved.deck });
+    assert.equal(hiddenRoom.count, 1);
+    await db.recursiveDelete(db.collection('liveRoomsV2').doc(hiddenRoom.code));
+    converted.hidden = false; converted.conversionPending = false; converted.options = ['Monday', 'Tuesday', 'Friday']; converted.answer = [0];
+    room = await call(teacher, 'create', null, { deck: { ...legacy, blocks: [edited, converted] } });
+    await call('canvas-student', 'join', room.code, { studentId: '50101' });
+    const first = await call('canvas-student', 'snapshot', room.code);
+    assert.equal(first.block.slideCanvas.original, undefined);
+    assert.equal(first.block.notes, undefined);
+    assert.equal(JSON.stringify(first.block).includes('PRIVATE TEACHER NOTE'), false);
+    assert.deepEqual(first.block.slideCanvas.elements, edited.slideCanvas.elements);
+    assert.equal(room.block.slideCanvas.original.text, source.text);
+    room = await call(teacher, 'control', room.code, { action: 'move', index: 1, revision: room.revision });
+    room = await call(teacher, 'control', room.code, { action: 'open', revision: room.revision });
+    const question = await call('canvas-student', 'snapshot', room.code);
+    assert.equal(question.block.answer, undefined);
+    assert.equal(question.block.questionCanvas.original, undefined);
+    assert.equal(question.block.notes, undefined);
+    assert.deepEqual(question.block.questionCanvas.elements, edited.slideCanvas.elements);
+    const response = await call('canvas-student', 'submit', room.code, { attemptId: crypto.randomUUID(), blockId: converted.id, revision: room.revision, answer: [0] });
+    assert.equal(response.feedback.outcome, 'full');
+    assert.equal(response.reward.eligible, true);
+  } finally {
+    if (room) await db.recursiveDelete(db.collection('liveRoomsV2').doc(room.code));
+    await db.recursiveDelete(deckRef);
+    await db.collection('liveMediaV2').doc(assetId).delete();
+    await db.terminate(); await deleteApp(app);
+  }
+});

@@ -94,7 +94,7 @@ test("no browser identity can list, delete, or read another student's Results", 
 test("all Function-owned Results records are denied to every browser client", async () => {
   const student = env.authenticatedContext("anon-alice", { firebase: { sign_in_provider: "anonymous" } }).firestore();
   const forged = env.authenticatedContext("forged-browser", { teacher: true, firebase: { sign_in_provider: "custom" } }).firestore();
-  for (const path of ["teacherLoginAttempts/global", "teacherResultSessions/session-1", "teacherLessonConfigs/current", "exportEvents/export-1"]) {
+  for (const path of ["teacherLoginAttempts/global", "teacherResultSessions/session-1", "teacherLessonConfigs/current", "exportEvents/export-1", "liveRoomsV2/123456", "liveRoomsV2/123456/responses/a", "liveRoomsV2/123456/rewards/a", "liveRoomsV2/123456/vowelProgress/a", "liveDecksV2/a", "liveAudioAttemptsV2/a", "liveAudioQuotaV2/a", "liveMediaV2/a", "liveMediaUploadsV2/a", "liveVideoJobsV2/a", "liveImageSearchCacheV2/a", "liveImageHitsV2/a", "liveServiceLimitsV2/a"]) {
     const record = { scope: "test", attemptCount: 1 };
     await assertFails(setDoc(doc(student, path), record));
     await assertFails(getDoc(doc(student, path)));

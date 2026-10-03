@@ -1,0 +1,462 @@
+.lh-reward {
+  margin: 18px auto;
+  padding: clamp(16px, 3vw, 30px);
+  max-width: 820px;
+  border: 3px solid #edc64a;
+  border-radius: 26px;
+  background: #fff9df;
+  color: #24334b;
+  box-shadow: 0 8px 0 #ead6a5;
+}
+.lh-reward-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.lh-reward h2 {
+  margin: 8px 0;
+}
+.lh-reward-heading small {
+  letter-spacing: 0.09em;
+  font-weight: bold;
+}
+.lh-reward-score {
+  background: #26334a;
+  color: #c4f7c6;
+  padding: 12px 18px;
+  border-radius: 15px;
+  white-space: nowrap;
+}
+.lh-reward-score strong {
+  font-size: 30px;
+  display: block;
+  text-align: center;
+}
+.lh-reward button,
+.lh-reward select {
+  min-height: 48px;
+  touch-action: manipulation;
+}
+.lh-reward-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+.lh-reward-actions button {
+  flex: 1;
+  min-width: 90px;
+  background: #4b3577;
+  color: white;
+  padding: 12px;
+}
+.lh-reward-actions small {
+  display: block;
+}
+.lh-reward-actions [aria-pressed="true"] {
+  outline: 4px solid #ed945b;
+  background: #253d54;
+}
+.lh-reward input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+.lh-reward-court {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(#93dfe9, #fce7ba);
+  border-radius: 20px;
+  margin: 12px 0;
+}
+.lh-reward-court svg {
+  display: block;
+  width: 100%;
+}
+.lh-reward-animal {
+  position: absolute;
+  width: 20%;
+  aspect-ratio: 3/4;
+  left: 62%;
+  bottom: 13%;
+  background-size: 400% 200%;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 4px 4px #2346);
+}
+.lh-reward-pegs {
+  display: block;
+  max-height: 480px;
+  width: 100%;
+  margin: 12px auto;
+}
+.lh-reward-slots {
+  display: flex;
+  justify-content: space-around;
+  background: white;
+  border: 8px solid #37234c;
+  border-radius: 25px;
+  font-size: clamp(42px, 10vw, 82px);
+  margin: 24px 0;
+  padding: 20px;
+  overflow: hidden;
+}
+.lh-reward-slots span {
+  display: inline-block;
+}
+.lh-reward-slots .rolling {
+  animation: lh-reel 0.13s linear infinite;
+}
+.lh-reward-result {
+  font-size: 26px;
+  font-weight: bold;
+  color: #743f12;
+}
+.lh-reward [role="alert"] {
+  background: #ffe4e2;
+  padding: 12px;
+  border-radius: 12px;
+}
+@keyframes lh-reel {
+  0% {
+    transform: translateY(-15%);
+    filter: blur(2px);
+  }
+  100% {
+    transform: translateY(15%);
+    filter: blur(2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lh-reward-slots .rolling {
+    animation: none;
+  }
+}
+@media (max-width: 480px) {
+  .lh-reward-heading {
+    align-items: flex-start;
+  }
+  .lh-reward-score {
+    padding: 8px;
+  }
+  .lh-reward-actions {
+    gap: 8px;
+  }
+  .lh-reward-actions button {
+    min-width: 70px;
+  }
+}
+/* Single-player adaptations of the source projects' visual stages. */
+.lh-reward[data-game="basketball"] {
+  background: radial-gradient(circle at 10% 10%, #622b59, #22102e 70%);
+  border-color: #ffae57;
+  color: #fff7e8;
+  box-shadow: 0 9px 0 #150b24, 0 24px 48px #160d2940;
+}
+.lh-reward[data-game="basketball"] .lh-note { color: #ebd5e9; }
+.lh-reward[data-game="basketball"] label { color: #fff7e8; }
+.lh-reward[data-game="basketball"] .lh-reward-result { color: #ffe96b; }
+.lh-reward[data-game="basketball"] .lh-reward-actions button {
+  background: #321b45;
+  border: 2px solid #ffc659;
+  box-shadow: 0 5px 0 #170e28;
+  font-size: 19px;
+}
+.lh-reward[data-game="basketball"] .lh-reward-actions button:hover:not(:disabled) {
+  transform: translateY(-3px) rotate(-2deg);
+  background: #603567;
+}
+.lh-reward-court {
+  aspect-ratio: 16 / 9;
+  border: 3px solid #8353b1;
+  background: #3d254c;
+  box-shadow: 0 8px 0 #140c24;
+}
+.lh-reward-court-bg,
+.lh-reward-court svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lh-reward-court-bg {
+  background: linear-gradient(170deg, #573d85 50%, #ae6968 50%);
+  background-image: url('/live-games/basketball/court.webp'), linear-gradient(170deg, #573d85 50%, #ae6968 50%);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.lh-reward-court svg { z-index: 2; pointer-events: none; }
+.lh-reward-court-pill {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  z-index: 3;
+  border: 2px solid #ffd961;
+  border-radius: 8px;
+  background: #28183be8;
+  color: #fff7d2;
+  padding: 4px 9px;
+  font-size: clamp(9px, 1.5vw, 15px);
+  font-weight: 900;
+  letter-spacing: .04em;
+  transform: rotate(-3deg);
+}
+.lh-reward-animal {
+  width: 15%;
+  left: 48%;
+  bottom: 15%;
+  z-index: 1;
+  transform: translateX(-50%);
+}
+.lh-reward-animal.is-shooting { animation: lh-court-shoot 2.5s both; }
+.lh-reward-animal.is-celebrating { animation: lh-court-bounce .6s infinite alternate ease-out; }
+.lh-reward-net-hit .lh-reward-net { animation: lh-court-net .55s ease-out; }
+.lh-reward-court-result {
+  position: absolute;
+  z-index: 4;
+  top: 31%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  padding: 6px 16px;
+  border-radius: 10px;
+  background: #281137df;
+  color: #f7f057;
+  text-shadow: 2px 2px #241235;
+  font-size: clamp(18px, 3vw, 30px);
+  font-weight: 900;
+  white-space: nowrap;
+  animation: lh-reward-pop .55s ease-out;
+}
+.lh-reward-court-result.missed { color: #fff4ee; }
+@keyframes lh-court-shoot {
+  0% { transform: translateX(-50%) translateY(0) scaleY(1); }
+  12% { transform: translateX(-50%) translateY(8px) scaleY(.94); }
+  23% { transform: translateX(-50%) translateY(-22px) rotate(-5deg); }
+  43% { transform: translateX(-50%) translateY(-7px); }
+  65%, 100% { transform: translateX(-50%) translateY(0); }
+}
+@keyframes lh-court-bounce {
+  from { transform: translateX(-50%) translateY(0) rotate(-3deg); }
+  to { transform: translateX(-50%) translateY(-14px) rotate(3deg); }
+}
+@keyframes lh-court-net {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(7px); }
+  60% { transform: translateY(-2px); }
+}
+.lh-reward[data-game="plinkoh"] {
+  background: repeating-conic-gradient(from 15deg at 50% 38%, #ffdc05 0 18deg, #f6d000 18deg 36deg);
+  border-color: #783fbe;
+  color: #381356;
+  box-shadow: 0 9px 0 #34145b;
+}
+.lh-reward[data-game="plinkoh"] .lh-reward-actions button,
+.lh-lab .lh-reward[data-game="plinkoh"] > .lh-primary {
+  background: linear-gradient(#83c6ff, #487bec 60%, #355dd8);
+  border: 3px solid #3f176d;
+  box-shadow: 0 5px 0 #31104e;
+  color: white;
+  font-weight: 900;
+}
+.lh-reward[data-game="plinkoh"] .lh-reward-actions [aria-pressed="true"] {
+  background: linear-gradient(#e5b8ff, #af5cff);
+  box-shadow: 0 0 20px #ffcbfd, 0 5px #2e0e62;
+}
+.lh-reward-plink-stage {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: 13px 10px 20px;
+  background: radial-gradient(circle at 15% 50%, #ffe865 0 2%, transparent 2.5%), radial-gradient(circle at 90% 20%, #ffe865 0 2%, transparent 2.5%);
+}
+.lh-reward-plink-logo {
+  color: #cb24ed;
+  font-size: clamp(32px, 5vw, 55px);
+  font-weight: 1000;
+  text-shadow: 3px 4px #392070;
+  -webkit-text-stroke: 1px #421061;
+  transform: rotate(-7deg);
+}
+.lh-reward-plink-board {
+  width: min(100%, 570px);
+  position: relative;
+  padding: 5px;
+  background: #7840dc;
+  border: 13px solid #7545d8;
+  border-left-color: #452291;
+  border-right-color: #452291;
+  border-radius: 17px;
+  box-shadow: 6px 7px 0 #27124c, inset 0 0 0 4px #b089ff;
+}
+.lh-reward-plink-board .lh-reward-pegs {
+  max-height: none;
+  width: 100%;
+  margin: 0;
+  border-radius: 4px;
+}
+.lh-reward-plink-launch {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 3px;
+  height: 10.3%;
+  min-height: 48px;
+}
+.lh-reward[data-game="plinkoh"] .lh-reward-plink-launch button {
+  min-width: 0;
+  min-height: 48px;
+  padding: 0;
+  border: 2px solid #461b89;
+  border-radius: 3px 3px 11px 11px;
+  background: linear-gradient(#be95ff, #7244cf);
+  box-shadow: 0 4px 0 #2e0e62;
+  color: #fff;
+  font-size: clamp(21px, 4vw, 36px);
+  font-weight: 900;
+  text-shadow: 1px 2px #45237b;
+}
+.lh-reward[data-game="plinkoh"] .lh-reward-plink-launch button:hover:not(:disabled),
+.lh-reward[data-game="plinkoh"] .lh-reward-plink-launch button[aria-pressed="true"] {
+  background: linear-gradient(#f4cdff, #ad5cf7);
+  box-shadow: 0 0 15px #ffe6ff, 0 4px #2e0e62;
+}
+.lh-reward[data-game="plinkoh"] .lh-reward-plink-launch button:focus-visible {
+  outline: 4px solid #fff39b;
+  outline-offset: 2px;
+}
+.lh-reward[data-game="plinkoh"] .lh-reward-plink-launch button:disabled { opacity: .7; }
+.lh-reward-plink-live-score {
+  position: absolute;
+  right: 12px;
+  top: 12%;
+  z-index: 1;
+  padding: 4px 9px;
+  border-radius: 9px;
+  background: #2d1650d9;
+  color: #fff;
+  font-size: clamp(14px, 2.5vw, 20px);
+  font-weight: 900;
+  pointer-events: none;
+}
+.lh-reward-plink-legend {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: clamp(13px, 2.5vw, 17px);
+  font-weight: 800;
+}
+.lh-reward-slot-glow { animation: lh-reward-spark .4s alternate infinite; }
+@keyframes lh-reward-spark { from { opacity: .3; } to { opacity: .9; } }
+.lh-reward[data-game="slot"] {
+  background: linear-gradient(135deg, #fff1aa, #ffd448);
+  border-color: #f0a96c;
+  color: #46236d;
+}
+.lh-reward-slot-machine {
+  background: #facc15;
+  border: 12px solid #fdba74;
+  border-radius: 48px;
+  padding: clamp(16px, 4vw, 36px);
+  text-align: center;
+  box-shadow: 0 20px 50px #27204443;
+}
+.lh-reward-slot-machine h3 {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 48px);
+  color: #7e22ce;
+  font-weight: 900;
+}
+.lh-reward-slot-machine .lh-reward-slots {
+  border: 8px solid #1f2937;
+  border-radius: 32px;
+  background: white;
+  font-size: clamp(50px, 10vw, 92px);
+  perspective: 700px;
+  margin: 24px 0;
+}
+.lh-reward-slot-machine .lh-reward-slots span {
+  min-width: 1.15em;
+  will-change: transform, filter;
+}
+.lh-reward-slot-machine .lh-reward-slots .rolling { animation: lh-slot-roll .16s linear infinite; }
+.lh-reward-slot-machine .lh-reward-slots .stopped { animation: lh-slot-stop .38s ease-out; }
+.lh-lab .lh-reward-slot-machine .lh-reward-spin {
+  width: 100%;
+  border: 0;
+  border-radius: 24px;
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 9px 0 #b53535;
+  font-size: clamp(23px, 4vw, 36px);
+  font-weight: 900;
+  padding: 16px;
+}
+.lh-reward[data-game="slot"] .lh-reward-result { animation: lh-reward-pop .55s ease-out; }
+@keyframes lh-slot-roll {
+  0% { transform: translateY(-18%) scale(.82); filter: blur(3px); }
+  50% { transform: translateY(18%) scale(1.12); filter: blur(1px); }
+  100% { transform: translateY(-18%) scale(.82); filter: blur(3px); }
+}
+@keyframes lh-slot-stop {
+  0% { transform: scale(.7) rotate(-8deg); }
+  65% { transform: scale(1.24) rotate(4deg); }
+  100% { transform: scale(1); }
+}
+@keyframes lh-reward-pop {
+  0% { opacity: 0; transform: translateX(-50%) translateY(18px) scale(.55); }
+  70% { opacity: 1; transform: translateX(-50%) translateY(-8px) scale(1.18); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+.lh-reward[data-game="slot"] .lh-reward-result { animation-name: lh-slot-win; }
+@keyframes lh-slot-win {
+  0% { opacity: 0; transform: translateY(18px) scale(.55); }
+  70% { opacity: 1; transform: translateY(-8px) scale(1.18); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lh-reward-animal,
+  .lh-reward-net-hit .lh-reward-net,
+  .lh-reward-slot-glow,
+  .lh-reward-court-result,
+  .lh-reward-slot-machine .lh-reward-slots .rolling,
+  .lh-reward-slot-machine .lh-reward-slots .stopped,
+  .lh-reward[data-game="slot"] .lh-reward-result { animation: none !important; }
+}
+.lh-reward-reduced .lh-reward-animal,
+.lh-reward-reduced .lh-reward-net-hit .lh-reward-net,
+.lh-reward-reduced .lh-reward-slot-glow,
+.lh-reward-reduced .lh-reward-court-result,
+.lh-reward-reduced .lh-reward-slots span,
+.lh-reward-reduced .lh-reward-result { animation: none !important; }
+.lh-reward > .lh-row {
+  gap: 18px;
+  margin: 15px 0;
+}
+.lh-reward > .lh-row label {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 700;
+}
+.lh-reward > .lh-row input[type="checkbox"] {
+  margin: 0;
+  accent-color: #7956d5;
+}
+.lh-lab .lh-reward-actions button:disabled {
+  opacity: .76;
+  color: #fff7e8;
+}
+
+.lh-reward-scoreboard { display:flex; align-items:stretch; justify-content:flex-end; gap:14px; margin-left:auto; }
+.lh-reward[data-game="slot"] .lh-reward-heading { align-items:flex-start; flex-wrap:wrap; }
+.lh-reward[data-game="slot"] .lh-reward-score { background:#5128a2; color:#fff071; border:3px solid #ffed72; box-shadow:0 5px 0 #361666; }
+.lh-slot-award { padding:12px 18px; border:3px solid #e44f82; border-radius:16px; background:#fff3fb; color:#9c0958; text-align:center; }
+.lh-slot-award small,.lh-reward-score span { display:block; font-weight:800; font-size:16px; }
+.lh-slot-award strong,.lh-reward[data-game="slot"] .lh-reward-score strong { display:block; font-size:clamp(38px,6vw,62px); line-height:1.2; font-weight:900; animation:lh-score-sway 1.7s ease-in-out infinite; }
+@keyframes lh-score-sway { 0%,100% { transform:translateX(-2px) rotate(-2deg); } 50% { transform:translateX(2px) rotate(2deg); } }
+.lh-reward.lh-reward-reduced .lh-reward-scoreboard strong { animation:none!important; }
+@media(prefers-reduced-motion:reduce){.lh-reward-scoreboard strong {animation:none!important;}}
+.lh-reward input[type="range"] { max-width:140px; accent-color:#7327cb; }
+@media(max-width:600px){.lh-reward-scoreboard{gap:8px;} .lh-slot-award,.lh-reward[data-game="slot"] .lh-reward-score{padding:8px 12px;} }

@@ -1,0 +1,70 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {createTeacherScope} from '../functions/src/live-teacher-scope.mjs';
+import {createLiveService} from '../functions/src/live-service.mjs';
+import {createMediaService} from '../functions/src/live-media-service.mjs';
+import {newBlock} from '../src/live/domain.mjs';
+if(!/^(127\.0\.0\.1|localhost):\d+$/.test(process.env.FIRESTORE_EMULATOR_HOST||''))throw Error('Local emulator required');
+const require=createRequire(new URL('../functions/index.cjs',import.meta.url));
+const {initializeApp}=require('firebase-admin/app'),{getFirestore}=require('firebase-admin/firestore');
+const db=getFirestore(initializeApp({projectId:'demo-lesson-hub'},'teacher-scope-test'));
+const auth=uid=>({uid,token:{firebase:{sign_in_provider:'anonymous'}}});
+const verified=async r=>{if(r.data.sessionToken!==`verified-${r.auth.uid}`)throw Error('teacher denied');return{anonymousUid:r.auth.uid};};
+const scope=createTeacherScope({db,requireTeacher:verified});
+const call=async(uid,action,code=null,payload={},token=`verified-${uid}`)=>{
+  const s=await scope({auth:auth(uid),data:{action,code,payload,sessionToken:token}},'live');
+  return createLiveService({db,requireTeacher:s.requireTeacher})(s.request);
+};
+const bucket={file:path=>({getSignedUrl:async()=>['https://private.invalid/'+path]})};
+const media=async(uid,action,extra={},token=`verified-${uid}`)=>{
+  const s=await scope({auth:auth(uid),data:{action,...extra,sessionToken:token}},'media');
+  return createMediaService({db,bucket,requireTeacher:s.requireTeacher,videoEnabled:true})(s.request);
+};
+test('stable workspace recovers original course, versions, rooms and private images across browsers',async()=>{
+  const owner='legacy-owner', id='legacy-course',assetId='cloud-11111111-1111-4111-8111-111111111111';
+  await db.collection('liveTeacherWorkspacesV2').doc('primary').set({schemaVersion:1,enabled:true,ownerUid:owner});
+  const b=newBlock('choice','question');b.media=[{id:assetId,name:'Private picture',kind:'image'}];
+  await db.collection('liveMediaV2').doc(assetId).set({id:assetId,ownerUid:owner,status:'ready',kind:'image',paths:{playback:`liveMediaV2/${owner}/${assetId}/playback`},variants:{original:{sha256:'a'.repeat(64)}}});
+  const deck={id,title:'Recovery fixture',version:218,blocks:[b]};
+  const ref=db.collection('liveDecksV2').doc(`${owner}_${id}`);
+  await ref.set({ownerUid:owner,json:JSON.stringify(deck),updatedAt:1});
+  await ref.collection('versions').doc('217').set({json:JSON.stringify({...deck,version:217})});
+  const original=(await ref.get()).data();
+  for(const uid of ['chrome-browser','safari-browser']){
+    const result=await call(uid,'decks');assert.equal(result.decks.find(d=>d.id===id).version,218);
+    assert.equal((await media(uid,'read',{id:assetId})).status,'ready');
+    assert.equal((await call(uid,'previousDeck',null,{id})).deck.version,217);
+  }
+  assert.deepEqual((await ref.get()).data(),original);
+  const room=await call('chrome-browser','create',null,{deck});
+  assert.equal((await call('safari-browser','snapshot',room.code)).teacher,true);
+  await call('safari-browser','control',room.code,{action:'open',revision:room.revision});
+  await assert.rejects(call('student','decks',null,{},null),/denied/);
+  await assert.rejects(call('student','decks',null,{},'verified-chrome-browser'),/denied/);
+  await assert.rejects(media('student','read',{id:assetId},null),/無權/);
+  await call('student','join',room.code,{studentId:'55555'},null);
+  assert.equal((await media('student','read',{id:assetId,code:room.code},null)).status,'ready');
+  const edited={...deck,title:'Saved from Safari'};
+  assert.equal((await call('safari-browser','saveDeck',null,{deck:edited,expectedVersion:218})).deck.version,219);
+  assert.equal(JSON.parse((await ref.collection('versions').doc('218').get()).data().json).title,deck.title);
+  assert.equal((await call('chrome-browser','snapshot',room.code)).title,deck.title);
+  assert.equal((await db.collection('liveDecksV2').doc(`safari-browser_${id}`).get()).exists,false);
+});
+test('new media retains real uploader storage grant but stable teacher ownership',async()=>{
+  const variant={mime:'image/webp',bytes:42,sha256:'b'.repeat(64)};
+  const created=await media('safari-browser','begin',{input:{name:'new.webp',variants:{original:variant,playback:variant}}});
+  assert.ok(created.paths.original.startsWith('liveMediaV2/safari-browser/'));
+  assert.equal((await db.collection('liveMediaUploadsV2').doc(created.id).get()).data().ownerUid,'safari-browser');
+  const record=(await db.collection('liveMediaV2').doc(created.id).get()).data();
+  assert.equal(record.ownerUid,'safari-browser');
+  assert.equal(record.workspaceOwnerUid,'legacy-owner');
+  const deck={id:'new-cross-browser-image',title:'New image',blocks:[{...newBlock('choice','new-image-q'),media:[{id:created.id,name:'new.webp',kind:'image'}]}]};
+  await db.collection('liveMediaV2').doc(created.id).update({status:'ready'});
+  assert.equal((await call('chrome-browser','saveDeck',null,{deck,expectedVersion:0})).deck.version,1);
+  const video=await media('safari-browser','begin',{input:{name:'new.mp4',variants:{original:{...variant,mime:'video/mp4'}}}});
+  const videoRecord=(await db.collection('liveMediaV2').doc(video.id).get()).data();
+  assert.equal(videoRecord.paths.original,`liveMediaV2/${videoRecord.ownerUid}/${video.id}/original`);
+  assert.equal(videoRecord.workspaceOwnerUid,'legacy-owner');
+  assert.equal((await media('chrome-browser','status',{id:created.id})).asset.status,'ready');
+});

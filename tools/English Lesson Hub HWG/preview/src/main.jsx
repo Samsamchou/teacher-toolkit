@@ -1,8 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import QRCode from "qrcode";
-import "@fontsource/comic-relief/400.css";
-import "@fontsource/comic-relief/700.css";
+import "./comic-relief.css";
 import "./styles.css";
 import "./media-presentation.css";
 import {
@@ -2307,4 +2306,8 @@ function ResultsDashboard({ localResults, lessons, onBack, onClearLocal }) {
     </main>
   );
 }
-createRoot(document.getElementById("root")).render(<App />);
+if (window.location.pathname === '/lab' || window.location.pathname.startsWith('/lab/')) {
+  import('./live/LiveApp.jsx').then(({ default: LiveApp }) => createRoot(document.getElementById('root')).render(<LiveApp />));
+} else {
+  createRoot(document.getElementById("root")).render(<App />);
+}

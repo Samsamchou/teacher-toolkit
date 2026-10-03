@@ -32,8 +32,58 @@ const {
 
 initializeApp();
 
+// v2 is opt-in. Default deployment leaves all new endpoints disabled.
+const liveAiSecret = defineSecret('LESSON_LIVE_GEMINI_KEY');
+const pixabaySecret=defineSecret('LESSON_LIVE_PIXABAY_KEY');
+exports.liveImageSearchV2=onCall({region:functionsRegion,enforceAppCheck:true,timeoutSeconds:90,memory:'512MiB',secrets:[pixabaySecret]},async request=>{
+  if(process.env.LIVE_V2_ENABLED!=='true'||process.env.LIVE_IMAGE_SEARCH_ENABLED!=='true')throw new HttpsError('failed-precondition','Pixabay 尚未部署啟用。');
+  try{const {createCloudImageService}=await import('./src/live-image-service.mjs');const scope=await liveTeacherScope(request,'image');return await createCloudImageService({db:firestore(),key:pixabaySecret.value(),enabled:true,requireTeacher:scope.requireTeacher})(scope.request);}catch(e){if(e instanceof HttpsError)throw e;throw new HttpsError('failed-precondition',e.code?'圖片服務暫時無法使用。':e.message);}
+});
+exports.liveMediaV2=onCall({region:functionsRegion,enforceAppCheck:true,timeoutSeconds:300,memory:'512MiB'},async request=>{
+  if(process.env.LIVE_V2_ENABLED!=='true'||process.env.LIVE_MEDIA_ENABLED!=='true')throw new HttpsError('failed-precondition','雲端素材尚未啟用。');
+  try{const {createMediaService}=await import('./src/live-media-service.mjs');const scope=await liveTeacherScope(request,'media');return await createMediaService({db:firestore(),bucket:getStorage().bucket(),requireTeacher:scope.requireTeacher,videoEnabled:process.env.LIVE_VIDEO_ENABLED==='true'})(scope.request);}catch(e){if(e instanceof HttpsError)throw e;throw new HttpsError('failed-precondition','素材處理未完成：'+(e.code?'請檢查授權與檔案狀態。':e.message));}
+});
+const {onDocumentWritten}=require('firebase-functions/v2/firestore');
+exports.liveVideoDispatchV2=onDocumentWritten({region:functionsRegion,document:'liveVideoJobsV2/{id}',retry:false,timeoutSeconds:540},async event=>{
+  if(process.env.LIVE_VIDEO_ENABLED!=='true'||event.data?.after.data()?.status!=='queued')return;
+  const {dispatchVideoJob,failQueuedVideoDispatch}=await import('./src/live-video-dispatch.mjs');const {GoogleAuth}=require('google-auth-library');
+  try{return await dispatchVideoJob({id:event.params.id,workerUrl:process.env.LIVE_WORKER_URL,enabled:true,getClient:audience=>new GoogleAuth().getIdTokenClient(audience)});}catch{
+    return {status:await failQueuedVideoDispatch({db:firestore(),id:event.params.id})?'failed':'in-progress'};
+  }
+});
+const {onSchedule}=require('firebase-functions/v2/scheduler');
+exports.liveRetentionV2=onSchedule({region:functionsRegion,schedule:'every day 03:10',timeZone:'Asia/Taipei',timeoutSeconds:300},async()=>{
+  if(process.env.LIVE_RETENTION_ENABLED!=='true')return;
+  const {cleanupLiveRetention}=await import('./src/live-retention.mjs');
+  return cleanupLiveRetention({db:firestore(),bucket:getStorage().bucket(),enabled:true});
+});
+exports.liveV2 = onCall({region:functionsRegion,enforceAppCheck:true,timeoutSeconds:120}, async request => {
+  if(process.env.LIVE_V2_ENABLED !== 'true') throw new HttpsError('failed-precondition','雲端 v2 尚未啟用。');
+  try {
+    const {createLiveService}=await import('./src/live-service.mjs');
+    const scope=await liveTeacherScope(request,'live');
+    return await createLiveService({db:firestore(),requireTeacher:scope.requireTeacher})(scope.request);
+  } catch(error) {if(error instanceof HttpsError)throw error;throw new HttpsError('failed-precondition',error.message);}
+});
+exports.liveAudioV2 = onCall({region:functionsRegion,enforceAppCheck:true,timeoutSeconds:180,memory:'512MiB',secrets:[liveAiSecret]}, async request => {
+  if(process.env.LIVE_V2_ENABLED!=='true'||process.env.LIVE_AI_ENABLED!=='true')throw new HttpsError('failed-precondition','錄音 AI 尚未經授權啟用。');
+  const uid=requireAnonymousCaller(request);
+  try {
+    const {createAudioWorkflow,geminiScorer}=await import('./src/live-audio.mjs');
+    const {audioRepository,audioStorage}=await import('./src/live-audio-repository.mjs');
+    const run=createAudioWorkflow({repository:audioRepository(firestore()),storage:audioStorage(getStorage().bucket()),score:geminiScorer({key:liveAiSecret.value(),model:process.env.LIVE_AI_MODEL,enabled:true})});
+    const result=await run({...request.data,uid});
+    return {status:result.status,result:result.result,best:result.best,passed:result.passed,attemptId:result.attemptId,expiresAt:result.expiresAt};
+  } catch(error){throw new HttpsError('failed-precondition',error.message);}
+});
+
 function firestore() {
   return getFirestore();
+}
+
+async function liveTeacherScope(request,service) {
+  const {createTeacherScope}=await import('./src/live-teacher-scope.mjs');
+  return createTeacherScope({db:firestore(),requireTeacher:requireTeacherResultsSession})(request,service);
 }
 
 

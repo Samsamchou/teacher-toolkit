@@ -1,0 +1,9 @@
+**
+!worker/
+!worker/package.json
+!worker/package-lock.json
+!worker/core.mjs
+!worker/server.mjs
+!worker/auth.mjs
+!scripts/
+!scripts/video-transcode.mjs

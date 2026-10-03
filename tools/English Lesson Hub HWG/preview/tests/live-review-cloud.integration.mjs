@@ -1,0 +1,42 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {createLiveService} from '../functions/src/live-service.mjs';
+import {newBlock} from '../src/live/domain.mjs';
+import {parityBlock} from '../src/live/parity.mjs';
+if(!/^(127\.0\.0\.1|localhost):\d+$/.test(process.env.FIRESTORE_EMULATOR_HOST||''))throw new Error('Local emulator required; production refused');
+const require=createRequire(new URL('../functions/index.cjs',import.meta.url));
+const {initializeApp,deleteApp}=require('firebase-admin/app');
+const {getFirestore}=require('firebase-admin/firestore');
+test('teacher-only historical report survives join expiry, retains original content, and ink stays per question',async()=>{
+  const app=initializeApp({projectId:'demo-lesson-hub'},'review-'+Date.now()),db=getFirestore(app);
+  const teacher='review-teacher-'+crypto.randomUUID(),other='review-other-'+crypto.randomUUID(),student='review-student-'+crypto.randomUUID();
+  let time=Date.now();
+  const service=createLiveService({db,now:()=>time++,requireTeacher:async r=>{if(![teacher,other].includes(r.auth.uid))throw new Error('teacher only');}});
+  const call=(uid,action,code,payload={})=>service({auth:{uid,token:{firebase:{sign_in_provider:'anonymous'}}},data:{action,code,payload}});
+  try{
+    const block=parityBlock(newBlock('multiselect')),second=parityBlock(newBlock('order'));
+    const deck={id:crypto.randomUUID(),title:'Synthetic report QA',blocks:[block,second]};
+    let room=await call(teacher,'create',null,{deck});const code=room.code;
+    await call(student,'join',code,{studentId:'00123'});
+    room=await call(teacher,'control',code,{action:'open',revision:room.revision});
+    const opened=room.openedAt;
+    const lines=[{anchor:'option-2',color:'#123456',width:6,points:[[100,200],[300,400]]}];
+    room=await call(teacher,'control',code,{action:'annotate',revision:room.revision,blockId:block.id,lines});
+    const view=await call(student,'snapshot',code);assert.deepEqual(view.annotations,lines);assert.equal(view.block.answer,undefined);
+    await assert.rejects(call(student,'control',code,{action:'annotate',revision:room.revision,blockId:block.id,lines:[]}),/teacher only/);
+    await call(student,'submit',code,{attemptId:crypto.randomUUID(),blockId:block.id,revision:room.revision,answer:[0,2]});
+    room=await call(teacher,'control',code,{action:'move',index:1,revision:room.revision});
+    assert.deepEqual(room.annotations,[]);
+    room=await call(teacher,'control',code,{action:'move',index:0,revision:room.revision});
+    assert.deepEqual(room.annotations,lines);assert.equal(room.openedAt,opened);
+    room=await call(teacher,'control',code,{action:'end',revision:room.revision});
+    const before=await call(teacher,'report',code);assert.equal(before.report[0].details[0].grade.score,0);
+    time+=13*3600000;
+    await assert.rejects(call(student,'snapshot',code),/到期/);
+    const after=await call(teacher,'report',code);assert.deepEqual(after.report,before.report);assert.deepEqual(after.reportBlocks,before.reportBlocks);assert.equal(after.reportBlocks[0].title,block.title);
+    assert.ok((await call(teacher,'reports')).reports.some(r=>r.code===code));assert.equal((await call(other,'reports')).reports.length,0);
+    await assert.rejects(call(other,'report',code),/本堂課教師/);await assert.rejects(call(student,'report',code),/teacher only/);
+    time=before.meta.retentionAt+1;await assert.rejects(call(teacher,'report',code),/保存期限/);
+  }finally{await deleteApp(app);}
+});

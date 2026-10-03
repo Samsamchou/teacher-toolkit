@@ -1,0 +1,15 @@
+{
+  "generator": "Codex built-in imagegen",
+  "model": "not exposed by tool",
+  "endpoint": "image_gen.imagegen",
+  "prompt": "Create one exquisite polished 3D clay-style illustration for a Taiwanese elementary school classroom web app: a wide classroom viewed from the back, 12 cheerful elementary students seated at group desks, their tablets lying flat unused on the desks, every student visibly looking toward the large television at the FRONT of the classroom. A warm friendly female teacher stands beside the TV, the TV shows a colorful educational cartoon landscape. Clear composition that instantly communicates stop looking at your tablet and watch the front screen together. Warm pastel yellow, aqua, lavender, deep blue accents, soft premium lighting, rounded forms, charming detailed classroom, clean readable silhouettes. No text, no letters, no logos, no watermarks. Landscape 3:2 composition with safe margins. The image is for an Eyes Up Front student focus overlay.",
+  "size": "1536x1024",
+  "quality": "tool default",
+  "timestamp": "2026-09-27T04:48:21.630Z",
+  "outputFilename": "eyes-up-front.png",
+  "sha256": "5494ff48f66184b07e49451862072caceeffc036198f3ba0b494414a15c8f3e4",
+  "requestId": null,
+  "usage": null,
+  "qa": "Viewed: students face front, tablets on desks, no embedded text.",
+  "toolOutputId": "exec-c60a6238-706c-4570-9343-a15e0f72c748"
+}

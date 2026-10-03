@@ -1,0 +1,66 @@
+/* Space Academy / 太空學院. Presentation only; review.css owns grading colors. */
+.lh-space {
+  position:relative; isolation:isolate; color:#edf3ff;
+  background:radial-gradient(ellipse at 85% 8%,#422479 0,transparent 42%),radial-gradient(ellipse at 0 50%,#123760 0,transparent 45%),#080f29;
+  padding-bottom:60px;
+}
+.lh-space-scene { position:absolute; inset:0; overflow:hidden; z-index:-1; pointer-events:none; }
+.lh-space-stars { position:absolute; inset:0; opacity:.65; background-image:radial-gradient(circle,#fff 1px,transparent 1.8px),radial-gradient(circle,#83dfff 1px,transparent 2px); background-size:117px 143px,211px 197px; background-position:12px 25px,65px 90px; }
+.lh-space-art { position:absolute; inset:0; z-index:-1; background:linear-gradient(to bottom,#080f290a 0,#080f291a 65%,#080f29 1100px),url('/live-space/space-academy-v1.png') top center / 100% auto no-repeat; }
+.lh-space > header { border-color:#849edb45; min-height:76px; }
+.lh-space > header a { color:#eef6ff; text-decoration:none; }
+.lh-space > header span { color:#a8e6ff; }
+.lh-space a { color:#bde9ff; }
+.lh-space .lh-space-banner { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:32px 0; min-height:170px; }
+.lh-space-kicker { color:#ffda8b; letter-spacing:.18em; font-size:12px; font-weight:800; }
+.lh-space-banner h1 { color:#fff; text-shadow:0 3px 0 #172854,0 0 30px #9578ed66; font-size:clamp(25px,3vw,40px); }
+.lh-space-banner p { color:#c8d6ee; margin:8px 0; line-height:1.7; }
+.lh-space-banner > button { background:#18294d; color:#e2f4ff; border:1px solid #93b9f3; flex-shrink:0; }
+.lh-space .lh-eyebrow { color:#cdbfff; }
+.lh-space > .lh-note { color:#c4d1ea; }
+.lh-space .lh-classbar { padding:14px 18px; border:1px solid #728cd45c; background:#152344; border-radius:16px; }
+.lh-space :is(.lh-canvas,.lh-control,.lh-dashboard,.lh-join,.lh-report,.lh-form,.lh-pages) {
+  color:#17324d; border:1px solid #c1d5f3; border-radius:22px;
+  background:#f7faff; box-shadow:inset 0 2px 0 #fff,0 6px 0 #263d6c,0 18px 34px #03092166;
+}
+.lh-space :is(.lh-canvas,.lh-control,.lh-dashboard,.lh-join,.lh-report,.lh-form,.lh-pages) a { color:#344fb0; }
+.lh-space :is(.lh-canvas,.lh-control,.lh-dashboard,.lh-join,.lh-report,.lh-form,.lh-pages) .lh-eyebrow { color:#60419c; }
+.lh-space .lh-canvas { border-top:5px solid #91c9f2; }
+.lh-space .lh-control { border-top:5px solid #b394ed; }
+.lh-space .lh-dashboard { border-top:5px solid #9bbbf5; }
+.lh-space .lh-title { padding:22px 0; }
+.lh-space .lh-title .lh-note { color:#c4d1ea; }
+.lh-space .lh-library > button { color:#17324d; background:linear-gradient(140deg,#fff,#e6eeff); border:1px solid #bdd3fa; border-top:5px solid #9d8cfa; border-radius:22px; box-shadow:inset 0 2px 0 white,0 6px 0 #2c4067,0 16px 28px #03092155; }
+.lh-space .lh-library > button:nth-child(3n+2) { border-top-color:#6dbde8; }
+.lh-space .lh-library > button:nth-child(3n+3) { border-top-color:#caa0ef; }
+.lh-space button.lh-primary { background:linear-gradient(135deg,#4744bb,#752eac); border-color:#a3a5ff; box-shadow:inset 0 1px 0 #ffffff55,0 4px 0 #252366,0 8px 18px #4435b333; }
+.lh-space button:hover:not(:disabled) { outline:2px solid #97c5fc; outline-offset:2px; }
+.lh-space :is(button,input,select,textarea):focus-visible { outline:3px solid #b97700; outline-offset:3px; }
+.lh-space .lh-toolbar { background:#e6edff; color:#17324d; border:1px solid #b2c6ec; box-shadow:0 4px 0 #243a64; }
+.lh-space .lh-form { background:#edf2ff; }
+.lh-space .lh-form-intro { background:linear-gradient(120deg,#202d64,#55347d); border-radius:20px 20px 0 0; border-bottom:3px solid #9db6ff; }
+.lh-space .lh-pages { background:#e6edfb; }
+.lh-space .lh-pages > button.active { background:#dce6ff; border-left-color:#5742aa; outline-color:#879ae0; }
+.lh-space .lh-question-settings { background:#e6edfb; border-radius:0 0 20px 0; }
+.lh-space .lh-answer { color:#17324d; background:linear-gradient(135deg,#eff4ff,#eee8fa); border-color:#9baed8; box-shadow:inset 0 2px 0 white,0 5px 0 #c1cde4; }
+.lh-space table { color:#17324d; }
+.lh-space :is(.lh-annotation-tools,.lh-vowel-question,.lh-vowel-editor,.lh-zone-editor) { color:#17324d; }
+.lh-space .lh-answer-heading { color:#333d73; border-color:#bdc9e8; }
+.lh-space .lh-answer-heading strong { background:linear-gradient(135deg,#353f88,#693795); }
+.lh-space .lh-answer .lh-options button:not(.lh-correct-option):not([aria-pressed="true"]) { background:linear-gradient(150deg,#fff,#dce9fc); color:#17324d; border-color:#8ba9d0; box-shadow:inset 0 2px 0 white,0 5px 0 #a4b9d9; }
+.lh-space .lh-answer .lh-options button:nth-child(even):not(.lh-correct-option):not([aria-pressed="true"]) { background:linear-gradient(150deg,#fff,#e9def9); border-color:#b29bcc; box-shadow:inset 0 2px 0 white,0 5px 0 #b8a9cf; }
+.lh-space .lh-answer .lh-options button[aria-pressed="true"]:not(.lh-correct-option) { background:linear-gradient(140deg,#414da0,#7138a1); color:white; border-color:#44327b; box-shadow:0 5px 0 #302552; }
+.lh-space .lh-wait { background:linear-gradient(130deg,#162951ee,#35255bee); border:1px solid #8099cf; border-radius:24px; margin:24px 0; padding:70px 24px; color:#eef7ff; box-shadow:inset 0 2px 0 #b6d4ff33,0 7px 0 #0c1734,0 20px 50px #03092155; }
+.lh-space .lh-wait::before { content:'✦'; display:block; font-size:60px; color:#ffdb90; text-shadow:0 0 25px #b691ff; margin-bottom:15px; }
+.lh-space .lh-student > .lh-row { color:#e5f2ff; }
+.lh-space .lh-join { border-top:5px solid #b2a0ed; }
+.lh-space .lh-join-qr { background:#fff; padding:12px; border-radius:10px; }
+.lh-space .lh-join-dialog { background:#f7faff; }
+.lh-space .lh-report { box-shadow:0 5px 0 #263d6c; }
+/* Motion only when joining/waiting; never animate question/annotation geometry. */
+@keyframes lh-space-glimmer { to { opacity:.85; } }
+.lh-space:has(.lh-join) .lh-space-scene:not(.is-still) .lh-space-stars,
+.lh-space:has(.lh-classbar[data-phase="lobby"]) .lh-space-scene:not(.is-still) .lh-space-stars { animation:lh-space-glimmer 8s ease-in-out infinite alternate; }
+@media(prefers-reduced-motion:reduce) { .lh-space .lh-space-scene * { animation:none!important; } }
+@media(max-width:850px) { .lh-space .lh-space-banner { align-items:flex-start; flex-direction:column; gap:8px; padding:22px 0; } .lh-space-art { background-size:auto,auto 850px; background-position:top center,top 0 right 25%; } }
+@media print { .lh-space { background:white!important; color:#17324d; } .lh-space-scene,.lh-space-banner { display:none!important; } .lh-space :is(.lh-report,.lh-canvas,.lh-control,.lh-dashboard) { background:white; box-shadow:none; border:0; } }

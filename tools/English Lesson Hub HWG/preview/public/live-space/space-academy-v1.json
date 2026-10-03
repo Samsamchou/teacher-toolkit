@@ -1,0 +1,14 @@
+{
+  "generator": "built-in ImageGen",
+  "date": "2026-09-25",
+  "asset": "space-academy-v1.png",
+  "width": 1536,
+  "height": 1024,
+  "bytes": 2134626,
+  "sha256": "2c6439c6678732c0aeeb143d887f1a1dc0b1620e7ea59ade56b1a3a6d9923cb6",
+  "promptRecord": "README.md",
+  "model": "not exposed by built-in tool",
+  "usage": "not exposed by built-in tool",
+  "authorization": "User explicitly requested built-in ImageGen in this turn",
+  "visualQA": "Inspected: original navy space, violet ringed planet, cyan planet, no text or UI baked into image"
+}

@@ -1,0 +1,11 @@
+{
+  "file": "great.mp3",
+  "text": "Great!",
+  "voice": "Microsoft Zira Desktop",
+  "engine": "System.Speech.Synthesis",
+  "source": "Windows local speech synthesis",
+  "documentation": "https://learn.microsoft.com/en-us/dotnet/api/system.speech.synthesis.speechsynthesizer.setoutputtowavefile",
+  "bytes": 4844,
+  "sha256": "576f2540843acff363e112a026f45dc1aeb97ab4afca57126c26ca16c9ab7d50",
+  "sourceSha256": "c39321ed63d0756669e06762ef07e92e6fd70eeb292426058d8b03c910add813"
+}
