@@ -1,0 +1,27 @@
+.as-student-identity{display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,48px);max-width:780px;margin:24px auto 18px;position:relative}
+.as-student-identity .as-champion{flex:0 0 300px;margin:-10px 0 5px}
+.as-identity-card{position:relative;z-index:1;text-align:left;padding:22px 28px;min-width:230px;border:1px solid #efce7970;border-radius:24px;background:linear-gradient(140deg,#39315ae8,#201a3bd9);box-shadow:0 12px 40px #0907194d,inset 0 1px 0 #ffedb522;animation:as-reveal .9s .2s both}
+.as-identity-card .as-eyebrow{font-size:10px;color:#e1c98f;letter-spacing:.12em;margin:0 0 10px}
+.as-identity-card>span{font-size:16px;color:#e5d8ef}
+.as-student-id{display:block;font-family:'Comic Relief',sans-serif;font-size:clamp(56px,7vw,80px);line-height:1.22;color:#ffe7a2;letter-spacing:.035em;font-weight:700;text-shadow:0 2px 24px #efc55455;white-space:nowrap}
+.as-identity-card>p:last-child{font-size:13px;line-height:1.7;color:#e0d4ed;margin:8px 0 0}
+.as-result-volume{display:flex;align-items:center;gap:8px;font-size:12px;color:#e7d7ee;margin:0 4px}
+.as-result-volume input{width:90px;min-height:30px;accent-color:#f1ce70;padding:0}
+.as-celebration-notice{position:relative;z-index:2;max-width:520px;margin:16px auto 0;padding:10px 16px;border:1px solid #eacb6e80;background:#403354;border-radius:16px;color:#fff0be;text-align:center;font-size:13px}
+.as-celebration-notice button{margin:4px 0 4px 8px}
+@media(max-width:600px){
+ .as-student-identity{gap:12px;margin:24px auto 14px}
+ .as-student-identity .as-champion{flex:0 0 135px;width:135px;height:198px;margin:0}
+ .as-student-identity .as-hero-art{width:135px;height:135px;top:12px}
+ .as-student-identity .as-champion-halo{width:115px;height:115px;top:24px;outline-offset:8px}
+ .as-student-identity .as-champion-stars{top:121px;font-size:25px;letter-spacing:2px}
+ .as-student-identity .as-ribbon{top:161px;bottom:auto;min-width:135px;width:135px;font-size:10px;letter-spacing:.06em;white-space:nowrap;padding:6px 8px}
+ .as-identity-card{min-width:0;padding:15px 12px;border-radius:18px;flex:0 1 170px}
+ .as-identity-card .as-eyebrow{font-size:8px;letter-spacing:.02em;margin-bottom:7px}
+ .as-identity-card>span{font-size:14px}
+ .as-student-id{font-size:clamp(32px,10vw,48px);letter-spacing:.01em}
+ .as-identity-card>p:last-child{font-size:11px;margin-top:7px}
+ .as-result-volume{font-size:10px}
+ .as-result-volume input{width:70px}
+}
+@media print{.as-student-identity{break-inside:avoid}.as-identity-card{background:white;box-shadow:none}.as-student-id,.as-identity-card>span,.as-identity-card>p{color:#222!important}.as-celebration-notice{display:none}}

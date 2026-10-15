@@ -98,7 +98,8 @@ export function AudioAnswer({ code, block, disabled, responses = [] }) {
   return (
     <section className="lh-form">
       <p>朗讀：{block.text}</p>
-      <p>80 分過關，每題每天最多 3 次；錄音與紀錄保存 7 個月。</p>
+      <p>未滿 70 分可再練習；70–79 分遊戲 1 次；80 分以上或老師放行，遊戲 2 次。</p>
+      <p>保存完成後才開放遊戲；每題每天最多 3 次錄音，錄音與紀錄保存 7 個月。</p>
       {saved && (
         <p>
           已保存最高分 {saved.best}；

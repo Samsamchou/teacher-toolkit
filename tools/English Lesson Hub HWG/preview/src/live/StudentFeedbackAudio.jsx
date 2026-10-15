@@ -53,13 +53,13 @@ export function useStudentFeedbackAudio() {
     } catch { setBlocked(true); }
   }
 
-  async function play(outcome, mastery=false) {
+  async function play(outcome, mastery=false, sentence=false) {
     if (mutedRef.current) return;
     try {
       arm();
       if (!context.current) return;
       if (context.current.state !== 'running') await context.current.resume();
-      if (mastery) {
+      if (mastery && !(sentence && outcome==='full')) {
         const data = await loadVoice(outcome);
         if (mutedRef.current) return;
         voice.current?.stop?.();
@@ -80,7 +80,7 @@ export function useStudentFeedbackAudio() {
     setVisible(receipt.mastery === true);
     setCelebrating(receipt.mastery === true && receipt.outcome === 'full');
     timer.current=setTimeout(() => { setVisible(false); setCelebrating(false); },1500);
-    void play(receipt.outcome,receipt.mastery === true);
+    void play(receipt.outcome,receipt.mastery === true,receipt.questionType==='sentence');
   }
 
   function toggleMuted() {
@@ -99,12 +99,12 @@ export function useStudentFeedbackAudio() {
     controls: <div className="lh-result-audio" aria-label="作答結果音效">
       <button type="button" aria-pressed={!muted} onClick={toggleMuted}>結果音效：{muted ? '關' : '開'}</button>
       <button type="button" aria-pressed={reduceMotion} onClick={() => { const next=!reduceMotion; setReduceMotion(next); try { localStorage.setItem('lh-feedback-reduce-motion',String(Number(next))); } catch {} }}>減少回饋動畫：{reduceMotion ? '開' : '關'}</button>
-      {feedback && !visible && <p role="status" className={`lh-result-audio-status status-${feedback.outcome}`}>{feedback.mastery ? feedback.outcome==='full' ? 'Great！全部答對' : 'Try Again！再試一次，全部答對才能進遊戲。' : `本題${OUTCOME_LABELS[feedback.outcome]}`}</p>}
+      {feedback && !visible && <p role="status" className={`lh-result-audio-status status-${feedback.outcome}`}>{feedback.mastery ? feedback.outcome==='full' ? feedback.questionType==='sentence'?'You are right！全部答對':'Great！全部答對' : 'Try Again！再試一次，全部答對才能進遊戲。' : `本題${OUTCOME_LABELS[feedback.outcome]}`}</p>}
       {visible && feedback && <div key={feedback.attemptId} className={`lh-mastery-feedback ${feedback.outcome==='full'?'is-great':'is-encourage'} ${reduceMotion?'reduce-motion':''}`} role="status">
         <img src={`/live-feedback/${feedback.outcome==='full'?'great':'try-again'}.webp`} width="128" height="128" alt="" decoding="async"/>
-        <strong>{feedback.outcome==='full'?'Great!':'Try Again!'}<small>{feedback.outcome==='full'?'超讚！全部答對':'加油，全部答對才能進遊戲！'}</small></strong>
+        <strong>{feedback.outcome==='full'?(feedback.questionType==='sentence'?'You are right':'Great!'):'Try Again!'}<small>{feedback.outcome==='full'?'超讚！全部答對':'加油，全部答對才能進遊戲！'}</small></strong>
       </div>}
-      {blocked && !muted && feedback && <button type="button" onClick={() => void play(feedback.outcome,feedback.mastery===true)}>▶ 重播提示音</button>}
+      {blocked && !muted && feedback && <button type="button" onClick={() => void play(feedback.outcome,feedback.mastery===true,feedback.questionType==='sentence')}>▶ 重播提示音</button>}
       {blocked && !muted && <small>瀏覽器尚未允許聲音；可按「重播提示音」或檢查裝置音量。</small>}
     </div>,
   };

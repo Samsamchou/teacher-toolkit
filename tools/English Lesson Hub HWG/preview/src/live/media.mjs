@@ -1,4 +1,4 @@
-import {cloudMode,callCloudService,activeRoomCode} from './transport.mjs';
+import {cloudMode,callCloudService,activeRoomCode,activeAssignmentCode} from './transport.mjs';
 import { halfDimensions, IMAGE_OPTIMIZATION_VERSION } from './image-optimization.mjs';
 const urlCache=new Map();
 export async function imageAsset(file, { halfSize = true } = {}) {
@@ -111,8 +111,8 @@ export async function saveAsset(file,options={}) {
 }
 export async function assetUrl(id) {
   if(id?.startsWith('cloud-')){
-    const key=`${activeRoomCode()}:${id}`,cached=urlCache.get(key);if(cached&&cached.expiresAt>Date.now()+30000)return cached.url;
-    const result=await callCloudService('liveMediaV2',{action:'read',id,code:activeRoomCode()||null});
+    const key=`${activeAssignmentCode()||activeRoomCode()}:${id}`,cached=urlCache.get(key);if(cached&&cached.expiresAt>Date.now()+30000)return cached.url;
+    const result=await callCloudService('liveMediaV2',{action:'read',id,code:activeRoomCode()||null,assignmentCode:activeAssignmentCode()||null});
     if(result.status!=='ready')throw new Error(result.status==='failed'?'影片轉檔失敗，可由教師重試。':'素材上傳／轉檔中，請稍候。');
     urlCache.set(key,result);return result.url;
   }

@@ -1,4 +1,5 @@
 // Versioned, observable question contract. No claim about Wayground internals.
+import { publicSentence } from './sentence-rebuild.mjs';
 export const PARITY_VERSION = 3;
 export const OPEN_LIMIT = 200;
 export const textLength = value => Array.from(String(value)).length;
@@ -106,6 +107,7 @@ function mixed(values, salt, unique=true) {
   return (unique?[...new Set(values)]:[...values]).sort((a,b)=>hash(a)-hash(b)||a.localeCompare(b));
 }
 export function publicParity(b,reveal=false) {
+  if(b.type==='sentence')return publicSentence(b,reveal);
   const s=clone(b);
   if(s.slideCanvas)delete s.slideCanvas.original;
   if(s.questionCanvas)delete s.questionCanvas.original;
@@ -124,6 +126,7 @@ export function publicParity(b,reveal=false) {
   return s;
 }
 export function solutionText(b) {
+  if(b.type==='sentence')return (b.correctSentences||b.sentences||[]).join(' / ');
   if(inlineTypes.includes(b.type))return b.blanks.map((x,i)=>`${i+1}: ${(x.answers||[]).join(' / ')}`).join('；');
   if(b.type==='label')return b.anchors.map((a,i)=>`${i+1}: ${b.labels.find(l=>l.id===a.labelId)?.text||''}`).join('；');
   if(b.type==='hotspot')return b.regions.map((r,i)=>r.correct?`區域 ${i+1}`:'').filter(Boolean).join('、');

@@ -1,0 +1,16 @@
+{
+  "generator": "Codex built-in ImageGen",
+  "model": null,
+  "requestId": null,
+  "prompt": "Production top-down 2.5D storybook fantasy RPG FINAL LEVEL arena texture, landscape 1536x1024. Match reference enchanted forest's premium detailed painterly game art. The Dawn Castle courtyard: magnificent luminous ivory and gold castle walls, elegant leaf-carved arches and emerald flags framing the outer edges, peach dawn sunlight, distant mist only at borders, flowering shrubs and small cascading turquoise fountains at corners, warm golden rune mosaic on broad grass-and-stone courtyard. Camera near-overhead 3/4 top-down, no horizon, keep central 75 percent EMPTY and walkable, no tall objects obscuring center. Luxurious rich jewel-toned mobile RPG illustration, soft cinematic god rays, clear readable floor, child friendly triumphant sense of completing a magical English journey. No people, no creatures, no game items in center, absolutely no UI, no text, no lettering, no logos, no watermark. Whole image is the actual game level background.",
+  "operation": "generation",
+  "size": [
+    1536,
+    1024
+  ],
+  "mode": "RGB",
+  "outputFilename": "castle.png",
+  "sha256": "1c178cd0c0928b557ab2b7fe8a3aafe7f3e777ae1717f861221b8a288c9852f9",
+  "timestamp": "2026-10-15T02:22:21.815014+00:00",
+  "alphaExtrema": null
+}

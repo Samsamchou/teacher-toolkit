@@ -1,0 +1,4 @@
+let audioContext;
+export function tone(frequency=660,duration=.1,delay=0){try{audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain(),t=audioContext.currentTime+delay;o.type='sine';o.frequency.value=frequency;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.07,t+.01);g.gain.exponentialRampToValueAtTime(.001,t+duration);o.connect(g).connect(audioContext.destination);o.start(t);o.stop(t+duration);}catch{}}
+export function celebrateSound(){[523.25,659.25,783.99,1046.5].forEach((n,i)=>tone(n,.4,i*.14));}
+export function tryAgainSound(){const audio=new Audio('/live-feedback/try-again.mp3');audio.play().catch(()=>{if('speechSynthesis' in window){const u=new SpeechSynthesisUtterance('Try again!');u.lang='en-US';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u);}});tone(440,.16);tone(587,.2,.14);}

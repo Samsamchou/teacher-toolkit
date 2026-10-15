@@ -5,6 +5,8 @@ import { newCanvas, validateCanvas } from './slide-canvas.mjs';
 import { videoSource, blockVideoTrim, clampVideoPosition, videoPosition, videoClipEnded } from './video.mjs';
 import { validateAnnotations } from './annotations.mjs';
 import { validateParity, publicParity, gradeParity, textLength, OPEN_LIMIT, inlineTypes } from './parity.mjs';
+import { validateSentence, publicSentence, gradeSentence } from './sentence-rebuild.mjs';
+import {validateSpell,publicSpell,gradeSpell} from './spelling.mjs';
 export const TYPES = Object.freeze({
   slide: "教材投影片",
   choice: "選擇題",
@@ -15,6 +17,8 @@ export const TYPES = Object.freeze({
   hotspot: "熱點",
   draw: "塗鴉",
   order: "重新排序",
+  sentence: "句子重組",
+  spell: "Spell the word",
   category: "分類",
   dropdown: "下拉選單",
   cloud: "文字雲",
@@ -107,6 +111,8 @@ export function newBlock(type = "slide", id = globalThis.crypto.randomUUID()) {
     partial: true,
     multiple: false,
     ungraded: false,
+    ...(type === 'spell' ? {spellingAnswer:'',spellDistractors:'',spellTiles:[],partial:false,ungraded:false} : {}),
+    ...(type === 'sentence' ? {sentences:[''],distractors:[],partial:false,ungraded:false} : {}),
     ...(type === 'slide' ? { slideCanvas: newCanvas() } : {}),
     ...(type === "vowel"
       ? {
@@ -146,6 +152,8 @@ export function validateDeck(deck, { draft = false } = {}) {
     if (!draft && !b.hidden && b.conversionPending) fail('轉換題目需先確認題幹、正解與選項。');
     if (!draft && !b.hidden && b.questionCanvas && b.type === 'choice' && (!Array.isArray(b.answer) || !b.answer.length || (!b.multiple && b.answer.length !== 1) || b.options?.some(v => typeof v !== 'string' || !v.trim()) || new Set(b.options?.map(normalize)).size !== b.options?.length)) fail('轉換選擇題需填寫不同的選項並設定正解。');
     if(b.type==='multiselect'&&b.modelVersion!==3)fail('多項選擇題需要新版模型。');
+    if(b.type==='spell')validateSpell(b,{draft:draft||b.hidden});
+    if(b.type==='sentence')validateSentence(b,{draft:draft||b.hidden});
     validateParity(b, { draft: draft || b.hidden });
     if (!identifier(b.id) || !TYPES[b.type]) fail("投影片格式不正確。");
     if (!Number.isFinite(b.points) || b.points < 0 || b.points > 100)
@@ -243,6 +251,8 @@ export function validateDeck(deck, { draft = false } = {}) {
   return deck;
 }
 export function publicBlock(block, reveal = false) {
+  if(block.type==='spell')return publicSpell(block,reveal);
+  if(block.type==='sentence')return publicSentence(block,reveal);
   if (block.modelVersion === 3) return publicParity(block, reveal);
   const {
     answer,
@@ -267,6 +277,8 @@ export function publicBlock(block, reveal = false) {
   return safe;
 }
 export function grade(block, response) {
+  if(block.type==='spell')return gradeSpell(block,response);
+  if(block.type==='sentence')return gradeSentence(block,response);
   if (block.type === 'multiselect') return gradeParity(block, response);
   if (block.modelVersion === 3) {
     if(block.type === 'choice' && (!Array.isArray(response) || !response.length || (!block.multiple && response.length !== 1))) fail('請選擇有效數量的選項。');

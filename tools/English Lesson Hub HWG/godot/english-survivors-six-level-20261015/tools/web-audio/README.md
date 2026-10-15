@@ -1,0 +1,1 @@
+Original locally synthesized browser audio. Import createGameAudio, unlock after a user gesture, setScene(playing or paused, level), and play validated Godot sound events. dispose() when leaving. No network requests or provider keys. Sound tests live in the Lesson Hub preview/tests/game-audio.test.mjs.

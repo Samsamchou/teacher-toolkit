@@ -17,6 +17,7 @@ import {
   rewardResult,
   playReward,
   finishReward,
+  canShowReward,
 } from "../src/live/rewards.mjs";
 import {
   makeBoard,
@@ -31,7 +32,7 @@ const fixture = (type = "choice", game = "basketball") => {
       id: "reward-test",
       title: "Rewards",
       rewardGame: game,
-      blocks: [newBlock(type, "q1"), newBlock("choice", "q2")],
+      blocks: [{...newBlock(type, "q1"), ...(type === "audio" ? {text: "Hello."} : {})}, newBlock("choice", "q2")],
     },
     "123456",
     "teacher",
@@ -141,8 +142,14 @@ test("cloud gets two, open/draw pending zero, fail then pass adds only one and d
     assert.equal(rewardView(r, "student").earned, 2);
   }
 });
-test("audio pending/failure not wrong, 79 is one, 80 is two, manual pass is two", () => {
+test("audio needs completed grading, 70–79 earns one, 80 earns two, teacher override remains", () => {
   const b = newBlock("audio");
+  for (const [best, expected] of [[0, 0], [69, 0], [70, 1], [79, 1], [80, 2], [100, 2]]) {
+    assert.equal(rewardAllowance(b, { grade: { status: "graded" }, best }), expected);
+  }
+  for (const status of ["pending", "error", "reserved"]) {
+    assert.equal(rewardAllowance(b, { grade: { status }, best: 100, override: true }), 0);
+  }
   assert.equal(
     rewardAllowance(b, { grade: { status: "pending" }, best: 0 }),
     0,
@@ -180,6 +187,37 @@ test("audio pending/failure not wrong, 79 is one, 80 is two, manual pass is two"
   assert.equal(rewardView(r, "student").earned, 2);
   r.responses.c = { ...r.responses.a, best: 90 };
   assert.equal(rewardView(r, "student").earned, 2);
+});
+test("audio blocks under 70, returns to recording after one game, and an upgrade only adds the unused second game", () => {
+  for (const game of ["basketball", "plinkoh", "slot"]) {
+    let r = fixture("audio", game);
+    r.responses.a = {uid: "student", blockId: "q1", openedAt: r.openedAt,
+      ai: {}, best: 69, passed: false, grade: {status: "graded", score: 0.69, max: 1}};
+    assert.equal(canShowReward(snapshot(r, "student", 1004)), false);
+    assert.throws(() => play(r));
+    r.responses.a.best = 70;
+    assert.equal(rewardView(r, "student").earned, 1);
+    assert.equal(canShowReward(snapshot(r, "student", 1004)), true);
+    play(r);
+    assert.equal(canShowReward(snapshot(r, "student", 1010)), true);
+    finish(r);
+    r = JSON.parse(JSON.stringify(r));
+    assert.equal(canShowReward(snapshot(r, "student", 1012)), false);
+    assert.equal(rewardView(r, "student").remaining, 0);
+    assert.throws(() => play(r, "extra"));
+    r.responses.b = {...r.responses.a, best: 80, passed: true};
+    r.responses.c = {...r.responses.b};
+    assert.equal(rewardView(r, "student").earned, 2);
+    assert.equal(rewardView(r, "student").remaining, 1);
+    assert.equal(canShowReward(snapshot(r, "student", 1012)), true);
+    play(r, "upgrade");
+    play(r, "upgrade");
+    finish(r, "upgrade");
+    finish(r, "upgrade");
+    assert.equal(rewardView(r, "student").used, 2);
+    assert.equal(canShowReward(snapshot(r, "student", 1013)), false);
+    assert.throws(() => play(r, "third"));
+  }
 });
 test("pause, content, reveal, locks, removal and completion take priority; pending resumes with same result", () => {
   const r = fixture();

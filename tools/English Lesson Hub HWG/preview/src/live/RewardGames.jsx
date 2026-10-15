@@ -163,7 +163,13 @@ function PegBoard({ turn, frame, zone }) {
   );
 }
 import { createSlotAudio } from './slot-audio.mjs';
-export function RewardGames({ room, onRoom }) {
+const SportRewards = React.lazy(() => import('./SportRewards.jsx'));
+export function RewardGames(props) {
+  return ['bowling','worldpup'].includes(props.room.reward?.game)
+    ? <React.Suspense fallback={<p role="status">正在載入遊戲…</p>}><SportRewards key={props.room.reward.game} {...props}/></React.Suspense>
+    : <LegacyRewardGames {...props}/>;
+}
+function LegacyRewardGames({ room, onRoom }) {
   const saved = useRef(preferences()),
     [muted, setMuted] = useState(saved.current.soundPreferenceVersion === 3
       ? saved.current.muted ?? true

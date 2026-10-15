@@ -68,3 +68,5 @@ const base='http://127.0.0.1:5187';const out='G:/我的雲端硬碟/teacher-tool
  assert.deepEqual(errors,[]);report.errors=errors;report.status='PASS';delete report.migration.deck;await fs.writeFile(out+'/browser-report.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
  }catch(e){await teacher.screenshot({path:out+'/failure-teacher.png'}).catch(()=>{});await student.screenshot({path:out+'/failure-student.png'}).catch(()=>{});console.error(e);process.exitCode=1;}finally{await browser.close();}
 })();
+
+

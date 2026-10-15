@@ -129,6 +129,7 @@ export function createMediaService({
       id,
       input,
       code,
+      assignmentCode,
       variant = "playback",
     } = request.data || {};
     if (action === "begin") {
@@ -201,6 +202,15 @@ export function createMediaService({
     const asset = doc.data();
     const owner = (asset.workspaceOwnerUid || asset.ownerUid) === uid;
     if (owner) await requireTeacher(request);
+    else if(action==='read'&&/^\d{6}$/.test(assignmentCode||'')) {
+      const root=db.collection('lessonAssignmentsV1').doc(assignmentCode),assignmentDoc=await root.get();
+      if(!assignmentDoc.exists)throw Error('找不到分配。');
+      const assignment=JSON.parse(assignmentDoc.data().json),member=await root.collection('members').doc(uid).get();
+      if(!member.exists||assignment.retentionAt<=now()||(asset.workspaceOwnerUid||asset.ownerUid)!==assignment.ownerUid)throw Error('沒有這份分配素材的權限。');
+      const runDoc=await root.collection('runs').doc(member.data().studentId).get(),run=runDoc.exists?JSON.parse(runDoc.data().json):null;
+      const block=run&&assignment.deck.blocks.find(b=>b.id===run.sequence[run.index]);
+      if(!run||run.uid!==uid||!block?.media?.some(m=>m.id===id))throw Error('本題未提供此素材。');
+    }
     else {
       if (action !== "read" || !/^\d{6}$/.test(code || ""))
         throw new Error("無權存取素材。");

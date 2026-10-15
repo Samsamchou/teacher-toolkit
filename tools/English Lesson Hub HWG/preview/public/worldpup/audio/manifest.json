@@ -1,0 +1,42 @@
+[
+  {
+    "name": "ambience",
+    "source": "https://freesound.org/people/huubjeroen/sounds/39733/",
+    "license": "CC0-1.0",
+    "preview": "https://cdn.freesound.org/previews/39/39733_190760-lq.mp3",
+    "start": 30,
+    "duration": 20,
+    "file": "ambience.mp3",
+    "bytes": 200924,
+    "sha256": "66ac27b5b484c070733b3535b81991e04e731c1f8fbe009cdf06ff751ac1de46",
+    "listeningQA": "pending-human",
+    "note": "Licensed replacement, not original game sound"
+  },
+  {
+    "name": "goal",
+    "source": "https://freesound.org/people/Sandermotions/sounds/494352/",
+    "license": "CC0-1.0",
+    "preview": "https://cdn.freesound.org/previews/494/494352_1402315-lq.mp3",
+    "start": 5.05,
+    "duration": 4.9,
+    "file": "goal.mp3",
+    "bytes": 50084,
+    "sha256": "c30f8a2b7a556709c015155cb6cf26cf59e1795760f25acf162ac7ddabfeac39",
+    "listeningQA": "pending-human",
+    "note": "Licensed replacement, not original game sound",
+    "processing": "Peak-energy region, highpass 90Hz, gain 0.6, limiter 0.85, fades; not listening QA"
+  },
+  {
+    "name": "miss",
+    "source": "https://freesound.org/people/RadioCounseling/sounds/635110/",
+    "license": "CC0-1.0",
+    "preview": "https://cdn.freesound.org/previews/635/635110_13862996-lq.mp3",
+    "start": 0,
+    "duration": 1.602,
+    "file": "miss.mp3",
+    "bytes": 16964,
+    "sha256": "aad829c1156e5f6da0148d09848731ef7ba5f0f0779405456b7b88893ce071a9",
+    "listeningQA": "pending-human",
+    "note": "Licensed replacement, not original game sound"
+  }
+]

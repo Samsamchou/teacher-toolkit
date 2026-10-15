@@ -1,6 +1,8 @@
 export const cloudMode = import.meta.env.VITE_LIVE_V2_TRANSPORT === "firebase";
 let cloud;
 let activeRoom='';
+let activeAssignment='';
+export const activeAssignmentCode=()=>activeAssignment;
 export const activeRoomCode=()=>activeRoom;
 async function client() {
   if (!cloud)
@@ -38,13 +40,14 @@ export async function api(action, code, payload = {}) {
       sessionToken: session?.sessionToken || null,
     });
     if(response.data?.code)activeRoom=response.data.code;
+    if(['assignmentJoin','assignmentSnapshot'].includes(action)&&response.data?.assignment)activeAssignment=response.data.assignment.code;
     return response.data;
   }
-  const response = await fetch("/api/live", {
+  const response = await fetch(String(action).startsWith("assignment")?"/api/assignments":"/api/live", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Lab-Role": new URLSearchParams(location.search).has("join")
+      "X-Lab-Role": (new URLSearchParams(location.search).has("join")||new URLSearchParams(location.search).has("assignment"))
         ? "student"
         : "teacher",
     },
@@ -55,6 +58,7 @@ export async function api(action, code, payload = {}) {
     throw new Error("本機服務未啟動，或雲端 v2 尚未啟用。");
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || "服務暫時無法連線。");
+  if(['assignmentJoin','assignmentSnapshot'].includes(action)&&result.assignment)activeAssignment=result.assignment.code;
   return result;
 }
 export async function callCloudService(name,payload){
@@ -66,3 +70,5 @@ export async function loginTeacher(passcode) {
   const [firebase] = await client();
   return firebase.openTeacherResultsSession(passcode);
 }
+
+export async function submitAssignmentAudio(payload){if(!cloudMode)throw Error('本機未啟用付費AI評分；可在隔離模擬器驗證保存流程。');const [firebase,{httpsCallable}]=await client();await firebase.ensureAnonymousSession();return (await httpsCallable(firebase.functions,'liveAudioV2',{timeout:180000})({...payload,assignment:true})).data;}

@@ -1,0 +1,16 @@
+{
+  "generator": "Codex built-in ImageGen",
+  "model": null,
+  "requestId": null,
+  "prompt": "Production game environment texture atlas for the same exquisite 2.5D storybook RPG style as the reference forest. New asset: ONE landscape image 1536x1024 containing EXACTLY 2 columns by 2 rows of four separate rectangular top-down battle arenas, each cell 768x512, no borders or labels. Every arena has an unobstructed EMPTY central 70 percent for gameplay, decorative architecture and nature around outer edges, near-overhead view with subtle 3/4 depth, no horizon, no characters, no enemies, no UI, no text. TOP LEFT level2 Moonlit Pond: turquoise enchanted pool at edges, lily pads, giant glowing blue flowers, silver moon rays, grassy clearing. TOP RIGHT level3 Crystal Glade: luminous lavender and cyan crystals around edges of a mossy grotto clearing, polished magical rocks, luxurious light. BOTTOM LEFT level4 Ancient Ruins: golden carved stone arcades and ancient leaf-covered ruins surrounding broad emerald stone courtyard, warm amber beams. BOTTOM RIGHT level5 Floating Garden: magnificent elevated lush garden terraces, pink flowering trees, turquoise waterfalls at edges and ivory mosaic central grassy clearing. Saturated jewel colors, cinematic painted detail and warm luminous highlights, readable ground, premium fantasy game art, child friendly. Each cell its own full landscape scene with center empty, no continuity required across cell boundaries.",
+  "operation": "generation",
+  "size": [
+    1536,
+    1024
+  ],
+  "mode": "RGB",
+  "outputFilename": "biomes.png",
+  "sha256": "918a2cc4c69d3fe60e1bb4fb2ead2db4bef557e4828490bcca31c320d787265c",
+  "timestamp": "2026-10-15T02:22:21.804687+00:00",
+  "alphaExtrema": null
+}

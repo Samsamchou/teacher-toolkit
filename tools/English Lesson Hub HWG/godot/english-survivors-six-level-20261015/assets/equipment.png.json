@@ -1,0 +1,20 @@
+{
+  "generator": "Codex built-in ImageGen",
+  "model": null,
+  "requestId": null,
+  "prompt": "Production transparent fantasy RPG item sprite atlas, 1536x1024, EXACTLY 4 columns by 2 rows, eight equal 384x512 cells. Each item centered fully within its cell with 60 px transparent margins, no visible grid or labels. Match exquisite 2.5D painted teal emerald gold storybook game art of reference. TOP ROW LEFT TO RIGHT: 1 luminous amber crystal sunbeam wizard staff; 2 emerald leaf shield with delicate gold border; 3 pair of small enchanted teal boots with gold trim; 4 three golden star orbs orbiting a small emerald sphere. BOTTOM ROW LEFT TO RIGHT: 5 delicate cyan ice crystal bell with silver leaf handle; 6 electric violet and gold lightning feather; 7 blooming pink magical healing flower with golden center and emerald leaves; 8 magnificent small pair of white-gold dawn angel wings with teal jeweled clasp. Every object a separate clean readable full item silhouette, luxurious polished handpainted details, magical soft glows entirely inside its cell. No characters, no scenes, no pedestal, no ground plane, no UI, NO letters, NO text, no frame, no borders, no watermark. Genuine transparent alpha background outside all eight objects.",
+  "operation": "edit",
+  "size": [
+    1536,
+    1024
+  ],
+  "mode": "RGBA",
+  "outputFilename": "equipment.png",
+  "sha256": "d58ef4bb93cfee84a14a5a47652c0801e4fc88636acdd685a5d9de2d4469d121",
+  "timestamp": "2026-10-15T02:22:21.871724+00:00",
+  "alphaExtrema": [
+    0,
+    254
+  ],
+  "editInstruction": "Remove colored backdrop and preserve all eight equipment positions; transparent background. Original retained."
+}

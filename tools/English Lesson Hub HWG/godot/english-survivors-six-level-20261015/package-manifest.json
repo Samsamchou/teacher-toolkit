@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-10-15T11:30:15.408758+00:00",
+  "version": "2026.10.15-spell-results-production.2",
+  "status": "local-review-not-deployed",
+  "packages": [
+    {
+      "name": "Forest-of-Words-Web.zip",
+      "bytes": 17601515,
+      "sha256": "8abf415a60ed45c7b77cc6e635344ae5c7113519447ba36c63348b078f90e110",
+      "entries": 45,
+      "oldSha256": "1cd0560e2b89db091a05d3ec46530fa3a0720de9eef6e6aa10543e6f88931e4b",
+      "changedEntries": [
+        "README.txt",
+        "survivors/v1/manual.html"
+      ],
+      "codeAndArtEntriesUnchanged": true
+    },
+    {
+      "name": "Forest-of-Words-Godot-source.zip",
+      "bytes": 32806467,
+      "sha256": "a7277a3a189685e9e961f5a41ee9afbab50bfaf46642948cd23fd181ea8a90c5",
+      "entries": 55,
+      "oldSha256": "0e6f725d9abb687347dce9579c1df809121e88d320efb04d73acb760d6162a8c",
+      "changedEntries": [
+        "Forest-of-Words-Godot/README.md",
+        "Forest-of-Words-Godot/製作手冊-v06.md"
+      ],
+      "codeAndArtEntriesUnchanged": true
+    }
+  ],
+  "audio": {
+    "seconds": 7.8,
+    "rms": 0.08657891356675987,
+    "peak": 0.406005859375,
+    "primaryBytes": 78138,
+    "alternateBytes": 83247
+  }
+}

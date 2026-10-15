@@ -1,3 +1,7 @@
+import {CreateAssignmentDialog,AssignmentDashboard} from '../assignments/AssignmentTeacher.jsx';
+import {AssignmentStudent} from '../assignments/AssignmentStudent.jsx';
+import {SpellEditor,SpellQuestion} from './SpellQuestion.jsx';
+import '../assignments/assignments.css';
 import React, { useEffect, useRef, useState } from "react";
 import { JoinPanel } from './JoinPanel.jsx';
 import { createSeedLessons } from "../data/lesson-data.js";
@@ -24,6 +28,7 @@ import { RewardGames } from "./RewardGames.jsx";
 import { TeacherMusic } from './TeacherMusic.jsx';
 import { useStudentFeedbackAudio } from './StudentFeedbackAudio.jsx';
 import { VowelEditor, VowelQuestion } from "./VowelQuestion.jsx";
+import { SentenceQuestion } from './SentenceQuestion.jsx';
 import { AnswerEditor } from "./AnswerEditor.jsx";
 import { ZoneEditor } from "./ZoneEditor.jsx";
 import { parityBlock, convertBlock, inlineTypes, textLength, publicParity, solutionText } from './parity.mjs';
@@ -32,7 +37,7 @@ import { ParityQuestion } from './ParityQuestion.jsx';
 import { videoSource } from './video.mjs';
 import { VideoPlayer } from './VideoPlayer.jsx';
 import { UploadedVideo } from './UploadedVideo.jsx';
-import { REWARD_GAMES } from "./rewards.mjs";
+import { REWARD_GAMES, canShowReward } from "./rewards.mjs";
 import { ImageZoom } from './ImageZoom.jsx';
 import { FocusScreen } from './FocusScreen.jsx';
 import { ImageUpgrade } from './ImageUpgrade.jsx';
@@ -43,6 +48,7 @@ import './review.css';
 import SpaceTheme from './SpaceTheme.jsx';
 import { CourseName } from './CourseName.jsx';
 import { courseName } from './course-name.mjs';
+import { duplicateDeck } from './deck-copy.mjs';
 import './compact.css';
 
 const params = new URLSearchParams(location.search);
@@ -145,6 +151,16 @@ function BlockContent({ block, room, onControl, onPlaybackChange }) {
   if (block.questionCanvas) return <CanvasQuestionStem block={block} />;
   if (block.type !== 'slide' && block.type !== 'vowel') {
     const pictures = (block.media || []).filter(a => a.kind === 'image');
+    const videos = block.type === 'choice' ? (block.media || []).filter(a => a.kind === 'video') : [];
+    if (videos.length) return <section className="lh-canvas lh-question-stem lh-split-stem lh-choice-video-stem" style={{color:block.color,fontSize:block.fontSize}}>
+      <div className="lh-stem-copy"><h2 data-annotation-anchor="title">{block.title}</h2>
+        {block.text && <p data-annotation-anchor="prompt">{block.text}</p>}
+        <CanvasObjects objects={block.objects || []} media={block.media || []}/>
+        {pictures.map(a => <div key={a.id} data-annotation-anchor={`media-${a.id}`}><Media asset={a} zoom /></div>)}
+        {(block.media || []).filter(a => a.kind === 'audio').map(a => <Media key={a.id} asset={a}/>)}
+      </div>
+      <div className="lh-stem-videos" aria-label="題目影片">{videos.map(a => <div key={a.id} data-annotation-anchor={`media-${a.id}`}><Media asset={a}/></div>)}</div>
+    </section>;
     return <section className="lh-canvas lh-question-stem lh-split-stem" style={{color:block.color,fontSize:block.fontSize}}>
       {pictures.length > 0 && <div className="lh-stem-pictures">{pictures.map(a => <div key={a.id} data-annotation-anchor={`media-${a.id}`}><Media asset={a} zoom /></div>)}</div>}
       <div className="lh-stem-copy"><h2 data-annotation-anchor="title">{block.title}</h2>
@@ -221,7 +237,9 @@ function BlockContent({ block, room, onControl, onPlaybackChange }) {
     </div>
   );
 }
-function Question({ block, disabled, onSubmit, reveal=false, savedAnswer, savedAttemptId, allowRetry=false }) {
+function Question({ block, disabled, onSubmit, reveal=false, savedAnswer, savedAttemptId, allowRetry=false, savedAttemptNumber=0 }) {
+  if(block.type==='spell')return <SpellQuestion block={block.spellGroups?block:publicBlock(block,reveal)} disabled={disabled} onSubmit={onSubmit} savedAnswer={savedAnswer} savedAttemptId={savedAttemptId} allowRetry={allowRetry} reveal={reveal}/>;
+  if(block.type==='sentence')return <SentenceQuestion block={block} disabled={disabled} onSubmit={onSubmit} reveal={reveal} savedAnswer={savedAnswer} savedAttemptId={savedAttemptId} allowRetry={allowRetry} savedAttemptNumber={savedAttemptNumber}/>;
   if (block.modelVersion === 3 && [...inlineTypes,'label','hotspot','draw'].includes(block.type)) return <ParityQuestion block={block} disabled={disabled} onSubmit={onSubmit} savedAnswer={savedAnswer} savedAttemptId={savedAttemptId} allowRetry={allowRetry}/>;
   return <LegacyQuestion block={block} disabled={disabled} onSubmit={onSubmit} reveal={reveal} savedAnswer={savedAnswer} savedAttemptId={savedAttemptId} allowRetry={allowRetry}/>;
 }
@@ -515,7 +533,7 @@ function Editor({ deck, onChange }) {
           </select>
           <button
             onClick={() => {
-              const next = ['audio','vowel'].includes(type) ? newBlock(type) : parityBlock(newBlock(type));
+              const next = ['audio','vowel','sentence','spell'].includes(type) ? newBlock(type) : parityBlock(newBlock(type));
               update({ ...deck, blocks: [...deck.blocks, next] });
               setIndex(deck.blocks.length);
             }}
@@ -559,13 +577,14 @@ function Editor({ deck, onChange }) {
               ) : (
                 <Question
                   key={block.id}
-                  block={block.modelVersion===3 ? publicParity(block) : block}
+                  block={['sentence','spell'].includes(block.type) ? publicBlock(block) : block.modelVersion===3 ? publicParity(block) : block}
                   onSubmit={async (answer) => {
                     const {grade,validateDeck}=await import('./domain.mjs');
                     validateDeck({...deck,blocks:[block]});
                     if(block.type==='open'&&(!String(answer).trim()||textLength(answer)>200))throw new Error('請輸入 1–200 字元。');
                     const result=grade(block,answer);
                     setError(`預覽評分：${result.status} · ${result.score??'待評'} / ${result.max}`);
+                    if(['sentence','spell'].includes(block.type))return {feedback:{outcome:result.score===result.max?'full':'wrong'}};
                   }}
                   disabled={false}
                 />
@@ -576,7 +595,7 @@ function Editor({ deck, onChange }) {
           <>
             <div className="lh-row">
               <button onClick={() => shift(-1)}>↑</button>
-              {block.modelVersion!==3 && !['audio','vowel'].includes(block.type) && <button onClick={()=>{const converted=convertBlock(block,crypto.randomUUID());converted.hidden=true;update({...deck,blocks:[...deck.blocks,converted]});setIndex(deck.blocks.length);setError('新版副本已建立並暫時隱藏；原題保留。請完成轉換報告後再顯示。');}}>建立新版副本（保留原題）</button>}
+              {block.modelVersion!==3 && !['audio','vowel','spell'].includes(block.type) && <button onClick={()=>{const converted=convertBlock(block,crypto.randomUUID());converted.hidden=true;update({...deck,blocks:[...deck.blocks,converted]});setIndex(deck.blocks.length);setError('新版副本已建立並暫時隱藏；原題保留。請完成轉換報告後再顯示。');}}>建立新版副本（保留原題）</button>}
               <button onClick={() => shift(1)}>↓</button>
               <button
                 onClick={() => {
@@ -622,7 +641,7 @@ function Editor({ deck, onChange }) {
                 }) }); });
               }}
               onConvert={kind => {
-                const base = ['audio', 'vowel'].includes(kind) ? newBlock(kind) : parityBlock(newBlock(kind));
+                const base = ['audio', 'vowel', 'sentence'].includes(kind) ? newBlock(kind) : parityBlock(newBlock(kind));
                 const converted = slideToQuestion(block, base);
                 update({ ...deck, blocks: [...deck.blocks, converted] }); setIndex(deck.blocks.length);
                 setError('題目副本已建立並隱藏。請設定題幹、選項與正解，確認後再顯示。');
@@ -697,6 +716,7 @@ function Editor({ deck, onChange }) {
               {block.type !== "vowel" && <AdvancedEditor block={block} onChange={patch} />}
               </details>}
               {block.type !== "vowel" && <ImageSearch onAdd={addAsset} halfSize={block.type !== "slide"} />}
+              {block.type==='spell'&&<SpellEditor block={block} onPatch={patch}/>}
               {block.type === "vowel" && (
                 <>
                 <h3 className="lh-form-section-title">三字三圖設定</h3>
@@ -875,7 +895,7 @@ function Editor({ deck, onChange }) {
                     value={block.focusRule}
                     onChange={(e) => patch({ focusRule: e.target.value })}
                   />
-                  <small>80 分過關，每天最多 3 次；最高分與教師放行。</small>
+                  <small>70–79 分遊戲 1 次；80 分以上或教師放行 2 次。每天最多 3 次錄音，以最高分計算。</small>
                 </label>
               )}
               </div><aside className="lh-question-settings" aria-label="題目設定">
@@ -925,7 +945,7 @@ function Editor({ deck, onChange }) {
                         <input
                           type="checkbox"
                           checked={block.partial}
-                          disabled={['cloud','open','draw','multiselect'].includes(block.type)}
+                          disabled={['sentence','cloud','open','draw','multiselect'].includes(block.type)}
                           onChange={(e) => patch({ partial: e.target.checked })}
                         />
                         部分給分
@@ -934,7 +954,7 @@ function Editor({ deck, onChange }) {
                         <input
                           type="checkbox"
                           checked={block.ungraded}
-                          disabled={['cloud','multiselect'].includes(block.type)}
+                          disabled={['sentence','cloud','multiselect'].includes(block.type)}
                           onChange={(e) => patch({ ungraded: e.target.checked })}
                         />
                         不計分
@@ -1083,7 +1103,7 @@ function Classroom({ initial, onExit }) {
   }
   const active = room.responses.filter((r) => r.blockId === room.block.id && r.openedAt===room.openedAt);
   const myResponse=active.at(-1);
-  const showReward=room.reward?.eligible && !error && !feedbackAudio.celebrating;
+  const showReward=canShowReward(room) && !error && !feedbackAudio.celebrating;
   const submitted = new Set(active.map((r) => r.uid)).size;
   return (
     <>
@@ -1460,6 +1480,7 @@ function Classroom({ initial, onExit }) {
                     reveal={room.reveal}
                     savedAnswer={myResponse?.answer}
                     savedAttemptId={myResponse?.attemptId}
+                    savedAttemptNumber={myResponse?.attemptNumber||0}
                     allowRetry={canRetryResponse(room.block,myResponse)}
                     disabled={room.phase !== "question"||room.reveal||(!!myResponse&&!canRetryResponse(room.block,myResponse))}
                     onSubmit={submitAnswer}
@@ -1476,7 +1497,7 @@ function Classroom({ initial, onExit }) {
               {room.reveal && !['choice','multiselect'].includes(room.block.type) && (
                 <p className="lh-review-solution">
                   答案：
-                  {room.block.modelVersion===3 ? solutionText(room.block) : room.block.type === "vowel"
+                  {room.block.type==='sentence' ? room.block.correctSentences?.join(' / ') : room.block.modelVersion===3 ? solutionText(room.block) : room.block.type === "vowel"
                     ? room.block.vowelWords
                         .map((word) =>
                           word.targets.map((i) => word.word[i]).join(""),
@@ -1497,7 +1518,9 @@ function Classroom({ initial, onExit }) {
     </>
   );
 }
-export default function LiveApp() {
+export default function LiveApp(){return params.has("assignment")?<AssignmentStudent code={params.get("assignment")}/>:<LiveStudio/>;}
+function LiveStudio() {
+  const [assignDeck,setAssignDeck]=useState(null),[assignmentRefresh,setAssignmentRefresh]=useState(0);
   const [deck, setDeck] = useState(null),
     [decks, setDecks] = useState([]),
     [room, setRoom] = useState(null),
@@ -1506,7 +1529,10 @@ export default function LiveApp() {
     [sid, setSid] = useState(""),
     [code, setCode] = useState(params.get("join") || ""),
     [lessonId, setLessonId] = useState(""),
-    [naming, setNaming] = useState(false);
+    [naming, setNaming] = useState(false),
+    [copySource, setCopySource] = useState(null),
+    [copyBusy, setCopyBusy] = useState(false);
+  const copyAttempt = useRef(null), copiedSnapshot = useRef(null), copyLock = useRef(false);
   const lessons = useRef(createSeedLessons());
   const version = useRef(new Map());
   const loaded = useRef(false);
@@ -1540,6 +1566,7 @@ export default function LiveApp() {
   }, []);
   useEffect(() => {
     if (!deck || !loaded.current) return;
+    if (copiedSnapshot.current === JSON.stringify(deck)) { copiedSnapshot.current = null; return; }
     setMessage("尚未儲存…");
     const value = copy(deck);
     saveQueue.current = saveQueue.current.then(async () => {
@@ -1570,6 +1597,28 @@ export default function LiveApp() {
     version.current.set(d.id, d.version || 0);
     history.current = [];
     setDeck(copy(d));
+  }
+  async function copyCourse(name) {
+    if (copyLock.current || !copySource) return;
+    copyLock.current = true; setCopyBusy(true); setError('');
+    try {
+      await saveQueue.current;
+      if (failedSave.current) throw new Error('先完成原課程儲存，再複製。');
+      const title = courseName(name);
+      if (!copyAttempt.current || copyAttempt.current.title !== title || copyAttempt.current.sourceId !== copySource.id)
+        copyAttempt.current = { sourceId: copySource.id, title, deck: duplicateDeck(copySource, title) };
+      const candidate = copyAttempt.current.deck;
+      // Reuse the same ID after an uncertain network result, avoiding extra copies.
+      const existing = (await api('decks')).decks.find(d => d.id === candidate.id);
+      if (!existing) await api('saveDeck', null, { deck: candidate, expectedVersion: 0 });
+      const list = (await api('decks')).decks;
+      const saved = list.find(d => d.id === candidate.id);
+      if (!saved || JSON.stringify({...saved, version:0}) !== JSON.stringify(candidate))
+        throw new Error('副本尚未確認保存，請重試；原課程未變更。');
+      setDecks(list); copiedSnapshot.current = JSON.stringify(saved); select(saved);
+      setMessage('副本已儲存並確認 · 可獨立修改'); setCopySource(null); copyAttempt.current = null;
+    } catch (err) { setError(err.message); }
+    finally { copyLock.current = false; setCopyBusy(false); }
   }
   function create(name) {
     const title=courseName(name);
@@ -1712,11 +1761,12 @@ export default function LiveApp() {
               <h1>讓每一頁，都有回應。</h1>
               <p>先準備教材，再帶著全班一起學習。</p>
             </div>
-            <button className="lh-primary" disabled={cloudMode&&!loaded.current} onClick={()=>setNaming(true)}>
+            <button className="lh-primary" disabled={copyBusy||(cloudMode&&!loaded.current)} onClick={()=>{setCopySource(null);copyAttempt.current=null;setNaming(true);}}>
               ＋ 建立互動課程
             </button>
           </div>}
           {!deck&&naming&&<CourseName create onSave={create} onCancel={()=>setNaming(false)}/>}
+          {!deck&&copySource&&<div className="lh-copy-panel"><p>複製「{copySource.title}」· {copySource.blocks.length} 頁。輸入副本名稱後開始獨立備課。</p><CourseName key={copySource.id} create value={copySource.title.length <= 197 ? copySource.title+' 副本' : copySource.title} busy={copyBusy} submitLabel="複製並開始備課" onSave={copyCourse} onCancel={()=>{setCopySource(null);copyAttempt.current=null;}}/></div>}
           {!deck&&cloudMode&&<p role="status" className="lh-note">{!loaded.current
             ? '尚未載入雲端課程庫，請先解鎖教師驗證；這不代表課程已刪除。'
             : `固定教師課程庫已載入：${decks.length} 堂課。課程會保存在雲端，可於其他瀏覽器驗證後繼續備課。`}</p>}
@@ -1738,23 +1788,24 @@ export default function LiveApp() {
                 </option>
               ))}
             </select>
-            <button disabled={!lessonId||(cloudMode&&!loaded.current)} onClick={adapt}>
+            <button disabled={copyBusy||!lessonId||(cloudMode&&!loaded.current)} onClick={adapt}>
               建立相容課程副本
             </button>
             <span className="lh-note">原課程繼續由原 Lesson Flow 播放</span>
           </div>
           }
+          {!deck&&loaded.current&&<AssignmentDashboard refreshKey={assignmentRefresh}/>}
           {!deck && loaded.current && <ImageUpgrade decks={decks} onSaved={d => { version.current.set(d.id,d.version); setDecks(all => all.map(x => x.id===d.id?d:x)); }} />}
           {!deck ? (
             <div className="lh-library">
               {decks.map((d) => (
-                <button key={d.id} onClick={() => select(d)}>
-                  <small>
-                    {d.blocks.length} 頁 · v{d.version}
-                  </small>
-                  <h2>{d.title}</h2>
-                  <span>繼續備課 →</span>
-                </button>
+                <article className="lh-course-card" key={d.id}>
+                  <button className="lh-course-open" disabled={copyBusy} onClick={() => {setCopySource(null);select(d);}}>
+                    <small>{d.blocks.length} 頁 · v{d.version}</small>
+                    <h2>{d.title}</h2><span>繼續備課 →</span>
+                  </button>
+                  <button className="lh-course-copy" disabled={copyBusy} aria-label={`複製並重新命名：${d.title}`} onClick={()=>{setNaming(false);setCopySource(copy(d));copyAttempt.current=null;setError('');}}>複製並重新命名</button>
+                </article>
               ))}
             </div>
           ) : (
@@ -1777,6 +1828,7 @@ export default function LiveApp() {
                     ))}
                   </select>
                 </label>
+                <button className="lh-primary as-assign-button" onClick={async()=>{try{await saveQueue.current;if(failedSave.current)throw Error('請先完成儲存。');setAssignDeck({...copy(deck),version:version.current.get(deck.id)||0});}catch(e){setError(e.message);}}}>分配</button>
                 <span role="status">{message}</span>
                 {message==='儲存未完成'&&<button onClick={()=>setDeck({...deck})}>重試儲存</button>}
                 <button
@@ -1823,6 +1875,7 @@ export default function LiveApp() {
           )}
         </>
       )}
+    {assignDeck&&<CreateAssignmentDialog deck={assignDeck} onClose={()=>setAssignDeck(null)} onCreated={()=>setAssignmentRefresh(n=>n+1)}/>}
     </div>
   );
 }

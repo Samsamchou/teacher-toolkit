@@ -1,7 +1,15 @@
 import React from 'react';
+import { sentenceRoles, SENTENCE_ROLES } from './sentence-rebuild.mjs';
 
 // These controls adapt the existing data model; no migration or grading change.
 export function AnswerEditor({ block, patch }) {
+  if(block.type==='sentence')return <section className="lh-answer-editor" aria-label="句子重組設定">
+    <p>正解只供教師設定；學生上方顯示另外填寫的提示文字。每句以空格拆成字卡，標點跟著單字。</p>
+    {block.sentences.map((s,i)=><div className="lh-answer-card" key={i}><label>正確句子 {i+1}<input aria-label={'正確句子 '+(i+1)} maxLength={200} value={s} onChange={e=>patch({sentences:block.sentences.map((v,k)=>k===i?e.target.value:v)})}/></label><label>欄位標示<select aria-label={'句子 '+(i+1)+' 欄位標示'} value={block.sentenceRoles?.[i]||'auto'} onChange={e=>patch({sentenceRoles:block.sentences.map((_,k)=>k===i?e.target.value:block.sentenceRoles?.[k]||'auto')})}><option value="auto">自動：{SENTENCE_ROLES[sentenceRoles(block)[i]]}</option><option value="question">問句</option><option value="answer">答句</option><option value="sentence">句子</option></select></label><button disabled={block.sentences.length===1} onClick={()=>patch({sentences:block.sentences.filter((_,k)=>k!==i),sentenceRoles:block.sentences.map((_,k)=>block.sentenceRoles?.[k]||'auto').filter((_,k)=>k!==i)})}>移除句子 {i+1}</button></div>)}
+    <button disabled={block.sentences.length>=3} onClick={()=>patch({sentences:[...block.sentences,''],sentenceRoles:[...block.sentences.map((_,k)=>block.sentenceRoles?.[k]||'auto'),'auto']})}>＋ 新增正確句子</button>
+    <label>干擾字（每行一個，可留空）<textarea aria-label="干擾字" value={block.distractors.join('\n')} onChange={e=>patch({distractors:e.target.value.split('\n')})}/></label>
+    <small>最多 60 張字卡。各列對應句子順序；可無限重試；第1或第2次提交全對可玩2回合，第3次起全對可玩1回合。</small>
+  </section>;
   if (['choice', 'dropdown','multiselect'].includes(block.type)) {
     return <section className="lh-answer-editor" aria-label="選項與正確答案">
       <p>輸入各個選項，再點選「正確答案」。</p>

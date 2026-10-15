@@ -88,3 +88,4 @@ export function ImageSearch({ onAdd, halfSize = true, inline = false }) {
     </Wrapper>
   );
 }
+

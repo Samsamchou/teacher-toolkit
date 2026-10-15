@@ -81,6 +81,11 @@ export function SlideCanvasView({ block, canvas: supplied, room, onControl, onPl
 }
 export function CanvasQuestionStem({ block }) {
   const elements = block.questionCanvas.elements, images = elements.filter(e => e.kind === 'image'), copy = elements.filter(e => e.kind !== 'image');
+  const videos = block.type === 'choice' ? elements.filter(e => e.kind === 'video' || (e.kind === 'embed' && videoSource(e.url))) : [];
+  if (videos.length) return <section className="lh-canvas lh-question-stem lh-split-stem sc-question-stem lh-choice-video-stem">
+    <div className="lh-stem-copy"><h2>{block.title}</h2>{elements.filter(e => !videos.includes(e)).map(e => <div key={e.id} className={`sc-question-${e.kind}`}>{e.kind === 'text' ? <TextContent element={e} student /> : e.kind === 'embed' ? <EmbedMaterial url={e.url} trim={e.trim} block={block} /> : <CanvasAsset asset={block.media.find(a => a.id === e.assetId)} zoom={e.kind === 'image'} />}</div>)}</div>
+    <div className="lh-stem-videos" aria-label="題目影片">{videos.map(e => <div key={e.id}>{e.kind === 'embed' ? <EmbedMaterial url={e.url} trim={e.trim} block={block} /> : <CanvasAsset asset={block.media.find(a => a.id === e.assetId)} />}</div>)}</div>
+  </section>;
   return <section className={`lh-canvas lh-question-stem lh-split-stem sc-question-stem ${images.length ? '' : 'sc-no-pictures'}`}>
     {images.length > 0 && <div className="lh-stem-pictures">{images.map(e => <div key={e.id}><CanvasAsset asset={block.media.find(a => a.id === e.assetId)} zoom /></div>)}</div>}
     <div className="lh-stem-copy"><h2>{block.title}</h2>{copy.map(e => <div key={e.id} className={`sc-question-${e.kind}`}>{e.kind === 'text' ? <TextContent element={e} student /> : e.kind === 'embed' ? <EmbedMaterial url={e.url} trim={e.trim} block={block} /> : <CanvasAsset asset={block.media.find(a => a.id === e.assetId)} />}</div>)}</div>

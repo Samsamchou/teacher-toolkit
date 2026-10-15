@@ -1,0 +1,184 @@
+{
+  "images": {
+    "baseball": "/bowling/optimized/baseball.118d842e0051b51a.webp",
+    "basketball": "/bowling/optimized/basketball.bf76308b76786dc1.webp",
+    "camouflage": "/bowling/optimized/camouflage.08b3a51bd0a25b3b.webp",
+    "donut": "/bowling/optimized/donut.6e98eec3d7900311.webp",
+    "dragon-eye": "/bowling/optimized/dragon-eye.f85cee3e68487367.webp",
+    "eight-ball": "/bowling/optimized/eight-ball.c7a4c039c3c78dd4.webp",
+    "fire": "/bowling/optimized/fire.4aae27e3a39fcee2.webp",
+    "flowers": "/bowling/optimized/flowers.fb5568740403f409.webp",
+    "lightning": "/bowling/optimized/lightning.8462d58a839d5063.webp",
+    "pin-prone": "/bowling/optimized/pin-prone.5060c7cc1bdac1a5.webp",
+    "pin-tipping": "/bowling/optimized/pin-tipping.519ca58e3be21aab.webp",
+    "pin-upright": "/bowling/optimized/pin-upright.4545522eba0acb65.webp",
+    "pizza": "/bowling/optimized/pizza.2be3ce38bf134a7d.webp",
+    "soccer": "/bowling/optimized/soccer.8e1516d6ab56d88c.webp",
+    "stars": "/bowling/optimized/stars.500a475021f6e9b2.webp",
+    "swirl-candy": "/bowling/optimized/swirl-candy.b97c78a4c0cd6cf2.webp",
+    "watermelon": "/bowling/optimized/watermelon.3d37efd2706c06b6.webp",
+    "zebra": "/bowling/optimized/zebra.fc19d2dcb82f442e.webp"
+  },
+  "sounds": [
+    {
+      "name": "ui_click",
+      "url": "/bowling/optimized/ui_click.6b4a73dbee27a28d.wav",
+      "bytes": 22444
+    },
+    {
+      "name": "aim_tick",
+      "url": "/bowling/optimized/aim_tick.1acef69c10c62e11.wav",
+      "bytes": 24364
+    },
+    {
+      "name": "roll",
+      "url": "/bowling/optimized/roll.70972d17fd8d94d1.wav",
+      "bytes": 115244
+    },
+    {
+      "name": "gutter",
+      "url": "/bowling/optimized/gutter.9cc293a110a9a94e.wav",
+      "bytes": 70444
+    },
+    {
+      "name": "pins_1",
+      "url": "/bowling/optimized/pins_1.9e4f860066d33848.wav",
+      "bytes": 41644
+    },
+    {
+      "name": "pins_2",
+      "url": "/bowling/optimized/pins_2.a0cd0d2ff92d0423.wav",
+      "bytes": 48044
+    },
+    {
+      "name": "pins_3",
+      "url": "/bowling/optimized/pins_3.bcf7e4931aed0f32.wav",
+      "bytes": 51244
+    },
+    {
+      "name": "pins_4",
+      "url": "/bowling/optimized/pins_4.9e81ef4a44ead9f2.wav",
+      "bytes": 57644
+    },
+    {
+      "name": "pins_5",
+      "url": "/bowling/optimized/pins_5.56bd272fd291c5ce.wav",
+      "bytes": 64044
+    },
+    {
+      "name": "pins_6",
+      "url": "/bowling/optimized/pins_6.28a83fd7f682d4d3.wav",
+      "bytes": 69164
+    },
+    {
+      "name": "pins_7",
+      "url": "/bowling/optimized/pins_7.8f1070270e32f056.wav",
+      "bytes": 74284
+    },
+    {
+      "name": "pins_8",
+      "url": "/bowling/optimized/pins_8.e0fbe750ae47976d.wav",
+      "bytes": 80044
+    },
+    {
+      "name": "pins_9",
+      "url": "/bowling/optimized/pins_9.4a8306006c75acd6.wav",
+      "bytes": 85804
+    },
+    {
+      "name": "strike",
+      "url": "/bowling/optimized/strike.cccef11547014c2c.wav",
+      "bytes": 105644
+    },
+    {
+      "name": "spare",
+      "url": "/bowling/optimized/spare.a9b1de95af7cef03.wav",
+      "bytes": 80044
+    },
+    {
+      "name": "score",
+      "url": "/bowling/optimized/score.2c5c7c6e30a4c3f7.wav",
+      "bytes": 54444
+    },
+    {
+      "name": "miss",
+      "url": "/bowling/optimized/miss.9c198ddd8fcf3b55.wav",
+      "bytes": 67244
+    },
+    {
+      "name": "power_collect",
+      "url": "/bowling/optimized/power_collect.608bf1c3b24cae61.wav",
+      "bytes": 60844
+    },
+    {
+      "name": "power_reveal",
+      "url": "/bowling/optimized/power_reveal.670aa334238ceb56.wav",
+      "bytes": 86444
+    },
+    {
+      "name": "card_hit_or_miss",
+      "url": "/bowling/optimized/card_hit_or_miss.2f0d532499fc8da1.wav",
+      "bytes": 92844
+    },
+    {
+      "name": "card_extra_shot",
+      "url": "/bowling/optimized/card_extra_shot.7e583bd9c0e642e1.wav",
+      "bytes": 83244
+    },
+    {
+      "name": "card_no_shot",
+      "url": "/bowling/optimized/card_no_shot.308428d08817975a.wav",
+      "bytes": 76844
+    },
+    {
+      "name": "card_lose_points",
+      "url": "/bowling/optimized/card_lose_points.924dc1efa7b9ea8d.wav",
+      "bytes": 92844
+    },
+    {
+      "name": "card_double_points",
+      "url": "/bowling/optimized/card_double_points.b5fad1b89a913cc4.wav",
+      "bytes": 92844
+    },
+    {
+      "name": "card_swap_points",
+      "url": "/bowling/optimized/card_swap_points.afc570c2dc299ef2.wav",
+      "bytes": 105644
+    },
+    {
+      "name": "winner",
+      "url": "/bowling/optimized/winner.ed96a2c266c46397.wav",
+      "bytes": 320044
+    },
+    {
+      "name": "music",
+      "url": "/bowling/optimized/music.f16a5d3242c802cd.wav",
+      "bytes": 1024044
+    },
+    {
+      "name": "roll_b",
+      "url": "/bowling/optimized/roll.04814417dc68af01.mp3",
+      "bytes": 57824
+    },
+    {
+      "name": "pins_8_score_b",
+      "url": "/bowling/optimized/pins_8_score.a56ec2488bfbbcb3.mp3",
+      "bytes": 66601
+    },
+    {
+      "name": "spare_b",
+      "url": "/bowling/optimized/spare.1283bb90df6961be.mp3",
+      "bytes": 90425
+    },
+    {
+      "name": "swap_points_b",
+      "url": "/bowling/optimized/swap_points.991150b1d5f30591.mp3",
+      "bytes": 284776
+    },
+    {
+      "name": "miss_b",
+      "url": "/bowling/optimized/miss.e8f7cd025f722264.mp3",
+      "bytes": 104844
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+.lh-spell-editor input,.lh-spell-pool button,.lh-spell-pool span,.lh-spell-word button{text-transform:none!important;font-variant:normal}
+.lh-spell-legacy{padding:10px 14px;border:1px solid #dfc582;border-radius:10px;background:#fff7dc;color:#70541b}
+.lh-spell-answer .lh-spell-groups{gap:0;align-items:center}
+.lh-spell-space{display:block;flex:0 0 1.1em;min-width:1.1em;white-space:pre;font-size:28px}

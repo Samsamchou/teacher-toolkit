@@ -296,3 +296,4 @@ test("teacher pause and page changes stop vowel taps without losing prior progre
   controlRoom(room, "teacher", "resume", { revision: room.revision }, 1006);
   assert.deepEqual(snapshot(room, "student", 1007).vowelProgress.selected[0], [1]);
 });
+

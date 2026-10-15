@@ -55,13 +55,16 @@ const {onSchedule}=require('firebase-functions/v2/scheduler');
 exports.liveRetentionV2=onSchedule({region:functionsRegion,schedule:'every day 03:10',timeZone:'Asia/Taipei',timeoutSeconds:300},async()=>{
   if(process.env.LIVE_RETENTION_ENABLED!=='true')return;
   const {cleanupLiveRetention}=await import('./src/live-retention.mjs');
-  return cleanupLiveRetention({db:firestore(),bucket:getStorage().bucket(),enabled:true});
+  const existing=await cleanupLiveRetention({db:firestore(),bucket:getStorage().bucket(),enabled:true});
+  const {cleanupAssignmentRetention}=await import('./src/assignment-retention.mjs');
+  const assignments=await cleanupAssignmentRetention({db:firestore(),bucket:getStorage().bucket(),enabled:true});return {existing,assignments};
 });
 exports.liveV2 = onCall({region:functionsRegion,enforceAppCheck:true,timeoutSeconds:120}, async request => {
   if(process.env.LIVE_V2_ENABLED !== 'true') throw new HttpsError('failed-precondition','雲端 v2 尚未啟用。');
   try {
     const {createLiveService}=await import('./src/live-service.mjs');
     const scope=await liveTeacherScope(request,'live');
+    if(String(request.data?.action||'').startsWith('assignment')){const {createAssignmentService}=await import('./src/assignment-service.mjs');const {rateLimit}=await import('./src/live-image-service.mjs');return await createAssignmentService({db:firestore(),requireTeacher:scope.requireTeacher,rateLimit:(uid,action)=>rateLimit(firestore(),uid,action,30),readRecording:async path=>{const f=getStorage().bucket().file(path+'/audio');const [metadata]=await f.getMetadata();return {base64Audio:(await f.download())[0].toString('base64'),mimeType:metadata.contentType};}})(scope.request);}
     return await createLiveService({db:firestore(),requireTeacher:scope.requireTeacher})(scope.request);
   } catch(error) {if(error instanceof HttpsError)throw error;throw new HttpsError('failed-precondition',error.message);}
 });
@@ -71,6 +74,7 @@ exports.liveAudioV2 = onCall({region:functionsRegion,enforceAppCheck:true,timeou
   try {
     const {createAudioWorkflow,geminiScorer}=await import('./src/live-audio.mjs');
     const {audioRepository,audioStorage}=await import('./src/live-audio-repository.mjs');
+    if(request.data?.assignment===true){const {assignmentAudioRepository}=await import('./src/assignment-audio-repository.mjs');const run=createAudioWorkflow({repository:assignmentAudioRepository(firestore(),{revision:request.data.revision}),pathPrefix:'assignmentAudioV1',storage:audioStorage(getStorage().bucket()),score:geminiScorer({key:liveAiSecret.value(),model:process.env.LIVE_AI_MODEL,enabled:true})});const result=await run({...request.data,uid});return {status:result.status,attemptId:result.attemptId,result:result.result};}
     const run=createAudioWorkflow({repository:audioRepository(firestore()),storage:audioStorage(getStorage().bucket()),score:geminiScorer({key:liveAiSecret.value(),model:process.env.LIVE_AI_MODEL,enabled:true})});
     const result=await run({...request.data,uid});
     return {status:result.status,result:result.result,best:result.best,passed:result.passed,attemptId:result.attemptId,expiresAt:result.expiresAt};

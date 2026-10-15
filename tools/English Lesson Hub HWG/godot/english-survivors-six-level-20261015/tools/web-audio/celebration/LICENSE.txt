@@ -1,0 +1,12 @@
+Victory celebration mix
+
+Sources released under CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+
+Win Fanfare by gchoc / Graciano Choc
+https://opengameart.org/content/win-fanfare
+
+Well Done by qubodup
+https://opengameart.org/content/well-done
+Author changed license to CC0 on 2024-10-05. The original filename still contains CCBY3.
+
+Edited for a 7.8-second victory melody and applause. Source-page snapshots and original hashes are retained in project QA; this file and sources.json accompany the web and editable project packages.

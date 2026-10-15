@@ -1,4 +1,5 @@
 // Presentation only: never recalculate or overwrite historical grades.
+import { sentenceRowsText } from './sentence-rebuild.mjs';
 import { requiresMastery } from './mastery.mjs';
 export const reviewLabels = {full:'全對',partial:'部分答對',wrong:'答錯',missing:'未作答',pending:'待教師評分',ungraded:'已提交・不計分',unknown:'已提交・評分資料不足'};
 export function answerStatus(block, response) {
@@ -38,12 +39,19 @@ export function responseFeedback(block, response) {
     ? response.rewardPass ? 'full' : response.grade.status === 'ungraded' || response.grade.max === 0 ? 'wrong' : answerStatus(block, response)
     : answerStatus(block, response);
   return ['full', 'partial', 'wrong'].includes(outcome)
-    ? { attemptId: response.attemptId, outcome, ...(objective ? {mastery:true} : {}) }
+    ? { attemptId: response.attemptId, outcome, ...(block.type==='sentence'?{questionType:'sentence'}:{}), ...(objective ? {mastery:true} : {}) }
     : null;
 }
 export function answerText(block, answer) {
   if(answer===undefined||answer===null)return '未作答';
   if(block && ['choice','multiselect'].includes(block.type))return (Array.isArray(answer)?answer:[answer]).map(i=>`${String.fromCharCode(65+Number(i))}. ${block.options?.[i]??'未知選項'}`).join('、');
+  if(block?.type==='spell'){
+    const letters=(Array.isArray(answer)?answer:[]).map(id=>block.spellTiles.find(t=>t.id===id)?.text||'?');
+    const groups=block.spellGroups||String(block.spellingAnswer||'').normalize('NFKC').trim().split(/\s+/).map(word=>word.length);
+    if(groups.reduce((n,size)=>n+size,0)!==letters.length)return letters.join('');
+    let offset=0;return groups.map(size=>{const word=letters.slice(offset,offset+size).join('');offset+=size;return word;}).join(' ');
+  }
+  if(block?.type==='sentence')return sentenceRowsText(block,answer).join(' / ');
   if(block?.type==='order')return answer.join(' → ');
   if(block?.type==='category')return block.items.map((v,i)=>`${v}：${block.groups?.[answer[i]]??'未分類'}`).join('；');
   if(block?.type==='label'&&block.anchors)return block.anchors.map((v,i)=>`${i+1}：${block.labels.find(l=>l.id===answer[v.id])?.text??'未填'}`).join('；');

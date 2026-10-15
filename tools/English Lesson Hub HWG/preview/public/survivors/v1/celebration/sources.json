@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-10-15T09:25:37.825314+00:00",
+  "sources": [
+    {
+      "title": "win-fanfare",
+      "author": "gchoc / Graciano Choc",
+      "page": "https://opengameart.org/content/win-fanfare",
+      "download": "https://opengameart.org/sites/default/files/winmelody.ogg",
+      "license": "CC0-1.0",
+      "licensePage": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "2148effe834a4d70f0fc2aad0accb1afb4385760b30421b6e0c4b866c9e0a3b3",
+      "bytes": 359683
+    },
+    {
+      "title": "well-done",
+      "author": "qubodup",
+      "page": "https://opengameart.org/content/well-done",
+      "download": "https://opengameart.org/sites/default/files/Well%20Done%20CCBY3.ogg",
+      "license": "CC0-1.0",
+      "licensePage": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sha256": "8ef5cdf2323ce9efd19f5553757c607ecb57647bd568316958472ab6b9048dfc",
+      "bytes": 44069
+    }
+  ],
+  "note": "Well Done author page explicitly changed license to CC0 on 2024-10-05; old CCBY3 filename retained.",
+  "output": "victory-applause",
+  "durationSeconds": 7.8,
+  "sampleRate": 44100,
+  "channels": 2,
+  "filter": "[0:a]atempo=1.8,atrim=0:7.4,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.04,afade=t=out:st=6.3:d=1.1,volume=0.8[m];[1:a]atrim=0:4,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.03,afade=t=out:st=3.2:d=0.8,volume=0.65,adelay=3700|3700[p];[m][p]amix=inputs=2:normalize=0:duration=longest,loudnorm=I=-18:TP=-1.5:LRA=8,aresample=44100,apad,atrim=0:7.8,afade=t=out:st=7.2:d=0.6[a]",
+  "files": [
+    {
+      "name": "victory-applause.mp3",
+      "bytes": 78138,
+      "sha256": "da54345a5a91114f0cebe06449ced58ce17d04bd8fc78b8eb38ecebf819fad83"
+    },
+    {
+      "name": "victory-applause.ogg",
+      "bytes": 83247,
+      "sha256": "d246fd338d3e29febf608adacbbec4c82f44b280f2bc1aaf888aa6cb5cda725e"
+    }
+  ]
+}

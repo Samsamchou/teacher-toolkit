@@ -136,6 +136,23 @@ test("concurrent audio retries call AI at most once", async () => {
   assert.ok(r.some((v) => v.status === "fulfilled"));
   assert.equal(f.calls(), 1);
 });
+test("missing audio or score storage prevents publishing a graded response; saving retry does not rescore", async () => {
+  for (const file of ["audio", "score.json"]) {
+    const f = fixture();
+    let unavailable = true, finalized = 0;
+    const exists = f.storage.exists, finalize = f.repository.finalize;
+    f.storage.exists = async path => !(unavailable && path.endsWith('/' + file)) && exists(path);
+    f.repository.finalize = async (...args) => { finalized++; return finalize(...args); };
+    const run = createAudioWorkflow(f);
+    await assert.rejects(run(f.input), /保存尚未完成/);
+    assert.equal(finalized, 0);
+    assert.notEqual((await f.repository.read()).status, "complete");
+    unavailable = false;
+    assert.equal((await run(f.input)).status, "complete");
+    assert.equal(finalized, 1);
+    assert.equal(f.calls(), 1);
+  }
+});
 test("ambiguous AI outcome is not automatically re-evaluated", async () => {
   const f = fixture();
   let calls = 0;

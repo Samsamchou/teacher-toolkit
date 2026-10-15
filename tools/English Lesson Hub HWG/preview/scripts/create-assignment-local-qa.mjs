@@ -1,0 +1,6 @@
+// Explicit synthetic fixture for isolated localhost QA only; no Firebase access.
+import fs from 'node:fs/promises';import path from 'node:path';import {newBlock,validateDeck} from '../src/live/domain.mjs';import {parityBlock} from '../src/live/parity.mjs';
+if(process.argv[2]!=='--local-fixture')throw Error('Requires explicit --local-fixture');
+const filename=path.resolve('.live-lab/state.json'),state=JSON.parse(await fs.readFile(filename,'utf8')),teacher=Object.keys(state.decks).find(id=>state.decks[id]?.some(d=>d.title==='本機驗收範本 35 題'));if(!teacher)throw Error('Create the local 35-question fixture through the UI first');
+const blocks=['blank','dropdown','drag','sentence','draw','open','cloud','category','multiselect','order'].map(type=>{let b=['sentence'].includes(type)?newBlock(type):parityBlock(newBlock(type));b.title='混合驗收 '+type;b.seconds=0;b.points=type==='cloud'?0:10;if(type==='sentence')b.sentences=['I like cats.'];return b;});
+const deck={id:crypto.randomUUID(),title:'本機混合題型驗收 10 題',version:1,blocks};validateDeck(deck);state.decks[teacher].push(deck);await fs.writeFile(filename+'.fixture.tmp',JSON.stringify(state));await fs.rename(filename+'.fixture.tmp',filename);console.log('Synthetic localhost fixture saved:',deck.title);

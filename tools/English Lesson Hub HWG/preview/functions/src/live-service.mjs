@@ -23,6 +23,7 @@ export function createLiveService({ db, requireTeacher, now = Date.now }) {
     if (!uid || request.auth.token?.firebase?.sign_in_provider !== "anonymous")
       throw new Error("請先登入匿名工作階段。");
     const { action, code, payload = {} } = request.data || {};
+    if(String(action||'').startsWith('assignment')){const {createAssignmentService}=await import('./assignment-service.mjs');return createAssignmentService({db,requireTeacher,now})(request);}
     const teacherActions = [
       "decks",
       "saveDeck",

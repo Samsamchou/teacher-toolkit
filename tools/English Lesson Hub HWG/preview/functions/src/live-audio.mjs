@@ -102,6 +102,7 @@ export function createAudioWorkflow({
   repository,
   storage,
   score,
+  pathPrefix = "liveAudioV2",
   now = Date.now,
 }) {
   return async function assess({
@@ -138,7 +139,8 @@ export function createAudioWorkflow({
       expiresAt: expiryMonth(now()).getTime(),
     };
     let attempt = await repository.reserve(identity);
-    const path = `liveAudioV2/${uid}/${attemptId}`;
+    if(!["liveAudioV2","assignmentAudioV1"].includes(pathPrefix))throw new Error("錄音儲存範圍無效。");
+    const path = `${pathPrefix}/${uid}/${attemptId}`;
     if (attempt.status === 'complete') {
       if(!await storage.exists(`${path}/audio`)||!await storage.exists(`${path}/score.json`))throw new Error('保存資料不完整，請教師查核；不會重新評分。');
       return attempt;
@@ -180,6 +182,10 @@ export function createAudioWorkflow({
       }
     }
     result = validateScore(result);
+    // Do not publish a graded room response until both durable files exist.
+    if (!(await storage.exists(`${path}/audio`)) ||
+        !(await storage.exists(`${path}/score.json`)))
+      throw new Error("保存尚未完成，請重試保存（不重新評分）。");
     await repository.finalize(attemptId, uid, result, path);
     const stored = await repository.read(attemptId, uid);
     const savedAudio = await storage.exists(`${path}/audio`);

@@ -1,0 +1,21 @@
+{
+  "generator": "Codex built-in ImageGen, explicitly requested by user",
+  "endpoint": null,
+  "model": null,
+  "request_id": null,
+  "usage": null,
+  "quality": "tool controlled",
+  "created_at": "2026-10-15T08:52:51.113407",
+  "output": "characters.png",
+  "size": [
+    1254,
+    1254
+  ],
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "sha256": "0743c804425bf7b2fe2adc7248c1df86611605bd56cd351530d561423796c734",
+  "prompt_file": "characters.prompt.txt",
+  "prompt": "Use case: stylized-concept. Actual transparent game sprite atlas, square 1024x1024, exact 2 by 2 equal cell layout with no visible grid. Each subject stays COMPLETELY inside its own 512x512 cell, centered, ample transparent margin 70 pixels around every cell edge. Four separate exquisite 2.5D storybook RPG characters viewed from elevated 3/4 top-down, matching enchanted emerald forest golden sunlight. TOP LEFT: adorable young forest wizard hero, teal hooded cloak, golden trim, brown boots, holding small luminous amber crystal staff, full body facing slightly down and right. TOP RIGHT: friendly mischievous round jade leaf slime enemy with two expressive amber eyes and sprout crown. BOTTOM LEFT: small violet mushroom creature enemy with stubby feet and luminous spotted mushroom cap. BOTTOM RIGHT: tiny hovering blue forest wisp creature with leafy ears, luminous cyan core, cute face. Premium detailed hand-painted fantasy mobile-game rendering, clear silhouettes at small sizes, rich warm/cool contrast, magical rim highlights. NO ground platforms, no shadows extending beyond subject, NO labels, NO letters, NO frame, NO grid, NO watermark. True alpha transparency everywhere outside the four isolated characters. Do not add objects in empty margins."
+}
