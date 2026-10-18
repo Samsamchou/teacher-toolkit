@@ -1,0 +1,601 @@
+[
+ {
+  "file": "S01-03_車窗揮手.png",
+  "storyboard_rows": "分鏡 1–3",
+  "content": "兩人從車窗探頭；小晨揮手、小哲比讚",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXQQTHr8",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "f4229846fb0541791553d505b4d2c7a4844fb4c89a3565850aa3a731c4588973",
+  "qa": "2026-10-18 改畫成集集線現行的 DR1000 柴油客車（黃色車頭、橘紅 V 形斜紋、不鏽鋼車身加橘色腰帶），依維基共享資源 DR1000 照片描述。兩人與設定圖一致。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "previous_version": "superseded/S01-03_車窗揮手.png"
+ },
+ {
+  "file": "S04-07_月台小火車.png",
+  "storyboard_rows": "分鏡 4、7",
+  "content": "濁水溪旁月台的藍白小火車",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXaXoHS4",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "1ba26edc6e8ad4c7b489bccb2d87013e800223ff0bfbc6cd7afb742304c0ac94",
+  "qa": "2026-10-18 改畫成集集線現行的 DR1000 柴油客車（黃色車頭、橘紅 V 形斜紋、不鏽鋼車身加橘色腰帶），依維基共享資源 DR1000 照片描述。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "previous_version": "superseded/S04-07_月台小火車.png"
+ },
+ {
+  "file": "S05-10-37_路線底圖.png",
+  "storyboard_rows": "分鏡 5、10、37",
+  "content": "濁水溪谷手繪地圖底圖",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXFApPSw",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "6f1c2314615a30098e79893b6675bd230c680b30390ff7a8a74a408f8d6f56ee",
+  "qa": "通過：左邊平原、右邊山區、濁水溪穿過，沒有任何文字。路線、五個站點和站名由程式畫上（只畫五站）。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S06_百年前運建材.png",
+  "storyboard_rows": "分鏡 6",
+  "content": "百年前小火車運建材，右上日月潭與發電廠",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXIKxKts",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "dc6dbcade93a4ef3d055cf24bb1480b024d5547f46d716e827c3369f4ce9f74d",
+  "qa": "通過：老照片色調、建材車廂、山上的湖和發電廠水管都看得出來。「一百多年前」字卡由程式加上。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S08_二水車站-整修後.png",
+  "storyboard_rows": "分鏡 8",
+  "content": "2025 年 12 月整修後的二水車站外觀",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXNFdS8g",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "5c8fc7c37d2cda1fb569cd878b0dc968b73f84eb2005817adc1781076d9a7ad5",
+  "qa": "通過：米白牆、芥末黃飾帶、白色圓柱黃色柱腳、牛眼窗、整排石階、站前沒有花圃，屋頂上沒有大招牌，和整修後照片相符。右上的 4 個小方塊會由程式換成「二水車站」站名。顏色比實景的橘黃略偏黃。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S11_蒸汽火車加水維修.png",
+  "storyboard_rows": "分鏡 11",
+  "content": "以前蒸汽火車在水塔下加水、工人檢查車輪",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXD6NW9Y",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "96bc573aedd4cac798d0a88526b376726ea67eb6c1f4bbe5f9e816004c56f736",
+  "qa": "通過：水塔、水管加水、工人拿扳手都看得出來，舊時代色調。人物較小，手部細節在影片尺寸不明顯。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S12_CT278蒸汽女王-公園.png",
+  "storyboard_rows": "分鏡 12",
+  "content": "CT278 在戶外公園（無屋頂），旁邊是台糖小火車頭；兩人拍照、指著火車",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXKtQLLU",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "5da4ca9daf6ab9e819e91f24eb414fb9b8ee3d5644121c5510c7dd3d008a391b",
+  "qa": "通過：兩人與設定圖一致；火車頭有白邊除煙板、紅心白圈動輪、紅色連桿、白色排障器；旁邊的小火車頭表現出大小對比；木棧道和戶外環境和現址照片相符。車頭紅色號碼牌由程式寫上「CT278」，皇冠和「蒸汽女王」字樣也由程式加上。已依老師要求把煙囪的煙用天空顏色蓋掉（原圖另存為 S12_CT278蒸汽女王-公園-原始有煙.png）。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S13-14_源泉車站.png",
+  "storyboard_rows": "分鏡 13、14",
+  "content": "源泉小站：單一月台、綠色鋼架雨棚、木長椅、空白站名牌",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXe-oY4M",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "688e4f36b3b67c0401a2da15794eb8666c2da8eda55a2cc8419bb31e38f9deab",
+  "qa": "通過：和實景照片的單月台、綠色鋼柱雨棚相符。站名牌由程式寫上「源泉」，再做翻牌成「鼻仔頭」的動畫。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S15_小哲疑問.png",
+  "storyboard_rows": "分鏡 15",
+  "content": "小哲在月台抓頭、歪頭疑問",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXSKjkvo",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "565fe520855ee34154712fd13f321f9d254caeca3270ba298c34c9fe14c26c82",
+  "qa": "通過：和設定圖一致；右上留白，問號由程式加上。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S16_八堡圳源頭取水口.png",
+  "storyboard_rows": "分鏡 16",
+  "content": "濁水溪旁的水圳取水口、閘門、水道流向稻田",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXbJAYMI",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "0163b313712d69c90b3c03e8293bf5cf7831a72a0ac8acf3aa93a8f4b06f3fec",
+  "qa": "通過：混凝土閘門、步道欄杆、水流進水道都清楚；左上留白放箭頭和「八堡圳源頭」標示（程式）。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S17_古早開水圳.png",
+  "storyboard_rows": "分鏡 17",
+  "content": "三百年前農民挑土、砌石開水圳",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXZXN_I4",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "5e201c286a2090666a7bd170be001164d34e3064c91b9285834629d3f70c22e3",
+  "qa": "通過：古早服裝、斗笠、扁擔、砌石水道、稻田都看得出來；「台灣最古老的水圳之一」徽章由程式加上。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S19_水圳旁拍手.png",
+  "storyboard_rows": "分鏡 19",
+  "content": "兩人在水圳旁拍手",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXeSgzhs",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "3c9f1712f10f256e79b88beba1984480b26f7feb7127a9609aa06563486a36d3",
+  "qa": "通過：兩人與設定圖一致，各自雙手合掌拍手；上方留白放「源」「泉」大字（程式）。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S20-22_集集車站正面.png",
+  "storyboard_rows": "分鏡 20、22",
+  "content": "集集車站正面，無人物",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXSap4jo",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "116fcdfb340ef6744cfa46bbad465d4bbe6cc4773997c85b297a6e735916beb4",
+  "qa": "通過：單層日式木造、深灰瓦頂、米白木板牆、木柱雨庇、拱形門廊，和實景相符。門廊招牌畫成 3 塊（實景 4 塊），會由程式畫上 4 塊招牌寫「集集車站」。分鏡 22 用這張做地震搖晃、歪斜的動畫。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S21_檜木與木紋.png",
+  "storyboard_rows": "分鏡 21",
+  "content": "左：檜木木板木紋；右：山林裡的紅檜",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXWcVW7U",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "86ee1ce7123654ea34b46965387a04395bd10e054f608c68568361851e7e12f9",
+  "qa": "通過：木紋清楚、右邊是高大檜木；右下留白放「快 100 歲」字卡（程式）。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S23_集集車站修復.png",
+  "storyboard_rows": "分鏡 23",
+  "content": "工人搭鷹架、裝新木板、用水平儀檢查柱子",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXRq8Vg8",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "09f7ee3cff271d52dc87e0925c6bdcc56a24a46062c5338ed26ed611a184144f",
+  "qa": "通過：用分鏡 20 的車站當參考圖，建築一致；修復動作清楚。前兩版（建築不像、修復太小）不採用。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S24a_集集老街.png",
+  "storyboard_rows": "分鏡 24 第 1 鏡",
+  "content": "集集老街店家、小吃攤、香蕉、遠處石造拱門",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXaNjh7s",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "a15f085c2e58cc29319b2bbc19b5265692d3e2bea1a94a81a38084ef8b2d6810",
+  "qa": "通過：招牌都是空白，沒有亂碼字；熱鬧但不擁擠。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S24b_綠色隧道騎車.png",
+  "storyboard_rows": "分鏡 24 第 2 鏡",
+  "content": "綠色隧道下兩人騎腳踏車，旁邊有鐵軌",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXXv47oE",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "cc9f9a952e026e0a4aa60242eab533519e7d439074569f51dab3db9eebcae257",
+  "qa": "通過：樟樹隧道、旁邊鐵軌、陽光灑落；兩人戴安全帽（小哲改戴安全帽、沒戴站務員帽），其他服裝配件和設定圖一致；頭髮有被風吹動。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S25_水里車站.png",
+  "storyboard_rows": "分鏡 25",
+  "content": "水里車站外觀：兩層樓、粉米色、中央山牆與圓窗、大階梯、柏樹與棕櫚、後方山坡",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXX2OGRk",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "63d9d0dd85f7018fdb0c95a6f26bbeffe29a7257e8cdf17a7edb5e611156bdec",
+  "qa": "通過：和實景照片的樣式相符（集集線各站外觀改裝要到 2027 年，現在仍是這個樣子）。站名由程式加上。畫面比實景稍寬大。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S26_水裡坑熱鬧山城.png",
+  "storyboard_rows": "分鏡 26",
+  "content": "以前的水里山城：公車、挑香蕉的人、手推車、火車進站",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXXhD7pY",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "5c3d423a363a3d4a602953f26960a4523c1ebf839e8a26baf92f9e4eb289c692",
+  "qa": "通過：熱鬧但不擁擠，招牌空白；左上「水裡坑」舊站牌由程式加上。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S27_登山客往玉山.png",
+  "storyboard_rows": "分鏡 27",
+  "content": "以前的登山客背背包、拿登山杖走山路，遠方是玉山",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXbV-f28",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "d1ac299c7684568ada3215a0f8f1c1ab1d6719d725124d99ebc248af4a5082ee",
+  "qa": "通過：舊時代色調，玉山主峰清楚；地圖箭頭 水里 → 玉山由程式加上。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S28_車窗看玉山.png",
+  "storyboard_rows": "分鏡 28",
+  "content": "從車窗看出去，火車轉彎、雲散開露出玉山",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXdeuEq0",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "865d54f65b020f2e7760f1dd095110797f37bfc1a8bc0aae9d4954d204d42c85",
+  "qa": "通過：車窗視角、彎道、溪谷、玉山主峰都有；雲散開的動作由程式做。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S29_發電廠.png",
+  "storyboard_rows": "分鏡 29",
+  "content": "溪邊發電廠、山坡上的大水管、輸電塔",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXTlX8qw",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "59ce8c89435a9446c491f0bfc3ba7f7e7e8feb5f10ec949e0518b888f458c174",
+  "qa": "通過：「大觀」「明湖」標示由程式加上，輸電塔亮燈由程式做。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S30_吃枝仔冰.png",
+  "storyboard_rows": "分鏡 30",
+  "content": "兩人在冰店前吃枝仔冰",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXfILU5I",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "89c5644ad80d435ffa6c9a8c4d92d31aa8432c9efeebaa3abd14381c6b39c63c",
+  "qa": "通過：兩人和設定圖一致；小晨咬紅豆口味、小哲舉著鳳梨口味；手指正確。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S31_車埕車站.png",
+  "storyboard_rows": "分鏡 31",
+  "content": "車埕車站：紅褐色瓦頂、深色木造、木柱月台、草坪、後方山壁",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXe-O3dc",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "b92f97cdac0dfcde86e833ef94c79ac788d20ac36a682843d11b000a1a79a332",
+  "qa": "通過：和實景照片相符。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S32_軌道終點車擋.png",
+  "storyboard_rows": "分鏡 32",
+  "content": "軌道盡頭紅白車擋，後方是車埕車站",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXQ7cdts",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "8b3cb355e2d3a303d98171c14b7354a60063cf90aadb8d61a6a971e29624e4a0",
+  "qa": "通過：第一版背後是歐洲木屋，已用分鏡 31 的車埕車站當參考圖重做；地圖上「終點」由程式加上。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S33_埕是空地.png",
+  "storyboard_rows": "分鏡 33",
+  "content": "山谷裡的大空地，幾條鐵軌和停放的車廂",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXTs8Fo8",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "4b783527edea744628441e9a10ed0d32df2dcc46f13b01417c2153ecdad46f59",
+  "qa": "通過：空地明顯，上方留白放「埕＝空地」大字（程式）。山景稍偏高山針葉林。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S34_木材集散地.png",
+  "storyboard_rows": "分鏡 34",
+  "content": "以前蒸汽火車載木頭進木材小鎮，工人戴斗笠搬木頭",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXRXgcek",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "cccf0fba1ca0a9fbf9087da937418c62dc2dab61d1c59781c1292fcfaabbef92",
+  "qa": "通過：熱鬧的木材集散地，人物服裝是台灣早期樣子。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S35a_貯木池以前.png",
+  "storyboard_rows": "分鏡 35 第 1 鏡",
+  "content": "以前：貯木池漂滿木頭，天車吊木頭，工人用竹竿推木頭",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXawhnIU",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "206cb8c736d53a49997c6d229d3dea150a3d7769d40532d1670d7dbc736a7d32",
+  "qa": "通過：第一版人物和建築像美國西部，已用分鏡 35 第 2 鏡當參考圖重做，水池和天車與現在的樣子一致，方便做「以前 → 現在」的轉場。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S35b_貯木池現在生態池.png",
+  "storyboard_rows": "分鏡 35 第 2 鏡",
+  "content": "現在：生態池、睡蓮、白鷺、鴨子、保留的天車",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXWAzTXQ",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "863ecb0725228374811cb191cfa3036d02da7ef1687f688ddfe9b1671bfb4959",
+  "qa": "通過：天車保留、生態池清楚。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S36_木業展示館故事書.png",
+  "storyboard_rows": "分鏡 36",
+  "content": "木業展示館：木頭玩具、木雕，中間打開的木頭故事書",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXRjCeeY",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "f809382aa4a7bcccb8fdf1b6d4b6f158bf0c11ce35912029c8175883f3f408ff",
+  "qa": "通過：溫暖的故事感，書頁上有木頭小火車與小鎮。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18"
+ },
+ {
+  "file": "S38_全線通車剪綵.png",
+  "storyboard_rows": "分鏡 38",
+  "content": "藍白小火車衝破紅色彩帶，月台上的人歡呼、彩紙飛舞",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXY12xRw",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "dfc3b7cda948edcd81e5b1455b0cfcba2c38aa5133ddf997699b1a8db62fdf35",
+  "qa": "2026-10-18 改畫成集集線現行的 DR1000 柴油客車（黃色車頭、橘紅 V 形斜紋、不鏽鋼車身加橘色腰帶），依維基共享資源 DR1000 照片描述。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "previous_version": "superseded/S38_全線通車剪綵.png"
+ },
+ {
+  "file": "S39_全家搭火車.png",
+  "storyboard_rows": "分鏡 39",
+  "content": "一家人（爸媽、阿嬤、兩個孩子）在月台上車，孩子回頭揮手",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXV7lS9Y",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "51b69f561151ac0d2436e26529e6d8b1b6f4ff48d09615c5fe40853814208247",
+  "qa": "2026-10-18 改畫成集集線現行的 DR1000 柴油客車（黃色車頭、橘紅 V 形斜紋、不鏽鋼車身加橘色腰帶），依維基共享資源 DR1000 照片描述。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "previous_version": "superseded/S39_全家搭火車.png"
+ },
+ {
+  "file": "S40_夕陽揮手再見.png",
+  "storyboard_rows": "分鏡 40",
+  "content": "夕陽下的濁水溪，小火車開在溪邊，小晨、小哲在車窗揮手",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXadtHSQ",
+  "size": [
+   1680,
+   944
+  ],
+  "sha256": "0172e598361e888bd9f61156ed05406a43cf42f95969cabeef489626b8aa1fe1",
+  "qa": "2026-10-18 改畫成集集線現行的 DR1000 柴油客車（黃色車頭、橘紅 V 形斜紋、不鏽鋼車身加橘色腰帶），依維基共享資源 DR1000 照片描述。兩人與設定圖一致。",
+  "status": "老師已確認（全部圖片定案 2026-10-18）",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "previous_version": "superseded/S40_夕陽揮手再見.png"
+ }
+]

@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>集集線 2D player</title>
+<style>html,body{margin:0;background:#000}canvas{display:block;width:1920px;height:1080px}</style>
+<canvas id="cv" width="1920" height="1080"></canvas>
+<script src="timeline.js"></script>
+<script src="jiji.js"></script>
+<script src="shots2.js"></script>
+<script>
+// ?nosub=1 為無字幕版。window.renderFrame(T)：T = 全片秒
+window.NOSUB = new URLSearchParams(location.search).get('nosub') === '1';
+loadImages().then(() => document.fonts.ready).then(() => {
+  buildShots(); buildShots2();
+  const c = document.getElementById('cv').getContext('2d');
+  window.renderFrame = T => { c.setTransform(1,0,0,1,0,0); c.globalAlpha = 1; c.filter = 'none'; c.clearRect(0,0,W,H); draw(c, T); };
+  window.DUR = TL.dur; window.READY = true;
+});
+</script>

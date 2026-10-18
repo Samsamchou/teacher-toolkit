@@ -1,0 +1,98 @@
+[
+ {
+  "purpose": "小晨 character sheet",
+  "tool": "canva_generate_image",
+  "tool_note": "教師 2026-10-18 指定本批樣圖改用 Canva AI 生圖（非 Codex 內建 Image Gen）",
+  "canva_media_id": "MAHYXEhJsb8",
+  "original_size": [
+   1680,
+   944
+  ],
+  "sha256_local_preview": "3c4a66cf360365a3625c814db8f1b142512f6cf5f81b3474c9c977029685da90",
+  "prompt_source": "deliverables/19-集集線角色與畫風樣圖規格.md",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "status": "老師已確認角色與畫風；原尺寸檢查：可用；背面圖左右畫反，動畫以正面為準（見 QA-原尺寸檢查.md）",
+  "preview_file": "preview/01-小晨角色設定.jpg",
+  "full_file": "01-小晨角色設定-原尺寸.png",
+  "full_size": [
+   1680,
+   944
+  ],
+  "sha256_full": "c918ce0e61971b7ef055a326a0cbc4f82b5b034867a3d2db85cdcf9a8d76f529",
+  "full_obtained_via": "Canva 暫用設計 DAHYXAoe9b8 匯出 PNG（原尺寸）"
+ },
+ {
+  "purpose": "小哲 character sheet",
+  "tool": "canva_generate_image",
+  "tool_note": "教師 2026-10-18 指定本批樣圖改用 Canva AI 生圖（非 Codex 內建 Image Gen）",
+  "canva_media_id": "MAHYXJP942g",
+  "original_size": [
+   1680,
+   944
+  ],
+  "sha256_local_preview": "dc543fe60efd50dd0062a05f643a0ab5a4bcdc98ea05f3dc7411cb416165ec00",
+  "prompt_source": "deliverables/19-集集線角色與畫風樣圖規格.md",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "status": "老師已確認角色與畫風；原尺寸檢查：可用（見 QA-原尺寸檢查.md）",
+  "preview_file": "preview/02-小哲角色設定.jpg",
+  "full_file": "02-小哲角色設定-原尺寸.png",
+  "full_size": [
+   1680,
+   944
+  ],
+  "sha256_full": "d515b91d60fa67c4df922e77dd12c75b7d55011a32c7067005980a3eaf11a1c7",
+  "full_obtained_via": "Canva 暫用設計 DAHYXAoe9b8 匯出 PNG（原尺寸）"
+ },
+ {
+  "purpose": "style frame 集集車站",
+  "tool": "canva_generate_image",
+  "tool_note": "教師 2026-10-18 指定本批樣圖改用 Canva AI 生圖（非 Codex 內建 Image Gen）",
+  "canva_media_id": "MAHYXJJp9UU",
+  "original_size": [
+   1680,
+   944
+  ],
+  "sha256_local_preview": "c161b7954c3a1065d396b69b2d7632e83dfbf161d721d3d1ae8b972662b03841",
+  "prompt_source": "deliverables/19-集集線角色與畫風樣圖規格.md",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "status": "老師已確認角色與畫風；原尺寸檢查：畫風可用；角色髮色與配件不一致、站房不像真實集集車站，正式素材要修正（見 QA-原尺寸檢查.md）",
+  "preview_file": "preview/03-畫風樣圖-集集車站.jpg",
+  "full_file": "03-畫風樣圖-集集車站-原尺寸.png",
+  "full_size": [
+   1680,
+   944
+  ],
+  "sha256_full": "412f14a15e9eb7f83b5c77f048d758c7f54e624671ec6ab2745a3673e7eced01",
+  "full_obtained_via": "Canva 暫用設計 DAHYXAoe9b8 匯出 PNG（原尺寸）"
+ },
+ {
+  "full_file": "04-畫風樣圖v2-集集車站-原尺寸.png",
+  "purpose": "style frame v2 集集車站（角色設定圖當參考圖）",
+  "tool": "canva_generate_image",
+  "canva_media_id": "MAHYXG12Yp4",
+  "reference_media_ids": [
+   "MAHYXEhJsb8",
+   "MAHYXJP942g"
+  ],
+  "full_size": [
+   1680,
+   944
+  ],
+  "sha256_full": "bc3a8b51dda11ba94a37f0e57d60cb62fd777ef8e7c82a7c8db12c706244a068",
+  "full_obtained_via": "Canva 暫用設計 DAHYXAoe9b8 第 5 頁匯出 PNG",
+  "model": null,
+  "quality": null,
+  "usage": null,
+  "generated_at": "2026-10-18",
+  "status": "原尺寸檢查通過；招牌 5 塊（實景 4 塊）由程式蓋字修正；待老師確認"
+ }
+]

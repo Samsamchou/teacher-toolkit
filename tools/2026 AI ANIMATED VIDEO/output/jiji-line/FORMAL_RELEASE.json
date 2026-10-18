@@ -1,0 +1,17 @@
+{
+ "official": "2d-v1",
+ "accepted_at": "2026-10-18",
+ "files": {
+  "full_1080p": {
+   "path": "2d-v1/renders/集集線五站-2D動畫-v1.mp4",
+   "bytes": 235078377,
+   "sha256": "0e22d632bb183fa4dd5ab3e79ddabe8078930d4a000cdbcbbeebf24daf9b3466"
+  },
+  "preview_720p": {
+   "path": "2d-v1/renders/集集線五站-2D動畫-v1-720p.mp4",
+   "bytes": 26469572,
+   "sha256": "72ff48f7f879cef0ad3ee307416523ea23e31b020640baf6956188a24314be03"
+  }
+ },
+ "acceptance": "2d-v1/qa/teacher-acceptance-2d-v1.json"
+}
