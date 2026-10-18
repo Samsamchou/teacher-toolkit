@@ -1,0 +1,61 @@
+{
+ "fps": 30,
+ "expected_frames": 5164,
+ "scenes": [
+  {
+   "scene": "s00-intro-silent",
+   "frames": 445
+  },
+  {
+   "scene": "s01-taiwan-car-silent",
+   "frames": 207
+  },
+  {
+   "scene": "s02-singapore-metro-silent",
+   "frames": 217
+  },
+  {
+   "scene": "s03-japan-foot-silent",
+   "frames": 243
+  },
+  {
+   "scene": "s04-chorus1-silent",
+   "frames": 459
+  },
+  {
+   "scene": "s05-korea-bus-silent",
+   "frames": 519
+  },
+  {
+   "scene": "s06-chorus2-silent",
+   "frames": 432
+  },
+  {
+   "scene": "s07-uk-train-silent",
+   "frames": 210
+  },
+  {
+   "scene": "s08-usa-scooter-silent",
+   "frames": 431
+  },
+  {
+   "scene": "s09-chant-dance-silent",
+   "frames": 643
+  },
+  {
+   "scene": "s10-finale-silent",
+   "frames": 1358
+  }
+ ],
+ "English": {
+  "file": "How-Do-You-Go-2D-v1-English.mp4",
+  "frames": 5164,
+  "duration": 172.133333
+ },
+ "Listening": {
+  "file": "How-Do-You-Go-2D-v1-Listening.mp4",
+  "frames": 5164,
+  "duration": 172.133333
+ },
+ "scene_frames_sum": 5164
+}

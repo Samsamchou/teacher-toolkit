@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-18",
+  "recorded_at": "2026-10-18T18:14+08:00",
+  "timezone": "Asia/Taipei",
+  "version": "2d-v1",
+  "teacher_accepted": true,
+  "official_release": true,
+  "evidence": "2D v1 全曲可以，定為正式版。",
+  "hash_check": "SHA-256 re-read from disk at acceptance time and matched qa/final-verification-2d-v1.json.",
+  "scope": "Teacher acceptance of the 2D coded animation (Canvas 2D + Playwright, original-song lip-sync, no TTS). V15 3D-rig media, source and QA are preserved unchanged; V15 becomes the previous official version.",
+  "files": [
+    {
+      "file": "How-Do-You-Go-2D-v1-English.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/2d-v1/renders/How-Do-You-Go-2D-v1-English.mp4",
+      "bytes": 149215002,
+      "sha256": "247069bff5943783ec2120b448889c0dc10bc3be58db902e9cba8f0699741b46",
+      "duration_sec": 172.133333,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5164
+    },
+    {
+      "file": "How-Do-You-Go-2D-v1-Listening.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/2d-v1/renders/How-Do-You-Go-2D-v1-Listening.mp4",
+      "bytes": 142720135,
+      "sha256": "3c947dc987a4682cc18a39356e21223fed35814430ed97b520ee2980c44aa1b1",
+      "duration_sec": 172.133333,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5164
+    }
+  ],
+  "review_preview": {
+    "file": "How-Do-You-Go-2D-v1-English-preview720p.mp4",
+    "note": "720p compressed copy for phone viewing; not a teaching edition"
+  },
+  "technical_report": "qa/final-verification-2d-v1.json",
+  "previous_official": "physical-v15/qa/teacher-acceptance-v15.json"
+}

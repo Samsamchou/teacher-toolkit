@@ -1,0 +1,31 @@
+{
+  "model": "gemini-3.8-flash-tts",
+  "note": "Pilot lines for scene s01. 角色聲線為暫定，需教師試聽後確認。Voice picks are provisional.",
+  "voices": {
+    "TW": "Leda",
+    "SG": "Aoede",
+    "JP": "Puck",
+    "KR": "Sulafat",
+    "UK": "Charon",
+    "US": "Zephyr",
+    "NARR": "Achird"
+  },
+  "lines": [
+    {
+      "id": "S01-L1",
+      "scene": "s01-taiwan-car",
+      "who": "TW",
+      "style": "bright, cheerful 10-year-old girl, clear and slow for English learners",
+      "text": "I’m from Taiwan. I go to school by car.",
+      "at": 0.15
+    },
+    {
+      "id": "S01-L2",
+      "scene": "s01-taiwan-car",
+      "who": "TW",
+      "style": "excited, happy, clear",
+      "text": "Here is my school! Here we are!",
+      "at": 4.2
+    }
+  ]
+}

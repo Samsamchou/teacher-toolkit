@@ -1,0 +1,95 @@
+{
+  "song": "How Do You Go",
+  "version": "2d-v1",
+  "status": "teacher_accepted_official",
+  "date": "2026-10-18",
+  "style": "2D coded animation (Canvas 2D), original-song lip-sync, no TTS",
+  "acceptance": "2d-v1/qa/teacher-acceptance-2d-v1.json",
+  "files": [
+    {
+      "file": "How-Do-You-Go-2D-v1-English.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/2d-v1/renders/How-Do-You-Go-2D-v1-English.mp4",
+      "bytes": 149215002,
+      "sha256": "247069bff5943783ec2120b448889c0dc10bc3be58db902e9cba8f0699741b46",
+      "duration_sec": 172.133333,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5164
+    },
+    {
+      "file": "How-Do-You-Go-2D-v1-Listening.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/2d-v1/renders/How-Do-You-Go-2D-v1-Listening.mp4",
+      "bytes": 142720135,
+      "sha256": "3c947dc987a4682cc18a39356e21223fed35814430ed97b520ee2980c44aa1b1",
+      "duration_sec": 172.133333,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5164
+    }
+  ],
+  "previous_official_releases": [
+    {
+      "version": "v15",
+      "status": "teacher_accepted_official",
+      "date": "2026-10-17",
+      "acceptance": "physical-v15/qa/teacher-acceptance-v15.json",
+      "files": [
+        {
+          "file": "How-Do-You-Go-Full-v15-English.mp4",
+          "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/physical-v15/How-Do-You-Go-Full-v15-English.mp4",
+          "bytes": 100442680,
+          "sha256": "7fea905ddb9dfe76152202b4e8dd47b9d54ce3c36b2c4794cd40abfe9b759917",
+          "duration_sec": 172.133333,
+          "width": 1920,
+          "height": 1080,
+          "fps": 60,
+          "frames": 10328
+        },
+        {
+          "file": "How-Do-You-Go-Full-v15-Listening.mp4",
+          "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/physical-v15/How-Do-You-Go-Full-v15-Listening.mp4",
+          "bytes": 117121282,
+          "sha256": "b33dbf611302cbb24cda3efd9278a45c66194be576188dff5285cb52d271a739",
+          "duration_sec": 172.133333,
+          "width": 1920,
+          "height": 1080,
+          "fps": 60,
+          "frames": 10328
+        }
+      ]
+    },
+    {
+      "version": "v13",
+      "status": "teacher_accepted_official",
+      "date": "2026-10-07",
+      "acceptance": "physical-v13/qa/teacher-acceptance-v13.json",
+      "files": [
+        {
+          "file": "How-Do-You-Go-Full-v13-English.mp4",
+          "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/physical-v13/renders/How-Do-You-Go-Full-v13-English.mp4",
+          "bytes": 89306231,
+          "sha256": "279b0768fab39ae1fe0f18ef997435dd2a25a9ddbdcd72cc692f521ecc090c5a",
+          "duration_sec": 172.133333,
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "frames": 5164
+        },
+        {
+          "file": "How-Do-You-Go-Full-v13-Listening.mp4",
+          "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/how-do-you-go/physical-v13/renders/How-Do-You-Go-Full-v13-Listening.mp4",
+          "bytes": 92894129,
+          "sha256": "a6cd1cfc181fc6ae0fe16cbff129262cac4ee404cd7713d6e1848f7497567917",
+          "duration_sec": 172.133333,
+          "width": 1920,
+          "height": 1080,
+          "fps": 30,
+          "frames": 5164
+        }
+      ]
+    }
+  ],
+  "historical_versions_preserved": true
+}
