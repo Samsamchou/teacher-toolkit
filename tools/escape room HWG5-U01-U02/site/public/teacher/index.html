@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>教師後台｜English Mission Quest</title>
+  <link rel="stylesheet" href="teacher.css">
+</head>
+<body>
+  <header class="bar">
+    <a class="back" href="../">← 任務首頁</a>
+    <h1>教師後台 <span>English Mission Quest</span></h1>
+    <button class="btn ghost" id="logout" hidden>登出</button>
+  </header>
+
+  <main id="login" class="login">
+    <form id="loginForm" class="card" autocomplete="off">
+      <h2>輸入六碼通行碼</h2>
+      <input id="code" type="password" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="••••••" aria-label="六碼通行碼" required>
+      <button class="btn primary" type="submit">登入</button>
+      <p class="msg" id="loginMsg" role="status"></p>
+    </form>
+  </main>
+
+  <!-- step 1: days that have answers -->
+  <main id="dates" class="board" hidden>
+    <div class="dates-head">
+      <h2>作答日期</h2>
+      <button class="btn ghost" id="refresh">重新整理</button>
+    </div>
+    <p class="msg" id="datesMsg" role="status"></p>
+    <ul class="date-list" id="dateList"></ul>
+    <p class="note">紀錄保存一年三個月：每筆紀錄在學生最後一次作答後 15 個月自動刪除。</p>
+  </main>
+
+  <!-- step 2: the class list for one day -->
+  <main id="day" class="board" hidden>
+    <section class="controls">
+      <button class="btn ghost" id="backToDates">← 所有日期</button>
+      <h2 id="dayTitle"></h2>
+      <div class="tabs" id="missionTabs" role="tablist"></div>
+      <input id="search" type="search" inputmode="numeric" placeholder="搜尋學號">
+      <select id="sort" aria-label="排序">
+        <option value="student">依學號</option>
+        <option value="firstTry">依第一次答對率（低→高）</option>
+        <option value="retries">依需重試題數（多→少）</option>
+        <option value="updated">依最後更新（新→舊）</option>
+      </select>
+      <button class="btn ghost" id="csv">匯出 CSV</button>
+    </section>
+    <p class="msg" id="dayMsg" role="status"></p>
+    <div class="layout">
+      <section class="list">
+        <table id="table">
+          <thead><tr><th>學號</th><th>狀態</th><th>完成</th><th>第一次答對</th><th>需重試</th><th>戰鬥</th><th>Boss</th><th>最後更新</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+      <aside class="detail" id="detail"><p class="hint">點選左邊的學生，查看結果頁與需要重試的題目。</p></aside>
+    </div>
+  </main>
+
+  <script type="module" src="teacher.js"></script>
+</body>
+</html>

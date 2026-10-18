@@ -1,0 +1,1545 @@
+{
+  "version": "0.1",
+  "title": "Ken and the World Map Mix-Up",
+  "unit": "HWG7 U01+U02",
+  "endingSegment": "SEG-06",
+  "narrationTts": {
+    "provider": "openai",
+    "model": "gpt-4o-mini-tts",
+    "voice": "marin",
+    "speed": 0.8,
+    "format": "mp3",
+    "accent": "American English",
+    "disclosure": "English audio is AI-generated, not a human recording."
+  },
+  "story": {
+    "SEG-01": {
+      "id": "SEG-01",
+      "image": "story/STORY-01-prologue.png",
+      "title": "World Friends Day",
+      "lines": [
+        "Today is World Friends Day at Sunny Hill School.",
+        "Colorful flags hang in the big hall.",
+        "Seven new friends are coming to visit.",
+        "Suddenly, a paper dragon flies into the hall!",
+        "It is Map Gobbler!",
+        "It eats the big world map.",
+        "Now the map is blank!",
+        "Tick flies to Ken.",
+        "\"Let's meet the new friends first!\""
+      ],
+      "gloss": [
+        {
+          "en": "World Friends Day",
+          "zh": "世界朋友日"
+        },
+        {
+          "en": "flag",
+          "zh": "旗子"
+        },
+        {
+          "en": "hall",
+          "zh": "大廳"
+        },
+        {
+          "en": "visit",
+          "zh": "拜訪"
+        },
+        {
+          "en": "dragon",
+          "zh": "龍"
+        },
+        {
+          "en": "world map",
+          "zh": "世界地圖"
+        },
+        {
+          "en": "blank",
+          "zh": "空白的"
+        }
+      ],
+      "requiresListen": true,
+      "tts": {
+        "text": "Today is World Friends Day at Sunny Hill School. Colorful flags hang in the big hall. Seven new friends are coming to visit. Suddenly, a paper dragon flies into the hall! It is Map Gobbler! It eats the big world map. Now the map is blank! Tick flies to Ken. \"Let's meet the new friends first!\"",
+        "path": "audio/narration/SEG-01.mp3"
+      }
+    },
+    "SEG-02": {
+      "id": "SEG-02",
+      "image": "story/STORY-02-welcome.png",
+      "title": "New Friends",
+      "lines": [
+        "More friends come into the hall.",
+        "A boy holds a postcard of a big mountain.",
+        "A girl has a big pan of rice.",
+        "\"Welcome to our school!\" says Ken.",
+        "Tick wants to fill the map again."
+      ],
+      "gloss": [
+        {
+          "en": "postcard",
+          "zh": "明信片"
+        },
+        {
+          "en": "mountain",
+          "zh": "山"
+        },
+        {
+          "en": "pan",
+          "zh": "平底鍋"
+        },
+        {
+          "en": "rice",
+          "zh": "米飯"
+        },
+        {
+          "en": "welcome",
+          "zh": "歡迎"
+        },
+        {
+          "en": "fill",
+          "zh": "填滿"
+        }
+      ],
+      "requiresListen": true,
+      "tts": {
+        "text": "More friends come into the hall. A boy holds a postcard of a big mountain. A girl has a big pan of rice. \"Welcome to our school!\" says Ken. Tick wants to fill the map again.",
+        "path": "audio/narration/SEG-02.mp3"
+      }
+    },
+    "SEG-03": {
+      "id": "SEG-03",
+      "image": "story/STORY-03-mapwall.png",
+      "title": "The Map Wall",
+      "lines": [
+        "Ken and Tick run to the map wall.",
+        "The map has seven empty holes.",
+        "Five more friends wait by the wall.",
+        "Tom is Ken's friend from class.",
+        "Wei, Mina, Lynn and Alan are new.",
+        "\"Let's put the pins back!\" says Tick."
+      ],
+      "gloss": [
+        {
+          "en": "wall",
+          "zh": "牆"
+        },
+        {
+          "en": "empty",
+          "zh": "空的"
+        },
+        {
+          "en": "hole",
+          "zh": "洞"
+        },
+        {
+          "en": "wait",
+          "zh": "等待"
+        },
+        {
+          "en": "pin",
+          "zh": "徽章別針"
+        }
+      ],
+      "requiresListen": true,
+      "tts": {
+        "text": "Ken and Tick run to the map wall. The map has seven empty holes. Five more friends wait by the wall. Tom is Ken's friend from class. Wei, Mina, Lynn and Alan are new. \"Let's put the pins back!\" says Tick.",
+        "path": "audio/narration/SEG-03.mp3"
+      }
+    },
+    "SEG-04": {
+      "id": "SEG-04",
+      "image": "story/STORY-04-routes.png",
+      "title": "The Route Station",
+      "lines": [
+        "Six pins shine on the map now.",
+        "But Map Gobbler eats the route tickets!",
+        "Now nobody can go to school.",
+        "Ken and Tick run to the route station.",
+        "Glowing paths go to every street.",
+        "\"Let's fix the routes!\" says Tick."
+      ],
+      "gloss": [
+        {
+          "en": "shine",
+          "zh": "發光"
+        },
+        {
+          "en": "route",
+          "zh": "路線"
+        },
+        {
+          "en": "ticket",
+          "zh": "票"
+        },
+        {
+          "en": "nobody",
+          "zh": "沒有人"
+        },
+        {
+          "en": "station",
+          "zh": "站"
+        },
+        {
+          "en": "path",
+          "zh": "小路"
+        },
+        {
+          "en": "street",
+          "zh": "街道"
+        }
+      ],
+      "requiresListen": true,
+      "tts": {
+        "text": "Six pins shine on the map now. But Map Gobbler eats the route tickets! Now nobody can go to school. Ken and Tick run to the route station. Glowing paths go to every street. \"Let's fix the routes!\" says Tick.",
+        "path": "audio/narration/SEG-04.mp3"
+      }
+    },
+    "SEG-05": {
+      "id": "SEG-05",
+      "image": "story/STORY-05-echomap.png",
+      "title": "The Echo Map",
+      "lines": [
+        "All the routes glow again!",
+        "Map Gobbler is very angry.",
+        "It flies into the Map Hall.",
+        "Magic map frames float in the air.",
+        "\"Answer my echoes!\" shouts Map Gobbler.",
+        "\"I can do it!\" says Ken."
+      ],
+      "gloss": [
+        {
+          "en": "glow",
+          "zh": "發光"
+        },
+        {
+          "en": "angry",
+          "zh": "生氣的"
+        },
+        {
+          "en": "frame",
+          "zh": "框"
+        },
+        {
+          "en": "float",
+          "zh": "漂浮"
+        },
+        {
+          "en": "echo",
+          "zh": "回聲"
+        },
+        {
+          "en": "shout",
+          "zh": "大喊"
+        }
+      ],
+      "requiresListen": true,
+      "tts": {
+        "text": "All the routes glow again! Map Gobbler is very angry. It flies into the Map Hall. Magic map frames float in the air. \"Answer my echoes!\" shouts Map Gobbler. \"I can do it!\" says Ken.",
+        "path": "audio/narration/SEG-05.mp3"
+      }
+    },
+    "SEG-06": {
+      "id": "SEG-06",
+      "image": "story/STORY-06-ending.png",
+      "title": "The World Map Shines",
+      "lines": [
+        "Ken puts the seven pins on the map.",
+        "The world map shines again!",
+        "All the routes come back, too.",
+        "Map Gobbler is small and calm now.",
+        "It folds a new map for everyone.",
+        "\"Thank you, Ken!\" says Tick.",
+        "Happy World Friends Day!"
+      ],
+      "gloss": [
+        {
+          "en": "come back",
+          "zh": "回來"
+        },
+        {
+          "en": "calm",
+          "zh": "平靜的"
+        },
+        {
+          "en": "fold",
+          "zh": "摺"
+        },
+        {
+          "en": "everyone",
+          "zh": "每個人"
+        }
+      ],
+      "requiresListen": true,
+      "tts": {
+        "text": "Ken puts the seven pins on the map. The world map shines again! All the routes come back, too. Map Gobbler is small and calm now. It folds a new map for everyone. \"Thank you, Ken!\" says Tick. Happy World Friends Day!",
+        "path": "audio/narration/SEG-06.mp3"
+      }
+    }
+  },
+  "battles": [
+    {
+      "id": "B01",
+      "after": 3,
+      "arena": "Welcome Hall",
+      "arenaZh": "歡迎大廳",
+      "seconds": 20,
+      "intro": "Paper Scraps fly out of the blank map!",
+      "rewards": [
+        "Australia Pin",
+        "Boomerang"
+      ]
+    },
+    {
+      "id": "B02",
+      "after": 6,
+      "arena": "Japanese Garden",
+      "arenaZh": "日式庭園",
+      "seconds": 21,
+      "intro": "Paper Cranes fly over the garden!",
+      "rewards": [
+        "Japan Pin",
+        "Spain Pin",
+        "Paper Fan"
+      ]
+    },
+    {
+      "id": "B03",
+      "after": 9,
+      "arena": "Night Market",
+      "arenaZh": "夜市",
+      "seconds": 23,
+      "intro": "Tag Imps hop between the lanterns!",
+      "rewards": [
+        "Taiwan Pin",
+        "Bubble Tea"
+      ]
+    },
+    {
+      "id": "B04",
+      "after": 12,
+      "arena": "Garden City",
+      "arenaZh": "花園城市",
+      "seconds": 24,
+      "intro": "Paper Planes zoom over the fountain!",
+      "rewards": [
+        "Singapore Pin",
+        "UK Pin",
+        "Merlion Splash"
+      ]
+    },
+    {
+      "id": "B05",
+      "after": 15,
+      "arena": "City Crosswalk",
+      "arenaZh": "城市斑馬線",
+      "seconds": 26,
+      "intro": "Rolling Suitcases race across the street!",
+      "rewards": [
+        "USA Pin",
+        "Running Shoes"
+      ]
+    },
+    {
+      "id": "B06",
+      "after": 18,
+      "arena": "Bus Station",
+      "arenaZh": "公車站",
+      "seconds": 27,
+      "intro": "Tag Imps and suitcases fill the stop!",
+      "rewards": [
+        "Bus Pass Shield"
+      ]
+    },
+    {
+      "id": "B07",
+      "after": 21,
+      "arena": "Rainy Street",
+      "arenaZh": "雨天街道",
+      "seconds": 29,
+      "intro": "Umbrella Imps and Puddle Frogs jump in the rain!",
+      "rewards": [
+        "Rain Umbrella"
+      ]
+    },
+    {
+      "id": "B08",
+      "after": 24,
+      "arena": "Metro Station",
+      "arenaZh": "捷運站",
+      "seconds": 30,
+      "intro": "Token Imps roll along the platform!",
+      "rewards": [
+        "Metro Map"
+      ]
+    },
+    {
+      "id": "B09",
+      "after": 27,
+      "arena": "Map Hall",
+      "arenaZh": "地圖大廳",
+      "seconds": 67,
+      "boss": true,
+      "phase": 1,
+      "intro": "Map Gobbler raises its paper shield!",
+      "rewards": [
+        "Echo Map Piece"
+      ]
+    },
+    {
+      "id": "B10",
+      "after": 28,
+      "arena": "Map Hall",
+      "arenaZh": "地圖大廳",
+      "seconds": 67,
+      "boss": true,
+      "phase": 2,
+      "intro": "Map Gobbler spreads its glowing wings! Stay strong, Ken!",
+      "rewards": [
+        "World Map Restored"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "seq": 1,
+      "id": "Q01",
+      "type": "spell",
+      "segment": "SEG-01",
+      "bankId": "S:Australia",
+      "image": "questions/Q01.png",
+      "weekStrip": null,
+      "contextEn": "Tick shows Ken a picture.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "Australia",
+        "distractorLetters": "ek",
+        "groups": [
+          9
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the kangaroo and the opera house.",
+      "hint2En": "The first letter is A.",
+      "correctEn": "Australia. A-u-s-t-r-a-l-i-a.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "Australia. A-u-s-t-r-a-l-i-a.",
+        "path": "audio/feedback/Q01.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 2,
+      "id": "Q02",
+      "type": "drag",
+      "segment": "SEG-01",
+      "bankId": "D01",
+      "image": "questions/Q02.png",
+      "weekStrip": null,
+      "contextEn": "This is Maya. She waves at Ken.",
+      "lines": [
+        {
+          "speaker": "Ken",
+          "text": "Where {1} you from?"
+        },
+        {
+          "speaker": "Maya",
+          "text": "I'm from {2}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "are"
+        },
+        {
+          "id": 2,
+          "answer": "Australia"
+        }
+      ],
+      "distractors": [
+        "is",
+        "am",
+        "India"
+      ],
+      "hint1En": "Look at the poster behind Maya.",
+      "hint2En": "Ask with you: are or is? The kangaroo is a clue.",
+      "correctEn": "I'm from Australia. Maya is from Australia.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "I'm from Australia. Maya is from Australia.",
+        "path": "audio/feedback/Q02.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 3,
+      "id": "Q03",
+      "type": "spell",
+      "segment": "SEG-01",
+      "bankId": "S:Japan",
+      "image": "questions/Q03.png",
+      "weekStrip": null,
+      "contextEn": "Tick shows Ken a new picture.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "Japan",
+        "distractorLetters": "eo",
+        "groups": [
+          5
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the big mountain and the sushi.",
+      "hint2En": "The first letter is J.",
+      "correctEn": "Japan. J-a-p-a-n.",
+      "battleAfter": "B01",
+      "feedbackTts": {
+        "text": "Japan. J-a-p-a-n.",
+        "path": "audio/feedback/Q03.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 4,
+      "id": "Q04",
+      "type": "drag",
+      "segment": "SEG-02",
+      "bankId": "D02",
+      "image": "questions/Q04.png",
+      "weekStrip": null,
+      "contextEn": "Andy has a postcard and a lunch box.",
+      "lines": [
+        {
+          "speaker": "Maya",
+          "text": "Where {1} Andy from?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "He is from {2}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "is"
+        },
+        {
+          "id": 2,
+          "answer": "Japan"
+        }
+      ],
+      "distractors": [
+        "are",
+        "am",
+        "Australia"
+      ],
+      "hint1En": "Look at Andy's postcard and lunch box.",
+      "hint2En": "Andy is one boy: is or are?",
+      "correctEn": "He is from Japan. Andy is from Japan.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "He is from Japan. Andy is from Japan.",
+        "path": "audio/feedback/Q04.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 5,
+      "id": "Q05",
+      "type": "spell",
+      "segment": "SEG-02",
+      "bankId": "S:Spain",
+      "image": "questions/Q05.png",
+      "weekStrip": null,
+      "contextEn": "Look at the big pan and the church.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "Spain",
+        "distractorLetters": "ro",
+        "groups": [
+          5
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the flag and the big pan of rice.",
+      "hint2En": "The first letter is S.",
+      "correctEn": "Spain. S-p-a-i-n.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "Spain. S-p-a-i-n.",
+        "path": "audio/feedback/Q05.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 6,
+      "id": "Q06",
+      "type": "drag",
+      "segment": "SEG-02",
+      "bankId": "D03",
+      "image": "questions/Q06.png",
+      "weekStrip": null,
+      "contextEn": "This is Amy. She shows Ken her food.",
+      "lines": [
+        {
+          "speaker": "Ken",
+          "text": "Where {1} Amy {2}?"
+        },
+        {
+          "speaker": "Maya",
+          "text": "She is from {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "is"
+        },
+        {
+          "id": 2,
+          "answer": "from"
+        },
+        {
+          "id": 3,
+          "answer": "Spain"
+        }
+      ],
+      "distractors": [
+        "are",
+        "to",
+        "Japan"
+      ],
+      "hint1En": "Look at the flag next to Amy.",
+      "hint2En": "Where is ... from? Amy is one girl.",
+      "correctEn": "She is from Spain. Amy is from Spain.",
+      "battleAfter": "B02",
+      "feedbackTts": {
+        "text": "She is from Spain. Amy is from Spain.",
+        "path": "audio/feedback/Q06.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 7,
+      "id": "Q07",
+      "type": "spell",
+      "segment": "SEG-03",
+      "bankId": "S:Taiwan",
+      "image": "questions/Q07.png",
+      "weekStrip": null,
+      "contextEn": "Look at the tall tower and the drink.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "Taiwan",
+        "distractorLetters": "eo",
+        "groups": [
+          6
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the tall tower and the bubble tea.",
+      "hint2En": "The first letter is T.",
+      "correctEn": "Taiwan. T-a-i-w-a-n.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "Taiwan. T-a-i-w-a-n.",
+        "path": "audio/feedback/Q07.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 8,
+      "id": "Q08",
+      "type": "drag",
+      "segment": "SEG-03",
+      "bankId": "D06",
+      "image": "questions/Q08.png",
+      "weekStrip": null,
+      "contextEn": "Ken points at Tom. Tom smiles.",
+      "lines": [
+        {
+          "speaker": "Mina",
+          "text": "Is he from {1}?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "Yes, he {2}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Taiwan"
+        },
+        {
+          "id": 2,
+          "answer": "is"
+        }
+      ],
+      "distractors": [
+        "Japan",
+        "are",
+        "isn't"
+      ],
+      "hint1En": "Look at the tower and the drink behind Tom.",
+      "hint2En": "Tom nods. That means yes.",
+      "correctEn": "Yes, he is. Tom is from Taiwan.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "Yes, he is. Tom is from Taiwan.",
+        "path": "audio/feedback/Q08.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 9,
+      "id": "Q09",
+      "type": "spell",
+      "segment": "SEG-03",
+      "bankId": "S:Singapore",
+      "image": "questions/Q09.png",
+      "weekStrip": null,
+      "contextEn": "Look at the lion and the water.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "Singapore",
+        "distractorLetters": "lu",
+        "groups": [
+          9
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the lion statue with water.",
+      "hint2En": "The first letter is S.",
+      "correctEn": "Singapore. S-i-n-g-a-p-o-r-e.",
+      "battleAfter": "B03",
+      "feedbackTts": {
+        "text": "Singapore. S-i-n-g-a-p-o-r-e.",
+        "path": "audio/feedback/Q09.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 10,
+      "id": "Q10",
+      "type": "drag",
+      "segment": "SEG-03",
+      "bankId": "D05",
+      "image": "questions/Q10.png",
+      "weekStrip": null,
+      "contextEn": "This is Wei. He stands by a lion statue.",
+      "lines": [
+        {
+          "speaker": "Tom",
+          "text": "{1} he from Taiwan?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "No, he {2}. He's from {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Is"
+        },
+        {
+          "id": 2,
+          "answer": "isn't"
+        },
+        {
+          "id": 3,
+          "answer": "Singapore"
+        }
+      ],
+      "distractors": [
+        "Are",
+        "is",
+        "Japan"
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "He: is or isn't? Then find the lion.",
+      "correctEn": "No, he isn't. Wei is from Singapore.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "No, he isn't. Wei is from Singapore.",
+        "path": "audio/feedback/Q10.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 11,
+      "id": "Q11",
+      "type": "drag",
+      "segment": "SEG-03",
+      "bankId": "D04",
+      "image": "questions/Q11.png",
+      "weekStrip": null,
+      "contextEn": "This is Mina. She has a postcard.",
+      "lines": [
+        {
+          "speaker": "Wei",
+          "text": "{1} she from India?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "No, she {2}. She's from {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Is"
+        },
+        {
+          "id": 2,
+          "answer": "isn't"
+        },
+        {
+          "id": 3,
+          "answer": "the UK"
+        }
+      ],
+      "distractors": [
+        "Are",
+        "is",
+        "Spain"
+      ],
+      "hint1En": "Look at the red circle and the postcard.",
+      "hint2En": "She: is or isn't? Look at the big clock tower.",
+      "correctEn": "No, she isn't. Mina is from the UK.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "No, she isn't. Mina is from the UK.",
+        "path": "audio/feedback/Q11.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 12,
+      "id": "Q12",
+      "type": "spell",
+      "segment": "SEG-03",
+      "bankId": "S:the USA",
+      "image": "questions/Q12.png",
+      "weekStrip": null,
+      "contextEn": "Look at the big statue and the flag.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "the USA",
+        "distractorLetters": "kr",
+        "groups": [
+          3,
+          3
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the statue and the flag with stars.",
+      "hint2En": "The first letter is t.",
+      "correctEn": "The USA. T-h-e U-S-A.",
+      "battleAfter": "B04",
+      "feedbackTts": {
+        "text": "The USA. T-h-e U-S-A.",
+        "path": "audio/feedback/Q12.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 13,
+      "id": "Q13",
+      "type": "drag",
+      "segment": "SEG-03",
+      "bankId": "D07",
+      "image": "questions/Q13.png",
+      "weekStrip": null,
+      "contextEn": "This is Lynn. This is Alan.",
+      "lines": [
+        {
+          "speaker": "Mina",
+          "text": "Are they from {1}?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "No, they {2}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "the USA"
+        },
+        {
+          "id": 2,
+          "answer": "aren't"
+        }
+      ],
+      "distractors": [
+        "Japan",
+        "isn't",
+        "are"
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "They: are or aren't?",
+      "correctEn": "No, they aren't. Lynn and Alan aren't from the USA.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "No, they aren't. Lynn and Alan aren't from the USA.",
+        "path": "audio/feedback/Q13.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 14,
+      "id": "Q14",
+      "type": "spell",
+      "segment": "SEG-04",
+      "bankId": "S:on foot",
+      "image": "questions/Q14.png",
+      "weekStrip": null,
+      "contextEn": "Someone walks to the school gate.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "on foot",
+        "distractorLetters": "ea",
+        "groups": [
+          2,
+          4
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the shoes and the footprints.",
+      "hint2En": "The first letter is o.",
+      "correctEn": "On foot. O-n f-o-o-t.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "On foot. O-n f-o-o-t.",
+        "path": "audio/feedback/Q14.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 15,
+      "id": "Q15",
+      "type": "drag",
+      "segment": "SEG-04",
+      "bankId": "D10",
+      "image": "questions/Q15.png",
+      "weekStrip": null,
+      "contextEn": "Ken walks to school with his bag.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "{1} {2} you go to school?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "I go to school {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "How"
+        },
+        {
+          "id": 2,
+          "answer": "do"
+        },
+        {
+          "id": 3,
+          "answer": "on foot"
+        }
+      ],
+      "distractors": [
+        "Where",
+        "does",
+        "goes"
+      ],
+      "hint1En": "Look at Ken's feet.",
+      "hint2En": "Ask about the way: Where or How? You: do or does?",
+      "correctEn": "I go to school on foot. Ken walks to school.",
+      "battleAfter": "B05",
+      "feedbackTts": {
+        "text": "I go to school on foot. Ken walks to school.",
+        "path": "audio/feedback/Q15.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 16,
+      "id": "Q16",
+      "type": "spell",
+      "segment": "SEG-04",
+      "bankId": "S:by taxi",
+      "image": "questions/Q16.png",
+      "weekStrip": null,
+      "contextEn": "Look at the yellow car.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "by taxi",
+        "distractorLetters": "eo",
+        "groups": [
+          2,
+          4
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the yellow car. People pay to ride it.",
+      "hint2En": "The first letter is b.",
+      "correctEn": "By taxi. B-y t-a-x-i.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "By taxi. B-y t-a-x-i.",
+        "path": "audio/feedback/Q16.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 17,
+      "id": "Q17",
+      "type": "drag",
+      "segment": "SEG-04",
+      "bankId": "D11",
+      "image": "questions/Q17.png",
+      "weekStrip": null,
+      "contextEn": "Lynn gets out of a yellow car.",
+      "lines": [
+        {
+          "speaker": "Ken",
+          "text": "{1} does Lynn go to school?"
+        },
+        {
+          "speaker": "Tick",
+          "text": "She {2} to school {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "How"
+        },
+        {
+          "id": 2,
+          "answer": "goes"
+        },
+        {
+          "id": 3,
+          "answer": "by taxi"
+        }
+      ],
+      "distractors": [
+        "Where",
+        "go",
+        "on foot"
+      ],
+      "hint1En": "Look at Lynn and the yellow car.",
+      "hint2En": "Lynn is she: go or goes?",
+      "correctEn": "She goes to school by taxi.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "She goes to school by taxi.",
+        "path": "audio/feedback/Q17.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 18,
+      "id": "Q18",
+      "type": "spell",
+      "segment": "SEG-04",
+      "bankId": "S:by bus",
+      "image": "questions/Q18.png",
+      "weekStrip": null,
+      "contextEn": "Many people wait at the stop.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "by bus",
+        "distractorLetters": "ae",
+        "groups": [
+          2,
+          3
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the long car and the stop.",
+      "hint2En": "The first letter is b.",
+      "correctEn": "By bus. B-y b-u-s.",
+      "battleAfter": "B06",
+      "feedbackTts": {
+        "text": "By bus. B-y b-u-s.",
+        "path": "audio/feedback/Q18.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 19,
+      "id": "Q19",
+      "type": "drag",
+      "segment": "SEG-04",
+      "bankId": "D12",
+      "image": "questions/Q19.png",
+      "weekStrip": null,
+      "contextEn": "Alan sits by the window. He smiles.",
+      "lines": [
+        {
+          "speaker": "Lynn",
+          "text": "{1} Alan go to school {2}?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "Yes, he {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Does"
+        },
+        {
+          "id": 2,
+          "answer": "by bus"
+        },
+        {
+          "id": 3,
+          "answer": "does"
+        }
+      ],
+      "distractors": [
+        "Do",
+        "by taxi",
+        "is"
+      ],
+      "hint1En": "Look at the window. What is Alan in?",
+      "hint2En": "Alan is he: Do or Does?",
+      "correctEn": "Yes, he does. Alan goes to school by bus.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "Yes, he does. Alan goes to school by bus.",
+        "path": "audio/feedback/Q19.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 20,
+      "id": "Q20",
+      "type": "spell",
+      "segment": "SEG-04",
+      "bankId": "S:by scooter",
+      "image": "questions/Q20.png",
+      "weekStrip": null,
+      "contextEn": "Look at the two helmets.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "by scooter",
+        "distractorLetters": "ai",
+        "groups": [
+          2,
+          7
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the small bike with a motor.",
+      "hint2En": "The first letter is b.",
+      "correctEn": "By scooter. B-y s-c-o-o-t-e-r.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "By scooter. B-y s-c-o-o-t-e-r.",
+        "path": "audio/feedback/Q20.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 21,
+      "id": "Q21",
+      "type": "drag",
+      "segment": "SEG-04",
+      "bankId": "D13",
+      "image": "questions/Q21.png",
+      "weekStrip": null,
+      "contextEn": "Amy rides with her dad.",
+      "lines": [
+        {
+          "speaker": "Maya",
+          "text": "{1} Amy go to school by car?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "No, she {2}. She goes to school {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Does"
+        },
+        {
+          "id": 2,
+          "answer": "doesn't"
+        },
+        {
+          "id": 3,
+          "answer": "by scooter"
+        }
+      ],
+      "distractors": [
+        "Do",
+        "don't",
+        "by bus"
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "Amy is she: Does and doesn't, or Do and don't?",
+      "correctEn": "No, she doesn't. Amy goes to school by scooter.",
+      "battleAfter": "B07",
+      "feedbackTts": {
+        "text": "No, she doesn't. Amy goes to school by scooter.",
+        "path": "audio/feedback/Q21.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 22,
+      "id": "Q22",
+      "type": "spell",
+      "segment": "SEG-04",
+      "bankId": "S:by metro",
+      "image": "questions/Q22.png",
+      "weekStrip": null,
+      "contextEn": "A train comes under the city.",
+      "lines": [
+        {
+          "speaker": "Tick",
+          "text": "Spell the word."
+        }
+      ],
+      "spell": {
+        "answer": "by metro",
+        "distractorLetters": "ai",
+        "groups": [
+          2,
+          5
+        ],
+        "caseSensitive": true
+      },
+      "hint1En": "Look at the station under the ground.",
+      "hint2En": "The first letter is b.",
+      "correctEn": "By metro. B-y m-e-t-r-o.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "By metro. B-y m-e-t-r-o.",
+        "path": "audio/feedback/Q22.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 23,
+      "id": "Q23",
+      "type": "drag",
+      "segment": "SEG-04",
+      "bankId": "D14",
+      "image": "questions/Q23.png",
+      "weekStrip": null,
+      "contextEn": "Wei walks to the ticket gate.",
+      "lines": [
+        {
+          "speaker": "Tom",
+          "text": "Do you go to school {1}?"
+        },
+        {
+          "speaker": "Wei",
+          "text": "No, I {2}. I go to school {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "by train"
+        },
+        {
+          "id": 2,
+          "answer": "don't"
+        },
+        {
+          "id": 3,
+          "answer": "by metro"
+        }
+      ],
+      "distractors": [
+        "by taxi",
+        "doesn't",
+        "on foot"
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "I: don't or doesn't? Look at the gate.",
+      "correctEn": "No, I don't. Wei goes to school by metro.",
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "No, I don't. Wei goes to school by metro.",
+        "path": "audio/feedback/Q23.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 24,
+      "id": "Q24",
+      "type": "drag",
+      "segment": "SEG-04",
+      "bankId": "D15",
+      "image": "questions/Q24.png",
+      "weekStrip": null,
+      "contextEn": "Andy crosses the river to school.",
+      "lines": [
+        {
+          "speaker": "Maya",
+          "text": "Does he go to school {1}?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "No, he {2}. He goes to school {3}."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "by car"
+        },
+        {
+          "id": 2,
+          "answer": "doesn't"
+        },
+        {
+          "id": 3,
+          "answer": "by boat"
+        }
+      ],
+      "distractors": [
+        "by bus",
+        "don't",
+        "by metro"
+      ],
+      "hint1En": "Look at the red circle and the water.",
+      "hint2En": "He: don't or doesn't? What is on the water?",
+      "correctEn": "No, he doesn't. Andy goes to school by boat.",
+      "battleAfter": "B08",
+      "feedbackTts": {
+        "text": "No, he doesn't. Andy goes to school by boat.",
+        "path": "audio/feedback/Q24.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 25,
+      "id": "Q25",
+      "type": "drag",
+      "segment": "SEG-05",
+      "bankId": "D08",
+      "image": "questions/Q11.png",
+      "weekStrip": null,
+      "contextEn": "The echo map shows Mina again.",
+      "lines": [
+        {
+          "speaker": "Wei",
+          "text": "{1}"
+        },
+        {
+          "speaker": "Ken",
+          "text": "No, she isn't. She's from the UK."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Is she from India?"
+        }
+      ],
+      "distractors": [
+        "Is he from India?",
+        "Are they from India?",
+        "Is she from the UK?"
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "Mina is she. The answer says no.",
+      "correctEn": "Is she from India? No, she isn't.",
+      "mirrorFrame": true,
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "Is she from India? No, she isn't.",
+        "path": "audio/feedback/Q25.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 26,
+      "id": "Q26",
+      "type": "drag",
+      "segment": "SEG-05",
+      "bankId": "D09",
+      "image": "questions/Q13.png",
+      "weekStrip": null,
+      "contextEn": "The echo map shows Lynn and Alan.",
+      "lines": [
+        {
+          "speaker": "Mina",
+          "text": "Are they from the USA?"
+        },
+        {
+          "speaker": "Ken",
+          "text": "{1}"
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "No, they aren't."
+        }
+      ],
+      "distractors": [
+        "Yes, they are.",
+        "No, she isn't.",
+        "No, he isn't."
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "They: are or aren't?",
+      "correctEn": "No, they aren't. They aren't from the USA.",
+      "mirrorFrame": true,
+      "battleAfter": null,
+      "feedbackTts": {
+        "text": "No, they aren't. They aren't from the USA.",
+        "path": "audio/feedback/Q26.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 27,
+      "id": "Q27",
+      "type": "drag",
+      "segment": "SEG-05",
+      "bankId": "D16",
+      "image": "questions/Q27.png",
+      "weekStrip": null,
+      "contextEn": "The echo map shows Maya on her bike.",
+      "lines": [
+        {
+          "speaker": "Ken",
+          "text": "{1}"
+        },
+        {
+          "speaker": "Maya",
+          "text": "I go to school by bike."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "How do you go to school?"
+        }
+      ],
+      "distractors": [
+        "How does she go to school?",
+        "Where are you from?",
+        "Do you go to school by bike?"
+      ],
+      "hint1En": "Look at Maya's answer.",
+      "hint2En": "Maya says I. Ask with How and you.",
+      "correctEn": "How do you go to school? Maya goes to school by bike.",
+      "battleAfter": "B09",
+      "feedbackTts": {
+        "text": "How do you go to school? Maya goes to school by bike.",
+        "path": "audio/feedback/Q27.mp3",
+        "requiresListen": true
+      }
+    },
+    {
+      "seq": 28,
+      "id": "Q28",
+      "type": "drag",
+      "segment": "SEG-05",
+      "bankId": "D17",
+      "image": "questions/Q21.png",
+      "weekStrip": null,
+      "contextEn": "The last echo shows Amy and her dad.",
+      "lines": [
+        {
+          "speaker": "Ken",
+          "text": "{1}"
+        },
+        {
+          "speaker": "Maya",
+          "text": "No, she doesn't. She goes to school by scooter."
+        }
+      ],
+      "blanks": [
+        {
+          "id": 1,
+          "answer": "Does Amy go to school by car?"
+        }
+      ],
+      "distractors": [
+        "Does Amy go to school by scooter?",
+        "Does Andy go to school by car?",
+        "Is Amy from Spain?"
+      ],
+      "hint1En": "Look at the red circle. What is in it?",
+      "hint2En": "The answer says she doesn't. What is in the red circle?",
+      "correctEn": "Does Amy go to school by car? No, she doesn't.",
+      "mirrorFrame": true,
+      "battleAfter": "B10",
+      "feedbackTts": {
+        "text": "Does Amy go to school by car? No, she doesn't.",
+        "path": "audio/feedback/Q28.mp3",
+        "requiresListen": true
+      }
+    }
+  ]
+}

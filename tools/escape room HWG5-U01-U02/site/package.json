@@ -1,0 +1,11 @@
+{
+  "name": "hwg5-clock-tower",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-assets.mjs && node scripts/build-hwg7-u01-u02.mjs",
+    "test": "node --test tests/site.test.mjs tests/hwg7-u01-u02.test.mjs",
+    "check": "node --check public/hwg5-u01-u02/app.js && node --check public/hwg5-u01-u02/rules.js && node --check public/hwg5-u01-u02/storage.js && node --check public/hwg5-u01-u02/data.js",
+    "serve": "python -m http.server 4190 --bind 127.0.0.1 --directory public"
+  }
+}

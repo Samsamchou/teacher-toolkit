@@ -1,0 +1,265 @@
+{
+ "source": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\escape room HWG7-U01-U02\\HWG7 U01 + U02 合併題目與答案表.docx",
+ "spelling": [
+  "Australia",
+  "Spain",
+  "Singapore",
+  "Taiwan",
+  "Japan",
+  "The USA",
+  "by metro",
+  "on foot",
+  "by scooter",
+  "by taxi",
+  "by bus"
+ ],
+ "drag": [
+  {
+   "id": "D01",
+   "question": "Where are you from?",
+   "answer": "I'm from Australia.",
+   "questionMarked": "Where **are** you from?",
+   "answerMarked": "I'm from **Australia**.",
+   "blanks": [
+    "are",
+    "Australia"
+   ],
+   "kind": "gap"
+  },
+  {
+   "id": "D02",
+   "question": "Where is Andy from?",
+   "answer": "He is from Japan.",
+   "questionMarked": "Where **is** Andy from?",
+   "answerMarked": "He is from **Japan**.",
+   "blanks": [
+    "is",
+    "Japan"
+   ],
+   "kind": "gap"
+  },
+  {
+   "id": "D03",
+   "question": "Where is Amy from?",
+   "answer": "She is from Spain.",
+   "questionMarked": "Where **is** Amy **from**?",
+   "answerMarked": "She is from **Spain**.",
+   "blanks": [
+    "is",
+    "from",
+    "Spain"
+   ],
+   "kind": "gap"
+  },
+  {
+   "id": "D04",
+   "question": "Is she from India?",
+   "answer": "No, she isn't. She's from the UK.",
+   "questionMarked": "**Is** she from India?",
+   "answerMarked": "No, she **isn't**. She's from **the UK**.",
+   "blanks": [
+    "Is",
+    "isn't",
+    "the UK"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D05",
+   "question": "Is he from Taiwan?",
+   "answer": "No, he isn't. He's from Singapore.",
+   "questionMarked": "**Is** he from Taiwan?",
+   "answerMarked": "No, he **isn't**. He's from **Singapore**.",
+   "blanks": [
+    "Is",
+    "isn't",
+    "Singapore"
+   ],
+   "kind": "gap"
+  },
+  {
+   "id": "D06",
+   "question": "Is he from Taiwan?",
+   "answer": "Yes, he is.",
+   "questionMarked": "Is he from **Taiwan**?",
+   "answerMarked": "Yes, he **is**.",
+   "blanks": [
+    "Taiwan",
+    "is"
+   ],
+   "kind": "gap"
+  },
+  {
+   "id": "D07",
+   "question": "Are they from the USA?",
+   "answer": "No, they aren't.",
+   "questionMarked": "Are they from **the USA**?",
+   "answerMarked": "No, they **aren't**.",
+   "blanks": [
+    "the USA",
+    "aren't"
+   ],
+   "kind": "gap"
+  },
+  {
+   "id": "D08",
+   "question": "Is she from India?",
+   "answer": "No, she isn't. She's from the UK.",
+   "questionMarked": "**Is she from India?**",
+   "answerMarked": "No, she isn't. She's from the UK.",
+   "blanks": [
+    "Is she from India?"
+   ],
+   "kind": "complete-question"
+  },
+  {
+   "id": "D09",
+   "question": "Are they from the USA?",
+   "answer": "No, they aren't.",
+   "questionMarked": "Are they from the USA?",
+   "answerMarked": "**No, they aren't.**",
+   "blanks": [
+    "No, they aren't."
+   ],
+   "kind": "complete-answer"
+  },
+  {
+   "id": "D10",
+   "question": "How do you go to school?",
+   "answer": "I go to school on foot.",
+   "questionMarked": "**How do** you go to school?",
+   "answerMarked": "I go to school **on foot**.",
+   "blanks": [
+    "How",
+    "do",
+    "on foot"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "on foot是一個片語,所以這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D11",
+   "question": "How does Lynn go to school?",
+   "answer": "She goes to school by taxi.",
+   "questionMarked": "**How** does Lynn go to school?",
+   "answerMarked": "She **goes** to school **by taxi**.",
+   "blanks": [
+    "How",
+    "goes",
+    "by taxi"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D12",
+   "question": "Does Alan go to school by bus?",
+   "answer": "Yes, he does.",
+   "questionMarked": "**Does** Alan go to school **by bus**?",
+   "answerMarked": "Yes, he **does**.",
+   "blanks": [
+    "Does",
+    "by bus",
+    "does"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D13",
+   "question": "Does Amy go to school by car?",
+   "answer": "No, she doesn't. She goes to school by scooter.",
+   "questionMarked": "**Does** Amy go to school by car?",
+   "answerMarked": "No, she **doesn't**. She goes to school **by scooter**.",
+   "blanks": [
+    "Does",
+    "doesn't",
+    "by scooter"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D14",
+   "question": "Do you go to school by train?",
+   "answer": "No, I don't. I go to school by metro.",
+   "questionMarked": "Do you go to school **by train**?",
+   "answerMarked": "No, I **don't**. I go to school **by metro**.",
+   "blanks": [
+    "by train",
+    "don't",
+    "by metro"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D15",
+   "question": "Does he go to school by car?",
+   "answer": "No, he doesn't. He goes to school by boat.",
+   "questionMarked": "Does he go to school **by car**?",
+   "answerMarked": "No, he **doesn't**. He goes to school **by boat**.",
+   "blanks": [
+    "by car",
+    "doesn't",
+    "by boat"
+   ],
+   "kind": "gap",
+   "teacherNotes": [
+    "這題有3個正確答案"
+   ],
+   "teacherBlankCount": 3
+  },
+  {
+   "id": "D16",
+   "question": "How do you go to school?",
+   "answer": "I go to school by bike.",
+   "questionMarked": "**How do you go to school?**",
+   "answerMarked": "I go to school by bike.",
+   "blanks": [
+    "How do you go to school?"
+   ],
+   "kind": "complete-question"
+  },
+  {
+   "id": "D17",
+   "question": "Does Amy go to school by car?",
+   "answer": "No, she doesn't. She goes to school by scooter.",
+   "questionMarked": "**Does Amy go to school by car?**",
+   "answerMarked": "No, she doesn't. She goes to school by scooter.",
+   "blanks": [
+    "Does Amy go to school by car?"
+   ],
+   "kind": "complete-question"
+  }
+ ],
+ "notes": [
+  "HWG7 U01 + U02 合併題目與答案表",
+  "拖放題題目: 黑色粗體字就是答案，每一題都要有至少兩個干擾選項",
+  "same sentence used by D04, D08 (different blanks) — place them apart in the story",
+  "same sentence used by D07, D09 (different blanks) — place them apart in the story",
+  "same sentence used by D13, D17 (different blanks) — place them apart in the story"
+ ],
+ "warnings": [
+  "spelling 'The USA' is capitalized but the sentences use 'the USA' — spelling is case-sensitive, confirm the target with the teacher"
+ ]
+}

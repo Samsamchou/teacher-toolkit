@@ -1,0 +1,90 @@
+{
+ "items": 28,
+ "every": 3,
+ "battles": 10,
+ "boss": 2,
+ "rows": [
+  {
+   "battle": 1,
+   "afterQuestion": 3,
+   "questions": 3,
+   "seconds": 20,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 2,
+   "afterQuestion": 6,
+   "questions": 3,
+   "seconds": 21,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 3,
+   "afterQuestion": 9,
+   "questions": 3,
+   "seconds": 23,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 4,
+   "afterQuestion": 12,
+   "questions": 3,
+   "seconds": 24,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 5,
+   "afterQuestion": 15,
+   "questions": 3,
+   "seconds": 26,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 6,
+   "afterQuestion": 18,
+   "questions": 3,
+   "seconds": 27,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 7,
+   "afterQuestion": 21,
+   "questions": 3,
+   "seconds": 29,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 8,
+   "afterQuestion": 24,
+   "questions": 3,
+   "seconds": 30,
+   "boss": false,
+   "bossPhase": null
+  },
+  {
+   "battle": 9,
+   "afterQuestion": 27,
+   "questions": 3,
+   "seconds": 67.0,
+   "boss": true,
+   "bossPhase": 1
+  },
+  {
+   "battle": 10,
+   "afterQuestion": 28,
+   "questions": 1,
+   "seconds": 67.0,
+   "boss": true,
+   "bossPhase": 2
+  }
+ ],
+ "gameMinutes": 7.2,
+ "totalMinutes": 36
+}

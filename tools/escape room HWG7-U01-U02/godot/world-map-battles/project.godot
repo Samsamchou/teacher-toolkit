@@ -1,0 +1,18 @@
+; Ken and the World Map Mix-Up — real Godot battles (HWG7 U01+U02). Engine copied from HWG5 clock-tower-battles.
+config_version=5
+[application]
+config/name="Ken and the World Map Mix-Up — Battles"
+run/main_scene="res://battle.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+[display]
+window/size/viewport_width=960
+window/size/viewport_height=640
+window/size/window_width_override=1152
+window/size/window_height_override=768
+window/stretch/mode="canvas_items"
+[rendering]
+renderer/rendering_method="gl_compatibility"
+textures/canvas_textures/default_texture_filter=2
+environment/defaults/default_clear_color=Color(0.06,0.07,0.16,1)
+[audio]
+driver/enable_input=false
