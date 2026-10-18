@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>2D player</title>
+<style>html,body{margin:0;background:#000}canvas{display:block;width:1920px;height:1080px}</style>
+<canvas id="cv" width="1920" height="1080"></canvas>
+<script src="engine.js"></script>
+<script src="song-data.js"></script>
+<script src="cast.js"></script>
+<script src="group.js"></script>
+<script src="edif.js"></script>
+<script src="chorus.js"></script>
+<script>
+// ?scene=s01-taiwan-car[&nosub=1]  載入（可選）對嘴資料與場景，暴露 window.renderFrame(t)（t = 場景本地秒）與 window.SCENE
+const name = new URLSearchParams(location.search).get('scene');
+const v = document.createElement('script'); v.src = '../scenes/' + name + '.lipsync.js';   // 可選：原曲對嘴資料；沒有也能播
+v.onload = v.onerror = () => document.body.appendChild(s);
+const s = document.createElement('script'); s.src = '../scenes/' + name + '.js';
+s.onload = () => { const c = document.getElementById('cv').getContext('2d');
+  window.renderFrame = t => { c.setTransform(1,0,0,1,0,0); c.globalAlpha = 1; c.clearRect(0,0,W,H); const [bx,by]=boil(t,1,1.2); c.translate(bx,by); SCENE.draw(c, t); };
+  window.READY = true; };
+document.body.appendChild(v);
+</script>

@@ -1,0 +1,430 @@
+{
+ "scenes": [
+  [
+   "s00-intro",
+   0.0,
+   17.12
+  ],
+  [
+   "s01-weekend",
+   17.12,
+   36.18
+  ],
+  [
+   "s02-subjects1",
+   36.18,
+   45.92
+  ],
+  [
+   "s03-chorus1",
+   45.92,
+   64.66
+  ],
+  [
+   "s04-monday",
+   64.66,
+   78.64
+  ],
+  [
+   "s05-subjects2",
+   78.64,
+   87.84
+  ],
+  [
+   "s06-chorus2",
+   87.84,
+   106.10000000000001
+  ],
+  [
+   "s07-timetable",
+   106.1,
+   119.74
+  ],
+  [
+   "s08-bridge",
+   119.74,
+   133.57999999999998
+  ],
+  [
+   "s09-dance",
+   133.58,
+   151.78
+  ],
+  [
+   "s10-final",
+   151.78,
+   170.8
+  ],
+  [
+   "s11-outro",
+   170.8,
+   190.0
+  ]
+ ],
+ "lines": [
+  {
+   "n": 1,
+   "time": 1.34,
+   "text": "Monday, Tuesday, Wednesday, hey! (hey!)",
+   "scene": "s00-intro",
+   "split_by_boundary": []
+  },
+  {
+   "n": 2,
+   "time": 5.99,
+   "text": "Thursday, Friday, Saturday, Sunday! (yeah!)",
+   "scene": "s00-intro",
+   "split_by_boundary": []
+  },
+  {
+   "n": 3,
+   "time": 18.48,
+   "text": "What day is today?",
+   "scene": "s01-weekend",
+   "split_by_boundary": []
+  },
+  {
+   "n": 4,
+   "time": 20.53,
+   "text": "It's Saturday.",
+   "scene": "s01-weekend",
+   "split_by_boundary": []
+  },
+  {
+   "n": 5,
+   "time": 22.86,
+   "text": "Let's go to the park! (oh-oh-oh)",
+   "scene": "s01-weekend",
+   "split_by_boundary": []
+  },
+  {
+   "n": 6,
+   "time": 27.76,
+   "text": "What day is today?",
+   "scene": "s01-weekend",
+   "split_by_boundary": []
+  },
+  {
+   "n": 7,
+   "time": 30.07,
+   "text": "It's Sunday.",
+   "scene": "s01-weekend",
+   "split_by_boundary": []
+  },
+  {
+   "n": 8,
+   "time": 32.04,
+   "text": "Let's visit Grandma! (yay!)",
+   "scene": "s01-weekend",
+   "split_by_boundary": []
+  },
+  {
+   "n": 9,
+   "time": 37.53,
+   "text": "Chinese, English, math, and art,",
+   "scene": "s02-subjects1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 10,
+   "time": 39.89,
+   "text": "Music, PE, computer, let's start!",
+   "scene": "s02-subjects1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 11,
+   "time": 42.1,
+   "text": "Seven days, seven days, sing along,",
+   "scene": "s02-subjects1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 12,
+   "time": 44.63,
+   "text": "Every day, every day, a happy song!",
+   "scene": "s02-subjects1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 13,
+   "time": 48.2,
+   "text": "Monday to Sunday, every day is fun!",
+   "scene": "s03-chorus1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 14,
+   "time": 52.3,
+   "text": "Class by class, friend by friend, we are one!",
+   "scene": "s03-chorus1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 15,
+   "time": 57.55,
+   "text": "Monday to Sunday, every day is fun!",
+   "scene": "s03-chorus1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 16,
+   "time": 62.15,
+   "text": "Sing it with me, everybody, one, two, three! (hey!)",
+   "scene": "s03-chorus1",
+   "split_by_boundary": []
+  },
+  {
+   "n": 17,
+   "time": 65.94,
+   "text": "Today is Monday. Time for school.",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 18,
+   "time": 68.2,
+   "text": "Do you have music class on Monday?",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 19,
+   "time": 69.69,
+   "text": "No, I don't.",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 20,
+   "time": 71.36,
+   "text": "Do you have PE class on Monday?",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 21,
+   "time": 72.98,
+   "text": "Yes, I do.",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 22,
+   "time": 75.23,
+   "text": "Me, too. I like playing basketball in PE class.",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 23,
+   "time": 77.63,
+   "text": "(dribble, dribble!)",
+   "scene": "s04-monday",
+   "split_by_boundary": []
+  },
+  {
+   "n": 24,
+   "time": 79.82,
+   "text": "Chinese, English, math, and art,",
+   "scene": "s05-subjects2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 25,
+   "time": 82.09,
+   "text": "Music, PE, computer, let's start!",
+   "scene": "s05-subjects2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 26,
+   "time": 84.25,
+   "text": "Seven days, seven days, sing along,",
+   "scene": "s05-subjects2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 27,
+   "time": 86.62,
+   "text": "Every day, every day, a happy song!",
+   "scene": "s05-subjects2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 28,
+   "time": 89.88,
+   "text": "Monday to Sunday, every day is fun!",
+   "scene": "s06-chorus2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 29,
+   "time": 93.78,
+   "text": "Class by class, friend by friend, we are one!",
+   "scene": "s06-chorus2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 30,
+   "time": 99.1,
+   "text": "Monday to Sunday, every day is fun!",
+   "scene": "s06-chorus2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 31,
+   "time": 103.59,
+   "text": "Sing it with me, everybody, one, two, three! (hey!)",
+   "scene": "s06-chorus2",
+   "split_by_boundary": []
+  },
+  {
+   "n": 32,
+   "time": 107.89,
+   "text": "Does Andy have Chinese class on Tuesday?",
+   "scene": "s07-timetable",
+   "split_by_boundary": []
+  },
+  {
+   "n": 33,
+   "time": 109.95,
+   "text": "No, he doesn't.",
+   "scene": "s07-timetable",
+   "split_by_boundary": []
+  },
+  {
+   "n": 34,
+   "time": 111.98,
+   "text": "Does Amy have computer class on Thursday?",
+   "scene": "s07-timetable",
+   "split_by_boundary": []
+  },
+  {
+   "n": 35,
+   "time": 114.44,
+   "text": "Yes, she does.",
+   "scene": "s07-timetable",
+   "split_by_boundary": []
+  },
+  {
+   "n": 36,
+   "time": 116.81,
+   "text": "She can chat with an AI robot. (beep-boop!)",
+   "scene": "s07-timetable",
+   "split_by_boundary": []
+  },
+  {
+   "n": 37,
+   "time": 122.32,
+   "text": "What day is today? (what day is today?)",
+   "scene": "s08-bridge",
+   "split_by_boundary": []
+  },
+  {
+   "n": 38,
+   "time": 126.35,
+   "text": "Wednesday, we draw. Friday, we play.",
+   "scene": "s08-bridge",
+   "split_by_boundary": []
+  },
+  {
+   "n": 39,
+   "time": 130.67,
+   "text": "Every day is a good day. (oh-oh-oh)",
+   "scene": "s08-bridge",
+   "split_by_boundary": []
+  },
+  {
+   "n": 40,
+   "time": 135.08,
+   "text": "Monday, Tuesday, Wednesday, hey! (hey!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 41,
+   "time": 137.55,
+   "text": "Thursday, Friday, Saturday, Sunday! (yeah!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 42,
+   "time": 139.94,
+   "text": "Monday, Tuesday, Wednesday, hey! (hey!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 43,
+   "time": 142.47,
+   "text": "Thursday, Friday, Saturday, Sunday! (yeah!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 44,
+   "time": 144.7,
+   "text": "Monday, Tuesday, Wednesday, hey! (hey!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 45,
+   "time": 147.34,
+   "text": "Thursday, Friday, Saturday, Sunday! (yeah!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 46,
+   "time": 149.7,
+   "text": "Monday, Tuesday, Wednesday, hey! (hey!)",
+   "scene": "s09-dance",
+   "split_by_boundary": []
+  },
+  {
+   "n": 47,
+   "time": 154.28,
+   "text": "Monday to Sunday, every day is fun!",
+   "scene": "s10-final",
+   "split_by_boundary": []
+  },
+  {
+   "n": 48,
+   "time": 158.2,
+   "text": "Class by class, friend by friend, we are one!",
+   "scene": "s10-final",
+   "split_by_boundary": []
+  },
+  {
+   "n": 49,
+   "time": 163.34,
+   "text": "Monday to Sunday, every day is fun!",
+   "scene": "s10-final",
+   "split_by_boundary": []
+  },
+  {
+   "n": 50,
+   "time": 167.93,
+   "text": "Sing it with me, everybody, one, two, three! (yeah!)",
+   "scene": "s10-final",
+   "split_by_boundary": []
+  },
+  {
+   "n": 51,
+   "time": 178.01,
+   "text": "Seven days, seven days, see you on Monday!",
+   "scene": "s11-outro",
+   "split_by_boundary": []
+  },
+  {
+   "n": 52,
+   "time": 185.69,
+   "text": "(bye-bye!)",
+   "scene": "s11-outro",
+   "split_by_boundary": []
+  }
+ ]
+}

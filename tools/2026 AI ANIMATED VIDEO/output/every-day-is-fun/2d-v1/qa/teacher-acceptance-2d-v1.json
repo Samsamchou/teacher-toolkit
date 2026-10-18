@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-18",
+  "recorded_at": "2026-10-18T20:37+08:00",
+  "timezone": "Asia/Taipei",
+  "song": "Every Day Is Fun",
+  "version": "2d-v1",
+  "teacher_accepted": true,
+  "official_release": true,
+  "evidence": "Every Day Is Fun 2D v1 全曲可以，定為正式版。",
+  "hash_check": "SHA-256 re-read from disk at acceptance time and matched qa/final-verification-2d-v1.json.",
+  "scope": "Teacher acceptance of the 2D coded animation (Canvas 2D + Playwright, original Suno song lip-sync, no TTS), 52 lyric lines each mapped to an on-screen action (qa/lines-contact-1.jpg, -2.jpg). Pilot S01+S04 was approved earlier the same day.",
+  "open_items_accepted_as_is": [
+    "Dance Break sung 7 chant lines (from ASR, not ear-verified)",
+    "Line 35 subtitled 'Yes, she does.' though ASR heard 'he'",
+    "Line 34 male-sounding voice lip-synced by Amy (per the teacher's Andy/Amy quiz decision)"
+  ],
+  "files": [
+    {
+      "file": "Every-Day-Is-Fun-2D-v1-English.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/every-day-is-fun/2d-v1/renders/Every-Day-Is-Fun-2D-v1-English.mp4",
+      "bytes": 162094848,
+      "sha256": "94a3b668782bce60c83c01d5170040dfa0dce120c70522627ba1a56eea654a74",
+      "duration_sec": 190.0,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5700
+    },
+    {
+      "file": "Every-Day-Is-Fun-2D-v1-Listening.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/every-day-is-fun/2d-v1/renders/Every-Day-Is-Fun-2D-v1-Listening.mp4",
+      "bytes": 153311285,
+      "sha256": "2281ca5688422ae7ae3098d04ea59129cd15445f634394153d8ca35ae49e0a06",
+      "duration_sec": 190.0,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5700
+    }
+  ],
+  "review_preview": {
+    "file": "Every-Day-Is-Fun-2D-v1-English-preview720p.mp4",
+    "note": "720p compressed copy for phone viewing; not a teaching edition"
+  },
+  "technical_report": "2d-v1/qa/final-verification-2d-v1.json",
+  "line_check": "2d-v1/qa/lines-check.json"
+}

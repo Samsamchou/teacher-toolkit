@@ -1,0 +1,2158 @@
+{
+ "model": "faster-whisper small.en int8",
+ "prompted": false,
+ "duration": 190.0,
+ "status": "UNVERIFIED",
+ "segments": [
+  {
+   "start": 0.0,
+   "end": 8.38,
+   "text": " Monday, Tuesday, Wednesday Thursday, Friday, Saturday, Sunday",
+   "words": [
+    {
+     "word": " Monday,",
+     "start": 0.0,
+     "end": 0.66,
+     "probability": 0.038
+    },
+    {
+     "word": " Tuesday,",
+     "start": 1.44,
+     "end": 1.44,
+     "probability": 0.984
+    },
+    {
+     "word": " Wednesday",
+     "start": 1.6,
+     "end": 2.08,
+     "probability": 0.995
+    },
+    {
+     "word": " Thursday,",
+     "start": 2.08,
+     "end": 4.24,
+     "probability": 0.346
+    },
+    {
+     "word": " Friday,",
+     "start": 5.96,
+     "end": 5.96,
+     "probability": 0.992
+    },
+    {
+     "word": " Saturday,",
+     "start": 6.62,
+     "end": 6.62,
+     "probability": 0.997
+    },
+    {
+     "word": " Sunday",
+     "start": 6.62,
+     "end": 8.38,
+     "probability": 0.984
+    }
+   ]
+  },
+  {
+   "start": 18.0,
+   "end": 21.24,
+   "text": " What day is today? It's Saturday",
+   "words": [
+    {
+     "word": " What",
+     "start": 17.6,
+     "end": 18.16,
+     "probability": 0.412
+    },
+    {
+     "word": " day",
+     "start": 18.16,
+     "end": 18.54,
+     "probability": 0.986
+    },
+    {
+     "word": " is",
+     "start": 18.54,
+     "end": 18.72,
+     "probability": 0.894
+    },
+    {
+     "word": " today?",
+     "start": 18.72,
+     "end": 19.22,
+     "probability": 0.985
+    },
+    {
+     "word": " It's",
+     "start": 19.82,
+     "end": 20.68,
+     "probability": 0.96
+    },
+    {
+     "word": " Saturday",
+     "start": 20.68,
+     "end": 21.24,
+     "probability": 0.986
+    }
+   ]
+  },
+  {
+   "start": 22.0,
+   "end": 23.84,
+   "text": " Let's go to the park",
+   "words": [
+    {
+     "word": " Let's",
+     "start": 21.76,
+     "end": 22.32,
+     "probability": 0.845
+    },
+    {
+     "word": " go",
+     "start": 22.32,
+     "end": 22.66,
+     "probability": 0.989
+    },
+    {
+     "word": " to",
+     "start": 22.66,
+     "end": 23.16,
+     "probability": 0.987
+    },
+    {
+     "word": " the",
+     "start": 23.16,
+     "end": 23.36,
+     "probability": 0.994
+    },
+    {
+     "word": " park",
+     "start": 23.36,
+     "end": 23.84,
+     "probability": 0.989
+    }
+   ]
+  },
+  {
+   "start": 27.0,
+   "end": 28.52,
+   "text": " What day is today?",
+   "words": [
+    {
+     "word": " What",
+     "start": 26.84,
+     "end": 27.4,
+     "probability": 0.861
+    },
+    {
+     "word": " day",
+     "start": 27.4,
+     "end": 27.74,
+     "probability": 0.998
+    },
+    {
+     "word": " is",
+     "start": 27.74,
+     "end": 27.96,
+     "probability": 0.985
+    },
+    {
+     "word": " today?",
+     "start": 27.96,
+     "end": 28.52,
+     "probability": 0.998
+    }
+   ]
+  },
+  {
+   "start": 28.52,
+   "end": 30.68,
+   "text": " It's Sunday",
+   "words": [
+    {
+     "word": " It's",
+     "start": 28.52,
+     "end": 29.88,
+     "probability": 0.497
+    },
+    {
+     "word": " Sunday",
+     "start": 29.88,
+     "end": 30.68,
+     "probability": 0.912
+    }
+   ]
+  },
+  {
+   "start": 30.68,
+   "end": 32.96,
+   "text": " Let's visit Grandma",
+   "words": [
+    {
+     "word": " Let's",
+     "start": 30.68,
+     "end": 31.58,
+     "probability": 0.773
+    },
+    {
+     "word": " visit",
+     "start": 31.58,
+     "end": 31.98,
+     "probability": 0.964
+    },
+    {
+     "word": " Grandma",
+     "start": 31.98,
+     "end": 32.96,
+     "probability": 0.818
+    }
+   ]
+  },
+  {
+   "start": 36.18,
+   "end": 38.64,
+   "text": " Chinese, English, Math and Art",
+   "words": [
+    {
+     "word": " Chinese,",
+     "start": 36.18,
+     "end": 36.98,
+     "probability": 0.656
+    },
+    {
+     "word": " English,",
+     "start": 37.74,
+     "end": 37.74,
+     "probability": 0.991
+    },
+    {
+     "word": " Math",
+     "start": 38.04,
+     "end": 38.14,
+     "probability": 0.867
+    },
+    {
+     "word": " and",
+     "start": 38.14,
+     "end": 38.36,
+     "probability": 0.549
+    },
+    {
+     "word": " Art",
+     "start": 38.36,
+     "end": 38.64,
+     "probability": 0.951
+    }
+   ]
+  },
+  {
+   "start": 38.64,
+   "end": 40.92,
+   "text": " Music, P, Computer, Let's Start",
+   "words": [
+    {
+     "word": " Music,",
+     "start": 38.64,
+     "end": 39.28,
+     "probability": 0.969
+    },
+    {
+     "word": " P,",
+     "start": 39.32,
+     "end": 39.52,
+     "probability": 0.325
+    },
+    {
+     "word": " Computer,",
+     "start": 39.98,
+     "end": 40.06,
+     "probability": 0.883
+    },
+    {
+     "word": " Let's",
+     "start": 40.34,
+     "end": 40.5,
+     "probability": 0.81
+    },
+    {
+     "word": " Start",
+     "start": 40.5,
+     "end": 40.92,
+     "probability": 0.824
+    }
+   ]
+  },
+  {
+   "start": 40.92,
+   "end": 43.06,
+   "text": " Seven days, seven days, sing along",
+   "words": [
+    {
+     "word": " Seven",
+     "start": 40.92,
+     "end": 41.6,
+     "probability": 0.286
+    },
+    {
+     "word": " days,",
+     "start": 41.6,
+     "end": 41.86,
+     "probability": 0.542
+    },
+    {
+     "word": " seven",
+     "start": 42.04,
+     "end": 42.12,
+     "probability": 0.82
+    },
+    {
+     "word": " days,",
+     "start": 42.12,
+     "end": 42.44,
+     "probability": 0.975
+    },
+    {
+     "word": " sing",
+     "start": 42.56,
+     "end": 42.68,
+     "probability": 0.869
+    },
+    {
+     "word": " along",
+     "start": 42.68,
+     "end": 43.06,
+     "probability": 0.957
+    }
+   ]
+  },
+  {
+   "start": 43.06,
+   "end": 45.92,
+   "text": " Every day, every day, a happy song",
+   "words": [
+    {
+     "word": " Every",
+     "start": 43.06,
+     "end": 43.64,
+     "probability": 0.711
+    },
+    {
+     "word": " day,",
+     "start": 43.64,
+     "end": 43.88,
+     "probability": 0.982
+    },
+    {
+     "word": " every",
+     "start": 44.0,
+     "end": 44.22,
+     "probability": 0.921
+    },
+    {
+     "word": " day,",
+     "start": 44.22,
+     "end": 44.46,
+     "probability": 1.0
+    },
+    {
+     "word": " a",
+     "start": 44.52,
+     "end": 44.8,
+     "probability": 0.976
+    },
+    {
+     "word": " happy",
+     "start": 44.8,
+     "end": 45.14,
+     "probability": 0.87
+    },
+    {
+     "word": " song",
+     "start": 45.14,
+     "end": 45.92,
+     "probability": 0.998
+    }
+   ]
+  },
+  {
+   "start": 45.92,
+   "end": 50.06,
+   "text": " Monday to Sunday, every day, it's fun",
+   "words": [
+    {
+     "word": " Monday",
+     "start": 45.92,
+     "end": 47.0,
+     "probability": 0.677
+    },
+    {
+     "word": " to",
+     "start": 47.0,
+     "end": 47.56,
+     "probability": 0.767
+    },
+    {
+     "word": " Sunday,",
+     "start": 47.56,
+     "end": 48.2,
+     "probability": 0.993
+    },
+    {
+     "word": " every",
+     "start": 48.2,
+     "end": 48.76,
+     "probability": 0.866
+    },
+    {
+     "word": " day,",
+     "start": 48.76,
+     "end": 49.16,
+     "probability": 0.999
+    },
+    {
+     "word": " it's",
+     "start": 49.16,
+     "end": 49.7,
+     "probability": 0.939
+    },
+    {
+     "word": " fun",
+     "start": 49.7,
+     "end": 50.06,
+     "probability": 0.969
+    }
+   ]
+  },
+  {
+   "start": 50.06,
+   "end": 52.72,
+   "text": " Class by class and by friend",
+   "words": [
+    {
+     "word": " Class",
+     "start": 50.06,
+     "end": 50.62,
+     "probability": 0.975
+    },
+    {
+     "word": " by",
+     "start": 50.62,
+     "end": 51.06,
+     "probability": 0.958
+    },
+    {
+     "word": " class",
+     "start": 51.06,
+     "end": 51.52,
+     "probability": 0.937
+    },
+    {
+     "word": " and",
+     "start": 51.52,
+     "end": 51.92,
+     "probability": 0.529
+    },
+    {
+     "word": " by",
+     "start": 51.92,
+     "end": 52.2,
+     "probability": 0.896
+    },
+    {
+     "word": " friend",
+     "start": 52.2,
+     "end": 52.72,
+     "probability": 0.831
+    }
+   ]
+  },
+  {
+   "start": 52.72,
+   "end": 53.78,
+   "text": " We are one",
+   "words": [
+    {
+     "word": " We",
+     "start": 52.72,
+     "end": 53.04,
+     "probability": 0.478
+    },
+    {
+     "word": " are",
+     "start": 53.04,
+     "end": 53.4,
+     "probability": 0.988
+    },
+    {
+     "word": " one",
+     "start": 53.4,
+     "end": 53.78,
+     "probability": 0.958
+    }
+   ]
+  },
+  {
+   "start": 55.46,
+   "end": 58.4,
+   "text": " Monday to Sunday, every day",
+   "words": [
+    {
+     "word": " Monday",
+     "start": 55.46,
+     "end": 56.26,
+     "probability": 0.606
+    },
+    {
+     "word": " to",
+     "start": 56.26,
+     "end": 56.78,
+     "probability": 0.995
+    },
+    {
+     "word": " Sunday,",
+     "start": 56.78,
+     "end": 57.38,
+     "probability": 0.998
+    },
+    {
+     "word": " every",
+     "start": 57.38,
+     "end": 57.96,
+     "probability": 0.972
+    },
+    {
+     "word": " day",
+     "start": 57.96,
+     "end": 58.4,
+     "probability": 1.0
+    }
+   ]
+  },
+  {
+   "start": 58.4,
+   "end": 61.76,
+   "text": " It's fun, sing it with me, everybody",
+   "words": [
+    {
+     "word": " It's",
+     "start": 58.4,
+     "end": 58.92,
+     "probability": 0.584
+    },
+    {
+     "word": " fun,",
+     "start": 58.92,
+     "end": 59.26,
+     "probability": 0.849
+    },
+    {
+     "word": " sing",
+     "start": 59.28,
+     "end": 59.8,
+     "probability": 0.982
+    },
+    {
+     "word": " it",
+     "start": 59.8,
+     "end": 60.04,
+     "probability": 0.97
+    },
+    {
+     "word": " with",
+     "start": 60.04,
+     "end": 60.28,
+     "probability": 0.997
+    },
+    {
+     "word": " me,",
+     "start": 60.28,
+     "end": 60.72,
+     "probability": 0.999
+    },
+    {
+     "word": " everybody",
+     "start": 60.72,
+     "end": 61.76,
+     "probability": 0.927
+    }
+   ]
+  },
+  {
+   "start": 62.4,
+   "end": 64.66,
+   "text": " One, two, three, hey",
+   "words": [
+    {
+     "word": " One,",
+     "start": 62.4,
+     "end": 62.96,
+     "probability": 0.265
+    },
+    {
+     "word": " two,",
+     "start": 63.44,
+     "end": 63.5,
+     "probability": 0.959
+    },
+    {
+     "word": " three,",
+     "start": 63.78,
+     "end": 64.14,
+     "probability": 0.995
+    },
+    {
+     "word": " hey",
+     "start": 64.14,
+     "end": 64.66,
+     "probability": 0.843
+    }
+   ]
+  },
+  {
+   "start": 64.66,
+   "end": 66.98,
+   "text": " Today is Monday time for school",
+   "words": [
+    {
+     "word": " Today",
+     "start": 64.66,
+     "end": 65.06,
+     "probability": 0.692
+    },
+    {
+     "word": " is",
+     "start": 65.06,
+     "end": 65.84,
+     "probability": 0.755
+    },
+    {
+     "word": " Monday",
+     "start": 65.84,
+     "end": 66.04,
+     "probability": 0.965
+    },
+    {
+     "word": " time",
+     "start": 66.04,
+     "end": 66.36,
+     "probability": 0.968
+    },
+    {
+     "word": " for",
+     "start": 66.36,
+     "end": 66.58,
+     "probability": 0.997
+    },
+    {
+     "word": " school",
+     "start": 66.58,
+     "end": 66.98,
+     "probability": 0.991
+    }
+   ]
+  },
+  {
+   "start": 66.98,
+   "end": 68.84,
+   "text": " Do you have music class on Monday?",
+   "words": [
+    {
+     "word": " Do",
+     "start": 66.98,
+     "end": 67.6,
+     "probability": 0.898
+    },
+    {
+     "word": " you",
+     "start": 67.6,
+     "end": 67.72,
+     "probability": 0.998
+    },
+    {
+     "word": " have",
+     "start": 67.72,
+     "end": 67.84,
+     "probability": 0.998
+    },
+    {
+     "word": " music",
+     "start": 67.84,
+     "end": 68.12,
+     "probability": 0.908
+    },
+    {
+     "word": " class",
+     "start": 68.12,
+     "end": 68.34,
+     "probability": 0.998
+    },
+    {
+     "word": " on",
+     "start": 68.34,
+     "end": 68.54,
+     "probability": 0.996
+    },
+    {
+     "word": " Monday?",
+     "start": 68.54,
+     "end": 68.84,
+     "probability": 0.993
+    }
+   ]
+  },
+  {
+   "start": 69.24,
+   "end": 70.06,
+   "text": " No, I don't",
+   "words": [
+    {
+     "word": " No,",
+     "start": 69.24,
+     "end": 69.46,
+     "probability": 0.955
+    },
+    {
+     "word": " I",
+     "start": 69.64,
+     "end": 69.78,
+     "probability": 0.994
+    },
+    {
+     "word": " don't",
+     "start": 69.78,
+     "end": 70.06,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 70.06,
+   "end": 72.08,
+   "text": " Do you have PE class on Monday?",
+   "words": [
+    {
+     "word": " Do",
+     "start": 70.06,
+     "end": 70.58,
+     "probability": 0.902
+    },
+    {
+     "word": " you",
+     "start": 70.58,
+     "end": 70.7,
+     "probability": 0.992
+    },
+    {
+     "word": " have",
+     "start": 70.7,
+     "end": 70.88,
+     "probability": 0.998
+    },
+    {
+     "word": " PE",
+     "start": 70.88,
+     "end": 71.14,
+     "probability": 0.821
+    },
+    {
+     "word": " class",
+     "start": 71.14,
+     "end": 71.44,
+     "probability": 0.947
+    },
+    {
+     "word": " on",
+     "start": 71.44,
+     "end": 71.68,
+     "probability": 0.998
+    },
+    {
+     "word": " Monday?",
+     "start": 71.68,
+     "end": 72.08,
+     "probability": 0.998
+    }
+   ]
+  },
+  {
+   "start": 72.56,
+   "end": 73.32,
+   "text": " Yes, I do",
+   "words": [
+    {
+     "word": " Yes,",
+     "start": 72.56,
+     "end": 72.7,
+     "probability": 0.992
+    },
+    {
+     "word": " I",
+     "start": 72.76,
+     "end": 72.96,
+     "probability": 0.998
+    },
+    {
+     "word": " do",
+     "start": 72.96,
+     "end": 73.32,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 73.32,
+   "end": 76.8,
+   "text": " Me too, I like playing basketball in PE class",
+   "words": [
+    {
+     "word": " Me",
+     "start": 73.32,
+     "end": 73.96,
+     "probability": 0.972
+    },
+    {
+     "word": " too,",
+     "start": 73.96,
+     "end": 74.32,
+     "probability": 0.913
+    },
+    {
+     "word": " I",
+     "start": 74.32,
+     "end": 75.04,
+     "probability": 0.997
+    },
+    {
+     "word": " like",
+     "start": 75.04,
+     "end": 75.2,
+     "probability": 0.998
+    },
+    {
+     "word": " playing",
+     "start": 75.2,
+     "end": 75.38,
+     "probability": 0.992
+    },
+    {
+     "word": " basketball",
+     "start": 75.38,
+     "end": 75.74,
+     "probability": 0.996
+    },
+    {
+     "word": " in",
+     "start": 75.74,
+     "end": 75.98,
+     "probability": 0.983
+    },
+    {
+     "word": " PE",
+     "start": 75.98,
+     "end": 76.34,
+     "probability": 0.969
+    },
+    {
+     "word": " class",
+     "start": 76.34,
+     "end": 76.8,
+     "probability": 0.97
+    }
+   ]
+  },
+  {
+   "start": 76.8,
+   "end": 78.64,
+   "text": " Dribble, dribble, dribble, dribble",
+   "words": [
+    {
+     "word": " Dribble,",
+     "start": 76.8,
+     "end": 77.36,
+     "probability": 0.91
+    },
+    {
+     "word": " dribble,",
+     "start": 77.72,
+     "end": 77.96,
+     "probability": 0.942
+    },
+    {
+     "word": " dribble,",
+     "start": 77.98,
+     "end": 78.26,
+     "probability": 0.989
+    },
+    {
+     "word": " dribble",
+     "start": 78.26,
+     "end": 78.64,
+     "probability": 0.985
+    }
+   ]
+  },
+  {
+   "start": 78.64,
+   "end": 80.78,
+   "text": " Chinese, English, math and art",
+   "words": [
+    {
+     "word": " Chinese,",
+     "start": 78.64,
+     "end": 79.26,
+     "probability": 0.961
+    },
+    {
+     "word": " English,",
+     "start": 79.36,
+     "end": 79.84,
+     "probability": 0.996
+    },
+    {
+     "word": " math",
+     "start": 80.12,
+     "end": 80.18,
+     "probability": 0.262
+    },
+    {
+     "word": " and",
+     "start": 80.18,
+     "end": 80.42,
+     "probability": 0.638
+    },
+    {
+     "word": " art",
+     "start": 80.42,
+     "end": 80.78,
+     "probability": 0.772
+    }
+   ]
+  },
+  {
+   "start": 80.78,
+   "end": 83.16,
+   "text": " Music, PE, computer, let's start",
+   "words": [
+    {
+     "word": " Music,",
+     "start": 80.78,
+     "end": 81.3,
+     "probability": 0.977
+    },
+    {
+     "word": " PE,",
+     "start": 81.4,
+     "end": 81.9,
+     "probability": 0.998
+    },
+    {
+     "word": " computer,",
+     "start": 82.12,
+     "end": 82.44,
+     "probability": 0.959
+    },
+    {
+     "word": " let's",
+     "start": 82.64,
+     "end": 82.8,
+     "probability": 0.721
+    },
+    {
+     "word": " start",
+     "start": 82.8,
+     "end": 83.16,
+     "probability": 0.993
+    }
+   ]
+  },
+  {
+   "start": 83.16,
+   "end": 85.14,
+   "text": " Seven days, seven days, sing along",
+   "words": [
+    {
+     "word": " Seven",
+     "start": 83.16,
+     "end": 83.66,
+     "probability": 0.654
+    },
+    {
+     "word": " days,",
+     "start": 83.66,
+     "end": 83.92,
+     "probability": 0.679
+    },
+    {
+     "word": " seven",
+     "start": 84.1,
+     "end": 84.24,
+     "probability": 0.992
+    },
+    {
+     "word": " days,",
+     "start": 84.24,
+     "end": 84.52,
+     "probability": 0.991
+    },
+    {
+     "word": " sing",
+     "start": 84.56,
+     "end": 84.74,
+     "probability": 0.997
+    },
+    {
+     "word": " along",
+     "start": 84.74,
+     "end": 85.14,
+     "probability": 0.981
+    }
+   ]
+  },
+  {
+   "start": 85.14,
+   "end": 87.84,
+   "text": " Every day, every day, a happy song",
+   "words": [
+    {
+     "word": " Every",
+     "start": 85.14,
+     "end": 85.7,
+     "probability": 0.698
+    },
+    {
+     "word": " day,",
+     "start": 85.7,
+     "end": 85.94,
+     "probability": 0.998
+    },
+    {
+     "word": " every",
+     "start": 86.1,
+     "end": 86.28,
+     "probability": 0.984
+    },
+    {
+     "word": " day,",
+     "start": 86.28,
+     "end": 86.54,
+     "probability": 1.0
+    },
+    {
+     "word": " a",
+     "start": 86.76,
+     "end": 86.82,
+     "probability": 0.987
+    },
+    {
+     "word": " happy",
+     "start": 86.82,
+     "end": 87.24,
+     "probability": 0.975
+    },
+    {
+     "word": " song",
+     "start": 87.24,
+     "end": 87.84,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 87.84,
+   "end": 91.54,
+   "text": " Monday to Sunday, every day is fun",
+   "words": [
+    {
+     "word": " Monday",
+     "start": 87.84,
+     "end": 88.56,
+     "probability": 0.019
+    },
+    {
+     "word": " to",
+     "start": 88.56,
+     "end": 89.04,
+     "probability": 0.64
+    },
+    {
+     "word": " Sunday,",
+     "start": 89.04,
+     "end": 89.68,
+     "probability": 0.984
+    },
+    {
+     "word": " every",
+     "start": 89.68,
+     "end": 90.22,
+     "probability": 0.646
+    },
+    {
+     "word": " day",
+     "start": 90.22,
+     "end": 90.66,
+     "probability": 0.998
+    },
+    {
+     "word": " is",
+     "start": 90.66,
+     "end": 91.06,
+     "probability": 0.881
+    },
+    {
+     "word": " fun",
+     "start": 91.06,
+     "end": 91.54,
+     "probability": 0.993
+    }
+   ]
+  },
+  {
+   "start": 91.54,
+   "end": 95.26,
+   "text": " Class by class, friend by friend, we are one",
+   "words": [
+    {
+     "word": " Class",
+     "start": 91.54,
+     "end": 92.1,
+     "probability": 0.799
+    },
+    {
+     "word": " by",
+     "start": 92.1,
+     "end": 92.56,
+     "probability": 0.952
+    },
+    {
+     "word": " class,",
+     "start": 92.56,
+     "end": 93.02,
+     "probability": 0.96
+    },
+    {
+     "word": " friend",
+     "start": 93.26,
+     "end": 93.38,
+     "probability": 0.888
+    },
+    {
+     "word": " by",
+     "start": 93.38,
+     "end": 93.66,
+     "probability": 0.99
+    },
+    {
+     "word": " friend,",
+     "start": 93.66,
+     "end": 94.14,
+     "probability": 0.989
+    },
+    {
+     "word": " we",
+     "start": 94.14,
+     "end": 94.52,
+     "probability": 0.977
+    },
+    {
+     "word": " are",
+     "start": 94.52,
+     "end": 94.9,
+     "probability": 0.969
+    },
+    {
+     "word": " one",
+     "start": 94.9,
+     "end": 95.26,
+     "probability": 0.923
+    }
+   ]
+  },
+  {
+   "start": 95.26,
+   "end": 97.1,
+   "text": " Oh, oh, oh, oh",
+   "words": [
+    {
+     "word": " Oh,",
+     "start": 95.26,
+     "end": 95.48,
+     "probability": 0.148
+    },
+    {
+     "word": " oh,",
+     "start": 96.08,
+     "end": 96.3,
+     "probability": 0.891
+    },
+    {
+     "word": " oh,",
+     "start": 96.3,
+     "end": 96.74,
+     "probability": 0.969
+    },
+    {
+     "word": " oh",
+     "start": 96.74,
+     "end": 97.1,
+     "probability": 0.909
+    }
+   ]
+  },
+  {
+   "start": 97.1,
+   "end": 100.74,
+   "text": " Monday to Sunday, every day is fun",
+   "words": [
+    {
+     "word": " Monday",
+     "start": 97.1,
+     "end": 97.74,
+     "probability": 0.619
+    },
+    {
+     "word": " to",
+     "start": 97.74,
+     "end": 98.24,
+     "probability": 0.996
+    },
+    {
+     "word": " Sunday,",
+     "start": 98.24,
+     "end": 98.82,
+     "probability": 0.998
+    },
+    {
+     "word": " every",
+     "start": 99.22,
+     "end": 99.42,
+     "probability": 0.989
+    },
+    {
+     "word": " day",
+     "start": 99.42,
+     "end": 99.84,
+     "probability": 1.0
+    },
+    {
+     "word": " is",
+     "start": 99.84,
+     "end": 100.28,
+     "probability": 0.998
+    },
+    {
+     "word": " fun",
+     "start": 100.28,
+     "end": 100.74,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 100.74,
+   "end": 103.2,
+   "text": " Sing it with me, everybody",
+   "words": [
+    {
+     "word": " Sing",
+     "start": 100.74,
+     "end": 101.26,
+     "probability": 0.974
+    },
+    {
+     "word": " it",
+     "start": 101.26,
+     "end": 101.52,
+     "probability": 0.557
+    },
+    {
+     "word": " with",
+     "start": 101.52,
+     "end": 101.74,
+     "probability": 0.999
+    },
+    {
+     "word": " me,",
+     "start": 101.74,
+     "end": 102.2,
+     "probability": 0.999
+    },
+    {
+     "word": " everybody",
+     "start": 102.38,
+     "end": 103.2,
+     "probability": 0.521
+    }
+   ]
+  },
+  {
+   "start": 103.92,
+   "end": 106.1,
+   "text": " One, two, three, hey",
+   "words": [
+    {
+     "word": " One,",
+     "start": 103.92,
+     "end": 104.44,
+     "probability": 0.573
+    },
+    {
+     "word": " two,",
+     "start": 104.56,
+     "end": 104.98,
+     "probability": 0.989
+    },
+    {
+     "word": " three,",
+     "start": 105.52,
+     "end": 105.58,
+     "probability": 0.998
+    },
+    {
+     "word": " hey",
+     "start": 105.58,
+     "end": 106.1,
+     "probability": 0.927
+    }
+   ]
+  },
+  {
+   "start": 106.1,
+   "end": 109.0,
+   "text": " Does Andy have Chinese class on Tuesday?",
+   "words": [
+    {
+     "word": " Does",
+     "start": 106.1,
+     "end": 106.48,
+     "probability": 0.588
+    },
+    {
+     "word": " Andy",
+     "start": 106.48,
+     "end": 107.08,
+     "probability": 0.961
+    },
+    {
+     "word": " have",
+     "start": 107.08,
+     "end": 107.5,
+     "probability": 0.995
+    },
+    {
+     "word": " Chinese",
+     "start": 107.5,
+     "end": 107.94,
+     "probability": 0.966
+    },
+    {
+     "word": " class",
+     "start": 107.94,
+     "end": 108.26,
+     "probability": 0.981
+    },
+    {
+     "word": " on",
+     "start": 108.26,
+     "end": 108.56,
+     "probability": 0.996
+    },
+    {
+     "word": " Tuesday?",
+     "start": 108.56,
+     "end": 109.0,
+     "probability": 0.994
+    }
+   ]
+  },
+  {
+   "start": 109.46,
+   "end": 110.36,
+   "text": " No, he doesn't",
+   "words": [
+    {
+     "word": " No,",
+     "start": 109.46,
+     "end": 109.6,
+     "probability": 0.955
+    },
+    {
+     "word": " he",
+     "start": 109.7,
+     "end": 109.86,
+     "probability": 0.999
+    },
+    {
+     "word": " doesn't",
+     "start": 109.86,
+     "end": 110.36,
+     "probability": 0.998
+    }
+   ]
+  },
+  {
+   "start": 110.36,
+   "end": 112.96,
+   "text": " Does Amy have computer class on Thursday?",
+   "words": [
+    {
+     "word": " Does",
+     "start": 110.36,
+     "end": 110.86,
+     "probability": 0.932
+    },
+    {
+     "word": " Amy",
+     "start": 110.86,
+     "end": 111.16,
+     "probability": 0.961
+    },
+    {
+     "word": " have",
+     "start": 111.16,
+     "end": 111.52,
+     "probability": 0.997
+    },
+    {
+     "word": " computer",
+     "start": 111.52,
+     "end": 111.94,
+     "probability": 0.83
+    },
+    {
+     "word": " class",
+     "start": 111.94,
+     "end": 112.34,
+     "probability": 0.997
+    },
+    {
+     "word": " on",
+     "start": 112.34,
+     "end": 112.58,
+     "probability": 0.999
+    },
+    {
+     "word": " Thursday?",
+     "start": 112.58,
+     "end": 112.96,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 113.54,
+   "end": 114.58,
+   "text": " Yes, he does",
+   "words": [
+    {
+     "word": " Yes,",
+     "start": 113.54,
+     "end": 113.84,
+     "probability": 0.996
+    },
+    {
+     "word": " he",
+     "start": 113.94,
+     "end": 114.18,
+     "probability": 0.999
+    },
+    {
+     "word": " does",
+     "start": 114.18,
+     "end": 114.58,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 114.58,
+   "end": 117.8,
+   "text": " She can chat with an AI robot",
+   "words": [
+    {
+     "word": " She",
+     "start": 114.58,
+     "end": 115.18,
+     "probability": 0.543
+    },
+    {
+     "word": " can",
+     "start": 115.18,
+     "end": 115.52,
+     "probability": 0.992
+    },
+    {
+     "word": " chat",
+     "start": 115.52,
+     "end": 115.94,
+     "probability": 0.986
+    },
+    {
+     "word": " with",
+     "start": 115.94,
+     "end": 116.46,
+     "probability": 0.943
+    },
+    {
+     "word": " an",
+     "start": 116.46,
+     "end": 116.82,
+     "probability": 0.977
+    },
+    {
+     "word": " AI",
+     "start": 116.82,
+     "end": 117.3,
+     "probability": 0.82
+    },
+    {
+     "word": " robot",
+     "start": 117.3,
+     "end": 117.8,
+     "probability": 0.896
+    }
+   ]
+  },
+  {
+   "start": 119.88,
+   "end": 124.08,
+   "text": " What day is today?",
+   "words": [
+    {
+     "word": " What",
+     "start": 119.74,
+     "end": 120.14,
+     "probability": 0.38
+    },
+    {
+     "word": " day",
+     "start": 120.14,
+     "end": 120.78,
+     "probability": 0.95
+    },
+    {
+     "word": " is",
+     "start": 120.78,
+     "end": 122.26,
+     "probability": 0.835
+    },
+    {
+     "word": " today?",
+     "start": 122.26,
+     "end": 124.08,
+     "probability": 0.973
+    }
+   ]
+  },
+  {
+   "start": 124.9,
+   "end": 127.54,
+   "text": " Wednesday, we draw Friday, we play",
+   "words": [
+    {
+     "word": " Wednesday,",
+     "start": 124.9,
+     "end": 125.12,
+     "probability": 0.745
+    },
+    {
+     "word": " we",
+     "start": 125.7,
+     "end": 125.7,
+     "probability": 0.956
+    },
+    {
+     "word": " draw",
+     "start": 125.7,
+     "end": 125.9,
+     "probability": 0.99
+    },
+    {
+     "word": " Friday,",
+     "start": 125.9,
+     "end": 126.54,
+     "probability": 0.945
+    },
+    {
+     "word": " we",
+     "start": 126.62,
+     "end": 127.02,
+     "probability": 0.979
+    },
+    {
+     "word": " play",
+     "start": 127.02,
+     "end": 127.54,
+     "probability": 0.997
+    }
+   ]
+  },
+  {
+   "start": 127.54,
+   "end": 132.88,
+   "text": " Every day is a good day",
+   "words": [
+    {
+     "word": " Every",
+     "start": 127.54,
+     "end": 128.3,
+     "probability": 0.558
+    },
+    {
+     "word": " day",
+     "start": 128.3,
+     "end": 128.62,
+     "probability": 0.976
+    },
+    {
+     "word": " is",
+     "start": 128.62,
+     "end": 128.86,
+     "probability": 0.972
+    },
+    {
+     "word": " a",
+     "start": 128.86,
+     "end": 128.94,
+     "probability": 0.995
+    },
+    {
+     "word": " good",
+     "start": 128.94,
+     "end": 129.12,
+     "probability": 0.998
+    },
+    {
+     "word": " day",
+     "start": 129.12,
+     "end": 132.88,
+     "probability": 0.99
+    }
+   ]
+  },
+  {
+   "start": 133.58,
+   "end": 136.3,
+   "text": " Monday, Tuesday, Wednesday, hey",
+   "words": [
+    {
+     "word": " Monday,",
+     "start": 133.58,
+     "end": 134.28,
+     "probability": 0.37
+    },
+    {
+     "word": " Tuesday,",
+     "start": 134.82,
+     "end": 134.96,
+     "probability": 0.994
+    },
+    {
+     "word": " Wednesday,",
+     "start": 135.3,
+     "end": 135.56,
+     "probability": 0.998
+    },
+    {
+     "word": " hey",
+     "start": 135.68,
+     "end": 136.3,
+     "probability": 0.749
+    }
+   ]
+  },
+  {
+   "start": 136.3,
+   "end": 138.58,
+   "text": " Thursday, Friday, Saturday, Sunday",
+   "words": [
+    {
+     "word": " Thursday,",
+     "start": 136.3,
+     "end": 136.68,
+     "probability": 0.757
+    },
+    {
+     "word": " Friday,",
+     "start": 137.22,
+     "end": 137.24,
+     "probability": 0.999
+    },
+    {
+     "word": " Saturday,",
+     "start": 137.52,
+     "end": 137.88,
+     "probability": 0.998
+    },
+    {
+     "word": " Sunday",
+     "start": 137.96,
+     "end": 138.58,
+     "probability": 0.995
+    }
+   ]
+  },
+  {
+   "start": 138.58,
+   "end": 140.7,
+   "text": " Monday, Tuesday, Wednesday, hey",
+   "words": [
+    {
+     "word": " Monday,",
+     "start": 138.58,
+     "end": 139.0,
+     "probability": 0.93
+    },
+    {
+     "word": " Tuesday,",
+     "start": 139.4,
+     "end": 139.52,
+     "probability": 0.999
+    },
+    {
+     "word": " Wednesday,",
+     "start": 139.82,
+     "end": 140.16,
+     "probability": 0.998
+    },
+    {
+     "word": " hey",
+     "start": 140.24,
+     "end": 140.7,
+     "probability": 0.992
+    }
+   ]
+  },
+  {
+   "start": 140.7,
+   "end": 143.24,
+   "text": " Sunday, Friday, Saturday, Sunday",
+   "words": [
+    {
+     "word": " Sunday,",
+     "start": 140.7,
+     "end": 141.24,
+     "probability": 0.577
+    },
+    {
+     "word": " Friday,",
+     "start": 141.52,
+     "end": 141.84,
+     "probability": 0.999
+    },
+    {
+     "word": " Saturday,",
+     "start": 142.52,
+     "end": 142.52,
+     "probability": 0.991
+    },
+    {
+     "word": " Sunday",
+     "start": 142.54,
+     "end": 143.24,
+     "probability": 0.995
+    }
+   ]
+  },
+  {
+   "start": 143.24,
+   "end": 145.54,
+   "text": " Monday, Tuesday, Wednesday, hey",
+   "words": [
+    {
+     "word": " Monday,",
+     "start": 143.24,
+     "end": 143.74,
+     "probability": 0.578
+    },
+    {
+     "word": " Tuesday,",
+     "start": 144.3,
+     "end": 144.3,
+     "probability": 0.987
+    },
+    {
+     "word": " Wednesday,",
+     "start": 144.4,
+     "end": 144.82,
+     "probability": 0.55
+    },
+    {
+     "word": " hey",
+     "start": 144.82,
+     "end": 145.54,
+     "probability": 0.655
+    }
+   ]
+  },
+  {
+   "start": 145.54,
+   "end": 147.9,
+   "text": " Monday, Tuesday, Saturday, Sunday",
+   "words": [
+    {
+     "word": " Monday,",
+     "start": 145.54,
+     "end": 145.88,
+     "probability": 0.289
+    },
+    {
+     "word": " Tuesday,",
+     "start": 146.26,
+     "end": 146.38,
+     "probability": 0.553
+    },
+    {
+     "word": " Saturday,",
+     "start": 146.66,
+     "end": 147.04,
+     "probability": 0.932
+    },
+    {
+     "word": " Sunday",
+     "start": 147.04,
+     "end": 147.9,
+     "probability": 0.696
+    }
+   ]
+  },
+  {
+   "start": 147.9,
+   "end": 150.82,
+   "text": " Monday, Tuesday, Tuesday, hey",
+   "words": [
+    {
+     "word": " Monday,",
+     "start": 147.9,
+     "end": 148.26,
+     "probability": 0.637
+    },
+    {
+     "word": " Tuesday,",
+     "start": 148.62,
+     "end": 148.82,
+     "probability": 0.999
+    },
+    {
+     "word": " Tuesday,",
+     "start": 148.96,
+     "end": 149.56,
+     "probability": 0.566
+    },
+    {
+     "word": " hey",
+     "start": 149.56,
+     "end": 150.82,
+     "probability": 0.882
+    }
+   ]
+  },
+  {
+   "start": 152.34,
+   "end": 155.94,
+   "text": " Monday to Sunday, every day is fun",
+   "words": [
+    {
+     "word": " Monday",
+     "start": 152.24,
+     "end": 152.68,
+     "probability": 0.138
+    },
+    {
+     "word": " to",
+     "start": 152.68,
+     "end": 153.46,
+     "probability": 0.762
+    },
+    {
+     "word": " Sunday,",
+     "start": 153.46,
+     "end": 154.08,
+     "probability": 0.993
+    },
+    {
+     "word": " every",
+     "start": 154.08,
+     "end": 154.64,
+     "probability": 0.668
+    },
+    {
+     "word": " day",
+     "start": 154.64,
+     "end": 155.04,
+     "probability": 0.999
+    },
+    {
+     "word": " is",
+     "start": 155.04,
+     "end": 155.48,
+     "probability": 0.881
+    },
+    {
+     "word": " fun",
+     "start": 155.48,
+     "end": 155.94,
+     "probability": 0.994
+    }
+   ]
+  },
+  {
+   "start": 155.94,
+   "end": 159.7,
+   "text": " Class by class, friend by friend, we are one",
+   "words": [
+    {
+     "word": " Class",
+     "start": 155.94,
+     "end": 156.48,
+     "probability": 0.919
+    },
+    {
+     "word": " by",
+     "start": 156.48,
+     "end": 156.96,
+     "probability": 0.887
+    },
+    {
+     "word": " class,",
+     "start": 156.96,
+     "end": 157.5,
+     "probability": 0.943
+    },
+    {
+     "word": " friend",
+     "start": 157.7,
+     "end": 157.8,
+     "probability": 0.693
+    },
+    {
+     "word": " by",
+     "start": 157.8,
+     "end": 158.06,
+     "probability": 0.991
+    },
+    {
+     "word": " friend,",
+     "start": 158.06,
+     "end": 158.5,
+     "probability": 0.993
+    },
+    {
+     "word": " we",
+     "start": 158.5,
+     "end": 158.9,
+     "probability": 0.991
+    },
+    {
+     "word": " are",
+     "start": 158.9,
+     "end": 159.26,
+     "probability": 0.995
+    },
+    {
+     "word": " one",
+     "start": 159.26,
+     "end": 159.7,
+     "probability": 0.96
+    }
+   ]
+  },
+  {
+   "start": 161.2,
+   "end": 165.1,
+   "text": " Monday to Sunday, every day is fun",
+   "words": [
+    {
+     "word": " Monday",
+     "start": 161.2,
+     "end": 162.08,
+     "probability": 0.275
+    },
+    {
+     "word": " to",
+     "start": 162.08,
+     "end": 162.64,
+     "probability": 0.994
+    },
+    {
+     "word": " Sunday,",
+     "start": 162.64,
+     "end": 163.26,
+     "probability": 0.998
+    },
+    {
+     "word": " every",
+     "start": 163.6,
+     "end": 163.8,
+     "probability": 0.973
+    },
+    {
+     "word": " day",
+     "start": 163.8,
+     "end": 164.22,
+     "probability": 1.0
+    },
+    {
+     "word": " is",
+     "start": 164.22,
+     "end": 164.64,
+     "probability": 0.99
+    },
+    {
+     "word": " fun",
+     "start": 164.64,
+     "end": 165.1,
+     "probability": 0.999
+    }
+   ]
+  },
+  {
+   "start": 165.1,
+   "end": 167.82,
+   "text": " Sing it with me, everybody",
+   "words": [
+    {
+     "word": " Sing",
+     "start": 165.1,
+     "end": 165.64,
+     "probability": 0.925
+    },
+    {
+     "word": " it",
+     "start": 165.64,
+     "end": 165.88,
+     "probability": 0.641
+    },
+    {
+     "word": " with",
+     "start": 165.88,
+     "end": 166.1,
+     "probability": 0.998
+    },
+    {
+     "word": " me,",
+     "start": 166.1,
+     "end": 166.56,
+     "probability": 0.999
+    },
+    {
+     "word": " everybody",
+     "start": 166.72,
+     "end": 167.82,
+     "probability": 0.922
+    }
+   ]
+  },
+  {
+   "start": 168.44,
+   "end": 169.9,
+   "text": " One, two, three",
+   "words": [
+    {
+     "word": " One,",
+     "start": 168.34,
+     "end": 168.78,
+     "probability": 0.528
+    },
+    {
+     "word": " two,",
+     "start": 169.26,
+     "end": 169.32,
+     "probability": 0.969
+    },
+    {
+     "word": " three",
+     "start": 169.8,
+     "end": 169.9,
+     "probability": 0.998
+    }
+   ]
+  },
+  {
+   "start": 169.9,
+   "end": 170.78,
+   "text": " Yeah",
+   "words": [
+    {
+     "word": " Yeah",
+     "start": 169.9,
+     "end": 170.78,
+     "probability": 0.232
+    }
+   ]
+  },
+  {
+   "start": 174.66,
+   "end": 180.4,
+   "text": " Seven days, seven days, see you on Monday",
+   "words": [
+    {
+     "word": " Seven",
+     "start": 174.66,
+     "end": 175.8,
+     "probability": 0.203
+    },
+    {
+     "word": " days,",
+     "start": 175.8,
+     "end": 176.34,
+     "probability": 0.967
+    },
+    {
+     "word": " seven",
+     "start": 176.62,
+     "end": 176.9,
+     "probability": 0.879
+    },
+    {
+     "word": " days,",
+     "start": 176.9,
+     "end": 177.56,
+     "probability": 0.999
+    },
+    {
+     "word": " see",
+     "start": 177.74,
+     "end": 178.14,
+     "probability": 0.9
+    },
+    {
+     "word": " you",
+     "start": 178.14,
+     "end": 178.6,
+     "probability": 0.995
+    },
+    {
+     "word": " on",
+     "start": 178.6,
+     "end": 179.2,
+     "probability": 0.932
+    },
+    {
+     "word": " Monday",
+     "start": 179.2,
+     "end": 180.4,
+     "probability": 0.975
+    }
+   ]
+  },
+  {
+   "start": 184.24,
+   "end": 186.52,
+   "text": " Bye-bye",
+   "words": [
+    {
+     "word": " Bye",
+     "start": 184.24,
+     "end": 185.38,
+     "probability": 0.548
+    },
+    {
+     "word": "-bye",
+     "start": 185.38,
+     "end": 186.52,
+     "probability": 0.58
+    }
+   ]
+  }
+ ]
+}

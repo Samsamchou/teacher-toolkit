@@ -1,0 +1,41 @@
+{
+  "skill_name": "2d-animations",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "幫我寫一首新的 Suno 兒童英語歌：主題是 weather and clothes（天氣與衣服），給台灣國小四年級。曲風 K-pop，人聲用成人偶像團，速度不要太快。一定要出現的句子：How's the weather today? / It's rainy. / Put on your raincoat. / It's hot and sunny. / Let's wear a cap. 請輸出可以直接貼進 Suno 的 Lyrics 和 Style，存成 Markdown 檔。",
+      "expected_output": "A Markdown file with Suno-ready Lyrics (section [ ] tags, English ( ) ad-libs, every required sentence verbatim, a repeated chorus hook) and a one-paragraph English Style prompt (K-pop, adult idol group vocals, mid tempo ~100-105 BPM, unhurried delivery) plus exclude styles; grammar issues flagged not silently changed.",
+      "files": [],
+      "assertions": [
+        "Markdown 檔已存在於 outputs",
+        "5 句指定句全部逐字出現在歌詞中",
+        "歌詞有 [Verse]、[Chorus]、[Outro] 段落標籤",
+        "副歌記憶點句重複至少 2 次",
+        "歌詞與 Style 區塊內沒有中文字",
+        "Style 指定 K-pop 且人聲為成人偶像團（不是兒童合唱）",
+        "Style 寫明中等速度（約 95–110 BPM 或 mid-tempo）且語速不急促",
+        "Style 為單一段落且 ≤ 1,000 字元",
+        "有排除風格（含 fast／rushed 類）"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我有一首新歌 Seven Days, Here We Go!（MP3 和歌詞 Word 檔在 songs/ 資料夾），想照之前的方式做成 2D 動畫。我已經同意：沿用六位學生、對嘴規則照舊（第一人稱與問答由該角色、副歌全員、旁白閉嘴）、可以安裝或使用本機語音辨識、成品要英文字幕版和聽力版。請先做到階段 1～3：量實際演唱、做每句時間表、寫每句歌詞對應動作的分鏡表，然後停下來給我審，不要開始寫動畫程式。",
+      "expected_output": "New song folder created by copying the latest engine; local ASR (two passes) + beat analysis; per-line timing table; list of differences between sung audio and the lyric file; a line-by-line storyboard (time, who lip-syncs, action/picture) covering every sung line, with a scene table; stops for teacher review without writing scene code.",
+      "files": [
+        "songs/Seven Days, Here We Go!.mp3",
+        "songs/Seven Days, Here We Go! 歌詞.docx"
+      ],
+      "assertions": [
+        "在 sandbox 建立新歌資料夾並帶有引擎檔（engine.js 等）",
+        "ASR 跑了兩次（不提示＋提示）且有拍點／速度結果",
+        "有逐句時間表（CSV 或 JSON）且涵蓋實唱各句",
+        "列出實唱與歌詞檔的差異",
+        "分鏡表每一句歌詞都有一列，含時間、對嘴角色、動作／圖片",
+        "分鏡表含場景表且只在段落邊界換景（或明確說明）",
+        "沒有寫場景動畫程式、沒有渲染影片",
+        "最後列出要請教師確認的問題並停下"
+      ]
+    }
+  ]
+}

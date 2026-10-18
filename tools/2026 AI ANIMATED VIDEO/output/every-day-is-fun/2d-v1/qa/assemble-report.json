@@ -1,0 +1,65 @@
+{
+ "fps": 30,
+ "expected_frames": 5700,
+ "scenes": [
+  {
+   "scene": "s00-intro-silent",
+   "frames": 514
+  },
+  {
+   "scene": "s01-weekend-silent",
+   "frames": 571
+  },
+  {
+   "scene": "s02-subjects1-silent",
+   "frames": 293
+  },
+  {
+   "scene": "s03-chorus1-silent",
+   "frames": 562
+  },
+  {
+   "scene": "s04-monday-silent",
+   "frames": 419
+  },
+  {
+   "scene": "s05-subjects2-silent",
+   "frames": 276
+  },
+  {
+   "scene": "s06-chorus2-silent",
+   "frames": 548
+  },
+  {
+   "scene": "s07-timetable-silent",
+   "frames": 409
+  },
+  {
+   "scene": "s08-bridge-silent",
+   "frames": 415
+  },
+  {
+   "scene": "s09-dance-silent",
+   "frames": 546
+  },
+  {
+   "scene": "s10-final-silent",
+   "frames": 571
+  },
+  {
+   "scene": "s11-outro-silent",
+   "frames": 576
+  }
+ ],
+ "English": {
+  "file": "Every-Day-Is-Fun-2D-v1-English.mp4",
+  "frames": 5700,
+  "duration": 190.0
+ },
+ "Listening": {
+  "file": "Every-Day-Is-Fun-2D-v1-Listening.mp4",
+  "frames": 5700,
+  "duration": 190.0
+ },
+ "scene_frames_sum": 5700
+}

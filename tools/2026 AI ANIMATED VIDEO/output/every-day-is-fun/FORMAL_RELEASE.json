@@ -1,0 +1,34 @@
+{
+  "song": "Every Day Is Fun",
+  "version": "2d-v1",
+  "status": "teacher_accepted_official",
+  "date": "2026-10-18",
+  "style": "2D coded animation (Canvas 2D), original-song lip-sync, no TTS",
+  "acceptance": "2d-v1/qa/teacher-acceptance-2d-v1.json",
+  "files": [
+    {
+      "file": "Every-Day-Is-Fun-2D-v1-English.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/every-day-is-fun/2d-v1/renders/Every-Day-Is-Fun-2D-v1-English.mp4",
+      "bytes": 162094848,
+      "sha256": "94a3b668782bce60c83c01d5170040dfa0dce120c70522627ba1a56eea654a74",
+      "duration_sec": 190.0,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5700
+    },
+    {
+      "file": "Every-Day-Is-Fun-2D-v1-Listening.mp4",
+      "path": "G:/我的雲端硬碟/teacher-toolkit/tools/2026 AI ANIMATED VIDEO/output/every-day-is-fun/2d-v1/renders/Every-Day-Is-Fun-2D-v1-Listening.mp4",
+      "bytes": 153311285,
+      "sha256": "2281ca5688422ae7ae3098d04ea59129cd15445f634394153d8ca35ae49e0a06",
+      "duration_sec": 190.0,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "frames": 5700
+    }
+  ],
+  "previous_official_releases": [],
+  "historical_versions_preserved": true
+}

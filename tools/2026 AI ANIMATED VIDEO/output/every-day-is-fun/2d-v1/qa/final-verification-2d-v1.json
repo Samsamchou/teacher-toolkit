@@ -1,0 +1,123 @@
+{
+ "English": {
+  "bytes": 162094848,
+  "sha256": "94a3b668782bce60c83c01d5170040dfa0dce120c70522627ba1a56eea654a74",
+  "probe": {
+   "programs": [],
+   "stream_groups": [],
+   "streams": [
+    {
+     "codec_name": "h264",
+     "width": 1920,
+     "height": 1080,
+     "r_frame_rate": "30/1",
+     "side_data_list": [
+      {}
+     ]
+    },
+    {
+     "codec_name": "aac",
+     "sample_rate": "48000",
+     "channels": 2,
+     "r_frame_rate": "0/0"
+    }
+   ],
+   "format": {
+    "duration": "190.000000"
+   }
+  },
+  "full_decode_errors": ""
+ },
+ "Listening": {
+  "bytes": 153311285,
+  "sha256": "2281ca5688422ae7ae3098d04ea59129cd15445f634394153d8ca35ae49e0a06",
+  "probe": {
+   "programs": [],
+   "stream_groups": [],
+   "streams": [
+    {
+     "codec_name": "h264",
+     "width": 1920,
+     "height": 1080,
+     "r_frame_rate": "30/1",
+     "side_data_list": [
+      {}
+     ]
+    },
+    {
+     "codec_name": "aac",
+     "sample_rate": "48000",
+     "channels": 2,
+     "r_frame_rate": "0/0"
+    }
+   ],
+   "format": {
+    "duration": "190.000000"
+   }
+  },
+  "full_decode_errors": ""
+ },
+ "audio_alignment": [
+  {
+   "t": 2,
+   "corr_zero_lag": 0.9981,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9981
+  },
+  {
+   "t": 21,
+   "corr_zero_lag": 0.9991,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9991
+  },
+  {
+   "t": 40,
+   "corr_zero_lag": 0.9945,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9945
+  },
+  {
+   "t": 59,
+   "corr_zero_lag": 0.9988,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9988
+  },
+  {
+   "t": 78,
+   "corr_zero_lag": 0.9989,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9989
+  },
+  {
+   "t": 97,
+   "corr_zero_lag": 0.9974,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9974
+  },
+  {
+   "t": 116,
+   "corr_zero_lag": 0.999,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.999
+  },
+  {
+   "t": 135,
+   "corr_zero_lag": 0.9964,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9964
+  },
+  {
+   "t": 154,
+   "corr_zero_lag": 0.997,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.997
+  },
+  {
+   "t": 173,
+   "corr_zero_lag": 0.9984,
+   "best_lag_ms": 0.0,
+   "best_corr": 0.9984
+  }
+ ],
+ "audio_identical_between_editions": true
+}
