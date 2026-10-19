@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-19T10:03:14.182Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Edit only the transparent masked area. Keep the exact same character, face shape, skin tone, freckles, lighting, 3D animated-film render style, hair and everything outside the mask unchanged. Eyes: both eyes fully closed in a natural relaxed blink, curved closed eyelids with lashes, eyebrows unchanged.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "face-B01_blink.png",
+  "output_index": 1,
+  "output_sha256": "aff7bd4e01435bb9aec2e0a1b84846245cae59a43fc238a015f40a804b24deab",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_9176c9e8759a4e05a064be55213cfba0",
+  "usage": {
+    "input_tokens": 1091,
+    "input_tokens_details": {
+      "image_tokens": 1024,
+      "text_tokens": 67
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 2847
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "face-base.png",
+      "sha256": "319a7ad998a96472804940c676aca881781eec7a8900a9f441fb81b1c103f1fe",
+      "format": "png",
+      "width": 1024,
+      "height": 1024
+    }
+  ],
+  "mask": {
+    "file": "mask-eyes.png",
+    "sha256": "b109b61f7949c18d3d76d76117e269e896fbf60ba448b2086a2504faf82be691",
+    "format": "png",
+    "width": 1024,
+    "height": 1024
+  }
+}

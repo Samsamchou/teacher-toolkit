@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-19T14:36:14.971Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Use the reference image as the exact same character: same face, eyes, freckles, black bob hair with cyan gradient tips and star hair clip, white sci-fi jacket with glowing cyan lines, dark grey cargo trousers with cyan accents, white sneakers, holographic bracelet on her left wrist, same proportions and stylized 3D animated-film render style. Full body visible from head to feet, plain pure white background, even soft studio lighting, no shadow on the background. Hands with five fingers each, natural anatomy. No text, no letters, no logos, no extra objects or props. Pose: standing facing the viewer, both arms opened wide to the sides at shoulder height with open palms, an excited surprised gesture, eyebrows raised, closed-mouth delighted smile, eyes wide and looking at the viewer.",
+  "requested_size": "1024x1536",
+  "requested_quality": "high",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "nova-P10-pose-v1.png",
+  "output_index": 1,
+  "output_sha256": "1bacd29a6aa2f1aafa186ae97193f2d18b4e9f8096eb10a9355bd16ef049603a",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1536,
+  "request_id": "req_ef34cf028bcf470ca210f2139bd77d5b",
+  "usage": {
+    "input_tokens": 1702,
+    "input_tokens_details": {
+      "image_tokens": 1536,
+      "text_tokens": 166
+    },
+    "output_tokens": 5488,
+    "output_tokens_details": {
+      "image_tokens": 5488,
+      "text_tokens": 0
+    },
+    "total_tokens": 7190
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "nova-sheet-v1-1.png",
+      "sha256": "0945eaec8140a76985fc4091dba59c394490d7d7f4e19be68cbd489eae71d8b3",
+      "format": "png",
+      "width": 1024,
+      "height": 1536
+    }
+  ],
+  "mask": null
+}

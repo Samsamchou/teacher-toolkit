@@ -1,0 +1,65 @@
+{
+ "source": "teacher-provided references/[a|e|i|o|u].mp3 (2026-10-19)",
+ "clips": {
+  "a": [
+   {
+    "file": "short-a-1.wav",
+    "sec": 0.316,
+    "start_in_src": 0.44
+   },
+   {
+    "file": "short-a-2.wav",
+    "sec": 0.33,
+    "start_in_src": 1.796
+   }
+  ],
+  "e": [
+   {
+    "file": "short-e-1.wav",
+    "sec": 0.296,
+    "start_in_src": 0.393
+   },
+   {
+    "file": "short-e-2.wav",
+    "sec": 0.323,
+    "start_in_src": 1.745
+   }
+  ],
+  "i": [
+   {
+    "file": "short-i-1.wav",
+    "sec": 0.267,
+    "start_in_src": 0.525
+   },
+   {
+    "file": "short-i-2.wav",
+    "sec": 0.298,
+    "start_in_src": 1.869
+   }
+  ],
+  "o": [
+   {
+    "file": "short-o-1.wav",
+    "sec": 0.328,
+    "start_in_src": 0.333
+   },
+   {
+    "file": "short-o-2.wav",
+    "sec": 0.297,
+    "start_in_src": 1.767
+   }
+  ],
+  "u": [
+   {
+    "file": "short-u-1.wav",
+    "sec": 0.276,
+    "start_in_src": 0.468
+   },
+   {
+    "file": "short-u-2.wav",
+    "sec": 0.279,
+    "start_in_src": 1.842
+   }
+  ]
+ }
+}

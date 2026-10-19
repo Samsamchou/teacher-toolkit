@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><title>GLB pose renderer</title>
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+// glb_viewer.html?glb=<path>&yaw=<deg>&w=&h= — 固定燈光與鏡頭，透明背景渲染一個姿勢模型。
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const q = new URLSearchParams(location.search);
+const W = +q.get('w') || 1024, H = +q.get('h') || 1536;
+const r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+r.setSize(W, H); r.setPixelRatio(1); r.outputColorSpace = THREE.SRGBColorSpace;
+r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.0;
+document.body.appendChild(r.domElement);
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(2, 3, 4); scene.add(key);
+const rim = new THREE.DirectionalLight(0xbfe9ff, 0.8); rim.position.set(-3, 2, -3); scene.add(rim);
+scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+const cam = new THREE.PerspectiveCamera(22, W / H, 0.01, 100);
+new GLTFLoader().load(q.get('glb'), g => {
+  const m = g.scene; scene.add(m);
+  const box = new THREE.Box3().setFromObject(m), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  m.position.sub(c);                       // 模型置中
+  m.rotation.y = THREE.MathUtils.degToRad(+q.get('yaw') || 0);
+  const dist = (size.y * 1.08) / 2 / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
+  cam.position.set(0, size.y * 0.04, dist); cam.lookAt(0, 0, 0);
+  r.render(scene, cam); window.READY = true;
+}, undefined, e => { window.ERR = String(e); });
+</script>

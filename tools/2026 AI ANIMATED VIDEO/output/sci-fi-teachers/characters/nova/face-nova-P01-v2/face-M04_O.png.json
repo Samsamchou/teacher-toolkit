@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-19T10:00:30.645Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Edit only the transparent masked area. Keep the exact same character, face shape, skin tone, freckles, lighting, 3D animated-film render style, hair and everything outside the mask unchanged. Mouth: lips rounded into an open vertical oval, as when saying \"oh\".",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "face-M04_O.png",
+  "output_index": 1,
+  "output_sha256": "fe4f69e52a0ffae4dccaf4b3c028891a0a543f1fd02245da21fec3d51deaa028",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_2a500bfa7d084005acf58ee39d323dc8",
+  "usage": {
+    "input_tokens": 1085,
+    "input_tokens_details": {
+      "image_tokens": 1024,
+      "text_tokens": 61
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 2841
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "face-base.png",
+      "sha256": "319a7ad998a96472804940c676aca881781eec7a8900a9f441fb81b1c103f1fe",
+      "format": "png",
+      "width": 1024,
+      "height": 1024
+    }
+  ],
+  "mask": {
+    "file": "mask-mouth.png",
+    "sha256": "12f23bf1d7e5eceae3b4e50bc3703293b19efde8b8649ed8ec8260043ea83ace",
+    "format": "png",
+    "width": 1024,
+    "height": 1024
+  }
+}

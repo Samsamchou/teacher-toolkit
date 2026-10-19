@@ -1,0 +1,29 @@
+{
+ "source": "teacher-provided references/[wh|sh|th voiceless|th voiced|ph|ch].mp3 (2026-10-19)",
+ "clips": {
+  "wh": {
+   "file": "dg-wh.wav",
+   "sec": 0.436
+  },
+  "sh": {
+   "file": "dg-sh.wav",
+   "sec": 0.713
+  },
+  "th-voiceless": {
+   "file": "dg-th-voiceless.wav",
+   "sec": 1.031
+  },
+  "th-voiced": {
+   "file": "dg-th-voiced.wav",
+   "sec": 0.72
+  },
+  "ph": {
+   "file": "dg-ph.wav",
+   "sec": 1.254
+  },
+  "ch": {
+   "file": "dg-ch.wav",
+   "sec": 0.311
+  }
+ }
+}

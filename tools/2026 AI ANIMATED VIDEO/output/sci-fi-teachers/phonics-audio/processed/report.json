@@ -1,0 +1,393 @@
+[
+ {
+  "file": "Near-open_front_unrounded_vowel.wav",
+  "tag": "short a",
+  "ipa": "æ",
+  "example": "Saturday",
+  "sec": 0.706
+ },
+ {
+  "file": "Open-mid_front_unrounded_vowel.wav",
+  "tag": "short e",
+  "ipa": "ɛ",
+  "example": "Wednesday",
+  "sec": 0.656
+ },
+ {
+  "file": "Near-close_near-front_unrounded_vowel.wav",
+  "tag": "short i",
+  "ipa": "ɪ",
+  "example": "it",
+  "sec": 0.572
+ },
+ {
+  "file": "Open_back_unrounded_vowel.wav",
+  "tag": "short o",
+  "ipa": "ɑ",
+  "example": "hot",
+  "sec": 0.587
+ },
+ {
+  "file": "Open-mid_back_unrounded_vowel.wav",
+  "tag": "short u / o",
+  "ipa": "ʌ",
+  "example": "Sunday, Monday",
+  "sec": 0.635
+ },
+ {
+  "file": "Mid-central_vowel.wav",
+  "tag": "schwa",
+  "ipa": "ə",
+  "example": "about",
+  "sec": 0.556
+ },
+ {
+  "file": "Close_front_unrounded_vowel.wav",
+  "tag": "long e / ee",
+  "ipa": "i",
+  "example": "see",
+  "sec": 0.601
+ },
+ {
+  "file": "Close_back_rounded_vowel.wav",
+  "tag": "oo / ue",
+  "ipa": "u",
+  "example": "Tuesday",
+  "sec": 0.67
+ },
+ {
+  "file": "Near-close_near-back_rounded_vowel.wav",
+  "tag": "short oo",
+  "ipa": "ʊ",
+  "example": "book",
+  "sec": 0.607
+ },
+ {
+  "file": "Open-mid_back_rounded_vowel.wav",
+  "tag": "aw",
+  "ipa": "ɔ",
+  "example": "saw",
+  "sec": 0.571
+ },
+ {
+  "file": "Open-mid_central_unrounded_vowel.wav",
+  "tag": "ur / er / ir",
+  "ipa": "ɝ",
+  "example": "Thursday, Saturday",
+  "sec": 0.569
+ },
+ {
+  "file": "Close-mid_front_unrounded_vowel.wav",
+  "tag": "long a / ay (start)",
+  "ipa": "e",
+  "example": "day",
+  "sec": 0.717
+ },
+ {
+  "file": "Close-mid_back_rounded_vowel.wav",
+  "tag": "long o (start)",
+  "ipa": "o",
+  "example": "go",
+  "sec": 0.584
+ },
+ {
+  "file": "Open_front_unrounded_vowel.wav",
+  "tag": "long i (start)",
+  "ipa": "a",
+  "example": "Friday",
+  "sec": 0.584
+ },
+ {
+  "file": "Voiceless_palato-alveolar_sibilant.wav",
+  "tag": "sh",
+  "ipa": "ʃ",
+  "example": "she",
+  "sec": 2.277
+ },
+ {
+  "file": "Voiceless_palato-alveolar_affricate.wav",
+  "tag": "ch",
+  "ipa": "tʃ",
+  "example": "chair",
+  "sec": 1.96
+ },
+ {
+  "file": "Voiceless_dental_fricative.wav",
+  "tag": "th (voiceless)",
+  "ipa": "θ",
+  "example": "Thursday",
+  "sec": 2.276
+ },
+ {
+  "file": "Voiced_dental_fricative.wav",
+  "tag": "th (voiced)",
+  "ipa": "ð",
+  "example": "the",
+  "sec": 2.383
+ },
+ {
+  "file": "Velar_nasal.wav",
+  "tag": "ng",
+  "ipa": "ŋ",
+  "example": "sing",
+  "sec": 1.925
+ },
+ {
+  "file": "Voiceless_labio-velar_fricative.wav",
+  "tag": "wh",
+  "ipa": "ʍ",
+  "example": "what",
+  "sec": 2.063
+ },
+ {
+  "file": "Voiced_labio-velar_approximant.wav",
+  "tag": "w",
+  "ipa": "w",
+  "example": "Wednesday",
+  "sec": 1.8
+ },
+ {
+  "file": "Voiceless_labiodental_fricative.wav",
+  "tag": "ph / f",
+  "ipa": "f",
+  "example": "phone, Friday",
+  "sec": 0.715
+ },
+ {
+  "file": "Voiceless_velar_plosive.wav",
+  "tag": "ck / k",
+  "ipa": "k",
+  "example": "duck",
+  "sec": 1.984
+ },
+ {
+  "file": "Voiceless_alveolar_sibilant.wav",
+  "tag": "s",
+  "ipa": "s",
+  "example": "Sunday",
+  "sec": 2.319
+ },
+ {
+  "file": "Alveolar_approximant.wav",
+  "tag": "r",
+  "ipa": "ɹ",
+  "example": "Friday",
+  "sec": 1.95
+ },
+ {
+  "file": "En-us-day.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "day",
+  "sec": 0.627,
+  "asr": "Day."
+ },
+ {
+  "file": "En-us-Sunday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Sunday",
+  "sec": 0.65,
+  "asr": "Sunday."
+ },
+ {
+  "file": "En-us-Monday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Monday",
+  "sec": 0.534,
+  "asr": "Monday"
+ },
+ {
+  "file": "En-us-Tuesday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Tuesday",
+  "sec": 0.627,
+  "asr": "Tuesday."
+ },
+ {
+  "file": "En-us-Wednesday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Wednesday",
+  "sec": 0.639,
+  "asr": "Wednesday."
+ },
+ {
+  "file": "En-us-Thursday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Thursday",
+  "sec": 0.813,
+  "asr": "Thursday"
+ },
+ {
+  "file": "En-us-Friday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Friday",
+  "sec": 0.581,
+  "asr": "Friday."
+ },
+ {
+  "file": "En-us-Saturday.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "Saturday",
+  "sec": 0.685,
+  "asr": "Saturday."
+ },
+ {
+  "file": "En-us-a.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "a",
+  "sec": 0.567,
+  "asr": "A."
+ },
+ {
+  "file": "En-us-A_upper.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "A",
+  "sec": 1.161,
+  "asr": "A"
+ },
+ {
+  "file": "En-us-eye.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "eye",
+  "sec": 0.882,
+  "asr": "I."
+ },
+ {
+  "file": "En-us-I.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "I",
+  "sec": 0.488,
+  "asr": "I."
+ },
+ {
+  "file": "En-us-er.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "er",
+  "sec": 0.569,
+  "asr": "Errrr."
+ },
+ {
+  "file": "En-us-her.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "her",
+  "sec": 0.685,
+  "asr": "Her."
+ },
+ {
+  "file": "En-us-fur.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "fur",
+  "sec": 1.3,
+  "asr": "Fuhr."
+ },
+ {
+  "file": "En-us-you.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "you",
+  "sec": 0.441,
+  "asr": "You."
+ },
+ {
+  "file": "En-us-u.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "u",
+  "sec": 0.84,
+  "asr": "You."
+ },
+ {
+  "file": "En-us-blue.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "blue",
+  "sec": 0.581,
+  "asr": "Blue."
+ },
+ {
+  "file": "En-us-uh.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "uh",
+  "sec": 0.848,
+  "asr": "Uh..."
+ },
+ {
+  "file": "En-us-sun.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "sun",
+  "sec": 1.05,
+  "asr": "sun"
+ },
+ {
+  "file": "En-us-say.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "say",
+  "sec": 0.697,
+  "asr": "Say."
+ },
+ {
+  "file": "En-us-pie.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "pie",
+  "sec": 0.604,
+  "asr": "pie"
+ },
+ {
+  "file": "En-us-she.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "she",
+  "sec": 0.639,
+  "asr": "She."
+ },
+ {
+  "file": "En-us-chair.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "chair",
+  "sec": 0.627,
+  "asr": "chair"
+ },
+ {
+  "file": "En-us-thin.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "thin",
+  "sec": 0.852,
+  "asr": "Finn"
+ },
+ {
+  "file": "En-us-what.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "what",
+  "sec": 0.615,
+  "asr": "What?"
+ },
+ {
+  "file": "En-us-y.wav",
+  "tag": "word",
+  "ipa": null,
+  "example": "y",
+  "sec": 0.893,
+  "asr": "Why?"
+ }
+]
