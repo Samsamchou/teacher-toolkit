@@ -9,7 +9,7 @@ const IMG_FILES = {
   s06: 'S06_百年前運建材.png', s08: 'S08_二水車站-整修後.png', s11: 'S11_蒸汽火車加水維修.png',
   s12: 'S12_CT278蒸汽女王-公園.png',
   s13: 'S13-14_源泉車站.png', s15: 'S15_小哲疑問.png', s16: 'S16_八堡圳源頭取水口.png', s17: 'S17_古早開水圳.png',
-  s19: 'S19_水圳旁拍手.png', s20: 'S20-22_集集車站正面.png', s21: 'S21_檜木與木紋.png', s23: 'S23_集集車站修復.png',
+  s19: 'S19_水圳旁拍手.png', s20: 'S20-22_集集車站正面.png', s21: 'S21_檜木與木紋.png', s23: '../scenes-v2/N18_集集車站修復.png', // 2026-10-19 v1.1：原 S23 扛木板姿勢奇怪，改用 N18
   s24a: 'S24a_集集老街.png', s24b: 'S24b_綠色隧道騎車.png', s25: 'S25_水里車站.png', s26: 'S26_水裡坑熱鬧山城.png',
   s27: 'S27_登山客往玉山.png', s28: 'S28_車窗看玉山.png', s29: 'S29_發電廠.png', s30: 'S30_吃枝仔冰.png',
   s31: 'S31_車埕車站.png', s32: 'S32_軌道終點車擋.png', s33: 'S33_埕是空地.png', s34: 'S34_木材集散地.png',
@@ -19,7 +19,7 @@ const IMG_FILES = {
 function loadImages() {
   return Promise.all(Object.entries(IMG_FILES).map(([k, f]) => new Promise(res => {
     const im = new Image(); im.onload = () => { IMG[k] = im; res(); }; im.onerror = () => { console.error('missing', f); res(); };
-    im.src = ART + encodeURIComponent(f);
+    im.src = ART + f.split('/').map(s => s === '..' ? s : encodeURIComponent(s)).join('/');
   })));
 }
 const FONT = '"Microsoft JhengHei","Noto Sans TC",sans-serif';

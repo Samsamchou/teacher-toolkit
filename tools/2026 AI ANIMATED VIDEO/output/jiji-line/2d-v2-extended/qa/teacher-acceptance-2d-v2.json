@@ -1,0 +1,76 @@
+{
+ "project": "集集線五站 2D 動畫",
+ "version": "2d-v2-extended",
+ "accepted_by": "teacher",
+ "accepted_at": "2026-10-19",
+ "teacher_words": "延長版影片定為正式版，請記錄驗收。",
+ "spec": {
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "frames": 9262,
+  "duration_s": 308.73,
+  "subtitles": "zh-TW burned in（長句自動斷兩行）",
+  "narration": "edge-tts zh-TW-HsiaoChenNeural / zh-TW-YunJheNeural, rate -5%",
+  "lines": 45,
+  "units": 61
+ },
+ "sections_s": {
+  "開場": 36.3,
+  "二水": 49.9,
+  "源泉": 47.4,
+  "集集": 47.8,
+  "水里": 47.5,
+  "車埕": 50.3,
+  "結尾": 29.6
+ },
+ "files": {
+  "full_1080p": {
+   "path": "2d-v2-extended/renders/集集線五站-2D動畫-延長版-v2.1.mp4",
+   "bytes": 468880494,
+   "sha256": "d67d673949efef0d37790fe3820e1bfc53e8e92e1e2ea06ef5f82a2e45802cda"
+  },
+  "preview_540p": {
+   "path": "2d-v2-extended/renders/集集線五站-2D動畫-延長版-v2.1-預覽540p.mp4",
+   "bytes": 25510672,
+   "sha256": "79d8dd465b83e92ab3408a170f5fe87e764d52fa9830283e3d8dbaa64c68ceac"
+  }
+ },
+ "qa": {
+  "full_decode": "ok",
+  "per_unit_contact": "2d-v2-extended/qa/units-contact-集集線五站-2D動畫-延長版-v2.1.jpg",
+  "units_checked": 61,
+  "pilot": "2d-v2-extended/renders/集集線延長版-試做-開場與二水.mp4（老師 2026-10-19 認可）",
+  "unit34_frames": "2d-v2-extended/qa/u34-v2.1/"
+ },
+ "script_doc": "https://docs.google.com/document/d/1EPeCxXLQYlvAbxNXm8Wq-PFtZRTaS-1PAv0ASJ42Nr8/edit（文末〈延長版腳本（約 5 分鐘）〉段落）",
+ "storyboard": "2d-v2-extended/storyboard/storyboard-v2.md",
+ "art": "art/scenes-v1/（33 張 Canva AI，沿用）＋ art/scenes-v2/（18 張 OpenAI gpt-image-2，2026-10-19 老師定案；N02、N06、N09、N16、N17 重生一次，舊版在 superseded/）；N18 於 2026-10-19 取代第 34 句的 S23",
+ "previous_official": "2d-v1（3:02，保留不動）",
+ "current_release": "v2.1",
+ "revisions": [
+  {
+   "version": "v2",
+   "accepted_at": "2026-10-19",
+   "files": {
+    "full_1080p": {
+     "path": "2d-v2-extended/renders/集集線五站-2D動畫-延長版-v2.mp4",
+     "bytes": 462208262,
+     "sha256": "9712e5051516b3144707200ad198c18d4f5289c0be5359c1fad6ad2a86a58b78"
+    },
+    "preview_540p": {
+     "path": "2d-v2-extended/renders/集集線五站-2D動畫-延長版-v2-預覽540p.mp4",
+     "bytes": 25464776,
+     "sha256": "7b68dd9f89d8a48eed09704628a4bb29def448c9ea954a2ba0766dd9dd3d5b7c"
+    }
+   },
+   "note": "第一次驗收的檔案，已被 v2.1 取代（檔案保留未刪）"
+  },
+  {
+   "version": "v2.1",
+   "date": "2026-10-19",
+   "teacher_words": "N18 可以。換進延長版第 34 句，重新輸出完整影片，更新驗收紀錄，給我看第 34 句的畫面。",
+   "change": "第 34 句（約 2:35–2:42）的 S23 左側工人扛木板穿過脖子、姿勢奇怪；改用 OpenAI 新圖 N18（兩人抬木板），鏡頭推移改小以免切到人物。其他 60 句不變。"
+  }
+ ]
+}

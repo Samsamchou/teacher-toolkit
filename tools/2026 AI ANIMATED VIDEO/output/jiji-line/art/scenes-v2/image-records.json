@@ -1,0 +1,636 @@
+[
+ {
+  "file": "N01_古早載香蕉木材.png",
+  "unit": 7,
+  "id": "N01",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S06_百年前運建材.png",
+   "scenes-v1/S34_木材集散地.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "282700e4b2256253eda9df88808181378d008bb62122ae651975297129c8e24a",
+  "sha_match_sidecar": true,
+  "request_id": "req_e23ef59b19354665bbdb004475134bb5",
+  "usage": {
+   "input_tokens": 3241,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 225
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4403
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：古早蒸汽火車、香蕉與木材貨車、濁水溪。畫風較多細線，屬古早場景可接受。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N02_二水月台換車.png",
+  "unit": 12,
+  "id": "N02",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S04-07_月台小火車.png",
+   "scenes-v1/S08_二水車站-整修後.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "49c94a7a0b9fd7d271bab099ee593ab07c375c7fed8bae8385d1754e6eaf9b88",
+  "sha_match_sidecar": true,
+  "request_id": "req_858861b25cec40e09097dbba72e913e7",
+  "usage": {
+   "input_tokens": 3377,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 361
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4539
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過（第 2 版）：改成內陸小鎮、八卦山丘陵與稻田，沒有海；區間車無字。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": "superseded/N02_二水月台換車-v1.png"
+ },
+ {
+  "file": "N03_林先生教方法.png",
+  "unit": 25,
+  "id": "N03",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S17_古早開水圳.png",
+   "scenes-v1/S16_八堡圳源頭取水口.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "29b0e4f34aa83591fb030d7e0eddf5f796a66d072219f96fbbe9bf93acfa9a8b",
+  "sha_match_sidecar": true,
+  "request_id": "req_a9b8904750504f9ca0fb02f758740ac6",
+  "usage": {
+   "input_tokens": 3265,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 249
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4427
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：林先生指點、農民編竹籠裝石頭擋水。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N04_林先生廟.png",
+  "unit": 26,
+  "id": "N04",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S13-14_源泉車站.png",
+   "scenes-v1/S20-22_集集車站正面.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "8d2324ebe6d2d31cec6e1b1b063bb223152cc0733984295fa1052a83cb6fb3a2",
+  "sha_match_sidecar": true,
+  "request_id": "req_5fbd548c6fd14c5c8f6c6bc3a2607100",
+  "usage": {
+   "input_tokens": 3281,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 265
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4443
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：紅柱、綠色琉璃瓦燕尾脊、剪黏龍，與實景照片相符。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N05_跑水節.png",
+  "unit": 27,
+  "id": "N05",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S16_八堡圳源頭取水口.png",
+   "scenes-v1/S38_全線通車剪綵.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "b7729bfa7169d2f66936d7989e5ffe91f4723b845e7cf09797259a5cf877737d",
+  "sha_match_sidecar": true,
+  "request_id": "req_063113e1f9aa4152a370abf7171ab2bb",
+  "usage": {
+   "input_tokens": 3250,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 234
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4412
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：閘門放水，大家沿水圳奔跑、彩旗無字、鼓隊。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N06_台灣的米倉.png",
+  "unit": 28,
+  "id": "N06",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S16_八堡圳源頭取水口.png",
+   "scenes-v1/S19_水圳旁拍手.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "58861d71f3f71fd7b8da52d882f3cca673432f48f36877d9ff7bc637ea8bb631",
+  "sha_match_sidecar": true,
+  "request_id": "req_472e5c62b1644930bd3d42e45ad74236",
+  "usage": {
+   "input_tokens": 3300,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 284
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4462
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過（第 2 版）：阿公、媽媽、黃衣小女孩搬米，沒有人像小哲。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": "superseded/N06_台灣的米倉-v1.png"
+ },
+ {
+  "file": "N07_居民守護集集車站.png",
+  "unit": 33,
+  "id": "N07",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S20-22_集集車站正面.png",
+   "scenes-v1/S23_集集車站修復.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "f48fb068bc94818c8e31c384b7d83d382ee39d5c10c6485e83c8cfdca21c6e39",
+  "sha_match_sidecar": true,
+  "request_id": "req_ca002ee344e446a3a01d168c8beb11f8",
+  "usage": {
+   "input_tokens": 3256,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 240
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4418
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：震後受損木造車站，居民手牽手守護。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N08_綠色隧道俯瞰.png",
+  "unit": 36,
+  "id": "N08",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S24b_綠色隧道騎車.png",
+   "scenes-v1/S04-07_月台小火車.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "081fac45f96010954fca738e986d4f1b00735534e2c0a82630464eda63cad197",
+  "sha_match_sidecar": true,
+  "request_id": "req_bbb8a255f19a46f3b00ca281dc403d5d",
+  "usage": {
+   "input_tokens": 3301,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 285
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4463
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：俯瞰樟樹綠色隧道沿鐵道，DR1000 外觀正確。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N09_集集站恢復通車.png",
+  "unit": 37,
+  "id": "N09",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S20-22_集集車站正面.png",
+   "scenes-v1/S04-07_月台小火車.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "8b3067a558f2115363b2146a0db2299eb691490fc3d3ae4a5e6557f03a6e14b6",
+  "sha_match_sidecar": true,
+  "request_id": "req_3b2454ccaf9e4730b6cb4db5154e8367",
+  "usage": {
+   "input_tokens": 3305,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 289
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4467
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過（第 2 版）：大家站在黃線後揮手，孩子牽著大人，沒有人奔跑。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": "superseded/N09_集集站恢復通車-v1.png"
+ },
+ {
+  "file": "N10_日月潭水到明潭.png",
+  "unit": 43,
+  "id": "N10",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S29_發電廠.png",
+   "scenes-v1/S06_百年前運建材.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "3498273ad03161bf4c866796bb5977937bbab33401739e77f931336f43b1c257",
+  "sha_match_sidecar": true,
+  "request_id": "req_ad44b68cf441410da92263e58e0b3a24",
+  "usage": {
+   "input_tokens": 3251,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 235
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4413
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：日月潭、水管、發電廠、下方水庫與水壩。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N11_水里蛇窯.png",
+  "unit": 44,
+  "id": "N11",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S26_水裡坑熱鬧山城.png",
+   "scenes-v1/S21_檜木與木紋.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "4a25bfa07e28f6c5fccb62401159b50c76a0e90773e8dc77135320fd39b21c4c",
+  "sha_match_sidecar": true,
+  "request_id": "req_a9e8f547f9d94f4885984d08266c8992",
+  "usage": {
+   "input_tokens": 3267,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 251
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4429
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：長窯沿坡、木構棚架、柴堆、陶甕，與實景照片相符。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N12_捏陶土.png",
+  "unit": 45,
+  "id": "N12",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "../art/samples-v1/01-小晨角色設定-原尺寸.png",
+   "../art/samples-v1/02-小哲角色設定-原尺寸.png",
+   "scenes-v1/S30_吃枝仔冰.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "378157efdcc142a082dbe4093336e8c158f16647201d9748da595af61c2e1513",
+  "sha_match_sidecar": true,
+  "request_id": "req_b4cea742a9f84423a0209eef18605c9a",
+  "usage": {
+   "input_tokens": 4843,
+   "input_tokens_details": {
+    "image_tokens": 4524,
+    "text_tokens": 319
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 6005
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：兩人捏陶（小晨捏碗、小哲捏蛇），角色與設定圖一致（小哲藍帽為設定）。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N13_空地停滿糖台車.png",
+  "unit": 49,
+  "id": "N13",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S33_埕是空地.png",
+   "scenes-v1/S34_木材集散地.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "2592c1fe41dc5d3217e0820d1bd610608d4277c601441cdd3e4d53b6fcf59a35",
+  "sha_match_sidecar": true,
+  "request_id": "req_f49ae5bcc8a848d3b2131eada74d4600",
+  "usage": {
+   "input_tokens": 3241,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 225
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4403
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：空地上許多台車載糖包、蒸汽火車、木造站房。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N14_木業展示館外觀.png",
+  "unit": 52,
+  "id": "N14",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S31_車埕車站.png",
+   "scenes-v1/S36_木業展示館故事書.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "337d30b4a6e1703f4ed65b348627800908fd0f6a6b393fc77bf27130fac2544b",
+  "sha_match_sidecar": true,
+  "request_id": "req_8c70947ab8974c90b994c3e7f32ec326",
+  "usage": {
+   "input_tokens": 3257,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 241
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4419
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：尖斜大屋頂、外露木桁架的開放大棚＋兩層木造老廠房，與實景照片相符。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N15_工廠關門小鎮安靜.png",
+  "unit": 53,
+  "id": "N15",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S34_木材集散地.png",
+   "scenes-v1/S31_車埕車站.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "1e3914d97309181a89f89e63df720cdee0efd60ac9252718ace2976c4004b7a4",
+  "sha_match_sidecar": true,
+  "request_id": "req_3b2943df31e74352a9e4fb115aee9d4f",
+  "usage": {
+   "input_tokens": 3248,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 232
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4410
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：大木門關閉、落葉、閒置鋸木機、貓睡在木頭上，安靜不陰森。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": null
+ },
+ {
+  "file": "N16_石虎紀念車票.png",
+  "unit": 58,
+  "id": "N16",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S38_全線通車剪綵.png",
+   "scenes-v1/S39_全家搭火車.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "8c23fe9cd3f1cce664c0e8b08053a93f0be28fb213a99e2e1d3500897081777f",
+  "sha_match_sidecar": true,
+  "request_id": "req_b67f3a0c338f4f73ba84fabf52aaec64",
+  "usage": {
+   "input_tokens": 3333,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 317
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4495
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過（第 2 版）：石虎身上是斑點、額頭兩條白紋、尾巴有環紋，車票無字。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": "superseded/N16_石虎紀念車票-v1.png"
+ },
+ {
+  "file": "N17_雙鐵小旅行.png",
+  "unit": 59,
+  "id": "N17",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "../art/samples-v1/01-小晨角色設定-原尺寸.png",
+   "../art/samples-v1/02-小哲角色設定-原尺寸.png",
+   "scenes-v1/S24b_綠色隧道騎車.png",
+   "scenes-v1/S04-07_月台小火車.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "d556611b311674f44eec34e92dc6a1a422683c6b5c016cce39f1f60d22734f51",
+  "sha_match_sidecar": true,
+  "request_id": "req_97065f745abc4d9a8f4cc62ff5c34ba5",
+  "usage": {
+   "input_tokens": 6402,
+   "input_tokens_details": {
+    "image_tokens": 6032,
+    "text_tokens": 370
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 7564
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過（第 2 版）：兩人雙手握把、戴安全帽，小火車在圍欄另一側開過。",
+  "status": "老師已確認（2026-10-19，全部 17 張定案）",
+  "previous_version": "superseded/N17_雙鐵小旅行-v1.png"
+ },
+ {
+  "file": "N18_集集車站修復.png",
+  "unit": 34,
+  "id": "N18",
+  "tool": "gpt-image-2 (OpenAI Images API edit, v1 圖當參考)",
+  "refs": [
+   "scenes-v1/S23_集集車站修復.png",
+   "scenes-v1/S20-22_集集車站正面.png"
+  ],
+  "size": [
+   1680,
+   944
+  ],
+  "quality": "medium",
+  "sha256": "c6cce2111b843845e6e9408efe5ba69f5bed9124ce900db7e021653232740e26",
+  "sha_match_sidecar": true,
+  "request_id": "req_95a6283031904befab105cb8458862a6",
+  "usage": {
+   "input_tokens": 3309,
+   "input_tokens_details": {
+    "image_tokens": 3016,
+    "text_tokens": 293
+   },
+   "output_tokens": 1162,
+   "output_tokens_details": {
+    "image_tokens": 1162,
+    "text_tokens": 0
+   },
+   "total_tokens": 4471
+  },
+  "generated_at": "2026-10-19",
+  "qa": "通過：取代延長版第 34 句的 S23。老師指出 S23 左側工人扛木板穿過脖子、姿勢奇怪；新圖改成兩人一前一後抬木板，木板不經過頭頸。v1 的 S23 不動。",
+  "status": "老師已確認（2026-10-19）",
+  "previous_version": null,
+  "replaces": "scenes-v1/S23_集集車站修復.png（只在延長版）"
+ }
+]

@@ -1,0 +1,196 @@
+{
+ "style": "Create a NEW illustration (do not copy the reference composition). Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork with smooth watercolor washes (no heavy cross-hatching or etching lines), clean thin ink outlines, warm natural sunlight, rich greens and blues, friendly and suitable for 10-year-old children. 16:9 landscape. Keep the main subject inside the middle 60% of the image height; leave calm sky or ground near the top and bottom edges. Absolutely no text, letters, numbers, Chinese characters, signboards with writing, logos or watermarks anywhere in the image.",
+ "char": "The girl Xiao-Chen and the boy Xiao-Zhe must look exactly like the character sheets: Xiao-Chen has shoulder-length black hair with a small side ponytail and a blue train hair clip, light-blue short-sleeve shirt, navy suspender skirt, cross-body water bottle; Xiao-Zhe has short black hair, white short-sleeve shirt, orange vest with a whistle on a cord, khaki shorts, blue sneakers.",
+ "train": "The train is Taiwan's Jiji Line DR1000 diesel railcar exactly as in the reference: yellow front cab with an orange V-shaped stripe, two front windows and a centre door, ribbed stainless-steel silver body with an orange and yellow band along the side.",
+ "images": [
+  {
+   "id": "N01",
+   "unit": 7,
+   "file": "N01_古早載香蕉木材.png",
+   "refs": [
+    "scenes-v1/S06_百年前運建材.png",
+    "scenes-v1/S34_木材集散地.png"
+   ],
+   "prompt": "About 100 years ago in 1920s Taiwan: an old black steam locomotive pulls open freight wagons along a railway beside the wide pebbly Zhuoshui River valley. Some wagons are piled high with big green banana bunches, other wagons carry long stacked logs. Farmers in straw hats load banana bunches onto a wagon at a small rural siding; green mountains behind, banana trees beside the track. Nostalgic warm sepia-tinted morning light."
+  },
+  {
+   "id": "N02",
+   "unit": 12,
+   "file": "N02_二水月台換車.png",
+   "refs": [
+    "scenes-v1/S04-07_月台小火車.png",
+    "scenes-v1/S08_二水車站-整修後.png"
+   ],
+   "train": true,
+   "prompt": "A sunny island platform at Ershui station, an INLAND country town in central Taiwan (absolutely no sea, no ocean, no beach). On the left track stands a long Taiwan Railway commuter train with a plain white and silver body and a simple blue stripe, completely blank with no lettering or numbers. On the right track waits the short two-car Jiji Line DR1000 diesel railcar. Several travellers (a grandma with a cloth bag, a student with a backpack, a dad holding a child's hand) walk across the platform from the big commuter train toward the little yellow-and-silver Jiji Line train. Platform roof with simple steel columns, yellow safety line; behind the station low green hills of Bagua Mountain, small town houses, betel-nut palms and rice fields, blue sky."
+  },
+  {
+   "id": "N03",
+   "unit": 25,
+   "file": "N03_林先生教方法.png",
+   "refs": [
+    "scenes-v1/S17_古早開水圳.png",
+    "scenes-v1/S16_八堡圳源頭取水口.png"
+   ],
+   "prompt": "Taiwan about 300 years ago (Qing dynasty) at the bank of the wide Zhuoshui River. A kind, wise old gentleman in a long plain blue robe with a white beard points at the river and explains a method to a group of farmers in straw hats and simple clothes. Beside him farmers are weaving long cylindrical bamboo baskets and filling them with river stones, then placing the stone-filled bamboo cages in the river to divert water into a new irrigation channel. Hopeful morning light, sepia-tinted historical feeling."
+  },
+  {
+   "id": "N04",
+   "unit": 26,
+   "file": "N04_林先生廟.png",
+   "refs": [
+    "scenes-v1/S13-14_源泉車站.png",
+    "scenes-v1/S20-22_集集車站正面.png"
+   ],
+   "prompt": "Front view of Mr. Lin Temple in Yuanquan, Ershui, Changhua, Taiwan: a small single-hall traditional Taiwanese temple with bright red round pillars, a red front wall with carved wooden doors and lattice windows, and a green glazed-tile swallow-tail roof whose curved ridge is decorated with colourful cut-porcelain dragons and figures. A clean paved courtyard in front with neat flower beds of red and pink flowers, a small stone incense burner, tall green trees on both sides, a lamp post, blue sky with soft clouds. Peaceful, no people or only one small figure far away."
+  },
+  {
+   "id": "N05",
+   "unit": 27,
+   "file": "N05_跑水節.png",
+   "refs": [
+    "scenes-v1/S16_八堡圳源頭取水口.png",
+    "scenes-v1/S38_全線通車剪綵.png"
+   ],
+   "prompt": "A joyful autumn water-running festival at the Babao irrigation canal in Ershui, Taiwan. The sluice gate has just opened and a rush of white-foamed water flows down a straight stone-lined canal. Along the canal bank many villagers and children run forward together with the water, laughing and cheering, some waving colourful flags without writing, a drum team beats drums nearby. Golden rice fields and green mountains in the background, bright clear autumn sky."
+  },
+  {
+   "id": "N06",
+   "unit": 28,
+   "file": "N06_台灣的米倉.png",
+   "refs": [
+    "scenes-v1/S16_八堡圳源頭取水口.png",
+    "scenes-v1/S19_水圳旁拍手.png"
+   ],
+   "prompt": "A wide view of the Changhua plain in Taiwan at harvest time: endless golden rice paddies divided by small irrigation canals glittering with water, a small red-brick farmhouse with a traditional granary. In the foreground a farming family - a grandpa in a straw hat, a mother in a flowered work shirt with a headscarf, and a little girl in a yellow T-shirt with short pigtails - happily stack plump cloth sacks of rice and baskets of golden grain beside the granary door; rice grains spill from one basket. Nobody wears an orange vest, a white shirt with a vest, or a blue cap. Distant mountains, big blue sky, feeling of abundance."
+  },
+  {
+   "id": "N07",
+   "unit": 33,
+   "file": "N07_居民守護集集車站.png",
+   "refs": [
+    "scenes-v1/S20-22_集集車站正面.png",
+    "scenes-v1/S23_集集車站修復.png"
+   ],
+   "prompt": "Just after the 1999 earthquake: the small Japanese-style wooden Jiji railway station (dark wooden walls, grey tiled roof) leans slightly and is damaged, with a few fallen roof tiles on the ground. In front of it a group of local residents of all ages - grandparents, parents, children - stand together holding hands in a line facing the station, looking at it with love and determination, protecting it. Soft morning light breaking through clouds, hopeful mood, not scary."
+  },
+  {
+   "id": "N08",
+   "unit": 36,
+   "file": "N08_綠色隧道俯瞰.png",
+   "refs": [
+    "scenes-v1/S24b_綠色隧道騎車.png",
+    "scenes-v1/S04-07_月台小火車.png"
+   ],
+   "train": true,
+   "prompt": "A high bird's-eye view of the Jiji Green Tunnel in Taiwan: a very long straight country road lined on both sides by huge old camphor trees whose canopies meet overhead, forming a green tunnel that stretches far into the distance. A railway track runs right beside the road, and a small DR1000 railcar is visible on it. Rice fields and farmland on both sides, mountains on the horizon, summer sunlight."
+  },
+  {
+   "id": "N09",
+   "unit": 37,
+   "file": "N09_集集站恢復通車.png",
+   "refs": [
+    "scenes-v1/S20-22_集集車站正面.png",
+    "scenes-v1/S04-07_月台小火車.png"
+   ],
+   "train": true,
+   "prompt": "The platform of the Japanese-style wooden Jiji station in Taiwan on a bright winter morning. The DR1000 railcar is slowly arriving at the platform. Local residents and travellers all stand calmly BEHIND the yellow safety line, smiling and waving happily; children hold their parents' hands, nobody runs or jumps near the train. A station master in uniform raises his hand to greet the train. Clear blue sky, green mountains behind, festive happy mood."
+  },
+  {
+   "id": "N10",
+   "unit": 43,
+   "file": "N10_日月潭水到明潭.png",
+   "refs": [
+    "scenes-v1/S29_發電廠.png",
+    "scenes-v1/S06_百年前運建材.png"
+   ],
+   "prompt": "A wide mountain landscape in central Taiwan seen from high above: on the upper right, the blue Sun Moon Lake among green mountains; big water pipes run down the mountainside carrying water to a power station; below in a deep green valley lies a long calm reservoir (Minghu reservoir) behind a concrete dam. Glowing light-blue water flows visibly from the upper lake down to the lower reservoir, like a gentle path. Morning mist, bright and clear."
+  },
+  {
+   "id": "N11",
+   "unit": 44,
+   "file": "N11_水里蛇窯.png",
+   "refs": [
+    "scenes-v1/S26_水裡坑熱鬧山城.png",
+    "scenes-v1/S21_檜木與木紋.png"
+   ],
+   "prompt": "The Shuili Snake Kiln in Nantou, Taiwan: a very long, low, narrow, rounded brick-and-clay kiln, about thirty metres long, that climbs gently up a slope like a sleeping snake, its earthy brown-orange body covered with old clay and a little moss, with small square firing holes along its side. It sits under a long open shed with a dark tiled roof held up by wooden trusses and posts. Neat piles of firewood and rows of clay jars stand beside the kiln. Warm afternoon light."
+  },
+  {
+   "id": "N12",
+   "unit": 45,
+   "file": "N12_捏陶土.png",
+   "refs": [
+    "../art/samples-v1/01-小晨角色設定-原尺寸.png",
+    "../art/samples-v1/02-小哲角色設定-原尺寸.png",
+    "scenes-v1/S30_吃枝仔冰.png"
+   ],
+   "char": true,
+   "prompt": "Inside a bright pottery workshop with wooden tables at a pottery park in Taiwan. Xiao-Chen and Xiao-Zhe sit at a table happily shaping soft grey clay with their hands; Xiao-Chen makes a small bowl, Xiao-Zhe makes a little clay snake and grins. Their hands and the clay are clearly visible. Behind them wooden shelves hold old brown glazed clay jars and pots fired in the kiln. Soft daylight from a window."
+  },
+  {
+   "id": "N13",
+   "unit": 49,
+   "file": "N13_空地停滿糖台車.png",
+   "refs": [
+    "scenes-v1/S33_埕是空地.png",
+    "scenes-v1/S34_木材集散地.png"
+   ],
+   "prompt": "About 100 years ago in a mountain valley in Taiwan: a large open dirt yard next to a small railway terminus is filled with many small hand-pushed narrow-gauge rail carts, each loaded with stacked white cloth sacks of sugar. Workers in straw hats push the carts along narrow light rails. Green steep mountains around, a simple wooden station building at the side, nostalgic sepia-tinted warm light."
+  },
+  {
+   "id": "N14",
+   "unit": 52,
+   "file": "N14_木業展示館外觀.png",
+   "refs": [
+    "scenes-v1/S31_車埕車站.png",
+    "scenes-v1/S36_木業展示館故事書.png"
+   ],
+   "prompt": "Exterior of the Checheng Wood Industry Exhibition Hall in Nantou, Taiwan (the former Zhenchang lumber factory): a huge open-sided shed with a steep, sharply pointed dark gable roof, its big exposed wooden roof trusses and timber posts visible under the roof; beside it stands an old two-storey wooden factory building with weathered brown vertical wooden boards and small windows. A wide paved plaza in front, green steep mountains behind, a few small visitors for scale. Sunny day."
+  },
+  {
+   "id": "N15",
+   "unit": 53,
+   "file": "N15_工廠關門小鎮安靜.png",
+   "refs": [
+    "scenes-v1/S34_木材集散地.png",
+    "scenes-v1/S31_車埕車站.png"
+   ],
+   "prompt": "A quiet old lumber factory in a small mountain town in Taiwan after logging was banned: its big wooden sliding doors are closed, a few old logs lie still in the yard, fallen leaves drift on the empty ground, an idle saw machine rests under the eaves, a cat sleeps on a log. No people. Green forested mountains behind are lush and protected. Soft quiet evening light, calm and a little nostalgic, not sad or scary."
+  },
+  {
+   "id": "N16",
+   "unit": 58,
+   "file": "N16_石虎紀念車票.png",
+   "refs": [
+    "scenes-v1/S38_全線通車剪綵.png",
+    "scenes-v1/S39_全家搭火車.png"
+   ],
+   "prompt": "Close-up of a child's hands holding a small cute commemorative train ticket card with a rounded rectangle shape. The ticket shows only a picture: an adorable, ACCURATE Taiwanese leopard cat (Prionailurus bengalensis) sitting beside a little yellow train. The leopard cat has a golden-tan coat covered with many dark solid round SPOTS and small rosettes on its body and legs (definitely NOT tabby stripes, NOT a tiger-striped house cat), two clear white stripes running from the inner corners of the eyes up the forehead, dark stripes on the head and neck, small rounded ears with a white spot on the back of each ear, and a thick tail with dark rings and a dark tip. Soft pastel background, simple border. The ticket has a blank area but no writing at all. Behind, softly blurred, a sunny station platform."
+  },
+  {
+   "id": "N17",
+   "unit": 59,
+   "file": "N17_雙鐵小旅行.png",
+   "refs": [
+    "../art/samples-v1/01-小晨角色設定-原尺寸.png",
+    "../art/samples-v1/02-小哲角色設定-原尺寸.png",
+    "scenes-v1/S24b_綠色隧道騎車.png",
+    "scenes-v1/S04-07_月台小火車.png"
+   ],
+   "char": true,
+   "train": true,
+   "prompt": "Xiao-Chen and Xiao-Zhe wearing blue bicycle helmets ride their bicycles safely along a bike path right next to the railway in the Jiji countryside, BOTH HANDS firmly on the handlebars, looking ahead and smiling happily. On the track beside them, behind a fence, the DR1000 railcar passes by. Banana trees and rice fields, green mountains behind, bright summer sky. Both children's faces clearly visible."
+  },
+  {
+   "id": "N18",
+   "unit": 34,
+   "file": "N18_集集車站修復.png",
+   "refs": [
+    "scenes-v1/S23_集集車站修復.png",
+    "scenes-v1/S20-22_集集車站正面.png"
+   ],
+   "prompt": "Restoring the small Japanese-style wooden Jiji railway station in Taiwan after the 1999 earthquake: workers in white hard hats on simple bamboo scaffolding fit cream-coloured wooden wall boards onto the station and nail them with hammers; one worker checks a wooden post with a yellow spirit level. In the left foreground TWO workers carry one long wooden plank together, one at each end, holding it with both hands at waist height and walking toward the station - the plank is clearly in front of their bodies and never crosses any head, neck or face. A neat stack of old reused wooden planks and a wooden toolbox on the ground. Grey tiled roof, green trees, blue sky. Natural, anatomically correct poses, hands clearly holding the plank."
+  }
+ ]
+}

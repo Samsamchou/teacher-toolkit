@@ -1,0 +1,112 @@
+{
+ "deck": "2d-v1/renders/集集線我們一起去探索-注音簡報.pptx",
+ "deck_sha256": "9e509eff0e5fd2d8a5fe4b4b019af88f5d57d84e623907aabca44b2d474ff572",
+ "font": "Bpmf Zihi KaiStd Regular（ㄅ字嗨注音標楷，已內嵌）",
+ "polyphones": "PowerPoint 實際匯出檢查：句中多音字皆為預設讀音且正確（還ㄏㄞˊ、著˙ㄓㄜ、了˙ㄌㄜ…）",
+ "images": [
+  {
+   "file": "images/p1.png",
+   "slide": 1,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaBKQ6mg",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "7d116816dc7d079d1917350dcae508c9d1f5f0615ffbf9f3f9f0483d7791b3fe",
+   "reference_media_ids": [
+    "MAHYXEhJsb8",
+    "MAHYXJP942g"
+   ],
+   "generated_at": "2026-10-19"
+  },
+  {
+   "file": "images/p2.png",
+   "slide": 2,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaK8dG8s",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "11e2ec80e5167dad485eb232a0aa1d48a4a88bd4f0bb017321b51cee45fba983",
+   "reference_media_ids": [],
+   "generated_at": "2026-10-19"
+  },
+  {
+   "file": "images/p3.png",
+   "slide": 3,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaPO9eUU",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "a401da53128a93cc8903df6413ead528cf7b60a6d6c5c8fdfb6506b92ab3ed1f",
+   "reference_media_ids": [],
+   "generated_at": "2026-10-19"
+  },
+  {
+   "file": "images/p4.png",
+   "slide": 4,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaOGDp24",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "d34d144868b9672533546065fa75e385094e8533fe45117cb9ebaf9816d457ed",
+   "reference_media_ids": [],
+   "generated_at": "2026-10-19"
+  },
+  {
+   "file": "images/p5.png",
+   "slide": 5,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaP8VjC4",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "d602c2b9fbe0c56e8815465077759a481ab15f95bb5bf56e6454aa014661f755",
+   "reference_media_ids": [],
+   "generated_at": "2026-10-19"
+  },
+  {
+   "file": "images/p6.png",
+   "slide": 6,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaDjSHQk",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "ac784854edc4986492861b1c1e4fa12895eeee7900fad92e54ea6169f9cb229f",
+   "reference_media_ids": [],
+   "generated_at": "2026-10-19"
+  },
+  {
+   "file": "images/p7.png",
+   "slide": 7,
+   "tool": "canva_generate_image",
+   "canva_media_id": "MAHYaAVXVRc",
+   "style": "3D 吉卜力手繪風（提示詞：3D Studio Ghibli-inspired hand-painted）",
+   "size": [
+    1680,
+    944
+   ],
+   "sha256": "667e932f592da59f8f88598cfdd55f79f5c23e27888a89694c2675ed04deac2d",
+   "reference_media_ids": [
+    "MAHYXEhJsb8",
+    "MAHYXJP942g"
+   ],
+   "generated_at": "2026-10-19"
+  }
+ ]
+}

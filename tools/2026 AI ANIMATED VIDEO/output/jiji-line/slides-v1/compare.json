@@ -1,0 +1,1320 @@
+{
+ "mine": [
+  {
+   "shapes": [
+    {
+     "name": "插圖1",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "50f7c4418f",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 4.99,
+     "w": 12.23,
+     "h": 2.21,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "小晨和小哲搭上小火車，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "沿著濁水溪出發，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "認識集集線的五個車站。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "標題",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.9,
+     "y": 0.18,
+     "w": 11.53,
+     "h": 1.05,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "集集線，我們一起去探索",
+         44.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "影片開場：集集線從彰化二水出發，沿著濁水溪開進南投的山裡；一百多年前為了蓋日月潭發電廠而建。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖2",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "571656342b",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "二水站是集集線的起點，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "還能看到「蒸汽女王」老火車頭。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第一站　二水站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "二水是縱貫線和集集線交會的地方，舊名「二八水」；車站旁的二八水水公園陳列 CT278「蒸汽女王」。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖3",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "de57644097",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "源泉站附近是八堡圳的源頭，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "水圳灌溉一大片稻田。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第二站　源泉站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "源泉舊名「鼻仔頭」；八堡圳是台灣最古老的水圳之一，三百多年來把濁水溪的水送到彰化平原。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖4",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "4609bbbf36",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "集集站是快一百歲的檜木車站，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "九二一地震後被細心修好。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第三站　集集站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "日式檜木車站；一九九九年九二一大地震時歪斜，之後依原貌修復。附近有集集老街和綠色隧道。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖5",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "8c41b08467",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "水里站是山城的交通中心，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "天氣好時還能看見玉山。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第四站　水里站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "水里舊名「水裡坑」；以前登玉山的人常從水里出發。水里溪旁有大觀、明湖發電廠，還有古早味枝仔冰。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖6",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "295c5bac89",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "車埕站是終點站，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "以前是熱鬧的木材集散地。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第五站　車埕站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "「埕」是空地的意思；車站旁的貯木池以前泡木頭，現在是生態池，還有木業展示館。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖7",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "6106cd5fd3",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "集集線全線通車了，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "下次和家人一起來搭火車吧！",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 2.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "下次見",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "集集線停駛將近五年，二〇二六年六月二十五日恢復全線通車。"
+  }
+ ],
+ "teacher": [
+  {
+   "shapes": [
+    {
+     "name": "插圖1",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "50f7c4418f",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.69,
+     "y": 5.6,
+     "w": 11.7,
+     "h": 1.75,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "小晨和小哲搭上小火車",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ],
+        [
+         "，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "沿著濁水溪出發",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ],
+        [
+         "，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "認識集集線的五個車站",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ],
+        [
+         "。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "標題",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.18,
+     "y": 0.11,
+     "w": 10.71,
+     "h": 0.72,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "集集線，",
+         44.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ],
+        [
+         "我們",
+         44.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ],
+        [
+         "一",
+         44.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ],
+        [
+         "起去探索",
+         44.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "影片開場：集集線從彰化二水出發，沿著濁水溪開進南投的山裡；一百多年前為了蓋日月潭發電廠而建。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖2",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "571656342b",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "二水站是集集線的起點，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "還能看到「蒸汽女王」老火車頭。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第一站　二水站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "二水是縱貫線和集集線交會的地方，舊名「二八水」；車站旁的二八水水公園陳列 CT278「蒸汽女王」。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖3",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "de57644097",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.55,
+     "y": 5.61,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "源泉站附近是八堡圳的源頭，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "水圳灌溉一大片稻田。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第二站　源泉站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "源泉舊名「鼻仔頭」；八堡圳是台灣最古老的水圳之一，三百多年來把濁水溪的水送到彰化平原。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖4",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "4609bbbf36",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.13,
+     "y": 5.78,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "集集站是快一百歲的檜木車站，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "九二一地震後被細心修好。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第三站　集集站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "日式檜木車站；一九九九年九二一大地震時歪斜，之後依原貌修復。附近有集集老街和綠色隧道。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖5",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "8c41b08467",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.09,
+     "y": 5.91,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "水里站是山城的交通中心，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "天氣好時還能看見玉山。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第四站　水里站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "水里舊名「水裡坑」；以前登玉山的人常從水里出發。水里溪旁有大觀、明湖發電廠，還有古早味枝仔冰。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖6",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "295c5bac89",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.23,
+     "y": 5.8,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "車埕站是終點站，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "以前是熱鬧的木材集散地。",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 5.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "第五站　車埕站",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "「埕」是空地的意思；車站旁的貯木池以前泡木頭，現在是生態池，還有木業展示館。"
+  },
+  {
+   "shapes": [
+    {
+     "name": "插圖7",
+     "type": "PICTURE (13)",
+     "x": 0.0,
+     "y": 0.0,
+     "w": 13.33,
+     "h": 7.5,
+     "img": "6106cd5fd3",
+     "crop": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "name": "句子",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.23,
+     "y": 5.91,
+     "w": 12.23,
+     "h": 1.59,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "集集線全線通車了，",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ],
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "下次和家人一起來搭火車吧！",
+         34.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "FFFBF0",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    },
+    {
+     "name": "站名",
+     "type": "AUTO_SHAPE (1)",
+     "x": 0.45,
+     "y": 0.3,
+     "w": 2.6,
+     "h": 0.95,
+     "text": [
+      [
+       "CENTER (2)",
+       1.05,
+       [
+        [
+         "下次見",
+         30.0,
+         "Bpmf Zihi KaiStd Regular",
+         null,
+         "3B2A2E"
+        ]
+       ]
+      ]
+     ],
+     "fill": "F2B134",
+     "line": [
+      "8A5A2B",
+      3.0
+     ]
+    }
+   ],
+   "notes": "集集線停駛將近五年，二〇二六年六月二十五日恢復全線通車。"
+  }
+ ]
+}

@@ -3,15 +3,35 @@
  "accepted_at": "2026-10-18",
  "files": {
   "full_1080p": {
-   "path": "2d-v1/renders/集集線五站-2D動畫-v1.mp4",
-   "bytes": 235078377,
-   "sha256": "0e22d632bb183fa4dd5ab3e79ddabe8078930d4a000cdbcbbeebf24daf9b3466"
+   "path": "2d-v1/renders/集集線五站-2D動畫-v1.1.mp4",
+   "bytes": 237535079,
+   "sha256": "33e48a4d72b6ed000a21fcd9cb80627ab74291377db43e6d3d98c2406925d675"
   },
   "preview_720p": {
-   "path": "2d-v1/renders/集集線五站-2D動畫-v1-720p.mp4",
-   "bytes": 26469572,
-   "sha256": "72ff48f7f879cef0ad3ee307416523ea23e31b020640baf6956188a24314be03"
+   "path": "2d-v1/renders/集集線五站-2D動畫-v1.1-720p.mp4",
+   "bytes": 25760785,
+   "sha256": "33dedd8a7dc30948d5a2ba2c95fbe9570cc65c5628c54d11dd9bec204667df0a"
   }
  },
- "acceptance": "2d-v1/qa/teacher-acceptance-2d-v1.json"
+ "acceptance": "2d-v1/qa/teacher-acceptance-2d-v1.json",
+ "extended": {
+  "official": "2d-v2-extended",
+  "accepted_at": "2026-10-19",
+  "files": {
+   "full_1080p": {
+    "path": "2d-v2-extended/renders/集集線五站-2D動畫-延長版-v2.1.mp4",
+    "bytes": 468880494,
+    "sha256": "d67d673949efef0d37790fe3820e1bfc53e8e92e1e2ea06ef5f82a2e45802cda"
+   },
+   "preview_540p": {
+    "path": "2d-v2-extended/renders/集集線五站-2D動畫-延長版-v2.1-預覽540p.mp4",
+    "bytes": 25510672,
+    "sha256": "79d8dd465b83e92ab3408a170f5fe87e764d52fa9830283e3d8dbaa64c68ceac"
+   }
+  },
+  "acceptance": "2d-v2-extended/qa/teacher-acceptance-2d-v2.json",
+  "version": "v2.1"
+ },
+ "note": "兩個都是正式版：2d-v1 為 3 分鐘版，2d-v2-extended 為約 5 分鐘延長版。",
+ "version": "v1.1"
 }
