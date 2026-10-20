@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-20T10:20:48.193Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "Square illustration for a \"day of the week\" picture card, one clear central subject on a simple space background. A colourful thunder nebula with cute harmless lightning sparks and a small spaceship sailing past. Stylized 3D animated-film look, playful friendly sci-fi world for primary-school children, bright cheerful colours with soft cyan and warm orange accents, clean shapes, soft lighting, gentle depth of field. Absolutely no text, no letters, no numbers, no words, no logos, no signs with writing anywhere in the image.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "day-thu.png",
+  "output_index": 1,
+  "output_sha256": "a5cb6b9662667117dceef40cdcd06755dc7104054e3e06218cf6da4070f72dbe",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_5fa3e75fddd34ed2b48a9b24a6c1a592",
+  "usage": {
+    "input_tokens": 112,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 112
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1868
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

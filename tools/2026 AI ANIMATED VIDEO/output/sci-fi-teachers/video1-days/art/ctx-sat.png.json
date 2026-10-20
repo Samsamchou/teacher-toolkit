@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-20T10:21:50.687Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "Wide 16:9 scene illustration for an English lesson, the main action clearly readable in the centre. Cheerful diverse primary-school children (about 10 years old) in light sci-fi school uniforms, friendly faces, natural poses. Children playing basketball on a futuristic outdoor court on a space station, one child shooting the ball toward a glowing hoop. Stylized 3D animated-film look, playful friendly sci-fi world for primary-school children, bright cheerful colours with soft cyan and warm orange accents, clean shapes, soft lighting, gentle depth of field. Absolutely no text, no letters, no numbers, no words, no logos, no signs with writing anywhere in the image.",
+  "requested_size": "1536x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "ctx-sat.png",
+  "output_index": 1,
+  "output_sha256": "b664f7dac3f393f5c0b92d2f5450b59530fcd25aaa10aaff5b67dd3d0947c551",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1024,
+  "request_id": "req_313aa8e671a941d88b483d527f2d262e",
+  "usage": {
+    "input_tokens": 142,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 142
+    },
+    "output_tokens": 1372,
+    "output_tokens_details": {
+      "image_tokens": 1372,
+      "text_tokens": 0
+    },
+    "total_tokens": 1514
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

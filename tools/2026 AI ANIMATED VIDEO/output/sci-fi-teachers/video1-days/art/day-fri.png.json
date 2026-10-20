@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-20T10:20:48.542Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "Square illustration for a \"day of the week\" picture card, one clear central subject on a simple space background. A fun space party on a glowing pink-gold planet, balloons shaped like planets, confetti stars floating. Stylized 3D animated-film look, playful friendly sci-fi world for primary-school children, bright cheerful colours with soft cyan and warm orange accents, clean shapes, soft lighting, gentle depth of field. Absolutely no text, no letters, no numbers, no words, no logos, no signs with writing anywhere in the image.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "day-fri.png",
+  "output_index": 1,
+  "output_sha256": "1f4cd187bcd380955d688e169c14ea18a4850739f974ba3ed5e6c479c1eb2ffb",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_7ba9ab70743343daa699f60142d1b8f7",
+  "usage": {
+    "input_tokens": 117,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 117
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1873
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

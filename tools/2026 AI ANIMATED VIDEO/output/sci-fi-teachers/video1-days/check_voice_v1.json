@@ -1,0 +1,583 @@
+[
+ {
+  "i": 0,
+  "who": "nova",
+  "text": "Hi, class! I'm Ms. Nova.",
+  "heard": "Hi, class. I'm Ms. Nova.",
+  "ok": true
+ },
+ {
+  "i": 1,
+  "who": "cosmo",
+  "text": "And I'm Mr. Cosmo! Welcome to our space classroom!",
+  "heard": "And I'm Mr. Cosmo.  Welcome to our space classroom.",
+  "ok": true
+ },
+ {
+  "i": 2,
+  "who": "nova",
+  "text": "Today, we will learn the seven days of the week.",
+  "heard": "Today, we will learn the seven days of the week.",
+  "ok": true
+ },
+ {
+  "i": 3,
+  "who": "cosmo",
+  "text": "Let's read them, sound by sound!",
+  "heard": "Let's read them, sound by sound.",
+  "ok": true
+ },
+ {
+  "i": 5,
+  "who": "cosmo",
+  "text": "Look! All seven words end with D, A, Y. Day!",
+  "heard": "Look! All seven words end with D. A. Y. Day.",
+  "ok": true
+ },
+ {
+  "i": 6,
+  "who": "nova",
+  "text": "A and Y make this sound. Listen.",
+  "heard": "A and Y make this sound.  Listen.",
+  "ok": true
+ },
+ {
+  "i": 8,
+  "who": "nova",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 13,
+  "who": "cosmo",
+  "text": "Great job! Day!",
+  "heard": "Great job!  Day",
+  "ok": true
+ },
+ {
+  "i": 14,
+  "who": "nova",
+  "text": "Our first day is Sunday!",
+  "heard": "Our first day is Sunday.",
+  "ok": true
+ },
+ {
+  "i": 15,
+  "who": "nova",
+  "text": "Look at the letter U. Listen.",
+  "heard": "Look at the letter U. Listen.",
+  "ok": true
+ },
+ {
+  "i": 17,
+  "who": "nova",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 22,
+  "who": "cosmo",
+  "text": "And A and Y say...",
+  "heard": "and A and Y say.",
+  "ok": true
+ },
+ {
+  "i": 24,
+  "who": "cosmo",
+  "text": "Day!",
+  "heard": "DAY",
+  "ok": true
+ },
+ {
+  "i": 25,
+  "who": "cosmo",
+  "text": "Sun, day. Sunday!",
+  "heard": "sun, day, sunday",
+  "ok": true
+ },
+ {
+  "i": 26,
+  "who": "cosmo",
+  "text": "Say it with me. Sunday!",
+  "heard": "Say it with me.  Sunday",
+  "ok": true
+ },
+ {
+  "i": 28,
+  "who": "cosmo",
+  "text": "Sunday!",
+  "heard": "Sunday",
+  "ok": true
+ },
+ {
+  "i": 31,
+  "who": "cosmo",
+  "text": "Next is Monday!",
+  "heard": "Next is Monday.",
+  "ok": true
+ },
+ {
+  "i": 32,
+  "who": "cosmo",
+  "text": "Look at the letter O. In Monday, O makes the same sound as U in Sunday. Listen.",
+  "heard": "Look at the letter O. In Monday, O makes the same sound as you in Sunday.  Listen.",
+  "ok": false
+ },
+ {
+  "i": 34,
+  "who": "cosmo",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 39,
+  "who": "nova",
+  "text": "Mon, day. Monday!",
+  "heard": "Mon-day. Monday.",
+  "ok": true
+ },
+ {
+  "i": 40,
+  "who": "nova",
+  "text": "Say it with me. Monday!",
+  "heard": "Say it with me Monday.",
+  "ok": true
+ },
+ {
+  "i": 42,
+  "who": "nova",
+  "text": "Monday!",
+  "heard": "Monday",
+  "ok": true
+ },
+ {
+  "i": 45,
+  "who": "nova",
+  "text": "Here comes Tuesday!",
+  "heard": "Here comes Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 46,
+  "who": "nova",
+  "text": "Look at U and E. Together, they make this sound. Listen.",
+  "heard": "Look at you and E. Together, they make this sound.  Listen.",
+  "ok": false
+ },
+ {
+  "i": 48,
+  "who": "nova",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 53,
+  "who": "cosmo",
+  "text": "Tues, day. Tuesday!",
+  "heard": "Tuesday  Day  Tuesday",
+  "ok": false
+ },
+ {
+  "i": 54,
+  "who": "cosmo",
+  "text": "Say it with me. Tuesday!",
+  "heard": "Say it with me.  Tuesday",
+  "ok": true
+ },
+ {
+  "i": 56,
+  "who": "cosmo",
+  "text": "Tuesday!",
+  "heard": "Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 59,
+  "who": "cosmo",
+  "text": "Now, Wednesday! This one is tricky.",
+  "heard": "Now, Wednesday This one is tricky.",
+  "ok": true
+ },
+ {
+  "i": 60,
+  "who": "cosmo",
+  "text": "Look at the letter E. Listen.",
+  "heard": "Look at the letter E, listen.",
+  "ok": true
+ },
+ {
+  "i": 62,
+  "who": "cosmo",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 67,
+  "who": "nova",
+  "text": "Look! The first letter D is quiet. We don't say it.",
+  "heard": "Look, the first letter D is quiet. We don't say it.",
+  "ok": true
+ },
+ {
+  "i": 69,
+  "who": "cosmo",
+  "text": "Wednes, day. Wednesday!",
+  "heard": "Wednesday",
+  "ok": false
+ },
+ {
+  "i": 70,
+  "who": "cosmo",
+  "text": "Say it with me. Wednesday!",
+  "heard": "Say it with me.  Wednesday",
+  "ok": true
+ },
+ {
+  "i": 72,
+  "who": "cosmo",
+  "text": "Wednesday!",
+  "heard": "Wednesday",
+  "ok": true
+ },
+ {
+  "i": 75,
+  "who": "nova",
+  "text": "Next is Thursday!",
+  "heard": "Next is Thursday.",
+  "ok": true
+ },
+ {
+  "i": 76,
+  "who": "nova",
+  "text": "T and H make this sound. Listen.",
+  "heard": "T and H make this sound.  Listen.",
+  "ok": true
+ },
+ {
+  "i": 78,
+  "who": "nova",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 83,
+  "who": "cosmo",
+  "text": "And U and R make this sound. Listen.",
+  "heard": "And you and I make this sound.  Listen.",
+  "ok": false
+ },
+ {
+  "i": 85,
+  "who": "cosmo",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 90,
+  "who": "nova",
+  "text": "Thurs, day. Thursday!",
+  "heard": "Thursday, Day, Thursday",
+  "ok": false
+ },
+ {
+  "i": 91,
+  "who": "nova",
+  "text": "Say it with me. Thursday!",
+  "heard": "Say it with me.  Thursday",
+  "ok": true
+ },
+ {
+  "i": 93,
+  "who": "nova",
+  "text": "Thursday!",
+  "heard": "Thursday",
+  "ok": true
+ },
+ {
+  "i": 96,
+  "who": "cosmo",
+  "text": "Yay, it's Friday!",
+  "heard": "Yay, it's Friday!",
+  "ok": true
+ },
+ {
+  "i": 97,
+  "who": "cosmo",
+  "text": "Look at the letter I. In Friday, I says its name. Listen.",
+  "heard": "Look at the letter I.  In Friday, I says its name.  Listen.",
+  "ok": true
+ },
+ {
+  "i": 99,
+  "who": "cosmo",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 104,
+  "who": "nova",
+  "text": "Fri, day. Friday!",
+  "heard": "Friday  Day  Friday",
+  "ok": false
+ },
+ {
+  "i": 105,
+  "who": "nova",
+  "text": "Say it with me. Friday!",
+  "heard": "Say it with me. Friday.",
+  "ok": true
+ },
+ {
+  "i": 107,
+  "who": "nova",
+  "text": "Friday!",
+  "heard": "Friday.",
+  "ok": true
+ },
+ {
+  "i": 110,
+  "who": "nova",
+  "text": "The last day is Saturday!",
+  "heard": "The last day is Saturday.",
+  "ok": true
+ },
+ {
+  "i": 111,
+  "who": "nova",
+  "text": "Look at the first letter A. Listen.",
+  "heard": "Look at the first letter A. Listen.",
+  "ok": true
+ },
+ {
+  "i": 113,
+  "who": "nova",
+  "text": "Say it with me.",
+  "heard": "Say it with me.",
+  "ok": true
+ },
+ {
+  "i": 118,
+  "who": "cosmo",
+  "text": "And here, U and R sound like the end of teacher. Listen.",
+  "heard": "And here, you and I sound like the end of teacher.  Listen.",
+  "ok": false
+ },
+ {
+  "i": 120,
+  "who": "cosmo",
+  "text": "Sat, ur, day. Saturday!",
+  "heard": "sat  er day  saturday",
+  "ok": false
+ },
+ {
+  "i": 121,
+  "who": "cosmo",
+  "text": "Say it with me. Saturday!",
+  "heard": "Say it with me.  Saturday",
+  "ok": true
+ },
+ {
+  "i": 123,
+  "who": "cosmo",
+  "text": "Saturday!",
+  "heard": "Saturday",
+  "ok": true
+ },
+ {
+  "i": 126,
+  "who": "cosmo",
+  "text": "Now let's use the days in sentences!",
+  "heard": "Now let's use the days and sentences.",
+  "ok": false
+ },
+ {
+  "i": 127,
+  "who": "nova",
+  "text": "Today is Sunday. Let's play outside.",
+  "heard": "Today is Sunday. Let's play outside.",
+  "ok": true
+ },
+ {
+  "i": 128,
+  "who": "nova",
+  "text": "Say it with me. Today is Sunday. Let's play outside.",
+  "heard": "Say it with me, today is Sunday. Let's play outside.",
+  "ok": true
+ },
+ {
+  "i": 130,
+  "who": "cosmo",
+  "text": "It's Monday. I have art class on Monday.",
+  "heard": "It's Monday.  I have art class on Monday.",
+  "ok": true
+ },
+ {
+  "i": 131,
+  "who": "cosmo",
+  "text": "Say it with me. It's Monday. I have art class on Monday.",
+  "heard": "Say it with me. It's Monday. I have art class on Monday.",
+  "ok": true
+ },
+ {
+  "i": 133,
+  "who": "nova",
+  "text": "It's Tuesday. I have PE class on Tuesday.",
+  "heard": "It's Tuesday. I have PE class on Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 134,
+  "who": "nova",
+  "text": "Say it with me. It's Tuesday. I have PE class on Tuesday.",
+  "heard": "Say it with me. It's Tuesday. I have PE class on Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 136,
+  "who": "cosmo",
+  "text": "It's Wednesday. I have music class on Wednesday.",
+  "heard": "It's Wednesday.  I have music class on Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 137,
+  "who": "cosmo",
+  "text": "Say it with me. It's Wednesday. I have music class on Wednesday.",
+  "heard": "Say it with me.  It's Wednesday.  I have music class on Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 139,
+  "who": "nova",
+  "text": "Today is Thursday. Let's read a story.",
+  "heard": "Today is Thursday.  Let's read a story.",
+  "ok": true
+ },
+ {
+  "i": 140,
+  "who": "nova",
+  "text": "Say it with me. Today is Thursday. Let's read a story.",
+  "heard": "Say it with me.  Today is Thursday.  Let's read a story.",
+  "ok": true
+ },
+ {
+  "i": 142,
+  "who": "cosmo",
+  "text": "It's Friday. Let's go to the park after school.",
+  "heard": "It's Friday.  Let's go to the park after school.",
+  "ok": true
+ },
+ {
+  "i": 143,
+  "who": "cosmo",
+  "text": "Say it with me. It's Friday. Let's go to the park after school.",
+  "heard": "Say it with me. It's Friday. Let's go to the park after school.",
+  "ok": true
+ },
+ {
+  "i": 145,
+  "who": "nova",
+  "text": "Today is Saturday. Let's play basketball.",
+  "heard": "Today is Saturday.  Let's play basketball.",
+  "ok": true
+ },
+ {
+  "i": 146,
+  "who": "nova",
+  "text": "Say it with me. Today is Saturday. Let's play basketball.",
+  "heard": "Say it with me.  Today is Saturday.  Let's play basketball.",
+  "ok": true
+ },
+ {
+  "i": 148,
+  "who": "cosmo",
+  "text": "Days of the week are special names. They always start with a capital letter.",
+  "heard": "Days of the week are special names.  They always start with a capital letter.",
+  "ok": true
+ },
+ {
+  "i": 150,
+  "who": "cosmo",
+  "text": "Is this right? Small s, sunday?",
+  "heard": "Is this right?  Small s. Sunday?",
+  "ok": true
+ },
+ {
+  "i": 151,
+  "who": "nova",
+  "text": "No! We need a capital S. Sunday!",
+  "heard": "No, we need a capital S, Sunday.",
+  "ok": true
+ },
+ {
+  "i": 152,
+  "who": "nova",
+  "text": "We can write the days in a short way. Take the first three letters, and add a dot.",
+  "heard": "We can write the days in a short way, take the first three letters, and add a dot.",
+  "ok": true
+ },
+ {
+  "i": 154,
+  "who": "cosmo",
+  "text": "Sunday, S, U, N. Sun. Monday, M, O, N. Mon. Tuesday, T, U, E. Tue.",
+  "heard": "sunday s-u-n-dot monday m-o-n-dot tuesday t-u-e-dot",
+  "ok": false
+ },
+ {
+  "i": 155,
+  "who": "nova",
+  "text": "Wednesday, W, E, D. Wed. Thursday, T, H, U. Thu.",
+  "heard": "Wednesday, W-E-D dot Thursday T-H-U dot",
+  "ok": false
+ },
+ {
+  "i": 156,
+  "who": "cosmo",
+  "text": "Friday, F, R, I. Fri. Saturday, S, A, T. Sat.",
+  "heard": "Friday F.R.I. Dot Saturday S.A.T. Dot",
+  "ok": false
+ },
+ {
+  "i": 158,
+  "who": "cosmo",
+  "text": "Let's say all seven days together!",
+  "heard": "Let's say all seven days together.",
+  "ok": true
+ },
+ {
+  "i": 159,
+  "who": "both",
+  "text": "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday!",
+  "heard": "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday",
+  "ok": true
+ },
+ {
+  "i": 160,
+  "who": "nova",
+  "text": "Your turn! Say all seven days.",
+  "heard": "Your turn. Say all seven days.",
+  "ok": true
+ },
+ {
+  "i": 162,
+  "who": "cosmo",
+  "text": "Awesome! See you next time!",
+  "heard": "Awesome! See you next time!",
+  "ok": true
+ },
+ {
+  "i": 163,
+  "who": "nova",
+  "text": "Bye-bye, class!",
+  "heard": "Bye-bye class.",
+  "ok": true
+ }
+]

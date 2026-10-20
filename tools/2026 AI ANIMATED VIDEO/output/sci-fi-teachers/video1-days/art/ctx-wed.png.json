@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-20T10:21:21.026Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "Wide 16:9 scene illustration for an English lesson, the main action clearly readable in the centre. Cheerful diverse primary-school children (about 10 years old) in light sci-fi school uniforms, friendly faces, natural poses. Music class: children tapping glowing star-shaped chime bells and a futuristic xylophone, musical sparkles in the air (no written notes). Stylized 3D animated-film look, playful friendly sci-fi world for primary-school children, bright cheerful colours with soft cyan and warm orange accents, clean shapes, soft lighting, gentle depth of field. Absolutely no text, no letters, no numbers, no words, no logos, no signs with writing anywhere in the image.",
+  "requested_size": "1536x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "ctx-wed.png",
+  "output_index": 1,
+  "output_sha256": "8ff1c3e595be11cc33f49bed91b51e44e1dca4837b6ba02a18cd7cc167d5c4ac",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1024,
+  "request_id": "req_39021dc1af874a279fb47f34638fd3d1",
+  "usage": {
+    "input_tokens": 148,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 148
+    },
+    "output_tokens": 1372,
+    "output_tokens_details": {
+      "image_tokens": 1372,
+      "text_tokens": 0
+    },
+    "total_tokens": 1520
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}
