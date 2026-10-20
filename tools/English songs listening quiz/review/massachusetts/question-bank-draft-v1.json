@@ -1,0 +1,557 @@
+{
+ "quizId": "massachusetts-g6-cloze-v1",
+ "quizTitle": "Massachusetts · 六年級聽力練習",
+ "mediaType": "youtube",
+ "videoId": "QcVfw9mT-Fo",
+ "status": "teacher_approved_for_production",
+ "teacherBankApproval": true,
+ "timingVerified": false,
+ "actualAudioAligned": "asr-auto-approx",
+ "questions": [
+  {
+   "id": 1,
+   "target": "going",
+   "sentence": "Feel I'm going back to Massachusetts.",
+   "cloze": "Feel I'm _____ back to Massachusetts.",
+   "choices": [
+    "doing",
+    "going",
+    "knowing"
+   ],
+   "answerIndex": 1,
+   "start": 8.82,
+   "end": 15.04,
+   "sourceSentenceNo": 1,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "doing",
+     "lemma": "do",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "going",
+     "lemma": "go",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "knowing",
+     "lemma": "know",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "target": "home",
+   "sentence": "Something's telling me I must go home.",
+   "cloze": "Something's telling me I must go _____.",
+   "choices": [
+    "hope",
+    "home",
+    "hold"
+   ],
+   "answerIndex": 1,
+   "start": 18.92,
+   "end": 24.58,
+   "sourceSentenceNo": 2,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "hope",
+     "lemma": "hope",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "home",
+     "lemma": "home",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "hold",
+     "lemma": "hold",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "target": "lights",
+   "sentence": "And the lights all went out in Massachusetts.",
+   "cloze": "And the _____ all went out in Massachusetts.",
+   "choices": [
+    "nights",
+    "lights",
+    "lines"
+   ],
+   "answerIndex": 1,
+   "start": 26.42,
+   "end": 34.14,
+   "sourceSentenceNo": 3,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "nights",
+     "lemma": "night",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "lights",
+     "lemma": "light",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "lines",
+     "lemma": "line",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "target": "left",
+   "sentence": "The day I left her standing on her own.",
+   "cloze": "The day I _____ her standing on her own.",
+   "choices": [
+    "left",
+    "let",
+    "felt"
+   ],
+   "answerIndex": 0,
+   "start": 35.58,
+   "end": 43.56,
+   "sourceSentenceNo": 4,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "left",
+     "lemma": "left",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "let",
+     "lemma": "let",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "felt",
+     "lemma": "feel",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "target": "standing",
+   "sentence": "The day I left her standing on her own.",
+   "cloze": "The day I left her _____ on her own.",
+   "choices": [
+    "sending",
+    "studying",
+    "standing"
+   ],
+   "answerIndex": 2,
+   "start": 35.58,
+   "end": 43.56,
+   "sourceSentenceNo": 4,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "sending",
+     "lemma": "send",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "studying",
+     "lemma": "study",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "standing",
+     "lemma": "stand",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "target": "ride",
+   "sentence": "Tried to hitch a ride to San Francisco.",
+   "cloze": "Tried to hitch a _____ to San Francisco.",
+   "choices": [
+    "right",
+    "rice",
+    "ride"
+   ],
+   "answerIndex": 2,
+   "start": 46.52,
+   "end": 52.94,
+   "sourceSentenceNo": 5,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "right",
+     "lemma": "right",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "rice",
+     "lemma": "rice",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "ride",
+     "lemma": "ride",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "target": "things",
+   "sentence": "Gotta do the things I wanna do.",
+   "cloze": "Gotta do the _____ I wanna do.",
+   "choices": [
+    "things",
+    "thinks",
+    "sings"
+   ],
+   "answerIndex": 0,
+   "start": 56.16,
+   "end": 62.56,
+   "sourceSentenceNo": 6,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "things",
+     "lemma": "thing",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "thinks",
+     "lemma": "think",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "sings",
+     "lemma": "sing",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "target": "went",
+   "sentence": "And the lights all went out in Massachusetts.",
+   "cloze": "And the lights all _____ out in Massachusetts.",
+   "choices": [
+    "want",
+    "went",
+    "wait"
+   ],
+   "answerIndex": 1,
+   "start": 64.22,
+   "end": 71.06,
+   "sourceSentenceNo": 7,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "want",
+     "lemma": "want",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "went",
+     "lemma": "go",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "wait",
+     "lemma": "wait",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "target": "see",
+   "sentence": "They brought me back to see my way with you.",
+   "cloze": "They brought me back to _____ my way with you.",
+   "choices": [
+    "she",
+    "see",
+    "sea"
+   ],
+   "answerIndex": 1,
+   "start": 72.78,
+   "end": 82.26,
+   "sourceSentenceNo": 8,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "she",
+     "lemma": "she",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "see",
+     "lemma": "see",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "sea",
+     "lemma": "sea",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "target": "life",
+   "sentence": "Talk about the life in Massachusetts.",
+   "cloze": "Talk about the _____ in Massachusetts.",
+   "choices": [
+    "live",
+    "life",
+    "like"
+   ],
+   "answerIndex": 1,
+   "start": 84.02,
+   "end": 90.18,
+   "sourceSentenceNo": 9,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "live",
+     "lemma": "live",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "life",
+     "lemma": "life",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "like",
+     "lemma": "like",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "target": "seen",
+   "sentence": "Speak about the people I have seen.",
+   "cloze": "Speak about the people I have _____.",
+   "choices": [
+    "seen",
+    "sing",
+    "send"
+   ],
+   "answerIndex": 0,
+   "start": 93.42,
+   "end": 99.68,
+   "sourceSentenceNo": 10,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "seen",
+     "lemma": "see",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "sing",
+     "lemma": "sing",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "send",
+     "lemma": "send",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "target": "out",
+   "sentence": "And the lights all went out in Massachusetts.",
+   "cloze": "And the lights all went _____ in Massachusetts.",
+   "choices": [
+    "our",
+    "out",
+    "at"
+   ],
+   "answerIndex": 1,
+   "start": 102.4,
+   "end": 109.15,
+   "sourceSentenceNo": 11,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "our",
+     "lemma": "our",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "out",
+     "lemma": "out",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "at",
+     "lemma": "at",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "target": "place",
+   "sentence": "And Massachusetts is one place I have seen.",
+   "cloze": "And Massachusetts is one _____ I have seen.",
+   "choices": [
+    "plane",
+    "plate",
+    "place"
+   ],
+   "answerIndex": 2,
+   "start": 110.38,
+   "end": 120.34,
+   "sourceSentenceNo": 12,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "plane",
+     "lemma": "plane",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "plate",
+     "lemma": "plate",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "place",
+     "lemma": "place",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "target": "will",
+   "sentence": "I will remember Massachusetts.",
+   "cloze": "I _____ remember Massachusetts.",
+   "choices": [
+    "will",
+    "wall",
+    "well"
+   ],
+   "answerIndex": 0,
+   "start": 124.28,
+   "end": 130.1,
+   "sourceSentenceNo": 13,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "will",
+     "lemma": "will",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "wall",
+     "lemma": "wall",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "well",
+     "lemma": "well",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "target": "remember",
+   "sentence": "I will remember Massachusetts.",
+   "cloze": "I will _____ Massachusetts.",
+   "choices": [
+    "November",
+    "December",
+    "remember"
+   ],
+   "answerIndex": 2,
+   "start": 130.1,
+   "end": 134.12,
+   "sourceSentenceNo": 14,
+   "timingVerified": false,
+   "choiceEvidence": [
+    {
+     "word": "November",
+     "lemma": "November",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "December",
+     "lemma": "December",
+     "list": "基本1200字",
+     "inBasic1200": true
+    },
+    {
+     "word": "remember",
+     "lemma": "remember",
+     "list": "基本1200字",
+     "inBasic1200": true
+    }
+   ]
+  }
+ ],
+ "captionMaskPercent": 16,
+ "captionNote": "YouTube影片底部燒錄歌詞；網頁以底部16%遮罩蒙住（取樣12/28/75/128秒確認字幕在最底部約12%）。",
+ "timingNote": "2026-10-20 教師於 /review 微調第12–15題句尾；第15題句首因與第14題句尾重疊，順延為130.1（假設，待確認）。仍未宣稱人工逐字聽校。",
+ "teacherApprovalDate": "2026-10-20",
+ "teacherApprovalNote": "教師於2026-10-20明確核准15題內容與時間（含教師在/review微調第12–15題句尾；第15題句首順延130.1）。時間源自自動音訊對齊加教師試聽微調，不宣稱人工逐字校準。"
+}

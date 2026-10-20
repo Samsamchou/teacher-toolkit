@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Massachusetts · 教師審閱</title>
+<style>
+body{font:16px/1.6 system-ui,"Noto Sans TC",sans-serif;margin:0;background:#faf7ef;color:#252047}
+header{position:sticky;top:0;z-index:5;background:#faf7ef;padding:12px 20px;border-bottom:1px solid #d9d0f0}
+#wrap{max-width:900px}
+#player{width:min(640px,100%);aspect-ratio:16/9;background:#111;display:block}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:14px}
+main{padding:16px 20px 60px;max-width:1000px}
+table{border-collapse:collapse;background:#fff;width:100%}
+td,th{border:1px solid #d9d0f0;padding:8px 10px;vertical-align:top;text-align:left}
+th{background:#efe9ff}
+tr.focus td{background:#fff6c7}
+tr.playing td{background:#dff6e8}
+input[type=number]{width:84px;font:inherit;padding:3px 5px}
+button{font:inherit;padding:5px 10px;border-radius:8px;border:1px solid #6b4fd8;background:#fff;color:#4a2fb3;cursor:pointer;margin:2px 2px 2px 0}
+button.primary{background:#6b4fd8;color:#fff}
+.ans{color:#176b3a;font-weight:600}
+.warn{color:#9a4b00;font-size:13px}
+.note{background:#fff0b3;padding:8px 12px;border-radius:10px;font-size:14px;margin:10px 0}
+textarea{width:100%;height:160px;font:13px monospace}
+a{color:#4a2fb3}
+</style>
+<header>
+  <div id="wrap">
+    <strong>Massachusetts · 15題教師審閱</strong>
+    <span class="warn"> 時間為自動估計，請逐題試聽並微調</span>
+    <div id="player"></div>
+    <div class="bar">
+      <span>目前時間 <b id="clock">0.00</b> 秒</span>
+      <span id="status">載入播放器…</span>
+      <button id="pause">暫停</button>
+      <a href="/?localTest=1#song/massachusetts" target="_blank">開學生練習頁（本機測試，不寫入成績）</a>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="note">此頁顯示原影片（含燒錄歌詞）供老師審閱；學生頁已用底部遮罩蓋住字幕。「試聽原句」會從句首播到句尾後暫停。「句尾前後」播放句尾前 2 秒到後 2 秒，方便判斷是否切在字上。</div>
+  <table>
+    <thead><tr><th>題</th><th>挖空句／選項</th><th>句首（秒）</th><th>句尾（秒）</th><th>試聽</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <h3>修改後的時間（複製給我即可）</h3>
+  <button class="primary" id="export">產生時間 JSON</button>
+  <textarea id="out" readonly placeholder="按「產生時間 JSON」"></textarea>
+</main>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+let bank=null,player=null,ready=false,timer=null,stopAt=null,playingRow=null;
+const $=id=>document.getElementById(id);
+const focusId=Number((location.hash.match(/q=(\d+)/)||[])[1])||0;
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+async function load(){
+  bank=await (await fetch('/review/massachusetts/bank.json',{cache:'no-store'})).json();
+  $('rows').innerHTML=bank.questions.map(q=>{
+    const ch=q.choices.map((c,i)=>i===q.answerIndex?`<span class="ans">${esc(c)} ✓</span>`:esc(c)).join(' / ');
+    const same=q.id>1&&bank.questions[q.id-2].start===q.start&&bank.questions[q.id-2].end===q.end?' <span class="warn">（與上一題同一句）</span>':'';
+    return `<tr data-id="${q.id}" class="${q.id===focusId?'focus':''}"><td>${q.id}</td><td>${esc(q.cloze)}${same}<br><small>${ch}</small></td>
+    <td><input type="number" step="0.01" data-k="start" value="${q.start}"><br><button data-a="markStart">標記現在</button></td>
+    <td><input type="number" step="0.01" data-k="end" value="${q.end}"><br><button data-a="markEnd">標記現在</button></td>
+    <td><button class="primary" data-a="play">▶ 試聽原句</button><br><button data-a="tail">句尾前後</button><br><button data-a="nudgeM">句尾 −0.3</button><button data-a="nudgeP">句尾 +0.3</button></td></tr>`;}).join('');
+  if(focusId){const r=document.querySelector(`tr[data-id="${focusId}"]`);if(r)r.scrollIntoView({block:'center'});}
+}
+function row(id){return document.querySelector(`tr[data-id="${id}"]`);}
+function vals(id){const r=row(id);return {start:Number(r.querySelector('[data-k=start]').value),end:Number(r.querySelector('[data-k=end]').value),r};}
+function stopWatch(){clearInterval(timer);timer=null;stopAt=null;if(playingRow){playingRow.classList.remove('playing');playingRow=null;}}
+function playRange(id,from,to){
+  if(!ready){$('status').textContent='播放器尚未就緒';return;}
+  stopWatch();playingRow=row(id);playingRow.classList.add('playing');stopAt=to;
+  player.seekTo(from,true);player.playVideo();
+  timer=setInterval(()=>{const t=player.getCurrentTime();$('clock').textContent=t.toFixed(2);if(t>=stopAt){player.pauseVideo();stopWatch();$('status').textContent='已在 '+t.toFixed(2)+' 秒暫停';}},60);
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-a]');if(!b)return;
+  const id=Number(b.closest('tr').dataset.id),v=vals(id),a=b.dataset.a;
+  if(a==='play')playRange(id,v.start,v.end);
+  if(a==='tail')playRange(id,Math.max(0,v.end-2),v.end+2);
+  if(a==='markStart'&&ready)b.closest('tr').querySelector('[data-k=start]').value=player.getCurrentTime().toFixed(2);
+  if(a==='markEnd'&&ready)b.closest('tr').querySelector('[data-k=end]').value=player.getCurrentTime().toFixed(2);
+  if(a==='nudgeM'||a==='nudgeP'){const inp=b.closest('tr').querySelector('[data-k=end]');inp.value=(Number(inp.value)+(a==='nudgeP'?.3:-.3)).toFixed(2);playRange(id,Math.max(0,Number(inp.value)-2),Number(inp.value)+.6);}
+});
+$('pause').onclick=()=>{if(ready){player.pauseVideo();stopWatch();}};
+$('export').onclick=()=>{
+  const out=bank.questions.map(q=>{const v=vals(q.id);return {id:q.id,target:q.target,start:v.start,end:v.end};});
+  const bad=out.filter((q,i)=>!(q.end>q.start+.2)||(i&&q.start<out[i-1].end&&!(q.start===out[i-1].start&&q.end===out[i-1].end)));
+  $('out').value=JSON.stringify(out,null,1)+(bad.length?'\n// 注意：第 '+bad.map(q=>q.id).join('、')+' 題時間重疊或過短':'');
+};
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player('player',{videoId:'QcVfw9mT-Fo',playerVars:{playsinline:1,rel:0,controls:1},events:{onReady:()=>{ready=true;$('status').textContent='播放器就緒';},onStateChange:e=>{if(e.data===1&&!timer)timer=setInterval(()=>{$('clock').textContent=player.getCurrentTime().toFixed(2);},200);}}});
+}
+load();
+</script>
+</html>

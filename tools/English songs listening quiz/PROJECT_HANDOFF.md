@@ -221,3 +221,25 @@ Cloud Scheduler 本次狀態成功，函式錯誤0筆。目前無到期資料，
 - 自動測試與桌面 Edge 無法取代實體 iPad Safari。正式站須再驗收：一次點擊啟用、網路停滯復原、切換輕量版、句首續播、作答次數與分數保留、切換分頁／鎖定後返回、16 題與片尾完成。
 - 教師本人登入後確認同一天的成績與播放診斷可分別顯示，且診斷不含學號、IP、Cookie 或完整瀏覽器資訊。
 - 現場裝置若低於 iPadOS 13.4，不在目前 JavaScript 語法支援範圍內。
+
+
+# Massachusetts（六年級）本機實作｜2026-10-20
+
+狀態：**本機完成、題庫待教師審閱、尚未部署、尚未 commit。**
+
+- 影片：YouTube QcVfw9mT-Fo（Bee Gees）；歌詞由老師提供，存於 review/massachusetts/歌詞原文-教師提供.txt。
+- 15題，每題6.67分，全對100.00；第4、5題為同一句不同空格（left／standing）。45個選項以字串比對在基本1200字內（尚待人工複核）。
+- 審閱稿：review/massachusetts/Massachusetts-15題教師審閱版-v1.md；題庫草稿 question-bank-draft-v1.json（teacherBankApproval=false）。
+- 時間點為 faster-whisper(small.en) 自動估計，**未人工聽校**；優先試聽第9、12、14、15題。
+- **影片底部燒錄歌詞**：以頁面遮罩蓋住底部16%（bank.captionMaskPercent）；取樣8個時間點（12/28/45/75/104/116/128/136秒）確認字幕在遮罩內，非逐秒檢查全曲。YouTube 嵌入可播放。
+- 程式變更（public/index.html）：加入六年級歌單卡片、#song/massachusetts 路由與 massachusetts-bank；validateBank 允許連續題「完全相同的 start/end」（同句雙題）並接受第二個 YouTube ID；songName 支援 Massachusetts。
+- 測試：npm test、tests/browser.test.mjs、san-francisco、ipad-recovery 皆通過；新增 tests/massachusetts.browser.test.mjs（15題、同句雙題、遮罩、100分）通過。未重跑規則模擬器（規則未改）。
+- 注意：node_modules/playwright/package.json 在 Drive 上為0位元組（同步損壞），本次改在本機暫存資料夾安裝 playwright@1.63.0 跑測試。修復前 npm run test:* 在此資料夾會失敗。
+- 待辦：教師審閱題目＋/review 試聽微調時間 → 核准後把 teacherBankApproval 改 true、更新時間 → 部署（須當輪核准）。
+
+## Massachusetts 核准與正式發布｜2026-10-20
+- 教師明確核准15題題庫與時間，並授權部署。時間＝自動對齊＋教師在 /review 微調第12–15題句尾；第15題句首順延130.1（假設）。不宣稱人工逐字校準。
+- 只部署 Hosting（規則、清除函式未更動）：https://yestredayoncemore.web.app/#song/massachusetts
+- 讀回：HTTP 200，線上 index.html 134,641 bytes，SHA-256 `2f43b216ec31760f0ca04c5fda4f188a7503d5607021e31ea0f268f7b254ba1a` 與本機一致；兩支 San Francisco iPad 影片 Range 皆 206。
+- 正式站冒煙（localTest=1，未寫成績）：六年級歌單有 Massachusetts、15題、已核准提示、字幕遮罩存在、影片可啟用、開始按鈕可用。
+- 未做：實體 iPad 驗證；未 commit/push（等使用者指示）。
