@@ -1,0 +1,744 @@
+[
+ {
+  "i": 0,
+  "who": "nova",
+  "text": "Hi, class! I'm Ms. Nova.",
+  "heard": "Hi, class. I'm Ms. Nova.",
+  "ok": true
+ },
+ {
+  "i": 1,
+  "who": "cosmo",
+  "text": "And I'm Mr. Cosmo! Welcome back to our space classroom!",
+  "heard": "And I'm Mr. Cosmo.  Welcome back to our space classroom.",
+  "ok": true
+ },
+ {
+  "i": 2,
+  "who": "nova",
+  "text": "Do you remember the seven days of the week?",
+  "heard": "Do you remember the seven days of the week?",
+  "ok": true
+ },
+ {
+  "i": 3,
+  "who": "both",
+  "text": "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday!",
+  "heard": "Sunday, Monday, Tuesday, Wednesday, Thursday, Thursday, Friday, Saturday.",
+  "ok": false
+ },
+ {
+  "i": 4,
+  "who": "cosmo",
+  "text": "Great! Today, we will learn how to ask about the day, and how to answer.",
+  "heard": "Great! Today, we will learn how to ask about the day and how to answer.",
+  "ok": true
+ },
+ {
+  "i": 6,
+  "who": "cosmo",
+  "text": "Here is our question. What day is today?",
+  "heard": "Here is our question.  What day is today?",
+  "ok": true
+ },
+ {
+  "i": 7,
+  "who": "nova",
+  "text": "Look at \"What day\". What day means...",
+  "heard": "Look at what day.  What day means.",
+  "ok": true
+ },
+ {
+  "i": 9,
+  "who": "cosmo",
+  "text": "And look at \"today\". Today is this day, right now!",
+  "heard": "And look at today.  Today is this day, right now.",
+  "ok": true
+ },
+ {
+  "i": 12,
+  "who": "nova",
+  "text": "Let's read it. What day.",
+  "heard": "Let's read it.  What day?",
+  "ok": true
+ },
+ {
+  "i": 13,
+  "who": "nova",
+  "text": "Repeat after me. What day.",
+  "heard": "Repeat after me.  What day?",
+  "ok": true
+ },
+ {
+  "i": 15,
+  "who": "nova",
+  "text": "What day.",
+  "heard": "What day?",
+  "ok": true
+ },
+ {
+  "i": 17,
+  "who": "cosmo",
+  "text": "Repeat after me. Is today.",
+  "heard": "Repeat after me.  Is today",
+  "ok": true
+ },
+ {
+  "i": 19,
+  "who": "cosmo",
+  "text": "Is today.",
+  "heard": "is today.",
+  "ok": true
+ },
+ {
+  "i": 21,
+  "who": "nova",
+  "text": "Now the whole question. What day is today?",
+  "heard": "Now the whole question, what day is today?",
+  "ok": true
+ },
+ {
+  "i": 22,
+  "who": "nova",
+  "text": "Repeat after me. What day is today?",
+  "heard": "Repeat after me.  What day is today?",
+  "ok": true
+ },
+ {
+  "i": 24,
+  "who": "nova",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 26,
+  "who": "cosmo",
+  "text": "Great! Remember, the question ends with a question mark.",
+  "heard": "Great!  Remember, the question ends with a question mark.",
+  "ok": true
+ },
+ {
+  "i": 27,
+  "who": "nova",
+  "text": "Mr. Cosmo, what day is today?",
+  "heard": "Mr. Cosmo, what day is today?",
+  "ok": true
+ },
+ {
+  "i": 28,
+  "who": "cosmo",
+  "text": "Let me check! It's Friday!",
+  "heard": "Let me check.  It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 29,
+  "who": "nova",
+  "text": "Look at \"It's\". It's is a short way to say \"It is\".",
+  "heard": "Look at the word it's.  It is a short way to say it is.",
+  "ok": false
+ },
+ {
+  "i": 32,
+  "who": "cosmo",
+  "text": "Repeat after me. It is Friday.",
+  "heard": "Repeat after me.  It is Friday.",
+  "ok": true
+ },
+ {
+  "i": 34,
+  "who": "cosmo",
+  "text": "It is Friday.",
+  "heard": "It is Friday.",
+  "ok": true
+ },
+ {
+  "i": 36,
+  "who": "nova",
+  "text": "Repeat after me. It's Friday.",
+  "heard": "Repeat after me. It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 38,
+  "who": "nova",
+  "text": "It's Friday.",
+  "heard": "It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 41,
+  "who": "cosmo",
+  "text": "We can ask in another way. What day is it?",
+  "heard": "We can ask in another way.  What day is it?",
+  "ok": true
+ },
+ {
+  "i": 42,
+  "who": "nova",
+  "text": "The two questions mean the same thing.",
+  "heard": "The two questions mean the same thing.",
+  "ok": true
+ },
+ {
+  "i": 44,
+  "who": "cosmo",
+  "text": "Repeat after me. What day is it?",
+  "heard": "Repeat after me  What day is it?",
+  "ok": true
+ },
+ {
+  "i": 46,
+  "who": "cosmo",
+  "text": "What day is it?",
+  "heard": "What day is it?",
+  "ok": true
+ },
+ {
+  "i": 48,
+  "who": "nova",
+  "text": "And the answer is the same. It's Friday!",
+  "heard": "And the answer is the same.  It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 49,
+  "who": "nova",
+  "text": "Let's practice together. What day is it?",
+  "heard": "Let's practice together.  What day is it?",
+  "ok": true
+ },
+ {
+  "i": 50,
+  "who": "cosmo",
+  "text": "It's Monday!",
+  "heard": "It's Monday.",
+  "ok": true
+ },
+ {
+  "i": 51,
+  "who": "cosmo",
+  "text": "My turn. What day is today?",
+  "heard": "My turn. What day is today?",
+  "ok": true
+ },
+ {
+  "i": 52,
+  "who": "nova",
+  "text": "It's Tuesday!",
+  "heard": "It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 53,
+  "who": "cosmo",
+  "text": "Awesome! Now let's go to five places in our day.",
+  "heard": "Awesome now, let's go to five places in our day",
+  "ok": true
+ },
+ {
+  "i": 55,
+  "who": "nova",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 56,
+  "who": "cosmo",
+  "text": "It's Sunday. I can read at home.",
+  "heard": "It's Sunday.  I can read at home.",
+  "ok": true
+ },
+ {
+  "i": 58,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 60,
+  "who": "nova",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 62,
+  "who": "cosmo",
+  "text": "Now answer. It's Sunday.",
+  "heard": "Now answer.  It's Sunday.",
+  "ok": true
+ },
+ {
+  "i": 64,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 66,
+  "who": "nova",
+  "text": "I can read at home. Repeat after me. I can read at home.",
+  "heard": "I can read at home.  Repeat after me.  I can read at home.",
+  "ok": true
+ },
+ {
+  "i": 68,
+  "who": "nova",
+  "text": "What day is it?",
+  "heard": "What day is it?",
+  "ok": true
+ },
+ {
+  "i": 69,
+  "who": "cosmo",
+  "text": "It's Monday. Time for school.",
+  "heard": "It's Monday.  Time for school.",
+  "ok": true
+ },
+ {
+  "i": 71,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 73,
+  "who": "nova",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 75,
+  "who": "cosmo",
+  "text": "Now answer. It's Monday.",
+  "heard": "Now answer. It's Monday.",
+  "ok": true
+ },
+ {
+  "i": 77,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 79,
+  "who": "nova",
+  "text": "Time for school. Repeat after me. Time for school.",
+  "heard": "Time for school.  Repeat after me.  Time for school.",
+  "ok": true
+ },
+ {
+  "i": 81,
+  "who": "nova",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 82,
+  "who": "cosmo",
+  "text": "It's Wednesday. I have art on Wednesday.",
+  "heard": "It's Wednesday.  I have art on Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 84,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 86,
+  "who": "nova",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 88,
+  "who": "cosmo",
+  "text": "Now answer. It's Wednesday.",
+  "heard": "Now answer.  It's Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 90,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 92,
+  "who": "nova",
+  "text": "I have art on Wednesday. Repeat after me. I have art on Wednesday.",
+  "heard": "I have art on Wednesday.  Repeat after me.  I have art on Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 94,
+  "who": "nova",
+  "text": "What day is it?",
+  "heard": "What day is it?",
+  "ok": true
+ },
+ {
+  "i": 95,
+  "who": "cosmo",
+  "text": "It's Thursday. I have music class.",
+  "heard": "It's Thursday.  I have music class.",
+  "ok": true
+ },
+ {
+  "i": 97,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 99,
+  "who": "nova",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 101,
+  "who": "cosmo",
+  "text": "Now answer. It's Thursday.",
+  "heard": "Now answer.  It's Thursday.",
+  "ok": true
+ },
+ {
+  "i": 103,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 105,
+  "who": "nova",
+  "text": "I have music class. Repeat after me. I have music class.",
+  "heard": "I have music class.  Repeat after me.  I have music class.",
+  "ok": true
+ },
+ {
+  "i": 107,
+  "who": "nova",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 108,
+  "who": "cosmo",
+  "text": "It's Saturday. Let's play outside.",
+  "heard": "It's Saturday.  Let's play outside.",
+  "ok": true
+ },
+ {
+  "i": 110,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 112,
+  "who": "nova",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 114,
+  "who": "cosmo",
+  "text": "Now answer. It's Saturday.",
+  "heard": "Now answer, it's Saturday.",
+  "ok": true
+ },
+ {
+  "i": 116,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 118,
+  "who": "nova",
+  "text": "Let's play outside. Repeat after me. Let's play outside.",
+  "heard": "Let's play outside.  Repeat after me.  Let's play outside.",
+  "ok": true
+ },
+ {
+  "i": 120,
+  "who": "cosmo",
+  "text": "Now let's play in groups. Group A, ask the question. Group B, answer.",
+  "heard": "Now let's play in groups.  Group A, ask the question.  Group B, answer.",
+  "ok": true
+ },
+ {
+  "i": 122,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 124,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 126,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 128,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 130,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 132,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 134,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 136,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 138,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 140,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 142,
+  "who": "nova",
+  "text": "Now switch! Group B, ask. Group A, answer.",
+  "heard": "Now switch. Group B, ask. Group A, answer.",
+  "ok": true
+ },
+ {
+  "i": 144,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 146,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 148,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 150,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 152,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 154,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 156,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 158,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 160,
+  "who": "nova",
+  "text": "Group B!",
+  "heard": "Group B.",
+  "ok": true
+ },
+ {
+  "i": 162,
+  "who": "cosmo",
+  "text": "Group A!",
+  "heard": "Group A",
+  "ok": true
+ },
+ {
+  "i": 164,
+  "who": "cosmo",
+  "text": "Wonderful, everyone!",
+  "heard": "Wonderful, everyone.",
+  "ok": true
+ },
+ {
+  "i": 165,
+  "who": "cosmo",
+  "text": "Game time! Look at the calendar. What day is it?",
+  "heard": "Game time!  Look at the calendar!  What day is it?",
+  "ok": true
+ },
+ {
+  "i": 167,
+  "who": "nova",
+  "text": "It's Tuesday!",
+  "heard": "It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 168,
+  "who": "cosmo",
+  "text": "Next one. What day is it?",
+  "heard": "Next one. What day is it?",
+  "ok": true
+ },
+ {
+  "i": 170,
+  "who": "nova",
+  "text": "It's Friday!",
+  "heard": "It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 171,
+  "who": "cosmo",
+  "text": "Next one. What day is today?",
+  "heard": "Next one. What day is today?",
+  "ok": true
+ },
+ {
+  "i": 173,
+  "who": "nova",
+  "text": "It's Sunday!",
+  "heard": "It's Sunday.",
+  "ok": true
+ },
+ {
+  "i": 174,
+  "who": "cosmo",
+  "text": "Next one. What day is it?",
+  "heard": "Next one. What day is it?",
+  "ok": true
+ },
+ {
+  "i": 176,
+  "who": "nova",
+  "text": "It's Wednesday!",
+  "heard": "It's Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 177,
+  "who": "cosmo",
+  "text": "Last one. What day is today?",
+  "heard": "LAST ONE What day is today?",
+  "ok": true
+ },
+ {
+  "i": 179,
+  "who": "nova",
+  "text": "It's Thursday! Great job, class!",
+  "heard": "It's Thursday. Great job, class.",
+  "ok": true
+ },
+ {
+  "i": 180,
+  "who": "nova",
+  "text": "Today we learned two questions. What day is today? What day is it?",
+  "heard": "Today we learned two questions.  What day is today?  What day is it?",
+  "ok": true
+ },
+ {
+  "i": 181,
+  "who": "cosmo",
+  "text": "And one answer. It's Friday.",
+  "heard": "One answer  It's Friday",
+  "ok": false
+ },
+ {
+  "i": 183,
+  "who": "cosmo",
+  "text": "See you next time!",
+  "heard": "See you next time.",
+  "ok": true
+ },
+ {
+  "i": 184,
+  "who": "nova",
+  "text": "Bye-bye, class!",
+  "heard": "Bye-bye class.",
+  "ok": true
+ }
+]
