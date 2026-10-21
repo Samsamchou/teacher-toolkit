@@ -13,7 +13,7 @@ service cloud.firestore {
 
     // ---- english-portal (unchanged behaviour for all other collections)
     match /{collection}/{document=**} {
-      allow read, write: if request.auth != null && collection != 'questAttempts';
+      allow read, write: if request.auth != null && collection != 'questAttempts' && collection != 'questProgress';
     }
 
     // ---- English Mission Quest: one document per student attempt
@@ -47,6 +47,29 @@ service cloud.firestore {
         && validShape(request.resource.data);
       // only the teacher account can read (students never read records back)
       allow get, list: if isTeacher();
+      allow delete: if false;
+    }
+
+    // ---- 二水 3D 英語闖關：跨裝置接續進度（教師 2026-10-21 確認不加密碼，接受「知道學號即可讀寫該學號進度」的風險）
+    // 文件 ID = 任務代號_學號；只存已通關地點與各題作答狀態，沒有姓名。可以用學號讀一份，不能列出全部。
+    match /questProgress/{progressId} {
+      function validProgress(d) {
+        return d.keys().hasAll(['mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'results', 'cleared'])
+          && d.keys().hasOnly(['mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'completedAt',
+                               'results', 'cleared', 'version', 'activeDays', 'expiresAt'])
+          && d.mission == 'ershui-3d-quest'
+          && d.studentId is string && d.studentId.matches('^[0-9]{5,8}$')
+          && progressId == d.mission + '_' + d.studentId
+          && d.attemptId is string && d.attemptId.size() <= 40
+          && d.results is map && d.results.size() <= 60
+          && d.cleared is list && d.cleared.size() <= 20
+          && (!('activeDays' in d) || (d.activeDays is list && d.activeDays.size() <= 60))
+          && (!('expiresAt' in d) || (d.expiresAt is timestamp
+              && d.expiresAt > request.time && d.expiresAt < request.time + duration.value(470, 'd')));
+      }
+      allow get: if request.auth != null;
+      allow list: if false;
+      allow create, update: if request.auth != null && validProgress(request.resource.data);
       allow delete: if false;
     }
   }

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-21T07:54:57.213Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "A single cheerful tear-off desk calendar page for a children's English lesson. The page shows only the large, clear, correctly spelled English abbreviation \"Fri.\" in bold dark letters in the center, with a small colorful header bar on top. No other words or numbers. Flat, friendly, colorful children's picture-book illustration style, clean white background, centered composition, safe margins, suitable for elementary school students.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "cal-fri.png",
+  "output_index": 1,
+  "output_sha256": "dabeaf57c51a18ba4e428001c218781fe27ec6f3cd975f75c7389cb1539ebb48",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_ad46206dc0b64a508dfbc9848cb28d4b",
+  "usage": {
+    "input_tokens": 86,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 86
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1842
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

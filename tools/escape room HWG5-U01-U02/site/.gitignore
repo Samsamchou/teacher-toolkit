@@ -1,0 +1,12 @@
+# 舊版單機匯出的備份，不進 git、不部署
+_retired/
+
+# 共用 3D 遊戲匯出檔（由 godot-ershui-quest 匯出，約 81 MB）
+public/quest3d/
+
+# 3D 任務題庫的媒體（圖片、語音、字型）不入庫；bank.json 與 data.js 入庫
+public/ershui-3d-quest/bank/questions/
+public/ershui-3d-quest/bank/listening/
+public/ershui-3d-quest/bank/audio/
+public/ershui-3d-quest/bank/fonts/*.ttf
+public/ershui-3d-quest/cover.webp

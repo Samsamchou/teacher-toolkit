@@ -189,7 +189,7 @@ test("teacher dashboard: portal button, no passcode in code, rules keep english-
   assert.equal(/["'`]\d{6}["'`]/u.test(teacher), false, "no 6-digit literal in teacher.js");
   assert.match(teacher, /const retries = r => \(r\.items \|\| \[\]\)\.filter\(i => !i\.firstTryCorrect && i\.attempts > 0\)/u);
   const rules = readFileSync(path.join(root, "..", "firestore.rules.template"), "utf8");
-  assert.match(rules, /match \/\{collection\}\/\{document=\*\*\} \{\s*allow read, write: if request\.auth != null && collection != 'questAttempts';/u);
+  assert.match(rules, /match \/\{collection\}\/\{document=\*\*\} \{\s*allow read, write: if request\.auth != null && collection != 'questAttempts' && collection != 'questProgress';/u);
   assert.match(rules, /allow get, list: if isTeacher\(\);/u);
   assert.match(rules, /allow delete: if false;/u);
   const app = readFileSync(path.join(pub, "app.js"), "utf8");

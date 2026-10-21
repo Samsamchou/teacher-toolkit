@@ -105,6 +105,12 @@ const retries = r => (r.items || []).filter(i => !i.firstTryCorrect && i.attempt
 const firstTry = r => r.summary?.firstTry ?? (r.items || []).filter(i => i.firstTryCorrect).length;
 const finished = r => r.summary?.finished ?? (r.items || []).filter(i => i.finalCorrect).length;
 const battles = r => Object.keys(r.battles || {}).length;
+// 總分（滿分 100）：只有會計分的任務（二水 3D 英語闖關）有 summary.score，其他任務顯示「—」
+const score = r => (typeof r.summary?.score === "number" ? r.summary.score : null);
+const itemPoints = (r, it) => {
+  const x = (r.items || []).find(i => i.seq === it.seq);
+  return x?.finalCorrect ? Math.round(100 / total() * Math.min(4, Math.max(1, x.quality || 1)) / 4 * 10) / 10 : 0;
+};
 const when = iso => iso ? new Date(iso).toLocaleString("zh-TW", { timeZone: "Asia/Taipei", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
 const lastBattle = () => bank().battles.at(-1)?.id;
 const bossText = r => {
@@ -138,6 +144,7 @@ function currentList() {
     by === "firstTry" ? firstTry(a) / total() - firstTry(b) / total() :
     by === "retries" ? retries(b).length - retries(a).length :
     by === "updated" ? String(b.updatedAt).localeCompare(String(a.updatedAt)) :
+    by === "score" ? (score(b) ?? -1) - (score(a) ?? -1) :
     a.studentId.localeCompare(b.studentId) || String(a.startedAt).localeCompare(String(b.startedAt)));
 }
 function renderTable() {
@@ -148,13 +155,14 @@ function renderTable() {
     <tr data-id="${esc(r.attemptId)}" class="${r.attemptId === selected ? "sel" : ""}">
       <td class="sid">${esc(r.studentId)}</td>
       <td>${r.completedAt ? '<span class="pill done">完成</span>' : '<span class="pill">進行中</span>'}</td>
+      <td class="n">${score(r) ?? "—"}</td>
       <td>${finished(r)}/${total()}</td>
       <td>${firstTry(r)}/${total()}（${Math.round(firstTry(r) / total() * 100)}%）</td>
       <td>${retries(r).length}</td>
       <td>${battles(r)}/${bank().battles.length}</td>
       <td>${bossText(r)}</td>
       <td>${when(r.updatedAt)}</td>
-    </tr>`).join("") || `<tr><td colspan="8" class="hint">這一天沒有符合的紀錄。</td></tr>`;
+    </tr>`).join("") || `<tr><td colspan="9" class="hint">這一天沒有符合的紀錄。</td></tr>`;
 }
 $("table").addEventListener("click", e => {
   const tr = e.target.closest("tr[data-id]"); if (!tr) return;
@@ -166,6 +174,7 @@ function questionText(seq) {
   const it = bank().items.find(i => i.seq === seq);
   if (!it) return "";
   if (it.type === "spell") return `拼字：${it.spell.answer}`;
+  if (it.type === "listen") return `聽力：${it.transcript ? it.transcript + " → " : ""}${it.answerText}`;
   return it.lines.map(l => `${l.speaker}: ${l.text.replace(/\{(\d)\}/g, (_, d) => `〔${it.blanks[Number(d) - 1].answer}〕`)}`).join("　");
 }
 function showDetail(r) {
@@ -178,6 +187,7 @@ function showDetail(r) {
       <p class="big-id">${esc(r.studentId)}</p>
       <p class="boss">Boss：${bossText(r)}</p>
       <div class="stats">
+        ${score(r) !== null ? `<div><b>${score(r)}</b><span>總分（滿分 100）</span></div>` : ""}
         <div><b>${finished(r)}/${total()}</b><span>完成題數</span></div>
         <div><b>${firstTry(r)}/${total()}</b><span>第一次就答對</span></div>
         <div><b>${battles(r)}/${bank().battles.length}</b><span>戰鬥</span></div>
@@ -196,11 +206,15 @@ function showDetail(r) {
 // ---------------------------------------------------------------- CSV of the selected day + mission (UTF-8 BOM for Excel)
 $("csv").addEventListener("click", () => {
   if (!mission) return;
-  const head = ["日期", "任務", "學號", "開始", "完成", "完成題數", "第一次答對", "總題數", "需重試題數", "戰鬥", "Boss", "需重試的題目（作答次數）"];
+  const scored = currentList().some(r => score(r) !== null);
+  const perItem = scored ? bank().items.map(it => `${String(it.seq).padStart(2, "0")} ${it.id}`) : [];
+  const head = ["日期", "任務", "學號", "開始", "完成", ...(scored ? ["總分"] : []), "完成題數", "第一次答對", "總題數", "需重試題數", "戰鬥", "Boss", "需重試的題目（作答次數）", ...perItem];
   const list = currentList().sort((a, b) => a.studentId.localeCompare(b.studentId));
   const lines = [head, ...list.map(r => [day, missionInfo(mission).unit, r.studentId, r.startedAt || "", r.completedAt || "",
+    ...(scored ? [score(r) ?? ""] : []),
     finished(r), firstTry(r), total(), retries(r).length, battles(r), bossText(r),
-    retries(r).map(i => `Q${String(i.seq).padStart(2, "0")}(${i.attempts}次)`).join("; ")])];
+    retries(r).map(i => `Q${String(i.seq).padStart(2, "0")}(${i.attempts}次)`).join("; "),
+    ...(scored ? bank().items.map(it => itemPoints(r, it)) : [])])];
   const csv = "﻿" + lines.map(l => l.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\r\n");
   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(new Blob([csv], { type: "text/csv" })),
     download: `${mission}-${day}.csv` });

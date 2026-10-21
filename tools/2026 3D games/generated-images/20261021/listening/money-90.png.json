@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-21T08:00:07.384Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "A cute open wallet with some coins and paper bills, and one big round price tag next to it showing only the number \"90\" in large bold digits. Children's lesson card. No currency symbols, no other text or numbers. Flat, friendly, colorful children's picture-book illustration style, clean white background, centered composition, safe margins, suitable for elementary school students.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "money-90.png",
+  "output_index": 1,
+  "output_sha256": "ce20430aa01c8837e3a32c9462c975b9b965f93e1a30273b6b3201e96e91d0dc",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_6897826cc70a4d0e8a038bd6c5f0e782",
+  "usage": {
+    "input_tokens": 79,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 79
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1835
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

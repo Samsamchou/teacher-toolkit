@@ -46,6 +46,7 @@
         <option value="firstTry">依第一次答對率（低→高）</option>
         <option value="retries">依需重試題數（多→少）</option>
         <option value="updated">依最後更新（新→舊）</option>
+        <option value="score">依總分（高→低，計分任務）</option>
       </select>
       <button class="btn ghost" id="csv">匯出 CSV</button>
     </section>
@@ -53,7 +54,7 @@
     <div class="layout">
       <section class="list">
         <table id="table">
-          <thead><tr><th>學號</th><th>狀態</th><th>完成</th><th>第一次答對</th><th>需重試</th><th>戰鬥</th><th>Boss</th><th>最後更新</th></tr></thead>
+          <thead><tr><th>學號</th><th>狀態</th><th>總分</th><th>完成</th><th>第一次答對</th><th>需重試</th><th>戰鬥</th><th>Boss</th><th>最後更新</th></tr></thead>
           <tbody></tbody>
         </table>
       </section>

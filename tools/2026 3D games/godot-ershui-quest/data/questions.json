@@ -1,0 +1,1687 @@
+{
+ "source": "HWG5 U01+U02 (escape room HWG5-U01-U02, sourceBankSha256 c8fb4ad89b75)",
+ "weekStripOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekStripLabels": {
+  "Sun": "Sun.",
+  "Mon": "Mon.",
+  "Tue": "Tue.",
+  "Wed": "Wed.",
+  "Thu": "Thu.",
+  "Fri": "Fri.",
+  "Sat": "Sat."
+ },
+ "items": [
+  {
+   "id": "Q01",
+   "seq": 1,
+   "type": "drag",
+   "image": "res://assets/questions/Q01.webp",
+   "audio": "res://assets/audio/feedback/Q01.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What {1} is it?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "hint1En": "Look at the clock hands.",
+   "hint2En": "The short hand is near 10. The long hand is on 10.",
+   "correctEn": "It's 9:50. The clock stopped at 9:50.",
+   "weekStrip": null,
+   "clock": {
+    "time": "9:50",
+    "cx": 765.08,
+    "cy": 343.86,
+    "r": 204.5
+   },
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "time"
+    },
+    {
+     "id": 2,
+     "answer": "9:50"
+    }
+   ],
+   "distractors": [
+    "day",
+    "9:15",
+    "5:50"
+   ]
+  },
+  {
+   "id": "Q02",
+   "seq": 2,
+   "type": "drag",
+   "image": "res://assets/questions/Q02.webp",
+   "audio": "res://assets/audio/feedback/Q02.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What day {1} it?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "hint1En": "Look at the week strip again.",
+   "hint2En": "Find the bright day on the strip.",
+   "correctEn": "It's Monday. A new school week starts.",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "is"
+    },
+    {
+     "id": 2,
+     "answer": "Monday"
+    }
+   ],
+   "distractors": [
+    "do",
+    "are",
+    "Sunday"
+   ]
+  },
+  {
+   "id": "Q03",
+   "seq": 3,
+   "type": "drag",
+   "image": "res://assets/questions/Q03.webp",
+   "audio": "res://assets/audio/feedback/Q03.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it {1} today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, it {2}."
+    }
+   ],
+   "hint1En": "Look at Ken's face. Is it yes or no?",
+   "hint2En": "Ken nods. That means yes.",
+   "correctEn": "Yes, it is. Today is Monday.",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Monday"
+    },
+    {
+     "id": 2,
+     "answer": "is"
+    }
+   ],
+   "distractors": [
+    "Sunday",
+    "isn't",
+    "does"
+   ]
+  },
+  {
+   "id": "Q04",
+   "seq": 4,
+   "type": "drag",
+   "image": "res://assets/questions/Q04.webp",
+   "audio": "res://assets/audio/feedback/Q04.mp3",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have {1} class on Monday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, I {2}."
+    }
+   ],
+   "hint1En": "Look at the things in the picture.",
+   "hint2En": "I or you: use do. He or she: use does.",
+   "correctEn": "Yes, I do. Ken has art class on Monday.",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "art"
+    },
+    {
+     "id": 2,
+     "answer": "do"
+    }
+   ],
+   "distractors": [
+    "PE",
+    "does",
+    "don't"
+   ]
+  },
+  {
+   "id": "Q05",
+   "seq": 5,
+   "type": "spell",
+   "image": "res://assets/questions/Q05.webp",
+   "audio": "res://assets/audio/feedback/Q05.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the bright day on the strip.",
+   "hint2En": "The first letter is T.",
+   "correctEn": "Tuesday. T-u-e-s-d-a-y.",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": "星期二"
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Tuesday",
+    "distractorLetters": "hrn",
+    "groups": [
+     7
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q06",
+   "seq": 6,
+   "type": "drag",
+   "image": "res://assets/questions/Q06.webp",
+   "audio": "res://assets/audio/feedback/Q06.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it Monday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, it {1}. It's {2}."
+    }
+   ],
+   "hint1En": "Look at Ken's head. Is it yes or no?",
+   "hint2En": "Find the bright day on the strip.",
+   "correctEn": "No, it isn't. It's Tuesday.",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "isn't"
+    },
+    {
+     "id": 2,
+     "answer": "Tuesday"
+    }
+   ],
+   "distractors": [
+    "is",
+    "doesn't",
+    "Sunday"
+   ]
+  },
+  {
+   "id": "Q07",
+   "seq": 7,
+   "type": "spell",
+   "image": "res://assets/questions/Q07.webp",
+   "audio": "res://assets/audio/feedback/Q07.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the recorder and the piano.",
+   "hint2En": "The first letter is m.",
+   "correctEn": "Music. M-u-s-i-c.",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "music",
+    "distractorLetters": "ka",
+    "groups": [
+     5
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q08",
+   "seq": 8,
+   "type": "drag",
+   "image": "res://assets/questions/Q08.webp",
+   "audio": "res://assets/audio/feedback/Q08.mp3",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have {1} class on Tuesday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, I {2}."
+    }
+   ],
+   "hint1En": "Look at the things in Ken's hands.",
+   "hint2En": "I or you: use do. He or she: use does.",
+   "correctEn": "Yes, I do. Ken has music class on Tuesday.",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "music"
+    },
+    {
+     "id": 2,
+     "answer": "do"
+    }
+   ],
+   "distractors": [
+    "art",
+    "does",
+    "is"
+   ]
+  },
+  {
+   "id": "Q09",
+   "seq": 9,
+   "type": "spell",
+   "image": "res://assets/questions/Q09.webp",
+   "audio": "res://assets/audio/feedback/Q09.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the bright day on the strip.",
+   "hint2En": "The first letter is W.",
+   "correctEn": "Wednesday. W-e-d-n-e-s-d-a-y.",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": "星期三"
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Wednesday",
+    "distractorLetters": "st",
+    "groups": [
+     9
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q10",
+   "seq": 10,
+   "type": "drag",
+   "image": "res://assets/questions/Q10.webp",
+   "audio": "res://assets/audio/feedback/Q10.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What {1} is today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "hint1En": "Look at the week strip again.",
+   "hint2En": "What day is today? Find the bright day.",
+   "correctEn": "It's Wednesday. Tick gets the Wednesday gear.",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "day"
+    },
+    {
+     "id": 2,
+     "answer": "Wednesday"
+    }
+   ],
+   "distractors": [
+    "time",
+    "Monday",
+    "Tuesday"
+   ]
+  },
+  {
+   "id": "Q11",
+   "seq": 11,
+   "type": "spell",
+   "image": "res://assets/questions/Q11.webp",
+   "audio": "res://assets/audio/feedback/Q11.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the abacus and the blocks.",
+   "hint2En": "The first letter is m.",
+   "correctEn": "Math. M-a-t-h.",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "math",
+    "distractorLetters": "en",
+    "groups": [
+     4
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q12",
+   "seq": 12,
+   "type": "drag",
+   "image": "res://assets/questions/Q12.webp",
+   "audio": "res://assets/audio/feedback/Q12.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1} Jack have {2} class on Wednesday?"
+    },
+    {
+     "speaker": "Jenny",
+     "text": "Yes, he does."
+    }
+   ],
+   "hint1En": "Look at Jack's desk.",
+   "hint2En": "Who is it? You: Do. He, she or a name: Does.",
+   "correctEn": "Does Jack have math class? Yes, he does.",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Does"
+    },
+    {
+     "id": 2,
+     "answer": "math"
+    }
+   ],
+   "distractors": [
+    "Do",
+    "Is",
+    "music"
+   ]
+  },
+  {
+   "id": "Q13",
+   "seq": 13,
+   "type": "spell",
+   "image": "res://assets/questions/Q13.webp",
+   "audio": "res://assets/audio/feedback/Q13.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the bright day on the strip.",
+   "hint2En": "The first letter is T.",
+   "correctEn": "Thursday. T-h-u-r-s-d-a-y.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": "星期四"
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Thursday",
+    "distractorLetters": "en",
+    "groups": [
+     8
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q14",
+   "seq": 14,
+   "type": "drag",
+   "image": "res://assets/questions/Q14.webp",
+   "audio": "res://assets/audio/feedback/Q14.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What day is {1}?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "hint1En": "Look at the week strip again.",
+   "hint2En": "Find the bright day on the strip.",
+   "correctEn": "It's Thursday. The long hall is open.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "today"
+    },
+    {
+     "id": 2,
+     "answer": "Thursday"
+    }
+   ],
+   "distractors": [
+    "it",
+    "Tuesday",
+    "Wednesday"
+   ]
+  },
+  {
+   "id": "Q15",
+   "seq": 15,
+   "type": "spell",
+   "image": "res://assets/questions/Q15.webp",
+   "audio": "res://assets/audio/feedback/Q15.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the book cover.",
+   "hint2En": "The first letter is C.",
+   "correctEn": "Chinese. C-h-i-n-e-s-e.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Chinese",
+    "distractorLetters": "as",
+    "groups": [
+     7
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q16",
+   "seq": 16,
+   "type": "drag",
+   "image": "res://assets/questions/Q16.webp",
+   "audio": "res://assets/audio/feedback/Q16.mp3",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "{1} you have {2} class on Thursday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, I don't."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "Who is it? You: Do. He, she or a name: Does.",
+   "correctEn": "No, I don't. Ken doesn't have Chinese class on Thursday.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Do"
+    },
+    {
+     "id": 2,
+     "answer": "Chinese"
+    }
+   ],
+   "distractors": [
+    "Does",
+    "Is",
+    "math"
+   ]
+  },
+  {
+   "id": "Q17",
+   "seq": 17,
+   "type": "spell",
+   "image": "res://assets/questions/Q17.webp",
+   "audio": "res://assets/audio/feedback/Q17.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the headphones and the speech bubbles.",
+   "hint2En": "The first letter is E.",
+   "correctEn": "English. E-n-g-l-i-s-h.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "English",
+    "distractorLetters": "ae",
+    "groups": [
+     7
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q18",
+   "seq": 18,
+   "type": "drag",
+   "image": "res://assets/questions/Q18.webp",
+   "audio": "res://assets/audio/feedback/Q18.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Does he have {1} class on Thursday?"
+    },
+    {
+     "speaker": "Jenny",
+     "text": "Yes, he {2}."
+    }
+   ],
+   "hint1En": "Look at Tom's headphones.",
+   "hint2En": "I or you: use do. He or she: use does.",
+   "correctEn": "Yes, he does. Tom has English class on Thursday.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "English"
+    },
+    {
+     "id": 2,
+     "answer": "does"
+    }
+   ],
+   "distractors": [
+    "Chinese",
+    "do",
+    "is"
+   ]
+  },
+  {
+   "id": "Q19",
+   "seq": 19,
+   "type": "spell",
+   "image": "res://assets/questions/Q19.webp",
+   "audio": "res://assets/audio/feedback/Q19.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the microscope.",
+   "hint2En": "The first letter is s.",
+   "correctEn": "Science. S-c-i-e-n-c-e.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "science",
+    "distractorLetters": "sk",
+    "groups": [
+     7
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q20",
+   "seq": 20,
+   "type": "drag",
+   "image": "res://assets/questions/Q20.webp",
+   "audio": "res://assets/audio/feedback/Q20.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1} Jenny have {2} class on Thursday?"
+    },
+    {
+     "speaker": "Tom",
+     "text": "Yes, she does."
+    }
+   ],
+   "hint1En": "Look at Jenny's goggles and the microscope.",
+   "hint2En": "Who is it? You: Do. He, she or a name: Does.",
+   "correctEn": "Does Jenny have science class? Yes, she does.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Does"
+    },
+    {
+     "id": 2,
+     "answer": "science"
+    }
+   ],
+   "distractors": [
+    "Do",
+    "Is",
+    "English"
+   ]
+  },
+  {
+   "id": "Q21",
+   "seq": 21,
+   "type": "spell",
+   "image": "res://assets/questions/Q21.webp",
+   "audio": "res://assets/audio/feedback/Q21.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the bright day on the strip.",
+   "hint2En": "The first letter is F.",
+   "correctEn": "Friday. F-r-i-d-a-y.",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": "星期五"
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Friday",
+    "distractorLetters": "er",
+    "groups": [
+     6
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q22",
+   "seq": 22,
+   "type": "drag",
+   "image": "res://assets/questions/Q22.webp",
+   "audio": "res://assets/audio/feedback/Q22.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Does she have {1} class on Friday?"
+    },
+    {
+     "speaker": "Tom",
+     "text": "No, she {2}."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "She: does or doesn't? Is it yes or no?",
+   "correctEn": "No, she doesn't. Jenny doesn't have PE class on Friday.",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "PE"
+    },
+    {
+     "id": 2,
+     "answer": "doesn't"
+    }
+   ],
+   "distractors": [
+    "art",
+    "don't",
+    "isn't"
+   ]
+  },
+  {
+   "id": "Q23",
+   "seq": 23,
+   "type": "spell",
+   "image": "res://assets/questions/Q23.webp",
+   "audio": "res://assets/audio/feedback/Q23.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the globe and the map.",
+   "hint2En": "The first letter is s.",
+   "correctEn": "Social studies. S-o-c-i-a-l  s-t-u-d-i-e-s.",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "social studies",
+    "distractorLetters": "en",
+    "groups": [
+     6,
+     7
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q24",
+   "seq": 24,
+   "type": "drag",
+   "image": "res://assets/questions/Q24.webp",
+   "audio": "res://assets/audio/feedback/Q24.mp3",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do we have {1} class on Friday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, we {2}."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "We: do or don't? Is it yes or no?",
+   "correctEn": "No, we don't. We don't have social studies on Friday.",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "social studies"
+    },
+    {
+     "id": 2,
+     "answer": "don't"
+    }
+   ],
+   "distractors": [
+    "science",
+    "doesn't",
+    "aren't"
+   ]
+  },
+  {
+   "id": "Q25",
+   "seq": 25,
+   "type": "drag",
+   "image": "res://assets/questions/Q25.webp",
+   "audio": "res://assets/audio/feedback/Q25.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "{1} it Sunday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, it {2}."
+    }
+   ],
+   "hint1En": "Look at the week strip. Is it Sunday?",
+   "hint2En": "Ken shakes his head. That means no.",
+   "correctEn": "No, it isn't. It isn't Sunday.",
+   "weekStrip": {
+    "highlight": "Sat",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Is"
+    },
+    {
+     "id": 2,
+     "answer": "isn't"
+    }
+   ],
+   "distractors": [
+    "Do",
+    "Does",
+    "don't"
+   ]
+  },
+  {
+   "id": "Q26",
+   "seq": 26,
+   "type": "spell",
+   "image": "res://assets/questions/Q26.webp",
+   "audio": "res://assets/audio/feedback/Q26.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the bright day on the strip.",
+   "hint2En": "The first letter is S.",
+   "correctEn": "Saturday. S-a-t-u-r-d-a-y.",
+   "weekStrip": {
+    "highlight": "Sat",
+    "zhLabel": "星期六"
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Saturday",
+    "distractorLetters": "ne",
+    "groups": [
+     8
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q27",
+   "seq": 27,
+   "type": "drag",
+   "image": "res://assets/questions/Q03.webp",
+   "audio": "res://assets/audio/feedback/Q27.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it Monday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at the week strip again.",
+   "hint2En": "Is it ...? Use it is or it isn't.",
+   "correctEn": "Yes, it is. The mirror shows Monday.",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Yes, it is."
+    }
+   ],
+   "distractors": [
+    "No, it isn't.",
+    "Yes, it does.",
+    "Yes, I do."
+   ]
+  },
+  {
+   "id": "Q28",
+   "seq": 28,
+   "type": "drag",
+   "image": "res://assets/questions/Q06.webp",
+   "audio": "res://assets/audio/feedback/Q28.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it Monday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at the week strip again.",
+   "hint2En": "Is it ...? Use it isn't. Then say the day.",
+   "correctEn": "No, it isn't. It's Tuesday.",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "No, it isn't. It's Tuesday."
+    }
+   ],
+   "distractors": [
+    "Yes, it is.",
+    "No, it isn't. It's Thursday.",
+    "No, I don't. It's Tuesday."
+   ]
+  },
+  {
+   "id": "Q29",
+   "seq": 29,
+   "type": "drag",
+   "image": "res://assets/questions/Q04.webp",
+   "audio": "res://assets/audio/feedback/Q29.mp3",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have art class on Monday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at Ken's face.",
+   "hint2En": "Ken nods. Do you ...? Answer with I.",
+   "correctEn": "Yes, I do. Ken has art class on Monday.",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Yes, I do."
+    }
+   ],
+   "distractors": [
+    "Yes, he does.",
+    "No, I don't.",
+    "Yes, it is."
+   ]
+  },
+  {
+   "id": "Q30",
+   "seq": 30,
+   "type": "drag",
+   "image": "res://assets/questions/Q16.webp",
+   "audio": "res://assets/audio/feedback/Q30.mp3",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have Chinese class on Thursday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at the red circle.",
+   "hint2En": "Ken shakes his head. Do you ...? Answer with I.",
+   "correctEn": "No, I don't. Ken doesn't have Chinese class on Thursday.",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "No, I don't."
+    }
+   ],
+   "distractors": [
+    "Yes, I do.",
+    "No, she doesn't.",
+    "No, it isn't."
+   ]
+  },
+  {
+   "id": "Q31",
+   "seq": 31,
+   "type": "drag",
+   "image": "res://assets/questions/Q31.webp",
+   "audio": "res://assets/audio/feedback/Q31.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Does Tom have PE class on Tuesday?"
+    },
+    {
+     "speaker": "Jenny",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at Tom. What is he doing?",
+   "hint2En": "Tom is he. Is it yes or no?",
+   "correctEn": "Yes, he does. Tom has PE class on Tuesday.",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Yes, he does."
+    }
+   ],
+   "distractors": [
+    "Yes, I do.",
+    "No, he doesn't.",
+    "Yes, she does."
+   ]
+  },
+  {
+   "id": "Q32",
+   "seq": 32,
+   "type": "drag",
+   "image": "res://assets/questions/Q32.webp",
+   "audio": "res://assets/audio/feedback/Q32.mp3",
+   "lines": [
+    {
+     "speaker": "Tom",
+     "text": "Does Jenny have music class on Friday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at the red circle.",
+   "hint2En": "Jenny is she. Is it yes or no?",
+   "correctEn": "No, she doesn't. Jenny doesn't have music class on Friday.",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "No, she doesn't."
+    }
+   ],
+   "distractors": [
+    "No, he doesn't.",
+    "Yes, she does.",
+    "No, I don't."
+   ]
+  },
+  {
+   "id": "L01",
+   "seq": 101,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L01.mp3",
+   "options": [
+    {
+     "text": "fry"
+    },
+    {
+     "text": "flag"
+    },
+    {
+     "text": "fly"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “f”.",
+   "correctEn": "fly",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L02",
+   "seq": 102,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L02.mp3",
+   "options": [
+    {
+     "text": "toe"
+    },
+    {
+     "text": "pie"
+    },
+    {
+     "text": "tie"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “t”.",
+   "correctEn": "tie",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L03",
+   "seq": 103,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L03.mp3",
+   "options": [
+    {
+     "text": "May"
+    },
+    {
+     "text": "my"
+    },
+    {
+     "text": "day"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “M”.",
+   "correctEn": "May",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L04",
+   "seq": 104,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L04.mp3",
+   "options": [
+    {
+     "text": "road"
+    },
+    {
+     "text": "read"
+    },
+    {
+     "text": "red"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “r”.",
+   "correctEn": "read",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L05",
+   "seq": 105,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L05.mp3",
+   "options": [
+    {
+     "text": "nine"
+    },
+    {
+     "text": "nail"
+    },
+    {
+     "text": "mail"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “n”.",
+   "correctEn": "nail",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L06",
+   "seq": 106,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L06.mp3",
+   "options": [
+    {
+     "text": "life"
+    },
+    {
+     "text": "loaf"
+    },
+    {
+     "text": "leaf"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “l”.",
+   "correctEn": "leaf",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L07",
+   "seq": 107,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L07.mp3",
+   "options": [
+    {
+     "image": "res://assets/listening/cal-mon.png"
+    },
+    {
+     "image": "res://assets/listening/cal-fri.png"
+    },
+    {
+     "image": "res://assets/listening/cal-wed.png"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Wed. (Wednesday)",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L08",
+   "seq": 108,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L08.mp3",
+   "options": [
+    {
+     "image": "res://assets/listening/cal-fri.png"
+    },
+    {
+     "image": "res://assets/listening/cal-mon.png"
+    },
+    {
+     "image": "res://assets/listening/cal-sun.png"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Mon. (Monday)",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L09",
+   "seq": 109,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L09.mp3",
+   "options": [
+    {
+     "image": "res://assets/listening/wed-pe.png"
+    },
+    {
+     "image": "res://assets/listening/mon-art.png"
+    },
+    {
+     "image": "res://assets/listening/mon-pe.png"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Mon. + PE class",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L10",
+   "seq": 110,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L10.mp3",
+   "options": [
+    {
+     "image": "res://assets/listening/mon-english.png"
+    },
+    {
+     "image": "res://assets/listening/tue-english.png"
+    },
+    {
+     "image": "res://assets/listening/tue-science.png"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Tue. + English class",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L11",
+   "seq": 111,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L11.mp3",
+   "options": [
+    {
+     "image": "res://assets/listening/money-90.png"
+    },
+    {
+     "image": "res://assets/listening/money-100.png"
+    },
+    {
+     "image": "res://assets/listening/money-80.png"
+    }
+   ],
+   "answer": 0,
+   "transcript": "I have ninety dollars.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "I have ninety dollars.  →  90",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L12",
+   "seq": 112,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L12.mp3",
+   "options": [
+    {
+     "image": "res://assets/listening/money-90.png"
+    },
+    {
+     "image": "res://assets/listening/money-80.png"
+    },
+    {
+     "image": "res://assets/listening/money-100.png"
+    }
+   ],
+   "answer": 2,
+   "transcript": "I have one hundred dollars.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "I have one hundred dollars.  →  100",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L13",
+   "seq": 113,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L13.mp3",
+   "options": [
+    {
+     "text": "No, he isn't."
+    },
+    {
+     "text": "No, he doesn't."
+    },
+    {
+     "text": "No, I don't."
+    }
+   ],
+   "answer": 1,
+   "transcript": "Does he have math class on Friday?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Does he have math class on Friday?  →  No, he doesn't.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L14",
+   "seq": 114,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L14.mp3",
+   "options": [
+    {
+     "text": "Yes, she does."
+    },
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "Yes, she is."
+    }
+   ],
+   "answer": 0,
+   "transcript": "Does she have Chinese class on Friday?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Does she have Chinese class on Friday?  →  Yes, she does.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L15",
+   "seq": 115,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L15.mp3",
+   "options": [
+    {
+     "text": "Yes, it is. It's Saturday."
+    },
+    {
+     "text": "No, I'm not."
+    },
+    {
+     "text": "No, it isn't. It's Saturday."
+    }
+   ],
+   "answer": 2,
+   "transcript": "Is it Sunday today?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Is it Sunday today?  →  No, it isn't. It's Saturday.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L16",
+   "seq": 116,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L16.mp3",
+   "options": [
+    {
+     "text": "Yes, it is. It's Sunday."
+    },
+    {
+     "text": "Yes, it is."
+    },
+    {
+     "text": "Yes, I do."
+    }
+   ],
+   "answer": 1,
+   "transcript": "Is it Saturday today?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "Is it Saturday today?  →  Yes, it is.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L17",
+   "seq": 117,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L17.mp3",
+   "options": [
+    {
+     "text": "No, it isn't."
+    },
+    {
+     "text": "It's Monday."
+    },
+    {
+     "text": "Yes, it is."
+    }
+   ],
+   "answer": 1,
+   "transcript": "What day is today?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the key words carefully.  注意聽關鍵字。",
+   "correctEn": "What day is today?  →  It's Monday.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L18",
+   "seq": 118,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L18.mp3",
+   "options": [
+    {
+     "text": "cake"
+    },
+    {
+     "text": "lake"
+    },
+    {
+     "text": "cook"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “c”.",
+   "correctEn": "cake",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L19",
+   "seq": 119,
+   "type": "listen",
+   "audio": "res://assets/audio/listening/L19.mp3",
+   "options": [
+    {
+     "text": "those"
+    },
+    {
+     "text": "this"
+    },
+    {
+     "text": "these"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: “t”.",
+   "correctEn": "these",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  }
+ ]
+}

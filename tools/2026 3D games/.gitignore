@@ -1,0 +1,20 @@
+# Godot 快取、匯出成品、測試截圖不進 git（可由原始碼重建）
+.godot/
+web-build/
+test_*.png
+test_*.png.import
+
+# 公開 repo：圖片、模型、音訊、影片、字型不入庫（留在 GDrive）
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.glb
+*.mp3
+*.ogg
+*.wav
+*.mp4
+*.ttf
+*.otf
+*.import
+*.docx

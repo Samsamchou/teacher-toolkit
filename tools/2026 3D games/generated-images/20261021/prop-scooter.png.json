@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-21T04:43:23.584Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "A single parked Taiwanese scooter (motorbike) on its kickstand, rounded pastel mint-green body, black seat, small front basket, chrome mirrors, stylized low-poly toy-like game prop asset, chunky clean shapes, isolated on a plain light grey background, three-quarter view from front-left, soft even lighting, no people, no text, no logo",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "prop-scooter.png",
+  "output_index": 1,
+  "output_sha256": "199238d303f7c220d5645dd5e00bba3d1794ccf10a4487a18e4cc459f7c05c87",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_4dc41acfe1934063a862650a2e9dd845",
+  "usage": {
+    "input_tokens": 77,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 77
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1833
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

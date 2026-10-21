@@ -56,6 +56,24 @@ await t("english-portal: signed-in user can read other collections", () => asser
 await t("english-portal: nested paths still allowed", () => assertSucceeds(setDoc(doc(anon("p1"), "anyPortalCollection/doc1/sub/x"), { v: 2 })));
 await t("english-portal: signed-out still denied", () => assertFails(getDoc(doc(env.unauthenticatedContext().firestore(), "anyPortalCollection/doc1"))));
 
+// ---- questProgress (二水 3D 英語闖關跨裝置接續)
+const prog = (sid = "60101", extra = {}) => ({ mission: "ershui-3d-quest", studentId: sid, attemptId: `${sid}-abc`,
+  startedAt: "2026-10-21T00:00:00Z", updatedAt: "2026-10-21T00:01:00Z", results: { Q01: { attempts: 1, quality: 4, finalCorrect: true } },
+  cleared: ["station"], version: 1, ...extra });
+await t("progress: device A saves progress by student id", () => assertSucceeds(setDoc(doc(anon("d1"), "questProgress/ershui-3d-quest_60101"), prog())));
+await t("progress: device B reads the same student's progress", () => assertSucceeds(getDoc(doc(anon("d2"), "questProgress/ershui-3d-quest_60101"))));
+await t("progress: device B continues (updates) it", () => assertSucceeds(setDoc(doc(anon("d2"), "questProgress/ershui-3d-quest_60101"), prog("60101", { cleared: ["station", "inn"] }))));
+await t("progress: nobody can list all progress", () => assertFails(getDocs(collection(anon("d3"), "questProgress"))));
+await t("progress: teacher cannot list either", () => assertFails(getDocs(collection(teacher(), "questProgress"))));
+await t("progress: signed-out cannot read", () => assertFails(getDoc(doc(env.unauthenticatedContext().firestore(), "questProgress/ershui-3d-quest_60101"))));
+await t("progress: doc id must equal mission_studentId", () => assertFails(setDoc(doc(anon("d1"), "questProgress/ershui-3d-quest_60999"), prog("60101"))));
+await t("progress: other missions rejected", () => assertFails(setDoc(doc(anon("d1"), "questProgress/hwg5-u01-u02_60101"), prog("60101", { mission: "hwg5-u01-u02" }))));
+await t("progress: name field rejected", () => assertFails(setDoc(doc(anon("d1"), "questProgress/ershui-3d-quest_60102"), prog("60102", { name: "Real Name" }))));
+await t("progress: nobody can delete", () => assertFails(deleteDoc(doc(anon("d1"), "questProgress/ershui-3d-quest_60101"))));
+await t("progress: ershui attempt with 51 items accepted in questAttempts", () => assertSucceeds(setDoc(doc(anon("d5"), "questAttempts/c1"),
+  attempt("d5", "c1", { mission: "ershui-3d-quest", items: Array.from({ length: 51 }, (_, i) => ({ seq: i + 1, attempts: 1, quality: 4 })), summary: { score: 100 } }))));
+await t("english-portal: collection named questProgressX still behaves like other collections", () => assertSucceeds(setDoc(doc(anon("p1"), "questProgressX/doc1"), { v: 1 })));
+
 await env.cleanup();
 for (const [s, n] of results) console.log(s, n);
 const failed = results.filter(r => r[0] === "FAIL").length;

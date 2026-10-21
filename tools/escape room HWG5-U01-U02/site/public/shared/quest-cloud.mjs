@@ -37,7 +37,7 @@ async function connect() {
     useEmulators(auth, authMod, db, fs);
     await auth.authStateReady();
     if (!auth.currentUser) await signInAnonymously(auth);
-    return { db, uid: auth.currentUser.uid, doc: fs.doc, setDoc: fs.setDoc, Timestamp: fs.Timestamp };
+    return { db, uid: auth.currentUser.uid, doc: fs.doc, setDoc: fs.setDoc, getDoc: fs.getDoc, Timestamp: fs.Timestamp };
   })().catch(err => { client = null; throw err; });
   return client;
 }
@@ -74,3 +74,40 @@ export function uploadAttempt(record, { immediate = false } = {}) {
   timer = setTimeout(flushNow, 1500);
 }
 window.addEventListener("online", () => { if (pending) flushNow(); });
+
+// ---- Cross-device progress (二水 3D 英語闖關 only). Document id = `${mission}_${studentId}`; any signed-in
+// device can read/write one document by student id but nobody can list them (see firestore.rules).
+export const PROGRESS_COLLECTION = "questProgress";
+export async function loadProgress(mission, studentId) {
+  if (new URLSearchParams(location.search).get("cloud") === "off") return null;
+  try {
+    const c = await connect();
+    const snap = await c.getDoc(c.doc(c.db, PROGRESS_COLLECTION, `${mission}_${studentId}`));
+    return snap.exists() ? snap.data() : null;
+  } catch (err) {
+    console.warn("quest progress load failed", err?.code || err?.message || err);
+    return null;
+  }
+}
+let progressPending = null, progressTimer = null;
+async function flushProgress() {
+  clearTimeout(progressTimer); progressTimer = null;
+  const record = progressPending; progressPending = null;
+  if (!record) return;
+  try {
+    const c = await connect();
+    const expiresAt = c.Timestamp.fromMillis(Date.now() + RETENTION_DAYS * 86400000);
+    await c.setDoc(c.doc(c.db, PROGRESS_COLLECTION, `${record.mission}_${record.studentId}`), { ...record, expiresAt });
+  } catch (err) {
+    console.warn("quest progress upload failed", err?.code || err?.message || err);
+    progressPending ||= record;
+  }
+}
+export function saveProgress(record, { immediate = false } = {}) {
+  if (new URLSearchParams(location.search).get("cloud") === "off") return;
+  progressPending = record;
+  clearTimeout(progressTimer);
+  if (immediate) return flushProgress();
+  progressTimer = setTimeout(flushProgress, 1500);
+}
+window.addEventListener("online", () => { if (progressPending) flushProgress(); });
