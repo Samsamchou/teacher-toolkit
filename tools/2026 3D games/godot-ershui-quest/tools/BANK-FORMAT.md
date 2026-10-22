@@ -8,15 +8,15 @@ site/public/<任務代號>/
   data.js        網頁外框與教師後台用的題目摘要（自動產生）
   cover.webp     首頁卡片封面（自己放）
   bank/          遊戲讀的題庫（自動產生）
-    bank.json
-    questions/*.webp       題目插圖
-    listening/*.webp       聽力選項插圖
-    audio/feedback/*.mp3   答對後 Tick 的回饋語音
-    audio/listening/*.mp3  聽力題音檔
-    fonts/cjk-*.ttf        這個任務用到的中文字型子集
+    bank.json              題目、配題、任務資訊，"pak" 欄位寫 bank.pak 的檔名
+    bank-<雜湊>.pak        所有素材合成一個檔：題目插圖、聽力插圖、Tick 語音、聽力音檔、中文字型子集
+    fonts/NotoSansTC-OFL.txt
 ```
 
-遊戲開場時從 `bankBase`（= 任務頁網址 + `bank/`）下載 bank.json 和所有素材，顯示「Loading questions… %」。
+遊戲開場時從 `bankBase`（= 任務頁網址 + `bank/`）只下載兩個檔：bank.json 和 bank-<雜湊>.pak，顯示「Loading questions… %」；
+失敗會自動重試 3 次。iPad 上一次抓 95 個小檔又慢又會漏，所以改成一個檔（2026-10-22）。
+pak 檔名含內容雜湊，Firebase 設長期快取（`firebase.json` 的 `**/*.pak`）；題目一改檔名就變，不會讀到舊題。
+pak 格式：`QB01` + 索引長度（4 位元組 little-endian）+ 索引 JSON `{"files":[{"path","offset","size"}]}` + 各檔內容。
 **換題目不用重新匯出 Godot。** 只有改遊戲本身（地圖、怪物、特效、程式）才要重新匯出到 `quest3d/`。
 
 ## 新增一個任務（例：六年級）

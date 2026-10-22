@@ -1768,5 +1768,6 @@
  "fonts": {
   "regular": "fonts/cjk-regular.ttf",
   "bold": "fonts/cjk-bold.ttf"
- }
+ },
+ "pak": "bank-5671456342f6.pak"
 }

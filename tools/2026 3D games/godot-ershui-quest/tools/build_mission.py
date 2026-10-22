@@ -18,9 +18,11 @@ questions.json 裡的 image / audio / options[].image 路徑可以寫 res://asse
 """
 import argparse
 import glob
+import hashlib
 import json
 import os
 import shutil
+import struct
 import sys
 from pathlib import Path
 
@@ -128,6 +130,34 @@ def build_fonts(out_dir: Path, texts: list) -> dict:
     return out
 
 
+def pack_assets(out_dir: Path) -> str:
+    """把所有插圖、音檔、字型合成一個 bank.pak，iPad 只要下載一個檔（95 個小檔在 iPad 上又慢又容易漏）。
+
+    格式：'QB01' + 索引長度（4 位元組，little-endian）+ 索引 JSON（UTF-8）+ 各檔內容依序相接。
+    索引：{"files": [{"path": "questions/Q01.webp", "offset": 0, "size": 1234}, ...]}，offset 從內容區開頭算。
+    打包後刪掉零散的素材檔，只留 bank.json、bank.pak 與字型授權。
+    """
+    files = sorted(p for p in out_dir.rglob("*")
+                   if p.is_file() and p.name != "bank.json" and p.suffix.lower() not in (".txt", ".pak"))
+    index, blobs, offset = [], [], 0
+    for p in files:
+        data = p.read_bytes()
+        index.append({"path": p.relative_to(out_dir).as_posix(), "offset": offset, "size": len(data)})
+        blobs.append(data)
+        offset += len(data)
+    head = json.dumps({"files": index}, ensure_ascii=False).encode("utf-8")
+    payload = b"QB01" + struct.pack("<I", len(head)) + head + b"".join(blobs)
+    # 檔名含內容雜湊：CDN 可以長期快取，題目一改檔名就變，不會讀到舊題
+    name = f"bank-{hashlib.sha256(payload).hexdigest()[:12]}.pak"
+    (out_dir / name).write_bytes(payload)
+    for p in files:
+        p.unlink()
+    for d in sorted((d for d in out_dir.rglob("*") if d.is_dir()), key=lambda d: -len(d.parts)):
+        if not any(d.iterdir()):
+            d.rmdir()
+    return name
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--mission", required=True)
@@ -186,6 +216,7 @@ def main() -> None:
         "locations": {loc: plan[loc] for loc, _, _ in LOCS},
     }
     bank["fonts"] = build_fonts(out_dir, texts)
+    bank["pak"] = pack_assets(out_dir)
     (out_dir / "bank.json").write_text(json.dumps(bank, ensure_ascii=False, indent=1), encoding="utf-8")
 
     # 網頁外框用的摘要（計分、教師後台題目文字）

@@ -10,3 +10,4 @@ public/ershui-3d-quest/bank/listening/
 public/ershui-3d-quest/bank/audio/
 public/ershui-3d-quest/bank/fonts/*.ttf
 public/ershui-3d-quest/cover.webp
+public/*/bank/*.pak
