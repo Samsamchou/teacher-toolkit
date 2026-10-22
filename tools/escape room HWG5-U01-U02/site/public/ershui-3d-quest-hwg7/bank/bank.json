@@ -1,0 +1,1719 @@
+{
+ "mission": "ershui-3d-quest-hwg7",
+ "unit": "二水 3D 英語闖關 HWG7 U01-U02",
+ "title": "Ershui 3D English Quest 6",
+ "weekStripOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekStripLabels": {},
+ "items": [
+  {
+   "id": "Q01",
+   "seq": 1,
+   "type": "spell",
+   "image": "questions/Q01.webp",
+   "audio": "audio/feedback/Q01.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the kangaroo and the opera house.",
+   "hint2En": "The first letter is A.",
+   "correctEn": "Australia. A-u-s-t-r-a-l-i-a.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Australia",
+    "distractorLetters": "ek",
+    "groups": [
+     9
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q02",
+   "seq": 2,
+   "type": "drag",
+   "image": "questions/Q02.webp",
+   "audio": "audio/feedback/Q02.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Where {1} you from?"
+    },
+    {
+     "speaker": "Maya",
+     "text": "I'm from {2}."
+    }
+   ],
+   "hint1En": "Look at the poster behind Maya.",
+   "hint2En": "Ask with you: are or is? The kangaroo is a clue.",
+   "correctEn": "I'm from Australia. Maya is from Australia.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "are"
+    },
+    {
+     "id": 2,
+     "answer": "Australia"
+    }
+   ],
+   "distractors": [
+    "is",
+    "am",
+    "India"
+   ]
+  },
+  {
+   "id": "Q03",
+   "seq": 3,
+   "type": "spell",
+   "image": "questions/Q03.webp",
+   "audio": "audio/feedback/Q03.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the big mountain and the sushi.",
+   "hint2En": "The first letter is J.",
+   "correctEn": "Japan. J-a-p-a-n.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Japan",
+    "distractorLetters": "eo",
+    "groups": [
+     5
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q04",
+   "seq": 4,
+   "type": "drag",
+   "image": "questions/Q04.webp",
+   "audio": "audio/feedback/Q04.mp3",
+   "lines": [
+    {
+     "speaker": "Maya",
+     "text": "Where {1} Andy from?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "He is from {2}."
+    }
+   ],
+   "hint1En": "Look at Andy's postcard and lunch box.",
+   "hint2En": "Andy is one boy: is or are?",
+   "correctEn": "He is from Japan. Andy is from Japan.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "is"
+    },
+    {
+     "id": 2,
+     "answer": "Japan"
+    }
+   ],
+   "distractors": [
+    "are",
+    "am",
+    "Australia"
+   ]
+  },
+  {
+   "id": "Q05",
+   "seq": 5,
+   "type": "spell",
+   "image": "questions/Q05.webp",
+   "audio": "audio/feedback/Q05.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the flag and the big pan of rice.",
+   "hint2En": "The first letter is S.",
+   "correctEn": "Spain. S-p-a-i-n.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Spain",
+    "distractorLetters": "ro",
+    "groups": [
+     5
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q06",
+   "seq": 6,
+   "type": "drag",
+   "image": "questions/Q06.webp",
+   "audio": "audio/feedback/Q06.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Where {1} Amy {2}?"
+    },
+    {
+     "speaker": "Maya",
+     "text": "She is from {3}."
+    }
+   ],
+   "hint1En": "Look at the flag next to Amy.",
+   "hint2En": "Where is ... from? Amy is one girl.",
+   "correctEn": "She is from Spain. Amy is from Spain.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "is"
+    },
+    {
+     "id": 2,
+     "answer": "from"
+    },
+    {
+     "id": 3,
+     "answer": "Spain"
+    }
+   ],
+   "distractors": [
+    "are",
+    "to",
+    "Japan"
+   ]
+  },
+  {
+   "id": "Q07",
+   "seq": 7,
+   "type": "spell",
+   "image": "questions/Q07.webp",
+   "audio": "audio/feedback/Q07.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the tall tower and the bubble tea.",
+   "hint2En": "The first letter is T.",
+   "correctEn": "Taiwan. T-a-i-w-a-n.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Taiwan",
+    "distractorLetters": "eo",
+    "groups": [
+     6
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q08",
+   "seq": 8,
+   "type": "drag",
+   "image": "questions/Q08.webp",
+   "audio": "audio/feedback/Q08.mp3",
+   "lines": [
+    {
+     "speaker": "Mina",
+     "text": "Is he from {1}?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, he {2}."
+    }
+   ],
+   "hint1En": "Look at the tower and the drink behind Tom.",
+   "hint2En": "Tom nods. That means yes.",
+   "correctEn": "Yes, he is. Tom is from Taiwan.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Taiwan"
+    },
+    {
+     "id": 2,
+     "answer": "is"
+    }
+   ],
+   "distractors": [
+    "Japan",
+    "are",
+    "isn't"
+   ]
+  },
+  {
+   "id": "Q09",
+   "seq": 9,
+   "type": "spell",
+   "image": "questions/Q09.webp",
+   "audio": "audio/feedback/Q09.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the lion statue with water.",
+   "hint2En": "The first letter is S.",
+   "correctEn": "Singapore. S-i-n-g-a-p-o-r-e.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "Singapore",
+    "distractorLetters": "lu",
+    "groups": [
+     9
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q10",
+   "seq": 10,
+   "type": "drag",
+   "image": "questions/Q10.webp",
+   "audio": "audio/feedback/Q10.mp3",
+   "lines": [
+    {
+     "speaker": "Tom",
+     "text": "{1} he from Taiwan?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, he {2}. He's from {3}."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "He: is or isn't? Then find the lion.",
+   "correctEn": "No, he isn't. Wei is from Singapore.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Is"
+    },
+    {
+     "id": 2,
+     "answer": "isn't"
+    },
+    {
+     "id": 3,
+     "answer": "Singapore"
+    }
+   ],
+   "distractors": [
+    "Are",
+    "is",
+    "Japan"
+   ]
+  },
+  {
+   "id": "Q11",
+   "seq": 11,
+   "type": "drag",
+   "image": "questions/Q11.webp",
+   "audio": "audio/feedback/Q11.mp3",
+   "lines": [
+    {
+     "speaker": "Wei",
+     "text": "{1} she from India?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, she {2}. She's from {3}."
+    }
+   ],
+   "hint1En": "Look at the red circle and the postcard.",
+   "hint2En": "She: is or isn't? Look at the big clock tower.",
+   "correctEn": "No, she isn't. Mina is from the UK.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Is"
+    },
+    {
+     "id": 2,
+     "answer": "isn't"
+    },
+    {
+     "id": 3,
+     "answer": "the UK"
+    }
+   ],
+   "distractors": [
+    "Are",
+    "is",
+    "Spain"
+   ]
+  },
+  {
+   "id": "Q12",
+   "seq": 12,
+   "type": "spell",
+   "image": "questions/Q12.webp",
+   "audio": "audio/feedback/Q12.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the statue and the flag with stars.",
+   "hint2En": "The first letter is t.",
+   "correctEn": "The USA. T-h-e U-S-A.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "the USA",
+    "distractorLetters": "kr",
+    "groups": [
+     3,
+     3
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q13",
+   "seq": 13,
+   "type": "drag",
+   "image": "questions/Q13.webp",
+   "audio": "audio/feedback/Q13.mp3",
+   "lines": [
+    {
+     "speaker": "Mina",
+     "text": "Are they from {1}?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, they {2}."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "They: are or aren't?",
+   "correctEn": "No, they aren't. Lynn and Alan aren't from the USA.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "the USA"
+    },
+    {
+     "id": 2,
+     "answer": "aren't"
+    }
+   ],
+   "distractors": [
+    "Japan",
+    "isn't",
+    "are"
+   ]
+  },
+  {
+   "id": "Q14",
+   "seq": 14,
+   "type": "spell",
+   "image": "questions/Q14.webp",
+   "audio": "audio/feedback/Q14.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the shoes and the footprints.",
+   "hint2En": "The first letter is o.",
+   "correctEn": "On foot. O-n f-o-o-t.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "on foot",
+    "distractorLetters": "ea",
+    "groups": [
+     2,
+     4
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q15",
+   "seq": 15,
+   "type": "drag",
+   "image": "questions/Q15.webp",
+   "audio": "audio/feedback/Q15.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "{1} {2} you go to school?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "I go to school {3}."
+    }
+   ],
+   "hint1En": "Look at Ken's feet.",
+   "hint2En": "Ask about the way: Where or How? You: do or does?",
+   "correctEn": "I go to school on foot. Ken walks to school.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "How"
+    },
+    {
+     "id": 2,
+     "answer": "do"
+    },
+    {
+     "id": 3,
+     "answer": "on foot"
+    }
+   ],
+   "distractors": [
+    "Where",
+    "does",
+    "goes"
+   ]
+  },
+  {
+   "id": "Q16",
+   "seq": 16,
+   "type": "spell",
+   "image": "questions/Q16.webp",
+   "audio": "audio/feedback/Q16.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the yellow car. People pay to ride it.",
+   "hint2En": "The first letter is b.",
+   "correctEn": "By taxi. B-y t-a-x-i.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "by taxi",
+    "distractorLetters": "eo",
+    "groups": [
+     2,
+     4
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q17",
+   "seq": 17,
+   "type": "drag",
+   "image": "questions/Q17.webp",
+   "audio": "audio/feedback/Q17.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1} does Lynn go to school?"
+    },
+    {
+     "speaker": "Tick",
+     "text": "She {2} to school {3}."
+    }
+   ],
+   "hint1En": "Look at Lynn and the yellow car.",
+   "hint2En": "Lynn is she: go or goes?",
+   "correctEn": "She goes to school by taxi.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "How"
+    },
+    {
+     "id": 2,
+     "answer": "goes"
+    },
+    {
+     "id": 3,
+     "answer": "by taxi"
+    }
+   ],
+   "distractors": [
+    "Where",
+    "go",
+    "on foot"
+   ]
+  },
+  {
+   "id": "Q18",
+   "seq": 18,
+   "type": "spell",
+   "image": "questions/Q18.webp",
+   "audio": "audio/feedback/Q18.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the long car and the stop.",
+   "hint2En": "The first letter is b.",
+   "correctEn": "By bus. B-y b-u-s.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "by bus",
+    "distractorLetters": "ae",
+    "groups": [
+     2,
+     3
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q19",
+   "seq": 19,
+   "type": "drag",
+   "image": "questions/Q19.webp",
+   "audio": "audio/feedback/Q19.mp3",
+   "lines": [
+    {
+     "speaker": "Lynn",
+     "text": "{1} Alan go to school {2}?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, he {3}."
+    }
+   ],
+   "hint1En": "Look at the window. What is Alan in?",
+   "hint2En": "Alan is he: Do or Does?",
+   "correctEn": "Yes, he does. Alan goes to school by bus.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Does"
+    },
+    {
+     "id": 2,
+     "answer": "by bus"
+    },
+    {
+     "id": 3,
+     "answer": "does"
+    }
+   ],
+   "distractors": [
+    "Do",
+    "by taxi",
+    "is"
+   ]
+  },
+  {
+   "id": "Q20",
+   "seq": 20,
+   "type": "spell",
+   "image": "questions/Q20.webp",
+   "audio": "audio/feedback/Q20.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the small bike with a motor.",
+   "hint2En": "The first letter is b.",
+   "correctEn": "By scooter. B-y s-c-o-o-t-e-r.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "by scooter",
+    "distractorLetters": "ai",
+    "groups": [
+     2,
+     7
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q21",
+   "seq": 21,
+   "type": "drag",
+   "image": "questions/Q21.webp",
+   "audio": "audio/feedback/Q21.mp3",
+   "lines": [
+    {
+     "speaker": "Maya",
+     "text": "{1} Amy go to school by car?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, she {2}. She goes to school {3}."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "Amy is she: Does and doesn't, or Do and don't?",
+   "correctEn": "No, she doesn't. Amy goes to school by scooter.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Does"
+    },
+    {
+     "id": 2,
+     "answer": "doesn't"
+    },
+    {
+     "id": 3,
+     "answer": "by scooter"
+    }
+   ],
+   "distractors": [
+    "Do",
+    "don't",
+    "by bus"
+   ]
+  },
+  {
+   "id": "Q22",
+   "seq": 22,
+   "type": "spell",
+   "image": "questions/Q22.webp",
+   "audio": "audio/feedback/Q22.mp3",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Spell the word."
+    }
+   ],
+   "hint1En": "Look at the station under the ground.",
+   "hint2En": "The first letter is b.",
+   "correctEn": "By metro. B-y m-e-t-r-o.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "spell": {
+    "answer": "by metro",
+    "distractorLetters": "ai",
+    "groups": [
+     2,
+     5
+    ],
+    "caseSensitive": true
+   }
+  },
+  {
+   "id": "Q23",
+   "seq": 23,
+   "type": "drag",
+   "image": "questions/Q23.webp",
+   "audio": "audio/feedback/Q23.mp3",
+   "lines": [
+    {
+     "speaker": "Tom",
+     "text": "Do you go to school {1}?"
+    },
+    {
+     "speaker": "Wei",
+     "text": "No, I {2}. I go to school {3}."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "I: don't or doesn't? Look at the gate.",
+   "correctEn": "No, I don't. Wei goes to school by metro.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "by train"
+    },
+    {
+     "id": 2,
+     "answer": "don't"
+    },
+    {
+     "id": 3,
+     "answer": "by metro"
+    }
+   ],
+   "distractors": [
+    "by taxi",
+    "doesn't",
+    "on foot"
+   ]
+  },
+  {
+   "id": "Q24",
+   "seq": 24,
+   "type": "drag",
+   "image": "questions/Q24.webp",
+   "audio": "audio/feedback/Q24.mp3",
+   "lines": [
+    {
+     "speaker": "Maya",
+     "text": "Does he go to school {1}?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, he {2}. He goes to school {3}."
+    }
+   ],
+   "hint1En": "Look at the red circle and the water.",
+   "hint2En": "He: don't or doesn't? What is on the water?",
+   "correctEn": "No, he doesn't. Andy goes to school by boat.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "by car"
+    },
+    {
+     "id": 2,
+     "answer": "doesn't"
+    },
+    {
+     "id": 3,
+     "answer": "by boat"
+    }
+   ],
+   "distractors": [
+    "by bus",
+    "don't",
+    "by metro"
+   ]
+  },
+  {
+   "id": "Q25",
+   "seq": 25,
+   "type": "drag",
+   "image": "questions/Q11.webp",
+   "audio": "audio/feedback/Q25.mp3",
+   "lines": [
+    {
+     "speaker": "Wei",
+     "text": "{1}"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, she isn't. She's from the UK."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "Mina is she. The answer says no.",
+   "correctEn": "Is she from India? No, she isn't.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Is she from India?"
+    }
+   ],
+   "distractors": [
+    "Is he from India?",
+    "Are they from India?",
+    "Is she from the UK?"
+   ]
+  },
+  {
+   "id": "Q26",
+   "seq": 26,
+   "type": "drag",
+   "image": "questions/Q13.webp",
+   "audio": "audio/feedback/Q26.mp3",
+   "lines": [
+    {
+     "speaker": "Mina",
+     "text": "Are they from the USA?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "They: are or aren't?",
+   "correctEn": "No, they aren't. They aren't from the USA.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "No, they aren't."
+    }
+   ],
+   "distractors": [
+    "Yes, they are.",
+    "No, she isn't.",
+    "No, he isn't."
+   ]
+  },
+  {
+   "id": "Q27",
+   "seq": 27,
+   "type": "drag",
+   "image": "questions/Q27.webp",
+   "audio": "audio/feedback/Q27.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    },
+    {
+     "speaker": "Maya",
+     "text": "I go to school by bike."
+    }
+   ],
+   "hint1En": "Look at Maya's answer.",
+   "hint2En": "Maya says I. Ask with How and you.",
+   "correctEn": "How do you go to school? Maya goes to school by bike.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "How do you go to school?"
+    }
+   ],
+   "distractors": [
+    "How does she go to school?",
+    "Where are you from?",
+    "Do you go to school by bike?"
+   ]
+  },
+  {
+   "id": "Q28",
+   "seq": 28,
+   "type": "drag",
+   "image": "questions/Q21.webp",
+   "audio": "audio/feedback/Q28.mp3",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    },
+    {
+     "speaker": "Maya",
+     "text": "No, she doesn't. She goes to school by scooter."
+    }
+   ],
+   "hint1En": "Look at the red circle. What is in it?",
+   "hint2En": "The answer says she doesn't. What is in the red circle?",
+   "correctEn": "Does Amy go to school by car? No, she doesn't.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": true,
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Does Amy go to school by car?"
+    }
+   ],
+   "distractors": [
+    "Does Amy go to school by scooter?",
+    "Does Andy go to school by car?",
+    "Is Amy from Spain?"
+   ]
+  },
+  {
+   "id": "L01",
+   "seq": 101,
+   "type": "listen",
+   "audio": "audio/listening/audio-20.mp3",
+   "options": [
+    {
+     "text": "doctor"
+    },
+    {
+     "text": "actor"
+    },
+    {
+     "text": "teacher"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the sound “er”.",
+   "correctEn": "teacher",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #3 (word, -er, teacher)"
+  },
+  {
+   "id": "L02",
+   "seq": 102,
+   "type": "listen",
+   "audio": "audio/listening/audio-24.mp3",
+   "options": [
+    {
+     "text": "tailor"
+    },
+    {
+     "text": "sailor"
+    },
+    {
+     "text": "teacher"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the sound “or”.",
+   "correctEn": "tailor",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #6 (word, -or, tailor)"
+  },
+  {
+   "id": "L03",
+   "seq": 103,
+   "type": "listen",
+   "audio": "audio/listening/audio-04.mp3",
+   "options": [
+    {
+     "text": "short"
+    },
+    {
+     "text": "shirt"
+    },
+    {
+     "text": "shark"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the sound “ir”.",
+   "correctEn": "shirt",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #9 (word, ir, shirt)"
+  },
+  {
+   "id": "L04",
+   "seq": 104,
+   "type": "listen",
+   "audio": "audio/listening/audio-07.mp3",
+   "options": [
+    {
+     "text": "circle"
+    },
+    {
+     "text": "curry"
+    },
+    {
+     "text": "purple"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the sound “ur”.",
+   "correctEn": "purple",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #11 (word, ur, purple)"
+  },
+  {
+   "id": "L05",
+   "seq": 105,
+   "type": "listen",
+   "audio": "audio/listening/audio-12.mp3",
+   "options": [
+    {
+     "text": "shirt"
+    },
+    {
+     "text": "shark"
+    },
+    {
+     "text": "short"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the sound “ar”.",
+   "correctEn": "shark",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #15 (word, ar, shark)"
+  },
+  {
+   "id": "L06",
+   "seq": 106,
+   "type": "listen",
+   "audio": "audio/listening/audio-17.mp3",
+   "options": [
+    {
+     "text": "ar"
+    },
+    {
+     "text": "or"
+    },
+    {
+     "text": "-er"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Which letters make the sound in “cheeseburger”?",
+   "correctEn": "cheeseburger → -er",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #19 (pattern, -er, cheeseburger)"
+  },
+  {
+   "id": "L07",
+   "seq": 107,
+   "type": "listen",
+   "audio": "audio/listening/audio-23.mp3",
+   "options": [
+    {
+     "text": "-or"
+    },
+    {
+     "text": "ar"
+    },
+    {
+     "text": "or"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Which letters make the sound in “sailor”?",
+   "correctEn": "sailor → -or",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #23 (pattern, -or, sailor)"
+  },
+  {
+   "id": "L08",
+   "seq": 108,
+   "type": "listen",
+   "audio": "audio/listening/audio-02.mp3",
+   "options": [
+    {
+     "text": "or"
+    },
+    {
+     "text": "ar"
+    },
+    {
+     "text": "ir"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Which letters make the sound in “circle”?",
+   "correctEn": "circle → ir",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #26 (pattern, ir, circle)"
+  },
+  {
+   "id": "L09",
+   "seq": 109,
+   "type": "listen",
+   "audio": "audio/listening/audio-10.mp3",
+   "options": [
+    {
+     "text": "or"
+    },
+    {
+     "text": "ar"
+    },
+    {
+     "text": "ir"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Which letters make the sound in “farm”?",
+   "correctEn": "farm → ar",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #31 (pattern, ar, farm)"
+  },
+  {
+   "id": "L10",
+   "seq": 110,
+   "type": "listen",
+   "audio": "audio/listening/audio-15.mp3",
+   "options": [
+    {
+     "text": "ur"
+    },
+    {
+     "text": "or"
+    },
+    {
+     "text": "ar"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Which letters make the sound in “horse”?",
+   "correctEn": "horse → or",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG7 SU-U02 Phonics #35 (pattern, or, horse)"
+  },
+  {
+   "id": "H01",
+   "seq": 201,
+   "type": "listen",
+   "audio": "audio/listening/1-park-pork-burn.mp3",
+   "options": [
+    {
+     "text": "pork park burn"
+    },
+    {
+     "text": "park pork burn"
+    },
+    {
+     "text": "burn park pork"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to every word, one by one.",
+   "correctEn": "park pork burn",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 1 題（park pork burn）"
+  },
+  {
+   "id": "H02",
+   "seq": 202,
+   "type": "listen",
+   "audio": "audio/listening/2. peach parch porch.mp3",
+   "options": [
+    {
+     "text": "parch peach porch"
+    },
+    {
+     "text": "porch peach parch"
+    },
+    {
+     "text": "peach parch porch"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to every word, one by one.",
+   "correctEn": "peach parch porch",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 2 題（peach parch porch）"
+  },
+  {
+   "id": "H03",
+   "seq": 203,
+   "type": "listen",
+   "audio": "audio/listening/3-skirt-born-barn.mp3",
+   "options": [
+    {
+     "text": "skirt born barn"
+    },
+    {
+     "text": "born skirt barn"
+    },
+    {
+     "text": "born barn skirt"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to every word, one by one.",
+   "correctEn": "skirt born barn",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 3 題（skirt born barn）"
+  },
+  {
+   "id": "H04",
+   "seq": 204,
+   "type": "listen",
+   "audio": "audio/listening/4. Does he go to school by MRT No, he doesn’t. He goes to school by bus..mp3",
+   "options": [
+    {
+     "image": "listening/boy-mrt.webp"
+    },
+    {
+     "image": "listening/boy-train.webp"
+    },
+    {
+     "image": "listening/boy-bus.webp"
+    }
+   ],
+   "answer": 2,
+   "transcript": "Does he go to school by MRT? No, he doesn't. He goes to school by bus.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "Does he go to school by MRT? No, he doesn't. He goes to school by bus.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 4 題（boy-bus）"
+  },
+  {
+   "id": "H05",
+   "seq": 205,
+   "type": "listen",
+   "audio": "audio/listening/5. Kaohsiung 85 Sky Tower is 348 meters tall..mp3",
+   "options": [
+    {
+     "image": "listening/tower-348.webp"
+    },
+    {
+     "image": "listening/tower-347.webp"
+    },
+    {
+     "image": "listening/tower-248.webp"
+    }
+   ],
+   "answer": 0,
+   "transcript": "Kaohsiung 85 Sky Tower is 348 meters tall.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "Kaohsiung 85 Sky Tower is 348 meters tall.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 5 題（tower-348）"
+  },
+  {
+   "id": "H06",
+   "seq": 206,
+   "type": "listen",
+   "audio": "audio/listening/6-My-phone-number-is-0919234557.mp3",
+   "options": [
+    {
+     "image": "listening/card-0910234557.webp"
+    },
+    {
+     "image": "listening/card-0919234557.webp"
+    },
+    {
+     "image": "listening/card-0919234556.webp"
+    }
+   ],
+   "answer": 1,
+   "transcript": "My phone number is 0919234557.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "My phone number is 0919234557.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 6 題（card-0919234557）"
+  },
+  {
+   "id": "H07",
+   "seq": 207,
+   "type": "listen",
+   "audio": "audio/listening/7. My room number is 472..mp3",
+   "options": [
+    {
+     "image": "listening/door-372.webp"
+    },
+    {
+     "image": "listening/door-472.webp"
+    },
+    {
+     "image": "listening/door-473.webp"
+    }
+   ],
+   "answer": 1,
+   "transcript": "My room number is 472.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "My room number is 472.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 7 題（door-472）"
+  },
+  {
+   "id": "H08",
+   "seq": 208,
+   "type": "listen",
+   "audio": "audio/listening/8-She-s-my-sister-She-goes-to-the-park-by-bike.mp3",
+   "options": [
+    {
+     "image": "listening/girl-bike.webp"
+    },
+    {
+     "image": "listening/girl-car.webp"
+    },
+    {
+     "image": "listening/girl-walk.webp"
+    }
+   ],
+   "answer": 0,
+   "transcript": "She's my sister. She goes to the park by bike.",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "She's my sister. She goes to the park by bike.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 8 題（girl-bike）"
+  },
+  {
+   "id": "H09",
+   "seq": 209,
+   "type": "listen",
+   "audio": "audio/listening/9. Are you from the UK.mp3",
+   "options": [
+    {
+     "text": "No, I don't."
+    },
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "No, I'm not."
+    }
+   ],
+   "answer": 2,
+   "transcript": "Are you from the UK?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "No, I'm not.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 9 題（No, I'm not.）"
+  },
+  {
+   "id": "H10",
+   "seq": 210,
+   "type": "listen",
+   "audio": "audio/listening/10. Does he go to school by taxi.mp3",
+   "options": [
+    {
+     "text": "No, he doesn't."
+    },
+    {
+     "text": "No, he isn't."
+    },
+    {
+     "text": "Yes, I do."
+    }
+   ],
+   "answer": 0,
+   "transcript": "Does he go to school by taxi?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "No, he doesn't.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 10 題（No, he doesn't.）"
+  },
+  {
+   "id": "H11",
+   "seq": 211,
+   "type": "listen",
+   "audio": "audio/listening/11. How do you go to school.mp3",
+   "options": [
+    {
+     "text": "He goes to school on foot."
+    },
+    {
+     "text": "I am going to school."
+    },
+    {
+     "text": "I go to school on foot."
+    }
+   ],
+   "answer": 2,
+   "transcript": "How do you go to school?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "I go to school on foot.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 11 題（I go to school on foot.）"
+  },
+  {
+   "id": "H12",
+   "seq": 212,
+   "type": "listen",
+   "audio": "audio/listening/12-Is-Andy-from-India.mp3",
+   "options": [
+    {
+     "text": "No, he isn't. He's from India."
+    },
+    {
+     "text": "No, he isn't. He's from Korea."
+    },
+    {
+     "text": "Yes, he does."
+    }
+   ],
+   "answer": 1,
+   "transcript": "Is Andy from India?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "No, he isn't. He's from Korea.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 12 題（No, he isn't. He's from Korea.）"
+  },
+  {
+   "id": "H13",
+   "seq": 213,
+   "type": "listen",
+   "audio": "audio/listening/H13.mp3",
+   "options": [
+    {
+     "text": "I'm going to Taiwan."
+    },
+    {
+     "text": "Yes, I am."
+    },
+    {
+     "text": "I'm from India."
+    }
+   ],
+   "answer": 2,
+   "transcript": "Where are you from?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "I'm from India.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 13 題（I'm from India.）"
+  },
+  {
+   "id": "H14",
+   "seq": 214,
+   "type": "listen",
+   "audio": "audio/listening/H14.mp3",
+   "options": [
+    {
+     "text": "She goes to school by car."
+    },
+    {
+     "text": "He goes to school by car."
+    },
+    {
+     "text": "Yes, she does."
+    }
+   ],
+   "answer": 0,
+   "transcript": "How does she go to school?",
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen for the key words.",
+   "correctEn": "She goes to school by car.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "source": "HWG 7 R1 聽力題目.docx 第 14 題（She goes to school by car.）"
+  }
+ ],
+ "locations": {
+  "station": [
+   "Q01",
+   "Q02",
+   "L01",
+   "H01"
+  ],
+  "inn": [
+   "Q03",
+   "Q04",
+   "L02",
+   "H02"
+  ],
+  "seven": [
+   "Q05",
+   "Q06",
+   "L03",
+   "H03"
+  ],
+  "school": [
+   "Q07",
+   "Q08",
+   "L04",
+   "H04"
+  ],
+  "teatop": [
+   "Q09",
+   "Q10",
+   "L05",
+   "H05"
+  ],
+  "market": [
+   "Q12",
+   "Q13",
+   "L06",
+   "H06"
+  ],
+  "post": [
+   "Q14",
+   "Q15",
+   "L07",
+   "H07"
+  ],
+  "bookstore": [
+   "Q18",
+   "Q19",
+   "L09",
+   "H09"
+  ],
+  "pxmart": [
+   "Q16",
+   "Q17",
+   "L08",
+   "H08"
+  ],
+  "library": [
+   "Q20",
+   "Q21",
+   "L10",
+   "H10"
+  ],
+  "farm": [
+   "Q22",
+   "Q23",
+   "H11",
+   "H12"
+  ],
+  "park": [
+   "Q11",
+   "Q24",
+   "Q25",
+   "H13"
+  ],
+  "lawn": [
+   "Q26",
+   "Q27",
+   "Q28",
+   "H14"
+  ]
+ },
+ "fonts": {
+  "regular": "fonts/cjk-regular.ttf",
+  "bold": "fonts/cjk-bold.ttf"
+ },
+ "pak": "bank-ff15ff6b675b.pak"
+}

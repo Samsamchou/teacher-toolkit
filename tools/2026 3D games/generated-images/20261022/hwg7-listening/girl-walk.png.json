@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-22T11:11:32.184Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "A cheerful elementary school girl (about 11 years old, Taiwanese, ponytail) walking on foot along a sidewalk towards a sunny city park with trees, a slide and swings. Flat, friendly, colorful children's picture-book illustration style, clean white background, centered composition, safe margins, suitable for elementary school students. Absolutely no text, letters or numbers anywhere.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "girl-walk.png",
+  "output_index": 1,
+  "output_sha256": "11bb60b5e35b56a6e01524d34d706e39755d9db100abbd58681d9e6ad2d0264b",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_5c5fce497b1b4de690a378a97ee599d0",
+  "usage": {
+    "input_tokens": 78,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 78
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1834
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

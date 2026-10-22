@@ -57,7 +57,8 @@ service cloud.firestore {
         return d.keys().hasAll(['mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'results', 'cleared'])
           && d.keys().hasOnly(['mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'completedAt',
                                'results', 'cleared', 'version', 'activeDays', 'expiresAt'])
-          && d.mission == 'ershui-3d-quest'
+          // 所有 3D 闖關任務共用：ershui-3d-quest 或 ershui-3d-quest-<代號>（例如 -hwg7）
+          && d.mission is string && d.mission.matches('^ershui-3d-quest(-[a-z0-9]{2,20})?$')
           && d.studentId is string && d.studentId.matches('^[0-9]{5,8}$')
           && progressId == d.mission + '_' + d.studentId
           && d.attemptId is string && d.attemptId.size() <= 40

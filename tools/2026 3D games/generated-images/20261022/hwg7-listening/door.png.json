@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-22T11:13:06.114Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "A hotel corridor with one wooden hotel room door in the center, a door handle with a key card reader, carpet floor, a potted plant beside it. On the door at eye level there is a blank empty gold rectangular room-number plate. Flat, friendly, colorful children's picture-book illustration style, clean white background, centered composition, safe margins, suitable for elementary school students. Absolutely no text, letters or numbers anywhere.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "door.png",
+  "output_index": 1,
+  "output_sha256": "df9a09e06a5c7dc90fba65d1127c951ff6a4fc311907b8cea2000f9807b2ca7f",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_a943424c521449bc84fb82daab09bb84",
+  "usage": {
+    "input_tokens": 91,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 91
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1847
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

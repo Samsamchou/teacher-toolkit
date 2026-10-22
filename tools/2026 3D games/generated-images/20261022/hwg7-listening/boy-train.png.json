@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-10-22T11:09:42.640Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/generations",
+  "model": "gpt-image-2",
+  "mode": "generate",
+  "prompt": "A cheerful elementary school boy (about 11 years old, Taiwanese, school backpack, short black hair) waving from the window of a regular railway passenger train on his way to school, the train running on rail tracks through green countryside, clearly a railway train not a metro. Flat, friendly, colorful children's picture-book illustration style, clean white background, centered composition, safe margins, suitable for elementary school students. Absolutely no text, letters or numbers anywhere.",
+  "requested_size": "1024x1024",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "boy-train.png",
+  "output_index": 1,
+  "output_sha256": "3aa08d08e377308dfbcd5f984070a6944f07a8a73a8e7afcd9bfbdf6cb08c919",
+  "detected_format": "png",
+  "detected_width": 1024,
+  "detected_height": 1024,
+  "request_id": "req_8c6efae4dd9245c8b463960867837e90",
+  "usage": {
+    "input_tokens": 97,
+    "input_tokens_details": {
+      "image_tokens": 0,
+      "text_tokens": 97
+    },
+    "output_tokens": 1756,
+    "output_tokens_details": {
+      "image_tokens": 1756,
+      "text_tokens": 0
+    },
+    "total_tokens": 1853
+  },
+  "revised_prompt": null,
+  "source_images": [],
+  "mask": null
+}

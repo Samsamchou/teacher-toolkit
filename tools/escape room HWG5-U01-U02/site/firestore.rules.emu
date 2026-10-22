@@ -13,7 +13,7 @@ service cloud.firestore {
 
     // ---- english-portal (unchanged behaviour for all other collections)
     match /{collection}/{document=**} {
-      allow read, write: if request.auth != null && collection != 'questAttempts';
+      allow read, write: if request.auth != null && collection != 'questAttempts' && collection != 'questProgress';
     }
 
     // ---- English Mission Quest: one document per student attempt
@@ -25,12 +25,17 @@ service cloud.firestore {
       function validShape(d) {
         return d.keys().hasAll(['uid', 'mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'items', 'battles', 'summary'])
           && d.keys().hasOnly(['uid', 'mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'completedAt',
-                               'stepIndex', 'stepCount', 'items', 'battles', 'summary', 'inventory', 'version'])
+                               'stepIndex', 'stepCount', 'items', 'battles', 'summary', 'inventory', 'version',
+                               'activeDays', 'expiresAt'])
           && d.mission is string && d.mission.matches('^[a-z0-9-]{3,40}$')
           && d.studentId is string && d.studentId.matches('^[0-9]{5,8}$')
           && d.attemptId == attemptId
           && d.items is list && d.items.size() <= 60
-          && d.battles is map && d.summary is map;
+          && d.battles is map && d.summary is map
+          && (!('activeDays' in d) || (d.activeDays is list && d.activeDays.size() <= 60))
+          // kept 1 year 3 months after last activity (TTL policy on expiresAt deletes it)
+          && (!('expiresAt' in d) || (d.expiresAt is timestamp
+              && d.expiresAt > request.time && d.expiresAt < request.time + duration.value(470, 'd')));
       }
       // a student device (anonymous sign-in) creates and updates only its own attempts
       allow create: if request.auth != null && request.resource.data.uid == request.auth.uid
@@ -42,6 +47,30 @@ service cloud.firestore {
         && validShape(request.resource.data);
       // only the teacher account can read (students never read records back)
       allow get, list: if isTeacher();
+      allow delete: if false;
+    }
+
+    // ---- 二水 3D 英語闖關：跨裝置接續進度（教師 2026-10-21 確認不加密碼，接受「知道學號即可讀寫該學號進度」的風險）
+    // 文件 ID = 任務代號_學號；只存已通關地點與各題作答狀態，沒有姓名。可以用學號讀一份，不能列出全部。
+    match /questProgress/{progressId} {
+      function validProgress(d) {
+        return d.keys().hasAll(['mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'results', 'cleared'])
+          && d.keys().hasOnly(['mission', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'completedAt',
+                               'results', 'cleared', 'version', 'activeDays', 'expiresAt'])
+          // 所有 3D 闖關任務共用：ershui-3d-quest 或 ershui-3d-quest-<代號>（例如 -hwg7）
+          && d.mission is string && d.mission.matches('^ershui-3d-quest(-[a-z0-9]{2,20})?$')
+          && d.studentId is string && d.studentId.matches('^[0-9]{5,8}$')
+          && progressId == d.mission + '_' + d.studentId
+          && d.attemptId is string && d.attemptId.size() <= 40
+          && d.results is map && d.results.size() <= 60
+          && d.cleared is list && d.cleared.size() <= 20
+          && (!('activeDays' in d) || (d.activeDays is list && d.activeDays.size() <= 60))
+          && (!('expiresAt' in d) || (d.expiresAt is timestamp
+              && d.expiresAt > request.time && d.expiresAt < request.time + duration.value(470, 'd')));
+      }
+      allow get: if request.auth != null;
+      allow list: if false;
+      allow create, update: if request.auth != null && validProgress(request.resource.data);
       allow delete: if false;
     }
   }

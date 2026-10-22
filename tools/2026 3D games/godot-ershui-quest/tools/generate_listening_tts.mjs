@@ -2,7 +2,8 @@
 // 沿用 HWG5 任務的 OpenAI 語音設定：gpt-4o-mini-tts、marin、0.8 倍速、美式英語。
 // 金鑰由 HWG5 專案的 openai-audio.mjs 讀取（環境變數或 .env.local），不會印出或寫入任何檔案。
 // 每段產生後用 whisper-1 轉文字，確認文稿的字都有念到。
-// 用法：node tools/generate_listening_tts.mjs
+// 用法：node tools/generate_listening_tts.mjs            （HWG5 R1：L11–L17）
+//       node tools/generate_listening_tts.mjs hwg7       （HWG7 R1：第 13、14 題，原始資料夾沒有 MP3）
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -13,7 +14,7 @@ const { readApiKey, tts, transcribe, coverage } = await import(pathToFileURL(hel
 
 const VOICE = { model: "gpt-4o-mini-tts", voice: "marin", speed: 0.8 };
 const INSTRUCTIONS = "American English. Speak clearly and slowly for young English learners in Taiwan. Friendly teacher voice.";
-const SCRIPTS = {
+const HWG5 = {
   L11: "I have ninety dollars.",
   L12: "I have one hundred dollars.",
   L13: "Does he have math class on Friday?",
@@ -22,8 +23,16 @@ const SCRIPTS = {
   L16: "Is it Saturday today?",
   L17: "What day is today?",
 };
+const HWG7 = {
+  H13: "Where are you from?",
+  H14: "How does she go to school?",
+};
+const SET = process.argv[2] === "hwg7" ? "hwg7" : "hwg5";
+const SCRIPTS = SET === "hwg7" ? HWG7 : HWG5;
 
-const outDir = path.resolve(here, "..", "assets", "audio", "listening");
+const outDir = SET === "hwg7"
+  ? path.resolve(here, "..", "..", "HWG 7 R1 Listening", "generated-tts")
+  : path.resolve(here, "..", "assets", "audio", "listening");
 await mkdir(outDir, { recursive: true });
 const key = await readApiKey();
 for (const [id, text] of Object.entries(SCRIPTS)) {

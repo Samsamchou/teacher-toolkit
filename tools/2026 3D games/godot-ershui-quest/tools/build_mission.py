@@ -21,8 +21,10 @@ import glob
 import hashlib
 import json
 import os
+import re
 import shutil
 import struct
+import subprocess
 import sys
 from pathlib import Path
 
@@ -86,6 +88,18 @@ def resolve(src: str) -> Path:
     return p if p.is_absolute() else HERE / p
 
 
+def is_real_mp3(p: Path) -> bool:
+    """檔頭是 ID3 標籤或 MPEG 音框同步碼才算真的 MP3。"""
+    head = p.read_bytes()[:3]
+    return head == b"ID3" or (len(head) >= 2 and head[0] == 0xFF and (head[1] & 0xE0) == 0xE0)
+
+
+def safe_name(stem: str) -> str:
+    """教師檔名常有空白、引號、中文：轉成安全的 ASCII 檔名。"""
+    s = re.sub(r"[^A-Za-z0-9]+", "-", stem).strip("-")
+    return s[:60] or "audio"
+
+
 def copy_asset(src: str, out_dir: Path, sub: str, to_webp: bool) -> str:
     sp = resolve(src)
     if not sp.exists():
@@ -96,6 +110,12 @@ def copy_asset(src: str, out_dir: Path, sub: str, to_webp: bool) -> str:
         im = Image.open(sp)
         im.thumbnail((768, 768))
         im.save(out_dir / sub / name, "WEBP", quality=82)
+    elif sp.suffix.lower() == ".mp3" and not is_real_mp3(sp):
+        # 副檔名是 .mp3 但內容其實是 WAV 等其他格式（教師錄音常見）：遊戲只認真正的 MP3，轉檔
+        name = safe_name(sp.stem) + ".mp3"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(sp), "-ac", "1", "-ar", "44100", "-b:a", "96k",
+                        str(out_dir / sub / name)], check=True)
+        print(f"轉成 MP3：{sp.name}")
     else:
         name = sp.name
         shutil.copyfile(sp, out_dir / sub / name)
