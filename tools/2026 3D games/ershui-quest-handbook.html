@@ -116,6 +116,13 @@ details.stage ul { margin: 0; padding-left: 20px; }
 .box ul { margin: 6px 0 0; padding-left: 20px; }
 .answer { background: var(--soft); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
 
+.results { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.results .box h3 { margin-bottom: 4px; }
+.results .num { font-family: var(--font-mono); font-weight: 600; font-size: 22px; color: var(--road); }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 16px; border-left: 4px solid var(--road); display: grid; gap: 10px; }
+.timeline li { position: relative; padding-left: 12px; }
+.timeline li::before { content: ""; position: absolute; left: -26px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--signal); border: 3px solid var(--road); }
+.timeline .d { font-family: var(--font-mono); font-size: 13px; color: var(--grass); font-weight: 600; display: block; }
 .todo { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .todo li { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; display: flex; gap: 10px; }
 .todo li::before { content: ""; width: 16px; height: 16px; border: 2px solid var(--road); border-radius: 4px; flex: none; margin-top: 5px; }
@@ -127,11 +134,12 @@ html { scroll-behavior: smooth; }
 <header class="top">
   <div class="eyebrow">Ershui English Quest · Production Handbook</div>
   <h1>二水 3D 闖關製作手冊</h1>
-  <p class="lede">從一支 YouTube 影片的想法，到國小學生用 iPad 在二水街道答題打怪、成績進教師後台。這份手冊記錄整個流程、每一個踩過的坑，以及下次改版或換成新任務的做法。</p>
+  <p class="lede">從一支 YouTube 影片的想法，到國小學生用 iPad 在二水街道答題打怪、成績進教師後台；現在同一份遊戲已經給五、六年級兩個任務共用。這份手冊記錄目前成果、整個流程、每一個踩過的坑，以及下次改版或新增任務的做法。</p>
   <div class="facts">
-    <span><b>上線</b>2026-10-21</span>
+    <span><b>首次上線</b>2026-10-21</span>
+    <span><b>最近更新</b>2026-10-23（v5）</span>
     <span><b>正式站</b><a href="https://hwg5-clock-tower.web.app" target="_blank" rel="noopener">hwg5-clock-tower.web.app</a></span>
-    <span><b>題數</b>51 題（32 拼字／拖放＋19 聽力）</span>
+    <span><b>任務</b>HWG5 R1 51 題、HWG7 U01-U02 52 題</span>
     <span><b>地點</b>13 處（11 一般＋2 魔王）</span>
     <span><b>引擎</b>Godot 4.7.2 Web</span>
   </div>
@@ -140,16 +148,35 @@ html { scroll-behavior: smooth; }
 <div class="wrap">
   <nav class="route" aria-label="目錄">
     <ol>
+      <li><a href="#results">目前成果</a></li>
       <li><a href="#stages">製作流程</a></li>
       <li><a href="#details">各階段細節</a></li>
       <li><a href="#pits">踩過的坑</a></li>
       <li><a href="#release">改版步驟</a></li>
-      <li><a href="#grade6">換成六年級任務</a></li>
+      <li><a href="#grade6">新增任務</a></li>
       <li><a href="#todo">目前待辦</a></li>
     </ol>
   </nav>
 
   <main>
+    <section id="results">
+      <h2>目前成果</h2>
+      <div class="results">
+        <div class="box keep"><h3>二水 3D 英語闖關 HWG5 R1</h3><span class="num">51 題</span><p>32 題拼字／拖放＋19 題聽力；五年級。</p></div>
+        <div class="box keep"><h3>二水 3D 英語闖關 HWG7 U01-U02</h3><span class="num">52 題</span><p>28 題拼字／拖放＋10 題發音聽力＋14 題 R1 聽力；六年級，13 個地點各 4 題。</p></div>
+        <div class="box change"><h3>學生第一次下載</h3><span class="num">約 42 MB</span><p>引擎 7.1＋遊戲 25.1＋題庫約 10 MB；背景音樂進遊戲後才下載。原本約 62 MB。</p></div>
+        <div class="box change"><h3>主角與街道</h3><span class="num">Ken 2.2 m</span><p>約三分之二層樓高；汽車、機車擺放前自動檢查，不擋路、不插進建築。</p></div>
+      </div>
+      <ul class="timeline">
+        <li><span class="d">10/21</span>影片分析 → Tripo 建模 13 個地點 → Godot 街道、答題、打怪 → 網頁版 → 上架（預覽 → 正式）。</li>
+        <li><span class="d">10/21</span>v2 音樂音效與第一人稱、v3 走路動畫、v4 手動攻擊與華麗特效；iPad 卡頓修正。</li>
+        <li><span class="d">10/21 晚</span>改成「共用遊戲＋任務題庫」：新任務不用重新匯出遊戲。</li>
+        <li><span class="d">10/22</span>iPad 讀題失敗 → 題庫合成單一檔、自動重試、字型修正，正式上線。</li>
+        <li><span class="d">10/22 晚</span>六年級 HWG7 任務 52 題上線，跨裝置接續規則放寬給所有 3D 任務。</li>
+        <li><span class="d">10/23</span>v5：Ken 縮小、汽車機車不再重疊、遊戲檔 44.8 → 25.1 MB，正式上線。</li>
+      </ul>
+    </section>
+
     <section id="stages">
       <h2>製作流程</h2>
       <p>依實際製作順序排列；每個大改動前都先跑一次 RDQ，規格卡確認後才動工。</p>
@@ -166,6 +193,10 @@ html { scroll-behavior: smooth; }
         <li><h3>網頁版匯出</h3><p>只給 iPad、中文字型子集、貼圖上限 1024。</p><span class="tool">Godot export · fontTools</span></li>
         <li><h3>上架與後台</h3><p>學號外框、questAttempts／questProgress、預覽頻道 → 正式站。</p><span class="tool">Firebase</span></li>
         <li><h3>效能修正</h3><p>iPad 攻擊卡頓：開場預熱、材質共用、物件池。</p><span class="tool">--perf 測試</span></li>
+        <li><h3>共用遊戲架構</h3><p>遊戲不含題目；題目、插圖、音檔放各任務的 bank 資料夾。</p><span class="tool">build_mission.py</span></li>
+        <li><h3>iPad 讀題修正</h3><p>95 個小檔合成一個 pak、自動重試、長期快取。</p><span class="tool">Firebase 快取標頭</span></li>
+        <li><h3>六年級任務</h3><p>網站題庫＋發音題庫＋R1 聽力轉成 3D 題庫；數字插圖用程式疊字。</p><span class="tool">convert_site_bank.py</span></li>
+        <li><h3>比例與檔案大小</h3><p>Ken 2.2 m、道具重疊自動檢查、遊戲檔縮小並逐張截圖比對。</p><span class="tool">OVERLAP CHECK · pck 解析</span></li>
       </ol>
     </section>
 
@@ -185,7 +216,9 @@ html { scroll-behavior: smooth; }
       <details class="stage"><summary>答題系統</summary><div class="body"><ul>
         <li><code>tools/build_quiz_data.py</code> 從 HWG5 網站題庫轉出 <code>data/questions.json</code> 和 <code>data/quiz_plan.json</code>。</li>
         <li>品質＝max(1, 5−嘗試次數)；答錯一次出提示 1、兩次以上提示 2；拼字／拖放答對要聽完 Tick 語音才能下一題。</li>
-        <li>聽力 11–17 題音檔：gpt-4o-mini-tts、marin、0.8 倍速，產生後用 whisper 轉文字核對。</li>
+        <li>缺音檔的聽力題用 gpt-4o-mini-tts、marin、0.8 倍速產生，再用 whisper 轉文字核對；教師給的音檔也先逐題辨識一次。</li>
+        <li>遊戲不會打亂選項，正解位置要在題庫裡先平均分到 A／B／C。</li>
+        <li>圖片選項裡的數字（電話、房號、高度）由程式疊上去，AI 畫數字常出錯。</li>
       </ul></div></details>
       <details class="stage"><summary>打怪與特效</summary><div class="body"><ul>
         <li>一般地點隨機 2 隻（6 種原創怪物），魔王區各 1 隻；愛心數＝該地點題數。</li>
@@ -202,9 +235,28 @@ html { scroll-behavior: smooth; }
         <li>原模型 195 萬面 → Retopology 1 萬面（35 點）→ Rig Humanoid（20 點）。</li>
         <li>Animation 預設 walk、idle 不扣點；匯出時選全部動畫並勾 <b>Animation stay in Place</b>。</li>
       </ul></div></details>
+      <details class="stage"><summary>網頁版匯出與檔案大小</summary><div class="body"><ul>
+        <li>Web、不用多執行緒（Safari 不需特殊標頭）、只開 iPad 用的貼圖壓縮。</li>
+        <li>匯出時排除：測試截圖、題庫素材、沒用到的舊 <code>ken.glb</code>、背景音樂 <code>assets/audio/music/*</code>。</li>
+        <li>背景音樂改放 <code>quest3d/music/</code>，開始玩後在背景下載；<b>每次匯出完都要把三首 mp3 複製過去</b>。</li>
+        <li>貼圖上限寫在各貼圖的 <code>.import</code>：建築與公園道具底色 768、小道具 512、Ken 768、怪物 1024；粗糙度 256；<b>法線圖維持 512</b>（降到 256 磁磚線會變糊）。</li>
+        <li>加了新的中文字串（例如錯誤訊息）要重做內建中文字型，否則會出現方框。</li>
+      </ul></div></details>
+      <details class="stage"><summary>共用遊戲與題庫檔</summary><div class="body"><ul>
+        <li>每個任務 <code>site/public/&lt;任務&gt;/</code>：<code>index.html</code>、<code>data.js</code>、<code>cover.webp</code>、<code>bank/</code>。</li>
+        <li><code>bank/</code> 只有 <code>bank.json</code>＋一個 <code>bank-&lt;內容雜湊&gt;.pak</code>；遊戲只下載兩個檔，失敗自動重試 3 次。</li>
+        <li>pak 長期快取，題目一改檔名就變，iPad 不會讀到舊題。</li>
+        <li><code>build_mission.py</code> 會檢查音檔真實格式；副檔名是 .mp3 但其實是 WAV 就自動轉檔。</li>
+      </ul></div></details>
+      <details class="stage"><summary>比例與道具重疊（v5）</summary><div class="body"><ul>
+        <li>比例常數集中在 <code>world.gd</code> 開頭：<code>KEN_H</code> 2.2、<code>MONSTER_SCALE</code> 0.75、<code>FOE_DIST</code> 7、<code>FOE_GAP</code> 2.3、<code>CAR_LEN</code> 3.6。</li>
+        <li>汽車、機車、路燈、樹擺放前檢查：離 Ken 的路線至少一個身體寬、不在建築外框內、不在打怪的區域；不合格就換位置或不放。</li>
+        <li>開場在主控台印出 <code>OVERLAP CHECK: 0 problems</code>，改地圖或道具時馬上看得到問題。</li>
+        <li><code>--shots</code> 會拍 13 個地點的走路視角和戰鬥視角，比例改動先看截圖再上線。</li>
+      </ul></div></details>
       <details class="stage"><summary>上架與教師後台</summary><div class="body"><ul>
         <li>網頁外框負責 Start、學號、存檔、上傳；Godot 透過 <code>scripts/host.gd</code> 回報每題結果。</li>
-        <li>紀錄寫進 <code>questAttempts</code>（沿用既有後台）；<code>questProgress</code> 讓同學號換 iPad 接續（不加密碼）。</li>
+        <li>紀錄寫進 <code>questAttempts</code>（沿用既有後台）；<code>questProgress</code> 讓同學號換 iPad 接續（不加密碼），規則接受 <code>ershui-3d-quest</code> 與 <code>ershui-3d-quest-&lt;代號&gt;</code>。</li>
         <li>計分：每題 100÷題數 × 品質/4，總分四捨五入；題數由題庫自動計算。</li>
         <li>先部署預覽頻道給教師 iPad 實測，教師明說「部署正式站」才上正式站。</li>
       </ul></div></details>
@@ -233,8 +285,10 @@ html { scroll-behavior: smooth; }
         <li><div>改 Godot 程式或素材。有新中文字時重建字型：<div class="cmd"><pre>python -I tools/build_cjk_font.py C:/Users/User/Godot/dl/NotoSansTC.ttf</pre><button class="copy">複製</button></div></div></li>
         <li><div>有改題庫時重建題庫，再產生任務題庫資料夾（<b>只改題庫不必重新匯出遊戲</b>）：<div class="cmd"><pre>python -I tools/build_quiz_data.py
 python -I -X utf8 tools/build_mission.py --mission ershui-3d-quest --unit "二水 3D 英語闖關 HWG5 R1" --title "Ershui 3D English Quest" --questions data/questions.json --plan data/quiz_plan.json</pre><button class="copy">複製</button></div></div></li>
-        <li><div>自動測試（<code>--test</code> 截圖、<code>--shots</code> 13 地點、<code>--perf --mobile</code> 攻擊幀時間），用 <code>--bank=</code> 指定題庫：<div class="cmd"><pre>Godot_v4.7.2-stable_win64_console.exe --path . --resolution 1280x720 -- --test --bank="../../escape room HWG5-U01-U02/site/public/ershui-3d-quest/bank"</pre><button class="copy">複製</button></div></div></li>
+        <li><div>自動測試（<code>--test</code> 看 <code>OVERLAP CHECK: 0 problems</code> 與 <code>TEST DONE</code>、<code>--shots</code> 13 地點走路與戰鬥截圖、<code>--perf --mobile</code> 攻擊幀時間），用 <code>--bank=</code> 指定題庫：<div class="cmd"><pre>Godot_v4.7.2-stable_win64_console.exe --path . --resolution 1280x720 -- --test --bank="../../escape room HWG5-U01-U02/site/public/ershui-3d-quest/bank"</pre><button class="copy">複製</button></div></div></li>
+        <li><div>改了貼圖上限要先重新匯入：<div class="cmd"><pre>Godot_v4.7.2-stable_win64_console.exe --headless --path . --import</pre><button class="copy">複製</button></div></div></li>
         <li><div>改了遊戲本身才匯出，輸出到所有任務共用的 <code>quest3d/</code>：<div class="cmd"><pre>Godot_v4.7.2-stable_win64_console.exe --headless --path . --export-release "Web" "../../escape room HWG5-U01-U02/site/public/quest3d/index.html"</pre><button class="copy">複製</button></div></div></li>
+        <li><div>匯出後把背景音樂複製到 <code>quest3d/music/</code>（遊戲檔不含音樂）：<div class="cmd"><pre>cp assets/audio/music/bgm_*.mp3 "../../escape room HWG5-U01-U02/site/public/quest3d/music/"</pre><button class="copy">複製</button></div></div></li>
         <li><div>網站測試（在 site 資料夾）：<div class="cmd"><pre>npm test</pre><button class="copy">複製</button></div></div></li>
         <li><div>部署預覽頻道給教師 iPad 實測：<div class="cmd"><pre>firebase hosting:channel:deploy ershui-preview --only hwg5-clock-tower --project g6-english-online-learning --account u9431818@gmail.com --expires 7d</pre><button class="copy">複製</button></div></div></li>
         <li><div>教師同意後部署正式站，再讀回確認：<div class="cmd"><pre>firebase deploy --only hosting:hwg5-clock-tower --project g6-english-online-learning --account u9431818@gmail.com</pre><button class="copy">複製</button></div></div></li>
@@ -243,9 +297,10 @@ python -I -X utf8 tools/build_mission.py --mission ershui-3d-quest --unit "二�
     </section>
 
     <section id="grade6">
-      <h2>換成六年級任務</h2>
+      <h2>新增任務</h2>
       <div class="answer">
-        <p><b>可以。2026-10-21 已改成「共用遊戲＋任務題庫」：</b>遊戲檔只有一份（<code>quest3d/</code>），題目、插圖、音檔、中文字型放在各任務的 <code>bank/</code> 資料夾。新任務只要做一份題庫、跑一次 <code>build_mission.py</code>、放封面、首頁加卡片、後台清單加一行，<b>不用重新匯出遊戲</b>。格式見 <code>godot-ershui-quest/tools/BANK-FORMAT.md</code>。</p>
+        <p><b>六年級 HWG7 U01-U02 已用這個方法在 10/22 上線</b>（<code>ershui-3d-quest-hwg7</code>，題庫轉換用 <code>tools/convert_site_bank.py</code>）。</p>
+        <p><b>做法：</b>遊戲檔只有一份（<code>quest3d/</code>），題目、插圖、音檔、中文字型放在各任務的 <code>bank/</code> 資料夾。新任務只要做一份題庫、跑一次 <code>build_mission.py</code>、放封面、首頁加卡片、後台清單加一行，<b>不用重新匯出遊戲</b>。格式見 <code>godot-ershui-quest/tools/BANK-FORMAT.md</code>。</p>
       </div>
       <div class="split">
         <div class="box keep"><h3>可以直接沿用</h3><ul>
@@ -259,32 +314,35 @@ python -I -X utf8 tools/build_mission.py --mission ershui-3d-quest --unit "二�
           <li>六年級題庫轉成同樣格式（拼字、拖放、聽力）</li>
           <li>題目插圖、Tick 回饋語音、聽力音檔</li>
           <li>重新分配每個地點的題目（11 一般＋2 魔王）</li>
-          <li>新的任務代號，例如 <code>ershui-3d-quest-g6</code>；<code>build_mission.py</code> 會建好資料夾與任務頁，並印出首頁卡片和後台清單那一行</li>
+          <li>新的任務代號一定用 <code>ershui-3d-quest-&lt;代號&gt;</code>（資料庫規則才不用改）；<code>build_mission.py</code> 會建好資料夾與任務頁，並印出首頁卡片和後台清單那一行</li>
           <li>一張封面 <code>cover.webp</code></li>
         </ul></div>
       </div>
-      <div class="cmd" style="margin-top:14px"><pre>python -I -X utf8 tools/build_mission.py --mission ershui-3d-quest-g6 --unit "二水 3D 英語闖關 HWG6" --title "Ershui 3D English Quest 6" --questions &lt;questions.json&gt; --plan &lt;quiz_plan.json&gt;</pre><button class="copy">複製</button></div>
+      <div class="cmd" style="margin-top:14px"><pre>python -I -X utf8 tools/build_mission.py --mission ershui-3d-quest-hwg7 --unit "二水 3D 英語闖關 HWG7 U01-U02" --title "Ershui 3D English Quest 6" --questions data/hwg7/questions.json --plan data/hwg7/quiz_plan.json</pre><button class="copy">複製</button></div>
     </section>
 
     <section id="todo">
       <h2>目前待辦</h2>
       <ul class="todo">
+        <li>iPad 實測 v5：Ken、汽車、機車的比例，下載速度，背景音樂有沒有出來。</li>
         <li>確認 iPad 上「每隔 1～2 擊微卡」是否已消失（請靜音前後比較；若靜音後不卡，下一步是預先解碼音效）。</li>
-        <li>遊戲內加上「Music: Suno」標示。</li>
-        <li>今天所有修改 commit 並 push 到 GitHub。</li>
+        <li>名片上的電話號碼在 iPad 上是否夠大。</li>
         <li>資源：Tripo 剩 505 點（Pro，至 2027-03-24）。</li>
       </ul>
     </section>
   </main>
 </div>
 
-<footer>整理自 2026-10-21 的製作紀錄（<code>2026 3D games/工作流程與踩坑紀錄.md</code>）。學生資料只用學號，不含姓名。</footer>
+<footer>整理自 2026-10-21～10-23 的製作紀錄（<code>2026 3D games/工作流程與踩坑紀錄.md</code>）。學生資料只用學號，不含姓名。</footer>
 
 <script>
 const PITS = [
   ["tool","faster-whisper 讀音檔時出錯","PyAV 版本不相容","改用 soundfile 讀成陣列再交給模型"],
   ["tool","PowerShell 執行含中文註解的腳本出現亂碼錯誤","Windows PowerShell 5.1 把檔案當成 ANSI 編碼","腳本只寫英文"],
   ["tool","匯出範本下載到 849 MB 斷線，壓縮檔損毀","單次下載逾時","斷點續傳加自動重試，完成後才解壓"],
+  ["tool","掃描遊戲專案的快取資料夾卡了十幾分鐘",".godot 裡有幾千個小檔，放在 Google 雲端硬碟上","不掃 .godot；要看遊戲檔內容就解析匯出的 index.pck"],
+  ["tool","部署時出現「Failed to get Firebase project」","沒有指定帳號","部署指令一定加 --project 與 --account"],
+  ["tool","git push 出現 packed-refs.lock 錯誤","雲端同步留下舊鎖定檔","push 其實成功；確認沒有其他 git 在跑再刪鎖定檔"],
   ["tool","Google Drive 裡的圖片無法用瀏覽器上傳","上傳工具只允許暫存資料夾的檔案","先複製到暫存資料夾再上傳"],
   ["tripo","匯出後 Downloads 找不到 GLB","Chrome 下載位置被改到專案資料夾，之後又以 .tmp 暫存檔出現","兩個地方都檢查，再用 GLB 內嵌貼圖名稱辨認"],
   ["tripo","連續匯出後半段沒有下載","Chrome 封鎖同一網站連續下載多個檔案","請教師允許 studio.tripo3d.ai 下載多個檔案"],
@@ -297,18 +355,31 @@ const PITS = [
   ["godot","第一人稱鏡頭看著自己的腳","鏡頭目標用到 Ken 自己的位置","另存怪物中心點當鏡頭目標"],
   ["godot","攻擊時怪物被建築或樹擋住一半","只用物件中心點判斷遮擋","改用實際外框，檢查眼睛到怪物頭、身、腳的連線"],
   ["godot","怪物的腳陷進馬路","路面高 0.2 公尺，模型放在高度 0","人物和怪物統一墊高到路面"],
-  ["godot","Ken 穿過汽車","汽車壓到 Ken 走的路線","汽車移到馬路邊緣"],
+  ["godot","Ken 穿越汽車、機車插進建築、Ken 快一層樓高","Ken 3.4 公尺太大；汽車停得離路中線太近；機車沒檢查建築外框","Ken 改 2.2 公尺、汽車 3.6 公尺；所有道具擺放前檢查路線、建築、打怪區（10/23）"],
+  ["godot","兩隻怪物頭上的名字疊在一起","兩隻間隔 1.8 公尺太近","間隔改 2.3 公尺，怪物站近到 7 公尺"],
+  ["godot","攻擊時怪物名字被畫面上緣切掉","攻擊視角鏡頭仰得太高","攻擊視角往下壓 4°"],
   ["godot","開場鏡頭卡進車站裡","開場朝向讓鏡頭落在建築內","開場面向車站，鏡頭遇到建築就拉近"],
   ["godot","魔王在遠處看起來很小","魔王站得遠、視角太廣","攻擊時拉近鏡頭（魔王 30°）"],
   ["godot","答題面板擋住怪物","面板佔滿整個畫面","戰鬥時面板只佔下半部、半透明"],
   ["web","網頁版中文變方框","網頁不能使用電腦內建字型","打包 Noto Sans TC，只保留遊戲用到的字"],
   ["web","遊戲檔 160 MB","同時包含電腦與 iPad 兩種貼圖格式","只給 iPad、貼圖上限 1024，降到約 54 MB"],
+  ["web","iPad 讀題目很慢、3 張聽力圖讀不到、錯誤訊息有方框","一次抓 95 個小檔；內建中文字型缺了錯誤訊息的字","題庫合成一個 pak、自動重試 3 次、重做內建字型（10/22）"],
+  ["web","題庫檔設成每次重新確認後，下載變得超慢","Firebase 不快取這種檔案，每次都回源站","檔名加內容雜湊，設長期快取"],
+  ["web","學校網路第一次進遊戲要 10 分鐘以上","遊戲檔大、校網慢","遊戲檔縮小、快取 1 天；課前先開一次或用手機熱點"],
+  ["web","遊戲資料檔 44.8 MB，伺服器壓縮也沒用","內容本來就壓過；主要是貼圖、背景音樂、沒用到的舊 Ken","排除舊 Ken、音樂背景下載、建築貼圖降一級 → 25.1 MB（10/23）"],
+  ["web","降低貼圖後郵局磁磚線變糊","法線圖決定表面凹凸細節","法線圖維持 512，只降粗糙度圖；每一步都做前後截圖比對"],
+  ["web","教師給的 mp3 遊戲讀不出來","檔案其實是 WAV，只是副檔名寫 .mp3","題庫程式檢查檔頭，自動轉成 mp3"],
+  ["web","聽力題正解全在 A","題目檔第一欄放正解，遊戲不打亂選項","轉題庫時把正解平均分到 A／B／C"],
+  ["web","新任務換 iPad 不能接著玩","資料庫規則只認一個任務代號","規則接受 ershui-3d-quest-<代號>"],
+  ["web","換了封面 iPad 還是舊的","圖片在 iPad 上快取 1 天","重新整理或隔天再看"],
   ["web","iPad Safari 沒有聲音","Safari 要使用者先點畫面才能播聲音","提醒學生進遊戲先點一下畫面"],
   ["web","攻擊時明顯卡頓（70～94 毫秒）","第一次畫特效要現場準備；每一擊都重做材質","開場預熱所有特效、文字、音效；材質共用；iPad 粒子減半放大"],
   ["web","每隔 1～2 擊又頓一下","特效物件 1.6 秒後被刪除，剛好撞到下一擊","改用物件池，攻擊途中不新增也不刪除（iPad 上待確認）","open"],
   ["web","電腦上測不出 iPad 的卡頓","電腦效能遠高於 iPad","用 --perf 比較改版前後最長一格，最後仍以 iPad 實測為準"],
   ["flow","教師中途一直追加需求","改動範圍沒收斂","每輪用 RDQ 收斂成規格卡，確認後才動工"],
-  ["flow","花錢的動作（Tripo、API 生圖、Suno）","容易在不知情下扣點","扣點前先說點數與餘額，等教師同意"],
+  ["flow","花錢的動作（Tripo、API 生圖、語音、Suno）","容易在不知情下扣點","先說數量、品質與費用，等教師同意"],
+  ["flow","縮小檔案會不會影響畫質","教師要求畫面和打怪品質不變","每一步做前後截圖比對與攻擊順暢度比對，看得出差別就退回"],
+  ["flow","公開 GitHub repo","圖片、音訊、教師題目不能公開","只放程式、JSON、文件；媒體與題目檔留在 Google 雲端硬碟"],
   ["flow","品牌名稱有廣告疑慮","地點用了店名","改一般名稱（飲料店、便利商店、超市），模型招牌用看板蓋住"],
   ["flow","鉛筆小鬼手上的尺像劍","給國小學生的遊戲不能出現武器","用 ChatGPT API 重畫成抱橡皮擦"],
   ["flow","正式站被誤更新的風險","預覽與正式部署指令相似","預覽頻道給教師實測，教師明說「部署正式站」才部署"]
