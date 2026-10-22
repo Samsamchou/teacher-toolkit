@@ -126,7 +126,7 @@ function renderStart(message = "") {
       <p class="msg" id="msg">${esc(message)}</p>
       <button class="btn primary" type="submit">▶ Start</button>
     </form>
-    <p class="small">${BANK.items.length} questions · ${BANK.battles.length} places · iPad 請橫放<br>English audio is AI-generated, not a human recording.</p>
+    <p class="small">${BANK.items.length} questions · ${BANK.battles.length} places · iPad 請橫放<br>English audio is AI-generated, not a human recording.<br>Music: Suno · Sound effects: Kenney (CC0)</p>
     <a class="home" href="../">← 回到任務首頁</a>
   </section></main>`;
   const form = app.querySelector("#startForm");

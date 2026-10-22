@@ -8,7 +8,16 @@ const S := 0.06
 const CENTER := Vector2(1000, 700)
 const ROAD_W := 4.0
 const WALK_W := 1.4
-const SPEED := 8.8
+const SPEED := 7.6
+# 主角與怪物比例（2026-10-23 教師確認 RDQ v5）：Ken 2.2 m（約三分之二層樓）；一般怪物 0.75 倍；魔王不變
+const KEN_H := 2.2
+const KEN_R := 0.45            # Ken 走路時身體半徑（含手臂）：道具離 Ken 的路線至少要這麼遠
+const EYE_H := 2.0             # 打怪第一人稱的眼睛高度
+const KEN_ANIM_SPEED := 1.3    # Ken 變矮、步伐變小：走路動畫快一點，腳才不會在地上滑
+const MONSTER_SCALE := 0.75
+const FOE_DIST := 7.0          # 一般怪物站離門口多遠（原 8.5；怪物變小後拉近一點）
+const FOE_GAP := 2.3           # 兩隻怪物左右間隔（原 1.8；避免頭上名字疊在一起）
+const CAR_LEN := 3.6           # 學生建議：汽車縮小（原 4.2）
 
 # 路口節點（簡圖像素）
 const NODES := {
@@ -158,6 +167,7 @@ func _ready() -> void:
 	_build_locations()
 	var before := get_child_count()
 	_build_props()
+	_overlap_report()
 	for i in range(before, get_child_count()):
 		occluders.append(get_child(i))
 	_build_player()
@@ -168,6 +178,7 @@ func _ready() -> void:
 	_build_ui()
 	_build_audio()
 	play_music("street")
+	_preload_music()
 	# 網頁外框給的進度（換 iPad 也能接續）
 	if typeof(init.get("cleared")) == TYPE_ARRAY:
 		for c in init["cleared"]:
@@ -430,7 +441,7 @@ func _build_locations() -> void:
 		root.add_child(body)
 		var lab := _label3d("%s\n%s" % [L["zh"], L["word"]], base + Vector3(0, h + 2.4, 0), 56)
 		lab.modulate = Color(1, 0.96, 0.75) if L.get("boss", false) else Color.WHITE
-		loc_world[L["id"]] = {"door": door, "root": root, "base": base}
+		loc_world[L["id"]] = {"door": door, "root": root, "base": base, "half": Vector2(wd / 2.0, dp / 2.0)}
 
 func _sign_cover(root: Node3D, c: Dictionary, wd: float, h: float, dp: float) -> void:
 	var plate := _box(Vector3(wd * 0.98, h * c["h"], 0.25), c["color"], Vector3(0, h * c["y"], dp / 2.0 + 0.12), root)
@@ -475,6 +486,69 @@ func _build_lawn(root: Node3D) -> void:
 	mi.rotation.y = deg_to_rad(-90)
 	root.add_child(mi)
 
+# ---------- 重疊檢查：道具不擋 Ken 的路、不插進建築、不站在戰鬥區 ----------
+var prop_marks: Array = []     # 已擺好的機車與汽車 [{name, pts, r}]
+var prop_skipped: Array = []   # 找不到合適位置、沒有擺的道具
+
+func _seg_dist_xz(p: Vector3, a: Vector3, b: Vector3) -> float:
+	var ab := Vector2(b.x - a.x, b.z - a.z)
+	var ap := Vector2(p.x - a.x, p.z - a.z)
+	var t := clampf(ap.dot(ab) / maxf(ab.length_squared(), 0.0001), 0.0, 1.0)
+	return (ap - ab * t).length()
+
+## 打怪時 Ken 站的位置到怪物站的位置（和 _start_battle 算法相同）：這段路上不能擺道具
+func _battle_zone(id: String) -> Array:
+	var door: Vector3 = loc_world[id]["door"]
+	var e: Array = EDGES[_project(door)["edge"]]
+	var t: Vector3 = (w(NODES[e[1]]) - w(NODES[e[0]])).normalized()
+	if t.z > 0.01 or (absf(t.z) <= 0.01 and t.x < 0):
+		t = -t
+	var boss := BOSSES.has(id)
+	var center := door + t * (18.0 if boss else FOE_DIST)
+	return [door - t * 2.5, center, 5.5 if boss else 3.4]
+
+## 回傳問題說明；沒問題回傳 ""
+func _prop_problem(pts: Array, r: float, check_props := false) -> String:
+	for pt in pts:
+		for e in EDGES:
+			if _seg_dist_xz(pt, w(NODES[e[0]]), w(NODES[e[1]])) < r + KEN_R:
+				return "擋到 Ken 的路線 %s-%s" % [e[0], e[1]]
+		for id in loc_world:
+			var info: Dictionary = loc_world[id]
+			var half: Vector2 = info["half"]
+			var root: Node3D = info["root"]
+			var lp: Vector3 = root.global_transform.affine_inverse() * pt
+			if absf(lp.x) < half.x + r and absf(lp.z) < half.y + r:
+				return "插進建築 %s" % id
+			var z: Array = _battle_zone(id)
+			if _seg_dist_xz(pt, z[0], z[1]) < z[2] + r:
+				return "在 %s 的戰鬥區" % id
+		if check_props:
+			for m in prop_marks:
+				for q in m["pts"]:
+					if Vector2(pt.x - q.x, pt.z - q.z).length() < r + m["r"] + 0.15:
+						return "和 %s 重疊" % m["name"]
+	return ""
+
+func _place_ok(pname: String, pts: Array, r: float, check_props := false) -> bool:
+	return _prop_problem(pts, r, check_props) == ""
+
+func _mark_prop(pname: String, pts: Array, r: float) -> void:
+	prop_marks.append({"name": pname, "pts": pts, "r": r})
+
+## 擺完後再檢查一次全部機車與汽車（自動重疊檢查）；結果印在主控台，測試時看這一行
+func _overlap_report() -> int:
+	var problems := 0
+	for m in prop_marks:
+		var why := _prop_problem(m["pts"], m["r"])
+		if why != "":
+			problems += 1
+			print("OVERLAP ", m["name"], ": ", why)
+	var cars := prop_marks.filter(func(x): return String(x["name"]).begins_with("汽車")).size()
+	var scooters := prop_marks.filter(func(x): return String(x["name"]).begins_with("機車")).size()
+	print("OVERLAP CHECK: %d problems (cars %d, scooters %d)" % [problems, cars, scooters])
+	return problems
+
 # ---------- 街道擺設（樹、路燈、機車、汽車、矮樹叢） ----------
 func _near_building(p: Vector3) -> bool:
 	for id in loc_world:
@@ -500,15 +574,18 @@ func _build_props() -> void:
 			var p := a + dir * t + side * sgn * (ROAD_W * 0.5 + WALK_W + 1.6)
 			if not _near_building(p) and absf(p.z - rail_z) > 4.0:
 				if i % 3 == 2 and lamp_ok:
-					var lamp := _fit_model("street_lamp", 5.0)
-					lamp.position = a + dir * t + side * sgn * (ROAD_W * 0.5 + WALK_W * 0.5)
-					lamp.rotation.y = atan2(-side.x * sgn, -side.z * sgn)
-					add_child(lamp)
+					var lp := a + dir * t + side * sgn * (ROAD_W * 0.5 + WALK_W * 0.5)
+					if _place_ok("路燈", [lp], 0.3):
+						var lamp := _fit_model("street_lamp", 4.2)
+						lamp.position = lp
+						lamp.rotation.y = atan2(-side.x * sgn, -side.z * sgn)
+						add_child(lamp)
 				elif tree_ok:
-					var tr := _fit_model("tree", rng.randf_range(4.5, 6.0))
-					tr.position = p
-					tr.rotation.y = rng.randf() * TAU
-					add_child(tr)
+					if _place_ok("樹", [p], 0.9):
+						var tr := _fit_model("tree", rng.randf_range(3.8, 5.0))
+						tr.position = p
+						tr.rotation.y = rng.randf() * TAU
+						add_child(tr)
 				else:
 					_bush(p, 1.4)
 			t += 9.0
@@ -524,25 +601,51 @@ func _build_props() -> void:
 		var door: Vector3 = info["door"]
 		var to_b: Vector3 = (info["base"] - door).normalized()
 		var along := Vector3(to_b.z, 0, -to_b.x)
+		# 機車：停在店門旁的人行道靠馬路側，車頭朝建築；每個位置先檢查不擋路、不插進建築、不在戰鬥區
 		if scooter_ok:
-			for j in 2:
-				var sc := _fit_model("scooter", 1.9)
-				sc.position = door + to_b * (ROAD_W * 0.5 + WALK_W * 0.5) + along * (3.0 + j * 1.1)
-				sc.rotation.y = atan2(to_b.x, to_b.z)
-				add_child(sc)
+			var placed := 0
+			for a_off in [3.0, 4.1, -3.0, -4.1, 6.0, 7.1, -6.0, -7.1, 9.0, 10.1, -9.0, -10.1, 12.0, -12.0]:
+				if placed >= 2:
+					break
+				for lat in [ROAD_W * 0.5 + WALK_W * 0.5, ROAD_W * 0.5 + 0.5]:
+					var sp: Vector3 = door + to_b * lat + along * a_off
+					if _place_ok("機車 %s" % L["id"], [sp - to_b * 0.55, sp + to_b * 0.55], 0.4, true):
+						var sc := _fit_model("scooter", 1.9)
+						sc.position = sp
+						sc.rotation.y = atan2(to_b.x, to_b.z)
+						add_child(sc)
+						_mark_prop("機車 %s" % L["id"], [sp - to_b * 0.55, sp + to_b * 0.55], 0.4)
+						placed += 1
+						break
+		# 汽車：縮小到 CAR_LEN，停在路邊（車身一部分壓上路緣），離 Ken 走的路中線至少 KEN_R
 		if car_ok and k % 3 == 0:
-			var car := _fit_model("car", 4.2)
-			car.position = door + along * -5.5 + to_b * (ROAD_W * 0.5 - 0.6) + Vector3(0, FOOT, 0)
-			car.rotation.y = atan2(along.x, along.z)
-			add_child(car)
-		_bush(door + to_b * (ROAD_W * 0.5 + WALK_W + 0.9) + along * -2.6, 0.9)
+			var car := _fit_model("car", CAR_LEN)
+			var cw := minf(car.get_meta("width"), car.get_meta("depth")) / 2.0
+			var lat_c := KEN_R + cw + 0.2
+			var ok_pos := Vector3.INF
+			for a_off in [-5.5, 5.5, -8.0, 8.0, -11.0, 11.0, -14.0, 14.0, -17.0, 17.0, -20.0, 20.0]:
+				var cp: Vector3 = door + along * a_off + to_b * lat_c
+				var pts := [cp - along * (CAR_LEN / 2.0 - cw), cp, cp + along * (CAR_LEN / 2.0 - cw)]
+				if _place_ok("汽車 %s" % L["id"], pts, cw, true):
+					ok_pos = cp
+					_mark_prop("汽車 %s" % L["id"], pts, cw)
+					break
+			if ok_pos != Vector3.INF:
+				car.position = ok_pos + Vector3(0, FOOT, 0)
+				car.rotation.y = atan2(along.x, along.z)
+				add_child(car)
+			else:
+				car.queue_free()
+		var bp: Vector3 = door + to_b * (ROAD_W * 0.5 + WALK_W + 0.9) + along * -2.6
+		if _place_ok("矮樹叢 %s" % L["id"], [bp], 0.5):
+			_bush(bp, 0.9)
 		k += 1
 	# 公園多種幾棵樹
 	if tree_ok:
 		for id in ["park", "lawn"]:
 			var base: Vector3 = loc_world[id]["base"]
 			for j in 5:
-				var tr2 := _fit_model("tree", rng.randf_range(5.0, 7.0))
+				var tr2 := _fit_model("tree", rng.randf_range(4.3, 6.0))
 				var ang := j * TAU / 5.0 + 0.3
 				tr2.position = base + Vector3(cos(ang) * 11.5, 0, sin(ang) * 9.0)
 				add_child(tr2)
@@ -566,9 +669,11 @@ func _build_player() -> void:
 	player.position = w(NODES["C"])
 	player.rotation.y = PI   # 一開始面向火車站，鏡頭在馬路這一側
 	var ken_file := "ken_rigged" if _has_model("ken_rigged") else "ken"
-	player_model = _fit_model(ken_file, 3.4)
+	player_model = _fit_model(ken_file, KEN_H)
 	player.add_child(player_model)
 	ken_anim = _find_anim(player_model)
+	if ken_anim != null:
+		ken_anim.speed_scale = KEN_ANIM_SPEED
 	player_model.position.y = FOOT
 	cam_focus = player.position
 	_update_camera(true, 0.0)
@@ -616,16 +721,60 @@ func _apply_volume() -> void:
 	if vol_btn != null:
 		vol_btn.text = VOL_NAME[vol_level]
 
+## 背景音樂不包進遊戲檔（讓第一次下載變小）：網頁版進遊戲後才從 quest3d/music/ 下載，
+## 下載好才開始播；電腦測試直接讀專案裡的檔案。
+var music_cache := {}
+var music_loading := {}
+
 func play_music(mname: String) -> void:
 	if mname == music_now:
 		return
 	music_now = mname
-	var st = load("res://assets/audio/music/bgm_%s.mp3" % mname)
-	if st == null:
+	var st: AudioStream = await _music_stream(mname)
+	if st == null or music_now != mname:
 		return
-	st.loop = true
 	music_player.stream = st
 	music_player.play()
+
+func _music_stream(mname: String) -> AudioStream:
+	if music_cache.has(mname):
+		return music_cache[mname]
+	var res_path := "res://assets/audio/music/bgm_%s.mp3" % mname
+	var st: AudioStream = null
+	if ResourceLoader.exists(res_path):
+		st = load(res_path)
+	elif OS.has_feature("web"):
+		if music_loading.has(mname):
+			while music_loading.has(mname):
+				await get_tree().process_frame
+			return music_cache.get(mname)
+		music_loading[mname] = true
+		var href := String(JavaScriptBridge.eval("location.href", true))
+		var url := href.substr(0, href.rfind("/") + 1) + "music/bgm_%s.mp3" % mname
+		for attempt in 3:
+			var req := HTTPRequest.new()
+			add_child(req)
+			if req.request(url) == OK:
+				var res: Array = await req.request_completed
+				if int(res[0]) == HTTPRequest.RESULT_SUCCESS and int(res[1]) == 200:
+					var mp3 := AudioStreamMP3.new()
+					mp3.data = res[3]
+					st = mp3
+			req.queue_free()
+			if st != null:
+				break
+			await get_tree().create_timer(2.0).timeout
+		music_loading.erase(mname)
+	if st == null:
+		return null
+	st.set("loop", true)
+	music_cache[mname] = st
+	return st
+
+## 開場後在背景先把三首音樂都下載好，之後切換場景就不用等
+func _preload_music() -> void:
+	for mname in ["street", "battle", "boss"]:
+		await _music_stream(mname)
 
 func sfx(sname: String, pitch := 1.0) -> void:
 	if not sfx_cache.has(sname):
@@ -986,11 +1135,11 @@ func _start_battle(id: String, n: int) -> void:
 	player.position = door - t * 2.5
 	player.rotation.y = atan2(t.x, t.z)
 	path.clear()
-	var center := door + t * (18.0 if BOSSES.has(id) else 8.5)
+	var center := door + t * (18.0 if BOSSES.has(id) else FOE_DIST)
 	for i in infos.size():
 		var info: Dictionary = infos[i]
-		var m := _fit_model(info["id"], info["size"])
-		var off := 0.0 if infos.size() == 1 else (-1.8 if i == 0 else 1.8)
+		var m := _fit_model(info["id"], info["size"] * (1.0 if BOSSES.has(id) else MONSTER_SCALE))
+		var off := 0.0 if infos.size() == 1 else (-FOE_GAP if i == 0 else FOE_GAP)
 		m.position = center + side * off + t * (1.2 * i) + Vector3(0, FOOT, 0)
 		m.rotation.y = atan2(-t.x, -t.z)
 		add_child(m)
@@ -1290,7 +1439,7 @@ func _hide_occluders() -> void:
 		for c in loc_world[id]["root"].get_children():
 			if c is Node3D and not (c is StaticBody3D):
 				cands.append(c)
-	var eye := player.position + Vector3(0, 2.1, 0)
+	var eye := player.position + Vector3(0, EYE_H, 0)
 	var targets: Array = []
 	for f in foes:
 		var m: Node3D = f["node"]
@@ -1776,7 +1925,7 @@ func _update_camera(snap: bool, delta: float) -> void:
 		want_look = Vector3(0, 0, 0)
 		want_fov = 40.0
 	elif battle_loc != "" and not foes.is_empty():
-		var eye := player.position + Vector3(0, 2.1, 0)
+		var eye := player.position + Vector3(0, EYE_H, 0)
 		var flat: Vector3 = battle_center - eye
 		flat.y = 0
 		var d := maxf(flat.length(), 1.0)
@@ -1785,20 +1934,21 @@ func _update_camera(snap: bool, delta: float) -> void:
 		if is_instance_valid(f0["node"]):
 			h = float(f0["node"].get_meta("height"))
 		# 讓怪物頭部落在畫面上方約 1/5 處，題目面板擋住的是怪物下半身
-		var head_ang := atan2(h - 2.1, d)
+		var head_ang := atan2(h - EYE_H, d)
 		# 答題時：怪物頭部在面板上方；連擊攻擊（面板收起）時：怪物移到畫面中間、拉近
 		var answering: bool = quiz != null and quiz.visible
-		var pitch := head_ang - deg_to_rad((27.0 if BOSSES.has(battle_loc) else 26.0) if answering else 12.0)
+		var pitch := head_ang - deg_to_rad((27.0 if BOSSES.has(battle_loc) else 26.0) if answering else 8.0)
 		want_pos = eye
 		want_look = eye + flat.normalized() * 10.0 + Vector3(0, 10.0 * tan(pitch), 0)
 		want_fov = 62.0 if answering else (30.0 if BOSSES.has(battle_loc) else 44.0)
 	else:
 		var f := _fwd()
-		want_pos = player.position - f * 8.0 + Vector3(0, 4.6, 0)
-		want_look = player.position + f * 7.0 + Vector3(0, 1.4, 0)
+		# 越肩鏡頭跟著 Ken 的新身高（2.2 m）拉近、降低，Ken 在畫面上不會變太小
+		want_pos = player.position - f * 6.4 + Vector3(0, 3.4, 0)
+		want_look = player.position + f * 7.0 + Vector3(0, 1.0, 0)
 		want_fov = 55.0
 		# 鏡頭和 Ken 之間如果有建築，鏡頭移到建築前面，不會卡在建築裡
-		var head := player.position + Vector3(0, 2.2, 0)
+		var head := player.position + Vector3(0, KEN_H, 0)
 		var q := PhysicsRayQueryParameters3D.create(head, want_pos, 2)
 		var hit := get_world_3d().direct_space_state.intersect_ray(q)
 		if hit.has("position"):
@@ -1839,7 +1989,20 @@ func _run_shots() -> void:
 		var id: String = L["id"]
 		_end_battle()
 		quiz.visible = false
-		player.position = loc_world[id]["door"]
+		var door: Vector3 = loc_world[id]["door"]
+		var e: Array = EDGES[_project(door)["edge"]]
+		var t: Vector3 = (w(NODES[e[1]]) - w(NODES[e[0]])).normalized()
+		var to_b: Vector3 = (loc_world[id]["base"] - door).normalized()
+		player.position = door - t * 6.0
+		var face := (t + to_b * 0.7).normalized()
+		player.rotation.y = atan2(face.x, face.z)
+		player_model.visible = true
+		battle_loc = ""
+		foes.clear()
+		_update_camera(true, 0.0)
+		await get_tree().create_timer(0.8).timeout
+		await _shot("walk_%s" % id)
+		player.position = door
 		var n: int = quiz.plan[id].size()
 		_start_battle(id, n)
 		battle_loc = id
