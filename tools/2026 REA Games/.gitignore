@@ -1,0 +1,13 @@
+# 公開 repo：第三方 YouTube 影片與其逐字稿只留在 GDrive，不入庫
+YT/
+transcripts/
+# Godot 快取與二進位素材（模型、貼圖、音效、字型、匯入設定）留在 GDrive
+godot-jump-island/.godot/
+*.glb
+*.jpg
+*.png
+*.webp
+*.ogg
+*.mp3
+*.ttf
+*.import

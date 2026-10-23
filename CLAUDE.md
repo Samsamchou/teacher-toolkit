@@ -33,6 +33,10 @@
   `https://monster-in-my-mind.samchou.chatgpt.site`。
 - `tools/monster-in-my-mind-legacy-vite/`：改寫為 ChatGPT Sites 前的 React／Vite
   歷史原型，只供比較與復原，不從此資料夾部署或繼續開發。
+- `tools/2026 REA Games/`：REA（Reverse Engineer Anything）研究＋ Ken's Jump Island。
+  `godot-jump-island/` 是 Mario 64 式手感、造型全原創的 13 關 3D 平台遊戲（HWG5 51 題，一星一題，
+  12、13 關魔王），網站在 hwg5-clock-tower 的 `jump3d/`＋任務 `ershui-3d-quest-jump/`（共用學號登入外框）。
+  先讀 `工作流程與踩坑紀錄.md`、`godot-jump-island/HANDOFF.md`；第三方 YouTube 影片與逐字稿不入庫。
 
 ## 工作注意事項
 

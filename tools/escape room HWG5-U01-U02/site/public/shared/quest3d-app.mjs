@@ -1,5 +1,7 @@
 // 二水 3D 英語闖關 — 共用網頁外框（所有 3D 任務共用這一份）。
 // 任務資料夾的 index.html：import { BANK } from "./data.js"; import { start } from "../shared/quest3d-app.mjs"; start(BANK);
+// 另一款遊戲也可以共用這個外框：start(BANK, { game, bankBase, intro, meta, credits })
+//   例：Ken's Jump Island（ershui-3d-quest-jump）用 ../jump3d/ 的遊戲、共用 HWG5 的題庫 ../ershui-3d-quest/bank/。
 // Start → 學號（5–8 位數字）→ 共用 Godot 遊戲（iframe ../quest3d/index.html）→ 結果頁。
 // 遊戲從「任務資料夾/bank/」讀題目、插圖、語音與中文字型，所以換任務不必重新匯出遊戲。
 // 遊戲透過 window.ershuiHost 讀初始進度、回報每題結果；外框負責：
@@ -10,6 +12,7 @@ import { uploadAttempt, loadProgress, saveProgress } from "./quest-cloud.mjs";
 
 let BANK = null;
 let MISSION = "";
+let OPTS = {};
 // 第一個任務沿用原本的存檔鍵，學生舊進度不會不見
 const KEY = sid => MISSION === "ershui-3d-quest" ? `ershui3d:v1:${sid}` : `quest3d:v1:${MISSION}:${sid}`;
 const STUDENT_ID = /^\d{5,8}$/u;
@@ -90,7 +93,7 @@ function persist(immediate = false) {
 // ------------------------------------------------------------------ bridge used by the Godot game
 window.ershuiHost = {
   getInitial() {
-    const bankBase = new URL("bank/", location.href).href;
+    const bankBase = new URL(OPTS.bankBase || "bank/", location.href).href;
     return state ? { studentId: state.studentId, results: state.results, cleared: state.cleared, bankBase } : { bankBase };
   },
   report(json) {
@@ -119,14 +122,14 @@ function renderStart(message = "") {
   app.innerHTML = `<main class="screen"><section class="panel">
     <h1>${esc(BANK.unit)}</h1>
     <p class="en">${esc(BANK.title)}</p>
-    <p>走進二水的街道，在每個地點回答英文問題、打敗怪物！<br>Walk around Ershui, answer questions and beat the monsters!</p>
+    <p>${OPTS.intro || "走進二水的街道，在每個地點回答英文問題、打敗怪物！<br>Walk around Ershui, answer questions and beat the monsters!"}</p>
     <form id="startForm">
       <label for="sid">學號 Student ID</label>
       <input id="sid" type="text" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="60101" required>
       <p class="msg" id="msg">${esc(message)}</p>
       <button class="btn primary" type="submit">▶ Start</button>
     </form>
-    <p class="small">${BANK.items.length} questions · ${BANK.battles.length} places · iPad 請橫放<br>English audio is AI-generated, not a human recording.<br>Music: Suno · Sound effects: Kenney (CC0)</p>
+    <p class="small">${BANK.items.length} questions · ${BANK.battles.length} ${esc(OPTS.meta || "places")} · iPad 請橫放<br>English audio is AI-generated, not a human recording.<br>${esc(OPTS.credits || "Music: Suno · Sound effects: Kenney (CC0)")}</p>
     <a class="home" href="../">← 回到任務首頁</a>
   </section></main>`;
   const form = app.querySelector("#startForm");
@@ -157,7 +160,7 @@ function renderStart(message = "") {
 }
 
 function renderGame() {
-  app.innerHTML = `<div class="game"><iframe id="game" title="${esc(BANK.unit)}" src="../quest3d/index.html" allow="autoplay; fullscreen"></iframe></div>`;
+  app.innerHTML = `<div class="game"><iframe id="game" title="${esc(BANK.unit)}" src="${esc(OPTS.game || "../quest3d/index.html")}" allow="autoplay; fullscreen"></iframe></div>`;
 }
 
 function renderResult() {
@@ -174,7 +177,7 @@ function renderResult() {
       <div class="stats">
         <div><b>${sm.finished}/${sm.total}</b><span>完成題數</span></div>
         <div><b>${sm.firstTry}/${sm.total}</b><span>第一次就答對</span></div>
-        <div><b>${sm.battlesDone}/${BANK.battles.length}</b><span>通關地點</span></div>
+        <div><b>${sm.battlesDone}/${BANK.battles.length}</b><span>${esc(OPTS.clearedLabel || "通關地點")}</span></div>
       </div>
       <button class="btn primary" id="cheer">🎉 Cheer again</button>
       <button class="btn ghost" id="again">再玩一次 Play again</button>
@@ -192,8 +195,9 @@ function renderResult() {
   });
 }
 
-export function start(bank) {
+export function start(bank, opts = {}) {
   BANK = bank;
+  OPTS = opts;
   MISSION = bank.mission;
   document.title = bank.unit;
   renderStart();

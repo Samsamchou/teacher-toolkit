@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f2a5a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Ken's Jump Island 跳跳島 HWG5</title>
+  <link rel="stylesheet" href="../shared/quest3d.css">
+</head>
+<body>
+  <main id="app"><p class="loading">Loading…</p></main>
+  <!-- Ken's Jump Island：3D 平台遊戲在 ../jump3d/，題目共用二水 3D 闖關 HWG5 的題庫 ../ershui-3d-quest/bank/ -->
+  <script type="module">
+    import { BANK } from "./data.js";
+    import { start } from "../shared/quest3d-app.mjs";
+    start(BANK, {
+      game: "../jump3d/index.html",
+      bankBase: "../ershui-3d-quest/bank/",
+      intro: "跑跑跳跳收集星星，每一顆星星都是一題英文！打敗兩個魔王就完成任務。<br>Run, jump and collect stars — every star is an English question!",
+      meta: "islands",
+      clearedLabel: "通關小島",
+      credits: "Music: Suno · Sound effects & 3D models: Kenney (CC0)",
+    });
+  </script>
+</body>
+</html>
