@@ -1,0 +1,73 @@
+1
+00:00:04,950 --> 00:00:07,673
+Hi, I'm Abu.
+
+2
+00:00:07,823 --> 00:00:11,318
+Good morning, boys and girls.
+
+3
+00:00:12,950 --> 00:00:14,744
+Hey, I'm Teddy.
+
+4
+00:00:14,894 --> 00:00:16,814
+How are you?
+
+5
+00:00:20,950 --> 00:00:23,863
+We're on a trip to ErShui Township.
+
+6
+00:00:28,950 --> 00:00:32,063
+Now, we are at
+ErShui train station.
+
+7
+00:00:36,950 --> 00:00:38,541
+Where are we going?
+
+8
+00:00:44,950 --> 00:00:47,670
+We are going to the park.
+
+9
+00:00:47,820 --> 00:00:49,789
+Hooray! Let's go!
+
+10
+00:00:52,950 --> 00:00:55,680
+Oh, no! It's out of battery!
+
+11
+00:01:00,950 --> 00:01:02,550
+Excuse me!
+
+12
+00:01:02,700 --> 00:01:04,108
+I'm lost.
+
+13
+00:01:08,950 --> 00:01:10,352
+Where are you going?
+
+14
+00:01:11,367 --> 00:01:13,597
+I'm going to the park.
+
+15
+00:01:19,367 --> 00:01:20,837
+Where's the park?
+
+16
+00:01:20,987 --> 00:01:23,329
+It's on Yuan Ji Road.
+
+17
+00:01:27,367 --> 00:01:31,795
+Thank you. And, where is the
+Ershui Elementary School?
+
+18
+00:01:35,367 --> 00:01:37,508
+It's on Guang-wen Road.

@@ -1,0 +1,178 @@
+{
+ "events": [
+  {
+   "time": "2026-10-23T15:55:17+08:00",
+   "kind": "開機前",
+   "note": "start --h3-only 前讀取",
+   "balance": 391.53
+  },
+  {
+   "time": "2026-10-23T15:59:00+08:00",
+   "kind": "開機完成",
+   "note": "G4 Columbus US；安裝 221 秒、2 個 ComfyUI",
+   "balance": null
+  },
+  {
+   "time": "2026-10-23T16:07:01+08:00",
+   "kind": "C01 生成中",
+   "note": "第 1 次送出後讀餘額",
+   "balance": 390.11
+  },
+  {
+   "time": "2026-10-23T16:09:36+08:00",
+   "kind": "停機",
+   "note": "C01 第 1 次完成，交老師驗收",
+   "balance": 390.11
+  },
+  {
+   "time": "2026-10-23T16:13:20+08:00",
+   "kind": "開機前",
+   "note": "送 8 段前",
+   "balance": 389.39
+  },
+  {
+   "time": "2026-10-23T17:27:26+08:00",
+   "kind": "停機",
+   "note": "8 段完成，交 QA",
+   "balance": 379.02
+  },
+  {
+   "time": "2026-10-23T17:39:03+08:00",
+   "kind": "開機前",
+   "note": "重做 C09、C10 第 2 次",
+   "balance": 379.02
+  },
+  {
+   "time": "2026-10-23T18:01:41+08:00",
+   "kind": "停機",
+   "note": "C09、C10 第 2 次完成（--stop-after）",
+   "balance": 376.05
+  },
+  {
+   "time": "2026-10-23T18:20:31+08:00",
+   "kind": "開機前",
+   "note": "C10 第 3 次",
+   "balance": 376.05
+  },
+  {
+   "time": "2026-10-23T18:37:30+08:00",
+   "kind": "停機",
+   "note": "C10 第 3 次完成（--stop-after）",
+   "balance": 374.1
+  }
+ ],
+ "jobs": [
+  {
+   "clip": "C01",
+   "take": 1,
+   "submitted": "2026-10-23T15:59:10+08:00",
+   "ok": true,
+   "render_sec": 517.4,
+   "wall_sec": 534
+  },
+  {
+   "clip": "C03",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 1009.7,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C07",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 1005.0,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C08",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 1000.9,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C09",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 1004.9,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C10",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 993.2,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C11",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 1000.9,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C12",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 985.1,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C13",
+   "take": 1,
+   "submitted": "2026-10-23T16:13:39+08:00",
+   "ok": true,
+   "render_sec": 988.9,
+   "parallel": 2,
+   "wall_sec": 509
+  },
+  {
+   "clip": "C09",
+   "take": 2,
+   "submitted": "2026-10-23T17:39:13+08:00",
+   "ok": true,
+   "render_sec": 1005.5,
+   "parallel": 2,
+   "wall_sec": 531
+  },
+  {
+   "clip": "C10",
+   "take": 2,
+   "submitted": "2026-10-23T17:39:13+08:00",
+   "ok": true,
+   "render_sec": 1009.0,
+   "parallel": 2,
+   "wall_sec": 531
+  },
+  {
+   "clip": "C10",
+   "take": 3,
+   "submitted": "2026-10-23T18:21:03+08:00",
+   "ok": true,
+   "render_sec": 513.5,
+   "parallel": 2,
+   "wall_sec": 532
+  }
+ ],
+ "summary": {
+  "avg_render_sec": 516.6666666666666,
+  "units_used_by_balance": 17.43,
+  "jobs": 12
+ }
+}

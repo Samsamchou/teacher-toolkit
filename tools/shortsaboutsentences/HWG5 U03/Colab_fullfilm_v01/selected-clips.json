@@ -1,0 +1,94 @@
+{
+  "C01": {
+    "file": "takes/C01_c1.mp4",
+    "sha256": "714fbdbb1cf83e17e0bf0aa33afe8aa2432588a9e684e32e71f3f04d45d90119",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C02": {
+    "file": "../H3_C06_voice-first_v01/clips/C02_H3_v01.mp4",
+    "sha256": "ce54f899b096f6009960328990a1e02da2ea43ba9fb98179a0af8054d76aaa70",
+    "platform": "RunPod",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C03": {
+    "file": "takes/C03_c1.mp4",
+    "sha256": "f675144650e132a340194609955fe934f5d8f4f79a0e228837a7da37c4e3b890",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C04": {
+    "file": "../H3_C06_voice-first_v01/clips/C04_H3_v01.mp4",
+    "sha256": "76f4a33c5c8cc0c20f97464d1765a55e804524f97eb4ceb178c653050634596d",
+    "platform": "RunPod",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C05": {
+    "file": "../H3_C06_voice-first_v01/clips/C05_H3_v01.mp4",
+    "sha256": "fe3c814c24f479036001751a8c5054adbfbfca18f024d8b4080666768bdcee8c",
+    "platform": "RunPod",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C06": {
+    "file": "../H3_C06_voice-first_v01/clips/C06_H3_v02.mp4",
+    "sha256": "e124def0ffe8865c8f73928408bbf7acf83e7972aa07c71d177aab7fe97fc040",
+    "platform": "RunPod",
+    "take": 2,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C07": {
+    "file": "takes/C07_c1.mp4",
+    "sha256": "e0b993572743c88658caefe96a3130b4bba5a8c61bb464683b481be1443b4e08",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C08": {
+    "file": "takes/C08_c1.mp4",
+    "sha256": "9318cdfa2201ebcfba2319dc2d68591f2955108195dfcde7c2bf9147c7f6675c",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C09": {
+    "file": "takes/C09_c2.mp4",
+    "sha256": "c7d409ea650dede404c89dbeb64679c6470cbc961fae1dd896987370804c14d2",
+    "platform": "Colab",
+    "take": 2,
+    "trim_end_sec": 2.4,
+    "teacher_acceptance": "TEACHER_APPROVED_TRIMMED"
+  },
+  "C10": {
+    "file": "takes/C10_c3.mp4",
+    "sha256": "23d0d611141ac2ef8069508cd550d80f8f90a5c48e6ab213b86741846ec11f7e",
+    "platform": "Colab",
+    "take": 3,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C11": {
+    "file": "takes/C11_c1.mp4",
+    "sha256": "7b327d2a6d79430535944fb6b1735783f1a33ec92273c2a9d5b33d02cf9d0a94",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C12": {
+    "file": "takes/C12_c1.mp4",
+    "sha256": "8f89fc8725695e7dd63ed4782a8153e2fa3ae00600c72647f99cdb0cd3487d45",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  },
+  "C13": {
+    "file": "takes/C13_c1.mp4",
+    "sha256": "db720ab3ba9cc7f9bb052074056fa7d9067532e5901ee54629e9d3d6ac034497",
+    "platform": "Colab",
+    "take": 1,
+    "teacher_acceptance": "TEACHER_APPROVED"
+  }
+}
