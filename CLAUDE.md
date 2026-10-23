@@ -37,6 +37,9 @@
   `godot-jump-island/` 是 Mario 64 式手感、造型全原創的 13 關 3D 平台遊戲（HWG5 51 題，一星一題，
   12、13 關魔王），網站在 hwg5-clock-tower 的 `jump3d/`＋任務 `ershui-3d-quest-jump/`（共用學號登入外框）。
   先讀 `工作流程與踩坑紀錄.md`、`godot-jump-island/HANDOFF.md`；第三方 YouTube 影片與逐字稿不入庫。
+- `tools/2026 AI VIDEOS SENSE BAR/`：照「山獅霸」工作流（shanshiba-workflow 兩個 repo）在 Google Colab G4
+  做 AI 短片；上游 repo clone 在裡面但不入庫，各片設定存 `films/<片名>/`。先讀 `HANDOFF.md`；
+  範本片〈被狗吃掉的作業〉2026-10-23 驗收。影片與圖片音檔不入庫。
 
 ## 工作注意事項
 

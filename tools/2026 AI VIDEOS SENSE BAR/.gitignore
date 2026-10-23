@@ -1,0 +1,25 @@
+# Upstream clone (has its own .git; re-clone from GitHub instead of embedding it)
+/shanshiba-workflow-32gvram-64gram/
+/shanshiba-workflow-colab/
+
+# Pipeline outputs
+out/
+
+# Large media stays on Google Drive, not in git
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.zip
+*.tgz
+*.safetensors
+*.ckpt
+*.onnx

@@ -1,0 +1,77 @@
+{
+ "version": 2,
+ "design_text": "Hello! It's a beautiful snowy day. Let's have fun together in the snow.",
+ "takes": 5,
+ "tempo": 0.8,
+ "voices": {
+  "narrator": "A warm, gentle adult woman storyteller with a soft, low, calm voice, clear American English, like reading a picture book to young children",
+  "teddy": "A bright, cheerful ten-year-old American boy, natural and friendly, very clear pronunciation",
+  "amber": "A confident ten-year-old American girl with a clear, warm, medium-pitched voice, steady and articulate, slightly mature for her age",
+  "abu": "A cute little robot with a bright, high, bouncy child-like voice, a light playful robotic lilt, crisp and clear American English",
+  "joy": "A sweet, natural little girl about seven years old with a light, high, warm human voice, cheerful and giggly, soft and clear American English",
+  "alan": "A happy, chubby young boy elf with a bouncy, round, cheerful voice, a bit cheeky, clear American English",
+  "santa": "A huge jolly old man with an extremely deep, low, rumbling bass voice, slow and hearty, warm, clear American English"
+ },
+ "tone": {
+  "S01_narr": "calm, warm storytelling with a hint of wonder about the cold",
+  "S02": "amazed and excited, looking up at the sky",
+  "S03": "joyful and proud, announcing it to everyone",
+  "S04": "curious and friendly, asking a question",
+  "S05": "bright and friendly, saying exactly the sentence with no extra words",
+  "S06": "polite and curious, asking a question",
+  "S07": "proud and happy, answering",
+  "S08": "curious and interested, asking a question",
+  "S09": "excited and playful",
+  "S10": "happy and a little cheeky",
+  "S11_narr": "warm, cozy storytelling",
+  "S12": "curious while busy wrapping a gift",
+  "S13": "cheerful and matter-of-fact",
+  "S14a_narr": "gentle and cozy",
+  "S14": "curious, asking a question",
+  "S15": "proud, showing off his drawing",
+  "S16_narr": "playful, with excited anticipation",
+  "S17": "curious, a little puzzled",
+  "S18": "giggly and mischievous, sharing a funny surprise",
+  "S20": "a hearty belly laugh, then a warm, friendly question",
+  "S21": "sleepy and yawning",
+  "S22": "warm, gentle and cozy, saying good night"
+ },
+ "post": {
+  "abu": [
+   "robot"
+  ],
+  "santa": [
+   "pitch:-3",
+   "chest"
+  ],
+  "amber": [
+   "pitch:-4"
+  ]
+ },
+ "line_control": {
+  "amber": false,
+  "santa": false
+ },
+ "ref_pick": {
+  "santa": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005
+   ],
+   "want": "low"
+  },
+  "joy": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003
+   ],
+   "want": "high"
+  }
+ }
+}

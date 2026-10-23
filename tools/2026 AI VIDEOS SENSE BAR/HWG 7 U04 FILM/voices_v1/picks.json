@@ -1,0 +1,178 @@
+{
+ "S01_narr": {
+  "who": "narrator",
+  "text": "Teddy, Amber and Abu are in Finland. It's near the North Pole. It's very cold.",
+  "take": 1,
+  "heard": "Teddy, Amber and Abu are in Finland. It's near the North Pole. It's very cold.",
+  "match": 1.0,
+  "secs": 4.62
+ },
+ "S02": {
+  "who": "teddy",
+  "text": "Wow! They are Northern Lights!",
+  "take": 0,
+  "heard": "Wow, they are Northern Lights.",
+  "match": 1.0,
+  "secs": 2.21
+ },
+ "S03": {
+  "who": "amber",
+  "text": "We are in the Arctic Circle now!",
+  "take": 2,
+  "heard": "We are in the Arctic Circle now!",
+  "match": 1.0,
+  "secs": 2.0
+ },
+ "S04": {
+  "who": "amber",
+  "text": "What time do you get up, Joy?",
+  "take": 1,
+  "heard": "What time do you get up, Joy?",
+  "match": 1.0,
+  "secs": 1.38
+ },
+ "S05": {
+  "who": "joy",
+  "text": "I get up at seven thirty.",
+  "take": 0,
+  "heard": "I get up at 7.30!",
+  "match": 0.667,
+  "secs": 1.56
+ },
+ "S06": {
+  "who": "abu",
+  "text": "What time do you go to school, Alan?",
+  "take": 1,
+  "heard": "What time do you go to school, Alan?",
+  "match": 1.0,
+  "secs": 1.87
+ },
+ "S07": {
+  "who": "alan",
+  "text": "I go to school at eight o'clock.",
+  "take": 2,
+  "heard": "I go to school at 8 o'clock.",
+  "match": 0.857,
+  "secs": 1.92
+ },
+ "S08": {
+  "who": "teddy",
+  "text": "What do you do in your free time?",
+  "take": 1,
+  "heard": "What do you do in your free time?",
+  "match": 1.0,
+  "secs": 1.73
+ },
+ "S09": {
+  "who": "joy",
+  "text": "I make a snowman.",
+  "take": 0,
+  "heard": "I make a snowman!",
+  "match": 1.0,
+  "secs": 1.34
+ },
+ "S10": {
+  "who": "alan",
+  "text": "I surf the Internet.",
+  "take": 1,
+  "heard": "I surf the internet.",
+  "match": 1.0,
+  "secs": 1.06
+ },
+ "S11_narr": {
+  "who": "narrator",
+  "text": "Abu, Teddy, and Amber are at the elf school. They wrap gifts.",
+  "take": 0,
+  "heard": "Abu, Teddy, and Amber are at the elf school. They wrap gifts.",
+  "match": 1.0,
+  "secs": 4.23
+ },
+ "S12": {
+  "who": "amber",
+  "text": "What time does Santa have lunch?",
+  "take": 1,
+  "heard": "What time does Santa have lunch?",
+  "match": 1.0,
+  "secs": 1.58
+ },
+ "S13": {
+  "who": "joy",
+  "text": "He has lunch at one o'clock.",
+  "take": 2,
+  "heard": "He has lunch at 1 o'clock.",
+  "match": 0.833,
+  "secs": 1.73
+ },
+ "S14a_narr": {
+  "who": "narrator",
+  "text": "They are drawing a Christmas card.",
+  "take": 0,
+  "heard": "They are drawing a Christmas card.",
+  "match": 1.0,
+  "secs": 1.82
+ },
+ "S14": {
+  "who": "teddy",
+  "text": "What time does Santa go home?",
+  "take": 1,
+  "heard": "What time does Santa go home?",
+  "match": 1.0,
+  "secs": 1.64
+ },
+ "S15": {
+  "who": "alan",
+  "text": "He goes home at five forty.",
+  "take": 2,
+  "heard": "He goes home at 540.",
+  "match": 0.727,
+  "secs": 2.34
+ },
+ "S16_narr": {
+  "who": "narrator",
+  "text": "The next day... They are going to a hot spring.",
+  "take": 0,
+  "heard": "The next day, they are going to a hot spring.",
+  "match": 1.0,
+  "secs": 2.76
+ },
+ "S17": {
+  "who": "abu",
+  "text": "What time does Santa take a shower?",
+  "take": 1,
+  "heard": "What time does Santa take a shower?",
+  "match": 1.0,
+  "secs": 1.8
+ },
+ "S18": {
+  "who": "joy",
+  "text": "He takes an ice shower at nine thirty.",
+  "take": 1,
+  "heard": "He takes an ice shower at 9.30.",
+  "match": 0.75,
+  "secs": 2.16
+ },
+ "S20": {
+  "who": "santa",
+  "text": "Ho ho ho! What time do you go to bed, kids?",
+  "take": 0,
+  "heard": "Ho, ho, ho! What time do you go to bed, kids?",
+  "match": 1.0,
+  "secs": 3.13
+ },
+ "S21": {
+  "who": "teddy",
+  "text": "I go to bed at nine o'clock.",
+  "take": 2,
+  "heard": "I go to bed at 9 o'clock.",
+  "match": 0.857,
+  "secs": 1.85
+ },
+ "S22": {
+  "who": "santa",
+  "text": "It's nine o'clock now. Good night!",
+  "take": 1,
+  "heard": "It's nine o'clock now. Good night.",
+  "match": 1.0,
+  "secs": 2.24
+ }
+}

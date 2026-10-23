@@ -1,0 +1,55 @@
+{
+ "pass1_sheet": "film_1080p_pass1.jpg",
+ "pass3_noise": [
+  [
+   "S1",
+   0.275,
+   1.08,
+   "ok"
+  ],
+  [
+   "S2",
+   0.342,
+   1.07,
+   "ok"
+  ],
+  [
+   "S3",
+   0.332,
+   1.1,
+   "ok"
+  ],
+  [
+   "S4",
+   0.357,
+   1.05,
+   "ok"
+  ],
+  [
+   "S5",
+   0.311,
+   1.05,
+   "ok"
+  ],
+  [
+   "S6",
+   0.324,
+   1.07,
+   "ok"
+  ],
+  [
+   "S7",
+   0.382,
+   1.09,
+   "ok"
+  ]
+ ],
+ "pass4_black": [],
+ "pass4_freeze": [],
+ "pass4_loudness_LUFS": -15.8,
+ "pass4_true_peak_dBFS": -2.0,
+ "pass4_loudness_ok": true,
+ "pass5_brightness_jumps": [],
+ "pass5_voice_overlaps": [],
+ "pass5_lines_cut_by_shot_end": []
+}

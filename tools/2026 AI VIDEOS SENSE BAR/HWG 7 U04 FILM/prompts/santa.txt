@@ -1,0 +1,5 @@
+Use your built-in image generation tool to create one image.
+
+Character: Santa Claus, a jolly old man. From the reference: big fluffy white beard and mustache, rosy round cheeks, closed-eye happy smile, red Santa hat with white pompom. He wears his classic red suit with white fur trim, black belt with gold buckle, and black boots. Japanese anime cel-shaded style: clean confident line art, flat cel shading with soft gradients, expressive large eyes, high-quality TV anime key-visual finish, set in a cozy sci-fi winter world. Character turnaround sheet in 16:9 landscape: the SAME single character shown full body twice, front view on the left and three-quarter view on the right, standing in a friendly neutral pose, same scale, feet fully visible, plain light gray background, generous margins. No text, no letters, no numbers, no logos, no watermark, no speech bubbles, no other characters.
+
+Use the attached image(s) only as identity and costume reference; redraw the character in the anime style above. Save the PNG as santa.png in the current directory. Reply with the saved file path only.

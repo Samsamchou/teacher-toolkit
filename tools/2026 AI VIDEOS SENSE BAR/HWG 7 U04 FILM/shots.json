@@ -1,0 +1,346 @@
+{
+ "title": "HWG7 U04 — A Day with the Elves",
+ "style": "Japanese anime cel-shaded style matching the attached character sheets: clean confident line art, flat cel shading with soft gradients, cinematic TV-anime key-visual finish, cozy sci-fi winter world with rich warm and cool lighting. 16:9 landscape film frame. Characters keep their mouths gently closed. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.",
+ "chars": {
+  "teddy": "Teddy (a 10-year-old boy with black bowl-cut hair and straight bangs, big brown eyes, cream hooded puffer jacket with two thin brown stripes across the chest, dark brown snow pants, white snow boots, brown mittens)",
+  "amber": "Amber (a 10-year-old girl with long light-brown hair, round red-framed glasses, red Santa hat with white trim, pale yellow knit scarf, light-blue sweater, blue jeans, navy snow boots)",
+  "abu": "Abu (a small white robot child: round glossy white head with a small bear-like snout and black nose, black oval eyes, light-blue headphone-like ear modules, glowing light-blue heart on the chest, light-blue joint rings, red knitted scarf)",
+  "joy": "Joy (a small girl elf: red pointed elf hat with a plain red band, two long brown braids, pointed ears, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+  "alan": "Alan (a small boy elf: red pointed elf hat with a plain red band, short brown hair, pointed ears, round chubby face, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+  "santa": "Santa Claus (a jolly old man with a big fluffy white beard and mustache, rosy round cheeks, red Santa hat with a white pompom)"
+ },
+ "masters": {
+  "field": "Wide empty snowy Finnish landscape at night under vivid green and violet Northern Lights in a starry sky, snow-covered pine trees, gentle white hills. In the middle ground stands a futuristic sled with smooth white curves, soft cyan glowing light strips and a cozy padded seat with a brown blanket, harnessed to two friendly brown reindeer with softly glowing blue harness lights. No people.",
+  "classroom": "Interior of a cozy sci-fi elf school classroom inside a wooden log cabin: warm wooden walls, several round red mushroom-shaped stools on a wooden floor, a low wooden stage at the front with a teacher's wooden desk and a globe, a large blank softly glowing cyan holographic panel on the back wall with nothing on it, shelves with a toy sailboat and books, big windows on the left side showing a snowy night with Northern Lights. Warm golden lamp light. No people.",
+  "yard": "Snowy yard outside a wooden elf school cabin at blue twilight: soft deep snow, snow-covered pine trees, a half-built snowman made of two big snowballs next to a small wooden stool, a little basket of black coal stones, a few glowing sci-fi lanterns on posts. No people.",
+  "workshop": "Interior of a warm elf gift workshop: long wooden worktables covered with colorful wrapping paper, ribbons, scissors and gift boxes, a gently glowing sci-fi conveyor belt carrying wrapped presents in the background, string lights, snowy windows on the left side. No people.",
+  "hotspring": "Outdoor night scene in deep snow: on the right a steaming natural hot spring pool framed by dark rocks, on the left a frozen lake with one round hole cut in the ice showing dark water, a small wooden sauna cabin with warm glowing windows in the background, vivid Northern Lights in a starry violet sky. No people."
+ },
+ "shots": [
+  {
+   "id": "S01",
+   "scene": "field",
+   "refs": [
+    "teddy",
+    "amber",
+    "abu"
+   ],
+   "dur": 8,
+   "narr": "Teddy, Amber and Abu are in Finland. It's near the North Pole. It's very cold.",
+   "frame": "Wide shot: Teddy, Amber and Abu sit side by side in the glowing sled under a brown blanket, pulled by the two reindeer across the snow, shivering a little and looking ahead in wonder. Northern Lights fill the sky.",
+   "action": "The sled glides slowly across the snow; the three friends shiver and look around in wonder. Nobody speaks."
+  },
+  {
+   "id": "S02",
+   "scene": "field",
+   "refs": [
+    "teddy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "teddy",
+    "text": "Wow! They are Northern Lights!"
+   },
+   "frame": "Medium close-up of Teddy sitting in the sled, looking up at the sky with wide eyes, green aurora light reflecting on his face, mouth closed, face clearly visible in three-quarter view.",
+   "action": "Teddy looks up at the sky, points upward and says his line with excitement."
+  },
+  {
+   "id": "S03",
+   "scene": "field",
+   "refs": [
+    "amber",
+    "abu"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "amber",
+    "text": "We are in the Arctic Circle now!"
+   },
+   "frame": "Medium shot: Amber stands in the sled facing the camera with both arms spread wide and a big smile, mouth closed; Abu stands beside her, bouncing happily with both hands raised. Northern Lights behind them.",
+   "action": "Amber spreads her arms and says her line happily; Abu bounces beside her and does not speak."
+  },
+  {
+   "id": "S04",
+   "scene": "classroom",
+   "refs": [
+    "amber"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "amber",
+    "text": "What time do you get up, Joy?"
+   },
+   "frame": "Medium shot: Amber sits on a red mushroom stool and raises her right hand, turning in three-quarter view toward the front of the room on the right, face clearly visible, mouth closed.",
+   "action": "Amber raises her hand and asks her question, looking toward the front of the classroom."
+  },
+  {
+   "id": "S05",
+   "scene": "classroom",
+   "refs": [
+    "joy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "joy",
+    "text": "I get up at seven thirty."
+   },
+   "frame": "Medium shot: Joy stands on the low wooden stage in front of the teacher's desk, facing the camera, hands clasped, smiling with mouth closed.",
+   "action": "Joy answers cheerfully, rocking on her heels."
+  },
+  {
+   "id": "S06",
+   "scene": "classroom",
+   "refs": [
+    "abu"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "abu",
+    "text": "What time do you go to school, Alan?"
+   },
+   "frame": "Medium shot: Abu sits on a red mushroom stool and raises one hand, turned in three-quarter view toward the front of the room on the right, his heart glowing, mouth closed.",
+   "action": "Abu raises his hand and asks his question."
+  },
+  {
+   "id": "S07",
+   "scene": "classroom",
+   "refs": [
+    "alan"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "alan",
+    "text": "I go to school at eight o'clock."
+   },
+   "frame": "Medium shot: Alan stands on the low wooden stage beside the teacher's desk, facing the camera with his hands on his hips, smiling with mouth closed.",
+   "action": "Alan answers proudly with his hands on his hips."
+  },
+  {
+   "id": "S08",
+   "scene": "classroom",
+   "refs": [
+    "teddy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "teddy",
+    "text": "What do you do in your free time?"
+   },
+   "frame": "Medium close-up: Teddy sits on a red mushroom stool, leaning forward curiously, three-quarter view toward the right, face clearly visible, mouth closed.",
+   "action": "Teddy leans forward and asks his question with curiosity."
+  },
+  {
+   "id": "S09",
+   "scene": "yard",
+   "refs": [
+    "joy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "joy",
+    "text": "I make a snowman."
+   },
+   "frame": "Medium shot: Joy stands on the small wooden stool beside the snowman, one hand still on the snowman's new carrot nose, her body and face turned toward the camera, face fully visible in front view, big smile with mouth closed.",
+   "action": "Joy puts the carrot nose on the snowman, then turns and says her line."
+  },
+  {
+   "id": "S10",
+   "scene": "classroom",
+   "refs": [
+    "alan"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "alan",
+    "text": "I surf the Internet."
+   },
+   "frame": "Medium shot: Alan sits cross-legged on a cushion by the classroom window, a floating cyan holographic screen in front of him showing only colorful abstract shapes and simple picture icons, his face lit in cyan, three-quarter view toward the camera, mouth closed.",
+   "action": "Alan swipes the floating screen with one finger and says his line happily."
+  },
+  {
+   "id": "S11",
+   "scene": "workshop",
+   "refs": [
+    "teddy",
+    "amber",
+    "abu"
+   ],
+   "dur": 6,
+   "narr": "Abu, Teddy, and Amber are at the elf school. They wrap gifts.",
+   "frame": "Wide shot: Teddy, Amber and Abu stand around a worktable wrapping colorful gift boxes with paper and ribbons, smiling, presents moving on the glowing conveyor belt behind them.",
+   "action": "The three friends fold wrapping paper and tie ribbons around gifts. Nobody speaks."
+  },
+  {
+   "id": "S12",
+   "scene": "workshop",
+   "refs": [
+    "amber"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "amber",
+    "text": "What time does Santa have lunch?"
+   },
+   "frame": "Medium shot: Amber stands at the worktable tying a red ribbon on a gift box and looks up toward the right in three-quarter view, face clearly visible, mouth closed.",
+   "action": "Amber finishes tying the ribbon, looks up and asks her question."
+  },
+  {
+   "id": "S13",
+   "scene": "workshop",
+   "refs": [
+    "joy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "joy",
+    "text": "He has lunch at one o'clock."
+   },
+   "frame": "Medium shot: Joy stands at the worktable wrapping a gift in green paper, facing the camera, smiling with mouth closed.",
+   "action": "Joy keeps wrapping the gift and answers cheerfully."
+  },
+  {
+   "id": "S14a",
+   "scene": "workshop",
+   "refs": [],
+   "dur": 4,
+   "narr": "They are drawing a Christmas card.",
+   "frame": "Close-up from above of a Christmas card being drawn with colored pencils on a wooden table: the card shows a simple drawing of a decorated Christmas tree with a star. Only two pairs of hands are visible: a boy's hands in brown mittens with cream jacket cuffs, and small white robot hands with light-blue joint rings. No other sleeves or arms, no faces.",
+   "action": "Hands color the Christmas tree drawing with colored pencils. Nobody speaks."
+  },
+  {
+   "id": "S14",
+   "scene": "workshop",
+   "refs": [
+    "teddy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "teddy",
+    "text": "What time does Santa go home?"
+   },
+   "frame": "Medium shot: Teddy sits at the worktable holding a colored pencil over a half-drawn Christmas card, looking up toward the right in three-quarter view, face clearly visible, mouth closed.",
+   "action": "Teddy stops drawing, looks up and asks his question."
+  },
+  {
+   "id": "S15",
+   "scene": "workshop",
+   "refs": [
+    "alan"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "alan",
+    "text": "He goes home at five forty."
+   },
+   "frame": "Medium shot: Alan holds up a finished Christmas card with a drawing of Santa's sleigh and reindeer, facing the camera, smiling with mouth closed.",
+   "action": "Alan shows the card proudly and answers."
+  },
+  {
+   "id": "S16",
+   "scene": "hotspring",
+   "refs": [
+    "teddy",
+    "amber",
+    "abu"
+   ],
+   "dur": 6,
+   "narr": "The next day... They are going to a hot spring.",
+   "frame": "Wide shot: Teddy, Amber and Abu walk through the snow toward the steaming hot spring carrying white towels, steam rising, Northern Lights above.",
+   "action": "The three friends walk happily toward the hot spring. Nobody speaks."
+  },
+  {
+   "id": "S17",
+   "scene": "hotspring",
+   "refs": [
+    "abu"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "abu",
+    "text": "What time does Santa take a shower?"
+   },
+   "frame": "Medium shot: Abu stands beside the steaming hot spring with a small white towel on his head, three-quarter view, heart glowing, mouth closed.",
+   "action": "Abu tilts his head and asks his question."
+  },
+  {
+   "id": "S18",
+   "scene": "hotspring",
+   "refs": [
+    "joy"
+   ],
+   "dur": 6,
+   "line": {
+    "who": "joy",
+    "text": "He takes an ice shower at nine thirty."
+   },
+   "frame": "Medium shot: Joy stands in the snow near the frozen lake, pointing toward the hole in the ice with one hand, facing the camera with a mischievous smile, mouth closed.",
+   "action": "Joy points toward the frozen lake and answers with a giggle."
+  },
+  {
+   "id": "S19",
+   "scene": "hotspring",
+   "refs": [
+    "santa"
+   ],
+   "dur": 5,
+   "frame": "Medium shot: Santa Claus sits in the round hole in the frozen lake, only his head, shoulders and arms above the icy water, laughing happily with eyes closed, his red suit and black boots neatly folded on the snow beside the hole.",
+   "action": "Santa splashes the icy water and laughs heartily without words."
+  },
+  {
+   "id": "S20",
+   "scene": "hotspring",
+   "refs": [
+    "santa"
+   ],
+   "dur": 6,
+   "line": {
+    "who": "santa",
+    "text": "Ho ho ho! What time do you go to bed, kids?"
+   },
+   "frame": "Medium close-up: Santa Claus sits in the round hole in the frozen lake, head and bare shoulders and arms like a man taking an ice bath (no shirt, no coat, nothing red on his body except his Santa hat), his red suit folded on the snow beside the hole; eyes open and twinkling, raising one bare hand to wave at the camera, mouth closed.",
+   "action": "Santa waves and asks his question warmly."
+  },
+  {
+   "id": "S21",
+   "scene": "hotspring",
+   "refs": [
+    "teddy"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "teddy",
+    "text": "I go to bed at nine o'clock."
+   },
+   "frame": "Medium close-up: Teddy stands by the hot spring wrapped in a big white towel, looking sleepy with half-closed eyes, mouth closed.",
+   "action": "Teddy rubs his eye sleepily and answers."
+  },
+  {
+   "id": "S22",
+   "scene": "hotspring",
+   "refs": [
+    "santa"
+   ],
+   "dur": 5,
+   "line": {
+    "who": "santa",
+    "text": "It's nine o'clock now. Good night!"
+   },
+   "frame": "Medium close-up: Santa Claus sits in the round hole in the frozen lake, head and bare shoulders and arms like a man taking an ice bath (no shirt, no coat, nothing red on his body except his Santa hat), his red suit folded on the snow beside the hole; he looks at a simple round wristwatch with a plain face on his raised bare wrist, smiling with mouth closed.",
+   "action": "Santa checks his watch, then winks and says good night."
+  },
+  {
+   "id": "S23",
+   "scene": "field",
+   "refs": [
+    "teddy",
+    "amber",
+    "abu",
+    "joy",
+    "alan"
+   ],
+   "dur": 6,
+   "frame": "Wide shot: the glowing sled flies up into the starry sky toward the Northern Lights, pulled by the two reindeer, with Teddy, Amber, Abu, Joy and Alan inside waving happily, the snowy land below.",
+   "action": "The sled rises into the sky; everyone waves goodbye. Nobody speaks."
+  }
+ ]
+}
