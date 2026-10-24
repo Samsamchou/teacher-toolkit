@@ -1,0 +1,123 @@
+[
+ {
+  "shot": "S03",
+  "mode": "first",
+  "take": 1,
+  "taskId": "e75d656df55ed4d114a0d2647a546e5e",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 122,
+  "fail": "",
+  "file": "seedance/S03/first_1.mp4"
+ },
+ {
+  "shot": "S03",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "71995202cf993ee0869ebde07d28eae3",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 168,
+  "fail": "",
+  "file": "seedance/S03/ref_1.mp4"
+ },
+ {
+  "shot": "S14a",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "1aa820d8c018f88e5c55be47f482076f",
+  "state": "success",
+  "credits": 32.8,
+  "secs": 92,
+  "fail": "",
+  "file": "seedance/S14a/ref_1.mp4"
+ },
+ {
+  "shot": "S01",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "922f51655f1063da7fcae11aadacad98",
+  "state": "success",
+  "credits": 65.6,
+  "secs": 137,
+  "fail": "",
+  "file": "seedance/S01/ref_1.mp4"
+ },
+ {
+  "shot": "S09",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "71fc9fd3f71bc2d3bf075bfb94afc677",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 153,
+  "fail": "",
+  "file": "seedance/S09/ref_1.mp4"
+ },
+ {
+  "shot": "S11",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "cfbcefb82a780a8e5774418fec84ddec",
+  "state": "success",
+  "credits": 49.2,
+  "secs": 152,
+  "fail": "",
+  "file": "seedance/S11/ref_1.mp4"
+ },
+ {
+  "shot": "S16",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "80bd6f2901e1d4b7bba678bd4acd5067",
+  "state": "success",
+  "credits": 49.2,
+  "secs": 137,
+  "fail": "",
+  "file": "seedance/S16/ref_1.mp4"
+ },
+ {
+  "shot": "S19",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "c72db3e26fae6bbe2ba98a909229e3df",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 137,
+  "fail": "",
+  "file": "seedance/S19/ref_1.mp4"
+ },
+ {
+  "shot": "S23",
+  "mode": "ref",
+  "take": 1,
+  "taskId": "31213c0abb607a4a52f177fa606ffb7d",
+  "state": "success",
+  "credits": 49.2,
+  "secs": 169,
+  "fail": "",
+  "file": "seedance/S23/ref_1.mp4"
+ },
+ {
+  "shot": "S11",
+  "mode": "ref",
+  "take": 2,
+  "taskId": "c026682b224e37804eca9150d18710d7",
+  "state": "success",
+  "credits": 49.2,
+  "secs": 122,
+  "fail": "",
+  "file": "seedance/S11/ref_2.mp4"
+ },
+ {
+  "shot": "S03",
+  "mode": "ref",
+  "take": 2,
+  "taskId": "50aafb4a0813d9402c7ececad135ea92",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 138,
+  "fail": "",
+  "file": "seedance/S03/ref_2.mp4"
+ }
+]

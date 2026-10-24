@@ -1,0 +1,37 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Line,Comic Relief,68,&H0000E6FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,2,2,80,80,130,1
+Style: Narr,Comic Relief,62,&H0000E6FF,&H00F0F0FF,&H00402000,&H64000000,0,1,0,0,100,100,0,0,1,5,2,2,80,80,130,1
+Style: Card,Comic Relief,110,&H0066E6FF,&H00FFFFFF,&H00301000,&H64000000,0,0,0,0,100,100,2,0,1,7,3,5,80,80,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:01:25.35,0:01:27.85,Card,,0,0,0,,{\fad(300,400)}The next day...
+Dialogue: 0,0:00:00.35,0:00:07.11,Narr,,0,0,0,,{\k25}{\k68}Teddy, {\k28}Amber {\k30}and {\k34}Abu {\k22}are {\k18}in {\k114}Finland. {\k24}It's {\k14}near {\k22}the {\k28}North {\k96}Pole. {\k22}It's {\k28}very {\k36}cold.
+Dialogue: 0,0:00:08.43,0:00:11.68,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Teddy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k86}Wow! {\k28}They {\k12}are {\k50}Northern {\k44}Lights!
+Dialogue: 0,0:00:13.30,0:00:15.87,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Amber: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k20}We {\k12}are {\k14}in {\k14}the {\k30}Arctic {\k36}Circle {\k44}now!
+Dialogue: 0,0:00:18.68,0:00:21.02,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Amber: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k16}What {\k28}time {\k18}do {\k12}you {\k20}get {\k46}up, {\k2}Joy?
+Dialogue: 0,0:00:23.85,0:00:26.56,Line,,0,0,0,,{\1c&H008CE6A0\2c&H008CE6A0}Joy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k14}I {\k26}get {\k22}up {\k18}at {\k44}seven {\k46}thirty.
+Dialogue: 0,0:00:29.02,0:00:32.67,Line,,0,0,0,,{\1c&H00FFD27A\2c&H00FFD27A}Abu: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k22}What {\k42}time {\k28}do {\k14}you {\k28}go {\k24}to {\k90}school, {\k8}Alan?
+Dialogue: 0,0:00:34.18,0:00:37.33,Line,,0,0,0,,{\1c&H0078B4FF\2c&H0078B4FF}Alan: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k22}I {\k24}go {\k20}to {\k38}school {\k36}at {\k28}eight {\k55}o'clock.
+Dialogue: 0,0:00:39.35,0:00:41.84,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Teddy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k18}What {\k14}do {\k14}you {\k26}do {\k18}in {\k12}your {\k28}free {\k34}time?
+Dialogue: 0,0:00:47.12,0:00:49.60,Line,,0,0,0,,{\1c&H008CE6A0\2c&H008CE6A0}Joy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k8}I {\k28}make {\k24}a {\k78}snowman.
+Dialogue: 0,0:00:49.60,0:00:51.96,Line,,0,0,0,,{\1c&H0078B4FF\2c&H0078B4FF}Alan: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k28}I {\k38}surf {\k34}the {\k36}Internet.
+Dialogue: 0,0:00:54.37,0:01:00.75,Narr,,0,0,0,,{\k25}{\k74}Abu, {\k80}Teddy, {\k4}and {\k48}Amber {\k38}are {\k32}at {\k18}the {\k26}elf {\k124}school. {\k12}They {\k28}wrap {\k50}gifts.
+Dialogue: 0,0:01:00.85,0:01:03.51,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Amber: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k16}What {\k30}time {\k22}does {\k28}Santa {\k32}have {\k34}lunch?
+Dialogue: 0,0:01:06.02,0:01:09.46,Line,,0,0,0,,{\1c&H008CE6A0\2c&H008CE6A0}Joy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k24}He {\k40}has {\k46}lunch {\k42}at {\k32}one {\k71}o'clock.
+Dialogue: 0,0:01:10.88,0:01:13.53,Narr,,0,0,0,,{\k25}{\k22}They {\k16}are {\k34}drawing {\k28}a {\k26}Christmas {\k54}card.
+Dialogue: 0,0:01:15.27,0:01:17.64,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Teddy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k16}What {\k28}time {\k22}does {\k30}Santa {\k30}go {\k26}home?
+Dialogue: 0,0:01:20.43,0:01:23.66,Line,,0,0,0,,{\1c&H0078B4FF\2c&H0078B4FF}Alan: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k20}He {\k28}goes {\k36}home {\k28}at {\k50}five {\k50}forty.
+Dialogue: 0,0:01:25.40,0:01:30.06,Narr,,0,0,0,,{\k25}{\k12}The {\k26}next {\k132}day... {\k32}They {\k16}are {\k30}going {\k32}to {\k22}a {\k24}hot {\k48}spring.
+Dialogue: 0,0:01:31.68,0:01:34.97,Line,,0,0,0,,{\1c&H00FFD27A\2c&H00FFD27A}Abu: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k22}What {\k44}time {\k32}does {\k32}Santa {\k42}take {\k22}a {\k28}shower?
+Dialogue: 0,0:01:36.85,0:01:40.09,Line,,0,0,0,,{\1c&H008CE6A0\2c&H008CE6A0}Joy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k20}He {\k30}takes {\k18}an {\k28}ice {\k32}shower {\k26}at {\k28}nine {\k34}thirty.
+Dialogue: 0,0:01:48.52,0:01:53.60,Line,,0,0,0,,{\1c&H006E6EFF\2c&H006E6EFF}Santa: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k26}Ho {\k16}ho {\k130}ho! {\k40}What {\k42}time {\k30}do {\k14}you {\k22}go {\k16}to {\k64}bed, {\k4}kids?
+Dialogue: 0,0:01:55.10,0:01:57.98,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Teddy: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k34}I {\k24}go {\k18}to {\k24}bed {\k20}at {\k24}nine {\k57}o'clock.
+Dialogue: 0,0:02:00.27,0:02:04.17,Line,,0,0,0,,{\1c&H006E6EFF\2c&H006E6EFF}Santa: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k44}It's {\k32}nine {\k54}o'clock {\k126}now. {\k14}Good {\k30}night!

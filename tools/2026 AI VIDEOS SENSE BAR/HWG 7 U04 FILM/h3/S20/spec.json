@@ -1,0 +1,47 @@
+{
+ "duration": 6.563,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a snowy night by a steaming hot spring and a frozen lake under the Northern Lights",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "santa",
+   "desc": "Santa Claus (a jolly old man with a big fluffy white beard and mustache, rosy round cheeks, red Santa hat with a white pompom)",
+   "voice": "a deep, warm, jolly old man's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Santa waves and asks his question warmly.",
+   "dialogue": [
+    {
+     "subject": "santa",
+     "line": "Ho ho ho! What time do you go to bed, kids?",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Bubbling hot water, a light winter breeze, gentle splashes.",
+ "music": "N/A"
+}

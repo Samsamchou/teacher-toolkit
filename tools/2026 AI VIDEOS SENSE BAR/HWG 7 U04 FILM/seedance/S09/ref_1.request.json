@@ -1,0 +1,15 @@
+{
+ "prompt": "Japanese anime TV series, clean cel-shaded 2D animation with confident line art, flat colors with soft gradients, smooth expressive character animation, cozy sci-fi winter world. Reference image 1 is the opening frame: match its composition, background, lighting and characters. The other reference images are the character sheets. Scene: Medium shot: Joy stands on the small wooden stool beside the snowman, one hand still on the snowman's new carrot nose, her body and face turned toward the camera, face fully visible in front view, big smile with mouth closed. Characters: Joy (a small girl elf: red pointed elf hat with a plain red band, two long brown braids, pointed ears, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes). Action: Joy puts the carrot nose on the snowman, then turns and says her line. Joy says in clear English: \"I make a snowman.\" Her/his lip movements follow the reference audio exactly. Only the speaker's mouth moves. Keep every character's face, hair, outfit and colors exactly as in the reference images. No captions, no subtitles, no readable text, letters or numbers anywhere. No new characters appear.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 5,
+ "web_search": false,
+ "reference_image_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S09_first.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_joy.png"
+ ],
+ "generate_audio": true,
+ "reference_audio_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S09_voice.wav"
+ ]
+}

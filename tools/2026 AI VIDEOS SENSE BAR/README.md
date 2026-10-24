@@ -23,7 +23,7 @@
 | 片名 | 日期 | 成片 | 備註 |
 |---|---|---|---|
 | 被狗吃掉的作業（範本片） | 2026-10-23 驗收 | `shanshiba-workflow-32gvram-64gram/pipeline/template_local/out/cut/film_1080p.mp4`（39.4 秒） | 全雲端 Colab G4，約 8.15 運算單元 |
-| HWG7 U04 A Day with the Elves | 製作中（劇本、角色、首幀、配音已核准；下一步 H3） | `HWG 7 U04 FILM/`，先讀它的 `HANDOFF.md` | 圖用 Codex CLI、英文配音 VoxCPM2 0.8 倍速 |
+| HWG7 U04 A Day with the Elves | 2026-10-24 驗收 | `HWG 7 U04 FILM/final/HWG7U04_1080p_sub.mp4`（2 分 25 秒） | 動作 8 鏡 Seedance 2.0 Mini（KIE）＋靜態 16 鏡 Colab H3；卡拉 OK 英文字幕 |
 
 ## 授權提醒
 

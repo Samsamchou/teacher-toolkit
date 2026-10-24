@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a cozy sci-fi elf school classroom inside a wooden log cabin",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "joy",
+   "desc": "Joy (a small girl elf: red pointed elf hat with a plain red band, two long brown braids, pointed ears, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+   "voice": "a playful, sweet young girl elf's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Joy stands on the low wooden stage with her hands clasped in front of her. She rises onto her toes once, rocks back onto her heels, and answers cheerfully toward the camera, her two long braids swinging gently as she nods on the word thirty. Her pointed ears twitch upward when she smiles. After the line her lips close into a proud grin, she unclasps her hands and gives a small wave with her right hand at chest height, then clasps them again.",
+   "dialogue": [
+    {
+     "subject": "joy",
+     "line": "I get up at seven thirty.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy classroom room tone, a crackling fireplace far away.",
+ "music": "N/A"
+}

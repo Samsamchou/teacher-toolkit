@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a snowy night by a steaming hot spring and a frozen lake under the Northern Lights",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "abu",
+   "desc": "Abu (a small white robot child: round glossy white head with a small bear-like snout and black nose, black oval eyes, light-blue headphone-like ear modules, glowing light-blue heart on the chest, light-blue joint rings, red knitted scarf)",
+   "voice": "a light, friendly, slightly high child voice of a cute little robot"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Abu stands beside the steaming hot spring with the small white towel on his head. Steam drifts past him from the right. He tilts his round head to one side so the towel slips a little, lifts one white hand to scratch the side of his head, and asks his puzzled question while his blue heart pulses brighter on each word. After the line his mouth closes, he straightens the towel with both hands and looks toward the frozen lake on the left.",
+   "dialogue": [
+    {
+     "subject": "abu",
+     "line": "What time does Santa take a shower?",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Bubbling hot water, a light winter breeze, gentle splashes.",
+ "music": "N/A"
+}

@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a cozy sci-fi elf school classroom inside a wooden log cabin",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "abu",
+   "desc": "Abu (a small white robot child: round glossy white head with a small bear-like snout and black nose, black oval eyes, light-blue headphone-like ear modules, glowing light-blue heart on the chest, light-blue joint rings, red knitted scarf)",
+   "voice": "a light, friendly, slightly high child voice of a cute little robot"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Abu sits on the red mushroom stool with one white robot hand raised. He waves the raised hand twice from side to side, turns his round head slightly toward the front of the room on the right, and asks his polite question while his blue heart pulses brighter on each word. His light-blue ear modules glow softly. After the line his mouth closes, he lowers the hand to his lap and tilts his head to one side, waiting for the answer with big shining eyes.",
+   "dialogue": [
+    {
+     "subject": "abu",
+     "line": "What time do you go to school, Alan?",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy classroom room tone, a crackling fireplace far away.",
+ "music": "N/A"
+}

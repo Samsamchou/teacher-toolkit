@@ -1,0 +1,26 @@
+subject_definitions:
+<Subject 1> is Santa Claus (a jolly old man with a big fluffy white beard and mustache, rosy round cheeks, red Santa hat with a white pompom), visible in <Picture 1>.
+<Picture 1> is the first frame of [Shot 1], fixing the camera position, framing, set layout and lighting.
+<Audio 1> is the complete, exactly timed soundtrack of the target video, containing the spoken lines.
+
+summary:
+[keyframe completion + audio reuse] The target video is one continuous shot set in a snowy night by a steaming hot spring and a frozen lake under the Northern Lights, beginning from <Picture 1>. <Subject 1> (S1) speaks 1 short line exactly as in <Audio 1>.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - identity, face, age, hairstyle, body build and clothing are retained.
+<Picture 1> ([Shot 1] first frame): fully_preserved - camera position, framing, set layout, furniture and lighting are retained.
+<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete audio track, and lips follow it exactly.
+
+detailed_description:
+The target video is in the style of a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly.
+[Shot 1] The shot begins from <Picture 1>. Santa Claus is <Subject 1> (S1). The camera holds a static shot on a tripod. Starting from <Picture 1>, Santa Claus sits in the round hole in the frozen lake with his bare raised wrist showing the plain round watch. He brings the wrist closer to his face, squints at the watch for a moment, then lowers it and looks at the camera. He says his line warmly, smiling under his big white beard, and winks with his right eye on the words good night. After the line his lips close, he gives one slow wave with his raised hand and sinks a little deeper into the icy water. <Subject 1> (S1) says in a deep, warm, jolly old man's voice, <d>[English] It's nine o'clock now. Good night!</d> Right after the line the speaker's lips close and stay closed.
+The animation style, colors and line art stay exactly as in the first frame for the whole clip.
+No new people or characters appear that are not already in the first frame.
+No captions, no subtitles, no readable text, letters or numbers appear anywhere.
+Every character keeps the same face, hair, outfit and colors as in the first frame.
+
+overall_soundscape:
+Bubbling hot water, a light winter breeze, gentle splashes.
+
+non_diegetic_music:
+N/A

@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a snowy Finnish landscape at night under green and violet Northern Lights",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "teddy",
+   "desc": "Teddy (a 10-year-old boy with black bowl-cut hair and straight bangs, big brown eyes, cream hooded puffer jacket with two thin brown stripes across the chest, dark brown snow pants, white snow boots, brown mittens)",
+   "voice": "a bright, cheerful ten-year-old American boy's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Teddy sits in the sled under the brown blanket and slowly tilts his head back to look up at the sky. His eyes open wide and his eyebrows lift as green light ripples across his face. He pulls his right mittened hand out from under the blanket and points straight up at the Northern Lights, then says his line with excitement while his gaze follows the moving lights from left to right. After the line his mouth closes into a big smile and he keeps pointing upward, shaking the pointing hand twice in delight.",
+   "dialogue": [
+    {
+     "subject": "teddy",
+     "line": "Wow! They are Northern Lights!",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Soft winter wind, sled runners on snow, faint reindeer bells.",
+ "music": "N/A"
+}

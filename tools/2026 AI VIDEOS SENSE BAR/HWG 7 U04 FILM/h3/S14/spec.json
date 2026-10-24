@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a warm elf gift workshop with a glowing conveyor belt",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "teddy",
+   "desc": "Teddy (a 10-year-old boy with black bowl-cut hair and straight bangs, big brown eyes, cream hooded puffer jacket with two thin brown stripes across the chest, dark brown snow pants, white snow boots, brown mittens)",
+   "voice": "a bright, cheerful ten-year-old American boy's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Teddy sits at the worktable with a colored pencil hovering over the half-drawn Christmas card. He stops drawing, lifts his head and looks up toward the right, tapping the pencil against his chin once as he thinks. Then he asks his question with curious, wide eyes, tilting his head at the end of the sentence. After the line his lips close, he lowers the pencil back to the card and draws one short green line on the tree while glancing up again.",
+   "dialogue": [
+    {
+     "subject": "teddy",
+     "line": "What time does Santa go home?",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Gentle workshop sounds: rustling wrapping paper, a soft conveyor hum.",
+ "music": "N/A"
+}

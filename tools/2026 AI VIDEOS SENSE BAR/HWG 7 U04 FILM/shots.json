@@ -42,7 +42,8 @@
     "text": "Wow! They are Northern Lights!"
    },
    "frame": "Medium close-up of Teddy sitting in the sled, looking up at the sky with wide eyes, green aurora light reflecting on his face, mouth closed, face clearly visible in three-quarter view.",
-   "action": "Teddy looks up at the sky, points upward and says his line with excitement."
+   "action": "Teddy looks up at the sky, points upward and says his line with excitement.",
+   "h3_action": "Starting from <Picture 1>, Teddy sits in the sled under the brown blanket and slowly tilts his head back to look up at the sky. His eyes open wide and his eyebrows lift as green light ripples across his face. He pulls his right mittened hand out from under the blanket and points straight up at the Northern Lights, then says his line with excitement while his gaze follows the moving lights from left to right. After the line his mouth closes into a big smile and he keeps pointing upward, shaking the pointing hand twice in delight."
   },
   {
    "id": "S03",
@@ -71,7 +72,8 @@
     "text": "What time do you get up, Joy?"
    },
    "frame": "Medium shot: Amber sits on a red mushroom stool and raises her right hand, turning in three-quarter view toward the front of the room on the right, face clearly visible, mouth closed.",
-   "action": "Amber raises her hand and asks her question, looking toward the front of the classroom."
+   "action": "Amber raises her hand and asks her question, looking toward the front of the classroom.",
+   "h3_action": "Starting from <Picture 1>, Amber sits on the red mushroom stool with her right hand already raised. She stretches the raised arm a little higher, leans her upper body slightly forward toward the front of the room on the right, and says her friendly question while tilting her head once to the side. Her glasses catch the warm lamp light as she blinks. After the line her lips close, she keeps her hand up for a moment, then lowers it to her knee and waits with curious, wide eyes and a small smile."
   },
   {
    "id": "S05",
@@ -85,7 +87,8 @@
     "text": "I get up at seven thirty."
    },
    "frame": "Medium shot: Joy stands on the low wooden stage in front of the teacher's desk, facing the camera, hands clasped, smiling with mouth closed.",
-   "action": "Joy answers cheerfully, rocking on her heels."
+   "action": "Joy answers cheerfully, rocking on her heels.",
+   "h3_action": "Starting from <Picture 1>, Joy stands on the low wooden stage with her hands clasped in front of her. She rises onto her toes once, rocks back onto her heels, and answers cheerfully toward the camera, her two long braids swinging gently as she nods on the word thirty. Her pointed ears twitch upward when she smiles. After the line her lips close into a proud grin, she unclasps her hands and gives a small wave with her right hand at chest height, then clasps them again."
   },
   {
    "id": "S06",
@@ -99,7 +102,8 @@
     "text": "What time do you go to school, Alan?"
    },
    "frame": "Medium shot: Abu sits on a red mushroom stool and raises one hand, turned in three-quarter view toward the front of the room on the right, his heart glowing, mouth closed.",
-   "action": "Abu raises his hand and asks his question."
+   "action": "Abu raises his hand and asks his question.",
+   "h3_action": "Starting from <Picture 1>, Abu sits on the red mushroom stool with one white robot hand raised. He waves the raised hand twice from side to side, turns his round head slightly toward the front of the room on the right, and asks his polite question while his blue heart pulses brighter on each word. His light-blue ear modules glow softly. After the line his mouth closes, he lowers the hand to his lap and tilts his head to one side, waiting for the answer with big shining eyes."
   },
   {
    "id": "S07",
@@ -113,7 +117,8 @@
     "text": "I go to school at eight o'clock."
    },
    "frame": "Medium shot: Alan stands on the low wooden stage beside the teacher's desk, facing the camera with his hands on his hips, smiling with mouth closed.",
-   "action": "Alan answers proudly with his hands on his hips."
+   "action": "Alan answers proudly with his hands on his hips.",
+   "h3_action": "Starting from <Picture 1>, Alan stands on the low wooden stage beside the teacher's desk with his hands on his hips. He puffs out his chest, bounces once on his curled red shoes, and answers proudly toward the camera, nodding firmly on the words eight o'clock. His round cheeks lift in a wide grin and his pointed ears wiggle. After the line his lips close, he keeps his hands on his hips, rocks from side to side once and gives a quick satisfied nod."
   },
   {
    "id": "S08",
@@ -127,7 +132,8 @@
     "text": "What do you do in your free time?"
    },
    "frame": "Medium close-up: Teddy sits on a red mushroom stool, leaning forward curiously, three-quarter view toward the right, face clearly visible, mouth closed.",
-   "action": "Teddy leans forward and asks his question with curiosity."
+   "action": "Teddy leans forward and asks his question with curiosity.",
+   "h3_action": "Starting from <Picture 1>, Teddy sits on the red mushroom stool and leans his upper body further forward, resting both mittened hands on his knees. His eyebrows rise and his eyes widen with curiosity as he asks his question toward the front of the room on the right, tilting his head slightly at the end of the sentence. After the line his lips close, he sits up straight again, rubs his hands together once and waits with an eager smile, his eyes fixed to the right."
   },
   {
    "id": "S09",
@@ -155,7 +161,8 @@
     "text": "I surf the Internet."
    },
    "frame": "Medium shot: Alan sits cross-legged on a cushion by the classroom window, a floating cyan holographic screen in front of him showing only colorful abstract shapes and simple picture icons, his face lit in cyan, three-quarter view toward the camera, mouth closed.",
-   "action": "Alan swipes the floating screen with one finger and says his line happily."
+   "action": "Alan swipes the floating screen with one finger and says his line happily.",
+   "h3_action": "Starting from <Picture 1>, Alan sits cross-legged on the cushion in front of the floating cyan holographic screen. He lifts his right index finger and swipes across the screen from right to left twice, and the colorful shapes and picture icons slide along with his finger. He turns his face toward the camera, grins and says his line cheerfully, raising his eyebrows on the last word. After the line his lips close, he winks once and taps one icon on the screen with his finger, making it glow brighter."
   },
   {
    "id": "S11",
@@ -168,7 +175,7 @@
    "dur": 6,
    "narr": "Abu, Teddy, and Amber are at the elf school. They wrap gifts.",
    "frame": "Wide shot: Teddy, Amber and Abu stand around a worktable wrapping colorful gift boxes with paper and ribbons, smiling, presents moving on the glowing conveyor belt behind them.",
-   "action": "The three friends fold wrapping paper and tie ribbons around gifts. Nobody speaks."
+   "action": "The camera stays still on the wide shot. Exactly three characters are in the shot the whole time: Teddy on the left, Amber in the middle and Abu on the right; nobody else appears. They fold wrapping paper and tie ribbons around gifts. Nobody speaks."
   },
   {
    "id": "S12",
@@ -182,7 +189,8 @@
     "text": "What time does Santa have lunch?"
    },
    "frame": "Medium shot: Amber stands at the worktable tying a red ribbon on a gift box and looks up toward the right in three-quarter view, face clearly visible, mouth closed.",
-   "action": "Amber finishes tying the ribbon, looks up and asks her question."
+   "action": "Amber finishes tying the ribbon, looks up and asks her question.",
+   "h3_action": "Starting from <Picture 1>, Amber stands at the worktable holding the two ends of a red ribbon around a gift box. She pulls the ribbon tight with both hands and ties a quick bow, then lifts her head and looks up toward the right. She asks her curious question while her hands stay on the finished bow, raising her eyebrows on the word lunch. After the line her lips close, she gives the bow a small pat with her right hand and waits with a curious smile."
   },
   {
    "id": "S13",
@@ -196,7 +204,8 @@
     "text": "He has lunch at one o'clock."
    },
    "frame": "Medium shot: Joy stands at the worktable wrapping a gift in green paper, facing the camera, smiling with mouth closed.",
-   "action": "Joy keeps wrapping the gift and answers cheerfully."
+   "action": "Joy keeps wrapping the gift and answers cheerfully.",
+   "h3_action": "Starting from <Picture 1>, Joy stands at the worktable folding green wrapping paper around a gift box. She presses the folded edge down with both palms, slides a strip of tape across it with her right hand, and answers cheerfully toward the camera without stopping her work. She nods once on the words one o'clock and her braids bounce. After the line her lips close into a bright smile, she turns the wrapped box around once on the table and pats its top with both hands."
   },
   {
    "id": "S14a",
@@ -219,7 +228,8 @@
     "text": "What time does Santa go home?"
    },
    "frame": "Medium shot: Teddy sits at the worktable holding a colored pencil over a half-drawn Christmas card, looking up toward the right in three-quarter view, face clearly visible, mouth closed.",
-   "action": "Teddy stops drawing, looks up and asks his question."
+   "action": "Teddy stops drawing, looks up and asks his question.",
+   "h3_action": "Starting from <Picture 1>, Teddy sits at the worktable with a colored pencil hovering over the half-drawn Christmas card. He stops drawing, lifts his head and looks up toward the right, tapping the pencil against his chin once as he thinks. Then he asks his question with curious, wide eyes, tilting his head at the end of the sentence. After the line his lips close, he lowers the pencil back to the card and draws one short green line on the tree while glancing up again."
   },
   {
    "id": "S15",
@@ -233,7 +243,8 @@
     "text": "He goes home at five forty."
    },
    "frame": "Medium shot: Alan holds up a finished Christmas card with a drawing of Santa's sleigh and reindeer, facing the camera, smiling with mouth closed.",
-   "action": "Alan shows the card proudly and answers."
+   "action": "Alan shows the card proudly and answers.",
+   "h3_action": "Starting from <Picture 1>, Alan holds up the finished Christmas card with both hands at chest height. He pushes the card a little toward the camera so the drawing of Santa's sleigh is easy to see, then answers proudly, nodding on the words five forty. His round cheeks lift in a big grin and his pointed ears wiggle. After the line his lips close, he turns the card left and right once to show it off, then hugs it to his chest with a happy squeeze of his shoulders."
   },
   {
    "id": "S16",
@@ -260,7 +271,8 @@
     "text": "What time does Santa take a shower?"
    },
    "frame": "Medium shot: Abu stands beside the steaming hot spring with a small white towel on his head, three-quarter view, heart glowing, mouth closed.",
-   "action": "Abu tilts his head and asks his question."
+   "action": "Abu tilts his head and asks his question.",
+   "h3_action": "Starting from <Picture 1>, Abu stands beside the steaming hot spring with the small white towel on his head. Steam drifts past him from the right. He tilts his round head to one side so the towel slips a little, lifts one white hand to scratch the side of his head, and asks his puzzled question while his blue heart pulses brighter on each word. After the line his mouth closes, he straightens the towel with both hands and looks toward the frozen lake on the left."
   },
   {
    "id": "S18",
@@ -274,7 +286,8 @@
     "text": "He takes an ice shower at nine thirty."
    },
    "frame": "Medium shot: Joy stands in the snow near the frozen lake, pointing toward the hole in the ice with one hand, facing the camera with a mischievous smile, mouth closed.",
-   "action": "Joy points toward the frozen lake and answers with a giggle."
+   "action": "Joy points toward the frozen lake and answers with a giggle.",
+   "h3_action": "Starting from <Picture 1>, Joy stands in the snow near the frozen lake with her right arm stretched out, pointing at the round hole in the ice. She bends her knees a little, covers a giggle with her left hand for a moment, then says her line with a mischievous smile, jabbing the pointing finger toward the hole twice on the words ice shower. Her braids swing as she laughs. After the line her lips close, she lowers her arm and hugs herself, shivering playfully as if she feels the cold."
   },
   {
    "id": "S19",
@@ -312,7 +325,8 @@
     "text": "I go to bed at nine o'clock."
    },
    "frame": "Medium close-up: Teddy stands by the hot spring wrapped in a big white towel, looking sleepy with half-closed eyes, mouth closed.",
-   "action": "Teddy rubs his eye sleepily and answers."
+   "action": "Teddy rubs his eye sleepily and answers.",
+   "h3_action": "Starting from <Picture 1>, Teddy stands by the hot spring wrapped in the big white towel. His eyelids droop and his head nods forward once with sleepiness. He lifts his right mittened hand out of the towel to rub one eye, then answers slowly and sleepily, his shoulders sinking on the words nine o'clock. After the line his lips close, he pulls the towel tighter around his shoulders with both hands, sways gently from side to side once and blinks slowly with heavy eyes."
   },
   {
    "id": "S22",
@@ -326,7 +340,8 @@
     "text": "It's nine o'clock now. Good night!"
    },
    "frame": "Medium close-up: Santa Claus sits in the round hole in the frozen lake, head and bare shoulders and arms like a man taking an ice bath (no shirt, no coat, nothing red on his body except his Santa hat), his red suit folded on the snow beside the hole; he looks at a simple round wristwatch with a plain face on his raised bare wrist, smiling with mouth closed.",
-   "action": "Santa checks his watch, then winks and says good night."
+   "action": "Santa checks his watch, then winks and says good night.",
+   "h3_action": "Starting from <Picture 1>, Santa Claus sits in the round hole in the frozen lake with his bare raised wrist showing the plain round watch. He brings the wrist closer to his face, squints at the watch for a moment, then lowers it and looks at the camera. He says his line warmly, smiling under his big white beard, and winks with his right eye on the words good night. After the line his lips close, he gives one slow wave with his raised hand and sinks a little deeper into the icy water."
   },
   {
    "id": "S23",

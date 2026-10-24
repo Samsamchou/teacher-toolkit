@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a cozy sci-fi elf school classroom inside a wooden log cabin",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "alan",
+   "desc": "Alan (a small boy elf: red pointed elf hat with a plain red band, short brown hair, pointed ears, round chubby face, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+   "voice": "a happy, bouncy young boy elf's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Alan sits cross-legged on the cushion in front of the floating cyan holographic screen. He lifts his right index finger and swipes across the screen from right to left twice, and the colorful shapes and picture icons slide along with his finger. He turns his face toward the camera, grins and says his line cheerfully, raising his eyebrows on the last word. After the line his lips close, he winks once and taps one icon on the screen with his finger, making it glow brighter.",
+   "dialogue": [
+    {
+     "subject": "alan",
+     "line": "I surf the Internet.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy classroom room tone, a crackling fireplace far away.",
+ "music": "N/A"
+}

@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a warm elf gift workshop with a glowing conveyor belt",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "joy",
+   "desc": "Joy (a small girl elf: red pointed elf hat with a plain red band, two long brown braids, pointed ears, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+   "voice": "a playful, sweet young girl elf's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Joy stands at the worktable folding green wrapping paper around a gift box. She presses the folded edge down with both palms, slides a strip of tape across it with her right hand, and answers cheerfully toward the camera without stopping her work. She nods once on the words one o'clock and her braids bounce. After the line her lips close into a bright smile, she turns the wrapped box around once on the table and pats its top with both hands.",
+   "dialogue": [
+    {
+     "subject": "joy",
+     "line": "He has lunch at one o'clock.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Gentle workshop sounds: rustling wrapping paper, a soft conveyor hum.",
+ "music": "N/A"
+}

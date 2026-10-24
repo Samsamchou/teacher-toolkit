@@ -1,0 +1,16 @@
+{
+ "prompt": "Japanese anime TV series, clean cel-shaded 2D animation with confident line art, flat colors with soft gradients, smooth expressive character animation, cozy sci-fi winter world. Reference image 1 is the opening frame: match its composition, background, lighting and characters. The other reference images are the character sheets. Scene: Medium shot: Amber stands in the sled facing the camera with both arms spread wide and a big smile, mouth closed; Abu stands beside her, bouncing happily with both hands raised. Northern Lights behind them. Characters: Amber (a 10-year-old girl with long light-brown hair, round red-framed glasses, red Santa hat with white trim, pale yellow knit scarf, light-blue sweater, blue jeans, navy snow boots), Abu (a small white robot child: round glossy white head with a small bear-like snout and black nose, black oval eyes, light-blue headphone-like ear modules, glowing light-blue heart on the chest, light-blue joint rings, red knitted scarf). Action: Amber spreads her arms and says her line happily; Abu bounces beside her and does not speak. Amber says in clear English: \"We are in the Arctic Circle now!\" Her/his lip movements follow the reference audio exactly. Only the speaker's mouth moves. Keep every character's face, hair, outfit and colors exactly as in the reference images. No captions, no subtitles, no readable text, letters or numbers anywhere. No new characters appear.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 5,
+ "web_search": false,
+ "reference_image_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S03_first.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_amber.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_abu.png"
+ ],
+ "generate_audio": true,
+ "reference_audio_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S03_voice.wav"
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a snowy night by a steaming hot spring and a frozen lake under the Northern Lights",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "teddy",
+   "desc": "Teddy (a 10-year-old boy with black bowl-cut hair and straight bangs, big brown eyes, cream hooded puffer jacket with two thin brown stripes across the chest, dark brown snow pants, white snow boots, brown mittens)",
+   "voice": "a bright, cheerful ten-year-old American boy's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Teddy stands by the hot spring wrapped in the big white towel. His eyelids droop and his head nods forward once with sleepiness. He lifts his right mittened hand out of the towel to rub one eye, then answers slowly and sleepily, his shoulders sinking on the words nine o'clock. After the line his lips close, he pulls the towel tighter around his shoulders with both hands, sways gently from side to side once and blinks slowly with heavy eyes.",
+   "dialogue": [
+    {
+     "subject": "teddy",
+     "line": "I go to bed at nine o'clock.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Bubbling hot water, a light winter breeze, gentle splashes.",
+ "music": "N/A"
+}

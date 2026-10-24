@@ -1,0 +1,12 @@
+{
+ "prompt": "Japanese anime TV series, clean cel-shaded 2D animation with confident line art, flat colors with soft gradients, smooth expressive character animation, cozy sci-fi winter world. Reference image 1 is the opening frame: match its composition, background, lighting and characters. The other reference images are the character sheets. Scene: Medium shot: Santa Claus sits in the round hole in the frozen lake, only his head, shoulders and arms above the icy water, laughing happily with eyes closed, his red suit and black boots neatly folded on the snow beside the hole. Characters: Santa Claus (a jolly old man with a big fluffy white beard and mustache, rosy round cheeks, red Santa hat with a white pompom). Action: Santa splashes the icy water and laughs heartily without words. Nobody speaks; all mouths stay closed. Keep every character's face, hair, outfit and colors exactly as in the reference images. No captions, no subtitles, no readable text, letters or numbers anywhere. No new characters appear.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 5,
+ "web_search": false,
+ "reference_image_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S19_first.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_santa.png"
+ ],
+ "generate_audio": true
+}

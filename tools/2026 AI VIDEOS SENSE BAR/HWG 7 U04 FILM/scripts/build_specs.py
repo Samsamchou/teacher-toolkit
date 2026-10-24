@@ -86,7 +86,7 @@ def build(s):
     with wave.open(str(od / "guide.wav"), "wb") as g:
         g.setnchannels(1); g.setsampwidth(2); g.setframerate(SR)
         g.writeframes((np.clip(buf, -1, 1) * 32767).astype("<i2").tobytes())
-    action = s["action"]
+    action = s.get("h3_action") or s["action"]   # h3_action = repo 2026-10-23 style: 50-120 words, "Starting from <Picture 1>, ..."
     if not dialogue and s["refs"]:
         action += " Nobody speaks; all mouths stay closed."
     spec = dict(

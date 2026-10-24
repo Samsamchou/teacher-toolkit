@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a cozy sci-fi elf school classroom inside a wooden log cabin",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "alan",
+   "desc": "Alan (a small boy elf: red pointed elf hat with a plain red band, short brown hair, pointed ears, round chubby face, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+   "voice": "a happy, bouncy young boy elf's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Alan stands on the low wooden stage beside the teacher's desk with his hands on his hips. He puffs out his chest, bounces once on his curled red shoes, and answers proudly toward the camera, nodding firmly on the words eight o'clock. His round cheeks lift in a wide grin and his pointed ears wiggle. After the line his lips close, he keeps his hands on his hips, rocks from side to side once and gives a quick satisfied nod.",
+   "dialogue": [
+    {
+     "subject": "alan",
+     "line": "I go to school at eight o'clock.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy classroom room tone, a crackling fireplace far away.",
+ "music": "N/A"
+}

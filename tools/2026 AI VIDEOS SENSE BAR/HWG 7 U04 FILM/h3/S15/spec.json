@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a warm elf gift workshop with a glowing conveyor belt",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "alan",
+   "desc": "Alan (a small boy elf: red pointed elf hat with a plain red band, short brown hair, pointed ears, round chubby face, white shirt under a red vest with white trim, white shorts, red-and-green striped stockings, red curled shoes)",
+   "voice": "a happy, bouncy young boy elf's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Alan holds up the finished Christmas card with both hands at chest height. He pushes the card a little toward the camera so the drawing of Santa's sleigh is easy to see, then answers proudly, nodding on the words five forty. His round cheeks lift in a big grin and his pointed ears wiggle. After the line his lips close, he turns the card left and right once to show it off, then hugs it to his chest with a happy squeeze of his shoulders.",
+   "dialogue": [
+    {
+     "subject": "alan",
+     "line": "He goes home at five forty.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Gentle workshop sounds: rustling wrapping paper, a soft conveyor hum.",
+ "music": "N/A"
+}

@@ -1,0 +1,11 @@
+{
+ "prompt": "Japanese anime TV series, clean cel-shaded 2D animation with confident line art, flat colors with soft gradients, smooth expressive character animation, cozy sci-fi winter world. Reference image 1 is the opening frame: match its composition, background, lighting and characters. Scene: Close-up from above of a Christmas card being drawn with colored pencils on a wooden table: the card shows a simple drawing of a decorated Christmas tree with a star. Only two pairs of hands are visible: a boy's hands in brown mittens with cream jacket cuffs, and small white robot hands with light-blue joint rings. No other sleeves or arms, no faces. Action: Hands color the Christmas tree drawing with colored pencils. Nobody speaks. Keep every character's face, hair, outfit and colors exactly as in the reference images. No captions, no subtitles, no readable text, letters or numbers anywhere. No new characters appear.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 4,
+ "web_search": false,
+ "reference_image_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S14a_first.png"
+ ],
+ "generate_audio": true
+}

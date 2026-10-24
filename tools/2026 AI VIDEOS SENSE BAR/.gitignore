@@ -23,3 +23,13 @@ out/
 *.safetensors
 *.ckpt
 *.onnx
+
+# Fonts (license files stay with their source projects)
+*.ttf
+*.otf
+
+# Generated noise
+_clips*.txt
+**/h3/*/frames.txt
+**/h3/*/workflow_api.json
+**/h3/*/shot.json

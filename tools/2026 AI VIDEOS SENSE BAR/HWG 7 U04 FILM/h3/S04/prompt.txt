@@ -1,0 +1,26 @@
+subject_definitions:
+<Subject 1> is Amber (a 10-year-old girl with long light-brown hair, round red-framed glasses, red Santa hat with white trim, pale yellow knit scarf, light-blue sweater, blue jeans, navy snow boots), visible in <Picture 1>.
+<Picture 1> is the first frame of [Shot 1], fixing the camera position, framing, set layout and lighting.
+<Audio 1> is the complete, exactly timed soundtrack of the target video, containing the spoken lines.
+
+summary:
+[keyframe completion + audio reuse] The target video is one continuous shot set in a cozy sci-fi elf school classroom inside a wooden log cabin, beginning from <Picture 1>. <Subject 1> (S1) speaks 1 short line exactly as in <Audio 1>.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - identity, face, age, hairstyle, body build and clothing are retained.
+<Picture 1> ([Shot 1] first frame): fully_preserved - camera position, framing, set layout, furniture and lighting are retained.
+<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete audio track, and lips follow it exactly.
+
+detailed_description:
+The target video is in the style of a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly.
+[Shot 1] The shot begins from <Picture 1>. Amber is <Subject 1> (S1). The camera holds a static shot on a tripod. Starting from <Picture 1>, Amber sits on the red mushroom stool with her right hand already raised. She stretches the raised arm a little higher, leans her upper body slightly forward toward the front of the room on the right, and says her friendly question while tilting her head once to the side. Her glasses catch the warm lamp light as she blinks. After the line her lips close, she keeps her hand up for a moment, then lowers it to her knee and waits with curious, wide eyes and a small smile. <Subject 1> (S1) says in a lively, cheerful ten-year-old American girl's voice, <d>[English] What time do you get up, Joy?</d> Right after the line the speaker's lips close and stay closed.
+The animation style, colors and line art stay exactly as in the first frame for the whole clip.
+No new people or characters appear that are not already in the first frame.
+No captions, no subtitles, no readable text, letters or numbers appear anywhere.
+Every character keeps the same face, hair, outfit and colors as in the first frame.
+
+overall_soundscape:
+Quiet cozy classroom room tone, a crackling fireplace far away.
+
+non_diegetic_music:
+N/A

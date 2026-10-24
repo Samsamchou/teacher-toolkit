@@ -1,0 +1,47 @@
+{
+ "duration": 5.147,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261023,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, matching the first frame exactly",
+ "setting": "a cozy sci-fi elf school classroom inside a wooden log cabin",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "amber",
+   "desc": "Amber (a 10-year-old girl with long light-brown hair, round red-framed glasses, red Santa hat with white trim, pale yellow knit scarf, light-blue sweater, blue jeans, navy snow boots)",
+   "voice": "a lively, cheerful ten-year-old American girl's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Amber sits on the red mushroom stool with her right hand already raised. She stretches the raised arm a little higher, leans her upper body slightly forward toward the front of the room on the right, and says her friendly question while tilting her head once to the side. Her glasses catch the warm lamp light as she blinks. After the line her lips close, she keeps her hand up for a moment, then lowers it to her knee and waits with curious, wide eyes and a small smile.",
+   "dialogue": [
+    {
+     "subject": "amber",
+     "line": "What time do you get up, Joy?",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy classroom room tone, a crackling fireplace far away.",
+ "music": "N/A"
+}
