@@ -6,8 +6,8 @@ WrapStyle: 0
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Line,Comic Relief,68,&H0000E6FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,2,2,80,80,130,1
-Style: Narr,Comic Relief,62,&H0000E6FF,&H00F0F0FF,&H00402000,&H64000000,0,1,0,0,100,100,0,0,1,5,2,2,80,80,130,1
+Style: Line,Comic Relief,88,&H0000E6FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,2,2,80,80,130,1
+Style: Narr,Comic Relief,82,&H0000E6FF,&H00F0F0FF,&H00402000,&H64000000,0,1,0,0,100,100,0,0,1,5,2,2,80,80,130,1
 Style: Card,Comic Relief,110,&H0066E6FF,&H00FFFFFF,&H00301000,&H64000000,0,0,0,0,100,100,2,0,1,7,3,5,80,80,0,1
 
 [Events]

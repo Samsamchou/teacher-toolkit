@@ -27,7 +27,7 @@
 
 聲音規則（老師決定）：H3 鏡與 S03 用核准配音；S09 保留 Seedance 自己念的聲音（已用 BS-RoFormer 去掉它的背景音樂）；其他 Seedance 聲音不用；旁白後製疊上。
 
-字幕規則（老師 2026-10-24）：**Comic Relief** 字體（`fonts/ComicRelief-Regular.ttf`，ass 用 `fontsdir`），位置上移（MarginV 130），**卡拉 OK**：整句白色出現、念到哪個字就變黃；說話者名字保留角色色（Teddy 橘、Amber 粉、Abu 淺藍、Joy 綠、Alan 淺橘、Santa 紅），旁白斜體。
+字幕規則（老師 2026-10-24）：**Comic Relief** 字體、**字要大到教室後排看得到**（1080p 台詞 88、旁白 82，長句自動換兩行）（`fonts/ComicRelief-Regular.ttf`，ass 用 `fontsdir`），位置上移（MarginV 130），**卡拉 OK**：整句白色出現、念到哪個字就變黃；說話者名字保留角色色（Teddy 橘、Amber 粉、Abu 淺藍、Joy 綠、Alan 淺橘、Santa 紅），旁白斜體。
 
 ## 花費
 

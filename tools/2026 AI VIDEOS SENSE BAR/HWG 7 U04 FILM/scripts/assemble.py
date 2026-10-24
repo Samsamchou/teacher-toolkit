@@ -123,9 +123,9 @@ s16 = next(g for g in segs if g["id"] == "S16")
 head = ("[Script Info]\nScriptType: v4.00+\nPlayResX: 1920\nPlayResY: 1080\nWrapStyle: 0\n\n[V4+ Styles]\n"
         "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, "
         "ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
-        # teacher 2026-10-24: Comic Relief, raised (MarginV 130), karaoke: spoken word turns yellow (Primary), not yet = white (Secondary)
-        "Style: Line,Comic Relief,68,&H0000E6FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,2,2,80,80,130,1\n"
-        "Style: Narr,Comic Relief,62,&H0000E6FF,&H00F0F0FF,&H00402000,&H64000000,0,1,0,0,100,100,0,0,1,5,2,2,80,80,130,1\n"
+        # teacher 2026-10-24: Comic Relief, LARGE for back-row students (88/82 at 1080p), raised (MarginV 130), karaoke: spoken word turns yellow (Primary), not yet = white (Secondary)
+        "Style: Line,Comic Relief,88,&H0000E6FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,2,2,80,80,130,1\n"
+        "Style: Narr,Comic Relief,82,&H0000E6FF,&H00F0F0FF,&H00402000,&H64000000,0,1,0,0,100,100,0,0,1,5,2,2,80,80,130,1\n"
         "Style: Card,Comic Relief,110,&H0066E6FF,&H00FFFFFF,&H00301000,&H64000000,0,0,0,0,100,100,2,0,1,7,3,5,80,80,0,1\n\n"
         "[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n")
 lines = [f"Dialogue: 1,{ts(s16['start'] + 0.1)},{ts(s16['start'] + 2.6)},Card,,0,0,0,,{{\\fad(300,400)}}The next day..."]
