@@ -1,0 +1,20 @@
+{
+  "action_id": "",
+  "status": "pending",
+  "animation_video_references": [],
+  "reference_fields": [
+    "url",
+    "title",
+    "author",
+    "watched_timecodes",
+    "viewing_method",
+    "observations",
+    "occlusions"
+  ],
+  "motion_phases": [],
+  "contact_conditions": [],
+  "implementation_decisions": [],
+  "sample_checks": [],
+  "limitations": [],
+  "real_video_supplements": []
+}

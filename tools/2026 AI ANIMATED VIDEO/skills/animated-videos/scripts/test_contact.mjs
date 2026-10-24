@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {ContactController,frameTime,smoothstep} from '../assets/contact-controller.mjs';
+const c=new ContactController({required:['grip','support'],stableSeconds:.10});
+assert.equal(c.update(0,{grip:true,support:false}).allowed,false);
+assert.equal(c.update(100,{grip:true,support:false}).allowed,false);
+assert.equal(c.update(101,{grip:true,support:true}).allowed,false);
+assert.equal(c.update(101,{grip:true,support:true}).allowed,false);
+for(let i=1;i<=4;i++)c.update(101+i/30,{grip:true,support:true});
+assert.equal(c.allowed,true);
+assert.equal(c.update(102,{grip:false,support:true}).allowed,false);
+assert.equal(c.update(0,{grip:true,support:true}).allowed,false);
+assert.equal(c.update(.01,{grip:1,support:true}).allowed,false);
+assert.throws(()=>c.update(NaN,{}));assert.throws(()=>new ContactController({required:[]}));
+assert.equal(frameTime(90,30),3);assert.equal(smoothstep(0),0);assert.equal(smoothstep(1),1);
+console.log('PASS contact loss, rewind, missing support, no time-only release, frame evaluation');

@@ -43,7 +43,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 教師可能改動某段的指定（例：Verse 3 改成兩人互問、Bridge 只有一人唱），照教師決定並把影響寫明（例如女孩對嘴到男聲）。
 
 ### 階段 4：兩個場景的試片（約 30 秒）
-挑最具代表性、動作最多的兩段（例如人物故事段＋課堂問答段），渲染含原曲的試片，並在**每個關鍵字的時間點各抽一張靜態圖**自己看過再交出。試片通過後才做其他場景。
+挑最具代表性、動作最多的兩段（例如人物故事段＋課堂問答段），渲染含原曲的試片，並在**每個關鍵字的時間點各抽一張靜態圖**自己看過再交出。試片裡每一種新動作都要另抽「動作關鍵格條」，照 `references/character-motion-checklist.md` 的 12 項檢查（預備、擠壓伸展、跟隨、弧線、停格時間等），不過的先修再交。試片通過後才做其他場景。
 
 ### 階段 5：全曲
 - 其餘場景可交給子代理平行製作（故事場景適合；副歌／群舞共用編舞自己寫）。每份交辦要附：要讀的分鏡表、兩個已通過的試片場景檔、引擎檔清單、禁止修改 engine／其他場景、`grpPop` 浮點陷阱、關鍵字逐張抽格、只做無聲渲染。範本見 `references/delegation-brief.md`。
@@ -53,6 +53,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 ### 階段 6：檢查與交付
 - `qa_full.py`：兩版完整解碼、原曲 10 窗相關（應 ≥ 0.99、偏移 0）、兩版音軌相同、SHA-256。
 - `qa_lines.py`：每句在唱到一半時從成片抽一格，做成 `qa/lines-contact-*.jpg`，**逐張看**每句是否真的有對應動作，並確認沒有一句被場景交界切開。
+- 角色動作原則檢查：照 `references/character-motion-checklist.md`。每句一格看 A 段（演出清楚、立體感、誇張、吸引力、次要動作）；有明顯肢體動作的句子另抽動作關鍵格條看 B 段（預備、擠壓伸展、跟隨／重疊、緩入緩出、弧線、時間）。結果寫 `qa/motion-principles-<版本>.md`，沒看過格條的項目寫「未檢查」。
 - 交付：英文字幕版＋聽力版（1080p／30 fps）、720p 手機預覽（1080p 檔超過 30 MB 時傳不到手機）、逐句總表、`HANDOFF.md`。
 - 教師說「定為正式版」後：寫 `qa/teacher-acceptance-2d-v1.json`（驗收當下重新算雜湊比對）、`FORMAL_RELEASE.json`、更新專案 README／PROJECT_HANDOFF 頂端紀錄。舊正式版移到 `previous_official_releases`，檔案全部保留。
 
@@ -73,6 +74,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 - `references/suno-template.md` — Suno 模板全文與 K-pop 定案設定。
 - `references/case-studies.md` — 兩首正式版的時間線、決定與數據；遇到同類問題時參考。
 - `references/delegation-brief.md` — 交辦子代理的範本。
+- `references/character-motion-checklist.md` — 角色動畫 12 原則檢查表（逐句抽格與動作關鍵格條），試片與全片驗收都用。
 - `scripts/new_song_setup.py` — 新歌資料夾與引擎複製（同時放入下面三支通用分析腳本）。
 - `scripts/analyze_song.py`、`scripts/align_lines.py`、`scripts/annotate_timing.py` — 階段 2 的通用分析腳本（自動讀 sources/，不需改檔名）。
 - `assets/build_suno_docx.cjs` — Suno 歌詞／Style 轉 Word 的範例腳本。

@@ -20,6 +20,7 @@ RULES:
 - DO NOT edit engine/, lipsync/, planning, or other scenes. Prefix helpers s<nn>…; never redeclare engine names.
 - No cuts inside a scene. Keep y 930–1018 (lyrics) and the top-left tag clear. Characters must not be hidden.
 - Verify: `python -I render.py <scene> --still <t>` at EVERY sung keyword, READ the PNGs, fix, iterate; save contact sheets to qa/.
+- Motion check: read `G:\我的雲端硬碟\teacher-toolkit\tools\2026 AI ANIMATED VIDEO\skills\2d-animations\references\character-motion-checklist.md`. For every line with a clear body action (jump, throw, wave, clap, turn, sit, point…), render stills at anticipation → start → peak/contact → settle → hold and check items 6–12 (anticipation, squash & stretch with constant volume, follow-through of hair/clothes, slow in/out spacing, arcs, key teaching pose held ≥ 8–10 frames). Report pass/fix per line; write "not checked" for anything you did not look at.
 - Final: `python -I render.py <scene>` (silent) and confirm `ffmpeg -v error -i file -f null -` decodes.
 - No git commits, no paid APIs, no files outside 2d-v1/scenes, renders, qa.
 
@@ -27,6 +28,6 @@ REPORT BACK: file paths, keyword → local time → action table, who lip-syncs 
 ```
 
 收到回報後：
-1. 自己讀子代理的抽格總表（不要只看文字報告）。
+1. 自己讀子代理的抽格總表與動作關鍵格條（不要只看文字報告），依角色動作檢查表複查。
 2. 檢查畫面上有無上一首歌的殘留（人名、國旗、地名），註解裡有也要改掉。
 3. 用 `render_all.py render <scenes>` 補渲染聽力版，再串接。

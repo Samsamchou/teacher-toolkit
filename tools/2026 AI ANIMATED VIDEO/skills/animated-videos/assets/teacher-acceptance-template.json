@@ -1,0 +1,8 @@
+{
+  "version": "", "date": null, "timezone": "Asia/Taipei",
+  "teacher_accepted": false, "official_release": false,
+  "evidence": "", "files": [],
+  "file_record_fields": ["path", "sha256", "bytes", "duration_sec", "width", "height", "fps"],
+  "technical_report": "", "visual_report": "",
+  "note": "Only populate acceptance from an actual teacher statement and bind exact delivered files."
+}

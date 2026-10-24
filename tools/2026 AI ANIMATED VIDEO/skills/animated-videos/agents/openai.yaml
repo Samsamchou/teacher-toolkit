@@ -1,0 +1,8 @@
+interface:
+
+  display_name: "Animated Videos"
+
+  short_description: "以 V13 為基準，用內建 Image Gen 與程式完成歌曲動畫及驗收"
+
+  default_prompt: "使用 $animated-videos，收到我的 MP3 與歌詞後，以 V13 品質基準先分析並建立本曲規格，用內建 Image Gen 與程式製作連續動畫。"
+

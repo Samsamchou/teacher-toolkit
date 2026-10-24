@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "title": "",
+  "target_students": "國小高年級",
+  "purpose": "聽歌學英文句子／聽力練習",
+  "visual_style": "V13 K-POP 動漫風",
+  "image_tool": "builtin_image_gen",
+  "sources": {
+    "audio": {
+      "path": "",
+      "sha256": ""
+    },
+    "lyrics": {
+      "path": "",
+      "sha256": ""
+    }
+  },
+  "duration_sec": null,
+  "fps": 30,
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "format": "mp4",
+    "variants": [
+      "English",
+      "Listening"
+    ],
+    "listening_text_policy": "保留教學圖卡與場景標籤；移除底部逐句字幕"
+  },
+  "scene_transition_policy": "允許歌詞段落邊界換場景；完整動作內連續，不藏切或省略",
+  "approvals": {
+    "spec": {
+      "accepted": false,
+      "evidence": ""
+    },
+    "sample": {
+      "accepted": false,
+      "waived": false,
+      "evidence": ""
+    },
+    "final": {
+      "accepted": false,
+      "evidence": ""
+    }
+  },
+  "generation_authorization": {
+    "scope": "",
+    "limit": null,
+    "retry_limit": null,
+    "evidence": ""
+  },
+  "characters": [],
+  "objects": [],
+  "scenes": [],
+  "cues": [],
+  "events": [],
+  "quality_baseline": "How Do You Go V13 teacher accepted 2026-10-07",
+  "defaults_are_overridable": true,
+  "internal_sample_qa": {
+    "passed": false,
+    "report": ""
+  }
+}
