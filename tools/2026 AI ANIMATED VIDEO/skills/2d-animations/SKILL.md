@@ -22,7 +22,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 
 ### 階段 1：先討論工作流程
 收到 MP3＋歌詞後，先讀檔（`ffprobe` 看長度；讀歌詞 Word 檔；**也讀 MP3 內嵌的歌詞標籤**——Suno 音檔常有，且可能與 Word 檔不同，例如段落重複次數）。
-然後用條列說明接下來的六階段，並列出需要教師決定的事：角色（建議沿用六位學生）、誰對嘴、是否需要安裝語音辨識、成品要哪幾版。不要在這階段開始做。
+然後用條列說明接下來的六階段，並列出需要教師決定的事：角色（建議沿用六位學生）、**畫風（A 現行平塗繪本風／B 電影光影風／C 黑底塗鴉寓言風，見 `references/style-references.md`）**、誰對嘴、是否需要安裝語音辨識、成品要哪幾版。不要在這階段開始做。
 
 ### 階段 2：量實際演唱（本機、免費）
 1. 建立新歌資料夾：`python -I scripts/new_song_setup.py "<歌名>" "<mp3>" "<歌詞.docx>"`（會建立 `output/<slug>/`，複製來源並記錄 SHA-256、複製最新引擎；見腳本說明）。
@@ -43,6 +43,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 教師可能改動某段的指定（例：Verse 3 改成兩人互問、Bridge 只有一人唱），照教師決定並把影響寫明（例如女孩對嘴到男聲）。
 
 ### 階段 4：兩個場景的試片（約 30 秒）
+教師選了畫風 B 或 C 時，從 `assets/style-samples/sB-cinematic.js`／`sC-doodle.js`（教師 2026-10-24 核准的樣張程式）複製起手，先做一張這首歌的靜態樣張給教師確認，再做試片。
 挑最具代表性、動作最多的兩段（例如人物故事段＋課堂問答段），渲染含原曲的試片，並在**每個關鍵字的時間點各抽一張靜態圖**自己看過再交出。試片裡每一種新動作都要另抽「動作關鍵格條」，照 `references/character-motion-checklist.md` 的 12 項檢查（預備、擠壓伸展、跟隨、弧線、停格時間等），不過的先修再交。試片通過後才做其他場景。
 
 ### 階段 5：全曲
@@ -74,6 +75,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 - `references/suno-template.md` — Suno 模板全文與 K-pop 定案設定。
 - `references/case-studies.md` — 兩首正式版的時間線、決定與數據；遇到同類問題時參考。
 - `references/delegation-brief.md` — 交辦子代理的範本。
+- `references/style-references.md` — 參考風格（Ifverse 電影光影火柴人、Day One Films 黑底塗鴉寓言）的觀察、推論、可借用的程式做法與節奏；選畫風或想讓畫面更有電影感時讀。
 - `references/character-motion-checklist.md` — 角色動畫 12 原則檢查表（逐句抽格與動作關鍵格條），試片與全片驗收都用。
 - `scripts/new_song_setup.py` — 新歌資料夾與引擎複製（同時放入下面三支通用分析腳本）。
 - `scripts/analyze_song.py`、`scripts/align_lines.py`、`scripts/annotate_timing.py` — 階段 2 的通用分析腳本（自動讀 sources/，不需改檔名）。
