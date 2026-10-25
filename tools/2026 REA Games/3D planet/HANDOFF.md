@@ -44,3 +44,22 @@
 - 清心福全（疑似歇業）→ **五分田-二水光化店**（光文路 82 號）。
 - 第二階段：22 處建築依網路最新照片＋老師的 Google 地圖連結（只看不存）→ Codex 參考圖（`資料/generated-images/buildings/`，provenance.json 有提示詞與 SHA-256）→ Tripo（`資料/tripo-buildings-20261025.json` 有每個 task 網址）→ `assets/models/bld_<id>.glb`；中文招牌用 Label3D 疊（模型上是英文佔位字）。二水國中第一次＋免費重試都壞掉（透空走廊讓 Tripo 混亂），改畫實心版本再做成功。Tripo 餘額 2740 → 1475。
 - 網頁 pck 52.1 MB（復刻模型貼圖 768）。預覽頻道已更新。
+## v3（2026-10-25 晚，RDQ-spec-ershui-planet-v3-login-fixes-20261026.md）
+- **首頁**：先在太空看整顆星球轉（6.5 秒，星空天空 shader `world.set_space()`）→ 俯衝到二水車站 → 接原本的街道低空飛；點畫面跳過。測試：`INTRO=1` 拍 9 張。
+- **問路題**：畫面「Where's the park?  二八水水公園」（`_zh_name`，全聯／OK超商／7-ELEVEN／五分田／台灣第一味用短名），語音只念英文。
+- **文法**：Street 答句改「It's on __ Street.」，`make_voice.py` 重錄 20 句 Road/Street 語音。
+- **押注鏡頭**：`world.face_view()` 繞角色一圈找不被擋的方向、角色轉身面向鏡頭；鏡頭站進街屋方塊範圍也變半透明（`fade_between` 加 rect 判斷）。21 站檢查表：`資料/v3-checks/face_checklist.png`（`ARRIVALS=1` 會多拍 `face_*`，`python -I tools/arrival_sheet.py face`）。
+- **個人模式**：首頁「個人／分組」。個人＝`site/public/ershui-3d-quest-planet/`（自己的外框 `planet-app.mjs`，沒動正式任務共用的 quest3d-app.mjs）→ 學號 → iframe `../ershui-planet/`。遊戲在外框裡（`window.parent.ershuiHost`）就只顯示一排句子按鈕、答對 +10、滿分 120。
+  - 一輪的資料：`cleared` 存 `mode:ken`、`set:2`、`seed:123456`；`results` 存 q01–q12 對錯與題目／答案／選了什麼。遊戲用 seed 重新排出同一份題目，所以換 iPad 也能「繼續上次」。
+  - 雲端：questProgress（跨裝置）＋ questAttempts（教師後台），任務代號 `ershui-3d-quest-planet`（符合既有 rules，不用改 firestore.rules）。
+  - 教師後台 `teacher.js`：planet 顯示「作答／答對／答錯／模式・路線・進度」、總分滿分 120、答錯題目附「選了什麼」；**任務 data.js 讀不到時不再整個後台讀取失敗**。`missions.mjs` 加一行。
+  - 測試：Godot `PERSONAL=1`（假外框，答 5 題→回首頁→繼續，`same_rounds=true`）；網站用 Firebase 模擬器（`firebase emulators:start --only auth,firestore --config firebase.emulator.json --project g6-english-online-learning`，網址加 `?emu=1`，教師帳號用模擬器 REST 建 `emu-teacher-uid-01`）：學號 99901 → 12 題 → 結果 80/120 → 後台顯示正確 → 清掉本機存檔重登，從雲端接回 Q4/12。
+- **部署**：只上預覽頻道 ershui-planet（到期 11-01）。正式站沒動。
+- **10/25 21:00 正式站只更新教師後台**（老師同意）：teacher.js、missions.mjs（只加 planet 一行）、ershui-3d-quest-planet/（只為了讓後台讀 data.js）。做法：先用 Hosting API 列出正式站 301 個檔、逐檔比對 sha256，在 scratchpad/live-stage 組「正式站現況＋這 5 個檔」再 `firebase deploy --only hosting`；首頁 index.html、quest3d-app.mjs 用正式站原檔，Jump Island（jump3d、ershui-3d-quest-jump）與遊戲 ershui-planet/ 仍未上正式站、首頁沒有卡片。
+- 正式資料庫測試（預覽頻道、學號 99901）：Q1 真的在遊戲裡作答、Q2–Q12 用外框 report() 送；結果 80/120；清本機存檔重登從雲端接回 12 題。老師可在正式後台看到 99901 的「二水小行星逛街版」紀錄。
+- 注意：上正式站時要一起上 ershui-planet/（遊戲），不然正式站的個人模式頁面 iframe 會 404。
+
+## 正式上線（2026-10-25 21:10，老師說「部署上正式站」）
+- 正式站：https://hwg5-clock-tower.web.app/ershui-planet/ （首頁選 個人／分組）；個人模式 https://hwg5-clock-tower.web.app/ershui-3d-quest-planet/
+- 首頁加了卡片「二水小行星逛街版」（連到 ershui-planet/，封面 ershui-3d-quest-planet/cover.webp，取自首頁太空空拍第 4 張）。本機 site/public/index.html 也加了同一張卡（排在 Jump Island 卡片後）。
+- 部署方式同後台那次：scratchpad/live-stage＝正式站現況＋遊戲資料夾＋封面＋卡片，逐檔比對後只差這 11 個檔才部署。Ken's Jump Island 仍未上正式站。

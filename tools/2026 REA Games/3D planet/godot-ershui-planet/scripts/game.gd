@@ -41,6 +41,9 @@ var qi := 0
 var bets := {}                  # 組 → 選項
 var cam_mode := "fly"           # fly / follow / map / arrive
 var fly_t := 0.0
+var intro_t := 0.0
+const INTRO_SPIN := 6.5   # 太空轉星球的秒數
+const INTRO_END := 10.5   # 俯衝結束（之後接街道低空飛）
 var fly_route: Array = []
 var cam_pos := Vector3.ZERO
 var cam_look := Vector3.ZERO
@@ -65,6 +68,17 @@ var next_btn: Button
 var listen_btn: Button
 var listened := false
 var continue_btn: Button
+# 個人模式（老師 10/26 1C）：從 hwg5-clock-tower 的學號外框（ershui-3d-quest-planet）進來；分組模式＝投影、不登入
+var personal := false
+var personal_sid := ""
+var group_btns_row: HBoxContainer
+var personal_row: HBoxContainer
+var sid_label: Label
+var setup_group_nodes: Array = []
+var setup_mode_label: Label
+var setup_set_label: Label
+const PERSONAL_POINTS := 10
+const PERSONAL_URL := "../ershui-3d-quest-planet/"
 var walk_from := Vector2.ZERO
 var toast: Label
 const SAVE_PATH := "user://ershui_planet_save.json"
@@ -116,10 +130,123 @@ func _ready() -> void:
 	_build_fly_route()
 	_load_icons()
 	_build_audio()
+	var hi := _host_initial()
+	if hi.has("studentId"):
+		personal = true
+		personal_sid = String(hi["studentId"])
+		group_count = 1
 	_build_ui()
 	_show_title()
 	if test_mode:
 		_run_test()
+
+# ---------- 網頁外框（學號＋教師後台） ----------
+## 外框在 window.parent.ershuiHost：getInitial() 給學號與進度、report() 收作答；電腦上直接開 Godot 時什麼也不做
+var test_host := {}
+func _host_initial() -> Dictionary:
+	if OS.get_environment("PERSONAL") != "":
+		if test_host.is_empty():
+			test_host = {"studentId": "99901", "results": {}, "cleared": []}   # 測試用（假外框）
+		return test_host
+	if not OS.has_feature("web"):
+		return {}
+	var raw = JavaScriptBridge.eval("(function(){try{var h=window.parent&&window.parent!==window&&window.parent.ershuiHost;return h?JSON.stringify(h.getInitial()):'';}catch(e){return '';}})()", true)
+	if typeof(raw) != TYPE_STRING or raw == "":
+		return {}
+	var d = JSON.parse_string(raw)
+	return d if typeof(d) == TYPE_DICTIONARY else {}
+
+func _host_report(payload: Dictionary) -> void:
+	if not personal:
+		return
+	if OS.get_environment("PERSONAL") != "":
+		print("REPORT ", JSON.stringify(payload))
+		# 假外框也照外框的規則存起來，測試「繼續上次」
+		match String(payload["type"]):
+			"start":
+				test_host["results"] = {}
+				test_host["cleared"] = ["mode:%s" % payload["mode"], "set:%d" % payload["set"], "seed:%d" % payload["seed"]]
+			"item":
+				test_host["results"][payload["id"]] = payload["result"]
+	if not OS.has_feature("web"):
+		return
+	var arg := JSON.stringify(JSON.stringify(payload))
+	JavaScriptBridge.eval("(function(){try{var h=window.parent&&window.parent.ershuiHost;if(h)h.report(%s);}catch(e){console.warn(e);}})()" % arg, true)
+
+## 外框存的這一輪：cleared 裡放 "mode:ken"、"set:2"、"seed:123456"，results 是 q01..q12 的對錯
+func _host_run(d: Dictionary) -> Dictionary:
+	var run := {}
+	for c in d.get("cleared", []):
+		var s := String(c)
+		var i := s.find(":")
+		if i > 0:
+			run[s.substr(0, i)] = s.substr(i + 1)
+	if not run.has("mode") or not run.has("seed") or not run.has("set"):
+		return {}
+	var res: Dictionary = d.get("results", {})
+	var n := 0
+	var ok := 0
+	for k in 12:
+		var r = res.get("q%02d" % (k + 1))
+		if typeof(r) != TYPE_DICTIONARY:
+			break
+		n += 1
+		if r.get("finalCorrect", false):
+			ok += 1
+	run["answered"] = n
+	run["correct"] = ok
+	return run
+
+func _go_personal() -> void:
+	# 首頁按「個人」：整頁換到學號外框（外框再把遊戲放進 iframe）
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("window.top.location.href = new URL('%s', location.href).href" % PERSONAL_URL, true)
+	else:
+		_toast("Personal mode opens on the website 個人模式請從網站進入")
+
+func _resume_personal() -> void:
+	var run := _host_run(_host_initial())
+	if run.is_empty():
+		_show_setup()
+		return
+	mode = String(run["mode"])
+	set_idx = clampi(int(run["set"]), 0, sets["sets"].size() - 1)
+	run_seed = int(run["seed"])
+	group_count = 1
+	_make_rounds()
+	qi = mini(int(run["answered"]), rounds.size())
+	scores = [int(run["correct"]) * PERSONAL_POINTS]
+	# 角色站回上一題走到的地方
+	var start: Vector2 = world.places["station"]["door2"]
+	walkers["ken"]["pos"] = start + Vector2(-0.9, 0.0)
+	walkers["yuyu"]["pos"] = start + Vector2(0.9, 0.0)
+	if walkers.has("zunbo"):
+		walkers["zunbo"]["pos"] = start + Vector2(0.0, 1.3)
+	arrive_id = ""
+	for r in qi:
+		var Rd: Dictionary = rounds[r]
+		var door: Vector2 = world.places[Rd["target"]]["door2"]
+		if Rd["who"] == "all":
+			walkers["ken"]["pos"] = door
+			walkers["yuyu"]["pos"] = door + Vector2(0.85, 0.5)
+			if walkers.has("zunbo"):
+				walkers["zunbo"]["pos"] = door + Vector2(-0.85, 0.5)
+		else:
+			walkers[Rd["lead"]]["pos"] = door
+		arrive_id = Rd["target"]
+	for k in walkers:
+		walkers[k]["path"] = []
+		walkers[k]["fwd"] = Vector2(0, 1)
+		_walker_anim(k, false)
+	_hide_all()
+	hud.visible = true
+	_build_chips()
+	cam_pos = Vector3.ZERO
+	if qi >= rounds.size():
+		_show_result()
+	else:
+		_show_question()
+		_toast("Welcome back! 接著玩 Q%d" % (qi + 1))
 
 # ---------- 角色 ----------
 func _build_walkers() -> void:
@@ -369,6 +496,21 @@ func _follow(k: String, delta: float) -> void:
 		_walker_anim(k, moving)
 
 ## 抵達鏡頭：距離依建築大小，在建築四周找最不被擋住的角度（world.arrive_view）
+var face_cam: Array = []
+## 押注畫面鏡頭：找不被擋的方向，角色轉身面向鏡頭，中間的房子半透明
+func _setup_face_cam() -> void:
+	var W: Dictionary = walkers[active]
+	var p: Vector2 = W["pos"]
+	var pref: Vector2 = -(W["fwd"] as Vector2)
+	if pref.length() < 0.1:
+		pref = Vector2(0, 1)
+	face_cam = world.face_view(p, pref.normalized())
+	var dir: Vector2 = face_cam[2]
+	for k in walkers:
+		if (walkers[k]["pos"] as Vector2).distance_to(p) < 5.0:
+			walkers[k]["fwd"] = dir
+	world.fade_between(face_cam[0], p, arrive_id if arrive_id != "" else "station", 0.0)
+
 func _arrive_view(id: String) -> Array:
 	var P: Dictionary = world.places[id]
 	var h: float = P.get("height", 5.0)
@@ -411,7 +553,36 @@ func _update_camera(delta: float) -> void:
 	var want_up := cam_up
 	var k := 1.0 - exp(-delta * 3.0)
 	match cam_mode:
+		"fly" when intro_t < INTRO_END:
+			# 老師 10/26：首頁要看得出是一顆星球 → 先在太空看整顆星球轉，再俯衝到二水車站上空
+			intro_t += delta
+			var sp: Vector3 = (world.bend2(world.places["station"]["door2"]) as Vector3).normalized()
+			var north: Vector3 = (world.bend2((world.places["station"]["door2"] as Vector2) + Vector2(0, -6)) - world.bend2(world.places["station"]["door2"])).normalized()
+			var axis := Vector3(1.0, 0.25, 0.35).normalized()
+			var far_d: float = world.R * 2.7
+			var p0 := _fly_point(0.0)
+			var a0 := _fly_point(22.0)
+			var fwd0 := (a0 - _fly_point(-6.0)).normalized()
+			var end_pos: Vector3 = world.bend2(p0 - fwd0 * 4.0, 19.0)
+			var end_look: Vector3 = world.bend2(a0, 1.0)
+			if intro_t < INTRO_SPIN:
+				var ang := (intro_t - INTRO_SPIN) * 0.5
+				want_pos = sp.rotated(axis, ang) * far_d
+				want_look = Vector3.ZERO
+				want_up = north.rotated(axis, ang)
+				world.set_space(1.0)
+			else:
+				var s := smoothstep(INTRO_SPIN, INTRO_END, intro_t)
+				var e := s * s * (3.0 - 2.0 * s)
+				var dir: Vector3 = sp.slerp(end_pos.normalized(), e)
+				want_pos = dir * lerpf(far_d, end_pos.length(), e)
+				want_look = Vector3.ZERO.lerp(end_look, e)
+				want_up = north.slerp(world.bend2(p0).normalized(), e)
+				world.set_space(clampf(1.0 - e * 1.6, 0.0, 1.0))
+			k = 1.0
+			fly_t = 0.0
 		"fly":
+			world.set_space(0.0)
 			fly_t += delta * 8.0
 			var p := _fly_point(fly_t)
 			var ahead := _fly_point(fly_t + 22.0)
@@ -432,10 +603,13 @@ func _update_camera(delta: float) -> void:
 			var W: Dictionary = walkers[active]
 			var p: Vector2 = W["pos"]
 			var f: Vector2 = W["fwd"]
-			var side := Vector2(-f.y, f.x)
-			# 鏡頭往下看一點，角色就會在畫面上半部（下半部是題目面板）
-			want_pos = world.bend2(p + f * 4.6 + side * 1.1, 1.9)
-			want_look = world.bend2(p - f * 0.6, -0.75)
+			# 鏡頭往下看一點，角色就會在畫面上半部（下半部是題目面板）；位置由 _setup_face_cam 避開遮擋
+			if face_cam.is_empty():
+				_setup_face_cam()
+			var fd: Vector2 = face_cam[2]
+			var fh: float = face_cam[1]
+			want_pos = world.bend2(face_cam[0], fh)
+			want_look = world.bend2(p - fd * 0.6, -0.75 - (fh - 1.9) * 0.55)
 			want_up = world.bend2(p).normalized()
 		"arrive":
 			# 同時看到整棟建築和站在門口的角色；中間擋住的房子已經變半透明
@@ -521,7 +695,7 @@ func voice_key(word: String) -> String:
 # ---------- 題組：六種人物模式（老師 2026-10-25 v2 規格） ----------
 ## ken：Where are you going? I'm going…｜zunbo：Where is he going? He's going…｜yuyu：Where is she going? She's going…
 ## mix：三人輪流、各用自己的句型｜we：三人一起走 Where are you going? We're going…
-## where：三人一起走 Where's the __? It's on __ Road.／It's __ Street.（顏色路名，同一條路整場同色）
+## where：三人一起走 Where's the __? It's on __ Road.／It's on __ Street.（顏色路名，同一條路整場同色）
 const MODES := [
 	["ken", "Ken", "I'm going to the __."],
 	["zunbo", "Zun-Bo 圳寶", "He's going to the __."],
@@ -536,14 +710,31 @@ const COLOR_HEX := {"red": "#e03131", "yellow": "#fcc419", "green": "#2f9e44", "
 const OWN_PATTERN := {"ken": "you", "zunbo": "he", "yuyu": "she"}
 var mode := "mix"
 
+## 題目順序用固定種子洗牌：個人模式換一台 iPad 也能排出同一套題目（種子存在教師後台進度裡）
+var run_seed := 0
+func _shuffle(a: Array) -> void:
+	for i in range(a.size() - 1, 0, -1):
+		var j := rng.randi_range(0, i)
+		var tmp = a[i]
+		a[i] = a[j]
+		a[j] = tmp
+
+## 地點中文名：去掉括號裡的補充（例：「超市（民生路）」→「超市」不夠清楚時保留括號）
+const ZH_SHOW := {"pxmart": "全聯", "ok": "OK超商", "seven": "7-ELEVEN", "tea2": "五分田", "teatop": "台灣第一味"}
+func _zh_name(id: String) -> String:
+	return String(ZH_SHOW.get(id, world.places[id]["zh"]))
+
 func _group_mode() -> bool:
 	return mode == "we" or mode == "where"
 
 func _make_rounds() -> void:
 	rounds.clear()
+	if run_seed == 0:
+		run_seed = randi() % 900000 + 100000
+	rng.seed = run_seed
 	var S: Dictionary = sets["sets"][set_idx]
 	var targets: Array = S["targets"].duplicate()
-	targets.shuffle()
+	_shuffle(targets)
 	var first_opts: Array = sets["first_options"]
 	# 第一題固定從 tea shop / post office / library / supermarket 中出（問路模式除外）
 	if mode != "where":
@@ -593,15 +784,15 @@ func _round(target: String, who: String, pattern: String, fixed: Array) -> Dicti
 		R["road"] = road["group"]
 		var pool: Array = COLORS.duplicate()
 		pool.erase(answer)
-		pool.shuffle()
+		_shuffle(pool)
 		opts = [answer, pool[0], pool[1], pool[2]]
-		opts.shuffle()
+		_shuffle(opts)
 	elif opts.is_empty():
 		var pool: Array = data["words"].duplicate()
 		pool.erase(word)
-		pool.shuffle()
+		_shuffle(pool)
 		opts = [word, pool[0], pool[1], pool[2]]
-		opts.shuffle()
+		_shuffle(opts)
 	var q := ""
 	var qkey := ""
 	match pattern:
@@ -616,7 +807,7 @@ func _round(target: String, who: String, pattern: String, fixed: Array) -> Dicti
 			q = "Where are you going?"
 			qkey = "q_we"
 		"where":
-			q = "Where's the %s?" % word
+			q = "Where's the %s?  %s" % [word, _zh_name(target)]   # 老師 10/26：同單字有好幾個地點，加中文地名（語音只念英文）
 			qkey = "q_where_%s" % voice_key(word)
 		"he":
 			q = "Where is he going?"
@@ -637,7 +828,7 @@ func sentence(Rd: Dictionary, x: String) -> String:
 		"he":
 			return "He's going to the %s." % x
 		"where":
-			return ("It's on %s Road." if Rd.get("kind", "Road") == "Road" else "It's %s Street.") % x.capitalize()
+			return ("It's on %s Road." if Rd.get("kind", "Road") == "Road" else "It's on %s Street.") % x.capitalize()
 		_:
 			return "She's going to the %s." % x
 
@@ -760,10 +951,10 @@ func _build_title() -> void:
 	title_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
 	title_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(title_ui)
+	# 整個畫面大小、內容置中：個人／分組切換按鈕時不會跑位（10/26 iPad 預覽發現 iframe 裡整塊偏右下）
 	var v := VBoxContainer.new()
-	v.set_anchors_preset(Control.PRESET_CENTER)
-	v.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	v.grow_vertical = Control.GROW_DIRECTION_BOTH
+	v.set_anchors_preset(Control.PRESET_FULL_RECT)
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.alignment = BoxContainer.ALIGNMENT_CENTER
 	v.add_theme_constant_override("separation", 10)
 	title_ui.add_child(v)
@@ -785,22 +976,62 @@ func _build_title() -> void:
 	var gap := Control.new()
 	gap.custom_minimum_size = Vector2(0, 30)
 	v.add_child(gap)
-	var b := _btn("  Start 開始  ", 42, Color("#ffd166"))
-	b.custom_minimum_size = Vector2(360, 86)
-	b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	# 老師 10/26：首頁先選玩法 → 個人（學號，每人一台 iPad）／分組（投影，5–7 組押注）
+	group_btns_row = HBoxContainer.new()
+	group_btns_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	group_btns_row.add_theme_constant_override("separation", 24)
+	v.add_child(group_btns_row)
+	var pb := _btn("個人 Personal\n輸入學號 Student ID", 30, Color("#a5d8ff"))
+	pb.custom_minimum_size = Vector2(340, 104)
+	pb.pressed.connect(_go_personal)
+	group_btns_row.add_child(pb)
+	var b := _btn("分組 Groups\n投影 5–7 組", 30, Color("#ffd166"))
+	b.custom_minimum_size = Vector2(340, 104)
 	b.pressed.connect(_show_setup)
-	v.add_child(b)
+	group_btns_row.add_child(b)
+	# 個人模式（外框裡）：顯示學號＋新的一輪／繼續
+	sid_label = _label("", 30, Color.WHITE)
+	sid_label.add_theme_color_override("font_outline_color", Color("#3a2a40"))
+	sid_label.add_theme_constant_override("outline_size", 14)
+	sid_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	v.add_child(sid_label)
+	personal_row = HBoxContainer.new()
+	personal_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	personal_row.add_theme_constant_override("separation", 24)
+	v.add_child(personal_row)
+	var nb := _btn("  New game 新的一輪  ", 34, Color("#ffd166"))
+	nb.custom_minimum_size = Vector2(340, 86)
+	nb.pressed.connect(_show_setup)
+	personal_row.add_child(nb)
 	continue_btn = _btn("  Continue 繼續上次  ", 30, Color("#cfe8ff"))
 	continue_btn.custom_minimum_size = Vector2(360, 64)
 	continue_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	continue_btn.pressed.connect(load_progress)
+	continue_btn.pressed.connect(func(): _resume_personal() if personal else load_progress())
 	v.add_child(continue_btn)
+
+func _input(ev: InputEvent) -> void:
+	# 首頁空拍：點一下畫面就跳過太空段
+	if cam_mode == "fly" and intro_t < INTRO_END and ((ev is InputEventMouseButton and ev.pressed) or (ev is InputEventScreenTouch and ev.pressed)):
+		intro_t = INTRO_END
+		cam_pos = Vector3.ZERO
 
 func _show_title() -> void:
 	state = St.TITLE
 	cam_mode = "fly"
+	intro_t = 0.0
+	fly_t = 0.0
 	_hide_all()
 	title_ui.visible = true
+	group_btns_row.visible = not personal
+	personal_row.visible = personal
+	sid_label.visible = personal
+	if personal:
+		sid_label.text = "學號 Student ID：%s" % personal_sid
+		var run := _host_run(_host_initial())
+		continue_btn.visible = not run.is_empty() and int(run["answered"]) < 12
+		if continue_btn.visible:
+			continue_btn.text = "  Continue 繼續上次（Q%d/12）  " % (int(run["answered"]) + 1)
+		return
 	var sv := _read_save()
 	continue_btn.visible = not sv.is_empty()
 	if not sv.is_empty():
@@ -835,7 +1066,8 @@ func _build_setup() -> void:
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	v.add_theme_constant_override("separation", 8)
 	scroll.add_child(v)
-	v.add_child(_label("1. How many groups?  幾組？", 30))
+	var l1 := _label("1. How many groups?  幾組？", 30)
+	v.add_child(l1)
 	var hc := HBoxContainer.new()
 	hc.add_theme_constant_override("separation", 12)
 	v.add_child(hc)
@@ -844,7 +1076,8 @@ func _build_setup() -> void:
 		b.pressed.connect(func(): _set_group_count(n))
 		hc.add_child(b)
 		setup_count_btns.append(b)
-	v.add_child(_label("2. Pick an emoji for each group  點組別，再點圖示", 30))
+	var l2 := _label("2. Pick an emoji for each group  點組別，再點圖示", 30)
+	v.add_child(l2)
 	var gr := HBoxContainer.new()
 	gr.name = "Groups"
 	gr.add_theme_constant_override("separation", 10)
@@ -867,7 +1100,9 @@ func _build_setup() -> void:
 		b.add_child(ic)
 		b.pressed.connect(func(): _assign_icon(i))
 		ig.add_child(b)
-	v.add_child(_label("3. Who walks?  選人物與句型", 30))
+	setup_group_nodes = [l1, hc, l2, gr, ig]
+	setup_mode_label = _label("3. Who walks?  選人物與句型", 30)
+	v.add_child(setup_mode_label)
 	var mg := GridContainer.new()
 	mg.columns = 3
 	mg.add_theme_constant_override("h_separation", 10)
@@ -879,7 +1114,8 @@ func _build_setup() -> void:
 		mb.pressed.connect(func(): _set_mode(i))
 		mg.add_child(mb)
 		setup_mode_btns.append(mb)
-	v.add_child(_label("4. Choose a route  選路線（每次順序都不同）", 30))
+	setup_set_label = _label("4. Choose a route  選路線（每次順序都不同）", 30)
+	v.add_child(setup_set_label)
 	var sg := GridContainer.new()
 	sg.columns = 3
 	sg.add_theme_constant_override("h_separation", 10)
@@ -905,7 +1141,14 @@ func _show_setup() -> void:
 	if group_icons.is_empty():
 		for i in 7:
 			group_icons.append(i)
-	_set_group_count(group_count)
+	for n in setup_group_nodes:
+		n.visible = not personal
+	setup_mode_label.text = ("1." if personal else "3.") + " Who walks?  選人物與句型"
+	setup_set_label.text = ("2." if personal else "4.") + " Choose a route  選路線（每次順序都不同）"
+	if personal:
+		group_count = 1
+	else:
+		_set_group_count(group_count)
 	_set_mode(MODES.map(func(m): return m[0]).find(mode))
 	_set_set(set_idx)
 
@@ -1073,10 +1316,16 @@ func _build_hud() -> void:
 	hud.add_child(walk_caption)
 
 func _start_game() -> void:
+	if personal:
+		group_count = 1
 	scores.clear()
 	for g in group_count:
 		scores.append(0)
+	run_seed = 0        # 每一輪新的順序；個人模式把 seed 存到外框，換裝置也能排出同一份題目
+	arrive_id = ""
+	cam_pos = Vector3.ZERO   # 鏡頭直接跳到角色前面（不從首頁空拍慢慢飄過來）
 	_make_rounds()
+	_host_report({"type": "start", "mode": mode, "set": set_idx, "seed": run_seed})
 	qi = 0
 	var start: Vector2 = world.places["station"]["door2"]
 	walkers["ken"]["pos"] = start + Vector2(-0.9, 0.0)
@@ -1105,7 +1354,7 @@ func _build_chips() -> void:
 		var vb := VBoxContainer.new()
 		vb.add_theme_constant_override("separation", -6)
 		h.add_child(vb)
-		vb.add_child(_label("G%d" % (g + 1), 16))
+		vb.add_child(_label(personal_sid if personal else "G%d" % (g + 1), 16))
 		var sl := _label("0", 30)
 		vb.add_child(sl)
 		var bl := _label("", 26, Color("#7b5ea7"))
@@ -1124,6 +1373,7 @@ func _show_question() -> void:
 	active = Rd["lead"]
 	world.clear_fade()
 	world.hide_road_color()
+	_setup_face_cam()
 	cam_mode = "face"
 	bets.clear()
 	q_sub.text = "Q%d/%d" % [qi + 1, rounds.size()]
@@ -1137,7 +1387,7 @@ func _show_question() -> void:
 	_build_bet_row()
 	qpanel.visible = true
 	opt_grid.visible = true
-	bet_box.visible = true
+	bet_box.visible = not personal   # 個人模式：直接點上面的句子按鈕作答
 	q_label.add_theme_color_override("font_color", Color(0.15, 0.12, 0.2))
 	for g in chip_nodes.size():
 		chip_nodes[g]["panel"].add_theme_stylebox_override("panel", _style(GROUP_COLORS[g].lightened(0.6), Color(0.15, 0.12, 0.2), 16, 3))
@@ -1178,11 +1428,15 @@ func _bet(g: int, i: int) -> void:
 	bets[g] = i
 	for k in 4:
 		_paint(bet_buttons[g][k], Color("#ffd166") if k == i else Color("#fff8e7"))
+		if personal:
+			_paint(opt_buttons[k], Color("#ffd166") if k == i else Color("#fff8e7"))
 	start_btn.disabled = bets.size() < group_count
 	_refresh_chips()
 
 func _speak_option(i: int) -> void:
 	var Rd: Dictionary = rounds[qi]
+	if personal:
+		_bet(0, i)
 	say(answer_key(Rd, Rd["options"][i]))
 
 func _repeat_voice() -> void:
@@ -1198,6 +1452,7 @@ func _on_start() -> void:
 	if state != St.QUESTION or bets.size() < group_count:
 		return
 	state = St.WALKING
+	world.clear_fade()
 	var Rd: Dictionary = rounds[qi]
 	var lead: String = Rd["lead"]
 	var W: Dictionary = walkers[lead]
@@ -1223,6 +1478,8 @@ func _on_start() -> void:
 			walk_caption.text = "Let's find the %s!" % Rd["word"]
 		"we":
 			walk_caption.text = "Ken, Zun-Bo & Shuiling…  Where are they going?"
+		"you":
+			walk_caption.text = "Ken, where are you going…?"   # 和題目一致（Ken＝you）
 		_:
 			walk_caption.text = "%s  Where is %s going…?" % [W["name"], {"yuyu": "she", "zunbo": "he", "ken": "he"}[lead]]
 
@@ -1251,14 +1508,20 @@ func _on_arrive(k: String) -> void:
 	q_sub.text = LETTERS[Rd["correct"]]
 	q_label.text = sentence(Rd, Rd["answer"])
 	q_label.add_theme_color_override("font_color", Color("#2b8a3e"))
+	var pts := PERSONAL_POINTS if personal else POINTS
 	for g in group_count:
 		var hit: bool = bets.get(g, -1) == Rd["correct"]
 		if hit:
-			scores[g] += POINTS
-			_pop_points(g)
+			scores[g] += pts
+			_pop_points(g, pts)
 		chip_nodes[g]["panel"].add_theme_stylebox_override("panel", _style(Color("#b2f2bb") if hit else Color("#e9ecef"), Color("#2b8a3e") if hit else Color("#c92a2a"), 16, 5))
 	_refresh_chips()
 	sfx("correct" if bets.values().has(Rd["correct"]) else "wrong")
+	if personal:
+		var ok: bool = bets.get(0, -1) == Rd["correct"]
+		_host_report({"type": "item", "id": "q%02d" % (qi + 1), "q": Rd["question"], "a": sentence(Rd, Rd["answer"]),
+			"pick": sentence(Rd, Rd["options"][bets.get(0, 0)]),
+			"result": {"attempts": 1, "wrong": 0 if ok else 1, "firstTry": ok, "hintUsed": false, "quality": 4 if ok else 0, "finalCorrect": ok}})
 	listened = false
 	listen_btn.visible = true
 	listen_btn.disabled = false
@@ -1276,9 +1539,9 @@ func _on_listen() -> void:
 	listen_btn.disabled = false
 	next_btn.disabled = false
 
-func _pop_points(g: int) -> void:
+func _pop_points(g: int, pts := POINTS) -> void:
 	var pc: PanelContainer = chip_nodes[g]["panel"]
-	var l := _label("+%d" % POINTS, 40, Color("#2b8a3e"))
+	var l := _label("+%d" % pts, 40, Color("#2b8a3e"))
 	l.add_theme_color_override("font_outline_color", Color.WHITE)
 	l.add_theme_constant_override("outline_size", 10)
 	hud.add_child(l)
@@ -1327,6 +1590,9 @@ func _go_home() -> void:
 ## 存在瀏覽器（網頁版是 IndexedDB）；只存組數、圖示、分數、題組與題目順序、目前第幾題、角色位置，不存任何學生資料
 func save_progress() -> void:
 	if rounds.is_empty() or state == St.RESULT:
+		return
+	if personal:
+		_toast("Saved ✓ 每一題都自動存好了（學號 %s）" % personal_sid)
 		return
 	var next_q := qi
 	var ken_pos: Vector2 = walkers["ken"]["pos"]
@@ -1439,7 +1705,10 @@ func _build_result() -> void:
 	result_ui.add_child(panel)
 
 func _show_result() -> void:
-	_delete_save()
+	if personal:
+		_host_report({"type": "complete", "score": scores[0] if not scores.is_empty() else 0})
+	else:
+		_delete_save()
 	state = St.RESULT
 	cam_mode = "map"
 	sfx("victory")
@@ -1470,10 +1739,10 @@ func _show_result() -> void:
 		var rank := _label("🏆" if win else "  ", 30)
 		h.add_child(_label("★" if win else "  ", 34, Color("#e8590c")))
 		h.add_child(_icon(g, 52))
-		var nm := _label("Group %d" % (g + 1), 30)
+		var nm := _label(("學號 %s" % personal_sid) if personal else "Group %d" % (g + 1), 30)
 		nm.custom_minimum_size = Vector2(200, 0)
 		h.add_child(nm)
-		h.add_child(_label("%d points" % scores[g], 34))
+		h.add_child(_label(("%d / 120" % scores[g]) if personal else "%d points" % scores[g], 34))
 		rank.queue_free()
 		v.add_child(pc)
 	var row := HBoxContainer.new()
@@ -1483,7 +1752,7 @@ func _show_result() -> void:
 	var again := _btn("Play again 再玩一次", 26, Color("#ffd166"))
 	again.pressed.connect(_start_game)
 	row.add_child(again)
-	var setup := _btn("New groups 重新設定", 26)
+	var setup := _btn("Change route 換路線" if personal else "New groups 重新設定", 26)
 	setup.pressed.connect(_show_setup)
 	row.add_child(setup)
 
@@ -1498,6 +1767,19 @@ func _wait(sec: float) -> void:
 	await get_tree().create_timer(sec).timeout
 
 func _run_test() -> void:
+	if OS.get_environment("INTRO") != "":
+		# 首頁空拍：太空 → 俯衝 → 街道，每 1.5 秒拍一張
+		title_ui.visible = false
+		intro_t = 0.0
+		for i in 9:
+			await _wait(1.5)
+			await _shot("intro_%d" % i)
+		get_tree().quit()
+		return
+	if personal:
+		await _test_personal()
+		get_tree().quit()
+		return
 	await _wait(2.5)
 	await _shot("01_title")
 	_show_setup()
@@ -1550,6 +1832,56 @@ func _run_test() -> void:
 	print("TEST DONE mode=%s scores=%s" % [mode, scores])
 	get_tree().quit()
 
+## 個人模式（PERSONAL=1 假外框）：答 5 題 → 回首頁 → 繼續上次（要排出同一份題目、從第 6 題接著）→ 答完
+func _test_personal() -> void:
+	await _wait(2.5)
+	intro_t = INTRO_END
+	await _wait(1.0)
+	await _shot("p01_title")
+	_show_setup()
+	var m := OS.get_environment("MODE")
+	if m != "":
+		_set_mode(MODES.map(func(x): return x[0]).find(m))
+	_set_set(int(OS.get_environment("SET")) if OS.get_environment("SET") != "" else 0)
+	await _wait(0.4)
+	await _shot("p02_setup")
+	_start_game()
+	fast = true
+	var sig := []
+	for r in rounds:
+		sig.append("%s>%s>%d" % [r["who"], r["target"], int(r["correct"])])
+	for n in rounds.size():
+		if n == 5:
+			_go_home()
+			await _wait(0.8)
+			await _shot("p05_title_continue")
+			print("CONTINUE visible=", continue_btn.visible, " text=", continue_btn.text)
+			_resume_personal()
+			var sig2 := []
+			for r in rounds:
+				sig2.append("%s>%s>%d" % [r["who"], r["target"], int(r["correct"])])
+			print("RESUME qi=", qi, " scores=", scores, " same_rounds=", sig == sig2)
+			await _wait(0.8)
+			await _shot("p06_resumed")
+		await _wait(0.6)
+		_speak_option(rng.randi() % 4)
+		if n == 0:
+			await _wait(0.5)
+			await _shot("p03_question")
+		_on_start()
+		var guard := 0.0
+		while state == St.WALKING and guard < 60.0:
+			await _wait(0.2)
+			guard += 0.2
+		if n == 0:
+			await _wait(1.0)
+			await _shot("p04_reveal")
+		await _on_listen()
+		_on_next()
+	await _wait(1.0)
+	await _shot("p07_result")
+	print("PERSONAL DONE mode=%s scores=%s" % [mode, scores])
+
 ## 每個會去的地點：Ken 站在門口、用抵達鏡頭拍一張（檢查表）
 func _test_arrivals() -> void:
 	var ids := []
@@ -1576,4 +1908,16 @@ func _test_arrivals() -> void:
 		world.fade_between(arrive_cam_point(id), P["pos2"], id)
 		await _wait(0.6)
 		await _shot("arr_%s" % id)
+		# 押注畫面（單人題：只有 Ken）
+		walkers["yuyu"]["pos"] = Vector2(9999, 9999)
+		walkers["zunbo"]["pos"] = Vector2(9999, 9999)
+		world.clear_fade()
+		_setup_face_cam()
+		cam_mode = "face"
+		cam_pos = Vector3.ZERO
+		hud.visible = true
+		q_label.text = "Ken, where are you going?  (%s)" % id
+		await _wait(0.6)
+		await _shot("face_%s" % id)
+		hud.visible = false
 	print("ARRIVALS ", ids.size())

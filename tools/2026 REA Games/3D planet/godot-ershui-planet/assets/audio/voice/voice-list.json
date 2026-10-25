@@ -428,7 +428,7 @@
  },
  {
   "key": "a_street_red",
-  "text": "It's Red Street.",
+  "text": "It's on Red Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -442,7 +442,7 @@
  },
  {
   "key": "a_street_yellow",
-  "text": "It's Yellow Street.",
+  "text": "It's on Yellow Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -456,7 +456,7 @@
  },
  {
   "key": "a_street_green",
-  "text": "It's Green Street.",
+  "text": "It's on Green Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -470,7 +470,7 @@
  },
  {
   "key": "a_street_blue",
-  "text": "It's Blue Street.",
+  "text": "It's on Blue Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -484,7 +484,7 @@
  },
  {
   "key": "a_street_black",
-  "text": "It's Black Street.",
+  "text": "It's on Black Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -498,7 +498,7 @@
  },
  {
   "key": "a_street_white",
-  "text": "It's White Street.",
+  "text": "It's on White Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -512,7 +512,7 @@
  },
  {
   "key": "a_street_purple",
-  "text": "It's Purple Street.",
+  "text": "It's on Purple Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -526,7 +526,7 @@
  },
  {
   "key": "a_street_pink",
-  "text": "It's Pink Street.",
+  "text": "It's on Pink Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -540,7 +540,7 @@
  },
  {
   "key": "a_street_orange",
-  "text": "It's Orange Street.",
+  "text": "It's on Orange Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"
@@ -554,7 +554,7 @@
  },
  {
   "key": "a_street_brown",
-  "text": "It's Brown Street.",
+  "text": "It's on Brown Street.",
   "voice": "en-US-JennyNeural",
   "rate": "-20%",
   "pitch": "+0Hz"

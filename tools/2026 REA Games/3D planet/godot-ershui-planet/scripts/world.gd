@@ -116,16 +116,41 @@ void vertex() { VERTEX += NORMAL * width; }
 void fragment() { ALBEDO = ink.rgb; }
 """
 
+var sky_mat: ShaderMaterial
+var space_now := -1.0
+func set_space(v: float) -> void:
+	if absf(v - space_now) < 0.002:
+		return
+	space_now = v
+	sky_mat.set_shader_parameter("space", v)
+
+const SKY_SHADER := """
+shader_type sky;
+uniform float space = 0.0;
+void sky() {
+	vec3 d = normalize(EYEDIR);
+	vec3 top = vec3(0.4, 0.66, 0.92);
+	vec3 hor = vec3(0.84, 0.92, 0.98);
+	vec3 bot = vec3(0.6, 0.75, 0.9);
+	vec3 day = d.y >= 0.0 ? mix(hor, top, pow(clamp(d.y, 0.0, 1.0), 0.6)) : mix(hor, bot, pow(clamp(-d.y, 0.0, 1.0), 0.6));
+	vec3 g = floor(d * 260.0);
+	float h = fract(sin(dot(g, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+	float star = step(0.9972, h) * (0.6 + 0.4 * fract(h * 97.0));
+	vec3 sp = mix(vec3(0.02, 0.03, 0.1), vec3(0.08, 0.05, 0.2), d.x * 0.5 + 0.5) + vec3(star);
+	COLOR = mix(day, sp, space);
+}
+"""
+
 func _build_sky() -> void:
 	var we := WorldEnvironment.new()
 	var e := Environment.new()
 	var sky := Sky.new()
-	var sm := ProceduralSkyMaterial.new()
-	sm.sky_top_color = Color(0.4, 0.66, 0.92)
-	sm.sky_horizon_color = Color(0.84, 0.92, 0.98)
-	sm.ground_horizon_color = Color(0.84, 0.92, 0.98)
-	sm.ground_bottom_color = Color(0.6, 0.75, 0.9)
-	sky.sky_material = sm
+	# 天空：白天藍天，首頁太空段換成星空（space 0→1）
+	var sh := Shader.new()
+	sh.code = SKY_SHADER
+	sky_mat = ShaderMaterial.new()
+	sky_mat.shader = sh
+	sky.sky_material = sky_mat
 	e.background_mode = Environment.BG_SKY
 	e.sky = sky
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
@@ -582,7 +607,7 @@ func _build_places() -> void:
 			var pr := Rect2(poly[0], Vector2.ZERO)
 			for q in poly:
 				pr = pr.expand(q)
-			tiles.append({"center": pr.get_center(), "r": maxf(4.0, pr.size.length() * 0.5), "id": P["id"], "mesh": holder.get_node_or_null("B"), "ink": holder.get_node_or_null("BInk")})
+			tiles.append({"center": pr.get_center(), "r": maxf(4.0, pr.size.length() * 0.5), "rect": pr, "id": P["id"], "mesh": holder.get_node_or_null("B"), "ink": holder.get_node_or_null("BInk")})
 			var r := Rect2(poly[0], Vector2.ZERO)
 			for q in poly:
 				r = r.expand(q)
@@ -755,15 +780,17 @@ func _build_buildings() -> void:
 		add_child(holder)
 		b.commit(holder, "B")
 		var tr: Rect2 = tile_rect[key]
-		tiles.append({"center": tr.get_center(), "r": tr.size.length() * 0.5 + 1.0, "mesh": holder.get_node_or_null("B"), "ink": holder.get_node_or_null("BInk")})
+		tiles.append({"center": tr.get_center(), "r": tr.size.length() * 0.5 + 1.0, "rect": tr, "mesh": holder.get_node_or_null("B"), "ink": holder.get_node_or_null("BInk")})
 	print("BUILDINGS ", n, " tiles ", tiles.size())
 
 ## 把鏡頭到目標之間的街屋方塊變半透明（目標建築本身是地點，不在方塊裡）
-func fade_between(cam2: Vector2, target2: Vector2, target_id := "") -> void:
+func fade_between(cam2: Vector2, target2: Vector2, target_id := "", near := 16.0) -> void:
 	for T in tiles:
 		var c: Vector2 = T["center"]
 		var d := _seg_dist(c, cam2, target2)
-		var fade: bool = (d < float(T["r"]) or c.distance_to(cam2) < 16.0) and T.get("id", "") != target_id
+		# 鏡頭站在方塊範圍內（街屋或別的地點建築）也要變半透明，不然畫面一片黑
+		var inside: bool = T.has("rect") and (T["rect"] as Rect2).grow(1.5).has_point(cam2)
+		var fade: bool = (d < float(T["r"]) or c.distance_to(cam2) < near or inside) and T.get("id", "") != target_id
 		if T["mesh"]:
 			(T["mesh"] as MeshInstance3D).material_override = mat_fade if fade else mat_toon
 		if T["ink"]:
@@ -1330,6 +1357,25 @@ func _blocked_count(cam2: Vector2, ch: float, tgt2: Vector2, th: float, self_id:
 				n += 1 if i > 0 else 30   # 鏡頭自己在房子裡面：最差
 				break
 	return n
+
+## 押注畫面（老師 10/26：Ken 在圖書館等站被房子擋住）：繞角色一圈找不被擋的鏡頭方向
+## pref＝最想要的方向（背對建築、面向街道）；回傳 [鏡頭平面位置, 鏡頭高度, 鏡頭方向]
+func face_view(p: Vector2, pref: Vector2, dist := 4.6, ch := 1.9) -> Array:
+	var best := []
+	var best_score := 1e9
+	for hk in [1.0, 1.6, 2.4]:
+		for deg in [0, 20, -20, 40, -40, 60, -60, 80, -80, 100, -100, 120, -120, 140, -140, 160, -160, 180]:
+			var dir := pref.rotated(deg_to_rad(deg))
+			var side := Vector2(-dir.y, dir.x)
+			var c2 := p + dir * dist + side * 1.1
+			var hh: float = ch * hk
+			var score: float = _blocked_count(c2, hh, p, 1.1, "") * 10.0 + absf(deg) / 40.0 + (hk - 1.0) * 2.0
+			if score < best_score:
+				best_score = score
+				best = [c2, hh, dir]
+	if OS.get_environment("ARRIVALS") != "":
+		print("FACE ", p, " score=", best_score, " cam=", best)
+	return best
 
 ## 回傳 [鏡頭平面位置, 鏡頭高度]；結果存在 P["view"]
 func arrive_view(id: String, d: float, ch: float, tgt_h: float) -> Array:

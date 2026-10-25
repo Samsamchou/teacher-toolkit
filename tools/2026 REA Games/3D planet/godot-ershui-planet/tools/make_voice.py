@@ -37,7 +37,7 @@ def lines():
         yield f"q_where_{k}", f"Where's the {w}?", NARRATOR
     for c in COLORS:
         yield f"a_road_{c}", f"It's on {c.capitalize()} Road.", NARRATOR
-        yield f"a_street_{c}", f"It's {c.capitalize()} Street.", NARRATOR
+        yield f"a_street_{c}", f"It's on {c.capitalize()} Street.", NARRATOR
 
 
 async def main() -> None:

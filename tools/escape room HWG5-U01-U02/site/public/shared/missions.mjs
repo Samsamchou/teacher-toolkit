@@ -6,4 +6,5 @@ export const MISSIONS = [
   { slug: "ershui-3d-quest", unit: "二水 3D 英語闖關 HWG5 R1", title: "Ershui 3D English Quest" },
   { slug: "ershui-3d-quest-hwg7", unit: "二水 3D 英語闖關 HWG7 U01-U02", title: "Ershui 3D English Quest 6" },
   { slug: "ershui-3d-quest-jump", unit: "Ken's Jump Island 跳跳島 HWG5", title: "Ken's Jump Island" },
+  { slug: "ershui-3d-quest-planet", unit: "二水小行星逛街版", title: "Ershui Planet Street Walk" },
 ];

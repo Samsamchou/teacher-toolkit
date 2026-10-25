@@ -29,7 +29,7 @@
         ]
       },
       {
-        "source": "**/@(game|quest3d|jump3d)/*.@(wasm|pck)",
+        "source": "**/@(game|quest3d|jump3d|ershui-planet)/*.@(wasm|pck)",
         "headers": [
           {
             "key": "Cache-Control",

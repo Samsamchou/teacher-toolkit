@@ -55,7 +55,10 @@ async function load() {
     const snap = await F.getDocs(F.collection(db, COLLECTION));
     all = snap.docs.map(d => d.data());
     await Promise.all([...new Set(all.map(r => r.mission))].map(async slug => {
-      if (!banks[slug]) banks[slug] = (await import(`../${slug}/data.js`)).BANK;
+      if (banks[slug]) return;
+      // 任務資料夾還沒上線（例如只在預覽頻道）也不能讓整個後台讀取失敗
+      try { banks[slug] = (await import(`../${slug}/data.js`)).BANK; }
+      catch { banks[slug] = { items: [], battles: [], missing: true }; }
     }));
     renderDates();
     if (day && !$("day").hidden) renderDay();
@@ -100,7 +103,9 @@ $("backToDates").addEventListener("click", () => { selected = null; showDates();
 // ---------------------------------------------------------------- step 2: one day's class list
 const dayRows = () => all.filter(r => daysOf(r).includes(day));
 const bank = () => banks[mission];
-const total = () => bank().items.length;
+const total = () => bank().items.length || 1;
+const planet = () => bank().kind === "planet";
+const maxScore = () => bank().maxScore || 100;
 const retries = r => (r.items || []).filter(i => !i.firstTryCorrect && i.attempts > 0);
 const firstTry = r => r.summary?.firstTry ?? (r.items || []).filter(i => i.firstTryCorrect).length;
 const finished = r => r.summary?.finished ?? (r.items || []).filter(i => i.finalCorrect).length;
@@ -109,8 +114,10 @@ const battles = r => Object.keys(r.battles || {}).length;
 const score = r => (typeof r.summary?.score === "number" ? r.summary.score : null);
 const itemPoints = (r, it) => {
   const x = (r.items || []).find(i => i.seq === it.seq);
+  if (planet()) return x?.finalCorrect ? bank().pointsPer : 0;
   return x?.finalCorrect ? Math.round(100 / total() * Math.min(4, Math.max(1, x.quality || 1)) / 4 * 10) / 10 : 0;
 };
+const planetNote = r => r.summary?.note || "—";
 const when = iso => iso ? new Date(iso).toLocaleString("zh-TW", { timeZone: "Asia/Taipei", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
 const lastBattle = () => bank().battles.at(-1)?.id;
 const bossText = r => {
@@ -149,6 +156,12 @@ function currentList() {
 }
 function renderTable() {
   if (!mission) { $("table").tBodies[0].innerHTML = ""; return; }
+  // 表頭：二水小行星沒有戰鬥，「完成／第一次答對」＝「作答／答對」
+  const th = $("table").tHead.rows[0].cells;
+  th[3].textContent = planet() ? "作答" : "完成";
+  th[4].textContent = planet() ? "答對" : "第一次答對";
+  th[5].textContent = planet() ? "答錯" : "需重試";
+  th[6].textContent = planet() ? "模式・路線・進度" : "戰鬥";
   const list = currentList();
   $("dayMsg").textContent = `${missionInfo(mission).unit}｜這一天有 ${new Set(list.map(r => r.studentId)).size} 位學生、${list.length} 筆作答紀錄`;
   $("table").tBodies[0].innerHTML = list.map(r => `
@@ -159,8 +172,8 @@ function renderTable() {
       <td>${finished(r)}/${total()}</td>
       <td>${firstTry(r)}/${total()}（${Math.round(firstTry(r) / total() * 100)}%）</td>
       <td>${retries(r).length}</td>
-      <td>${battles(r)}/${bank().battles.length}</td>
-      <td>${bossText(r)}</td>
+      <td>${planet() ? esc(planetNote(r)) : `${battles(r)}/${bank().battles.length}`}</td>
+      <td>${planet() ? "—" : bossText(r)}</td>
       <td>${when(r.updatedAt)}</td>
     </tr>`).join("") || `<tr><td colspan="9" class="hint">這一天沒有符合的紀錄。</td></tr>`;
 }
@@ -170,9 +183,10 @@ $("table").addEventListener("click", e => {
 });
 
 // ---------------------------------------------------------------- detail = result page + retried questions
-function questionText(seq) {
+function questionText(seq, rec) {
   const it = bank().items.find(i => i.seq === seq);
   if (!it) return "";
+  if (it.type === "choice") return rec?.q ? `${rec.q} → ${rec.a}（選了：${rec.pick}）` : "";
   if (it.type === "spell") return `拼字：${it.spell.answer}`;
   if (it.type === "listen") return `聽力：${it.transcript ? it.transcript + " → " : ""}${it.answerText}`;
   return it.lines.map(l => `${l.speaker}: ${l.text.replace(/\{(\d)\}/g, (_, d) => `〔${it.blanks[Number(d) - 1].answer}〕`)}`).join("　");
@@ -183,24 +197,24 @@ function showDetail(r) {
   const icon = name => bank().rewardIcons?.[name] ? `<img src="../${r.mission}/${bank().rewardIcons[name]}" alt="${esc(name)}" title="${esc(name)}">` : "";
   $("detail").innerHTML = `
     <div class="result">
-      <p class="state">${r.completedAt ? "Mission Complete!" : `進行中（第 ${r.stepIndex ?? 0} / ${r.stepCount ?? "?"} 步）`}</p>
+      <p class="state">${r.completedAt ? "Mission Complete!" : planet() ? `進行中（已作答 ${r.stepIndex ?? 0} / ${r.stepCount ?? "?"} 題）` : `進行中（第 ${r.stepIndex ?? 0} / ${r.stepCount ?? "?"} 步）`}</p>
       <p class="big-id">${esc(r.studentId)}</p>
-      <p class="boss">Boss：${bossText(r)}</p>
+      <p class="boss">${planet() ? esc(planetNote(r)) : `Boss：${bossText(r)}`}</p>
       <div class="stats">
-        ${score(r) !== null ? `<div><b>${score(r)}</b><span>總分（滿分 100）</span></div>` : ""}
-        <div><b>${finished(r)}/${total()}</b><span>完成題數</span></div>
-        <div><b>${firstTry(r)}/${total()}</b><span>第一次就答對</span></div>
-        <div><b>${battles(r)}/${bank().battles.length}</b><span>戰鬥</span></div>
+        ${score(r) !== null ? `<div><b>${score(r)}</b><span>總分（滿分 ${maxScore()}）</span></div>` : ""}
+        <div><b>${finished(r)}/${total()}</b><span>${planet() ? "作答題數" : "完成題數"}</span></div>
+        <div><b>${firstTry(r)}/${total()}</b><span>${planet() ? "答對題數" : "第一次就答對"}</span></div>
+        ${planet() ? "" : `<div><b>${battles(r)}/${bank().battles.length}</b><span>戰鬥</span></div>`}
       </div>
       <div class="items">${(r.inventory || []).map(icon).join("")}</div>
       <p class="meta">作答日期 ${daysOf(r).join("、")}｜最後更新 ${when(r.updatedAt)}${r.completedAt ? `｜完成 ${when(r.completedAt)}` : ""}</p>
     </div>
-    <h3>需要重試的題目（${re.length} 題）</h3>
+    <h3>${planet() ? "答錯的題目" : "需要重試的題目"}（${re.length} 題）</h3>
     ${re.length ? `<table class="retry"><thead><tr><th>題</th><th>題目與答案</th><th>作答次數</th><th>提示</th><th>最後</th></tr></thead><tbody>
-      ${re.map(i => `<tr><td>Q${String(i.seq).padStart(2, "0")}<br><small>${esc(i.id)}</small></td><td>${esc(questionText(i.seq))}</td>
-        <td class="n">${i.attempts}</td><td>${i.hintUsed ? "有" : "—"}</td><td>${i.finalCorrect ? "答對" : "未完成"}</td></tr>`).join("")}
+      ${re.map(i => `<tr><td>Q${String(i.seq).padStart(2, "0")}<br><small>${esc(i.id)}</small></td><td>${esc(questionText(i.seq, i))}</td>
+        <td class="n">${i.attempts}</td><td>${i.hintUsed ? "有" : "—"}</td><td>${i.finalCorrect ? "答對" : planet() ? "答錯" : "未完成"}</td></tr>`).join("")}
       </tbody></table>` : '<p class="hint">作答過的題目都是第一次就答對。</p>'}
-    <p class="note">第一次就答對的題目不列出。</p>`;
+    <p class="note">${planet() ? "答對的題目不列出。" : "第一次就答對的題目不列出。"}</p>`;
 }
 
 // ---------------------------------------------------------------- CSV of the selected day + mission (UTF-8 BOM for Excel)
