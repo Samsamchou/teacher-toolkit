@@ -1,0 +1,16 @@
+{
+ "note": "Tripo Studio 圖生 3D（HD Model、H3.1、Triangle 10000 面、4K PBR、Private），2026-10-25，每個 55 點，共 1210 點（2740→1530）。網址 https://studio.tripo3d.ai/workspace/generate/<task>",
+ "tasks": {
+  "station": "a5de168a-96c5-48cc-887c-8d56bca43782", "school": "3ddc8d56-f933-4926-9d41-c5af4b40ceb8",
+  "esjh": "33893fbf-3da5-4c28-b88b-98578a58d54e", "yuanquan": "f94811b4-9d94-4f19-b2dd-7d0129a0c409",
+  "fuxing": "2df9e8bb-9a0a-4271-967b-18c652a4dbbf", "library": "c1b5e55c-d41e-440d-86ce-af2a79ba766b",
+  "post": "1d1ee932-5e4c-465b-bf68-d0b7970f679a", "health": "2ab40b0d-a52a-47d5-8e4d-23c4ef1dbf43",
+  "market": "5a944dd5-4b04-41c0-a006-a83e2a881ca9", "pxmart": "be5f7aea-2b23-4ee9-a52d-f704374d588c",
+  "seven": "ff76ec27-2529-42cb-8e71-80034d3404eb", "ok": "c5482eae-246e-4600-9db2-3b39e2b45aa1",
+  "bookstore": "22ec4143-1c28-4750-b4bd-e3ee622f8ba6", "teatop": "b46af015-4c91-4d3a-be52-d41f9eebeaff",
+  "tea2": "c47dde6e-6b12-4d62-b584-7439e18a4538", "inn": "329544a9-463a-4cdf-876f-e3976a45270b",
+  "qizao": "8783ea0e-59ec-4b66-8fc4-1f20ed23ebff", "waterpark": "d66a5b54-febb-4507-9c2b-35645c55fc4a",
+  "fengbo": "823a4a61-f6b0-4bc5-947e-21866eae49f0", "lawn": "5065fb54-10a0-41cb-a640-b93803e0b384",
+  "baobao": "15979aa4-3ff9-4d3a-8d36-b24a8dbf5202", "lintemple": "71427d84-223e-42fc-ac6c-c8c1ebc985f0"
+ }
+}

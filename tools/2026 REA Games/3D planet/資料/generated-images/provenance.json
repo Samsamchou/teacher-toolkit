@@ -1,0 +1,11 @@
+{
+  "tool": "Codex CLI 0.164.0 built-in image_generation (codex exec -s workspace-write)",
+  "date": "2026-10-25",
+  "note": "Codex could not write into G: from its sandbox; originals copied from C:/Users/User/.codex/generated_images/",
+  "images": [
+    {"file": "emoji_sheet.png", "sha256": "9750E0852ADCD095A875629AB54541A957D8C5950E47FBD7199FE7E78A5BB918", "use": "12 group emoji, sliced by godot-ershui-planet/tools/slice_emoji.py", "prompt": "4x3 grid of 12 round emoji-style team badges, sci-fi anime style ... rocket, robot, alien, astronaut kid, laser star, UFO, cyber cat, mecha dragon, ringed planet, comet, space bunny, lightning hero mask; no text"},
+    {"file": "mascot_A_yuyu.png", "sha256": "F80A11C639926C6F8EDF59121584A899E418707622C2B26CFF01B2865A5464FB", "use": "female mascot option A 柚柚 (concept, awaiting teacher choice)", "prompt": "see 資料/research-ershui-places-and-mascot-20261025.md English prompt (A)"},
+    {"file": "mascot_B_shuiling.png", "sha256": "C4F04C60EB5E6B7B83E53D3A085E640C76D759038EBED8E323AA65333A8D4B31", "use": "female mascot option B 水鈴 (concept, awaiting teacher choice)", "prompt": "see research report English prompt (B)"},
+    {"file": "robot_zunbo.png", "sha256": "66E4140A9639DD3CB6E432D0C4C0E63349AD0D56DD8DF9F9AD303567774D6BD3", "use": "neutral robot mascot 圳寶 (concept)", "prompt": "see research report English prompt (a)"}
+  ]
+}

@@ -1,0 +1,562 @@
+[
+ {
+  "key": "q_you_1",
+  "text": "Ken, where are you going?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "q_you_2",
+  "text": "Where are you going, Ken?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "q_he",
+  "text": "Where is he going?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "q_she",
+  "text": "Where is she going?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "q_we",
+  "text": "Where are you going?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_park",
+  "text": "I'm going to the park.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_park",
+  "text": "He's going to the park.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_park",
+  "text": "She's going to the park.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_park",
+  "text": "We're going to the park.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_park",
+  "text": "Where's the park?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_post_office",
+  "text": "I'm going to the post office.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_post_office",
+  "text": "He's going to the post office.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_post_office",
+  "text": "She's going to the post office.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_post_office",
+  "text": "We're going to the post office.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_post_office",
+  "text": "Where's the post office?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_supermarket",
+  "text": "I'm going to the supermarket.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_supermarket",
+  "text": "He's going to the supermarket.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_supermarket",
+  "text": "She's going to the supermarket.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_supermarket",
+  "text": "We're going to the supermarket.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_supermarket",
+  "text": "Where's the supermarket?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_library",
+  "text": "I'm going to the library.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_library",
+  "text": "He's going to the library.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_library",
+  "text": "She's going to the library.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_library",
+  "text": "We're going to the library.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_library",
+  "text": "Where's the library?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_school",
+  "text": "I'm going to the school.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_school",
+  "text": "He's going to the school.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_school",
+  "text": "She's going to the school.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_school",
+  "text": "We're going to the school.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_school",
+  "text": "Where's the school?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_train_station",
+  "text": "I'm going to the train station.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_train_station",
+  "text": "He's going to the train station.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_train_station",
+  "text": "She's going to the train station.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_train_station",
+  "text": "We're going to the train station.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_train_station",
+  "text": "Where's the train station?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_tea_shop",
+  "text": "I'm going to the tea shop.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_tea_shop",
+  "text": "He's going to the tea shop.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_tea_shop",
+  "text": "She's going to the tea shop.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_tea_shop",
+  "text": "We're going to the tea shop.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_tea_shop",
+  "text": "Where's the tea shop?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_bookstore",
+  "text": "I'm going to the bookstore.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_bookstore",
+  "text": "He's going to the bookstore.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_bookstore",
+  "text": "She's going to the bookstore.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_bookstore",
+  "text": "We're going to the bookstore.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_bookstore",
+  "text": "Where's the bookstore?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_hospital",
+  "text": "I'm going to the hospital.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_hospital",
+  "text": "He's going to the hospital.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_hospital",
+  "text": "She's going to the hospital.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_hospital",
+  "text": "We're going to the hospital.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_hospital",
+  "text": "Where's the hospital?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_restaurant",
+  "text": "I'm going to the restaurant.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_restaurant",
+  "text": "He's going to the restaurant.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_restaurant",
+  "text": "She's going to the restaurant.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_restaurant",
+  "text": "We're going to the restaurant.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_restaurant",
+  "text": "Where's the restaurant?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_i_convenience_store",
+  "text": "I'm going to the convenience store.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_convenience_store",
+  "text": "He's going to the convenience store.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_convenience_store",
+  "text": "She's going to the convenience store.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_convenience_store",
+  "text": "We're going to the convenience store.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_convenience_store",
+  "text": "Where's the convenience store?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_red",
+  "text": "It's on Red Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_red",
+  "text": "It's Red Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_yellow",
+  "text": "It's on Yellow Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_yellow",
+  "text": "It's Yellow Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_green",
+  "text": "It's on Green Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_green",
+  "text": "It's Green Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_blue",
+  "text": "It's on Blue Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_blue",
+  "text": "It's Blue Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_black",
+  "text": "It's on Black Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_black",
+  "text": "It's Black Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_white",
+  "text": "It's on White Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_white",
+  "text": "It's White Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_purple",
+  "text": "It's on Purple Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_purple",
+  "text": "It's Purple Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_pink",
+  "text": "It's on Pink Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_pink",
+  "text": "It's Pink Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_orange",
+  "text": "It's on Orange Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_orange",
+  "text": "It's Orange Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_road_brown",
+  "text": "It's on Brown Road.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_street_brown",
+  "text": "It's Brown Street.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ }
+]

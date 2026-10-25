@@ -1,0 +1,138 @@
+{
+ "tool": "Codex CLI built-in image_generation",
+ "date": "2026-10-25",
+ "images": [
+  {
+   "id": "station",
+   "file": "station.png",
+   "sha256": "5154f82d11ef20a8f4ae920ce3be5da81d1dbf616b2398e202830aae3f67fcd3",
+   "prompt": "Ershui Railway Station in Taiwan after its 2025 renovation: a long symmetrical single-storey 1930s station with a flat roof and a slightly raised central parapet. Off-white walls (#F1ECDD) with ochre-yellow horizontal bands at the cornice and along the canopy edge (#E2A82C). A long flat entrance canopy along the front held up by a row of white round columns with ochre bases. Dark-grey tall rectangular windows, small round porthole windows. Low stepped plinth with stainless handrails. Black letters 'STATION' with a small round railway emblem on the central parapet. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "school",
+   "file": "school.png",
+   "sha256": "8377aac6ca9e3e07d4255f8305ce98e91b639e75a2490aa304a9264ecce3ebb6",
+   "prompt": "Ershui Elementary School in Taiwan: a three-storey pink classroom building (#E9A5B6) with white window frames, long corridor balconies and small pink slanted sun-shade eaves over each window row. In front, a tall square dark-brown stone gate pillar with vertical gold letters 'SCHOOL' topped by a tiny red tiled hip-roof cap, beside a grey sliding steel gate. A red running track edge in front. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "yuanquan",
+   "file": "yuanquan.png",
+   "sha256": "9e2f4294c3261ae42aee22f67fa3486d99e950f59e02b2b6a2c67a8c73ca9f95",
+   "prompt": "Yuanquan Elementary School in rural Taiwan: a two-storey cream-colored classroom building with a dark-red pitched clay-tile roof and one small dormer window in the middle of the roof, a row of cream square columns along a ground-floor corridor with red cloth banners hanging on two columns, large windows. In front: a cream-colored concrete gate arch with a long red banner board with white placeholder text 'WELCOME', and a tall separate cream name pillar on the right with vertical letters 'SCHOOL'. Red-brick paved forecourt with potted shrubs. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "fuxing",
+   "file": "fuxing.png",
+   "sha256": "d53e76045c1ecfadd395d4a37ac7580fb31d19b42a249149b2e94484ca45ec0d",
+   "prompt": "Fuxing Elementary School in Taiwan: a three-storey white school building with a central entrance block of green-tinted glass framed by maroon columns, a white parapet sign band 'SCHOOL', and a stair tower covered in a colorful mosaic mural. A curved low yellow wall and a blue running track edge in front. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "library",
+   "file": "library.png",
+   "sha256": "6a2ef68d3b3789c42314f3727b4eb38d44626c146e24218f805b85624899a5c5",
+   "prompt": "Ershui Township Library in Taiwan: a four-storey red-brown brick-tile corner building (#A8553B) with a tall cylindrical stair tower at the corner slightly taller than the main block, narrow slit windows in the tower, one large round window, a vertical pale stone name plaque, dark-grey framed glass doors and rows of vertical windows. A round orange-red logo of a white open book with placeholder text 'LIBRARY'. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "post",
+   "file": "post.png",
+   "sha256": "225ac765f74c06cf1998405b423b15b1391c1761ba9120fcb756a11cc9d7cc1d",
+   "prompt": "Ershui Post Office in Taiwan: a two-storey corner building clad in pale mint-green small square tiles, the upper floor has a row of white vertical concrete sun fins between tall windows. A flat white concrete canopy over the ground floor carries a long white signboard with a red round postal emblem, then a green section with white letters 'POST'. Glass doors and windows on the ground floor, grey stone entrance steps with a stainless handrail, one green and one red pillar postbox at the entrance, and a small grey 24-hour self-service kiosk with a dark glass panel on the left side. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "health",
+   "file": "health.png",
+   "sha256": "187c874222ae56ebfb776f65f191cf6bb4de714808f1adb049c67bd42c8d3d4f",
+   "prompt": "Ershui Township Public Health Center in Taiwan: a three-storey building clad in pinkish-grey square tiles, with a taller four-storey stair tower on the right side that has one long vertical strip of glass windows and a white vertical sign strip with placeholder letters 'HEALTH'. Green ivy vines climb over large parts of the facade. Wide horizontal windows with dark frames, a rooftop railing, a flat concrete canopy over the glass entrance doors, a small wheelchair ramp with railing. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "market",
+   "file": "market.png",
+   "sha256": "3bd0b6d4da48a03bdf7f91fbf235588cc696dadf42373112c481a122f779e82b",
+   "prompt": "Ershui Supermarket in Taiwan: a wide two-storey warehouse-style local supermarket with plain white walls and a white wavy roof edge. Huge dark-green placeholder letters 'MARKET' painted across the facade. A tall white vertical pylon sign with a green top. Open ground-floor shopfront under a simple awning with fruit crates visible. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "pxmart",
+   "file": "pxmart.png",
+   "sha256": "017243724d59e7de2dc5e935a3d2f8fb38a1d7795d760b68eec9b873b31425e9",
+   "prompt": "PX Mart supermarket in small-town Taiwan: a long single-storey flat-roof supermarket box with a continuous deep purple-blue fascia band (#3B3FA3) with white placeholder letters 'SUPERMARKET' and a small orange accent, an orange awning (#F26B21) over the glass entrance, white walls. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "seven",
+   "file": "seven.png",
+   "sha256": "5c669002d83c5ff52b9d2a7eab932a1515d44c08081cdbfb38878d32dd6a6f17",
+   "prompt": "7-ELEVEN Erbashui convenience store in Taiwan: a single-storey standalone corner convenience store with a flat roof and a white fascia band carrying orange, green and red horizontal stripes with placeholder letters 'STORE'. Full-height glass storefront behind cream square columns holding a shallow covered walkway. Small yellow-black bollards. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "ok",
+   "file": "ok.png",
+   "sha256": "79863a84dbca39f518e399bbbbac3a267281af4760fce6f79129cba1dbef9158",
+   "prompt": "OK Mart convenience store on Guangwen Road, Taiwan: a narrow three-storey Taiwanese townhouse with a ground-floor convenience store. A white sign with a red rounded logo shape and red and blue bands with placeholder letters 'OK MART'. Upper floors have beige tiles, metal window grilles and air-conditioner boxes. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "bookstore",
+   "file": "bookstore.png",
+   "sha256": "89a39f7951ae8933070e789deabf972449c9fd969f4517a3e2f2f125e1cb8a46",
+   "prompt": "Damen Bookstore, an old stationery and book shop in Ershui, Taiwan: a narrow three-storey old shophouse with grey-beige pebble terrazzo walls, white decorative metal window grilles across the second and third floors, a very tall narrow vertical yellow signboard with red placeholder letters 'BOOKS' hanging on the left edge of the facade from the second to third floor. Ground floor: glass doors and windows of a stationery shop, a small red standing sign and racks of stationery at the door, an old grey arcade ceiling. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "teatop",
+   "file": "teatop.png",
+   "sha256": "750a4aedde54b907211dfb33623a3c898dbb0a95797671bcb1c5333b5b46644f",
+   "prompt": "TeaTop bubble-tea shop in Ershui, Taiwan: a narrow four-storey Taiwanese townhouse with a small ground-floor tea shop. A big red signboard with white placeholder letters 'TEA TOP' and a blue cloth banner below it, an orange service counter window. Upper floors have beige tiles, window grilles and air-conditioner units. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "tea2",
+   "file": "tea2.png",
+   "sha256": "5c21448799574cc130cc86a60ee0d250a0b89d5592da71feae4b68e139f2871d",
+   "prompt": "Wu Fen Tian (Five Fields) bubble-tea shop newly opened in Ershui, Taiwan, 2026: the ground floor of a three-storey townhouse with grey small-tile upper walls and black metal window grilles. A long deep navy-blue (#1F3A6E) horizontal signboard across the whole shopfront with large white placeholder letters 'WU FEN TIAN' and a small round white logo. Inside the open shopfront: bright orange walls and a clean white counter with drink machines. A round navy-and-white logo sign projects from the arcade column. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "inn",
+   "file": "inn.png",
+   "sha256": "c0a4386cb10accfc01a68b955b8e562ad009a6abd1180e91255a69ce90e34db3",
+   "prompt": "Erbashui Station restaurant in Ershui, Taiwan: a two-storey Japanese-style wooden restaurant clad in warm brown vertical timber boards (#8B5A2B) with a dark-grey tiled pitched roof and a wooden balcony railing on the upper floor. A projecting gabled entrance porch with red-brick pillars and a carved wooden signboard 'RESTAURANT'. Two large yellow paper lanterns on either side of the wooden glass doors, a row of small red lanterns along the eaves. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "qizao",
+   "file": "qizao.png",
+   "sha256": "f1d323ed7713a1f852719fb3ef11f99bbd82a0329adf0f740f50cdbeb165975a",
+   "prompt": "Qizao Garden in Ershui, Taiwan: a small compound with a tall narrow mustard-yellow two-storey cottage (#D6B02B) with a single-pitch shed roof, black window frames and a black door, and beside it a long single-storey red-brick house (#A0522D) with a grey tiled hip roof and wooden windows. A lawn with stepping stones and a low red-brick boundary wall. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "waterpark",
+   "file": "waterpark.png",
+   "sha256": "590bec893692fd78ee189a777390bfd37a817810835edd68689769c00ab27f7d",
+   "prompt": "Erbashui Water Park railway display in Ershui, Taiwan: a small open-air park on a red-brick plaza with a large black steam locomotive with red wheels on a short display track, a smaller black narrow-gauge sugar-cane locomotive beside it, and a grey F-5E fighter jet on a pedestal. A small playground slide. Scene object. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "fengbo",
+   "file": "fengbo.png",
+   "sha256": "9698f60a3c7485d622e2683c8467188b1caf644ea0a22a2c42a666d8e611a2d4",
+   "prompt": "Fengbo Plaza trailhead in Ershui, Taiwan: a hillside viewing plaza with an octagonal Chinese pavilion with a blue glazed-tile roof (#2F5DA8) and red columns on a wooden deck with railings, a grand staircase decorated with a blue, green and white mosaic dragon, a small grey-roofed rest shelter and a green-framed trail sign 'TRAIL', red-brick paving. Scene. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "lawn",
+   "file": "lawn.png",
+   "sha256": "3b4224731bd4a8503309a9b7b6071a2138996bec74aae6b565f1ead652036aae",
+   "prompt": "Shuixin Meadow in Ershui, Taiwan: a wide flat green meadow (#7CB342) with a row of four large white freestanding 3D block shapes on a low concrete base (abstract white blocks, no readable letters), a short concrete irrigation weir with a row of grey sluice gates behind, white water spilling. Scene. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "baobao",
+   "file": "baobao.png",
+   "sha256": "2a0a9f4827a52e6105f19840d9ba0618ff5858d130746dff10dbd55b6baa20e8",
+   "prompt": "Babao Canal Park in Ershui, Taiwan: a green riverside park beside a wide concrete irrigation canal with clear blue water, a stone weir with grey sluice gates, a small wooden viewing deck with railings, a grey stone monument tablet, a few round trees. Scene. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "lintemple",
+   "file": "lintemple.png",
+   "sha256": "b03be74d3b3df650d8ac51602e7cdc64914dec0bdcbc47249dee3470e10c8877",
+   "prompt": "Lin Xiansheng Temple in Ershui, Taiwan: a single-hall traditional Taiwanese temple with a double-eaved hip-and-gable roof of orange-red tiles (#C8602C), a swallowtail ridge decorated with colorful cut-porcelain twin dragons in green, blue and yellow, four red columns (#C62828) holding the front porch over three stone steps, painted door-god doors, a small red-brick gateway with red-tiled roof in front with a placeholder plaque 'TEMPLE'. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  },
+  {
+   "id": "esjh",
+   "file": "esjh.png",
+   "sha256": "350ed4a18690d159eada1dfde6acc1c7ca0e9393b767a9ad6c1d647b1e02cae3",
+   "prompt": "Ershui Junior High School in Taiwan, drawn as a SOLID chunky toy model (closed walls, no see-through railings, no open hollow corridors): a four-storey light-grey and white rectangular school block with rows of dark windows and solid white balcony parapet bands on each floor; the left end of the block is a solid rounded half-cylinder tower of the same height. In the center, a pale-yellow stair tower (#EFD68C) rises one floor higher, with a vertical red strip of placeholder letters 'SCHOOL' and a teal glass strip. In front: a small grey reviewing stage with green, pink and orange stepped bleachers. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but FAITHFUL real proportions and colors so local children recognize it. Any sign text must be simple English placeholder letters only (no Chinese characters)."
+  }
+ ]
+}

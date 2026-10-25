@@ -11,3 +11,10 @@ godot-jump-island/.godot/
 *.mp3
 *.ttf
 *.import
+
+# 3D planet：Godot 快取、網頁匯出、OSM 原始資料、Tripo/Codex 媒體都只留 GDrive
+3D planet/godot-ershui-planet/.godot/
+3D planet/web-build/
+3D planet/資料/osm/
+*.pck
+*.wasm
