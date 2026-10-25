@@ -76,6 +76,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 - `references/case-studies.md` — 兩首正式版的時間線、決定與數據；遇到同類問題時參考。
 - `references/delegation-brief.md` — 交辦子代理的範本。
 - `references/style-references.md` — 參考風格（Ifverse 電影光影火柴人、Day One Films 黑底塗鴉寓言）的觀察、推論、可借用的程式做法與節奏；選畫風或想讓畫面更有電影感時讀。
+- `references/prompt-benchmark-shadow-puppet.md` — 教師貼入的「皮影戲書店廣告」程式動畫提示詞原文，與可轉成我們抽格驗收的 8 條畫面品質檢查（money shot、hook、視差、尺度、節奏、文字、片尾卡、乾淨畫面）；想讓畫面更有電影感、做宣傳片或要寫給別的 AI 的動畫提示詞時讀。僅供參考，未經教師確認不套用到已驗收作品。
 - `references/character-motion-checklist.md` — 角色動畫 12 原則檢查表（逐句抽格與動作關鍵格條），試片與全片驗收都用。
 - `scripts/new_song_setup.py` — 新歌資料夾與引擎複製（同時放入下面三支通用分析腳本）。
 - `scripts/analyze_song.py`、`scripts/align_lines.py`、`scripts/annotate_timing.py` — 階段 2 的通用分析腳本（自動讀 sources/，不需改檔名）。
