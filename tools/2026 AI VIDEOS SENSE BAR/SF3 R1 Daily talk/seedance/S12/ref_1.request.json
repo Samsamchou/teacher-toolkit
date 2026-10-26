@@ -1,0 +1,14 @@
+{
+ "prompt": "Japanese anime TV series, clean cel-shaded 2D animation with confident line art, flat colors with soft gradients, smooth expressive character animation, warm sunny slice-of-life world in a small Taiwanese town. Reference image 1 is the opening frame: match its composition, background, lighting and characters. The other reference images are the character sheets. Scene: Wide shot inside the art studio looking toward the wooden front door on the right, which is now open with sunlight outside. Grandma steps in first, holding the door; Ken and Allen follow her in, looking around at the paintings with wide excited eyes. Characters: Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers), Ken (a 10-year-old boy with spiky messy brown hair, big brown eyes, white short-sleeve polo shirt with a navy collar and navy buttons, navy shorts, orange-and-navy backpack, red sneakers with white soles), Allen (a 10-year-old boy the same height as Ken, messy brown hair, amber-brown eyes, navy cap with two gold stripes and a round teal badge, navy short-sleeve zip jacket with gray shoulder panels, teal piping and green-and-gold cuffs over a white T-shirt, dark gray cargo shorts, white socks with teal stripes, navy-green-gold sneakers, small green-and-cream shoulder bag on a navy strap). Action: Grandma opens the door and walks in; Ken and Allen follow and look around at the paintings in wonder. Nobody speaks. Nobody speaks; all mouths stay closed. Keep every character's face, hair, outfit and colors exactly as in the reference images. No captions, no subtitles, no readable text, letters or numbers anywhere. No new characters appear.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 6,
+ "web_search": false,
+ "reference_image_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S12_first.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_grandma.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_ken.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_allen.png"
+ ],
+ "generate_audio": true
+}

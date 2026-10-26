@@ -1,0 +1,47 @@
+{
+ "duration": 3.022,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261026,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, warm sunny slice-of-life look, matching the first frame exactly",
+ "setting": "a sunny neighborhood park in a small Taiwanese town on a Sunday morning",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "grandma",
+   "desc": "Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers)",
+   "voice": "a kind, warm, gentle elderly grandmother's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Grandma sits on the wooden park bench with her hands on her knees. She settles back comfortably, looks toward the left with a grateful smile and thanks him gently, giving one soft nod. Sunlight and leaf shadows move across the bench. After the line her lips close, she smooths her trousers once with both hands and keeps smiling kindly to the left, relaxed on the bench.",
+   "dialogue": [
+    {
+     "subject": "grandma",
+     "line": "Thank you.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Gentle park ambience: birds chirping, leaves rustling in a light breeze, distant children playing.",
+ "music": "N/A"
+}

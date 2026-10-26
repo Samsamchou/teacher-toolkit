@@ -1,0 +1,18 @@
+{
+ "prompt": "Japanese anime TV series, clean cel-shaded 2D animation with confident line art, flat colors with soft gradients, smooth expressive character animation, warm sunny slice-of-life world in a small Taiwanese town. Reference image 1 is the opening frame: match its composition, background, lighting and characters. The other reference images are the character sheets. Scene: Medium-wide shot of the studio from a slightly high angle. Grandma, Ken, Allen and Dad stand in a loose semicircle around an empty space in the middle of the room, all turned toward that space in three-quarter view so every face is visible. Each holds a paintbrush. Grandma stands at the center back and raises her brush high with a bright smile; a few tiny glowing golden sparkles already float in the empty air in front of her. Warm sunlight from the window. Characters: Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers), Ken (a 10-year-old boy with spiky messy brown hair, big brown eyes, white short-sleeve polo shirt with a navy collar and navy buttons, navy shorts, orange-and-navy backpack, red sneakers with white soles), Allen (a 10-year-old boy the same height as Ken, messy brown hair, amber-brown eyes, navy cap with two gold stripes and a round teal badge, navy short-sleeve zip jacket with gray shoulder panels, teal piping and green-and-gold cuffs over a white T-shirt, dark gray cargo shorts, white socks with teal stripes, navy-green-gold sneakers, small green-and-cream shoulder bag on a navy strap), Dad (Allen's father, a friendly Taiwanese man in his late thirties, short neat brown hair, brown eyes, navy-blue short-sleeve shirt worn open over a white T-shirt, khaki trousers, navy sneakers). Action: Grandma raises her brush and says her line. Then, with a soft magical shimmer, a large rectangular glowing canvas made of translucent light materializes in mid-air in the middle of the group, floating at chest height with a thin glowing cyan frame. All four step closer and paint on the same floating canvas together: each brush stroke leaves bright flowing colors of light, and together they paint a picture of green mountains, golden rice fields and a big sun. They smile and laugh at each other. Sci-fi movie style magic light effects, sparkles drifting in the air. The painting contains no letters or words. Grandma says in clear English: \"Let's draw together.\" Her/his lip movements follow the reference audio exactly. Only the speaker's mouth moves. Keep every character's face, hair, outfit and colors exactly as in the reference images. No captions, no subtitles, no readable text, letters or numbers anywhere. No new characters appear.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 7,
+ "web_search": false,
+ "reference_image_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S20_first.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_grandma.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_ken.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_allen.png",
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/char_dad.png"
+ ],
+ "generate_audio": true,
+ "reference_audio_urls": [
+  "https://tempfile.redpandaai.co/kieai/12208804/hwg7u04/S20_voice.wav"
+ ]
+}

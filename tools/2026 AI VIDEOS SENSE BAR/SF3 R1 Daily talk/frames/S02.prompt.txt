@@ -1,0 +1,8 @@
+First frame of shot S02 of an animated film. Medium shot of Ken standing on the park path, facing slightly to screen right, waving his right hand with a friendly smile, mouth closed, face clearly visible in three-quarter view. Lawn and trees behind him.
+
+Draw only these characters and no one else: Ken (a 10-year-old boy with spiky messy brown hair, big brown eyes, white short-sleeve polo shirt with a navy collar and navy buttons, navy shorts, orange-and-navy backpack, red sneakers with white soles).
+
+Attached image 1 is the location reference: keep the same place, layout, lighting and time of day. The other attached images are the exact character sheets: keep each character's face, hair, colors, costume and relative height identical to the sheet. Ken and Allen are the same height; the adults are a head taller. 
+
+Style: Japanese anime cel-shaded style matching the attached character sheets: clean confident line art, flat cel shading with soft gradients, warm sunny slice-of-life TV-anime key-visual finish, bright natural Taiwanese daytime light. 16:9 landscape film frame. Characters keep their mouths gently closed. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+refs: park.png, ken.png

@@ -1,0 +1,173 @@
+{
+ "S01_narr": {
+  "who": "narrator",
+  "text": "It's Sunday today. It's sunny.",
+  "take": 2,
+  "heard": "It's Sunday today. It's sunny!",
+  "match": 1.0,
+  "secs": 2.03,
+  "f0": 384.8
+ },
+ "S02": {
+  "who": "ken",
+  "text": "Hello, Allen. How are you?",
+  "take": 2,
+  "heard": "Hello, Alan! How are you?",
+  "match": 0.8,
+  "secs": 2.18,
+  "f0": 365.3
+ },
+ "S03": {
+  "who": "allen",
+  "text": "I'm OK.",
+  "take": 2,
+  "heard": "I'm okay.",
+  "match": 0.5,
+  "secs": 0.67,
+  "f0": 155.6
+ },
+ "S04": {
+  "who": "ken",
+  "text": "Who's she?",
+  "take": 3,
+  "heard": "Who's she?",
+  "match": 1.0,
+  "secs": 0.69,
+  "f0": 422.5
+ },
+ "S05": {
+  "who": "allen",
+  "text": "She's my grandmother.",
+  "take": 0,
+  "heard": "She's my grandmother.",
+  "match": 1.0,
+  "secs": 1.09,
+  "f0": 123.5
+ },
+ "S06": {
+  "who": "ken",
+  "text": "Nice to meet you.",
+  "take": 3,
+  "heard": "Nice to meet you!",
+  "match": 1.0,
+  "secs": 1.25,
+  "f0": 338.0
+ },
+ "S07": {
+  "who": "grandma",
+  "text": "Nice to meet you, too!",
+  "take": 0,
+  "heard": "Nice to meet you too.",
+  "match": 1.0,
+  "secs": 1.57,
+  "f0": 252.5
+ },
+ "S08": {
+  "who": "ken",
+  "text": "Have a seat, please.",
+  "take": 2,
+  "heard": "Have a seat, please.",
+  "match": 1.0,
+  "secs": 1.28,
+  "f0": 332.1
+ },
+ "S09": {
+  "who": "grandma",
+  "text": "Thank you.",
+  "take": 3,
+  "heard": "Thank you.",
+  "match": 1.0,
+  "secs": 0.52,
+  "f0": 174.1
+ },
+ "S10": {
+  "who": "ken",
+  "text": "You're welcome.",
+  "take": 3,
+  "heard": "You're welcome.",
+  "match": 1.0,
+  "secs": 0.77,
+  "f0": 411.5
+ },
+ "S11_narr": {
+  "who": "narrator",
+  "text": "Ken and Allen play basketball in the park.",
+  "take": 2,
+  "heard": "Ken and Alan play basketball in the park.",
+  "match": 0.875,
+  "secs": 2.42,
+  "f0": 299.1
+ },
+ "S12_narr": {
+  "who": "narrator",
+  "text": "After that, they go to Grandma's art studio.",
+  "take": 3,
+  "heard": "After that, they go to Grandma's art studio.",
+  "match": 1.0,
+  "secs": 2.88,
+  "f0": 367.9
+ },
+ "S13": {
+  "who": "ken",
+  "text": "Is she a teacher?",
+  "take": 4,
+  "heard": "Is she a teacher?",
+  "match": 1.0,
+  "secs": 1.26,
+  "f0": 382.0
+ },
+ "S14": {
+  "who": "allen",
+  "text": "Yes, she is.",
+  "take": 3,
+  "heard": "Yes, she is.",
+  "match": 1.0,
+  "secs": 1.07,
+  "f0": 130.2
+ },
+ "S16": {
+  "who": "dad",
+  "text": "Sorry, I'm late.",
+  "take": 4,
+  "heard": "Sorry, I'm late.",
+  "match": 1.0,
+  "secs": 1.12,
+  "f0": 121.2
+ },
+ "S17": {
+  "who": "grandma",
+  "text": "That's OK. Come in, please.",
+  "take": 4,
+  "heard": "That's okay. Come in, please.",
+  "match": 0.8,
+  "secs": 2.42,
+  "f0": 260.3
+ },
+ "S18": {
+  "who": "ken",
+  "text": "Who's he?",
+  "take": 4,
+  "heard": "Who's he?",
+  "match": 1.0,
+  "secs": 0.67,
+  "f0": 402.9
+ },
+ "S19": {
+  "who": "allen",
+  "text": "He's my father.",
+  "take": 3,
+  "heard": "He's my father.",
+  "match": 1.0,
+  "secs": 0.89,
+  "f0": 165.8
+ },
+ "S20": {
+  "who": "grandma",
+  "text": "Let's draw together.",
+  "take": 4,
+  "heard": "Let's draw together.",
+  "match": 1.0,
+  "secs": 1.49,
+  "f0": 269.4
+ }
+}

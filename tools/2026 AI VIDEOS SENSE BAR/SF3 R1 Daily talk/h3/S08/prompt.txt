@@ -1,0 +1,29 @@
+subject_definitions:
+<Subject 1> is Ken (a 10-year-old boy with spiky messy brown hair, big brown eyes, white short-sleeve polo shirt with a navy collar and navy buttons, navy shorts, orange-and-navy backpack, red sneakers with white soles), visible in <Picture 1>.
+<Subject 2> is Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers), visible in <Picture 1>.
+<Picture 1> is the first frame of [Shot 1], fixing the camera position, framing, set layout and lighting.
+<Audio 1> is the complete, exactly timed soundtrack of the target video, containing the spoken lines.
+
+summary:
+[keyframe completion + audio reuse] The target video is one continuous shot set in a sunny neighborhood park in a small Taiwanese town on a Sunday morning, beginning from <Picture 1>. <Subject 1> (S1) speaks 1 short line exactly as in <Audio 1>.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - identity, face, age, hairstyle, body build and clothing are retained.
+<Subject 2> (appears in [Shot 1]): fully_preserved - identity, face, age, hairstyle, body build and clothing are retained.
+<Picture 1> ([Shot 1] first frame): fully_preserved - camera position, framing, set layout, furniture and lighting are retained.
+<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete audio track, and lips follow it exactly.
+
+detailed_description:
+The target video is in the style of a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, warm sunny slice-of-life look, matching the first frame exactly.
+[Shot 1] The shot begins from <Picture 1>. Ken is <Subject 1> (S1). Grandma is <Subject 2>. The camera holds a static shot on a tripod. Starting from <Picture 1>, Ken stands on the left with his right arm stretched out and his open palm pointing toward the wooden bench on the right. He looks at Grandma, smiles politely and invites her to sit, moving his open palm slowly toward the bench on the word seat. Grandma stands still, turns her head to look at the bench and smiles; her mouth stays closed. After the line Ken's lips close, he keeps his arm pointing at the bench for a moment, then lowers it. <Subject 1> (S1) says in a bright, energetic ten-year-old American boy's voice, <d>[English] Have a seat, please.</d> Right after the line the speaker's lips close and stay closed.
+Everyone else in the frame keeps their lips closed and does not speak.
+The animation style, colors and line art stay exactly as in the first frame for the whole clip.
+No new people or characters appear that are not already in the first frame.
+No captions, no subtitles, no readable text, letters or numbers appear anywhere.
+Every character keeps the same face, hair, outfit and colors as in the first frame.
+
+overall_soundscape:
+Gentle park ambience: birds chirping, leaves rustling in a light breeze, distant children playing.
+
+non_diegetic_music:
+N/A

@@ -1,0 +1,47 @@
+{
+ "duration": 3.73,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261026,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, warm sunny slice-of-life look, matching the first frame exactly",
+ "setting": "Grandma's bright, cozy home art studio full of paintings and easels",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "dad",
+   "desc": "Dad (Allen's father, a friendly Taiwanese man in his late thirties, short neat brown hair, brown eyes, navy-blue short-sleeve shirt worn open over a white T-shirt, khaki trousers, navy sneakers)",
+   "voice": "a friendly, warm adult man's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Dad stands in the open studio doorway with one hand on the door frame, breathing a little fast. His shoulders rise and fall twice as he catches his breath. He lifts his free hand to scratch the back of his head, gives an apologetic smile and apologizes, bowing his head slightly on the word late. After the line his lips close, he lowers the hand and keeps an embarrassed smile, still holding the door frame.",
+   "dialogue": [
+    {
+     "subject": "dad",
+     "line": "Sorry, I'm late.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy room tone, a soft brush on canvas, birds faintly outside the window.",
+ "music": "N/A"
+}

@@ -1,0 +1,47 @@
+{
+ "duration": 4.438,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261026,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, warm sunny slice-of-life look, matching the first frame exactly",
+ "setting": "Grandma's bright, cozy home art studio full of paintings and easels",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "grandma",
+   "desc": "Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers)",
+   "voice": "a kind, warm, gentle elderly grandmother's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Grandma stands in the studio facing the door on the right with a warm smile. She shakes her head gently to show it is fine, then lifts her right hand and beckons him in twice with a friendly wave, speaking warmly and unhurriedly. After the line her lips close into a kind smile, she lowers the hand and steps half a step back to make room near the easels, still looking toward the door.",
+   "dialogue": [
+    {
+     "subject": "grandma",
+     "line": "That's OK. Come in, please.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Quiet cozy room tone, a soft brush on canvas, birds faintly outside the window.",
+ "music": "N/A"
+}

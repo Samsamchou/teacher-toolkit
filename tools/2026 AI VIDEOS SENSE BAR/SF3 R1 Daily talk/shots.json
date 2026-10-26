@@ -1,0 +1,339 @@
+{
+ "title": "SF3 R1 — Daily Talk: A Sunday with Grandma",
+ "style": "Japanese anime cel-shaded style matching the attached character sheets: clean confident line art, flat cel shading with soft gradients, warm sunny slice-of-life TV-anime key-visual finish, bright natural Taiwanese daytime light. 16:9 landscape film frame. Characters keep their mouths gently closed. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.",
+ "chars": {
+  "ken": "Ken (a 10-year-old boy with spiky messy brown hair, big brown eyes, white short-sleeve polo shirt with a navy collar and navy buttons, navy shorts, orange-and-navy backpack, red sneakers with white soles)",
+  "allen": "Allen (a 10-year-old boy the same height as Ken, messy brown hair, amber-brown eyes, navy cap with two gold stripes and a round teal badge, navy short-sleeve zip jacket with gray shoulder panels, teal piping and green-and-gold cuffs over a white T-shirt, dark gray cargo shorts, white socks with teal stripes, navy-green-gold sneakers, small green-and-cream shoulder bag on a navy strap)",
+  "grandma": "Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers)",
+  "dad": "Dad (Allen's father, a friendly Taiwanese man in his late thirties, short neat brown hair, brown eyes, navy-blue short-sleeve shirt worn open over a white T-shirt, khaki trousers, navy sneakers)"
+ },
+ "char_refs": {
+  "ken": [
+   "characters/Ken/ken.webp"
+  ],
+  "allen": [
+   "characters/Allen/13_男孩_揮手打招呼.png",
+   "characters/Allen/01_男孩_介紹.png"
+  ],
+  "grandma": [
+   "characters/Allen_family/13_阿嬤_介紹.png"
+  ],
+  "dad": [
+   "characters/Allen_family/01_父親_介紹.png"
+  ]
+ },
+ "char_notes": {
+  "ken": "",
+  "allen": "Keep the cap, jacket, shorts, socks, sneakers and shoulder bag exactly as in the reference. Do not draw the notebook or magnifying glass; his hands are empty.",
+  "grandma": "",
+  "dad": ""
+ },
+ "masters": {
+  "park": "A sunny neighborhood park in a small Taiwanese town on a Sunday morning: a wide green lawn, a curving light-gray paved path along the lawn, one empty wooden park bench with a green metal frame on the right side of the lawn beside the path, shady banyan and camphor trees, low flowering bushes, a clear blue sky with a few soft white clouds, distant low rooftops and green mountains. No people.",
+  "court": "An outdoor public basketball court in the same sunny Taiwanese park: green-and-red court surface with plain white lines, one basketball hoop with a white backboard on a dark blue pole, a low fence, banyan trees around it and one empty wooden park bench with a green metal frame at the court edge in the shade. Clear blue sky. No people.",
+  "studio": "Interior of Grandma's small, bright home art studio: white walls hung with colorful framed paintings of mountains, rice fields and flowers that contain no writing, three wooden easels with blank canvases in the middle of the room, a long wooden table with jars of brushes, paint tubes and a palette, potted plants, a big window with sunlight streaming in on the left, and a wooden front door on the right wall, closed. Warm cozy afternoon light. No people."
+ },
+ "shots": [
+  {
+   "id": "S01",
+   "gen": "seedance",
+   "scene": "park",
+   "refs": [
+    "ken",
+    "allen",
+    "grandma"
+   ],
+   "dur": 7,
+   "narr": "It's Sunday today. It's sunny.",
+   "frame": "Wide shot of the sunny park. On the right, Allen and Grandma stand side by side on the path at the edge of the lawn, near the bench, chatting happily. On the left, Ken walks along the path toward them, smiling and lifting one hand to wave. Full bodies visible, plenty of sky.",
+   "action": "Ken walks along the path toward Allen and Grandma and waves; Allen turns and sees him. Birds fly across the blue sky. Nobody speaks."
+  },
+  {
+   "id": "S02",
+   "scene": "park",
+   "refs": [
+    "ken"
+   ],
+   "dur": 4,
+   "line": {
+    "who": "ken",
+    "text": "Hello, Allen. How are you?"
+   },
+   "frame": "Medium shot of Ken standing on the park path, facing slightly to screen right, waving his right hand with a friendly smile, mouth closed, face clearly visible in three-quarter view. Lawn and trees behind him.",
+   "action": "Ken waves and says his line cheerfully.",
+   "h3_action": "Starting from <Picture 1>, Ken stands on the sunny park path with his right hand already raised. He waves the hand from side to side three times, leans forward a little and greets his friend on the right with a big friendly smile, his eyebrows lifting on the word Allen. His spiky brown hair moves slightly in the breeze. After the line his lips close, he keeps smiling, lowers his hand to the strap of his orange backpack and waits for an answer, looking to the right."
+  },
+  {
+   "id": "S03",
+   "scene": "park",
+   "refs": [
+    "allen"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "allen",
+    "text": "I'm OK."
+   },
+   "frame": "Medium shot of Allen standing on the park path facing slightly to screen left, relaxed, small smile, mouth closed, face clearly visible in three-quarter view. Lawn and trees behind him.",
+   "action": "Allen nods and answers calmly.",
+   "h3_action": "Starting from <Picture 1>, Allen stands on the park path in a relaxed pose with a small smile. He turns his face a little more toward the left, gives one calm nod and answers in a short, easy way. Leaves on the trees behind him sway gently in the breeze. After the line his lips close, he lifts his right hand to adjust the brim of his navy cap once, then lets the hand rest on the strap of his shoulder bag and keeps a gentle smile."
+  },
+  {
+   "id": "S04",
+   "scene": "park",
+   "refs": [
+    "ken"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "ken",
+    "text": "Who's she?"
+   },
+   "frame": "Medium close-up of Ken in the park, his eyes and head turned toward screen right as if looking at someone next to Allen, curious friendly expression, eyebrows slightly raised, mouth closed.",
+   "action": "Ken looks at Grandma with curiosity and asks his question politely.",
+   "h3_action": "Starting from <Picture 1>, Ken stands in the park with his eyes and head turned toward the right as if looking at someone beside his friend. He blinks twice, tilts his head slightly, raises his eyebrows with polite curiosity and asks his short question quietly. His mouth moves only while he speaks. After the line his lips close, he keeps looking to the right with curious, wide eyes and lifts one hand to scratch his cheek once, then lowers it."
+  },
+  {
+   "id": "S05",
+   "scene": "park",
+   "refs": [
+    "allen",
+    "grandma"
+   ],
+   "dur": 4,
+   "line": {
+    "who": "allen",
+    "text": "She's my grandmother."
+   },
+   "frame": "Medium two-shot in the park: Allen on the left and Grandma on the right standing close together. Allen holds out his open right palm toward Grandma to introduce her, smiling, mouth closed; Grandma smiles warmly at the camera with her hands together in front.",
+   "action": "Allen gestures toward Grandma and introduces her proudly; Grandma smiles and does not speak.",
+   "h3_action": "Starting from <Picture 1>, Allen stands on the left with his open right palm held toward Grandma on the right. He looks at the camera, smiles proudly and introduces her, moving the open palm slightly toward her on the word grandmother. Grandma stands still with her hands together in front of her and smiles warmly; her mouth stays closed. After the line Allen's lips close, he lowers his hand and turns his head to smile up at Grandma, and Grandma gives one gentle nod."
+  },
+  {
+   "id": "S06",
+   "scene": "park",
+   "refs": [
+    "ken"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "ken",
+    "text": "Nice to meet you."
+   },
+   "frame": "Medium shot of Ken in the park facing screen right, giving a small polite bow of the head with a bright smile, mouth closed.",
+   "action": "Ken bows his head slightly and greets Grandma politely.",
+   "h3_action": "Starting from <Picture 1>, Ken stands in the park facing the right. He straightens his back, gives a small polite bow of his head and greets Grandma brightly, his eyes curving into a happy smile. Both hands hold the straps of his orange backpack. After the line his lips close, he raises his head again, keeps smiling and gives one more small nod. Sunlight flickers through the leaves of the trees behind him."
+  },
+  {
+   "id": "S07",
+   "scene": "park",
+   "refs": [
+    "grandma"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "grandma",
+    "text": "Nice to meet you, too!"
+   },
+   "frame": "Medium close-up of Grandma in the park, facing slightly to screen left, kind warm smile, mouth closed, face clearly visible in three-quarter view, trees and sunlight behind her.",
+   "action": "Grandma smiles kindly and answers Ken.",
+   "h3_action": "Starting from <Picture 1>, Grandma stands in the sunny park facing a little to the left. She smiles kindly, her eyes crinkling at the corners, and answers warmly in a gentle, unhurried way, giving a soft nod on the word too. A light breeze moves her short silver-gray hair. After the line her lips close into a warm smile, she lifts one hand to her chest for a moment, then lowers it and keeps looking kindly to the left."
+  },
+  {
+   "id": "S08",
+   "scene": "park",
+   "refs": [
+    "ken",
+    "grandma"
+   ],
+   "dur": 4,
+   "line": {
+    "who": "ken",
+    "text": "Have a seat, please."
+   },
+   "frame": "Medium-wide shot in the park: Ken on the left, Grandma in the middle, and the empty wooden bench on the right beside the lawn. Ken stretches out his right arm with an open palm pointing toward the bench, smiling at Grandma, mouth closed.",
+   "action": "Ken points to the bench with his right hand and politely invites Grandma to sit; Grandma looks at the bench and does not speak.",
+   "h3_action": "Starting from <Picture 1>, Ken stands on the left with his right arm stretched out and his open palm pointing toward the wooden bench on the right. He looks at Grandma, smiles politely and invites her to sit, moving his open palm slowly toward the bench on the word seat. Grandma stands still, turns her head to look at the bench and smiles; her mouth stays closed. After the line Ken's lips close, he keeps his arm pointing at the bench for a moment, then lowers it."
+  },
+  {
+   "id": "S09",
+   "scene": "park",
+   "refs": [
+    "grandma"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "grandma",
+    "text": "Thank you."
+   },
+   "frame": "Medium shot of Grandma sitting on the wooden park bench, hands on her knees, smiling gratefully toward screen left, mouth closed. Lawn and trees behind her.",
+   "action": "Grandma sits on the bench and thanks Ken with a smile.",
+   "h3_action": "Starting from <Picture 1>, Grandma sits on the wooden park bench with her hands on her knees. She settles back comfortably, looks toward the left with a grateful smile and thanks him gently, giving one soft nod. Sunlight and leaf shadows move across the bench. After the line her lips close, she smooths her trousers once with both hands and keeps smiling kindly to the left, relaxed on the bench."
+  },
+  {
+   "id": "S10",
+   "scene": "park",
+   "refs": [
+    "ken"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "ken",
+    "text": "You're welcome."
+   },
+   "frame": "Medium close-up of Ken in the park facing slightly to screen right, cheerful smile, mouth closed.",
+   "action": "Ken smiles and answers brightly.",
+   "h3_action": "Starting from <Picture 1>, Ken stands in the park facing a little to the right. He smiles brightly and answers cheerfully, his eyes curving with happiness and his spiky hair bouncing as he gives a quick nod. Both hands hold the straps of his orange backpack. After the line his lips close into a wide smile, he rocks once onto his toes and back onto his heels and keeps looking happily to the right."
+  },
+  {
+   "id": "S11",
+   "gen": "seedance",
+   "scene": "court",
+   "refs": [
+    "ken",
+    "allen",
+    "grandma"
+   ],
+   "dur": 8,
+   "narr": "Ken and Allen play basketball in the park.",
+   "frame": "Wide shot of the sunny basketball court: Ken dribbles an orange basketball near the hoop while Allen guards him with arms spread, both laughing; Ken's backpack lies on the bench. Grandma sits on the bench at the court edge in the shade, smiling and clapping. Full bodies visible.",
+   "action": "Ken dribbles, jumps and shoots the ball into the hoop; Allen jumps to block and laughs; Grandma claps on the bench. Nobody speaks."
+  },
+  {
+   "id": "S12",
+   "gen": "seedance",
+   "scene": "studio",
+   "refs": [
+    "grandma",
+    "ken",
+    "allen"
+   ],
+   "dur": 6,
+   "narr": "After that, they go to Grandma's art studio.",
+   "frame": "Wide shot inside the art studio looking toward the wooden front door on the right, which is now open with sunlight outside. Grandma steps in first, holding the door; Ken and Allen follow her in, looking around at the paintings with wide excited eyes.",
+   "action": "Grandma opens the door and walks in; Ken and Allen follow and look around at the paintings in wonder. Nobody speaks."
+  },
+  {
+   "id": "S13",
+   "scene": "studio",
+   "refs": [
+    "ken",
+    "allen",
+    "grandma"
+   ],
+   "dur": 4,
+   "line": {
+    "who": "ken",
+    "text": "Is she a teacher?"
+   },
+   "frame": "Medium two-shot in the studio: Ken and Allen in the foreground, Ken leaning toward Allen with a curious face, mouth closed. In the background Grandma stands at an easel with a brush, painting a mountain on the canvas.",
+   "action": "Ken leans toward Allen and asks quietly; Grandma keeps painting in the background.",
+   "h3_action": "Starting from <Picture 1>, Ken leans toward Allen in the foreground and asks his question quietly, as if telling a small secret, his curious eyes glancing once toward Grandma in the background. Allen listens and looks at Ken; his mouth stays closed. In the background Grandma keeps painting at her easel, moving her brush slowly across the canvas. After the line Ken's lips close, he straightens up a little and waits for the answer, still glancing at Grandma."
+  },
+  {
+   "id": "S14",
+   "scene": "studio",
+   "refs": [
+    "allen",
+    "grandma"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "allen",
+    "text": "Yes, she is."
+   },
+   "frame": "Medium shot in the studio: Allen in the foreground facing slightly to screen left, proud smile, mouth closed. Behind him, Grandma at her easel turns her head back and smiles, holding a brush.",
+   "action": "Allen nods proudly and answers; Grandma looks back and smiles.",
+   "h3_action": "Starting from <Picture 1>, Allen stands in the studio foreground facing a little to the left. He nods proudly and answers clearly with a confident smile, nodding again on the word is. Behind him Grandma, holding her brush at the easel, turns her head back and smiles; her mouth stays closed. After the line Allen's lips close, he puts both hands on the strap of his shoulder bag and keeps smiling proudly while Grandma turns back to her painting."
+  },
+  {
+   "id": "S15",
+   "gen": "still",
+   "scene": "studio",
+   "refs": [],
+   "dur": 2.5,
+   "sfx": "Knock, knock!",
+   "frame": "Close-up of the closed wooden front door of the studio from inside, warm light, a small potted plant beside it. No people.",
+   "action": "Knock, knock — the door shakes slightly."
+  },
+  {
+   "id": "S16",
+   "scene": "studio",
+   "refs": [
+    "dad"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "dad",
+    "text": "Sorry, I'm late."
+   },
+   "frame": "Medium shot of Dad standing in the open studio doorway, slightly out of breath, one hand on the door frame, apologetic smile, mouth closed. Sunlight outside behind him.",
+   "action": "Dad catches his breath, scratches the back of his head and apologizes.",
+   "h3_action": "Starting from <Picture 1>, Dad stands in the open studio doorway with one hand on the door frame, breathing a little fast. His shoulders rise and fall twice as he catches his breath. He lifts his free hand to scratch the back of his head, gives an apologetic smile and apologizes, bowing his head slightly on the word late. After the line his lips close, he lowers the hand and keeps an embarrassed smile, still holding the door frame."
+  },
+  {
+   "id": "S17",
+   "scene": "studio",
+   "refs": [
+    "grandma"
+   ],
+   "dur": 4,
+   "line": {
+    "who": "grandma",
+    "text": "That's OK. Come in, please."
+   },
+   "frame": "Medium shot of Grandma in the studio facing screen right toward the door, smiling warmly and beckoning with one hand, mouth closed, an easel behind her.",
+   "action": "Grandma smiles, waves her hand to invite Dad in and speaks warmly.",
+   "h3_action": "Starting from <Picture 1>, Grandma stands in the studio facing the door on the right with a warm smile. She shakes her head gently to show it is fine, then lifts her right hand and beckons him in twice with a friendly wave, speaking warmly and unhurriedly. After the line her lips close into a kind smile, she lowers the hand and steps half a step back to make room near the easels, still looking toward the door."
+  },
+  {
+   "id": "S18",
+   "scene": "studio",
+   "refs": [
+    "ken"
+   ],
+   "dur": 3,
+   "line": {
+    "who": "ken",
+    "text": "Who's he?"
+   },
+   "frame": "Medium close-up of Ken in the studio looking toward screen right at the door, curious face, eyebrows slightly raised, mouth closed, paintings on the wall behind him.",
+   "action": "Ken looks at Dad and asks Allen with curiosity.",
+   "h3_action": "Starting from <Picture 1>, Ken stands in the studio with his head turned toward the door on the right. His eyebrows lift with curiosity, he blinks once and asks his short question, leaning his head slightly toward the right. His mouth moves only while he speaks. After the line his lips close, he keeps looking toward the door with wide curious eyes and holds the straps of his orange backpack with both hands."
+  },
+  {
+   "id": "S19",
+   "scene": "studio",
+   "refs": [
+    "allen",
+    "dad"
+   ],
+   "dur": 4,
+   "line": {
+    "who": "allen",
+    "text": "He's my father."
+   },
+   "frame": "Medium two-shot in the studio: Allen on the left and Dad on the right just inside the door. Allen holds out his open right palm toward Dad to introduce him, smiling, mouth closed; Dad smiles and lifts a hand in greeting.",
+   "action": "Allen gestures toward Dad and introduces him; Dad waves hello and does not speak.",
+   "h3_action": "Starting from <Picture 1>, Allen stands on the left with his open right palm held toward Dad on the right. He smiles happily and introduces him, moving the open palm slightly toward Dad on the word father. Dad smiles and waves his raised hand in greeting twice; his mouth stays closed. After the line Allen's lips close, he lowers his hand and looks up at Dad with a proud smile, and Dad lowers his hand and pats Allen's shoulder once."
+  },
+  {
+   "id": "S20",
+   "gen": "seedance",
+   "scene": "studio",
+   "refs": [
+    "grandma",
+    "ken",
+    "allen",
+    "dad"
+   ],
+   "dur": 7,
+   "line": {
+    "who": "grandma",
+    "text": "Let's draw together."
+   },
+   "frame": "Medium-wide shot of the studio from a slightly high angle. Grandma, Ken, Allen and Dad stand in a loose semicircle around an empty space in the middle of the room, all turned toward that space in three-quarter view so every face is visible. Each holds a paintbrush. Grandma stands at the center back and raises her brush high with a bright smile; a few tiny glowing golden sparkles already float in the empty air in front of her. Warm sunlight from the window.",
+   "action": "Grandma raises her brush and says her line. Then, with a soft magical shimmer, a large rectangular glowing canvas made of translucent light materializes in mid-air in the middle of the group, floating at chest height with a thin glowing cyan frame. All four step closer and paint on the same floating canvas together: each brush stroke leaves bright flowing colors of light, and together they paint a picture of green mountains, golden rice fields and a big sun. They smile and laugh at each other. Sci-fi movie style magic light effects, sparkles drifting in the air. The painting contains no letters or words."
+  }
+ ]
+}

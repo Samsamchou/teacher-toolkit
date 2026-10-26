@@ -1,0 +1,12 @@
+{
+ "title": "A Sunday with Grandma",
+ "header": "本片使用的 AI 工具",
+ "card_dur": 3.3,
+ "title_dur": 4.5,
+ "out": "ending.mp4",
+ "cards": [
+  {"image": "frames/c1.png", "tools": [["MiniMax H3", "對話鏡頭影片"], ["Seedance 2.0 Mini（KIE AI）", "動作鏡頭影片"], ["OpenAI 圖像（Codex CLI）", "角色與首幀"]]},
+  {"image": "frames/c2.png", "tools": [["VoxCPM2", "英文配音"], ["MiniMax-Music3", "配樂"], ["faster-whisper・BS-RoFormer", "校對／分離"]]},
+  {"image": "frames/c3.png", "tools": [["本片畫面、配音與配樂皆由 AI 生成", ""]]}
+ ]
+}

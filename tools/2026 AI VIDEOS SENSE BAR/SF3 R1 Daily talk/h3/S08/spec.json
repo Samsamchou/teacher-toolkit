@@ -1,0 +1,52 @@
+{
+ "duration": 4.438,
+ "size": [
+  1344,
+  768
+ ],
+ "seed": 20261026,
+ "steps": 14,
+ "draft": true,
+ "style": "a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, warm sunny slice-of-life look, matching the first frame exactly",
+ "setting": "a sunny neighborhood park in a small Taiwanese town on a Sunday morning",
+ "first_frame": "first.png",
+ "subjects": [
+  {
+   "key": "ken",
+   "desc": "Ken (a 10-year-old boy with spiky messy brown hair, big brown eyes, white short-sleeve polo shirt with a navy collar and navy buttons, navy shorts, orange-and-navy backpack, red sneakers with white soles)",
+   "voice": "a bright, energetic ten-year-old American boy's voice"
+  },
+  {
+   "key": "grandma",
+   "desc": "Grandma (Allen's grandmother, a kind elderly Taiwanese woman, short wavy silver-gray hair, warm brown eyes, gentle smile, orange short-sleeve button shirt, navy trousers, light gray sneakers)",
+   "voice": "a kind, warm, gentle elderly grandmother's voice"
+  }
+ ],
+ "audio": {
+  "fixed": {
+   "file": "guide.wav"
+  }
+ },
+ "shots": [
+  {
+   "camera": "The camera holds a static shot on a tripod.",
+   "action": "Starting from <Picture 1>, Ken stands on the left with his right arm stretched out and his open palm pointing toward the wooden bench on the right. He looks at Grandma, smiles politely and invites her to sit, moving his open palm slowly toward the bench on the word seat. Grandma stands still, turns her head to look at the bench and smiles; her mouth stays closed. After the line Ken's lips close, he keeps his arm pointing at the bench for a moment, then lowers it.",
+   "dialogue": [
+    {
+     "subject": "ken",
+     "line": "Have a seat, please.",
+     "lang": "English",
+     "after": "Right after the line the speaker's lips close and stay closed."
+    }
+   ]
+  }
+ ],
+ "constraints": [
+  "The animation style, colors and line art stay exactly as in the first frame for the whole clip.",
+  "No new people or characters appear that are not already in the first frame.",
+  "No captions, no subtitles, no readable text, letters or numbers appear anywhere.",
+  "Every character keeps the same face, hair, outfit and colors as in the first frame."
+ ],
+ "soundscape": "Gentle park ambience: birds chirping, leaves rustling in a light breeze, distant children playing.",
+ "music": "N/A"
+}

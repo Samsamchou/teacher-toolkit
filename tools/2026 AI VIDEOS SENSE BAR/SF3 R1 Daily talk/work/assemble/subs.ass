@@ -1,0 +1,34 @@
+﻿[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Line,Comic Relief,88,&H0000E6FF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,2,2,80,80,130,1
+Style: Narr,Comic Relief,82,&H0000E6FF,&H00F0F0FF,&H00402000,&H64000000,0,1,0,0,100,100,0,0,1,5,2,2,80,80,130,1
+Style: Card,Comic Relief,120,&H0066E6FF,&H00FFFFFF,&H00301000,&H64000000,0,0,0,0,100,100,2,0,1,7,3,5,80,80,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:01:09.12,0:01:11.37,Card,,0,0,0,,{\fad(150,250)}Knock, knock!
+Dialogue: 0,0:00:00.35,0:00:03.63,Narr,,0,0,0,,{\k25}{\k26}It's {\k28}Sunday {\k118}today. {\k32}It's {\k24}sunny.
+Dialogue: 0,0:00:07.89,0:00:10.94,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k78}Hello, {\k64}Allen. {\k28}How {\k24}are {\k26}you?
+Dialogue: 0,0:00:12.85,0:00:14.39,Line,,0,0,0,,{\1c&H00FFD27A\2c&H00FFD27A}Allen: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k24}I'm {\k32}OK.
+Dialogue: 0,0:00:16.39,0:00:17.98,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k40}Who's {\k32}she?
+Dialogue: 0,0:00:19.93,0:00:22.03,Line,,0,0,0,,{\1c&H00FFD27A\2c&H00FFD27A}Allen: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k32}She's {\k20}my {\k54}grandmother.
+Dialogue: 0,0:00:24.89,0:00:27.08,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k40}Nice {\k28}to {\k28}meet {\k38}you.
+Dialogue: 0,0:00:28.43,0:00:31.25,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Grandma: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k44}Nice {\k32}to {\k30}meet {\k66}you, {\k18}too!
+Dialogue: 0,0:00:32.68,0:00:35.02,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k28}Have {\k20}a {\k74}seat, {\k4}please.
+Dialogue: 0,0:00:37.64,0:00:39.03,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Grandma: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k22}Thank {\k32}you.
+Dialogue: 0,0:00:41.18,0:00:42.84,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k36}You're {\k24}welcome.
+Dialogue: 0,0:00:44.73,0:00:48.42,Narr,,0,0,0,,{\k25}{\k26}Ken {\k30}and {\k46}Allen {\k40}play {\k56}basketball {\k36}in {\k12}the {\k28}park.
+Dialogue: 0,0:00:53.27,0:00:57.14,Narr,,0,0,0,,{\k25}{\k32}After {\k70}that, {\k14}they {\k28}go {\k18}to {\k64}Grandma's {\k14}art {\k48}studio.
+Dialogue: 0,0:00:59.81,0:01:01.66,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k20}Is {\k20}she {\k16}a {\k30}teacher?
+Dialogue: 0,0:01:04.77,0:01:07.08,Line,,0,0,0,,{\1c&H00FFD27A\2c&H00FFD27A}Allen: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k66}Yes, {\k24}she {\k44}is.
+Dialogue: 0,0:01:11.52,0:01:13.75,Line,,0,0,0,,{\1c&H008CE6A0\2c&H008CE6A0}Dad: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k90}Sorry, {\k28}I'm {\k20}late.
+Dialogue: 0,0:01:15.77,0:01:18.78,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Grandma: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k30}That's {\k104}OK. {\k6}Come {\k44}in, {\k18}please.
+Dialogue: 0,0:01:19.72,0:01:21.31,Line,,0,0,0,,{\1c&H003C8CFF\2c&H003C8CFF}Ken: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k52}Who's {\k22}he?
+Dialogue: 0,0:01:23.27,0:01:25.14,Line,,0,0,0,,{\1c&H00FFD27A\2c&H00FFD27A}Allen: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k26}He's {\k20}my {\k40}father.
+Dialogue: 0,0:01:27.92,0:01:30.21,Line,,0,0,0,,{\1c&H00B48CFF\2c&H00B48CFF}Grandma: {\1c&H0000E6FF&\2c&H00FFFFFF&}{\k25}{\k54}Let's {\k32}draw {\k58}together.

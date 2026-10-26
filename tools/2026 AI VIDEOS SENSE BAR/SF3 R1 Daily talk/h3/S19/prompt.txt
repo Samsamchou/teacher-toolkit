@@ -1,0 +1,29 @@
+subject_definitions:
+<Subject 1> is Allen (a 10-year-old boy the same height as Ken, messy brown hair, amber-brown eyes, navy cap with two gold stripes and a round teal badge, navy short-sleeve zip jacket with gray shoulder panels, teal piping and green-and-gold cuffs over a white T-shirt, dark gray cargo shorts, white socks with teal stripes, navy-green-gold sneakers, small green-and-cream shoulder bag on a navy strap), visible in <Picture 1>.
+<Subject 2> is Dad (Allen's father, a friendly Taiwanese man in his late thirties, short neat brown hair, brown eyes, navy-blue short-sleeve shirt worn open over a white T-shirt, khaki trousers, navy sneakers), visible in <Picture 1>.
+<Picture 1> is the first frame of [Shot 1], fixing the camera position, framing, set layout and lighting.
+<Audio 1> is the complete, exactly timed soundtrack of the target video, containing the spoken lines.
+
+summary:
+[keyframe completion + audio reuse] The target video is one continuous shot set in Grandma's bright, cozy home art studio full of paintings and easels, beginning from <Picture 1>. <Subject 1> (S1) speaks 1 short line exactly as in <Audio 1>.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - identity, face, age, hairstyle, body build and clothing are retained.
+<Subject 2> (appears in [Shot 1]): fully_preserved - identity, face, age, hairstyle, body build and clothing are retained.
+<Picture 1> ([Shot 1] first frame): fully_preserved - camera position, framing, set layout, furniture and lighting are retained.
+<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete audio track, and lips follow it exactly.
+
+detailed_description:
+The target video is in the style of a Japanese anime TV series in clean cel-shaded 2D animation with confident line art, flat colors with soft gradients and smooth expressive character animation, warm sunny slice-of-life look, matching the first frame exactly.
+[Shot 1] The shot begins from <Picture 1>. Allen is <Subject 1> (S1). Dad is <Subject 2>. The camera holds a static shot on a tripod. Starting from <Picture 1>, Allen stands on the left with his open right palm held toward Dad on the right. He smiles happily and introduces him, moving the open palm slightly toward Dad on the word father. Dad smiles and waves his raised hand in greeting twice; his mouth stays closed. After the line Allen's lips close, he lowers his hand and looks up at Dad with a proud smile, and Dad lowers his hand and pats Allen's shoulder once. <Subject 1> (S1) says in a calm, gentle ten-year-old American boy's voice, <d>[English] He's my father.</d> Right after the line the speaker's lips close and stay closed.
+Everyone else in the frame keeps their lips closed and does not speak.
+The animation style, colors and line art stay exactly as in the first frame for the whole clip.
+No new people or characters appear that are not already in the first frame.
+No captions, no subtitles, no readable text, letters or numbers appear anywhere.
+Every character keeps the same face, hair, outfit and colors as in the first frame.
+
+overall_soundscape:
+Quiet cozy room tone, a soft brush on canvas, birds faintly outside the window.
+
+non_diegetic_music:
+N/A

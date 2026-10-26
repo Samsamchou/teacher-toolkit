@@ -1,0 +1,87 @@
+{
+ "version": 2,
+ "design_text": "Hello! It's a sunny Sunday. Let's go to the park and have fun together.",
+ "takes": 5,
+ "tempo": 0.8,
+ "voices": {
+  "narrator": "A warm, gentle young adult woman storyteller with a soft, smooth, calm voice, clear American English, like reading a picture book to young children",
+  "ken": "A bright, energetic, cheerful ten-year-old American boy with a high, lively voice, very clear pronunciation",
+  "allen": "A calm, gentle, friendly ten-year-old American boy with a slightly lower, soft and steady voice, very clear pronunciation",
+  "grandma": "A kind, warm elderly grandmother about seventy years old with a soft, slightly husky, slow and gentle voice, clear American English",
+  "dad": "A friendly American man in his late thirties with a warm, medium-low baritone voice, relaxed and clear"
+ },
+ "tone": {
+  "S01_narr": "calm, warm storytelling, bright and happy about the sunny day",
+  "S02": "cheerful and friendly greeting",
+  "S03": "calm and relaxed, a short simple answer",
+  "S04": "curious and polite, asking a question",
+  "S05": "proud and friendly, introducing his grandmother",
+  "S06": "polite and bright",
+  "S07": "warm and kind, smiling",
+  "S08": "polite and helpful, offering a seat",
+  "S09": "warm and grateful",
+  "S10": "happy and friendly",
+  "S11_narr": "lively, warm storytelling",
+  "S12_narr": "warm storytelling with gentle excitement",
+  "S13": "curious, asking quietly",
+  "S14": "proud, nodding",
+  "S16": "a little out of breath and apologetic",
+  "S17": "warm and welcoming, kind",
+  "S18": "curious, asking a question",
+  "S19": "proud and happy, introducing his father",
+  "S20": "cheerful and inviting"
+ },
+ "post": {
+  "dad": [
+   "pitch:-2"
+  ],
+  "allen": [
+   "pitch:+4",
+   "chest"
+  ]
+ },
+ "line_control": {},
+ "ref_pick": {
+  "ken": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003
+   ],
+   "want": "high"
+  },
+  "allen": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003
+   ],
+   "want": "low"
+  },
+  "dad": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003
+   ],
+   "want": "low"
+  }
+ },
+ "pace": "speaking slowly and very clearly for young English learners, every word fully pronounced, unhurried",
+ "split": [
+  "S01_narr",
+  "S02",
+  "S17"
+ ],
+ "split_gap": 0.3,
+ "speed_vs_v1": 0.7,
+ "tempo_range": [
+  0.5,
+  1.0
+ ],
+ "all_lines_gap": 1.5,
+ "tail_pad": 0.5
+}
