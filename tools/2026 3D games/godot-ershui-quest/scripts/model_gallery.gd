@@ -2,9 +2,9 @@ extends Node3D
 ## 模型檢查場景：把所有 Tripo GLB 排成一列，印出尺寸，存一張截圖後離開。
 
 const MODELS := [
-	"train_station", "teatop", "post_office", "library", "market", "pxmart",
-	"school", "seven_eleven", "bookstore", "farm_centre", "station_inn",
-	"steam_locomotive", "fighter_jet", "playground",
+	"bld_station", "bld_teatop", "bld_post", "bld_library", "bld_market", "bld_pxmart",
+	"bld_school", "bld_seven", "bld_bookstore", "farm_centre", "bld_inn",
+	"bld_waterpark", "bld_lawn", "fighter_jet", "playground",
 ]
 
 func _collect_aabb(node: Node, acc: Array) -> void:

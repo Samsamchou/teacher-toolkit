@@ -34,16 +34,16 @@ const EDGES := [
 
 # id, 中文名, 簡單英文, 模型, 簡圖位置, 門口(路上)位置, 最大邊長, 魔王區
 const LOCS := [
-	{"id": "station", "zh": "二水火車站", "word": "train station", "model": "train_station", "pos": Vector2(930, 285), "door": Vector2(920, 390), "size": 19.0},
-	{"id": "inn", "zh": "二八水驛站", "word": "restaurant", "model": "station_inn", "pos": Vector2(1560, 320), "door": Vector2(1480, 390), "size": 9.0},
-	{"id": "seven", "zh": "便利商店", "word": "convenience store", "model": "seven_eleven", "pos": Vector2(1640, 650), "door": Vector2(1530, 650), "size": 10.0, "cover": {"y": 0.86, "h": 0.32, "text": "STORE", "color": Color(0.22, 0.55, 0.42)}},
-	{"id": "school", "zh": "二水國小", "word": "school", "model": "school", "pos": Vector2(1300, 960), "door": Vector2(1300, 1130), "size": 22.0},
-	{"id": "teatop", "zh": "飲料店", "word": "tea shop", "model": "teatop", "pos": Vector2(820, 760), "door": Vector2(920, 760), "size": 9.0, "cover": {"y": 0.62, "h": 0.16, "text": "TEA SHOP", "color": Color(0.85, 0.32, 0.25)}},
-	{"id": "market", "zh": "二水超市", "word": "supermarket", "model": "market", "pos": Vector2(600, 880), "door": Vector2(680, 880), "size": 10.0},
-	{"id": "post", "zh": "二水郵局", "word": "post office", "model": "post_office", "pos": Vector2(830, 1195), "door": Vector2(830, 1130), "size": 9.0},
-	{"id": "bookstore", "zh": "大盟書局", "word": "bookstore", "model": "bookstore", "pos": Vector2(720, 1200), "door": Vector2(720, 1130), "size": 8.5},
-	{"id": "pxmart", "zh": "超市", "word": "supermarket", "model": "pxmart", "pos": Vector2(565, 1205), "door": Vector2(565, 1130), "size": 12.0},
-	{"id": "library", "zh": "二水鄉立圖書館", "word": "library", "model": "library", "pos": Vector2(1230, 1240), "door": Vector2(1230, 1330), "size": 11.0},
+	{"id": "station", "zh": "二水火車站", "word": "train station", "model": "bld_station", "pos": Vector2(930, 285), "door": Vector2(920, 390), "size": 19.0},
+	{"id": "inn", "zh": "二八水驛站", "word": "restaurant", "model": "bld_inn", "pos": Vector2(1560, 320), "door": Vector2(1480, 390), "size": 9.0},
+	{"id": "seven", "zh": "便利商店", "word": "convenience store", "model": "bld_seven", "pos": Vector2(1640, 650), "door": Vector2(1530, 650), "size": 10.0},
+	{"id": "school", "zh": "二水國小", "word": "school", "model": "bld_school", "pos": Vector2(1300, 960), "door": Vector2(1300, 1130), "size": 22.0},
+	{"id": "teatop", "zh": "飲料店", "word": "tea shop", "model": "bld_teatop", "pos": Vector2(820, 760), "door": Vector2(920, 760), "size": 9.0},
+	{"id": "market", "zh": "二水超市", "word": "supermarket", "model": "bld_market", "pos": Vector2(600, 880), "door": Vector2(680, 880), "size": 10.0},
+	{"id": "post", "zh": "二水郵局", "word": "post office", "model": "bld_post", "pos": Vector2(830, 1195), "door": Vector2(830, 1130), "size": 9.0},
+	{"id": "bookstore", "zh": "書店", "word": "bookstore", "model": "bld_bookstore", "pos": Vector2(720, 1200), "door": Vector2(720, 1130), "size": 8.5},
+	{"id": "pxmart", "zh": "超市", "word": "supermarket", "model": "bld_pxmart", "pos": Vector2(565, 1205), "door": Vector2(565, 1130), "size": 12.0},
+	{"id": "library", "zh": "二水鄉立圖書館", "word": "library", "model": "bld_library", "pos": Vector2(1230, 1240), "door": Vector2(1230, 1330), "size": 11.0},
 	{"id": "farm", "zh": "八堡圳農情館", "word": "coffee shop", "model": "farm_centre", "pos": Vector2(1780, 1250), "door": Vector2(1780, 1330), "size": 12.0},
 	{"id": "park", "zh": "二八水水公園", "word": "park", "model": "", "pos": Vector2(560, 520), "door": Vector2(680, 520), "size": 0.0, "boss": true},
 	{"id": "lawn", "zh": "水心之初大草原", "word": "park", "model": "", "pos": Vector2(1790, 900), "door": Vector2(1530, 900), "size": 0.0, "boss": true},
@@ -416,6 +416,8 @@ func _build_locations() -> void:
 			# 模型上的品牌招牌用一般字樣的看板蓋住
 			if L.has("cover"):
 				_sign_cover(root, L["cover"], wd, h, dp)
+			# 老師 10/26：中文通用招牌；有品牌字樣的模型先蓋素色看板
+			_place_sign(root, L["id"], wd, h, dp)
 			# 建築前的小廣場地磚
 			_box(Vector3(wd + 2.0, 0.12, dp + 2.5), Color(0.86, 0.82, 0.74), Vector3(0, -0.02, 0.6), root)
 		root.position = base
@@ -443,6 +445,45 @@ func _build_locations() -> void:
 		lab.modulate = Color(1, 0.96, 0.75) if L.get("boss", false) else Color.WHITE
 		loc_world[L["id"]] = {"door": door, "root": root, "base": base, "half": Vector2(wd / 2.0, dp / 2.0)}
 
+const BLD_SIGN := {
+	"station": "二水車站", "school": "二水國民小學", "library": "二水鄉立圖書館", "post": "郵局", "market": "二水超市",
+	"pxmart": "超市", "bookstore": "書店", "teatop": "飲料店", "seven": "便利商店", "inn": "二八水驛站",
+}
+const SIGN_Y := {"station": 0.78, "school": 0.55, "library": 0.6, "post": 0.42, "market": 0.6, "pxmart": 0.72,
+	"bookstore": 0.72, "teatop": 0.3, "inn": 0.4}
+## [中心高度比例, 高度比例, 寬度比例, 顏色, 往前凸出 m]
+const SIGN_PLATE := {
+	"pxmart": [0.8, 0.42, 1.04, "#2f6f73", 0.12, true],   # 闖關鏡頭較高較近：看板往上、蓋到屋頂邊
+	"seven": [0.78, 0.22, 1.02, "#4a5f8a", 0.15, true],
+	"teatop": [0.31, 0.09, 1.0, "#c0392b", 0.25],
+}
+
+func _place_sign(root: Node3D, id: String, wd: float, h: float, dp: float) -> void:
+	var txt: String = BLD_SIGN.get(id, "")
+	if txt == "":
+		return
+	var l := Label3D.new()
+	l.text = txt
+	l.font = font_bold
+	l.font_size = 64
+	var want_w := minf(wd * 0.45, 2.4 + txt.length() * 0.45)
+	l.pixel_size = want_w / maxf(1.0, txt.length() * 64.0)
+	l.modulate = Color.WHITE
+	l.outline_size = 14
+	l.outline_modulate = Color(0.12, 0.1, 0.16)
+	l.double_sided = false   # 從背面看不到（不會出現反字）
+	l.position = Vector3(0, h * float(SIGN_Y.get(id, 0.55)), dp / 2.0 + 0.12)
+	if SIGN_PLATE.has(id):
+		var c: Array = SIGN_PLATE[id]
+		var plate := _box(Vector3(wd * float(c[2]), h * float(c[1]), 0.2), Color(c[3]), Vector3(0, h * float(c[0]), dp / 2.0 + float(c[4])), root)
+		plate.name = "SignCover"
+		if c.size() > 5 and c[5]:
+			for sx in [-1.0, 1.0]:
+				_box(Vector3(0.2, h * float(c[1]), dp * 1.02), Color(c[3]), Vector3(sx * (wd / 2.0 + float(c[4])), h * float(c[0]), 0), root)
+		l.position = Vector3(0, h * float(c[0]), dp / 2.0 + float(c[4]) + 0.14)
+		l.pixel_size = minf(l.pixel_size, h * float(c[1]) * 0.75 / 64.0)
+	root.add_child(l)
+
 func _sign_cover(root: Node3D, c: Dictionary, wd: float, h: float, dp: float) -> void:
 	var plate := _box(Vector3(wd * 0.98, h * c["h"], 0.25), c["color"], Vector3(0, h * c["y"], dp / 2.0 + 0.12), root)
 	plate.name = "SignCover"
@@ -458,7 +499,7 @@ func _sign_cover(root: Node3D, c: Dictionary, wd: float, h: float, dp: float) ->
 
 func _build_park(root: Node3D) -> void:
 	_box(Vector3(18, 0.15, 14), Color(0.42, 0.66, 0.36), Vector3(0, 0.0, 0), root)
-	var loco := _fit_model("steam_locomotive", 8.0)
+	var loco := _fit_model("bld_waterpark", 8.0)
 	loco.position = Vector3(-3.0, 0.1, -2.5)
 	loco.rotation.y = deg_to_rad(90)
 	root.add_child(loco)
@@ -485,6 +526,11 @@ func _build_lawn(root: Node3D) -> void:
 	mi.position = Vector3(0, 2.4, 0.2)
 	mi.rotation.y = deg_to_rad(-90)
 	root.add_child(mi)
+	# 小行星復刻的草原地景，放在戰場後方邊緣當背景（戰鬥區在中間）
+	var land := _fit_model("bld_lawn", 9.0)
+	land.position = Vector3(8.0, 0.08, -4.5)
+	land.rotation.y = deg_to_rad(-90)
+	root.add_child(land)
 
 # ---------- 重疊檢查：道具不擋 Ken 的路、不插進建築、不站在戰鬥區 ----------
 var prop_marks: Array = []     # 已擺好的機車與汽車 [{name, pts, r}]

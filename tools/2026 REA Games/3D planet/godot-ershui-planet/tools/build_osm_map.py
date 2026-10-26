@@ -35,15 +35,15 @@ PLACES = [
     dict(id="inn", zh="二八水驛站", word="restaurant", lat=23.8116694, lon=120.6198485, kind="model", model="station_inn", size=9.0),
     dict(id="ok", zh="便利商店（光文路）", word="convenience store", lat=23.8127731, lon=120.6180030, kind="osm", style="store", color="#3aa6d8", sign="STORE"),
     dict(id="qizao", zh="齊造園", word="restaurant", lat=23.8119492, lon=120.6194158, kind="osm", style="shop", color="#e3c08a", sign="RESTAURANT"),
-    dict(id="seven", zh="便利商店（二八水）", word="convenience store", lat=23.8097502, lon=120.6192371, kind="model", model="seven_eleven", size=8.0,
+    dict(id="seven", zh="便利商店（民族路）", word="convenience store", lat=23.8097502, lon=120.6192371, kind="model", model="seven_eleven", size=8.0,
          cover={"y": 0.86, "h": 0.32, "text": "STORE", "color": "#388c6b"}),
     dict(id="school", zh="二水國小", word="school", lat=23.8108492, lon=120.6178161, kind="model", model="school", size=24.0, clear=26.0),
-    dict(id="teatop", zh="台灣第一味", word="tea shop", lat=23.812147, lon=120.6168422, kind="model", model="teatop", size=7.0,
+    dict(id="teatop", zh="飲料店（紅招牌）", word="tea shop", lat=23.812147, lon=120.6168422, kind="model", model="teatop", size=7.0,
          cover={"y": 0.62, "h": 0.16, "text": "TEA SHOP", "color": "#d9523f"}),
     dict(id="market", zh="二水超市", word="supermarket", lat=23.8122266, lon=120.6157864, kind="model", model="market", size=9.0),
     dict(id="health", zh="二水鄉衛生所", word="hospital", lat=23.8117953, lon=120.6154177, kind="osm", style="clinic", color="#f2f2ee", sign="衛生所"),
     dict(id="post", zh="二水郵局", word="post office", lat=23.8112695, lon=120.6155068, kind="model", model="post_office", size=8.0),
-    dict(id="bookstore", zh="大盟書局", word="bookstore", lat=23.8114329, lon=120.6157759, kind="model", model="bookstore", size=6.5),
+    dict(id="bookstore", zh="書店", word="bookstore", lat=23.8114329, lon=120.6157759, kind="model", model="bookstore", size=6.5),
     dict(id="pxmart", zh="超市（民生路）", word="supermarket", lat=23.8123857, lon=120.6134788, kind="model", model="pxmart", size=14.0, clear=10.0),
     dict(id="library", zh="二水鄉立圖書館", word="library", lat=23.81001, lon=120.616798, kind="model", model="library", size=11.0, clear=9.0),
     dict(id="farm", zh="八堡圳農情館", word="", en="Farm Center", lat=23.8081589, lon=120.6228446, kind="outer", style="model", model="farm_centre", size=10.0),
@@ -60,7 +60,7 @@ PLACES = [
     dict(id="hall", zh="中山堂（舊公會堂）", word="", en="Old Town Hall", lat=23.810877, lon=120.615269, kind="osm", style="B", ruin=True, plaque="中山堂"),
     dict(id="honghe", zh="宏和醫院（老建築）", word="", en="Old Clinic", lat=23.8095, lon=120.6161, kind="osm", style="B", plaque="院醫和宏"),
     dict(id="dorm7", zh="二水驛第七號官舍", word="", en="Old Railway House", lat=23.812403, lon=120.618645, kind="osm", style="E"),
-    dict(id="tea2", zh="五分田（光化店）", word="tea shop", lat=23.81205, lon=120.61695, kind="osm", style="store", color="#1f3a6e", sign="TEA"),   # 光文路82號，長春藥局對面；取代已歇業的清心福全
+    dict(id="tea2", zh="飲料店（藍招牌）", word="tea shop", lat=23.81205, lon=120.61695, kind="osm", style="store", color="#1f3a6e", sign="TEA"),   # 光文路82號，長春藥局對面；取代已歇業的清心福全
     # 市區外（放在外圈，接一條路進來）
     dict(id="fengbo", zh="豐柏廣場", word="park", lat=23.8229712, lon=120.6191649, kind="outer", style="park"),
     dict(id="fuxing", zh="復興國小", word="school", lat=23.8299315, lon=120.6051432, kind="outer", style="school", color="#f0e2b8"),

@@ -1416,8 +1416,8 @@ const BLD_SIZE := {
 ## 招牌上的正確中文（模型上的字是英文佔位，疊一塊真正的招牌字）
 const BLD_SIGN := {
 	"station": "二水車站", "school": "二水國民小學", "esjh": "二水國民中學", "yuanquan": "源泉國民小學", "fuxing": "復興國民小學",
-	"library": "二水鄉立圖書館", "post": "郵局", "health": "二水鄉衛生所", "market": "二水超市", "pxmart": "全聯",
-	"bookstore": "大盟書局", "teatop": "台灣第一味", "tea2": "五分田", "inn": "二八水驛站", "lintemple": "林先生廟",
+	"library": "二水鄉立圖書館", "post": "郵局", "health": "二水鄉衛生所", "market": "二水超市", "pxmart": "超市",
+	"bookstore": "書店", "teatop": "飲料店", "tea2": "飲料店", "seven": "便利商店", "ok": "便利商店", "inn": "二八水驛站", "lintemple": "林先生廟",
 }
 
 func _place_sign(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) -> void:
@@ -1434,9 +1434,43 @@ func _place_sign(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) ->
 	l.modulate = Color.WHITE
 	l.outline_size = 14
 	l.outline_modulate = Color(0.12, 0.1, 0.16)
+	l.double_sided = false   # 從背面看不到（不會出現反字）
 	l.position = Vector3(0, h * float(SIGN_Y.get(P["id"], 0.55)), dp / 2.0 + 0.12)
+	# 老師 10/26 去品牌化：模型上有品牌字樣／配色的招牌，用一塊素色看板蓋住，中文招牌寫在看板上
+	if SIGN_PLATE.has(P["id"]):
+		var c: Array = SIGN_PLATE[P["id"]]   # [中心高度比例, 高度比例, 寬度比例, 顏色, 往前凸出 m]
+		var pm := MeshInstance3D.new()
+		var bm := BoxMesh.new()
+		bm.size = Vector3(wd * float(c[2]), h * float(c[1]), 0.2)
+		pm.mesh = bm
+		var mt := StandardMaterial3D.new()
+		mt.albedo_color = Color(c[3])
+		mt.roughness = 0.9
+		pm.material_override = mt
+		pm.position = Vector3(0, h * float(c[0]), dp / 2.0 + float(c[4]))
+		root.add_child(pm)
+		if c.size() > 5 and c[5]:
+			# 側面也有品牌色帶（全聯、7-ELEVEN）：兩側一起蓋
+			for sx in [-1.0, 1.0]:
+				var sp := MeshInstance3D.new()
+				var sb := BoxMesh.new()
+				sb.size = Vector3(0.2, h * float(c[1]), dp * 1.02)
+				sp.mesh = sb
+				sp.material_override = mt
+				sp.position = Vector3(sx * (wd / 2.0 + float(c[4])), h * float(c[0]), 0)
+				root.add_child(sp)
+		l.position = Vector3(0, h * float(c[0]), dp / 2.0 + float(c[4]) + 0.14)
+		l.pixel_size = minf(l.pixel_size, h * float(c[1]) * 0.75 / 64.0)
 	root.add_child(l)
 
+## 蓋品牌招牌的看板：[中心高度比例, 高度比例, 寬度比例, 顏色, 往前凸出 m]（對照 資料/generated-images/buildings 參考圖）
+const SIGN_PLATE := {
+	"pxmart": [0.7, 0.38, 1.03, "#2f6f73", 0.2, true],
+	"seven": [0.78, 0.22, 1.02, "#4a5f8a", 0.15, true],
+	"ok": [0.33, 0.1, 0.92, "#5a7d4f", 0.25],
+	"teatop": [0.31, 0.08, 0.8, "#c0392b", 0.25],
+	"tea2": [0.365, 0.14, 0.96, "#2b4f8a", 0.3],
+}
 ## 招牌高度（占建築高度比例），對照參考圖英文佔位招牌的位置
 const SIGN_Y := {
 	"station": 0.78, "school": 0.55, "esjh": 0.6, "yuanquan": 0.45, "fuxing": 0.82, "library": 0.6, "post": 0.42,

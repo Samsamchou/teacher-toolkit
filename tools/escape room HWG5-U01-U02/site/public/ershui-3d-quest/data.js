@@ -906,7 +906,7 @@ export const BANK = {
   },
   {
    "id": "bookstore",
-   "arena": "大盟書局",
+   "arena": "書店",
    "word": "bookstore",
    "boss": false
   },

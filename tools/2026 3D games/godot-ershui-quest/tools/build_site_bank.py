@@ -15,7 +15,7 @@ LOCS = [
     ("station", "二水火車站", "train station"), ("inn", "二八水驛站", "restaurant"),
     ("seven", "便利商店", "convenience store"), ("school", "二水國小", "school"),
     ("teatop", "飲料店", "tea shop"), ("market", "二水超市", "supermarket"),
-    ("post", "二水郵局", "post office"), ("bookstore", "大盟書局", "bookstore"),
+    ("post", "二水郵局", "post office"), ("bookstore", "書店", "bookstore"),
     ("pxmart", "超市", "supermarket"), ("library", "二水鄉立圖書館", "library"),
     ("farm", "八堡圳農情館", "coffee shop"), ("park", "二八水水公園", "park"),
     ("lawn", "水心之初大草原", "park"),

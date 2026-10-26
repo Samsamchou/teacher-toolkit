@@ -63,3 +63,10 @@
 - 正式站：https://hwg5-clock-tower.web.app/ershui-planet/ （首頁選 個人／分組）；個人模式 https://hwg5-clock-tower.web.app/ershui-3d-quest-planet/
 - 首頁加了卡片「二水小行星逛街版」（連到 ershui-planet/，封面 ershui-3d-quest-planet/cover.webp，取自首頁太空空拍第 4 張）。本機 site/public/index.html 也加了同一張卡（排在 Jump Island 卡片後）。
 - 部署方式同後台那次：scratchpad/live-stage＝正式站現況＋遊戲資料夾＋封面＋卡片，逐檔比對後只差這 11 個檔才部署。Ken's Jump Island 仍未上正式站。
+
+## 去品牌化＋闖關換新建築（2026-10-26，RDQ-spec-debrand-and-quest-models-20261026.md）
+- 店名改通用：全聯→超市、五分田／台灣第一味→飲料店、7-ELEVEN／OK超商→便利商店、大盟書局→書店（game.gd ZH_SHOW、world.gd BLD_SIGN、map.json、build_osm_map.py）。問路題：便利商店（光文路／民族路）、超市（民生路）；兩間飲料店都在光文路，改用招牌顏色分辨：飲料店（紅招牌）／（藍招牌）。
+- 模型上的品牌字樣用素色看板蓋住（world.gd SIGN_PLATE；全聯、7-ELEVEN 兩側也蓋）。檢查：`SIGNS=1 ARRIVALS=1 ONLY=id1,id2` 拍正面招牌特寫（test_sign_*）。檢查表在 `資料/debrand-checks/`。
+- 修正：首頁空拍中途點按鈕，遊戲裡天空會一直是星空 → 非 fly 鏡頭一律 set_space(0)。招牌 Label3D 改單面（背面不會出現反字）。
+- 二水 3D 闖關（`tools/2026 3D games/godot-ershui-quest`）改用這裡的 bld_*.glb（10 棟＋公園火車頭＋草原地景），刪掉 11 組舊模型；遊戲檔 26.9 MB（新建築底色貼圖 512）。
+- 10/26 已上正式站（staging 只差 quest3d、ershui-planet、兩個任務 data.js 共 6 檔）。

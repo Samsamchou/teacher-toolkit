@@ -42,6 +42,7 @@ var bets := {}                  # 組 → 選項
 var cam_mode := "fly"           # fly / follow / map / arrive
 var fly_t := 0.0
 var intro_t := 0.0
+var fixed_cam: Array = []   # 測試用固定鏡頭 [位置, 看的點, 上方]
 const INTRO_SPIN := 6.5   # 太空轉星球的秒數
 const INTRO_END := 10.5   # 俯衝結束（之後接街道低空飛）
 var fly_route: Array = []
@@ -581,6 +582,11 @@ func _update_camera(delta: float) -> void:
 				world.set_space(clampf(1.0 - e * 1.6, 0.0, 1.0))
 			k = 1.0
 			fly_t = 0.0
+		"fixed":
+			want_pos = fixed_cam[0]
+			want_look = fixed_cam[1]
+			want_up = fixed_cam[2]
+			k = 1.0
 		"fly":
 			world.set_space(0.0)
 			fly_t += delta * 8.0
@@ -629,6 +635,8 @@ func _update_camera(delta: float) -> void:
 			want_pos = up_d * (world.R + 300.0) - north * 120.0
 			want_look = up_d * world.R
 			want_up = north
+	if cam_mode != "fly":
+		world.set_space(0.0)   # 首頁空拍中途點了按鈕：星空也要換回藍天
 	if cam_pos == Vector3.ZERO:
 		cam_pos = want_pos
 		cam_look = want_look
@@ -720,7 +728,8 @@ func _shuffle(a: Array) -> void:
 		a[j] = tmp
 
 ## 地點中文名：去掉括號裡的補充（例：「超市（民生路）」→「超市」不夠清楚時保留括號）
-const ZH_SHOW := {"pxmart": "全聯", "ok": "OK超商", "seven": "7-ELEVEN", "tea2": "五分田", "teatop": "台灣第一味"}
+const ZH_SHOW := {"pxmart": "超市（民生路）", "ok": "便利商店（光文路）", "seven": "便利商店（民族路）",
+	"tea2": "飲料店（藍招牌）", "teatop": "飲料店（紅招牌）", "bookstore": "書店"}
 func _zh_name(id: String) -> String:
 	return String(ZH_SHOW.get(id, world.places[id]["zh"]))
 
@@ -1893,7 +1902,7 @@ func _test_arrivals() -> void:
 	setup_ui.visible = false
 	var only := OS.get_environment("ONLY")
 	if only != "":
-		ids = [only]
+		ids = Array(only.split(","))
 	for id in ids:
 		var P: Dictionary = world.places[id]
 		active = "ken"
@@ -1920,4 +1929,19 @@ func _test_arrivals() -> void:
 		await _wait(0.6)
 		await _shot("face_%s" % id)
 		hud.visible = false
+	# 正面招牌特寫（SIGNS=1）：檢查品牌字樣有沒有蓋住
+	if OS.get_environment("SIGNS") != "":
+		for id in ids:
+			var P: Dictionary = world.places[id]
+			var door: Vector2 = P["door2"]
+			var pos2: Vector2 = P["pos2"]
+			var hh: float = P.get("height", 6.0)
+			var outd := (door - pos2).normalized()
+			var c2 := door + outd * (hh * 0.9 + 5.0)
+			world.clear_fade()
+			world.fade_between(c2, pos2, id, 0.0)
+			fixed_cam = [world.bend2(c2, hh * 0.55), world.bend2(pos2, hh * 0.5), world.bend2(door).normalized()]
+			cam_mode = "fixed"
+			await _wait(0.4)
+			await _shot("sign_%s" % id)
 	print("ARRIVALS ", ids.size())
