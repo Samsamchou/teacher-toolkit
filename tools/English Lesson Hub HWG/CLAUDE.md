@@ -32,6 +32,7 @@
 
 ## 目前狀態（截至 2026-10-27 部署）
 
+- 2026-10-27 晚：右鍵刪除單一學生紀錄＋AI 口說 85 分過關已上線（liveV2 `livev2-00022-qix`、liveAudioV2 `liveaudiov2-00006-hic`），見 `rdq/DEPLOYMENT-student-reset-audio-pass-20261027.md`。
 - 2026-10-27：AI 錄音題修復已上線（liveV2 `livev2-00021-hut`、liveAudioV2 `liveaudiov2-00005-yel`，模型 `gemini-3.5-flash`）。部署時 Functions 環境變數必須包含 `LIVE_AI_MODEL`，見 `rdq/DEPLOYMENT-ai-audio-fix-20261027.md`。
 
 - 正式入口：https://lesson-hub-v03.web.app/lab ；Firebase 專案 `hwg7teaching`，Hosting `lesson-hub-v03` 版本 `066eeb180f4a7d72`，Function `liveV2` 為 `livev2-00020-wuk`（2026-10-17 課程配色＋已結束分配刪除，見 `rdq/DEPLOYMENT-course-color-20261017.md`、`rdq/DEPLOYMENT-assignment-delete-20261017.md`）。

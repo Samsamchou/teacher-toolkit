@@ -1,0 +1,10 @@
+{"check":"model-sync","exitCode":0}
+{"check":"config-sync","exitCode":0}
+{"check":"site-data","exitCode":1}
+{"check":"teacher-security","exitCode":0}
+{"check":"formal-gate","exitCode":0}
+{"check":"firebase-preflight","exitCode":0}
+{"check":"node-tests","exitCode":0}
+{"check":"functions-tests","exitCode":1}
+{"check":"functions-syntax","exitCode":0}
+{"check":"production-build","exitCode":0}

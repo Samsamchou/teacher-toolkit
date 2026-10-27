@@ -1,0 +1,1282 @@
+{
+  "timestamp": "2026-10-17T07:38:25.072Z",
+  "files": 209,
+  "passed": 209,
+  "failed": [],
+  "routes": [
+    {
+      "route": "/",
+      "status": 200,
+      "match": true
+    },
+    {
+      "route": "/lab",
+      "status": 200,
+      "match": true
+    },
+    {
+      "route": "/lab?assignment=000000",
+      "status": 200,
+      "match": true
+    }
+  ],
+  "projectOk": true,
+  "fullBody": 189,
+  "etag": 20,
+  "artifacts": [
+    {
+      "path": "assets/comic-relief-cyrillic-400-normal-B3keOpHr.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-cyrillic-700-normal-DarmAgTX.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-greek-400-normal-CNIaTf8D.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-greek-700-normal-BJRePHgP.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-latin-400-normal-B1VvNpZu.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-latin-700-normal-Cye9ejqn.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-latin-ext-400-normal-B7siEQO1.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/comic-relief-latin-ext-700-normal-D1hKNlU-.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/domain-DD3LGnmt.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/domain-DJ7PWwdb.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/domain-DJ7PWwdb.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/firebase-client-BetUU0kG.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/firebase-client-IYNbz4-o.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/firebase-client-IYNbz4-o.js.map",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "assets/html2canvas-B0k4OQPy.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/html2canvas-B0k4OQPy.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/01-sunday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/02-monday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/03-tuesday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/04-wednesday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/05-thursday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/06-friday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/audio/07-saturday.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/01-sunday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/02-monday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/03-tuesday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/04-wednesday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/05-thursday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/06-friday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg5-u01/days/07-saturday.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/1-australia.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/2-india.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/3-japan.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/4-singapore.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/5-spain.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/6-taiwan.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/7-the-uk.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/audio/8-the-usa.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/australia.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/india.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/japan.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/korea.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/singapore.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/spain.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/taiwan.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/the-uk.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/the-usa.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/hwg7-u01/landmark-food/vietnam.jpg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index-B21crsB1.css",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index-DZH5zbVu.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index-DZH5zbVu.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-BuZXCF0c.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-BuZXCF0c.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-BXLirwRn.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-BXLirwRn.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-CaR_GyVa.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-CaR_GyVa.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-Clesmnc0.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-DDO2uRbl.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-Dl9cLR5S.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-DouguhfI.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-DouguhfI.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-DVDBrutI.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/index.esm-DVDBrutI.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/lesson-data-QU-X4F08.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/lesson-data-QU-X4F08.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/LiveApp-B5_QWmdn.css",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/LiveApp-CgNDH_z9.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/LiveApp-CgNDH_z9.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/mascots/word-master-monster-v1.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "assets/preload-helper-CUZXG5J3.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/preload-helper-CUZXG5J3.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/rolldown-runtime-CbXtAM7H.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/site-source-DzrBC2sY.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/site-source-DzrBC2sY.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/SportRewards-B18Ha6qG.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/SportRewards-B18Ha6qG.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/SportRewards-B4oLpB3n.css",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/transport-CXP0kut_.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/transport-CXP0kut_.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/worldpup-countries-DjZjcc4d.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "assets/worldpup-countries-DjZjcc4d.js.map",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/aim_tick.1acef69c10c62e11.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/baseball.118d842e0051b51a.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/basketball.bf76308b76786dc1.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/camouflage.08b3a51bd0a25b3b.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/card_double_points.b5fad1b89a913cc4.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/card_extra_shot.7e583bd9c0e642e1.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/card_hit_or_miss.2f0d532499fc8da1.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/card_lose_points.924dc1efa7b9ea8d.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/card_no_shot.308428d08817975a.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/card_swap_points.afc570c2dc299ef2.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/donut.6e98eec3d7900311.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/dragon-eye.f85cee3e68487367.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/eight-ball.c7a4c039c3c78dd4.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/fire.4aae27e3a39fcee2.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/flowers.fb5568740403f409.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/gutter.9cc293a110a9a94e.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/lightning.8462d58a839d5063.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/miss.9c198ddd8fcf3b55.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/miss.e8f7cd025f722264.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/music.f16a5d3242c802cd.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pin-prone.5060c7cc1bdac1a5.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pin-tipping.519ca58e3be21aab.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pin-upright.4545522eba0acb65.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_1.9e4f860066d33848.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_2.a0cd0d2ff92d0423.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_3.bcf7e4931aed0f32.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_4.9e81ef4a44ead9f2.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_5.56bd272fd291c5ce.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_6.28a83fd7f682d4d3.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_7.8f1070270e32f056.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_8_score.a56ec2488bfbbcb3.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_8.e0fbe750ae47976d.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pins_9.4a8306006c75acd6.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/pizza.2be3ce38bf134a7d.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/power_collect.608bf1c3b24cae61.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/power_reveal.670aa334238ceb56.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/roll.04814417dc68af01.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/roll.70972d17fd8d94d1.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/score.2c5c7c6e30a4c3f7.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/soccer.8e1516d6ab56d88c.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/spare.1283bb90df6961be.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/spare.a9b1de95af7cef03.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/stars.500a475021f6e9b2.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/strike.cccef11547014c2c.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/swap_points.991150b1d5f30591.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/swirl-candy.b97c78a4c0cd6cf2.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/ui_click.6b4a73dbee27a28d.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/watermelon.3d37efd2706c06b6.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/winner.ed96a2c266c46397.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "bowling/optimized/zebra.fc19d2dcb82f442e.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-audio/upbeat-happy-corporate-487426.mp3",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "live-audio/upbeat-happy-corporate-487426.source.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/great.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/great.mp3.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/great.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/great.webp.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/try-again.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/try-again.mp3.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/try-again.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-feedback/try-again.webp.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/cat-dog.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/cat-dog.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/court.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/court.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/fox-penguin.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/fox-penguin.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/rabbit-panda.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "live-games/basketball/rabbit-panda.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/OPTIMIZATION-20260925.md",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/slot/mixkit-arcade-slot-wheel-1933.wav",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/slot/SOURCE.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-games/SOURCE.md",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-space/eyes-up-front.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "live-space/eyes-up-front.png.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-space/README.md",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-space/space-academy-v1.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "live-space/space-academy-v1.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/arena.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/biomes.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/castle.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/celebration/LICENSE.txt",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/celebration/sources.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/celebration/victory-applause.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/celebration/victory-applause.ogg",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/characters.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/ComicRelief-Regular.woff2",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/equipment.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/Forest-of-Words-Godot-source.zip",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/Forest-of-Words-Web.zip",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game-sw.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.audio.position.worklet.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.audio.worklet.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.html",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.pck",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.png",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/game.wasm",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manifest.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual.html",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual/level-1.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual/level-2.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual/level-3.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual/level-4.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual/level-5.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/manual/level-6.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v1/props.webp",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.audio.position.worklet.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.audio.worklet.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.html",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.js",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.pck",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.png",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/engine.wasm",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/Forest-of-Words-Godot-source.zip",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/Forest-of-Words-Web.zip",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/game.html",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/GODOT-LICENSE.txt",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/GODOT-THIRD-PARTY.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/manual.html",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/portraits/mage.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/portraits/ranger.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "survivors/v2/portraits/warden.png",
+      "status": 200,
+      "verification": "hosting-gzip9-etag-and-raw-length",
+      "match": true
+    },
+    {
+      "path": "worldpup/audio/ambience.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "worldpup/audio/goal.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "worldpup/audio/manifest.json",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    },
+    {
+      "path": "worldpup/audio/miss.mp3",
+      "status": 200,
+      "verification": "downloaded-body-sha256",
+      "match": true
+    }
+  ]
+}

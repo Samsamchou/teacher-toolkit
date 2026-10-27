@@ -1,0 +1,87 @@
+# 完整六關三英雄 v07：2026-10-16 交接
+
+<!-- lesson-hub-six-heroes-closeout-20261016:handoff -->
+> 最新狀態（2026-10-16T22:34:23+08:00）：完整六關、三英雄、後台與觸控修正已正式部署；Hosting `f1274706dc9b3bfe`、liveV2 `livev2-00018-vaq`。Godot Games skill已安裝。收工與下次接續以專案 `rdq/CLOSEOUT-godot-six-heroes-20261016.md` 為準；下方未部署敘述為歷史。GitHub本輪未新增提交或推送。
+<!-- /lesson-hub-six-heroes-closeout-20261016:handoff -->
+
+
+已完成真正 Godot 原生／Web 六關、三角色主動技能、逐關機關與第六關雙階段 Boss，並串接既有 Lesson Hub 教師／學生後台程式。這是本機候選版，未部署正式站、未 Git commit/push。
+
+## 開啟與下載
+
+- 現在可玩：http://127.0.0.1:5218/ （目前開著本機伺服器）
+- 網站整合候選：http://127.0.0.1:5220/lab （本機模擬資料；非正式成績）
+- 正式保存：godot/forest-of-words-six-heroes-20261016
+- 製作手冊：同資料夾「製作手冊-v07-完整六關.md」
+- 全部想法、生成素材、開發、修正與測試：同資料夾「製作流程-v07-完整六關.md」
+- 可攜網頁 ZIP：web/downloads/Forest-of-Words-Six-Heroes-Web.zip，約 28 MB／40 檔。
+- Godot 原始 ZIP：web/downloads/Forest-of-Words-Six-Heroes-Godot-source.zip，約 42 MB／93 檔。
+- 關閉後重開：執行新資料夾的「啟動網頁版.cmd」，再開 5218；需 Node.js。Godot 4.7.2 匯入 project.godot，F5。
+
+## 規則與成果
+
+六關每題後戰鬥 15／17／19／21／23／25 秒，可用道具種類 3／4／5／6／7／8。風道、水晶、砲台、空中聖域與 Boss 彈幕逐關加入。三英雄各有不同生命與技能，角色與技能紀錄可保存、續玩、教師讀回與 CSV。
+
+練習一般題最多四次提交、採最佳分；拼字無限重試，測驗仍保留首次分數。首次全對的提交次數決定道具品質 4／3／2／1，不扣學習分。獨立示範 36 題全對 100 分；正式 Phonics 36 題／100 分／24 音檔保留原樣。英語和戰鬥分開頁面，結果大字學號並列同一英雄、分開呈現分數與真實 Boss 戰果。
+
+## 已驗證
+
+網站 297 項、Firestore／Storage 模擬器 15 項、真正 Godot 72 項、獨立計分 594 項通過；建置通過。瀏覽器走完六關與 36 題得 100／100（此路徑略過部分戰鬥，Boss 未擊敗，結果如實顯示）。三角色 Boss 程式模擬皆能擊敗；不是人工實玩驗收。教師 UI 讀回守衛技能、拼字第五次滿分與基本道具。1024×768／390×844 作答頁無水平溢出。
+
+兩 ZIP 經瀏覽器實際下載、SHA 比對、解壓、網頁伺服器啟動與核心資源 HTTP 200；下載的原始專案重新 Godot 匯入並再通過 72 項。初次沙箱匯入無法寫編輯器設定，保留原紀錄，允許正常本機 Godot 設定路徑後重試無錯誤。詳細證據見 qa/godot-heroes-six-20261016/final-readback.json 與 evidence/。
+
+## 保護與下一步
+
+舊 v06、先前兩關試玩、Phonics 題庫音檔及原圖保護清單逐檔 SHA 比對；Git index 保持原 SHA、未動既有鎖。只同步本專案明列的 preview 程式與新 /survivors/v2 候選資源。沒有改正式 Firebase 學生資料。
+
+教師接著實玩六關，確認美術、難度、Boss 節奏、iPad Safari、校園 Wi-Fi 與喇叭聽感。華麗模式目標 60 FPS，可自動降級，不能宣稱所有裝置均不卡。依前次分階段約定，驗收後才整理 Godot Games skill；尚未安裝該 skill。
+
+正式部署需另按正式設定重建、授權部署及發布後讀回；這次的本機 dist 只作建置驗證，未當成正式發布物。
+
+
+## 2026-10-16 第六關觸控修補
+
+使用者回報：網頁方向按鈕／平板觸控在第六關只能上下，左右失靈。
+
+程式沒有第六關水平移動禁制。查到兩個可重現的控制缺陷：原獨立版任一 pointerup/pointercancel 都 resetInput，會清除另一根仍按著的手指；舊引擎把網頁控制與 Godot 實體按鍵相加，實際注入殘留右鍵後，網頁向左與其相抵，x 維持 480。
+
+修正：以 pointerId 分開追蹤每個方向，pointerup、cancel、lostcapture 只釋放相應手指；失焦、暫停和切題全部清除。網頁版統一由宿主提供輸入，iframe 鍵盤事件帶 run/index 轉送、保留同源來源驗證；原生 Godot 仍讀實體按鍵。WASD 使用 physical code，避免中文輸入法改變 key 字元。未改題目、分數、素材、關卡時間或 Boss 難度。
+
+驗證：網站 301 項測試、Vite 建置、Godot 原有 72 項及新增 29 項移動檢查通過。第 1–6 關四方向引擎測試通過。瀏覽器在真正第六關以實際方向按鈕長按驗證：左 x480→368.80，右→465.90，上 y430→318.61，下→429.81。多指交錯／放開／取消與快速左右換向有程式回歸測試；瀏覽器工具未支援多指觸控注入，不能冒稱已在實體平板重現使用者當時情境。
+
+本次修補已同步原始專案、現行本機試玩、後台候選控制元件、Web 引擎與兩 ZIP。請重新整理後測試；原有學習進度保留。沒有部署正式站或 Git commit/push。
+
+新版下載包：網頁 42 檔、Godot 原始專案 99 檔；舊包已保存在 qa/godot-touch-fix-20261016/before。舊 40／93 檔紀錄為修補前版本。
+
+
+## 2026-10-16 Godot Games skill 已建立
+
+教師已確認左右移動正常並要求建立 skill，現已完成安裝。個人位置 C:/Users/User/.codex/skills/godot-games/SKILL.md，專案 skills/godot-games，11 檔及可攜 ZIP；完整內容與本次驗證見 SKILL-Godot-Games-20261016.md。先前「尚未安裝 skill」為歷史狀態，這一項已完成；未部署正式遊戲。
+
+
+# 完整六關、後台與觸控修補正式部署 · 2026-10-16
+
+已依使用者明確要求部署，正式入口：https://lesson-hub-v03.web.app/lab 。發布時間（台灣）：2026-10-16T22:09:01.381000+08:00。
+
+- Firebase hwg7teaching，僅更新 liveV2 與 lesson-hub-v03 Hosting。
+- Hosting：sites/lesson-hub-v03/versions/f1274706dc9b3bfe。
+- liveV2：livev2-00018-vaq，ACTIVE／Ready；既有 LIVE 設定與 Secret 參照完整保留。
+- 其他 12 個 Functions、預設 Hosting、Firestore／Storage rules 與其他專案未變。
+
+## 已上線
+
+三英雄與主動技能、完整六關、15／17／19／21／23／25秒、逐關3→8種裝備與新機關、雙階段Boss。新版分配使用 gameVersion2，舊分配及歷史結果維持相容。英語與遊戲分頁，角色／技能／Boss存檔續作，教師明細與CSV保留角色戰果。
+
+觸控以 pointerId 個別追蹤，放開／取消只釋放相應手指；Web只接受宿主權威方向，iframe鍵盤轉交，避免Godot殘留反向鍵相抵。原生鍵盤保留，教師先前已確認左右移動正常。
+
+學習分數與道具品質分開。普通練習首次＋3重試採最佳，拼字無限重試、測驗首次成績，大小寫／片語空格及4／3／2／1品質規則保留。正式 Phonics仍36題／100分／24音檔，未建立正式測試分配或提交學生答案。
+
+## 本輪驗證
+
+正式設定建置與9項發布檢查通過；新跑301網站測試及15項Firestore／Storage模擬器整合。雲端實際部署的42份後台來源逐位元相符。209／209正式資源HTTP核對通過：189全檔SHA、20按Firebase CLI相同gzip9算法計算的傳輸SHA／ETag及原始長度相符；ETag不是原始內容SHA。大型檔完整GET遇到本次網路逾時，沒有冒稱全209檔都完成全檔下載。三個SPA入口、Firebase正式專案設定、v2快取重新驗證及WASM MIME通過。
+
+部署前後9份課程、工作區、Phonics題庫與24音檔文件指紋／generation全相同。新版Web42檔、Source99檔下載包及手冊已更新為正式發布封裝，原包／原文備份保留。正式Source99檔透過40塊HTTP Range完整下載後，全包SHA／CRC相符；新解壓專案實際Godot匯入，72關卡＋29移動檢查再次通過。瀏覽器正式教師入口、無效分配提示及真正Godot引擎啟動有畫面／日誌證據。教師私人登入／正式新分配全程與實體平板、校網及喇叭仍依教師現場驗收，不冒稱已代為完成。
+
+發佈來源使用隔離副本，470份來源讀回與canonical相符。Git index保持原SHA，未stage／commit／push，未動既有鎖或其他工作。先前handoff的「本機候選／尚未部署」是歷史狀態，本段取代它。
+
+證據：qa/godot-six-production-20261016；完整來源及兩包：godot/forest-of-words-six-heroes-20261016。學生使用教師新分配連結；已開著舊網頁請重新整理，下載版需重下載。

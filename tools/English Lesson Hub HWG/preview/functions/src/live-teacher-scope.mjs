@@ -1,6 +1,6 @@
 // One verified teacher passcode protects this site's private teacher workspace.
 // Never accept workspace IDs from browser input, or replace a student's identity.
-const teacherActions = new Set(['decks','saveDeck','previousDeck','create','control','report','reports','assignmentCreate','assignmentList','assignmentReport','assignmentStudent','assignmentGrade','assignmentClose','assignmentRelease','assignmentRecording']);
+const teacherActions = new Set(['decks','saveDeck','previousDeck','create','control','report','reports','assignmentCreate','assignmentList','assignmentReport','assignmentStudent','assignmentGrade','assignmentClose','assignmentRelease','assignmentRecording','assignmentDelete','assignmentStudentDelete']);
 export function createTeacherScope({db, requireTeacher}) {
   return async (request, service) => {
     const action = request.data?.action;

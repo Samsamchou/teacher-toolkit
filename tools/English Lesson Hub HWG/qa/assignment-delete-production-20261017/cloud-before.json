@@ -1,0 +1,179 @@
+{
+  "timestamp": "2026-10-17T08:16:31.890Z",
+  "functions": [
+    {
+      "name": "liveAudioV2",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-15T05:18:42.132293199Z",
+      "revision": "liveaudiov2-00004-tep",
+      "environmentHash": "0b572004f1d6ac32baa7faefe1ee82d1dc3f5b8dbde5881099549d0269e2dd32",
+      "secretBindingsHash": "e0f6c82b3f1c96267e2a207af1ace5e7777b6bfb3c42e9ad38a03e036e841716",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "liveAudioV2/function-source.zip",
+        "generation": "1792041510743769"
+      }
+    },
+    {
+      "name": "liveImageSearchV2",
+      "state": "ACTIVE",
+      "updateTime": "2026-09-26T10:16:33.171627661Z",
+      "revision": "liveimagesearchv2-00004-nuq",
+      "environmentHash": "183c2ebca28b5cea4b46ed0851f53c82aaa7194807e0a2dbe9924f592bc0c173",
+      "secretBindingsHash": "ab7a2d301906004a509bd6a51f9a4ff4325270cbc65e10b610d30edeac950b62",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "liveImageSearchV2/function-source.zip",
+        "generation": "1790417742425829"
+      }
+    },
+    {
+      "name": "liveMediaV2",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-15T05:18:36.599970097Z",
+      "revision": "livemediav2-00007-zez",
+      "environmentHash": "48cd111ed84f06fcd0936a8c7a28c4cddc6d35ee73fbe33e7acc4c375d7037a1",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "liveMediaV2/function-source.zip",
+        "generation": "1792041432956271"
+      }
+    },
+    {
+      "name": "liveRetentionV2",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-15T05:18:11.066214813Z",
+      "revision": "liveretentionv2-00003-git",
+      "environmentHash": "d30dc3d5cda067b1abe93c64949ec928362c17c011641dd1c2abe093d4de5067",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "liveRetentionV2/function-source.zip",
+        "generation": "1792041432971672"
+      }
+    },
+    {
+      "name": "liveV2",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-17T07:36:36.529339761Z",
+      "revision": "livev2-00019-tez",
+      "environmentHash": "fd95bd8bc51aca90ed0057487301aa988504797fc60636d5a0ece666657ebfe2",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "liveV2/function-source.zip",
+        "generation": "1792222553725319"
+      }
+    },
+    {
+      "name": "liveVideoDispatchV2",
+      "state": "ACTIVE",
+      "updateTime": "2026-09-24T15:17:36.515500574Z",
+      "revision": "livevideodispatchv2-00002-dac",
+      "environmentHash": "178d00e8daf951379a3513cd92d2631f4261c387c7e06512429a5263bf2eefef",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "liveVideoDispatchV2/function-source.zip",
+        "generation": "1790263002423290"
+      }
+    },
+    {
+      "name": "teacherLessonConfigLoad",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:05:02.332879322Z",
+      "revision": "teacherlessonconfigload-00005-tat",
+      "environmentHash": "f747f9adfbd2dc7a4a000ed5c4943b80295324f98b24e1d14f8d58567d19ead8",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherLessonConfigLoad/function-source.zip",
+        "generation": "1787241893177294"
+      }
+    },
+    {
+      "name": "teacherLessonConfigSave",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:04:58.585282385Z",
+      "revision": "teacherlessonconfigsave-00005-xak",
+      "environmentHash": "d7ffb46afd4cd13f130315d31c45eae3d0089c09e583c43b374a36a0c5428662",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherLessonConfigSave/function-source.zip",
+        "generation": "1787241856003342"
+      }
+    },
+    {
+      "name": "teacherPasscodeLogin",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:04:54.574742764Z",
+      "revision": "teacherpasscodelogin-00011-cek",
+      "environmentHash": "3a17aa7a17a77fb56bde3860445e5ea4b7854bd9b7d83de61133c9806c49b245",
+      "secretBindingsHash": "8e69e98eacc624c97be78cf6f7867da5fa780ae90a5d37de1132213a793d7486",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherPasscodeLogin/function-source.zip",
+        "generation": "1787241855908597"
+      }
+    },
+    {
+      "name": "teacherPasscodeLogout",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:05:01.754202349Z",
+      "revision": "teacherpasscodelogout-00009-pan",
+      "environmentHash": "f2ad165639f1656cbd95367592eb2ec5c7b87ac7fc69f20d12897a6993d00c1f",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherPasscodeLogout/function-source.zip",
+        "generation": "1787241893407915"
+      }
+    },
+    {
+      "name": "teacherResultsDelete",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:05:02.030412369Z",
+      "revision": "teacherresultsdelete-00007-gig",
+      "environmentHash": "33bef07912531553c42686b0b69cf02d0a289a2c8c6403b24baec5602bb68f24",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherResultsDelete/function-source.zip",
+        "generation": "1787241893517189"
+      }
+    },
+    {
+      "name": "teacherResultsList",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:05:01.705640646Z",
+      "revision": "teacherresultslist-00007-xut",
+      "environmentHash": "0f259981fdc8740c83b318b0ff57c46f5563294f80aaee7dc9bc8955c65227e7",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherResultsList/function-source.zip",
+        "generation": "1787241893193369"
+      }
+    },
+    {
+      "name": "teacherResultsRecordExport",
+      "state": "ACTIVE",
+      "updateTime": "2026-08-20T16:05:02.489144872Z",
+      "revision": "teacherresultsrecordexport-00007-vum",
+      "environmentHash": "257c67732e46d39613370ff9c38032a9d6466ece83b8d7abb54ffb4cdc8199e8",
+      "secretBindingsHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "source": {
+        "bucket": "gcf-v2-sources-647410433074-asia-east1",
+        "object": "teacherResultsRecordExport/function-source.zip",
+        "generation": "1787241893151282"
+      }
+    }
+  ],
+  "hosting": {
+    "version": "sites/lesson-hub-v03/versions/59f6a4b49bf7f134",
+    "releaseTime": "2026-10-17T07:37:37.136Z"
+  },
+  "defaultHosting": {}
+}

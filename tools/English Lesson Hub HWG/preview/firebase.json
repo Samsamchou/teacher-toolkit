@@ -72,6 +72,24 @@
               "value": "no-cache"
             }
           ]
+        },
+        {
+          "source": "/survivors/v2/**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public,max-age=0,must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "/survivors/v2/engine.wasm",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/wasm"
+            }
+          ]
         }
       ],
       "rewrites": [

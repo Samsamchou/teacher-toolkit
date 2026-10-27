@@ -1,0 +1,11 @@
+{
+  "zip": "previous-liveV2-source.zip",
+  "files": 42,
+  "changed": [
+    "index.cjs",
+    "src/assignment-service.mjs",
+    "src/live-teacher-scope.mjs"
+  ],
+  "new": [],
+  "missingLocally": []
+}

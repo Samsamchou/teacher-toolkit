@@ -180,7 +180,7 @@ export function SlideEditor({ block, onPatch, onAddAsset, onTheme, onConvert, on
     <div className="sc-heading"><div><span>{asStem ? '題幹教材' : '教材投影片'}</span><h2>{asStem ? '編輯帶入的教材' : '在畫布上編排教材'}</h2></div><button onClick={() => frameRef.current?.requestFullscreen?.().catch(() => setStatus('無法開啟全螢幕，請使用學生預覽。'))}>投影預覽</button></div>
     <div className="sc-toolbar" aria-label="投影片功能列">
       <button onClick={addText}>A 新增文字</button><button onClick={() => open('image')}>▧ 圖片</button><button onClick={() => open('audio')}>♫ 音檔</button><button onClick={() => open('video')}>▶ 影片／簡報</button><button onClick={() => open('theme')}>◈ 主題</button>
-      <span className="sc-toolbar-gap" /><button disabled={!canUndo} onClick={onUndo}>↶ 復原</button><button disabled={!canRedo} onClick={onRedo}>↷ 重做</button>{!asStem && <button onClick={() => open('convert')}>轉成題目</button>}
+      <span className="sc-toolbar-gap" /><button className="lh-tone-slate" disabled={!canUndo} onClick={onUndo}>↶ 復原</button><button className="lh-tone-slate" disabled={!canRedo} onClick={onRedo}>↷ 重做</button>{!asStem && <button className="lh-tone-indigo" onClick={() => open('convert')}>轉成題目</button>}
     </div>
     <div className="sc-formatbar" aria-label="文字與物件工具列">
       <span className="sc-font-name">Comic Relief</span>

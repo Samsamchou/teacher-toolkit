@@ -29,3 +29,5 @@ for (const name of ['reward-sports.mjs','sports-source/bowling-model.mjs','sport
 // Assignment domain has one normalized import path in the deployable tree.
 const assignmentText=await readFile(new URL('../src/assignments/assignment-domain.mjs',import.meta.url),'utf8');
 await writeFile(new URL('../functions/generated/assignment-domain.mjs',import.meta.url),assignmentText.replace("'../live/domain.mjs'","'./live-domain.mjs'"));
+
+await copyFile(new URL('../src/assignments/game-heroes.mjs',import.meta.url),new URL('../functions/generated/game-heroes.mjs',import.meta.url));

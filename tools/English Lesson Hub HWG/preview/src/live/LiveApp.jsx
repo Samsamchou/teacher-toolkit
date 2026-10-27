@@ -5,7 +5,7 @@ import '../assignments/assignments.css';
 import React, { useEffect, useRef, useState } from "react";
 import { JoinPanel } from './JoinPanel.jsx';
 import { createSeedLessons } from "../data/lesson-data.js";
-import { TYPES, newBlock, copy, embedUrl, publicBlock } from "./domain.mjs";
+import { TYPES, COURSE_COLORS, newBlock, copy, embedUrl, publicBlock } from "./domain.mjs";
 import { canRetryResponse, requiresMastery } from './mastery.mjs';
 import { AnnotationSurface } from './AnnotationSurface.jsx';
 import { HorizontalOrder } from './HorizontalOrder.jsx';
@@ -532,6 +532,8 @@ function Editor({ deck, onChange }) {
             ))}
           </select>
           <button
+            className="lh-tone-green"
+            aria-label="新增這個題型"
             onClick={() => {
               const next = ['audio','vowel','sentence','spell'].includes(type) ? newBlock(type) : parityBlock(newBlock(type));
               update({ ...deck, blocks: [...deck.blocks, next] });
@@ -561,9 +563,9 @@ function Editor({ deck, onChange }) {
       <main>
         <CourseName value={deck.title} onSave={title=>update({...deck,title})}/>
         <div className="lh-row">
-          {block.type !== 'slide' && <><button onClick={() => history("undo")}>復原</button>
-          <button onClick={() => history("redo")}>重做</button></>}
-          <button onClick={() => setPreview(!preview)}>
+          {block.type !== 'slide' && <><button className="lh-tone-slate" onClick={() => history("undo")}>復原</button>
+          <button className="lh-tone-slate" onClick={() => history("redo")}>重做</button></>}
+          <button className="lh-tone-teal" onClick={() => setPreview(!preview)}>
             {preview ? "回編輯" : "學生預覽"}
           </button>
         </div>
@@ -594,10 +596,11 @@ function Editor({ deck, onChange }) {
         ) : (
           <>
             <div className="lh-row">
-              <button onClick={() => shift(-1)}>↑</button>
-              {block.modelVersion!==3 && !['audio','vowel','spell'].includes(block.type) && <button onClick={()=>{const converted=convertBlock(block,crypto.randomUUID());converted.hidden=true;update({...deck,blocks:[...deck.blocks,converted]});setIndex(deck.blocks.length);setError('新版副本已建立並暫時隱藏；原題保留。請完成轉換報告後再顯示。');}}>建立新版副本（保留原題）</button>}
-              <button onClick={() => shift(1)}>↓</button>
+              <button className="lh-tone-slate" aria-label="上移這頁" onClick={() => shift(-1)}>↑</button>
+              {block.modelVersion!==3 && !['audio','vowel','spell'].includes(block.type) && <button className="lh-tone-indigo" onClick={()=>{const converted=convertBlock(block,crypto.randomUUID());converted.hidden=true;update({...deck,blocks:[...deck.blocks,converted]});setIndex(deck.blocks.length);setError('新版副本已建立並暫時隱藏；原題保留。請完成轉換報告後再顯示。');}}>建立新版副本（保留原題）</button>}
+              <button className="lh-tone-slate" aria-label="下移這頁" onClick={() => shift(1)}>↓</button>
               <button
+                className="lh-tone-green"
                 onClick={() => {
                   update({
                     ...deck,
@@ -611,10 +614,11 @@ function Editor({ deck, onChange }) {
               >
                 複製
               </button>
-              <button onClick={() => patch({ hidden: !block.hidden })}>
+              <button className="lh-tone-amber" onClick={() => patch({ hidden: !block.hidden })}>
                 {block.hidden ? "顯示" : "隱藏"}
               </button>
               <button
+                className="lh-tone-red"
                 disabled={deck.blocks.length === 1}
                 onClick={() => {
                   update({
@@ -1531,7 +1535,8 @@ function LiveStudio() {
     [lessonId, setLessonId] = useState(""),
     [naming, setNaming] = useState(false),
     [copySource, setCopySource] = useState(null),
-    [copyBusy, setCopyBusy] = useState(false);
+    [copyBusy, setCopyBusy] = useState(false),
+    [colorMenu, setColorMenu] = useState(null);
   const copyAttempt = useRef(null), copiedSnapshot = useRef(null), copyLock = useRef(false);
   const lessons = useRef(createSeedLessons());
   const version = useRef(new Map());
@@ -1593,6 +1598,34 @@ function LiveStudio() {
       }
     });
   }, [deck]);
+  useEffect(() => {
+    if (!colorMenu) return;
+    const close = (e) => { if (e.type !== 'keydown' || e.key === 'Escape') setColorMenu(null); };
+    window.addEventListener('pointerdown', close);
+    window.addEventListener('keydown', close);
+    window.addEventListener('scroll', close, true);
+    return () => { window.removeEventListener('pointerdown', close); window.removeEventListener('keydown', close); window.removeEventListener('scroll', close, true); };
+  }, [colorMenu]);
+  function openColorMenu(e, d) {
+    e.preventDefault();
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.type === 'contextmenu' && e.clientX ? e.clientX : r.right - 24, y = e.type === 'contextmenu' && e.clientY ? e.clientY : r.top + 24;
+    setColorMenu({ id: d.id, x: Math.min(x, window.innerWidth - 236), y: Math.min(y, window.innerHeight - 220) });
+  }
+  async function setCourseColor(id, color) {
+    setColorMenu(null);
+    try {
+      await saveQueue.current;
+      const d = decks.find(x => x.id === id);
+      if (!d || d.cardColor === color) return;
+      const next = { ...copy(d) };
+      if (color) next.cardColor = color; else delete next.cardColor;
+      const result = await api('saveDeck', null, { deck: next, expectedVersion: d.version || 0 });
+      version.current.set(id, result.deck.version);
+      setDecks(all => all.map(x => x.id === id ? result.deck : x));
+      setError('');
+    } catch (e) { setError(e.message); }
+  }
   function select(d) {
     version.current.set(d.id, d.version || 0);
     history.current = [];
@@ -1799,7 +1832,8 @@ function LiveStudio() {
           {!deck ? (
             <div className="lh-library">
               {decks.map((d) => (
-                <article className="lh-course-card" key={d.id}>
+                <article className="lh-course-card" key={d.id} data-color={d.cardColor || undefined} onContextMenu={e => openColorMenu(e, d)}>
+                  <button className="lh-course-color" aria-label={`更改配色：${d.title}`} title="更改配色（也可在卡片上按右鍵）" onPointerDown={e => e.stopPropagation()} onClick={e => colorMenu?.id === d.id ? setColorMenu(null) : openColorMenu(e, d)}>🎨</button>
                   <button className="lh-course-open" disabled={copyBusy} onClick={() => {setCopySource(null);select(d);}}>
                     <small>{d.blocks.length} 頁 · v{d.version}</small>
                     <h2>{d.title}</h2><span>繼續備課 →</span>
@@ -1807,11 +1841,20 @@ function LiveStudio() {
                   <button className="lh-course-copy" disabled={copyBusy} aria-label={`複製並重新命名：${d.title}`} onClick={()=>{setNaming(false);setCopySource(copy(d));copyAttempt.current=null;setError('');}}>複製並重新命名</button>
                 </article>
               ))}
+              {colorMenu && <div className="lh-color-menu" role="menu" aria-label="課程配色" style={{ left: colorMenu.x, top: colorMenu.y }} onPointerDown={e => e.stopPropagation()} onContextMenu={e => e.preventDefault()}>
+                <p>課程配色</p>
+                <div className="lh-color-swatches">
+                  {Object.entries(COURSE_COLORS).map(([key, label]) => (
+                    <button key={key} role="menuitemradio" aria-checked={decks.find(x => x.id === colorMenu.id)?.cardColor === key} data-color={key} title={label} aria-label={label} onClick={() => setCourseColor(colorMenu.id, key)} />
+                  ))}
+                </div>
+                <button role="menuitem" className="lh-color-clear" onClick={() => setCourseColor(colorMenu.id, null)}>清除配色</button>
+              </div>}
             </div>
           ) : (
             <>
               <div className="lh-row lh-toolbar">
-                <button onClick={async () => {await saveQueue.current;if(!failedSave.current)setDeck(null);}}>課程庫</button>
+                <button className="lh-tone-blue" onClick={async () => {await saveQueue.current;if(!failedSave.current)setDeck(null);}}>← 課程庫</button>
                 <label>
                   本堂課單人遊戲
                   <select
@@ -1830,8 +1873,9 @@ function LiveStudio() {
                 </label>
                 <button className="lh-primary as-assign-button" onClick={async()=>{try{await saveQueue.current;if(failedSave.current)throw Error('請先完成儲存。');setAssignDeck({...copy(deck),version:version.current.get(deck.id)||0});}catch(e){setError(e.message);}}}>分配</button>
                 <span role="status">{message}</span>
-                {message==='儲存未完成'&&<button onClick={()=>setDeck({...deck})}>重試儲存</button>}
+                {message==='儲存未完成'&&<button className="lh-tone-orange" onClick={()=>setDeck({...deck})}>重試儲存</button>}
                 <button
+                  className="lh-tone-amber"
                   onClick={async () => {
                     try {
                       await saveQueue.current;

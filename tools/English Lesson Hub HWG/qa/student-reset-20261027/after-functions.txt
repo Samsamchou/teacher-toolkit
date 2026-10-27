@@ -1,0 +1,2 @@
+liveV2 ACTIVE livev2-00022-qix | LIVE_AI_ENABLED=true LIVE_AI_MODEL=gemini-3.5-flash LIVE_IMAGE_SEARCH_ENABLED=true LIVE_MEDIA_ENABLED=true LIVE_V2_ENABLED=true LIVE_VIDEO_ENABLED=true LIVE_WORKER_URL=https://lesson-live-video-cxygwlr3qq-de.a.run.app | secrets:
+liveAudioV2 ACTIVE liveaudiov2-00006-hic | LIVE_AI_ENABLED=true LIVE_AI_MODEL=gemini-3.5-flash LIVE_IMAGE_SEARCH_ENABLED=true LIVE_MEDIA_ENABLED=true LIVE_V2_ENABLED=true LIVE_VIDEO_ENABLED=true LIVE_WORKER_URL=https://lesson-live-video-cxygwlr3qq-de.a.run.app | secrets:LESSON_LIVE_GEMINI_KEY

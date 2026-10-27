@@ -142,3 +142,37 @@
 .lh-sentence-line.is-correct>strong{color:#146236}.lh-sentence-line.is-correct .lh-sentence-card{background:#e0f8e8!important;color:#12562c!important;border-color:#25854b!important;opacity:1!important}
 
 .lh-sentence-line .lh-sentence-place{margin:0 0 6px 12px;min-height:44px;padding:6px 12px;font-size:16px}.lh-sentence-retry-note{font-size:16px;color:#294a66}
+
+/* Course card colors: teacher right-clicks a card (or taps 🎨) to tag it. */
+.lh-course-card { position:relative; --cc:#8c70e6; --cc-bg:#f5f6ff; --cc-ink:#433a70; }
+.lh-course-card[data-color] { background:var(--cc-bg); border-color:var(--cc); border-top:12px solid var(--cc); box-shadow:0 6px 0 var(--cc-ink); }
+.lh-course-card[data-color] h2 { color:var(--cc-ink); }
+.lh-course-card[data-color="red"],.lh-color-swatches [data-color="red"] { --cc:#e5484d; --cc-bg:#ffeeee; --cc-ink:#8c1d22; }
+.lh-course-card[data-color="orange"],.lh-color-swatches [data-color="orange"] { --cc:#f08c2b; --cc-bg:#fff2e3; --cc-ink:#8a4510; }
+.lh-course-card[data-color="yellow"],.lh-color-swatches [data-color="yellow"] { --cc:#f2c21b; --cc-bg:#fff9db; --cc-ink:#7a5d00; }
+.lh-course-card[data-color="green"],.lh-color-swatches [data-color="green"] { --cc:#30a46c; --cc-bg:#e7f8ee; --cc-ink:#17603d; }
+.lh-course-card[data-color="teal"],.lh-color-swatches [data-color="teal"] { --cc:#12a5a5; --cc-bg:#e2f7f7; --cc-ink:#0b5c5c; }
+.lh-course-card[data-color="blue"],.lh-color-swatches [data-color="blue"] { --cc:#3e7bfa; --cc-bg:#e8f0ff; --cc-ink:#1c3f8f; }
+.lh-course-card[data-color="purple"],.lh-color-swatches [data-color="purple"] { --cc:#8e4ec6; --cc-bg:#f4ecfc; --cc-ink:#4d2177; }
+.lh-course-card[data-color="pink"],.lh-color-swatches [data-color="pink"] { --cc:#e5489a; --cc-bg:#fdebf4; --cc-ink:#86194f; }
+.lh-course-card[data-color="brown"],.lh-color-swatches [data-color="brown"] { --cc:#a0663a; --cc-bg:#f7eee6; --cc-ink:#5c3416; }
+.lh-course-card[data-color="gray"],.lh-color-swatches [data-color="gray"] { --cc:#6f7a8a; --cc-bg:#eef0f3; --cc-ink:#363d48; }
+.lh-lab .lh-course-card .lh-course-color { position:absolute; top:10px; right:10px; z-index:1; min-height:40px; min-width:40px; padding:4px; font-size:20px; line-height:1; border-radius:50%; background:#ffffffcc; border:1px solid #c9cde6; }
+.lh-color-menu { position:fixed; z-index:1000; width:220px; padding:12px; background:#fff; color:#17324d; border:1px solid #b7bde2; border-radius:16px; box-shadow:0 12px 32px #0a0a2e66; }
+.lh-color-menu > p { margin:0 0 8px; font-weight:bold; font-size:15px; }
+.lh-color-swatches { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+.lh-lab .lh-color-swatches button { min-height:34px; height:34px; padding:0; border-radius:50%; background:var(--cc); border:3px solid #fff; box-shadow:0 0 0 1px #9aa3c0; }
+.lh-lab .lh-color-swatches button[aria-checked="true"] { box-shadow:0 0 0 3px var(--cc-ink); }
+.lh-lab .lh-color-menu .lh-color-clear { width:100%; margin-top:10px; min-height:38px; padding:6px; font-size:15px; }
+
+/* Editor action buttons: color by intent so they are easy to tell apart. */
+.lh-lab button[class*="lh-tone-"] { --tone:#5b6b84; --tone-bg:#eef1f6; --tone-ink:#2d3a4f; background:var(--tone-bg); color:var(--tone-ink); border:2px solid var(--tone); font-weight:bold; box-shadow:0 3px 0 var(--tone); }
+.lh-lab button[class*="lh-tone-"]:hover:not(:disabled) { background:var(--tone); color:#fff; }
+.lh-lab button.lh-tone-blue { --tone:#3e7bfa; --tone-bg:#e3edff; --tone-ink:#1c3f8f; }
+.lh-lab button.lh-tone-teal { --tone:#12a5a5; --tone-bg:#ddf5f5; --tone-ink:#0b5c5c; }
+.lh-lab button.lh-tone-green { --tone:#30a46c; --tone-bg:#e2f6ea; --tone-ink:#17603d; }
+.lh-lab button.lh-tone-amber { --tone:#d99a00; --tone-bg:#fff4d4; --tone-ink:#6e4c00; }
+.lh-lab button.lh-tone-orange { --tone:#f08c2b; --tone-bg:#ffead4; --tone-ink:#8a4510; }
+.lh-lab button.lh-tone-red { --tone:#e5484d; --tone-bg:#ffe5e5; --tone-ink:#8c1d22; }
+.lh-lab button.lh-tone-indigo { --tone:#6550d8; --tone-bg:#ece8ff; --tone-ink:#36268f; }
+.lh-lab button.lh-tone-slate { --tone:#5b6b84; --tone-bg:#e8ecf3; --tone-ink:#2d3a4f; }

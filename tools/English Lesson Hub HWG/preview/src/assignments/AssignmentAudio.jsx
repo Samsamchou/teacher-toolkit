@@ -17,6 +17,7 @@ export function AssignmentAudio({snapshot:s,onSaved,disabled}){
  const left=MAX_SECONDS-seconds;
  return <section className="as-audio">
   <p className="as-audio-target">朗讀：<b>{s.block.text}</b></p>
+  <p className="as-audio-pass">🎯 AI 口說評分 85 分以上就過關！</p>
   {recording&&<div className="as-rec-live" role="status"><span className="as-rec-dot" aria-hidden="true"/>錄音中 {String(Math.floor(seconds/60)).padStart(1,'0')}:{String(seconds%60).padStart(2,'0')}<small>（還剩 {left} 秒，唸完按「停止錄音」）</small></div>}
   {!recording&&!record&&!busy&&<p className="as-audio-hint">步驟：① 按 <b>🎙 開始錄音</b> → ② 唸出上面的英文 → ③ 按 <b>⏹ 停止錄音</b> → ④ 試聽後按 <b>📤 送出給 AI 評分</b></p>}
   {url&&!recording&&<div className="as-audio-preview"><span>你的錄音</span><audio controls src={url}/></div>}

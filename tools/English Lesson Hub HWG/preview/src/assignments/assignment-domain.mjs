@@ -103,6 +103,9 @@ export function assignmentSnapshot(a,r,lastAttempt=null,now=Date.now()) {
   return {assignment:publicAssignment(a),expired:a.closed||a.dueAt<=now,run:r?{studentId:r.studentId,index:r.index,revision:r.revision,completedAt:r.completedAt,createdAt:r.createdAt,sequence:copy(r.sequence),records:copy(r.records),awards:copy(r.awards),game:copy(r.game),gameResult:copy(r.gameResult||null),pendingAudio:r.pendingAudio?{attemptId:r.pendingAudio.attemptId,blockId:r.pendingAudio.blockId}:null}:null,block:r?publicAssignmentBlock(a,r):null,level:r?currentLevel(a,r):a.levels[0],score:r?scoreAssignment(a,r):null,lastAnswer:lastAttempt&&b&&lastAttempt.blockId===b.id?copy(lastAttempt.answer):null,lastAttemptId:lastAttempt&&b&&lastAttempt.blockId===b.id?lastAttempt.attemptId:null,feedback:r&&lastAttempt&&b&&lastAttempt.blockId===b.id?feedbackFor(a,r,lastAttempt):null};
 }
 export function feedbackFor(a,r,attempt) {const b=a.deck.blocks.find(b=>b.id===attempt.blockId),rec=recordFor(r,b.id);return {attemptId:attempt.attemptId,blockId:b.id,outcome:attempt.outcome,score:attempt.grade.score,max:attempt.grade.max,ordinal:attempt.ordinal,retry:!rec.closed,adopted:a.mode==='exam'?rec.first:rec.best,reward:r.awards[b.id]||null,ai:attempt.ai?{total:attempt.ai.total_score,feedback:attempt.ai.feedback}:null};}
+// AI speaking score of 85+ passes: it counts as full marks so the student moves on to the game.
+export const AUDIO_PASS_SCORE=85;
+export function audioPoints(total,points){return total>=AUDIO_PASS_SCORE?points:Math.round(total/100*points*100)/100;}
 export function manuallyGrade(a,r,b,attempt,score,now=Date.now()) {
   if(!['open','draw','audio'].includes(b.type)||!Number.isFinite(score)||score<0||score>b.points)throw Error('人工評分或配分無效。');
   const rec=recordFor(r,b.id),entry=rec.manualGrades.find(g=>g.attemptId===attempt.attemptId);if(!entry)throw Error('找不到這次作答。');

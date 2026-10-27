@@ -1,4 +1,4 @@
-import {currentBlock,recordFor,attemptLimit,checkOpen,checkRevision,applyAttempt,manuallyGrade,assignmentSnapshot} from '../generated/assignment-domain.mjs';
+import {audioPoints,currentBlock,recordFor,attemptLimit,checkOpen,checkRevision,applyAttempt,manuallyGrade,assignmentSnapshot} from '../generated/assignment-domain.mjs';
 const parse=d=>d.exists?JSON.parse(d.data().json):null;
 // Matches STALE_CLAIM_MS in live-audio.mjs: an AI call that has not finished by then is treated as failed.
 const STALE_MS=5*60*1000;
@@ -42,7 +42,7 @@ export function assignmentAudioRepository(db,{revision:requested,now=Date.now}={
    const audioRef=attempts.doc(id),audio=own(await tx.get(audioRef),uid);if(audio.status==='complete')return;if(audio.status==='manual-reviewed')throw Error('這次錄音已由教師處理。');
    const root=roots.doc(audio.code),a=parse(await tx.get(root)),runRef=root.collection('runs').doc(audio.studentId),r=parse(await tx.get(runRef)),attemptRef=root.collection('attempts').doc(id),response=parse(await tx.get(attemptRef));
    if(!a||!r||!response||r.uid!==uid||r.pendingAudio?.attemptId!==id)throw Error('錄音與學生進度不符，請教師查核。');
-   const b=a.deck.blocks.find(b=>b.id===audio.blockId),value=Math.round(result.total_score/100*b.points*100)/100;
+   const b=a.deck.blocks.find(b=>b.id===audio.blockId),value=audioPoints(result.total_score,b.points);
    manuallyGrade(a,r,b,response,value,now());r.pendingAudio=null;response.answer=result.transcript;response.ai=result;response.audioPath=path;
    tx.update(runRef,{json:JSON.stringify(r)});tx.update(attemptRef,{json:JSON.stringify(response)});
    tx.update(audioRef,{status:'complete',result,best:recordFor(r,b.id).best,passed:recordFor(r,b.id).closed,storagePath:path,completedAt:now()});

@@ -1,5 +1,9 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
+<!-- lesson-hub-student-reset-20261027:handoff -->
+> 最新狀態（2026-10-27 晚）：已完成兩項功能並**正式部署**（liveV2 `livev2-00022-qix`、liveAudioV2 `liveaudiov2-00006-hic`、Hosting 已更新，見 `rdq/DEPLOYMENT-student-reset-audio-pass-20261027.md`；教師右鍵刪除尚待教師登入後實測）。① 教師明細的學生列按右鍵，跳出確認視窗後刪除該生在這份分配的作答、成績、道具、錄音與裝置綁定，同一學號可以重新從第 1 題作答（新動作 `assignmentStudentDelete`，已加入 live-teacher-scope）。② AI 口說評分 85 分以上算滿分、給獎勵並過關（`audioPoints`／`AUDIO_PASS_SCORE`），錄音題畫面提示「85 分以上就過關」。舊分數不回溯。測試 317/317、建置通過；規格：`rdq/RDQ-spec-student-reset-audio-pass-20261027.md`。
+<!-- /lesson-hub-student-reset-20261027:handoff -->
+
 <!-- lesson-hub-ai-audio-fix-20261027:handoff -->
 > 最新狀態（2026-10-27T14:07+08:00）：分配練習 AI 錄音題已修好並**正式部署**。liveV2 `livev2-00021-hut`、liveAudioV2 `liveaudiov2-00005-yel`（新增 `LIVE_AI_MODEL=gemini-3.5-flash`；3.7／3.8-flash 加錄音會逾時），Hosting `lesson-hub-v03` 已更新。評分失敗會退還次數，學生可以再送或重錄；學生畫面會顯示 AI 口說評分和一句回饋；錄音按鈕改成彩色大按鈕。正式站用虛構學號 69930（99901 格式不合、60121 綁定教師裝置）實測：8.8 秒得到「AI 口說評分 25 / 100」（故意唸錯字），之後可以再試。待辦：教師 iPad 真麥克風驗收；60121 重送或重錄以解開舊的 uncertain 錄音；642749 明細中的 69930 是測試資料。詳見 `rdq/DEPLOYMENT-ai-audio-fix-20261027.md`。未 Git commit／push。
 <!-- /lesson-hub-ai-audio-fix-20261027:handoff -->

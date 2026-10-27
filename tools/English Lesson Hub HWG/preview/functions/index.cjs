@@ -64,7 +64,7 @@ exports.liveV2 = onCall({region:functionsRegion,enforceAppCheck:true,timeoutSeco
   try {
     const {createLiveService}=await import('./src/live-service.mjs');
     const scope=await liveTeacherScope(request,'live');
-    if(String(request.data?.action||'').startsWith('assignment')){const {createAssignmentService}=await import('./src/assignment-service.mjs');const {rateLimit}=await import('./src/live-image-service.mjs');return await createAssignmentService({db:firestore(),requireTeacher:scope.requireTeacher,rateLimit:(uid,action)=>rateLimit(firestore(),uid,action,30),readRecording:async path=>{const f=getStorage().bucket().file(path+'/audio');const [metadata]=await f.getMetadata();return {base64Audio:(await f.download())[0].toString('base64'),mimeType:metadata.contentType};}})(scope.request);}
+    if(String(request.data?.action||'').startsWith('assignment')){const {createAssignmentService}=await import('./src/assignment-service.mjs');const {rateLimit}=await import('./src/live-image-service.mjs');return await createAssignmentService({db:firestore(),requireTeacher:scope.requireTeacher,rateLimit:(uid,action)=>rateLimit(firestore(),uid,action,30),readRecording:async path=>{const f=getStorage().bucket().file(path+'/audio');const [metadata]=await f.getMetadata();return {base64Audio:(await f.download())[0].toString('base64'),mimeType:metadata.contentType};},deleteRecording:async path=>{for(const name of ['audio','score.json'])await getStorage().bucket().file(path+'/'+name).delete({ignoreNotFound:true});}})(scope.request);}
     return await createLiveService({db:firestore(),requireTeacher:scope.requireTeacher})(scope.request);
   } catch(error) {if(error instanceof HttpsError)throw error;throw new HttpsError('failed-precondition',error.message);}
 });

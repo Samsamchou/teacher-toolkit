@@ -1,11 +1,12 @@
+import {isHeroes,normalizeHeroGame} from '../generated/game-heroes.mjs';
 import {randomInt,randomBytes,createHash} from 'node:crypto';
 import {createAssignment,publicAssignment,newAssignmentRun,currentBlock,recordFor,applyAttempt,advanceAssignment,assignmentSnapshot,feedbackFor,scoreAssignment,manuallyGrade,checkOpen,checkRevision,isStudentId} from '../generated/assignment-domain.mjs';
-export const ASSIGNMENT_TEACHER_ACTIONS=['assignmentCreate','assignmentList','assignmentReport','assignmentStudent','assignmentGrade','assignmentClose','assignmentRelease','assignmentRecording'];
+export const ASSIGNMENT_TEACHER_ACTIONS=['assignmentCreate','assignmentList','assignmentReport','assignmentStudent','assignmentGrade','assignmentClose','assignmentRelease','assignmentRecording','assignmentDelete','assignmentStudentDelete'];
 export const ASSIGNMENT_ACTIONS=[...ASSIGNMENT_TEACHER_ACTIONS,'assignmentInfo','assignmentJoin','assignmentSnapshot','assignmentSubmit','assignmentAdvance','assignmentCheckpoint'];
 const json=v=>JSON.stringify(v);
 const parse=doc=>doc.exists?JSON.parse(doc.data().json):null;
 export function answerHash(value){const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;return createHash('sha256').update(json(stable(value))).digest('hex');}
-export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimit=async()=>{},signRecording=null,readRecording=null}) {
+export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimit=async()=>{},signRecording=null,readRecording=null,deleteRecording=null}) {
  const roots=db.collection('lessonAssignmentsV1');
  return async function handle(request){
   const uid=request.auth?.uid,{action,code,payload={}}=request.data||{};
@@ -38,12 +39,38 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
   }
   if(!/^\d{6}$/.test(code||''))throw Error('請輸入六位數分配碼。');
   const ref=roots.doc(code);
+  if(action==='assignmentDelete'){
+   // Permanent: only the owner, only after the assignment has ended. The root document is
+   // removed last, so a failed run leaves it listed and the teacher can simply retry.
+   const a=parse(await ref.get());if(!a)throw Error('找不到這份分配，可能已刪除。');if(a.ownerUid!==uid)throw Error('沒有這份分配的教師權限。');
+   if(!a.closed&&a.dueAt>now())throw Error('請先結束分配，再刪除。');
+   const audio=await db.collection('lessonAssignmentAudioV1').where('code','==',code).get();if(audio.docs.length&&!deleteRecording)throw Error('錄音刪除服務尚未設定，未刪除任何資料。');
+   for(const doc of audio.docs){const v=doc.data();if(!/^[-\w]{1,128}$/.test(v.uid||'')||!/^[-\w]{8,100}$/.test(doc.id))throw Error('錄音識別碼無效。');await deleteRecording(`assignmentAudioV1/${v.uid}/${doc.id}`);await doc.ref.delete();}
+   const claims=await db.collection('assignmentCreationsV1').where('code','==',code).get();for(const doc of claims.docs)if(doc.data().uid===uid)await doc.ref.delete();
+   await db.recursiveDelete(ref);
+   return {deleted:true,code,recordings:audio.docs.length};
+  }
+  if(action==='assignmentStudentDelete'){
+   // Permanent reset of one student: the run and device binding go first so the student's
+   // device is cut off at once, then that student's answers and recordings.
+   const a=parse(await ref.get());if(!a)throw Error('找不到這份分配，可能已刪除。');if(a.ownerUid!==uid)throw Error('沒有這份分配的教師權限。');
+   const sid=String(payload.studentId||'');if(!isStudentId(sid))throw Error('學號無效。');
+   const audio=(await db.collection('lessonAssignmentAudioV1').where('code','==',code).get()).docs.filter(d=>d.data().studentId===sid);
+   if(audio.length&&!deleteRecording)throw Error('錄音刪除服務尚未設定，未刪除任何資料。');
+   const runRef=ref.collection('runs').doc(sid);
+   const existed=await db.runTransaction(async tx=>{const r=parse(await tx.get(runRef));if(!r)return false;if(r.uid)tx.delete(ref.collection('members').doc(r.uid));tx.delete(runRef);return true;});
+   const attempts=await ref.collection('attempts').where('studentId','==',sid).get();
+   if(!existed&&!attempts.docs.length&&!audio.length)throw Error('這位學生還沒有作答紀錄。');
+   for(const doc of audio){const v=doc.data();if(!/^[-\w]{1,128}$/.test(v.uid||'')||!/^[-\w]{8,100}$/.test(doc.id))throw Error('錄音識別碼無效。');await deleteRecording(`assignmentAudioV1/${v.uid}/${doc.id}`);await doc.ref.delete();}
+   for(const doc of attempts.docs)await doc.ref.delete();
+   return {deleted:true,studentId:sid,attempts:attempts.docs.length,recordings:audio.length};
+  }
   if(action==='assignmentRecording'){const a=parse(await ref.get());if(!a||a.ownerUid!==uid||a.retentionAt<=now())throw Error('沒有這份錄音的教師權限。');if(!/^[-\w]{8,100}$/.test(payload.attemptId||''))throw Error('錄音識別碼無效。');const attempt=parse(await ref.collection('attempts').doc(payload.attemptId).get());if(!attempt?.audioPath||!readRecording)throw Error('錄音檔尚未備妥。');return readRecording(attempt.audioPath);}
   if(action==='assignmentReport'||action==='assignmentStudent'){
    const a=parse(await ref.get());if(!a||a.ownerUid!==uid)throw Error('沒有這份分配的教師權限。');if(a.retentionAt<=now())throw Error('保存期限已到。');
    if(action==='assignmentReport'){
     const docs=await ref.collection('runs').limit(500).get(),runs=docs.docs.map(parse),seen=new Set(runs.map(r=>r.studentId));
-    const rows=runs.map(r=>({studentId:r.studentId,...scoreAssignment(a,r),index:r.index,completedAt:r.completedAt,gameResult:r.gameResult||null,updatedAt:r.updatedAt}));
+    const rows=runs.map(r=>({studentId:r.studentId,roleId:r.game?.roleId||null,...scoreAssignment(a,r),index:r.index,completedAt:r.completedAt,gameResult:r.gameResult||null,updatedAt:r.updatedAt}));
     for(const id of a.studentIds||[])if(!seen.has(id)){const r=newAssignmentRun(a,id,'unjoined','roster-'+id,a.createdAt);rows.push({studentId:id,...scoreAssignment(a,r),index:0,completedAt:null,updatedAt:null});}
     return {assignment:publicAssignment(a),rows};
    }
@@ -78,7 +105,7 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
     if(member.exists&&member.data().studentId!==sid)throw Error('此裝置已用另一學號加入，請教師協助。');
     const runRef=ref.collection('runs').doc(sid),existing=parse(await tx.get(runRef));
     if(existing&&existing.uid&&existing.uid!==uid)throw Error('此學號已由另一裝置加入，請教師解除裝置綁定。');
-    const r=existing||newAssignmentRun(a,sid,uid,randomBytes(16).toString('hex'),now());r.uid=uid;
+    const r=existing||newAssignmentRun(a,sid,uid,randomBytes(16).toString('hex'),now(),payload.roleId||'mage');r.uid=uid;
     const b=currentBlock(a,r),lastId=b?recordFor(r,b.id).lastAttemptId:null,last=lastId?parse(await tx.get(ref.collection('attempts').doc(lastId))):null;
     tx.set(runRef,{uid,studentId:sid,json:json(r),expiresAt:new Date(a.retentionAt)});tx.set(memberRef,{uid,studentId:sid,expiresAt:new Date(a.retentionAt)});
     return assignmentSnapshot(a,r,last,now());
@@ -106,6 +133,7 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
    if(action==='assignmentCheckpoint'){
     checkOpen(a,now());if(payload.index!==r.index||r.completedAt)throw Error('關卡進度已變更。');
     const value=payload.game||{};
+    if(isHeroes(a)){const level=a.levels.find(l=>r.index>=l.start&&r.index<l.end)?.level||1;r.game={...normalizeHeroGame(value,r.game.roleId,level,r.game),checkpointAt:now()};tx.update(runRef,{json:json(r)});return {saved:true};}
     for(const [key,max] of [['x',960],['y',640],['hp',8],['seconds',864000],['defeated',100000],['recoveries',10000]])if(!Number.isFinite(value[key])||value[key]<0||value[key]>max)throw Error('遊戲進度格式無效。');
     r.game={...Object.fromEntries(['x','y','hp','seconds','defeated','recoveries'].map(k=>[k,value[k]])),checkpointAt:now()};tx.update(runRef,{json:json(r)});return {saved:true};
    }

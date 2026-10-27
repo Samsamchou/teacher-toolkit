@@ -6,6 +6,6 @@ import { courseName } from './course-name.mjs';
 export function duplicateDeck(source, title, id = crypto.randomUUID()) {
   if (!id || id === source.id) throw new Error('副本需要獨立的課程 ID。');
   const result = { id, schemaVersion: source.schemaVersion || 2, title: courseName(title), blocks: copy(source.blocks), version: 0 };
-  for (const key of ['rewardGame', 'legacyLessonId']) if (source[key] !== undefined) result[key] = copy(source[key]);
+  for (const key of ['rewardGame', 'legacyLessonId', 'cardColor']) if (source[key] !== undefined) result[key] = copy(source[key]);
   return result;
 }

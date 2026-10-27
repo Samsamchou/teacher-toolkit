@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body,canvas{width:100%;height:100%;margin:0;display:block;background:#080f25;overflow:hidden}canvas{touch-action:none;outline:0}</style></head><body><canvas id="canvas" tabindex="0" aria-label="Godot Forest of Words game"></canvas><script src="./engine.js"></script><script>
+window.TrialHost={};
+const instance=new URLSearchParams(location.search).get('instance')||'heroes-six-20261016';
+function emitTrialEvent(event){parent.postMessage({channel:'lesson-survivors-v2',instance,event},location.origin);}
+window.emitTrialEvent=emitTrialEvent;
+function relayControl(action,e={}){emitTrialEvent({type:'control',action,code:e.code,key:e.key,repeat:!!e.repeat,runId:window.TrialHost.id,index:window.TrialHost.index});}
+const controlCodes=new Set(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','KeyW','KeyA','KeyS','KeyD','Space','KeyE','Escape','ShiftLeft','ShiftRight']);
+for(const action of ['keydown','keyup'])addEventListener(action,e=>{if(controlCodes.has(e.code)){e.preventDefault();e.stopImmediatePropagation();relayControl(action,e);}},true);
+addEventListener('blur',()=>relayControl('reset'));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)relayControl('reset');});
+
+addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.channel!=='lesson-survivors-v2'||e.data?.instance!==instance)return;window.TrialHost=e.data.host;});
+addEventListener('error',e=>emitTrialEvent({type:'error',message:e.message}));
+const GODOT_CONFIG={"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"engine","experimentalVK":false,"fileSizes":{"engine.pck":12563400,"engine.wasm":39514754},"focusCanvas":false,"gdextensionLibs":[],"godotPoolSize":4};
+const engine=new Engine(GODOT_CONFIG);
+const missing=Engine.getMissingFeatures({threads:false});
+if(missing.length)emitTrialEvent({type:'error',message:'Browser features missing: '+missing.join(', ')});
+else engine.startGame({canvas:document.getElementById('canvas'),onProgress:(n,total)=>emitTrialEvent({type:'progress',percent:total?Math.round(n/total*100):0}),onPrint:console.log,onPrintError:(...a)=>{console.error(...a);emitTrialEvent({type:'error',message:a.join(' ')});}}).catch(e=>emitTrialEvent({type:'error',message:String(e)}));
+</script></body></html>
