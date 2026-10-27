@@ -49,17 +49,19 @@ export function buildPrompt(targetText, focusRule) {
 }
 
 // This server-side adapter preserves Story's fixed-sentence score contract.
-// No API retry: an ambiguous provider outcome must not incur duplicate evaluation.
-export function geminiScorer({ key, model, enabled = false, fetcher = fetch }) {
-  return async ({ audio, mimeType, targetText, focusRule }) => {
-    if (!enabled || !key || !/^gemini-[a-z0-9.-]+$/.test(model || ""))
+// Only a clear "not evaluated" reply (429/500/503) is retried once; timeouts are never retried here.
+export function geminiScorer({ key, model, enabled = false, fetcher = fetch, retryDelayMs = 1500 }) {
+  const ready = () =>
+    Boolean(enabled && key && /^gemini-[a-z0-9.-]+$/.test(model || ""));
+  const scorer = async ({ audio, mimeType, targetText, focusRule }) => {
+    if (!ready())
       throw new Error("AI 服務尚未經授權啟用。");
     const properties = {
       transcript: { type: "STRING" },
       feedback: { type: "STRING" },
       ...Object.fromEntries(scoreFields.map((f) => [f, { type: "NUMBER" }])),
     };
-    const response = await fetcher(
+    const call = () => fetcher(
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
       {
         method: "POST",
@@ -86,6 +88,12 @@ export function geminiScorer({ key, model, enabled = false, fetcher = fetch }) {
         }),
       },
     );
+    // 429/500/503 mean the provider did not evaluate the audio, so one quick retry is safe.
+    let response = await call();
+    if ([429, 500, 503].includes(response.status)) {
+      await new Promise((r) => setTimeout(r, retryDelayMs));
+      response = await call();
+    }
     if (!response.ok)
       throw new Error(
         `AI 服務回應失敗 (${response.status})；不會自動重新評分。`,
@@ -95,7 +103,13 @@ export function geminiScorer({ key, model, enabled = false, fetcher = fetch }) {
       result.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join(""),
     );
   };
+  // Lets the workflow refuse before reserving, so a missing setting never uses up an attempt.
+  scorer.ready = ready;
+  return scorer;
 }
+export const AI_NOT_READY = "AI 評分暫時無法使用，請稍後再試；這次沒有扣次數。";
+// An AI call that started but never finished (instance killed, timeout) is released after this.
+export const STALE_CLAIM_MS = 5 * 60 * 1000;
 
 // Repository methods are atomic; provider I/O is deliberately outside transactions.
 export function createAudioWorkflow({
@@ -124,6 +138,8 @@ export function createAudioWorkflow({
       !/^[A-Za-z0-9+/]+={0,2}$/.test(base64Audio)
     )
       throw new Error("錄音最多 4 MB。");
+    if (typeof score.ready === "function" && !score.ready())
+      throw new Error(AI_NOT_READY);
     const audio = Buffer.from(base64Audio, "base64");
     if (!audio.length || audio.length > 4 * 1024 * 1024)
       throw new Error("錄音大小無效。");
@@ -139,6 +155,17 @@ export function createAudioWorkflow({
       expiresAt: expiryMonth(now()).getTime(),
     };
     let attempt = await repository.reserve(identity);
+    // Releasable repositories (assignments) give a failed or stuck attempt back and reserve it again.
+    const releasable = typeof repository.release === "function";
+    if (
+      releasable &&
+      (attempt.status === "uncertain" ||
+        (attempt.status === "ai-started" &&
+          now() - (attempt.claimedAt || 0) > STALE_CLAIM_MS))
+    ) {
+      await repository.release(attemptId, uid);
+      attempt = await repository.reserve(identity);
+    }
     if(!["liveAudioV2","assignmentAudioV1"].includes(pathPrefix))throw new Error("錄音儲存範圍無效。");
     const path = `${pathPrefix}/${uid}/${attemptId}`;
     if (attempt.status === 'complete') {
@@ -155,7 +182,9 @@ export function createAudioWorkflow({
       // Durable claim prevents two callers or a retry from scoring the same audio twice.
       if (!(await repository.claim(attemptId, uid)))
         throw new Error(
-          "這次 AI 結果待確認，請稍後重試保存；系統不會重複呼叫 AI。",
+          releasable
+            ? "AI 正在評分這份錄音，請等幾秒後再按一次「再送一次」。"
+            : "這次 AI 結果待確認，請稍後重試保存；系統不會重複呼叫 AI。",
         );
       try {
         result = validateScore(
@@ -175,6 +204,15 @@ export function createAudioWorkflow({
           },
         );
       } catch (error) {
+        console.error("audio scoring failed", attemptId, error?.message);
+        if (releasable) {
+          await repository
+            .release(attemptId, uid)
+            .catch(() => repository.markUncertain(attemptId, uid).catch(() => {}));
+          throw new Error(
+            "AI 這次沒有評分成功，這次不扣次數。請按「再送一次」，或重新錄音。",
+          );
+        }
         await repository.markUncertain(attemptId, uid).catch(() => {});
         throw new Error(
           "評分或結果暫存未完成；未列為成功次數，請教師查核，不會自動再次付費評分。",

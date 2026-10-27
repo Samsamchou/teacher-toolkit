@@ -204,3 +204,16 @@ test("disabled image search makes no external request", async () => {
     /尚未啟用/,
   );
 });
+test("Gemini busy (503) is retried once; a second busy reply fails without more calls", async () => {
+  const body = { candidates: [{ content: { parts: [{ text: JSON.stringify({ transcript: "dirt", feedback: "很好。", accuracy: 90, fluency: 90, completeness: 90, total_score: 90 }) }] } }] };
+  const reply = (status) => ({ ok: status === 200, status, json: async () => body });
+  for (const [statuses, ok] of [[[503, 200], true], [[503, 503], false], [[400], false]]) {
+    let calls = 0;
+    const score = geminiScorer({ key: "test-only", model: "gemini-3.5-flash", enabled: true, retryDelayMs: 0, fetcher: async () => reply(statuses[calls++]) });
+    assert.equal(score.ready(), true);
+    const run = score({ audio: Buffer.from("x"), mimeType: "audio/webm", targetText: "dirt", focusRule: "" });
+    if (ok) assert.equal((await run).total_score, 90); else await assert.rejects(run, /回應失敗/);
+    assert.equal(calls, statuses.length);
+  }
+  assert.equal(geminiScorer({ key: "k", model: undefined, enabled: true }).ready(), false);
+});

@@ -126,7 +126,25 @@ export function newBlock(type = "slide", id = globalThis.crypto.randomUUID()) {
       : {}),
   };
 }
+// Teacher-chosen course card colors; only these keys are stored on a deck.
+export const COURSE_COLORS = {
+  red: "紅",
+  orange: "橘",
+  yellow: "黃",
+  green: "綠",
+  teal: "青",
+  blue: "藍",
+  purple: "紫",
+  pink: "粉紅",
+  brown: "棕",
+  gray: "灰",
+};
 export function validateDeck(deck, { draft = false } = {}) {
+  if (
+    deck?.cardColor !== undefined &&
+    !Object.hasOwn(COURSE_COLORS, deck.cardColor)
+  )
+    fail("請選擇有效的課程配色。");
   if (
     deck?.rewardGame !== undefined &&
     !Object.hasOwn(REWARD_GAMES, deck.rewardGame)

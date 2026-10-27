@@ -1,5 +1,22 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
+<!-- lesson-hub-ai-audio-fix-20261027:handoff -->
+> 最新狀態（2026-10-27T14:07+08:00）：分配練習 AI 錄音題已修好並**正式部署**。liveV2 `livev2-00021-hut`、liveAudioV2 `liveaudiov2-00005-yel`（新增 `LIVE_AI_MODEL=gemini-3.5-flash`；3.7／3.8-flash 加錄音會逾時），Hosting `lesson-hub-v03` 已更新。評分失敗會退還次數，學生可以再送或重錄；學生畫面會顯示 AI 口說評分和一句回饋；錄音按鈕改成彩色大按鈕。正式站用虛構學號 69930（99901 格式不合、60121 綁定教師裝置）實測：8.8 秒得到「AI 口說評分 25 / 100」（故意唸錯字），之後可以再試。待辦：教師 iPad 真麥克風驗收；60121 重送或重錄以解開舊的 uncertain 錄音；642749 明細中的 69930 是測試資料。詳見 `rdq/DEPLOYMENT-ai-audio-fix-20261027.md`。未 Git commit／push。
+<!-- /lesson-hub-ai-audio-fix-20261027:handoff -->
+
+<!-- lesson-hub-assignment-delete-20261017:handoff -->
+> 最新狀態（2026-10-17T16:19+08:00）：已結束分配標示／排序與右鍵永久刪除（含學生作答、成績、錄音）已正式部署；Hosting `066eeb180f4a7d72`、liveV2 `livev2-00020-wuk`。詳見 `rdq/DEPLOYMENT-assignment-delete-20261017.md`；正式登入後實測待教師進行。下方較早的版本號已被取代。未 Git commit／push。
+<!-- /lesson-hub-assignment-delete-20261017:handoff -->
+
+<!-- lesson-hub-course-color-20261017:handoff -->
+> 最新狀態（2026-10-17T15:39+08:00）：課程庫右鍵／🎨 配色與編輯頁按鈕配色已正式部署；Hosting `59f6a4b49bf7f134`、liveV2 `livev2-00019-tez`。詳見 `rdq/DEPLOYMENT-course-color-20261017.md`；正式登入後改色與 iPad 尚待教師實測。下方 2026-10-16 狀態的版本號已被本段取代。未 Git commit／push。
+<!-- /lesson-hub-course-color-20261017:handoff -->
+
+<!-- lesson-hub-six-heroes-closeout-20261016:handoff -->
+> 最新狀態（2026-10-16T22:34:23+08:00）：完整六關、三英雄、後台與觸控修正已正式部署；Hosting `f1274706dc9b3bfe`、liveV2 `livev2-00018-vaq`。Godot Games skill已安裝。收工與下次接續以專案 `rdq/CLOSEOUT-godot-six-heroes-20261016.md` 為準；下方未部署敘述為歷史。GitHub本輪未新增提交或推送。
+<!-- /lesson-hub-six-heroes-closeout-20261016:handoff -->
+
+
 
 
 ## 2026-09-26 22:51 課堂錯題、上傳影片、落球、音樂與工具列正式發布
@@ -1569,3 +1586,31 @@ RDQ 已確認並實作三款單人改編版：每題答對／通過 2 次、答�
 - 程式與已發布來源保持；本次只在清單內4份交接文件追加此授權。核准時雜湊清冊suggested-git-scope.json保留，提交前內容另存qa/spell-results-production-20261015/closeout/git-sync-326/stage-manifest.json。
 - 此段保存時尚未執行提交／推送；實際結果以Git提交紀錄、Obsidian工作筆記最新Git同步段落與git-sync-326/receipt.json為準。
 <!-- /lesson-hub-approved-git326-20261015 -->
+
+
+# 完整六關、後台與觸控修補正式部署 · 2026-10-16
+
+已依使用者明確要求部署，正式入口：https://lesson-hub-v03.web.app/lab 。發布時間（台灣）：2026-10-16T22:09:01.381000+08:00。
+
+- Firebase hwg7teaching，僅更新 liveV2 與 lesson-hub-v03 Hosting。
+- Hosting：sites/lesson-hub-v03/versions/f1274706dc9b3bfe。
+- liveV2：livev2-00018-vaq，ACTIVE／Ready；既有 LIVE 設定與 Secret 參照完整保留。
+- 其他 12 個 Functions、預設 Hosting、Firestore／Storage rules 與其他專案未變。
+
+## 已上線
+
+三英雄與主動技能、完整六關、15／17／19／21／23／25秒、逐關3→8種裝備與新機關、雙階段Boss。新版分配使用 gameVersion2，舊分配及歷史結果維持相容。英語與遊戲分頁，角色／技能／Boss存檔續作，教師明細與CSV保留角色戰果。
+
+觸控以 pointerId 個別追蹤，放開／取消只釋放相應手指；Web只接受宿主權威方向，iframe鍵盤轉交，避免Godot殘留反向鍵相抵。原生鍵盤保留，教師先前已確認左右移動正常。
+
+學習分數與道具品質分開。普通練習首次＋3重試採最佳，拼字無限重試、測驗首次成績，大小寫／片語空格及4／3／2／1品質規則保留。正式 Phonics仍36題／100分／24音檔，未建立正式測試分配或提交學生答案。
+
+## 本輪驗證
+
+正式設定建置與9項發布檢查通過；新跑301網站測試及15項Firestore／Storage模擬器整合。雲端實際部署的42份後台來源逐位元相符。209／209正式資源HTTP核對通過：189全檔SHA、20按Firebase CLI相同gzip9算法計算的傳輸SHA／ETag及原始長度相符；ETag不是原始內容SHA。大型檔完整GET遇到本次網路逾時，沒有冒稱全209檔都完成全檔下載。三個SPA入口、Firebase正式專案設定、v2快取重新驗證及WASM MIME通過。
+
+部署前後9份課程、工作區、Phonics題庫與24音檔文件指紋／generation全相同。新版Web42檔、Source99檔下載包及手冊已更新為正式發布封裝，原包／原文備份保留。正式Source99檔透過40塊HTTP Range完整下載後，全包SHA／CRC相符；新解壓專案實際Godot匯入，72關卡＋29移動檢查再次通過。瀏覽器正式教師入口、無效分配提示及真正Godot引擎啟動有畫面／日誌證據。教師私人登入／正式新分配全程與實體平板、校網及喇叭仍依教師現場驗收，不冒稱已代為完成。
+
+發佈來源使用隔離副本，470份來源讀回與canonical相符。Git index保持原SHA，未stage／commit／push，未動既有鎖或其他工作。先前handoff的「本機候選／尚未部署」是歷史狀態，本段取代它。
+
+證據：qa/godot-six-production-20261016；完整來源及兩包：godot/forest-of-words-six-heroes-20261016。學生使用教師新分配連結；已開著舊網頁請重新整理，下載版需重下載。

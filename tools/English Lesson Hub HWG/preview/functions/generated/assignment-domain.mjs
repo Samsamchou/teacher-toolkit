@@ -1,3 +1,4 @@
+import {isHeroes,initialHeroGame,heroGameResult} from './game-heroes.mjs';
 import {validateDeck,publicBlock,grade,copy,identifier} from './live-domain.mjs';
 export const ASSIGNMENT_VERSION=1;
 export const ITEM_IDS=['sunbeam','leaf-shield','swift-boots','orbit-star','frost-bell','lightning-feather','healing-bloom','dawn-wings'];
@@ -21,13 +22,13 @@ export function createAssignment(deck,input,ownerUid,code,now=Date.now()) {
   if(!title||title.length>120)throw Error('分配名稱需為1–120字。');
   if(!['exam','practice'].includes(input.mode)||!['sequential','random'].includes(input.questionOrder)||!['original','random'].includes(input.optionOrder)||!['survivors','none'].includes(input.game||'survivors'))throw Error('分配模式或排列設定無效。');
   if(!Number.isFinite(dueAt)||dueAt<=now||dueAt>now+365*DAY)throw Error('有效期限需在現在之後、一年以內。');
-  return {schemaVersion:ASSIGNMENT_VERSION,code,ownerUid,title,mode:input.mode,questionOrder:input.questionOrder,optionOrder:input.optionOrder,game:input.game||'survivors',createdAt:now,dueAt,retentionAt:dueAt+180*DAY,deck:visible,levels:levelPlan(visible.blocks.length),closed:false};
+  return {gameVersion:input.gameVersion===2?2:1,schemaVersion:ASSIGNMENT_VERSION,code,ownerUid,title,mode:input.mode,questionOrder:input.questionOrder,optionOrder:input.optionOrder,game:input.game||'survivors',createdAt:now,dueAt,retentionAt:dueAt+180*DAY,deck:visible,levels:levelPlan(visible.blocks.length),closed:false};
 }
-export function publicAssignment(a) {return Object.fromEntries(['schemaVersion','code','title','mode','questionOrder','optionOrder','game','createdAt','dueAt','retentionAt','levels','closed'].map(k=>[k,copy(a[k])]));}
-export function newAssignmentRun(a,studentId,uid,seed,now=Date.now()) {
+export function publicAssignment(a) {return Object.fromEntries(['gameVersion','schemaVersion','code','title','mode','questionOrder','optionOrder','game','createdAt','dueAt','retentionAt','levels','closed'].map(k=>[k,copy(k==='gameVersion'?(a.gameVersion||1):a[k])]));}
+export function newAssignmentRun(a,studentId,uid,seed,now=Date.now(),roleId='mage') {
   if(!isStudentId(studentId))throw Error('請輸入有效五位數學號。');
   const ids=a.deck.blocks.map(b=>b.id);
-  return {schemaVersion:1,studentId,uid,seed,sequence:a.questionOrder==='random'?shuffled(ids,seed):ids,index:0,revision:0,records:{},awards:{},createdAt:now,updatedAt:now,completedAt:null,game:{x:480,y:330,hp:8,defeated:0,seconds:0,recoveries:0},gameResult:null,pendingAudio:null};
+  return {schemaVersion:1,studentId,uid,seed,sequence:a.questionOrder==='random'?shuffled(ids,seed):ids,index:0,revision:0,records:{},awards:{},createdAt:now,updatedAt:now,completedAt:null,game:isHeroes(a)?initialHeroGame(roleId):{x:480,y:330,hp:8,defeated:0,seconds:0,recoveries:0},gameResult:null,pendingAudio:null};
 }
 export const currentBlock=(a,r)=>a.deck.blocks.find(b=>b.id===r.sequence[r.index]);
 export const currentLevel=(a,r)=>a.levels.find(l=>r.index>=l.start&&r.index<l.end)||a.levels.at(-1);
@@ -89,7 +90,7 @@ export function advanceAssignment(a,r,revision,now=Date.now()) {
   if(r.index>=r.sequence.length){
     r.completedAt=now;
     const g=r.game;
-    r.gameResult={status:a.game==='none'?'questions-only':'cleared',levelsCompleted:a.game==='none'?0:a.levels.length,defeated:g.defeated,seconds:Math.round(g.seconds),recoveries:g.recoveries,score:a.game==='none'?0:g.defeated*10,finishedAt:now};
+    r.gameResult=isHeroes(a)?heroGameResult(a,r,now):{status:a.game==='none'?'questions-only':'cleared',levelsCompleted:a.game==='none'?0:a.levels.length,defeated:g.defeated,seconds:Math.round(g.seconds),recoveries:g.recoveries,score:a.game==='none'?0:g.defeated*10,finishedAt:now};
   }
 }
 export function scoreAssignment(a,r) {
@@ -101,7 +102,7 @@ export function assignmentSnapshot(a,r,lastAttempt=null,now=Date.now()) {
   const b=r?currentBlock(a,r):null;
   return {assignment:publicAssignment(a),expired:a.closed||a.dueAt<=now,run:r?{studentId:r.studentId,index:r.index,revision:r.revision,completedAt:r.completedAt,createdAt:r.createdAt,sequence:copy(r.sequence),records:copy(r.records),awards:copy(r.awards),game:copy(r.game),gameResult:copy(r.gameResult||null),pendingAudio:r.pendingAudio?{attemptId:r.pendingAudio.attemptId,blockId:r.pendingAudio.blockId}:null}:null,block:r?publicAssignmentBlock(a,r):null,level:r?currentLevel(a,r):a.levels[0],score:r?scoreAssignment(a,r):null,lastAnswer:lastAttempt&&b&&lastAttempt.blockId===b.id?copy(lastAttempt.answer):null,lastAttemptId:lastAttempt&&b&&lastAttempt.blockId===b.id?lastAttempt.attemptId:null,feedback:r&&lastAttempt&&b&&lastAttempt.blockId===b.id?feedbackFor(a,r,lastAttempt):null};
 }
-export function feedbackFor(a,r,attempt) {const b=a.deck.blocks.find(b=>b.id===attempt.blockId),rec=recordFor(r,b.id);return {attemptId:attempt.attemptId,blockId:b.id,outcome:attempt.outcome,score:attempt.grade.score,max:attempt.grade.max,ordinal:attempt.ordinal,retry:!rec.closed,adopted:a.mode==='exam'?rec.first:rec.best,reward:r.awards[b.id]||null};}
+export function feedbackFor(a,r,attempt) {const b=a.deck.blocks.find(b=>b.id===attempt.blockId),rec=recordFor(r,b.id);return {attemptId:attempt.attemptId,blockId:b.id,outcome:attempt.outcome,score:attempt.grade.score,max:attempt.grade.max,ordinal:attempt.ordinal,retry:!rec.closed,adopted:a.mode==='exam'?rec.first:rec.best,reward:r.awards[b.id]||null,ai:attempt.ai?{total:attempt.ai.total_score,feedback:attempt.ai.feedback}:null};}
 export function manuallyGrade(a,r,b,attempt,score,now=Date.now()) {
   if(!['open','draw','audio'].includes(b.type)||!Number.isFinite(score)||score<0||score>b.points)throw Error('人工評分或配分無效。');
   const rec=recordFor(r,b.id),entry=rec.manualGrades.find(g=>g.attemptId===attempt.attemptId);if(!entry)throw Error('找不到這次作答。');
