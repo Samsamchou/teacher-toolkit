@@ -1,0 +1,132 @@
+[
+    {
+        "target":  "A",
+        "wrongGlyph":  "h",
+        "file":  "target-A-wrong-h.png"
+    },
+    {
+        "target":  "B",
+        "wrongGlyph":  "o",
+        "file":  "target-B-wrong-o.png"
+    },
+    {
+        "target":  "C",
+        "wrongGlyph":  "v",
+        "file":  "target-C-wrong-v.png"
+    },
+    {
+        "target":  "D",
+        "wrongGlyph":  "l",
+        "file":  "target-D-wrong-l.png"
+    },
+    {
+        "target":  "E",
+        "wrongGlyph":  "c",
+        "file":  "target-E-wrong-c.png"
+    },
+    {
+        "target":  "F",
+        "wrongGlyph":  "t",
+        "file":  "target-F-wrong-t.png"
+    },
+    {
+        "target":  "G",
+        "wrongGlyph":  "6",
+        "file":  "target-G-wrong-6.png"
+    },
+    {
+        "target":  "H",
+        "wrongGlyph":  "x",
+        "file":  "target-H-wrong-x.png"
+    },
+    {
+        "target":  "I",
+        "wrongGlyph":  "u",
+        "file":  "target-I-wrong-u.png"
+    },
+    {
+        "target":  "J",
+        "wrongGlyph":  "r",
+        "file":  "target-J-wrong-r.png"
+    },
+    {
+        "target":  "K",
+        "wrongGlyph":  "h",
+        "file":  "target-K-wrong-h.png"
+    },
+    {
+        "target":  "L",
+        "wrongGlyph":  "o",
+        "file":  "target-L-wrong-o.png"
+    },
+    {
+        "target":  "M",
+        "wrongGlyph":  "v",
+        "file":  "target-M-wrong-v.png"
+    },
+    {
+        "target":  "N",
+        "wrongGlyph":  "l",
+        "file":  "target-N-wrong-l.png"
+    },
+    {
+        "target":  "O",
+        "wrongGlyph":  "c",
+        "file":  "target-O-wrong-c.png"
+    },
+    {
+        "target":  "P",
+        "wrongGlyph":  "t",
+        "file":  "target-P-wrong-t.png"
+    },
+    {
+        "target":  "Q",
+        "wrongGlyph":  "6",
+        "file":  "target-Q-wrong-6.png"
+    },
+    {
+        "target":  "R",
+        "wrongGlyph":  "x",
+        "file":  "target-R-wrong-x.png"
+    },
+    {
+        "target":  "S",
+        "wrongGlyph":  "u",
+        "file":  "target-S-wrong-u.png"
+    },
+    {
+        "target":  "T",
+        "wrongGlyph":  "r",
+        "file":  "target-T-wrong-r.png"
+    },
+    {
+        "target":  "U",
+        "wrongGlyph":  "h",
+        "file":  "target-U-wrong-h.png"
+    },
+    {
+        "target":  "V",
+        "wrongGlyph":  "o",
+        "file":  "target-V-wrong-o.png"
+    },
+    {
+        "target":  "W",
+        "wrongGlyph":  "v",
+        "file":  "target-W-wrong-v.png"
+    },
+    {
+        "target":  "X",
+        "wrongGlyph":  "l",
+        "file":  "target-X-wrong-l.png"
+    },
+    {
+        "target":  "Y",
+        "wrongGlyph":  "c",
+        "file":  "target-Y-wrong-c.png"
+    },
+    {
+        "target":  "Z",
+        "wrongGlyph":  "t",
+        "file":  "target-Z-wrong-t.png"
+    }
+]

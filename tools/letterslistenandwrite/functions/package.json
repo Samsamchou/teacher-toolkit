@@ -1,0 +1,20 @@
+{
+  "name": "letters-listen-and-write-functions",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "check": "node --check index.js",
+    "test": "node --test assessment.test.js v3.test.js",
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-admin": "^14.2.0",
+    "firebase-functions": "^7.3.0",
+    "openai": "^6.48.0",
+    "sharp": "^0.34.4"
+  }
+}

@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Student records contain names, handwriting images and stroke coordinates.
+    // Only the trusted Cloud Functions Admin SDK may read or write them.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

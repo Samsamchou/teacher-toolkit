@@ -28,6 +28,9 @@
 - `tools/sf3-4-voc/`：SF3–SF4 單字練習網站完整乾淨備份。
 - `tools/allstorybooks/`：電子語音繪本館完整備份；含兩本四年級學扶繪本、
   來源 PDF／音訊、資產重建腳本、Firebase 設定與 `HANDOFF.md`。
+- `tools/letterslistenandwrite/`：AI 英文字母聽寫（Firebase `g5-remedial-action-verbs`，
+  https://g5-remedial-action-verbs.web.app）。v3 手寫辨識＝程式判四線格＋AI 認字；題組出題＋華麗拉霸。
+  先讀該資料夾 `HANDOFF.md`；部署用 `--account u9431818@gmail.com`，在 C 槽暫存副本 npm ci 後建置。
 - `tools/monster-in-my-mind-site/`：Monster in My Mind 正式 ChatGPT Sites 原始碼；
   國小五、六年級 English × SEL × Art × AI 四步驟網站，私人網址為
   `https://monster-in-my-mind.samchou.chatgpt.site`。

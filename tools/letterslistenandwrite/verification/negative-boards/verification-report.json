@@ -1,0 +1,44 @@
+{
+  "testedAt": "2026-07-18",
+  "endpoint": "https://asia-east1-g5-remedial-action-verbs.cloudfunctions.net/analyzeLetterAttempt",
+  "model": "gpt-5.6-sol",
+  "method": "blind-then-reference-v2",
+  "summary": {
+    "tested": 26,
+    "rejected": 26,
+    "incorrectlyPassed": 0,
+    "allRejected": true
+  },
+  "cases": [
+    { "target": "Aa", "wrongGlyph": "h", "observed": "h h", "passed": false },
+    { "target": "Bb", "wrongGlyph": "o", "observed": "O o", "passed": false },
+    { "target": "Cc", "wrongGlyph": "v", "observed": "V v", "passed": false },
+    { "target": "Dd", "wrongGlyph": "l", "observed": "| |", "passed": false },
+    { "target": "Ee", "wrongGlyph": "c", "observed": "C c", "passed": false },
+    { "target": "Ff", "wrongGlyph": "t", "observed": "t t", "passed": false },
+    { "target": "Gg", "wrongGlyph": "6", "observed": "6 | 6", "passed": false },
+    { "target": "Hh", "wrongGlyph": "x", "observed": "X x", "passed": false },
+    { "target": "Ii", "wrongGlyph": "u", "observed": "U u", "passed": false },
+    { "target": "Jj", "wrongGlyph": "r", "observed": "r r", "passed": false },
+    { "target": "Kk", "wrongGlyph": "h", "observed": "h h", "passed": false },
+    { "target": "Ll", "wrongGlyph": "o", "observed": "O o", "passed": false },
+    { "target": "Mm", "wrongGlyph": "v", "observed": "V v", "passed": false },
+    { "target": "Nn", "wrongGlyph": "l", "observed": "| |", "passed": false },
+    { "target": "Oo", "wrongGlyph": "c", "observed": "C c", "passed": false },
+    { "target": "Pp", "wrongGlyph": "t", "observed": "t t", "passed": false },
+    { "target": "Qq", "wrongGlyph": "6", "observed": "6 6", "passed": false },
+    { "target": "Rr", "wrongGlyph": "x", "observed": "X x", "passed": false },
+    { "target": "Ss", "wrongGlyph": "u", "observed": "U u", "passed": false },
+    { "target": "Tt", "wrongGlyph": "r", "observed": "r r", "passed": false },
+    { "target": "Uu", "wrongGlyph": "h", "observed": "h h", "passed": false },
+    { "target": "Vv", "wrongGlyph": "o", "observed": "O o", "passed": false },
+    { "target": "Ww", "wrongGlyph": "v", "observed": "V v", "passed": false },
+    { "target": "Xx", "wrongGlyph": "l", "observed": "| |", "passed": false },
+    { "target": "Yy", "wrongGlyph": "c", "observed": "C c", "passed": false },
+    { "target": "Zz", "wrongGlyph": "t", "observed": "t t", "passed": false }
+  ],
+  "testDataCleanup": {
+    "studentId": "CODEX-STRICT-VERIFY",
+    "deleted": true
+  }
+}

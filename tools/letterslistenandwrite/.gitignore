@@ -1,0 +1,22 @@
+node_modules/
+functions/node_modules/
+dist/
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+*.local
+.env
+.env.*
+!.env.example
+.npm-cache-*/
+
+# Kept only on Google Drive (publisher materials, large files, or secrets):
+# 翰林字母卡與讀音、原始規格、截圖、簡報，以及含教師密碼明碼的早期原型。
+HWG1字母卡/
+字母讀音/
+functions/reference-cards/
+public/audio/
+outputs/
+*.docx
+螢幕擷取畫面*.png
+code_artifact.tsx
