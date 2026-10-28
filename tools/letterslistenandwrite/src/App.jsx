@@ -1522,6 +1522,11 @@ function V3SideSummary({ label, side }) {
       <span className={geometry.ok ? "pass" : "retry"}>
         格線：{geometry.ok ? "位置正確" : "位置不對"}（應 {ZONE_NAMES[geometry.zone] || "—"}）
       </span>
+      {side.shape?.angles?.length > 0 && (
+        <span className={side.shape.ok ? "pass" : "retry"}>
+          直線：{side.shape.ok ? "夠直" : "太斜"}（傾斜 {side.shape.angles.join("°、")}°）
+        </span>
+      )}
     </div>
   );
 }

@@ -93,3 +93,40 @@ test("side images render as square SVG", () => {
   assert.match(svg, /^<svg[^>]+height="384"/);
   assert.match(svg, /polyline/);
 });
+
+// Build one stroke from [x, y] canvas fractions.
+const line = (...points) => ({ points: points.flatMap(([x, y], i) => {
+  if (i === 0) return [{ x, y, t: 0 }];
+  const [px, py] = points[i - 1];
+  return Array.from({ length: 12 }, (_, k) => ({ x: px + ((x - px) * (k + 1)) / 12, y: py + ((y - py) * (k + 1)) / 12, t: i * 100 + k }));
+}) });
+
+test("M needs straight outer legs; ΛΛ-shaped M fails", () => {
+  const straight = [line([0.12, 0.68], [0.12, 0.08], [0.24, 0.5], [0.36, 0.08], [0.36, 0.68])];
+  assert.equal(v3.checkStrokeShape("M", straight).ok, true);
+  const slanted = [line([0.08, 0.68], [0.16, 0.08], [0.24, 0.66], [0.32, 0.08], [0.4, 0.68])];
+  const result = v3.checkStrokeShape("M", slanted);
+  assert.equal(result.ok, false);
+  assert.equal(result.issue, "m-legs-slanted");
+  const lower = board("M", "m", { seed: 2 }).slice(1);
+  const r = v3.evaluateV3({
+    targetLetter: "M",
+    strokes: [...slanted, ...lower],
+    ai: ai([["M", 95]], [["m", 95]]),
+  });
+  assert.equal(r.passed, false);
+  assert.match(r.feedback, /垂直的直線/);
+});
+
+test("Y needs a vertical stem; a slanted lower stroke fails", () => {
+  const good = [line([0.12, 0.08], [0.24, 0.37]), line([0.36, 0.08], [0.24, 0.37], [0.24, 0.68])];
+  assert.equal(v3.checkStrokeShape("Y", good).ok, true);
+  const bad = [line([0.12, 0.08], [0.22, 0.37]), line([0.38, 0.1], [0.12, 0.68])];
+  const result = v3.checkStrokeShape("Y", bad);
+  assert.equal(result.ok, false);
+  assert.equal(result.issue, "y-stem-slanted");
+});
+
+test("other letters are not affected by the straight-line rules", () => {
+  assert.equal(v3.checkStrokeShape("A", [line([0.1, 0.68], [0.25, 0.08], [0.4, 0.68])]).ok, true);
+});

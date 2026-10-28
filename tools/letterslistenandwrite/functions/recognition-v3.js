@@ -186,6 +186,125 @@ function checkIdentity(candidates, expected, geometryOk, firstFitsWriting = () =
   return { ok: false, rule: "mismatch", probability: 0, seen: first.glyph };
 }
 
+// ---------------------------------------------------------------------------
+// Straight-line rules for letters whose shape depends on vertical lines.
+// Angles are measured in real canvas proportions (width 4 : height 3).
+// ---------------------------------------------------------------------------
+
+const MAX_TILT_DEGREES = 15;
+// M written as "ΛΛ" has both outer legs leaning inward. Measured on 7/21
+// student writing: straight M legs add up to at most 14.5° of inward lean,
+// ΛΛ-style M at least 21°.
+const MAX_INWARD_LEAN_SUM = 18;
+
+// Ramer–Douglas–Peucker: keep only the corners of a wobbly stroke.
+function simplify(points, epsilon) {
+  if (points.length < 3) return points;
+  const [a, b] = [points[0], points[points.length - 1]];
+  const length = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1e-9;
+  let farthest = 0;
+  let index = 0;
+  for (let i = 1; i < points.length - 1; i += 1) {
+    const p = points[i];
+    const distance =
+      Math.abs((b[0] - a[0]) * (a[1] - p[1]) - (a[0] - p[0]) * (b[1] - a[1])) / length;
+    if (distance > farthest) {
+      farthest = distance;
+      index = i;
+    }
+  }
+  if (farthest <= epsilon) return [a, b];
+  return [
+    ...simplify(points.slice(0, index + 1), epsilon).slice(0, -1),
+    ...simplify(points.slice(index), epsilon),
+  ];
+}
+
+const tiltOf = (dx, dy) => (Math.atan2(Math.abs(dx), Math.abs(dy)) * 180) / Math.PI;
+
+// Long straight pieces of a letter (each at least `minShare` of its height).
+function longSegments(strokes, height, minShare = 0.45) {
+  const segments = [];
+  for (const stroke of strokes) {
+    const points = (stroke.points || []).map((p) => [p.x * 4, p.y * 3]);
+    const corners = simplify(points, height * 0.07);
+    for (let i = 1; i < corners.length; i += 1) {
+      const [x0, y0] = corners[i - 1];
+      const [x1, y1] = corners[i];
+      if (Math.hypot(x1 - x0, y1 - y0) < height * minShare) continue;
+      // lean > 0: the top end is further right than the bottom end.
+      const [top, bottom] = y0 < y1 ? [x0, x1] : [x1, x0];
+      segments.push({
+        midX: (x0 + x1) / 2,
+        tilt: tiltOf(x1 - x0, y1 - y0),
+        lean: top - bottom,
+        span: Math.abs(y1 - y0) / height,
+      });
+    }
+  }
+  return segments;
+}
+
+// Direction of a cloud of points (principal axis), as tilt from vertical.
+function principalTilt(points) {
+  const n = points.length;
+  const mx = points.reduce((s, p) => s + p[0], 0) / n;
+  const my = points.reduce((s, p) => s + p[1], 0) / n;
+  let sxx = 0;
+  let syy = 0;
+  let sxy = 0;
+  for (const [x, y] of points) {
+    sxx += (x - mx) ** 2;
+    syy += (y - my) ** 2;
+    sxy += (x - mx) * (y - my);
+  }
+  const angle = 0.5 * Math.atan2(2 * sxy, sxx - syy); // axis angle from the x-axis
+  return tiltOf(Math.cos(angle), Math.sin(angle));
+}
+
+// Returns { ok, issue, angles } for the uppercase letter on the left side.
+function checkStrokeShape(letter, strokes) {
+  const box = measureSide(strokes);
+  if (!box) return { ok: true, issue: null, angles: [] };
+  const height = (box.bottom - box.top) * 3;
+
+  if (letter === "M") {
+    // The first and last lines of M (the outer legs) must be vertical.
+    const legs = longSegments(strokes, height).filter((s) => s.span >= 0.55);
+    if (legs.length < 2) return { ok: true, issue: null, angles: [] };
+    const sorted = [...legs].sort((a, b) => a.midX - b.midX);
+    const left = sorted[0];
+    const right = sorted[sorted.length - 1];
+    const inwardSum = (left.lean > 0 ? left.tilt : 0) + (right.lean < 0 ? right.tilt : 0);
+    const ok =
+      left.tilt <= MAX_TILT_DEGREES &&
+      right.tilt <= MAX_TILT_DEGREES &&
+      inwardSum <= MAX_INWARD_LEAN_SUM;
+    const angles = [left.tilt, right.tilt].map((a) => Math.round(a));
+    return { ok, issue: ok ? null : "m-legs-slanted", angles };
+  }
+
+  if (letter === "Y") {
+    // The stem of Y (lower part, below where the arms meet) must be vertical.
+    const cut = box.top * 3 + height * 0.6;
+    const points = strokes
+      .flatMap((stroke) => stroke.points || [])
+      .map((p) => [p.x * 4, p.y * 3])
+      .filter(([, y]) => y >= cut);
+    if (points.length < 4) return { ok: true, issue: null, angles: [] };
+    const angle = Math.round(principalTilt(points));
+    const ok = angle <= MAX_TILT_DEGREES;
+    return { ok, issue: ok ? null : "y-stem-slanted", angles: [angle] };
+  }
+
+  return { ok: true, issue: null, angles: [] };
+}
+
+const SHAPE_FEEDBACK = {
+  "m-legs-slanted": "左邊的大寫字母，最左邊和最右邊的兩條線要寫成垂直的直線，不能斜斜的。",
+  "y-stem-slanted": "左邊的大寫字母，下半部那一筆要從中間垂直往下寫到基線，不能歪斜。",
+};
+
 function sideFeedback(sideName, geometry, identity, expected) {
   const label = sideName === "left" ? "左邊" : "右邊";
   if (geometry.issues.includes("empty")) return `${label}還沒有寫字，左右兩邊都要寫。`;
@@ -222,8 +341,10 @@ function evaluateV3({ targetLetter, strokes, ai }) {
     ? checkIdentity(rightCandidates, lower, rightGeometry.ok, fits("right", sides.right))
     : { ok: false, rule: "empty", probability: 0, seen: "?" };
 
+  const leftShape = checkStrokeShape(upper, sides.left);
+
   const passed =
-    leftGeometry.ok && rightGeometry.ok && leftIdentity.ok && rightIdentity.ok;
+    leftGeometry.ok && rightGeometry.ok && leftIdentity.ok && rightIdentity.ok && leftShape.ok;
 
   const sideScore = (identity, geometry) =>
     identity.ok
@@ -247,6 +368,8 @@ function evaluateV3({ targetLetter, strokes, ai }) {
       sideFeedback("left", leftGeometry, leftIdentity, upper),
       sideFeedback("right", rightGeometry, rightIdentity, lower),
     ].filter(Boolean);
+    // Only mention line straightness once the letter itself is recognised.
+    if (!leftShape.ok && leftIdentity.ok) messages.push(SHAPE_FEEDBACK[leftShape.issue]);
     const plainMismatch =
       (!leftIdentity.ok && !messages.some((m) => m.startsWith("左邊"))) ||
       (!rightIdentity.ok && !messages.some((m) => m.startsWith("右邊")));
@@ -272,7 +395,7 @@ function evaluateV3({ targetLetter, strokes, ai }) {
     feedback,
     aiRecognition: `左：${reading(leftCandidates)}｜右：${reading(rightCandidates)}`,
     detail: {
-      left: { geometry: leftGeometry, identity: leftIdentity, candidates: leftCandidates },
+      left: { geometry: leftGeometry, identity: leftIdentity, candidates: leftCandidates, shape: leftShape },
       right: { geometry: rightGeometry, identity: rightIdentity, candidates: rightCandidates },
     },
   };
@@ -414,6 +537,7 @@ module.exports = {
   measureSide,
   checkGeometry,
   checkIdentity,
+  checkStrokeShape,
   acceptedGlyphs,
   normalizeCandidates,
   evaluateV3,
