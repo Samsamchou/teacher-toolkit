@@ -485,257 +485,404 @@
  {
   "i": 120,
   "who": "cosmo",
-  "text": "Now let's play in groups. Group A, ask the question. Group B, answer.",
-  "heard": "Now let's play in groups.  Group A, ask the question.  Group B, answer.",
+  "text": "Now let's watch Amy and Ben. Listen carefully!",
+  "heard": "Now let's watch Amy and Ben.  Listen carefully.",
   "ok": true
  },
  {
   "i": 122,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "amy",
+  "text": "Good morning, Ben!",
+  "heard": "Good morning, Ben.",
+  "ok": true
+ },
+ {
+  "i": 123,
+  "who": "ben",
+  "text": "Good morning, Amy! Do you have your crayons?",
+  "heard": "Good morning, Amy.  Do you have your crayons?",
   "ok": true
  },
  {
   "i": 124,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "amy",
+  "text": "Crayons? Why?",
+  "heard": "Clans?  Why?",
+  "ok": false
+ },
+ {
+  "i": 125,
+  "who": "ben",
+  "text": "It's Wednesday. We have art class today!",
+  "heard": "It's Wednesday.  We have art class today.",
   "ok": true
  },
  {
   "i": 126,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "amy",
+  "text": "Oh, no! My crayons are at home.",
+  "heard": "Oh, no. My crayons are at home.",
   "ok": true
  },
  {
+  "i": 127,
+  "who": "ben",
+  "text": "It's OK. You can use my crayons.",
+  "heard": "It's okay. You can use my crayons.",
+  "ok": false
+ },
+ {
   "i": 128,
+  "who": "amy",
+  "text": "Thank you, Ben!",
+  "heard": "Thank you.  Ben.",
+  "ok": true
+ },
+ {
+  "i": 129,
   "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "text": "Listen again.",
+  "heard": "Listen again.",
   "ok": true
  },
  {
   "i": 130,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "amy",
+  "text": "Good morning, Ben!",
+  "heard": "Good morning, Ben.",
+  "ok": true
+ },
+ {
+  "i": 131,
+  "who": "ben",
+  "text": "Good morning, Amy! Do you have your crayons?",
+  "heard": "Good morning, Amy.  Do you have your crayons?",
   "ok": true
  },
  {
   "i": 132,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "amy",
+  "text": "Crayons? Why?",
+  "heard": "Clans?  Why?",
+  "ok": false
+ },
+ {
+  "i": 133,
+  "who": "ben",
+  "text": "It's Wednesday. We have art class today!",
+  "heard": "It's Wednesday.  We have art class today.",
   "ok": true
  },
  {
   "i": 134,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "amy",
+  "text": "Oh, no! My crayons are at home.",
+  "heard": "Oh no! My crayons are at home!",
   "ok": true
+ },
+ {
+  "i": 135,
+  "who": "ben",
+  "text": "It's OK. You can use my crayons.",
+  "heard": "It's okay. You can use my crayons.",
+  "ok": false
  },
  {
   "i": 136,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "amy",
+  "text": "Thank you, Ben!",
+  "heard": "Thank you.  Ben.",
   "ok": true
  },
  {
-  "i": 138,
+  "i": 137,
+  "who": "nova",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 139,
   "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "text": "It's Wednesday!",
+  "heard": "It's Wednesday.",
   "ok": true
  },
  {
   "i": 140,
   "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "text": "Repeat after me. It's Wednesday.",
+  "heard": "Repeat after me. It's Wednesday.",
   "ok": true
  },
  {
   "i": 142,
-  "who": "nova",
-  "text": "Now switch! Group B, ask. Group A, answer.",
-  "heard": "Now switch. Group B, ask. Group A, answer.",
+  "who": "ben",
+  "text": "Oh, no! I'm late for school!",
+  "heard": "Oh no, I'm late for school.",
+  "ok": true
+ },
+ {
+  "i": 143,
+  "who": "amy",
+  "text": "Ben, relax. Today is Saturday.",
+  "heard": "Ben, relax.  Today is Saturday.",
   "ok": true
  },
  {
   "i": 144,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "ben",
+  "text": "Saturday? No school today?",
+  "heard": "Saturday? No school today?",
+  "ok": true
+ },
+ {
+  "i": 145,
+  "who": "amy",
+  "text": "No school! Let's play basketball in the park.",
+  "heard": "No school. Let's play basketball in the park.",
   "ok": true
  },
  {
   "i": 146,
+  "who": "ben",
+  "text": "Great idea! Let's go!",
+  "heard": "Great idea! Let's go!",
+  "ok": true
+ },
+ {
+  "i": 147,
   "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "text": "Listen again.",
+  "heard": "Listen again.",
   "ok": true
  },
  {
   "i": 148,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "ben",
+  "text": "Oh, no! I'm late for school!",
+  "heard": "Oh no, I'm late for school.",
+  "ok": true
+ },
+ {
+  "i": 149,
+  "who": "amy",
+  "text": "Ben, relax. Today is Saturday.",
+  "heard": "Ben, relax.  Today is Saturday.",
   "ok": true
  },
  {
   "i": 150,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "ben",
+  "text": "Saturday? No school today?",
+  "heard": "Saturday? No school today?",
+  "ok": true
+ },
+ {
+  "i": 151,
+  "who": "amy",
+  "text": "No school! Let's play basketball in the park.",
+  "heard": "No school. Let's play basketball in the park.",
   "ok": true
  },
  {
   "i": 152,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "ben",
+  "text": "Great idea! Let's go!",
+  "heard": "Great idea! Let's go!",
   "ok": true
  },
  {
-  "i": 154,
+  "i": 153,
   "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 155,
+  "who": "nova",
+  "text": "It's Saturday!",
+  "heard": "It's Saturday.",
   "ok": true
  },
  {
   "i": 156,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "cosmo",
+  "text": "Repeat after me. It's Saturday.",
+  "heard": "Repeat after me.  It's Saturday.",
   "ok": true
  },
  {
   "i": 158,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "amy",
+  "text": "Ben, what's that?",
+  "heard": "Ben, what's that?",
+  "ok": true
+ },
+ {
+  "i": 159,
+  "who": "ben",
+  "text": "It's my new guitar!",
+  "heard": "It's my new guitar.",
   "ok": true
  },
  {
   "i": 160,
-  "who": "nova",
-  "text": "Group B!",
-  "heard": "Group B.",
+  "who": "amy",
+  "text": "Cool! Why do you have a guitar at school?",
+  "heard": "Cool. Why do you have a guitar at school?",
+  "ok": true
+ },
+ {
+  "i": 161,
+  "who": "ben",
+  "text": "Today is Thursday. We have music class!",
+  "heard": "Today is Thursday.  We have music class.",
   "ok": true
  },
  {
   "i": 162,
-  "who": "cosmo",
-  "text": "Group A!",
-  "heard": "Group A",
+  "who": "amy",
+  "text": "Yay! Let's sing together!",
+  "heard": "Yay!  Let's sing together!",
+  "ok": true
+ },
+ {
+  "i": 163,
+  "who": "nova",
+  "text": "Listen again.",
+  "heard": "Listen again.",
   "ok": true
  },
  {
   "i": 164,
+  "who": "amy",
+  "text": "Ben, what's that?",
+  "heard": "Ben, what's that?",
+  "ok": true
+ },
+ {
+  "i": 165,
+  "who": "ben",
+  "text": "It's my new guitar!",
+  "heard": "It's my new guitar.",
+  "ok": true
+ },
+ {
+  "i": 166,
+  "who": "amy",
+  "text": "Cool! Why do you have a guitar at school?",
+  "heard": "Cool. Why do you have a guitar at school?",
+  "ok": true
+ },
+ {
+  "i": 167,
+  "who": "ben",
+  "text": "Today is Thursday. We have music class!",
+  "heard": "Today is Thursday.  We have music class.",
+  "ok": true
+ },
+ {
+  "i": 168,
+  "who": "amy",
+  "text": "Yay! Let's sing together!",
+  "heard": "Yay!  Let's sing together!",
+  "ok": true
+ },
+ {
+  "i": 169,
+  "who": "nova",
+  "text": "What day is today?",
+  "heard": "What day is today?",
+  "ok": true
+ },
+ {
+  "i": 171,
+  "who": "cosmo",
+  "text": "It's Thursday!",
+  "heard": "It's Thursday.",
+  "ok": true
+ },
+ {
+  "i": 172,
+  "who": "nova",
+  "text": "Repeat after me. It's Thursday.",
+  "heard": "Repeat after me.  It's Thursday.",
+  "ok": true
+ },
+ {
+  "i": 174,
   "who": "cosmo",
   "text": "Wonderful, everyone!",
   "heard": "Wonderful, everyone.",
   "ok": true
  },
  {
-  "i": 165,
+  "i": 175,
   "who": "cosmo",
   "text": "Game time! Look at the calendar. What day is it?",
   "heard": "Game time!  Look at the calendar!  What day is it?",
   "ok": true
  },
  {
-  "i": 167,
+  "i": 177,
   "who": "nova",
   "text": "It's Tuesday!",
   "heard": "It's Tuesday.",
   "ok": true
  },
  {
-  "i": 168,
+  "i": 178,
   "who": "cosmo",
   "text": "Next one. What day is it?",
   "heard": "Next one. What day is it?",
   "ok": true
  },
  {
-  "i": 170,
+  "i": 180,
   "who": "nova",
   "text": "It's Friday!",
   "heard": "It's Friday.",
   "ok": true
  },
  {
-  "i": 171,
-  "who": "cosmo",
-  "text": "Next one. What day is today?",
-  "heard": "Next one. What day is today?",
-  "ok": true
- },
- {
-  "i": 173,
-  "who": "nova",
-  "text": "It's Sunday!",
-  "heard": "It's Sunday.",
-  "ok": true
- },
- {
-  "i": 174,
-  "who": "cosmo",
-  "text": "Next one. What day is it?",
-  "heard": "Next one. What day is it?",
-  "ok": true
- },
- {
-  "i": 176,
-  "who": "nova",
-  "text": "It's Wednesday!",
-  "heard": "It's Wednesday.",
-  "ok": true
- },
- {
-  "i": 177,
+  "i": 181,
   "who": "cosmo",
   "text": "Last one. What day is today?",
-  "heard": "LAST ONE What day is today?",
+  "heard": "Last one What day is today?",
   "ok": true
  },
  {
-  "i": 179,
+  "i": 183,
   "who": "nova",
   "text": "It's Thursday! Great job, class!",
   "heard": "It's Thursday. Great job, class.",
   "ok": true
  },
  {
-  "i": 180,
+  "i": 184,
   "who": "nova",
   "text": "Today we learned two questions. What day is today? What day is it?",
   "heard": "Today we learned two questions.  What day is today?  What day is it?",
   "ok": true
  },
  {
-  "i": 181,
+  "i": 185,
   "who": "cosmo",
   "text": "And one answer. It's Friday.",
   "heard": "One answer  It's Friday",
   "ok": false
  },
  {
-  "i": 183,
+  "i": 187,
   "who": "cosmo",
   "text": "See you next time!",
   "heard": "See you next time.",
   "ok": true
  },
  {
-  "i": 184,
+  "i": 188,
   "who": "nova",
   "text": "Bye-bye, class!",
   "heard": "Bye-bye class.",

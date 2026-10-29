@@ -16,8 +16,12 @@ PA = HERE.parent / 'phonics-audio' / 'processed'
 SR = 48000; RATE = '-20%'; GAP = 0.45; SEC_GAP = 1.0
 VOICE = {('nova', 'say'): 'en-US-AvaNeural', ('nova', 'zh'): 'zh-TW-HsiaoChenNeural',
          ('cosmo', 'say'): 'en-US-GuyNeural', ('cosmo', 'zh'): 'zh-TW-YunJheNeural'}
+# 2026-10-29 學生角色（對話動畫）：Amy＝AnaNeural；Ben＝男聲提高音調（老師試聽後定案，見 voice-test/audition.md）
+VOICE.update({('amy', 'say'): 'en-US-AnaNeural', ('ben', 'say'): 'en-US-RogerNeural'})
+PITCH = {'en-US-RogerNeural': '+40Hz'}  # 2026-10-29 老師選 Ben 4
 TTS_FIX = {  # 字幕顯示左邊，TTS 唸右邊（2026-10-20 whisper 檢查後決定）
- 'What day is today?': 'What day, is today?',   # 單獨一句時 Ava 的 day 太輕（聽成 What is today），在 day 後稍停，也對應 What day｜is today 的分塊
+ 'What day is today?': 'What day, is today?',
+ 'Crayons? Why?': 'Cray-ons? Why?',   # Amy 這句在全片裡 whisper 聽成 Clans，加連字號讓 cray 唸清楚   # 單獨一句時 Ava 的 day 太輕（聽成 What is today），在 day 後稍停，也對應 What day｜is today 的分塊
  'Look at "It\'s". It\'s is a short way to say "It is".': "Look at the word It's. It's is a short way to say, It is."}  # 原句唸成 Look out
 SOUND_VIS = {'short-u-1': ['M02_A'], 'short-e-1': ['M08_mid', 'M03_E'], 'short-a-1': ['M02_A'],
              'En-us-A_upper': ['M08_mid', 'M03_E'], 'En-us-blue': ['M07_L', 'M05_U'], 'En-us-u': ['M03_E', 'M05_U'], 'ref-er-1': ['M08_mid'], 'En-us-I': ['M02_A', 'M03_E'],
@@ -29,14 +33,15 @@ def tts_text(t):
     return t
 
 async def synth(text, voice):
-    f = HERE / 'segs' / (hashlib.sha1(f'{voice}|{RATE}|{text}'.encode()).hexdigest()[:16] + '.mp3')
+    pitch = PITCH.get(voice, '+0Hz')
+    f = HERE / 'segs' / (hashlib.sha1(f'{voice}|{RATE}|{text}'.encode() + (pitch.encode() if pitch != '+0Hz' else b'')).hexdigest()[:16] + '.mp3')
     j = f.with_suffix('.json')
     if f.exists() and j.exists(): return f, json.loads(j.read_text(encoding='utf-8'))
     for attempt in range(5):   # edge-tts 偶爾回 NoAudioReceived（同一句重試就好），最多試 5 次
         words = []
         try:
             with open(f, 'wb') as fh:
-                async for ch in edge_tts.Communicate(text, voice, rate=RATE, boundary='WordBoundary').stream():
+                async for ch in edge_tts.Communicate(text, voice, rate=RATE, pitch=pitch, boundary='WordBoundary').stream():
                     if ch['type'] == 'audio': fh.write(ch['data'])
                     elif ch['type'] == 'WordBoundary':
                         words.append({'w': ch['text'], 't0': ch['offset'] / 1e7, 't1': (ch['offset'] + ch['duration']) / 1e7})

@@ -1,10 +1,12 @@
 {
- "dur": 640.183,
+ "dur": 678.738,
  "voices": {
   "nova-say": "en-US-AvaNeural",
   "nova-zh": "zh-TW-HsiaoChenNeural",
   "cosmo-say": "en-US-GuyNeural",
-  "cosmo-zh": "zh-TW-YunJheNeural"
+  "cosmo-zh": "zh-TW-YunJheNeural",
+  "amy-say": "en-US-AnaNeural",
+  "ben-say": "en-US-RogerNeural"
  },
  "rate": "-20%",
  "sections": {
@@ -32,17 +34,17 @@
    208.151,
    437.241
   ],
-  "07-group": [
+  "07-talk": [
    438.241,
-   564.733
+   621.553
   ],
   "08-quiz": [
-   565.733,
-   615.454
+   622.553,
+   654.009
   ],
   "09-end": [
-   616.454,
-   638.683
+   655.009,
+   677.238
   ]
  },
  "segs": [
@@ -4429,11 +4431,11 @@
   },
   {
    "i": 120,
-   "sec": "07-group",
+   "sec": "07-talk",
    "who": "cosmo",
    "kind": "say",
-   "vis": "group:A→B",
-   "text": "Now let's play in groups. Group A, ask the question. Group B, answer.",
+   "vis": "對話段標題；老師退到兩側",
+   "text": "Now let's watch Amy and Ben. Listen carefully!",
    "voices": [
     "en-US-GuyNeural"
    ],
@@ -4441,955 +4443,1955 @@
     {
      "w": "Now",
      "t0": 438.133,
-     "t1": 438.477
+     "t1": 438.43
     },
     {
      "w": "let's",
-     "t0": 438.493,
-     "t1": 438.821
+     "t0": 438.445,
+     "t1": 438.727
     },
     {
-     "w": "play",
-     "t0": 438.836,
-     "t1": 439.102
+     "w": "watch",
+     "t0": 438.742,
+     "t1": 439.055
     },
     {
-     "w": "in",
-     "t0": 439.133,
-     "t1": 439.258
+     "w": "Amy",
+     "t0": 439.086,
+     "t1": 439.383
     },
     {
-     "w": "groups",
-     "t0": 439.274,
-     "t1": 439.852
+     "w": "and",
+     "t0": 439.414,
+     "t1": 439.539
     },
     {
-     "w": "Group",
-     "t0": 440.974,
-     "t1": 441.38
+     "w": "Ben",
+     "t0": 439.57,
+     "t1": 440.008
     },
     {
-     "w": "A",
-     "t0": 441.396,
-     "t1": 441.646
+     "w": "Listen",
+     "t0": 441.099,
+     "t1": 441.645
     },
     {
-     "w": "ask",
-     "t0": 441.911,
-     "t1": 442.286
-    },
-    {
-     "w": "the",
-     "t0": 442.318,
-     "t1": 442.443
-    },
-    {
-     "w": "question",
-     "t0": 442.474,
-     "t1": 443.146
-    },
-    {
-     "w": "Group",
-     "t0": 444.255,
-     "t1": 444.63
-    },
-    {
-     "w": "B",
-     "t0": 444.646,
-     "t1": 444.958
-    },
-    {
-     "w": "answer",
-     "t0": 445.224,
-     "t1": 445.896
+     "w": "carefully",
+     "t0": 441.677,
+     "t1": 442.474
     }
    ],
    "t0": 438.241,
-   "t1": 445.923
+   "t1": 442.568
   },
   {
    "i": 121,
-   "sec": "07-group",
+   "sec": "07-talk",
    "who": "nova",
    "kind": "zh",
-   "vis": "group:A→B",
-   "text": "A 組問問題，B 組回答。看月曆回答喔！",
+   "vis": "對話段標題",
+   "text": "仔細聽，他們說今天星期幾？",
    "voices": [
     "zh-TW-HsiaoChenNeural"
    ],
    "words": [
     {
-     "w": "A",
-     "t0": 446.274,
-     "t1": 446.431
+     "w": "仔細",
+     "t0": 442.925,
+     "t1": 443.378
     },
     {
-     "w": "組",
-     "t0": 446.509,
-     "t1": 446.665
+     "w": "聽",
+     "t0": 443.488,
+     "t1": 443.8
     },
     {
-     "w": "問",
-     "t0": 446.743,
-     "t1": 446.899
+     "w": "他們",
+     "t0": 444.066,
+     "t1": 444.456
     },
     {
-     "w": "問題",
-     "t0": 446.946,
-     "t1": 447.618
+     "w": "說",
+     "t0": 444.488,
+     "t1": 444.691
     },
     {
-     "w": "B",
-     "t0": 447.821,
-     "t1": 448.024
+     "w": "今天",
+     "t0": 444.738,
+     "t1": 445.144
     },
     {
-     "w": "組",
-     "t0": 448.071,
-     "t1": 448.243
+     "w": "星期",
+     "t0": 445.175,
+     "t1": 445.628
     },
     {
-     "w": "回答",
-     "t0": 448.29,
-     "t1": 448.977
-    },
-    {
-     "w": "看",
-     "t0": 450.037,
-     "t1": 450.271
-    },
-    {
-     "w": "月曆",
-     "t0": 450.334,
-     "t1": 450.677
-    },
-    {
-     "w": "回答",
-     "t0": 450.74,
-     "t1": 451.209
-    },
-    {
-     "w": "喔",
-     "t0": 451.224,
-     "t1": 451.552
+     "w": "幾",
+     "t0": 445.691,
+     "t1": 446.034
     }
    ],
-   "t0": 446.373,
-   "t1": 451.665
+   "t0": 443.018,
+   "t1": 446.166
   },
   {
    "i": 122,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Monday；card:What day is today?",
-   "text": "Group A!",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "Good morning, Ben!",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 452.008,
-     "t1": 452.477
+     "w": "Good",
+     "t0": 446.524,
+     "t1": 446.805
     },
     {
-     "w": "A",
-     "t0": 452.508,
-     "t1": 453.024
+     "w": "morning",
+     "t0": 446.821,
+     "t1": 447.446
+    },
+    {
+     "w": "Ben",
+     "t0": 447.805,
+     "t1": 448.305
     }
    ],
-   "t0": 452.115,
-   "t1": 453.114
+   "t0": 446.616,
+   "t1": 448.354
   },
   {
    "i": 123,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Monday；card:What day is today?",
-   "sec_len": 3.0,
-   "t0": 453.814,
-   "t1": 456.814
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "Good morning, Amy! Do you have your crayons?",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "Good",
+     "t0": 448.722,
+     "t1": 448.988
+    },
+    {
+     "w": "morning",
+     "t0": 449.004,
+     "t1": 449.535
+    },
+    {
+     "w": "Amy",
+     "t0": 449.566,
+     "t1": 450.176
+    },
+    {
+     "w": "Do",
+     "t0": 451.004,
+     "t1": 451.113
+    },
+    {
+     "w": "you",
+     "t0": 451.129,
+     "t1": 451.254
+    },
+    {
+     "w": "have",
+     "t0": 451.269,
+     "t1": 451.472
+    },
+    {
+     "w": "your",
+     "t0": 451.488,
+     "t1": 451.676
+    },
+    {
+     "w": "crayons",
+     "t0": 451.691,
+     "t1": 452.691
+    }
+   ],
+   "t0": 448.804,
+   "t1": 452.748
   },
   {
    "i": 124,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Monday；card:It's Monday.",
-   "text": "Group B!",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "Crayons? Why?",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 457.113,
-     "t1": 457.488
+     "w": "Cray-ons",
+     "t0": 453.111,
+     "t1": 454.095
     },
     {
-     "w": "B",
-     "t0": 457.504,
-     "t1": 457.894
+     "w": "Why",
+     "t0": 455.17,
+     "t1": 455.717
     }
    ],
-   "t0": 457.264,
-   "t1": 458.06
+   "t0": 453.198,
+   "t1": 455.762
   },
   {
    "i": 125,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Monday；card:It's Monday.",
-   "sec_len": 3.0,
-   "t0": 458.76,
-   "t1": 461.76
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "It's Wednesday. We have art class today!",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 456.119,
+     "t1": 456.416
+    },
+    {
+     "w": "Wednesday",
+     "t0": 456.432,
+     "t1": 457.26
+    },
+    {
+     "w": "We",
+     "t0": 458.088,
+     "t1": 458.275
+    },
+    {
+     "w": "have",
+     "t0": 458.291,
+     "t1": 458.416
+    },
+    {
+     "w": "art",
+     "t0": 458.432,
+     "t1": 458.728
+    },
+    {
+     "w": "class",
+     "t0": 458.744,
+     "t1": 459.182
+    },
+    {
+     "w": "today",
+     "t0": 459.197,
+     "t1": 459.869
+    }
+   ],
+   "t0": 456.212,
+   "t1": 459.939
   },
   {
    "i": 126,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Tuesday；card:What day is it?",
-   "text": "Group A!",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "Oh, no! My crayons are at home.",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 462.103,
-     "t1": 462.572
+     "w": "Oh",
+     "t0": 460.351,
+     "t1": 460.71
     },
     {
-     "w": "A",
-     "t0": 462.603,
-     "t1": 463.119
+     "w": "no",
+     "t0": 460.96,
+     "t1": 461.491
+    },
+    {
+     "w": "My",
+     "t0": 462.585,
+     "t1": 462.882
+    },
+    {
+     "w": "crayons",
+     "t0": 462.898,
+     "t1": 463.71
+    },
+    {
+     "w": "are",
+     "t0": 463.726,
+     "t1": 463.991
+    },
+    {
+     "w": "at",
+     "t0": 464.007,
+     "t1": 464.148
+    },
+    {
+     "w": "home",
+     "t0": 464.163,
+     "t1": 464.726
     }
    ],
-   "t0": 462.21,
-   "t1": 463.209
+   "t0": 460.389,
+   "t1": 464.781
   },
   {
    "i": 127,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Tuesday；card:What day is it?",
-   "sec_len": 3.0,
-   "t0": 463.909,
-   "t1": 466.909
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "It's OK. You can use my crayons.",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 465.144,
+     "t1": 465.425
+    },
+    {
+     "w": "OK",
+     "t0": 465.441,
+     "t1": 466.112
+    },
+    {
+     "w": "You",
+     "t0": 466.941,
+     "t1": 467.144
+    },
+    {
+     "w": "can",
+     "t0": 467.159,
+     "t1": 467.347
+    },
+    {
+     "w": "use",
+     "t0": 467.362,
+     "t1": 467.612
+    },
+    {
+     "w": "my",
+     "t0": 467.628,
+     "t1": 467.847
+    },
+    {
+     "w": "crayons",
+     "t0": 467.862,
+     "t1": 468.831
+    }
+   ],
+   "t0": 465.231,
+   "t1": 468.837
   },
   {
    "i": 128,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Tuesday；card:It's Tuesday.",
-   "text": "Group B!",
+   "vis": "talk:1；scene:classroom；pass:1",
+   "text": "Thank you, Ben!",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 467.209,
-     "t1": 467.584
+     "w": "Thank",
+     "t0": 469.179,
+     "t1": 469.585
     },
     {
-     "w": "B",
-     "t0": 467.599,
-     "t1": 467.99
+     "w": "you",
+     "t0": 469.6,
+     "t1": 469.882
+    },
+    {
+     "w": "Ben",
+     "t0": 470.225,
+     "t1": 470.741
     }
    ],
-   "t0": 467.359,
-   "t1": 468.155
+   "t0": 469.287,
+   "t1": 470.818
   },
   {
    "i": 129,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Tuesday；card:It's Tuesday.",
-   "sec_len": 3.0,
-   "t0": 468.855,
-   "t1": 471.855
+   "sec": "07-talk",
+   "who": "nova",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "Listen again.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Listen",
+     "t0": 471.112,
+     "t1": 471.612
+    },
+    {
+     "w": "again",
+     "t0": 471.628,
+     "t1": 472.222
+    }
+   ],
+   "t0": 471.268,
+   "t1": 472.351
   },
   {
    "i": 130,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Wednesday；card:What day is today?",
-   "text": "Group A!",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "Good morning, Ben!",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 472.199,
-     "t1": 472.667
+     "w": "Good",
+     "t0": 472.71,
+     "t1": 472.991
     },
     {
-     "w": "A",
-     "t0": 472.699,
-     "t1": 473.214
+     "w": "morning",
+     "t0": 473.007,
+     "t1": 473.632
+    },
+    {
+     "w": "Ben",
+     "t0": 473.991,
+     "t1": 474.491
     }
    ],
-   "t0": 472.305,
-   "t1": 473.305
+   "t0": 472.801,
+   "t1": 474.54
   },
   {
    "i": 131,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Wednesday；card:What day is today?",
-   "sec_len": 3.0,
-   "t0": 474.005,
-   "t1": 477.005
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "Good morning, Amy! Do you have your crayons?",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "Good",
+     "t0": 474.908,
+     "t1": 475.174
+    },
+    {
+     "w": "morning",
+     "t0": 475.189,
+     "t1": 475.721
+    },
+    {
+     "w": "Amy",
+     "t0": 475.752,
+     "t1": 476.361
+    },
+    {
+     "w": "Do",
+     "t0": 477.189,
+     "t1": 477.299
+    },
+    {
+     "w": "you",
+     "t0": 477.314,
+     "t1": 477.439
+    },
+    {
+     "w": "have",
+     "t0": 477.455,
+     "t1": 477.658
+    },
+    {
+     "w": "your",
+     "t0": 477.674,
+     "t1": 477.861
+    },
+    {
+     "w": "crayons",
+     "t0": 477.877,
+     "t1": 478.877
+    }
+   ],
+   "t0": 474.99,
+   "t1": 478.933
   },
   {
    "i": 132,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Wednesday；card:It's Wednesday.",
-   "text": "Group B!",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "Crayons? Why?",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 477.304,
-     "t1": 477.679
+     "w": "Cray-ons",
+     "t0": 479.296,
+     "t1": 480.281
     },
     {
-     "w": "B",
-     "t0": 477.695,
-     "t1": 478.085
+     "w": "Why",
+     "t0": 481.356,
+     "t1": 481.903
     }
    ],
-   "t0": 477.455,
-   "t1": 478.251
+   "t0": 479.383,
+   "t1": 481.948
   },
   {
    "i": 133,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Wednesday；card:It's Wednesday.",
-   "sec_len": 3.0,
-   "t0": 478.951,
-   "t1": 481.951
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "It's Wednesday. We have art class today!",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 482.305,
+     "t1": 482.602
+    },
+    {
+     "w": "Wednesday",
+     "t0": 482.617,
+     "t1": 483.445
+    },
+    {
+     "w": "We",
+     "t0": 484.273,
+     "t1": 484.461
+    },
+    {
+     "w": "have",
+     "t0": 484.477,
+     "t1": 484.602
+    },
+    {
+     "w": "art",
+     "t0": 484.617,
+     "t1": 484.914
+    },
+    {
+     "w": "class",
+     "t0": 484.93,
+     "t1": 485.367
+    },
+    {
+     "w": "today",
+     "t0": 485.383,
+     "t1": 486.055
+    }
+   ],
+   "t0": 482.398,
+   "t1": 486.124
   },
   {
    "i": 134,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Thursday；card:What day is it?",
-   "text": "Group A!",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "Oh, no! My crayons are at home.",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 482.294,
-     "t1": 482.763
+     "w": "Oh",
+     "t0": 486.536,
+     "t1": 486.896
     },
     {
-     "w": "A",
-     "t0": 482.794,
-     "t1": 483.31
+     "w": "no",
+     "t0": 487.146,
+     "t1": 487.677
+    },
+    {
+     "w": "My",
+     "t0": 488.771,
+     "t1": 489.068
+    },
+    {
+     "w": "crayons",
+     "t0": 489.083,
+     "t1": 489.896
+    },
+    {
+     "w": "are",
+     "t0": 489.911,
+     "t1": 490.177
+    },
+    {
+     "w": "at",
+     "t0": 490.193,
+     "t1": 490.333
+    },
+    {
+     "w": "home",
+     "t0": 490.349,
+     "t1": 490.911
     }
    ],
-   "t0": 482.401,
-   "t1": 483.4
+   "t0": 486.574,
+   "t1": 490.966
   },
   {
    "i": 135,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Thursday；card:What day is it?",
-   "sec_len": 3.0,
-   "t0": 484.1,
-   "t1": 487.1
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "It's OK. You can use my crayons.",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 491.329,
+     "t1": 491.611
+    },
+    {
+     "w": "OK",
+     "t0": 491.626,
+     "t1": 492.298
+    },
+    {
+     "w": "You",
+     "t0": 493.126,
+     "t1": 493.329
+    },
+    {
+     "w": "can",
+     "t0": 493.345,
+     "t1": 493.532
+    },
+    {
+     "w": "use",
+     "t0": 493.548,
+     "t1": 493.798
+    },
+    {
+     "w": "my",
+     "t0": 493.814,
+     "t1": 494.032
+    },
+    {
+     "w": "crayons",
+     "t0": 494.048,
+     "t1": 495.017
+    }
+   ],
+   "t0": 491.416,
+   "t1": 495.023
   },
   {
    "i": 136,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:A→B；cal:Thursday；card:It's Thursday.",
-   "text": "Group B!",
+   "vis": "talk:1；scene:classroom；pass:2",
+   "text": "Thank you, Ben!",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 487.399,
-     "t1": 487.774
+     "w": "Thank",
+     "t0": 495.364,
+     "t1": 495.77
     },
     {
-     "w": "B",
-     "t0": 487.79,
-     "t1": 488.181
+     "w": "you",
+     "t0": 495.786,
+     "t1": 496.067
+    },
+    {
+     "w": "Ben",
+     "t0": 496.411,
+     "t1": 496.927
     }
    ],
-   "t0": 487.55,
-   "t1": 488.346
+   "t0": 495.473,
+   "t1": 497.003
   },
   {
    "i": 137,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Thursday；card:It's Thursday.",
-   "sec_len": 3.0,
-   "t0": 489.046,
-   "t1": 492.046
+   "sec": "07-talk",
+   "who": "nova",
+   "kind": "say",
+   "vis": "talk:1；card:What day is today?",
+   "text": "What day is today?",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "What",
+     "t0": 497.305,
+     "t1": 497.617
+    },
+    {
+     "w": "day",
+     "t0": 497.633,
+     "t1": 498.008
+    },
+    {
+     "w": "is",
+     "t0": 498.039,
+     "t1": 498.274
+    },
+    {
+     "w": "today",
+     "t0": 498.289,
+     "t1": 498.821
+    }
+   ],
+   "t0": 497.453,
+   "t1": 498.979
   },
   {
    "i": 138,
-   "sec": "07-group",
-   "who": "cosmo",
-   "kind": "say",
-   "vis": "group:A→B；cal:Friday；card:What day is today?",
-   "text": "Group A!",
-   "voices": [
-    "en-US-GuyNeural"
-   ],
-   "words": [
-    {
-     "w": "Group",
-     "t0": 492.389,
-     "t1": 492.858
-    },
-    {
-     "w": "A",
-     "t0": 492.889,
-     "t1": 493.405
-    }
-   ],
-   "t0": 492.496,
-   "t1": 493.495
+   "sec": "07-talk",
+   "who": "-",
+   "kind": "turn",
+   "vis": "talk:1；card:What day is today?；倒數條",
+   "sec_len": 3.0,
+   "t0": 499.679,
+   "t1": 502.679
   },
   {
    "i": 139,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:A→B；cal:Friday；card:What day is today?",
-   "sec_len": 3.0,
-   "t0": 494.195,
-   "t1": 497.195
+   "sec": "07-talk",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "talk:1；揭曉；card:It's Wednesday. = Today is Wednesday.",
+   "text": "It's Wednesday!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 503.018,
+     "t1": 503.362
+    },
+    {
+     "w": "Wednesday",
+     "t0": 503.377,
+     "t1": 504.158
+    }
+   ],
+   "t0": 503.129,
+   "t1": 504.267
   },
   {
    "i": 140,
-   "sec": "07-group",
+   "sec": "07-talk",
    "who": "nova",
    "kind": "say",
-   "vis": "group:A→B；cal:Friday；card:It's Friday.",
-   "text": "Group B!",
+   "vis": "talk:1；card:It's Wednesday. = Today is Wednesday.",
+   "text": "Repeat after me. It's Wednesday.",
    "voices": [
     "en-US-AvaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 497.495,
-     "t1": 497.87
+     "w": "Repeat",
+     "t0": 504.569,
+     "t1": 505.148
     },
     {
-     "w": "B",
-     "t0": 497.885,
-     "t1": 498.276
+     "w": "after",
+     "t0": 505.163,
+     "t1": 505.523
+    },
+    {
+     "w": "me",
+     "t0": 505.538,
+     "t1": 505.835
+    },
+    {
+     "w": "It's",
+     "t0": 506.301,
+     "t1": 506.613
+    },
+    {
+     "w": "Wednesday",
+     "t0": 506.629,
+     "t1": 507.379
     }
    ],
-   "t0": 497.645,
-   "t1": 498.442
+   "t0": 504.717,
+   "t1": 507.535
   },
   {
    "i": 141,
-   "sec": "07-group",
+   "sec": "07-talk",
    "who": "-",
    "kind": "turn",
-   "vis": "group:A→B；cal:Friday；card:It's Friday.",
+   "vis": "talk:1；card:It's Wednesday. = Today is Wednesday.",
    "sec_len": 3.0,
-   "t0": 499.142,
-   "t1": 502.142
+   "t0": 508.235,
+   "t1": 511.235
   },
   {
    "i": 142,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "ben",
    "kind": "say",
-   "vis": "group:B→A",
-   "text": "Now switch! Group B, ask. Group A, answer.",
+   "vis": "talk:2；scene:home；pass:1",
+   "text": "Oh, no! I'm late for school!",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-RogerNeural"
    ],
    "words": [
     {
-     "w": "Now",
-     "t0": 502.433,
-     "t1": 502.855
+     "w": "Oh",
+     "t0": 511.594,
+     "t1": 512.016
     },
     {
-     "w": "switch",
-     "t0": 502.87,
-     "t1": 503.636
+     "w": "no",
+     "t0": 512.032,
+     "t1": 512.719
     },
     {
-     "w": "Group",
-     "t0": 504.102,
-     "t1": 504.445
+     "w": "I'm",
+     "t0": 513.547,
+     "t1": 513.922
     },
     {
-     "w": "B",
-     "t0": 504.461,
-     "t1": 504.82
+     "w": "late",
+     "t0": 513.938,
+     "t1": 514.219
     },
     {
-     "w": "ask",
-     "t0": 504.852,
-     "t1": 505.414
+     "w": "for",
+     "t0": 514.235,
+     "t1": 514.453
     },
     {
-     "w": "Group",
-     "t0": 505.867,
-     "t1": 506.242
-    },
-    {
-     "w": "A",
-     "t0": 506.367,
-     "t1": 506.602
-    },
-    {
-     "w": "answer",
-     "t0": 506.633,
-     "t1": 507.274
+     "w": "school",
+     "t0": 514.469,
+     "t1": 515.094
     }
    ],
-   "t0": 502.592,
-   "t1": 507.395
+   "t0": 511.685,
+   "t1": 515.156
   },
   {
    "i": 143,
-   "sec": "07-group",
-   "who": "cosmo",
-   "kind": "zh",
-   "vis": "group:B→A",
-   "text": "換過來！B 組問，A 組答。",
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:2；scene:home；pass:1",
+   "text": "Ben, relax. Today is Saturday.",
    "voices": [
-    "zh-TW-YunJheNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "換",
-     "t0": 507.642,
-     "t1": 508.001
+     "w": "Ben",
+     "t0": 515.513,
+     "t1": 515.981
     },
     {
-     "w": "過來",
-     "t0": 508.001,
-     "t1": 508.86
+     "w": "relax",
+     "t0": 516.309,
+     "t1": 517.2
     },
     {
-     "w": "B",
-     "t0": 509.92,
-     "t1": 510.17
+     "w": "Today",
+     "t0": 518.291,
+     "t1": 518.869
     },
     {
-     "w": "組",
-     "t0": 510.17,
-     "t1": 510.357
+     "w": "is",
+     "t0": 518.884,
+     "t1": 519.119
     },
     {
-     "w": "問",
-     "t0": 510.357,
-     "t1": 510.889
-    },
-    {
-     "w": "A",
-     "t0": 511.123,
-     "t1": 511.295
-    },
-    {
-     "w": "組",
-     "t0": 511.295,
-     "t1": 511.514
-    },
-    {
-     "w": "答",
-     "t0": 511.514,
-     "t1": 512.139
+     "w": "Saturday",
+     "t0": 519.134,
+     "t1": 519.978
     }
    ],
-   "t0": 507.845,
-   "t1": 512.022
+   "t0": 515.606,
+   "t1": 520.054
   },
   {
    "i": 144,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "ben",
    "kind": "say",
-   "vis": "group:B→A；cal:Saturday；card:What day is today?",
-   "text": "Group B!",
+   "vis": "talk:2；scene:home；pass:1",
+   "text": "Saturday? No school today?",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-RogerNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 512.322,
-     "t1": 512.697
+     "w": "Saturday",
+     "t0": 520.396,
+     "t1": 521.318
     },
     {
-     "w": "B",
-     "t0": 512.712,
-     "t1": 513.103
+     "w": "No",
+     "t0": 522.146,
+     "t1": 522.506
+    },
+    {
+     "w": "school",
+     "t0": 522.521,
+     "t1": 523.006
+    },
+    {
+     "w": "today",
+     "t0": 523.021,
+     "t1": 523.646
     }
    ],
-   "t0": 512.472,
-   "t1": 513.269
+   "t0": 520.504,
+   "t1": 523.725
   },
   {
    "i": 145,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Saturday；card:What day is today?",
-   "sec_len": 3.0,
-   "t0": 513.969,
-   "t1": 516.969
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:2；scene:home；pass:1",
+   "text": "No school! Let's play basketball in the park.",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "No",
+     "t0": 524.087,
+     "t1": 524.462
+    },
+    {
+     "w": "school",
+     "t0": 524.478,
+     "t1": 525.165
+    },
+    {
+     "w": "Let's",
+     "t0": 526.256,
+     "t1": 526.646
+    },
+    {
+     "w": "play",
+     "t0": 526.662,
+     "t1": 527.021
+    },
+    {
+     "w": "basketball",
+     "t0": 527.037,
+     "t1": 527.974
+    },
+    {
+     "w": "in",
+     "t0": 527.99,
+     "t1": 528.193
+    },
+    {
+     "w": "the",
+     "t0": 528.209,
+     "t1": 528.334
+    },
+    {
+     "w": "park",
+     "t0": 528.349,
+     "t1": 528.959
+    }
+   ],
+   "t0": 524.175,
+   "t1": 529.044
   },
   {
    "i": 146,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "ben",
    "kind": "say",
-   "vis": "group:B→A；cal:Saturday；card:It's Saturday.",
-   "text": "Group A!",
+   "vis": "talk:2；scene:home；pass:1",
+   "text": "Great idea! Let's go!",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-RogerNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 517.312,
-     "t1": 517.78
+     "w": "Great",
+     "t0": 529.41,
+     "t1": 529.816
     },
     {
-     "w": "A",
-     "t0": 517.812,
-     "t1": 518.327
+     "w": "idea",
+     "t0": 529.832,
+     "t1": 530.472
+    },
+    {
+     "w": "Let's",
+     "t0": 531.301,
+     "t1": 531.722
+    },
+    {
+     "w": "go",
+     "t0": 531.738,
+     "t1": 532.426
     }
    ],
-   "t0": 517.419,
-   "t1": 518.418
+   "t0": 529.494,
+   "t1": 532.505
   },
   {
    "i": 147,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Saturday；card:It's Saturday.",
-   "sec_len": 3.0,
-   "t0": 519.118,
-   "t1": 522.118
+   "sec": "07-talk",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "talk:2；scene:home；pass:2",
+   "text": "Listen again.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Listen",
+     "t0": 532.846,
+     "t1": 533.393
+    },
+    {
+     "w": "again",
+     "t0": 533.424,
+     "t1": 534.002
+    }
+   ],
+   "t0": 532.955,
+   "t1": 534.109
   },
   {
    "i": 148,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "ben",
    "kind": "say",
-   "vis": "group:B→A；cal:Sunday；card:What day is it?",
-   "text": "Group B!",
+   "vis": "talk:2；scene:home；pass:2",
+   "text": "Oh, no! I'm late for school!",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-RogerNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 522.417,
-     "t1": 522.792
+     "w": "Oh",
+     "t0": 534.467,
+     "t1": 534.889
     },
     {
-     "w": "B",
-     "t0": 522.808,
-     "t1": 523.198
+     "w": "no",
+     "t0": 534.905,
+     "t1": 535.592
+    },
+    {
+     "w": "I'm",
+     "t0": 536.42,
+     "t1": 536.795
+    },
+    {
+     "w": "late",
+     "t0": 536.811,
+     "t1": 537.092
+    },
+    {
+     "w": "for",
+     "t0": 537.108,
+     "t1": 537.327
+    },
+    {
+     "w": "school",
+     "t0": 537.342,
+     "t1": 537.967
     }
    ],
-   "t0": 522.568,
-   "t1": 523.364
+   "t0": 534.559,
+   "t1": 538.029
   },
   {
    "i": 149,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Sunday；card:What day is it?",
-   "sec_len": 3.0,
-   "t0": 524.064,
-   "t1": 527.064
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:2；scene:home；pass:2",
+   "text": "Ben, relax. Today is Saturday.",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "Ben",
+     "t0": 538.386,
+     "t1": 538.855
+    },
+    {
+     "w": "relax",
+     "t0": 539.183,
+     "t1": 540.073
+    },
+    {
+     "w": "Today",
+     "t0": 541.164,
+     "t1": 541.742
+    },
+    {
+     "w": "is",
+     "t0": 541.758,
+     "t1": 541.992
+    },
+    {
+     "w": "Saturday",
+     "t0": 542.008,
+     "t1": 542.851
+    }
+   ],
+   "t0": 538.479,
+   "t1": 542.928
   },
   {
    "i": 150,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "ben",
    "kind": "say",
-   "vis": "group:B→A；cal:Sunday；card:It's Sunday.",
-   "text": "Group A!",
+   "vis": "talk:2；scene:home；pass:2",
+   "text": "Saturday? No school today?",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-RogerNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 527.407,
-     "t1": 527.876
+     "w": "Saturday",
+     "t0": 543.269,
+     "t1": 544.191
     },
     {
-     "w": "A",
-     "t0": 527.907,
-     "t1": 528.423
+     "w": "No",
+     "t0": 545.019,
+     "t1": 545.379
+    },
+    {
+     "w": "school",
+     "t0": 545.394,
+     "t1": 545.879
+    },
+    {
+     "w": "today",
+     "t0": 545.894,
+     "t1": 546.519
     }
    ],
-   "t0": 527.514,
-   "t1": 528.513
+   "t0": 543.378,
+   "t1": 546.598
   },
   {
    "i": 151,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Sunday；card:It's Sunday.",
-   "sec_len": 3.0,
-   "t0": 529.213,
-   "t1": 532.213
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:2；scene:home；pass:2",
+   "text": "No school! Let's play basketball in the park.",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "No",
+     "t0": 546.96,
+     "t1": 547.335
+    },
+    {
+     "w": "school",
+     "t0": 547.351,
+     "t1": 548.038
+    },
+    {
+     "w": "Let's",
+     "t0": 549.129,
+     "t1": 549.519
+    },
+    {
+     "w": "play",
+     "t0": 549.535,
+     "t1": 549.894
+    },
+    {
+     "w": "basketball",
+     "t0": 549.91,
+     "t1": 550.848
+    },
+    {
+     "w": "in",
+     "t0": 550.863,
+     "t1": 551.066
+    },
+    {
+     "w": "the",
+     "t0": 551.082,
+     "t1": 551.207
+    },
+    {
+     "w": "park",
+     "t0": 551.223,
+     "t1": 551.832
+    }
+   ],
+   "t0": 547.048,
+   "t1": 551.917
   },
   {
    "i": 152,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "ben",
    "kind": "say",
-   "vis": "group:B→A；cal:Wednesday；card:What day is today?",
-   "text": "Group B!",
+   "vis": "talk:2；scene:home；pass:2",
+   "text": "Great idea! Let's go!",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-RogerNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 532.512,
-     "t1": 532.887
+     "w": "Great",
+     "t0": 552.283,
+     "t1": 552.689
     },
     {
-     "w": "B",
-     "t0": 532.903,
-     "t1": 533.294
+     "w": "idea",
+     "t0": 552.705,
+     "t1": 553.346
+    },
+    {
+     "w": "Let's",
+     "t0": 554.174,
+     "t1": 554.596
+    },
+    {
+     "w": "go",
+     "t0": 554.611,
+     "t1": 555.299
     }
    ],
-   "t0": 532.663,
-   "t1": 533.459
+   "t0": 552.367,
+   "t1": 555.378
   },
   {
    "i": 153,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Wednesday；card:What day is today?",
-   "sec_len": 3.0,
-   "t0": 534.159,
-   "t1": 537.159
+   "sec": "07-talk",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "talk:2；card:What day is today?",
+   "text": "What day is today?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "What",
+     "t0": 555.734,
+     "t1": 556.0
+    },
+    {
+     "w": "day",
+     "t0": 556.031,
+     "t1": 556.359
+    },
+    {
+     "w": "is",
+     "t0": 556.609,
+     "t1": 556.828
+    },
+    {
+     "w": "today",
+     "t0": 556.859,
+     "t1": 557.375
+    }
+   ],
+   "t0": 555.828,
+   "t1": 557.474
   },
   {
    "i": 154,
-   "sec": "07-group",
-   "who": "cosmo",
-   "kind": "say",
-   "vis": "group:B→A；cal:Wednesday；card:It's Wednesday.",
-   "text": "Group A!",
-   "voices": [
-    "en-US-GuyNeural"
-   ],
-   "words": [
-    {
-     "w": "Group",
-     "t0": 537.503,
-     "t1": 537.971
-    },
-    {
-     "w": "A",
-     "t0": 538.003,
-     "t1": 538.518
-    }
-   ],
-   "t0": 537.609,
-   "t1": 538.608
+   "sec": "07-talk",
+   "who": "-",
+   "kind": "turn",
+   "vis": "talk:2；card:What day is today?；倒數條",
+   "sec_len": 3.0,
+   "t0": 558.174,
+   "t1": 561.174
   },
   {
    "i": 155,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Wednesday；card:It's Wednesday.",
-   "sec_len": 3.0,
-   "t0": 539.308,
-   "t1": 542.308
+   "sec": "07-talk",
+   "who": "nova",
+   "kind": "say",
+   "vis": "talk:2；揭曉；card:It's Saturday. = Today is Saturday.",
+   "text": "It's Saturday!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 561.465,
+     "t1": 561.793
+    },
+    {
+     "w": "Saturday",
+     "t0": 561.808,
+     "t1": 562.574
+    }
+   ],
+   "t0": 561.624,
+   "t1": 562.759
   },
   {
    "i": 156,
-   "sec": "07-group",
-   "who": "nova",
+   "sec": "07-talk",
+   "who": "cosmo",
    "kind": "say",
-   "vis": "group:B→A；cal:Friday；card:What day is it?",
-   "text": "Group B!",
+   "vis": "talk:2；card:It's Saturday. = Today is Saturday.",
+   "text": "Repeat after me. It's Saturday.",
    "voices": [
-    "en-US-AvaNeural"
+    "en-US-GuyNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 542.608,
-     "t1": 542.983
+     "w": "Repeat",
+     "t0": 563.1,
+     "t1": 563.756
     },
     {
-     "w": "B",
-     "t0": 542.998,
-     "t1": 543.389
+     "w": "after",
+     "t0": 563.787,
+     "t1": 564.24
+    },
+    {
+     "w": "me",
+     "t0": 564.256,
+     "t1": 564.678
+    },
+    {
+     "w": "It's",
+     "t0": 565.768,
+     "t1": 566.112
+    },
+    {
+     "w": "Saturday",
+     "t0": 566.143,
+     "t1": 567.003
     }
    ],
-   "t0": 542.758,
-   "t1": 543.555
+   "t0": 563.209,
+   "t1": 567.085
   },
   {
    "i": 157,
-   "sec": "07-group",
+   "sec": "07-talk",
    "who": "-",
    "kind": "turn",
-   "vis": "group:B→A；cal:Friday；card:What day is it?",
+   "vis": "talk:2；card:It's Saturday. = Today is Saturday.",
    "sec_len": 3.0,
-   "t0": 544.255,
-   "t1": 547.255
+   "t0": 567.785,
+   "t1": 570.785
   },
   {
    "i": 158,
-   "sec": "07-group",
-   "who": "cosmo",
+   "sec": "07-talk",
+   "who": "amy",
    "kind": "say",
-   "vis": "group:B→A；cal:Friday；card:It's Friday.",
-   "text": "Group A!",
+   "vis": "talk:3；scene:hallway；pass:1",
+   "text": "Ben, what's that?",
    "voices": [
-    "en-US-GuyNeural"
+    "en-US-AnaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 547.598,
-     "t1": 548.067
+     "w": "Ben",
+     "t0": 571.142,
+     "t1": 571.595
     },
     {
-     "w": "A",
-     "t0": 548.098,
-     "t1": 548.614
+     "w": "what's",
+     "t0": 571.954,
+     "t1": 572.298
+    },
+    {
+     "w": "that",
+     "t0": 572.314,
+     "t1": 572.782
     }
    ],
-   "t0": 547.705,
-   "t1": 548.704
+   "t0": 571.235,
+   "t1": 572.79
   },
   {
    "i": 159,
-   "sec": "07-group",
-   "who": "-",
-   "kind": "turn",
-   "vis": "group:B→A；cal:Friday；card:It's Friday.",
-   "sec_len": 3.0,
-   "t0": 549.404,
-   "t1": 552.404
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:1",
+   "text": "It's my new guitar!",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 573.149,
+     "t1": 573.446
+    },
+    {
+     "w": "my",
+     "t0": 573.462,
+     "t1": 573.649
+    },
+    {
+     "w": "new",
+     "t0": 573.665,
+     "t1": 573.946
+    },
+    {
+     "w": "guitar",
+     "t0": 573.962,
+     "t1": 574.681
+    }
+   ],
+   "t0": 573.24,
+   "t1": 574.75
   },
   {
    "i": 160,
-   "sec": "07-group",
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:1",
+   "text": "Cool! Why do you have a guitar at school?",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "Cool",
+     "t0": 575.112,
+     "t1": 575.706
+    },
+    {
+     "w": "Why",
+     "t0": 576.781,
+     "t1": 577.093
+    },
+    {
+     "w": "do",
+     "t0": 577.109,
+     "t1": 577.234
+    },
+    {
+     "w": "you",
+     "t0": 577.249,
+     "t1": 577.39
+    },
+    {
+     "w": "have",
+     "t0": 577.406,
+     "t1": 577.687
+    },
+    {
+     "w": "a",
+     "t0": 577.703,
+     "t1": 577.796
+    },
+    {
+     "w": "guitar",
+     "t0": 577.812,
+     "t1": 578.328
+    },
+    {
+     "w": "at",
+     "t0": 578.343,
+     "t1": 578.499
+    },
+    {
+     "w": "school",
+     "t0": 578.515,
+     "t1": 579.093
+    }
+   ],
+   "t0": 575.2,
+   "t1": 579.16
+  },
+  {
+   "i": 161,
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:1",
+   "text": "Today is Thursday. We have music class!",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "Today",
+     "t0": 579.527,
+     "t1": 579.98
+    },
+    {
+     "w": "is",
+     "t0": 579.996,
+     "t1": 580.183
+    },
+    {
+     "w": "Thursday",
+     "t0": 580.199,
+     "t1": 580.964
+    },
+    {
+     "w": "We",
+     "t0": 581.792,
+     "t1": 581.98
+    },
+    {
+     "w": "have",
+     "t0": 581.996,
+     "t1": 582.214
+    },
+    {
+     "w": "music",
+     "t0": 582.23,
+     "t1": 582.652
+    },
+    {
+     "w": "class",
+     "t0": 582.667,
+     "t1": 583.511
+    }
+   ],
+   "t0": 579.61,
+   "t1": 583.532
+  },
+  {
+   "i": 162,
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:1",
+   "text": "Yay! Let's sing together!",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "Yay",
+     "t0": 583.872,
+     "t1": 584.466
+    },
+    {
+     "w": "Let's",
+     "t0": 585.541,
+     "t1": 585.994
+    },
+    {
+     "w": "sing",
+     "t0": 586.009,
+     "t1": 586.369
+    },
+    {
+     "w": "together",
+     "t0": 586.384,
+     "t1": 587.166
+    }
+   ],
+   "t0": 583.982,
+   "t1": 587.222
+  },
+  {
+   "i": 163,
+   "sec": "07-talk",
    "who": "nova",
    "kind": "say",
-   "vis": "group:B→A；cal:Tuesday；card:What day is today?",
-   "text": "Group B!",
+   "vis": "talk:3；scene:hallway；pass:2",
+   "text": "Listen again.",
    "voices": [
     "en-US-AvaNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 552.703,
-     "t1": 553.078
+     "w": "Listen",
+     "t0": 587.517,
+     "t1": 588.017
     },
     {
-     "w": "B",
-     "t0": 553.094,
-     "t1": 553.484
+     "w": "again",
+     "t0": 588.032,
+     "t1": 588.626
     }
    ],
-   "t0": 552.854,
-   "t1": 553.65
+   "t0": 587.672,
+   "t1": 588.756
   },
   {
-   "i": 161,
-   "sec": "07-group",
+   "i": 164,
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:2",
+   "text": "Ben, what's that?",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "Ben",
+     "t0": 589.113,
+     "t1": 589.566
+    },
+    {
+     "w": "what's",
+     "t0": 589.925,
+     "t1": 590.269
+    },
+    {
+     "w": "that",
+     "t0": 590.284,
+     "t1": 590.753
+    }
+   ],
+   "t0": 589.206,
+   "t1": 590.76
+  },
+  {
+   "i": 165,
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:2",
+   "text": "It's my new guitar!",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 591.12,
+     "t1": 591.417
+    },
+    {
+     "w": "my",
+     "t0": 591.433,
+     "t1": 591.62
+    },
+    {
+     "w": "new",
+     "t0": 591.636,
+     "t1": 591.917
+    },
+    {
+     "w": "guitar",
+     "t0": 591.933,
+     "t1": 592.651
+    }
+   ],
+   "t0": 591.21,
+   "t1": 592.721
+  },
+  {
+   "i": 166,
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:2",
+   "text": "Cool! Why do you have a guitar at school?",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "Cool",
+     "t0": 593.083,
+     "t1": 593.676
+    },
+    {
+     "w": "Why",
+     "t0": 594.751,
+     "t1": 595.064
+    },
+    {
+     "w": "do",
+     "t0": 595.08,
+     "t1": 595.205
+    },
+    {
+     "w": "you",
+     "t0": 595.22,
+     "t1": 595.361
+    },
+    {
+     "w": "have",
+     "t0": 595.376,
+     "t1": 595.658
+    },
+    {
+     "w": "a",
+     "t0": 595.673,
+     "t1": 595.767
+    },
+    {
+     "w": "guitar",
+     "t0": 595.783,
+     "t1": 596.298
+    },
+    {
+     "w": "at",
+     "t0": 596.314,
+     "t1": 596.47
+    },
+    {
+     "w": "school",
+     "t0": 596.486,
+     "t1": 597.064
+    }
+   ],
+   "t0": 593.171,
+   "t1": 597.131
+  },
+  {
+   "i": 167,
+   "sec": "07-talk",
+   "who": "ben",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:2",
+   "text": "Today is Thursday. We have music class!",
+   "voices": [
+    "en-US-RogerNeural"
+   ],
+   "words": [
+    {
+     "w": "Today",
+     "t0": 597.498,
+     "t1": 597.951
+    },
+    {
+     "w": "is",
+     "t0": 597.966,
+     "t1": 598.154
+    },
+    {
+     "w": "Thursday",
+     "t0": 598.169,
+     "t1": 598.935
+    },
+    {
+     "w": "We",
+     "t0": 599.763,
+     "t1": 599.951
+    },
+    {
+     "w": "have",
+     "t0": 599.966,
+     "t1": 600.185
+    },
+    {
+     "w": "music",
+     "t0": 600.201,
+     "t1": 600.623
+    },
+    {
+     "w": "class",
+     "t0": 600.638,
+     "t1": 601.482
+    }
+   ],
+   "t0": 597.581,
+   "t1": 601.502
+  },
+  {
+   "i": 168,
+   "sec": "07-talk",
+   "who": "amy",
+   "kind": "say",
+   "vis": "talk:3；scene:hallway；pass:2",
+   "text": "Yay! Let's sing together!",
+   "voices": [
+    "en-US-AnaNeural"
+   ],
+   "words": [
+    {
+     "w": "Yay",
+     "t0": 601.843,
+     "t1": 602.436
+    },
+    {
+     "w": "Let's",
+     "t0": 603.511,
+     "t1": 603.964
+    },
+    {
+     "w": "sing",
+     "t0": 603.98,
+     "t1": 604.339
+    },
+    {
+     "w": "together",
+     "t0": 604.355,
+     "t1": 605.136
+    }
+   ],
+   "t0": 601.952,
+   "t1": 605.193
+  },
+  {
+   "i": 169,
+   "sec": "07-talk",
+   "who": "nova",
+   "kind": "say",
+   "vis": "talk:3；card:What day is today?",
+   "text": "What day is today?",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "What",
+     "t0": 605.494,
+     "t1": 605.807
+    },
+    {
+     "w": "day",
+     "t0": 605.823,
+     "t1": 606.198
+    },
+    {
+     "w": "is",
+     "t0": 606.229,
+     "t1": 606.463
+    },
+    {
+     "w": "today",
+     "t0": 606.479,
+     "t1": 607.01
+    }
+   ],
+   "t0": 605.643,
+   "t1": 607.169
+  },
+  {
+   "i": 170,
+   "sec": "07-talk",
    "who": "-",
    "kind": "turn",
-   "vis": "group:B→A；cal:Tuesday；card:What day is today?",
+   "vis": "talk:3；card:What day is today?；倒數條",
    "sec_len": 3.0,
-   "t0": 554.35,
-   "t1": 557.35
+   "t0": 607.869,
+   "t1": 610.869
   },
   {
-   "i": 162,
-   "sec": "07-group",
+   "i": 171,
+   "sec": "07-talk",
    "who": "cosmo",
    "kind": "say",
-   "vis": "group:B→A；cal:Tuesday；card:It's Tuesday.",
-   "text": "Group A!",
+   "vis": "talk:3；揭曉；card:It's Thursday. = Today is Thursday.",
+   "text": "It's Thursday!",
    "voices": [
     "en-US-GuyNeural"
    ],
    "words": [
     {
-     "w": "Group",
-     "t0": 557.693,
-     "t1": 558.162
+     "w": "It's",
+     "t0": 611.196,
+     "t1": 611.524
     },
     {
-     "w": "A",
-     "t0": 558.193,
-     "t1": 558.709
+     "w": "Thursday",
+     "t0": 611.555,
+     "t1": 612.258
     }
    ],
-   "t0": 557.8,
-   "t1": 558.799
+   "t0": 611.319,
+   "t1": 612.346
   },
   {
-   "i": 163,
-   "sec": "07-group",
+   "i": 172,
+   "sec": "07-talk",
+   "who": "nova",
+   "kind": "say",
+   "vis": "talk:3；card:It's Thursday. = Today is Thursday.",
+   "text": "Repeat after me. It's Thursday.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 612.649,
+     "t1": 613.227
+    },
+    {
+     "w": "after",
+     "t0": 613.243,
+     "t1": 613.602
+    },
+    {
+     "w": "me",
+     "t0": 613.618,
+     "t1": 613.915
+    },
+    {
+     "w": "It's",
+     "t0": 614.38,
+     "t1": 614.74
+    },
+    {
+     "w": "Thursday",
+     "t0": 614.755,
+     "t1": 615.474
+    }
+   ],
+   "t0": 612.796,
+   "t1": 615.619
+  },
+  {
+   "i": 173,
+   "sec": "07-talk",
    "who": "-",
    "kind": "turn",
-   "vis": "group:B→A；cal:Tuesday；card:It's Tuesday.",
+   "vis": "talk:3；card:It's Thursday. = Today is Thursday.",
    "sec_len": 3.0,
-   "t0": 559.499,
-   "t1": 562.499
+   "t0": 616.319,
+   "t1": 619.319
   },
   {
-   "i": 164,
-   "sec": "07-group",
+   "i": 174,
+   "sec": "07-talk",
    "who": "cosmo",
    "kind": "say",
    "vis": "Cosmo 比讚 P07",
@@ -5400,20 +6402,20 @@
    "words": [
     {
      "w": "Wonderful",
-     "t0": 562.85,
-     "t1": 563.678
+     "t0": 619.669,
+     "t1": 620.498
     },
     {
      "w": "everyone",
-     "t0": 563.912,
-     "t1": 564.584
+     "t0": 620.732,
+     "t1": 621.404
     }
    ],
-   "t0": 562.949,
-   "t1": 564.733
+   "t0": 619.769,
+   "t1": 621.553
   },
   {
-   "i": 165,
+   "i": 175,
    "sec": "08-quiz",
    "who": "cosmo",
    "kind": "say",
@@ -5425,70 +6427,70 @@
    "words": [
     {
      "w": "Game",
-     "t0": 565.601,
-     "t1": 565.992
+     "t0": 622.421,
+     "t1": 622.811
     },
     {
      "w": "time",
-     "t0": 566.023,
-     "t1": 566.554
+     "t0": 622.843,
+     "t1": 623.374
     },
     {
      "w": "Look",
-     "t0": 567.676,
-     "t1": 568.098
+     "t0": 624.496,
+     "t1": 624.918
     },
     {
      "w": "at",
-     "t0": 568.114,
-     "t1": 568.27
+     "t0": 624.933,
+     "t1": 625.089
     },
     {
      "w": "the",
-     "t0": 568.301,
-     "t1": 568.442
+     "t0": 625.121,
+     "t1": 625.261
     },
     {
      "w": "calendar",
-     "t0": 568.473,
-     "t1": 569.27
+     "t0": 625.293,
+     "t1": 626.089
     },
     {
      "w": "What",
-     "t0": 570.348,
-     "t1": 570.661
+     "t0": 627.168,
+     "t1": 627.48
     },
     {
      "w": "day",
-     "t0": 570.692,
-     "t1": 570.957
+     "t0": 627.511,
+     "t1": 627.777
     },
     {
      "w": "is",
-     "t0": 570.989,
-     "t1": 571.192
+     "t0": 627.808,
+     "t1": 628.011
     },
     {
      "w": "it",
-     "t0": 571.207,
-     "t1": 571.489
+     "t0": 628.027,
+     "t1": 628.308
     }
    ],
-   "t0": 565.733,
-   "t1": 571.556
+   "t0": 622.553,
+   "t1": 628.375
   },
   {
-   "i": 166,
+   "i": 176,
    "sec": "08-quiz",
    "who": "-",
    "kind": "turn",
    "vis": "quiz:Tuesday；倒數條",
    "sec_len": 3.0,
-   "t0": 572.256,
-   "t1": 575.256
+   "t0": 629.075,
+   "t1": 632.075
   },
   {
-   "i": 167,
+   "i": 177,
    "sec": "08-quiz",
    "who": "nova",
    "kind": "say",
@@ -5500,20 +6502,20 @@
    "words": [
     {
      "w": "It's",
-     "t0": 575.547,
-     "t1": 575.875
+     "t0": 632.366,
+     "t1": 632.695
     },
     {
      "w": "Tuesday",
-     "t0": 575.891,
-     "t1": 576.609
+     "t0": 632.71,
+     "t1": 633.429
     }
    ],
-   "t0": 575.706,
-   "t1": 576.777
+   "t0": 632.525,
+   "t1": 633.597
   },
   {
-   "i": 168,
+   "i": 178,
    "sec": "08-quiz",
    "who": "cosmo",
    "kind": "say",
@@ -5525,50 +6527,50 @@
    "words": [
     {
      "w": "Next",
-     "t0": 577.12,
-     "t1": 577.652
+     "t0": 633.94,
+     "t1": 634.471
     },
     {
      "w": "one",
-     "t0": 577.683,
-     "t1": 578.152
+     "t0": 634.502,
+     "t1": 634.971
     },
     {
      "w": "What",
-     "t0": 579.242,
-     "t1": 579.555
+     "t0": 636.062,
+     "t1": 636.374
     },
     {
      "w": "day",
-     "t0": 579.586,
-     "t1": 579.852
+     "t0": 636.406,
+     "t1": 636.671
     },
     {
      "w": "is",
-     "t0": 579.883,
-     "t1": 580.086
+     "t0": 636.702,
+     "t1": 636.906
     },
     {
      "w": "it",
-     "t0": 580.102,
-     "t1": 580.383
+     "t0": 636.921,
+     "t1": 637.202
     }
    ],
-   "t0": 577.227,
-   "t1": 580.455
+   "t0": 634.047,
+   "t1": 637.274
   },
   {
-   "i": 169,
+   "i": 179,
    "sec": "08-quiz",
    "who": "-",
    "kind": "turn",
    "vis": "quiz:Friday；倒數條",
    "sec_len": 3.0,
-   "t0": 581.155,
-   "t1": 584.155
+   "t0": 637.974,
+   "t1": 640.974
   },
   {
-   "i": 170,
+   "i": 180,
    "sec": "08-quiz",
    "who": "nova",
    "kind": "say",
@@ -5580,180 +6582,20 @@
    "words": [
     {
      "w": "It's",
-     "t0": 584.46,
-     "t1": 584.726
+     "t0": 641.28,
+     "t1": 641.545
     },
     {
      "w": "Friday",
-     "t0": 584.742,
-     "t1": 585.46
+     "t0": 641.561,
+     "t1": 642.28
     }
    ],
-   "t0": 584.605,
-   "t1": 585.643
+   "t0": 641.424,
+   "t1": 642.463
   },
   {
-   "i": 171,
-   "sec": "08-quiz",
-   "who": "cosmo",
-   "kind": "say",
-   "vis": "quiz:Sunday；card:What day is today?",
-   "text": "Next one. What day is today?",
-   "voices": [
-    "en-US-GuyNeural"
-   ],
-   "words": [
-    {
-     "w": "Next",
-     "t0": 585.986,
-     "t1": 586.517
-    },
-    {
-     "w": "one",
-     "t0": 586.549,
-     "t1": 587.017
-    },
-    {
-     "w": "What",
-     "t0": 588.108,
-     "t1": 588.374
-    },
-    {
-     "w": "day",
-     "t0": 588.405,
-     "t1": 588.733
-    },
-    {
-     "w": "is",
-     "t0": 588.983,
-     "t1": 589.202
-    },
-    {
-     "w": "today",
-     "t0": 589.233,
-     "t1": 589.749
-    }
-   ],
-   "t0": 586.093,
-   "t1": 589.837
-  },
-  {
-   "i": 172,
-   "sec": "08-quiz",
-   "who": "-",
-   "kind": "turn",
-   "vis": "quiz:Sunday；倒數條",
-   "sec_len": 3.0,
-   "t0": 590.537,
-   "t1": 593.537
-  },
-  {
-   "i": 173,
-   "sec": "08-quiz",
-   "who": "nova",
-   "kind": "say",
-   "vis": "quiz:Sunday；揭曉；card:It's Sunday.",
-   "text": "It's Sunday!",
-   "voices": [
-    "en-US-AvaNeural"
-   ],
-   "words": [
-    {
-     "w": "It's",
-     "t0": 593.819,
-     "t1": 594.163
-    },
-    {
-     "w": "Sunday",
-     "t0": 594.178,
-     "t1": 594.85
-    }
-   ],
-   "t0": 593.987,
-   "t1": 595.017
-  },
-  {
-   "i": 174,
-   "sec": "08-quiz",
-   "who": "cosmo",
-   "kind": "say",
-   "vis": "quiz:Wednesday；card:What day is it?",
-   "text": "Next one. What day is it?",
-   "voices": [
-    "en-US-GuyNeural"
-   ],
-   "words": [
-    {
-     "w": "Next",
-     "t0": 595.36,
-     "t1": 595.891
-    },
-    {
-     "w": "one",
-     "t0": 595.922,
-     "t1": 596.391
-    },
-    {
-     "w": "What",
-     "t0": 597.482,
-     "t1": 597.794
-    },
-    {
-     "w": "day",
-     "t0": 597.825,
-     "t1": 598.091
-    },
-    {
-     "w": "is",
-     "t0": 598.122,
-     "t1": 598.325
-    },
-    {
-     "w": "it",
-     "t0": 598.341,
-     "t1": 598.622
-    }
-   ],
-   "t0": 595.467,
-   "t1": 598.694
-  },
-  {
-   "i": 175,
-   "sec": "08-quiz",
-   "who": "-",
-   "kind": "turn",
-   "vis": "quiz:Wednesday；倒數條",
-   "sec_len": 3.0,
-   "t0": 599.394,
-   "t1": 602.394
-  },
-  {
-   "i": 176,
-   "sec": "08-quiz",
-   "who": "nova",
-   "kind": "say",
-   "vis": "quiz:Wednesday；揭曉；card:It's Wednesday.",
-   "text": "It's Wednesday!",
-   "voices": [
-    "en-US-AvaNeural"
-   ],
-   "words": [
-    {
-     "w": "It's",
-     "t0": 602.68,
-     "t1": 602.946
-    },
-    {
-     "w": "Wednesday",
-     "t0": 602.961,
-     "t1": 603.727
-    }
-   ],
-   "t0": 602.844,
-   "t1": 603.908
-  },
-  {
-   "i": 177,
+   "i": 181,
    "sec": "08-quiz",
    "who": "cosmo",
    "kind": "say",
@@ -5765,50 +6607,50 @@
    "words": [
     {
      "w": "Last",
-     "t0": 604.253,
-     "t1": 604.769
+     "t0": 642.808,
+     "t1": 643.323
     },
     {
      "w": "one",
-     "t0": 604.8,
-     "t1": 605.3
+     "t0": 643.354,
+     "t1": 643.854
     },
     {
      "w": "What",
-     "t0": 606.406,
-     "t1": 606.672
+     "t0": 644.961,
+     "t1": 645.226
     },
     {
      "w": "day",
-     "t0": 606.703,
-     "t1": 607.031
+     "t0": 645.258,
+     "t1": 645.586
     },
     {
      "w": "is",
-     "t0": 607.281,
-     "t1": 607.5
+     "t0": 645.836,
+     "t1": 646.054
     },
     {
      "w": "today",
-     "t0": 607.531,
-     "t1": 608.047
+     "t0": 646.086,
+     "t1": 646.601
     }
    ],
-   "t0": 604.358,
-   "t1": 608.133
+   "t0": 642.913,
+   "t1": 646.688
   },
   {
-   "i": 178,
+   "i": 182,
    "sec": "08-quiz",
    "who": "-",
    "kind": "turn",
    "vis": "quiz:Thursday；倒數條",
    "sec_len": 3.0,
-   "t0": 608.833,
-   "t1": 611.833
+   "t0": 647.388,
+   "t1": 650.388
   },
   {
-   "i": 179,
+   "i": 183,
    "sec": "08-quiz",
    "who": "nova",
    "kind": "say",
@@ -5820,35 +6662,35 @@
    "words": [
     {
      "w": "It's",
-     "t0": 612.131,
-     "t1": 612.475
+     "t0": 650.685,
+     "t1": 651.029
     },
     {
      "w": "Thursday",
-     "t0": 612.49,
-     "t1": 613.24
+     "t0": 651.045,
+     "t1": 651.795
     },
     {
      "w": "Great",
-     "t0": 613.706,
-     "t1": 614.143
+     "t0": 652.26,
+     "t1": 652.698
     },
     {
      "w": "job",
-     "t0": 614.159,
-     "t1": 614.612
+     "t0": 652.714,
+     "t1": 653.167
     },
     {
      "w": "class",
-     "t0": 614.69,
-     "t1": 615.347
+     "t0": 653.245,
+     "t1": 653.901
     }
    ],
-   "t0": 612.283,
-   "t1": 615.454
+   "t0": 650.838,
+   "t1": 654.009
   },
   {
-   "i": 180,
+   "i": 184,
    "sec": "09-end",
    "who": "nova",
    "kind": "say",
@@ -5860,75 +6702,75 @@
    "words": [
     {
      "w": "Today",
-     "t0": 616.309,
-     "t1": 616.793
+     "t0": 654.863,
+     "t1": 655.347
     },
     {
      "w": "we",
-     "t0": 616.809,
-     "t1": 616.98
+     "t0": 655.363,
+     "t1": 655.535
     },
     {
      "w": "learned",
-     "t0": 616.996,
-     "t1": 617.449
+     "t0": 655.551,
+     "t1": 656.004
     },
     {
      "w": "two",
-     "t0": 617.465,
-     "t1": 617.699
+     "t0": 656.019,
+     "t1": 656.254
     },
     {
      "w": "questions",
-     "t0": 617.715,
-     "t1": 618.574
+     "t0": 656.269,
+     "t1": 657.129
     },
     {
      "w": "What",
-     "t0": 619.04,
-     "t1": 619.352
+     "t0": 657.594,
+     "t1": 657.907
     },
     {
      "w": "day",
-     "t0": 619.368,
-     "t1": 619.743
+     "t0": 657.922,
+     "t1": 658.297
     },
     {
      "w": "is",
-     "t0": 619.774,
-     "t1": 620.009
+     "t0": 658.329,
+     "t1": 658.563
     },
     {
      "w": "today",
-     "t0": 620.024,
-     "t1": 620.555
+     "t0": 658.579,
+     "t1": 659.11
     },
     {
      "w": "What",
-     "t0": 621.009,
-     "t1": 621.29
+     "t0": 659.563,
+     "t1": 659.844
     },
     {
      "w": "day",
-     "t0": 621.305,
-     "t1": 621.462
+     "t0": 659.86,
+     "t1": 660.016
     },
     {
      "w": "is",
-     "t0": 621.477,
-     "t1": 621.602
+     "t0": 660.032,
+     "t1": 660.157
     },
     {
      "w": "it",
-     "t0": 621.618,
-     "t1": 621.946
+     "t0": 660.172,
+     "t1": 660.501
     }
    ],
-   "t0": 616.454,
-   "t1": 622.027
+   "t0": 655.009,
+   "t1": 660.582
   },
   {
-   "i": 181,
+   "i": 185,
    "sec": "09-end",
    "who": "cosmo",
    "kind": "say",
@@ -5940,35 +6782,35 @@
    "words": [
     {
      "w": "And",
-     "t0": 622.387,
-     "t1": 622.652
+     "t0": 660.941,
+     "t1": 661.207
     },
     {
      "w": "one",
-     "t0": 622.684,
-     "t1": 622.965
+     "t0": 661.238,
+     "t1": 661.519
     },
     {
      "w": "answer",
-     "t0": 622.996,
-     "t1": 623.637
+     "t0": 661.551,
+     "t1": 662.191
     },
     {
      "w": "It's",
-     "t0": 624.743,
-     "t1": 625.055
+     "t0": 663.297,
+     "t1": 663.61
     },
     {
      "w": "Friday",
-     "t0": 625.087,
-     "t1": 625.79
+     "t0": 663.641,
+     "t1": 664.344
     }
    ],
-   "t0": 622.477,
-   "t1": 625.864
+   "t0": 661.032,
+   "t1": 664.418
   },
   {
-   "i": 182,
+   "i": 186,
    "sec": "09-end",
    "who": "nova",
    "kind": "zh",
@@ -5980,115 +6822,115 @@
    "words": [
     {
      "w": "問",
-     "t0": 626.199,
-     "t1": 626.449
+     "t0": 664.753,
+     "t1": 665.003
     },
     {
      "w": "今天",
-     "t0": 626.683,
-     "t1": 627.089
+     "t0": 665.238,
+     "t1": 665.644
     },
     {
      "w": "星期",
-     "t0": 627.121,
-     "t1": 627.558
+     "t0": 665.675,
+     "t1": 666.113
     },
     {
      "w": "幾",
-     "t0": 627.636,
-     "t1": 627.902
+     "t0": 666.191,
+     "t1": 666.456
     },
     {
      "w": "可以",
-     "t0": 628.199,
-     "t1": 628.464
+     "t0": 666.753,
+     "t1": 667.019
     },
     {
      "w": "說",
-     "t0": 628.511,
-     "t1": 628.746
+     "t0": 667.066,
+     "t1": 667.3
     },
     {
      "w": "What",
-     "t0": 628.777,
-     "t1": 628.98
+     "t0": 667.331,
+     "t1": 667.534
     },
     {
      "w": "day",
-     "t0": 629.042,
-     "t1": 629.324
+     "t0": 667.597,
+     "t1": 667.878
     },
     {
      "w": "is",
-     "t0": 629.652,
-     "t1": 629.792
+     "t0": 668.206,
+     "t1": 668.347
     },
     {
      "w": "today",
-     "t0": 629.792,
-     "t1": 630.23
+     "t0": 668.347,
+     "t1": 668.784
     },
     {
      "w": "或",
-     "t0": 631.399,
-     "t1": 631.649
+     "t0": 669.953,
+     "t1": 670.203
     },
     {
      "w": "What",
-     "t0": 631.664,
-     "t1": 631.852
+     "t0": 670.219,
+     "t1": 670.406
     },
     {
      "w": "day",
-     "t0": 631.899,
-     "t1": 632.071
+     "t0": 670.453,
+     "t1": 670.625
     },
     {
      "w": "is",
-     "t0": 632.086,
-     "t1": 632.258
+     "t0": 670.641,
+     "t1": 670.813
     },
     {
      "w": "it",
-     "t0": 632.258,
-     "t1": 632.477
+     "t0": 670.813,
+     "t1": 671.031
     },
     {
      "w": "回答",
-     "t0": 632.727,
-     "t1": 633.227
+     "t0": 671.281,
+     "t1": 671.781
     },
     {
      "w": "用",
-     "t0": 633.227,
-     "t1": 633.399
+     "t0": 671.781,
+     "t1": 671.953
     },
     {
      "w": "It's",
-     "t0": 633.446,
-     "t1": 633.649
+     "t0": 672.0,
+     "t1": 672.203
     },
     {
      "w": "加上",
-     "t0": 633.68,
-     "t1": 634.102
+     "t0": 672.234,
+     "t1": 672.656
     },
     {
      "w": "星期",
-     "t0": 634.133,
-     "t1": 634.586
+     "t0": 672.688,
+     "t1": 673.141
     },
     {
      "w": "幾",
-     "t0": 634.649,
-     "t1": 634.992
+     "t0": 673.203,
+     "t1": 673.547
     }
    ],
-   "t0": 626.314,
-   "t1": 635.109
+   "t0": 664.868,
+   "t1": 673.664
   },
   {
-   "i": 183,
+   "i": 187,
    "sec": "09-end",
    "who": "cosmo",
    "kind": "say",
@@ -6100,30 +6942,30 @@
    "words": [
     {
      "w": "See",
-     "t0": 635.438,
-     "t1": 635.782
+     "t0": 673.992,
+     "t1": 674.336
     },
     {
      "w": "you",
-     "t0": 635.813,
-     "t1": 635.954
+     "t0": 674.367,
+     "t1": 674.508
     },
     {
      "w": "next",
-     "t0": 635.985,
-     "t1": 636.313
+     "t0": 674.539,
+     "t1": 674.867
     },
     {
      "w": "time",
-     "t0": 636.344,
-     "t1": 636.782
+     "t0": 674.899,
+     "t1": 675.336
     }
    ],
-   "t0": 635.559,
-   "t1": 636.919
+   "t0": 674.114,
+   "t1": 675.473
   },
   {
-   "i": 184,
+   "i": 188,
    "sec": "09-end",
    "who": "nova",
    "kind": "say",
@@ -6135,17 +6977,17 @@
    "words": [
     {
      "w": "Bye-bye",
-     "t0": 637.204,
-     "t1": 637.86
+     "t0": 675.758,
+     "t1": 676.414
     },
     {
      "w": "class",
-     "t0": 637.891,
-     "t1": 638.563
+     "t0": 676.446,
+     "t1": 677.117
     }
    ],
-   "t0": 637.369,
-   "t1": 638.683
+   "t0": 675.923,
+   "t1": 677.238
   }
  ]
 }

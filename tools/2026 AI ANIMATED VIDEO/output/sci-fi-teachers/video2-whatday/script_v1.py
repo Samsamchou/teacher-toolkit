@@ -72,25 +72,34 @@ for day, q, sent, zh, img in CTX:
           (sec, 'cosmo', 'say', f"Now answer. It's {day}.", f"{v}；card:It's {day}."), (sec, '-', 'turn', SENT_TURN, f"{v}；card:It's {day}."),
           (sec, 'cosmo', 'say', 'One more time!', f"{v}；card:It's {day}."), (sec, '-', 'turn', SENT_TURN, f"{v}；card:It's {day}."),
           (sec, 'nova', 'say', f'{sent} Repeat after me. {sent}', f'{v}；card:{sent}'), (sec, '-', 'turn', SENT_TURN, f'{v}；card:{sent}')]
-# 7 分組問答（2026-10-20 老師選 B）：A 組問、B 組答，月曆翻五天，再交換
-GROUP = [('A', 'B', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']), ('B', 'A', ['Saturday', 'Sunday', 'Wednesday', 'Friday', 'Tuesday'])]
-S += [('07-group', 'cosmo', 'say', "Now let's play in groups. Group A, ask the question. Group B, answer.", 'group:A→B'),
-      ('07-group', 'nova', 'zh', 'A 組問問題，B 組回答。看月曆回答喔！', 'group:A→B')]
-for r, (ask, ans, days) in enumerate(GROUP):
-    if r == 1:
-        S += [('07-group', 'nova', 'say', 'Now switch! Group B, ask. Group A, answer.', 'group:B→A'),
-              ('07-group', 'cosmo', 'zh', '換過來！B 組問，A 組答。', 'group:B→A')]
-    for k, day in enumerate(days):
-        q = 'What day is today?' if k % 2 == 0 else 'What day is it?'
-        S += [('07-group', 'cosmo' if ask == 'A' else 'nova', 'say', f'Group {ask}!', f'group:{ask}→{ans}；cal:{day}；card:{q}'),
-              ('07-group', '-', 'turn', SENT_TURN, f'group:{ask}→{ans}；cal:{day}；card:{q}'),
-              ('07-group', 'nova' if ask == 'A' else 'cosmo', 'say', f'Group {ans}!', f"group:{ask}→{ans}；cal:{day}；card:It's {day}."),
-              ('07-group', '-', 'turn', SENT_TURN, f"group:{ask}→{ans}；cal:{day}；card:It's {day}.")]
-S += [('07-group', 'cosmo', 'say', 'Wonderful, everyone!', 'Cosmo 比讚 P07')]
-# 8 看月曆猜星期（2026-10-20 老師選 C：3 題加到 5 題）
+# 7 對話動畫（2026-10-29 規格卡 RDQ-spec-video2-dialogues：取消分組問答，改成 3 部學生對話）
+# Amy＝女、Ben＝男；每部先無字幕播一次（talk:N；pass:1），再有字幕播一次（pass:2）；畫面不出現星期提示；
+# 接著老師問 What day is today? → 3 秒 → 揭曉 It's ___. ＝ Today is ___. → Repeat after me 跟唸 It's ___. 一次。
+TALKS = [
+ (1, 'classroom', 'Wednesday', [('amy', 'Good morning, Ben!'), ('ben', 'Good morning, Amy! Do you have your crayons?'),
+     ('amy', 'Crayons? Why?'), ('ben', "It's Wednesday. We have art class today!"), ('amy', 'Oh, no! My crayons are at home.'),
+     ('ben', "It's OK. You can use my crayons."), ('amy', 'Thank you, Ben!')], 'nova'),
+ (2, 'home', 'Saturday', [('ben', "Oh, no! I'm late for school!"), ('amy', 'Ben, relax. Today is Saturday.'),
+     ('ben', 'Saturday? No school today?'), ('amy', "No school! Let's play basketball in the park."), ('ben', "Great idea! Let's go!")], 'cosmo'),
+ (3, 'hallway', 'Thursday', [('amy', "Ben, what's that?"), ('ben', "It's my new guitar!"),
+     ('amy', 'Cool! Why do you have a guitar at school?'), ('ben', 'Today is Thursday. We have music class!'),
+     ('amy', "Yay! Let's sing together!")], 'nova'),
+]
+S += [('07-talk', 'cosmo', 'say', "Now let's watch Amy and Ben. Listen carefully!", '對話段標題；老師退到兩側'),
+      ('07-talk', 'nova', 'zh', '仔細聽，他們說今天星期幾？', '對話段標題')]
+for no, scene, day, lines, asker in TALKS:
+    other = 'cosmo' if asker == 'nova' else 'nova'
+    for ps in (1, 2):
+        if ps == 2: S += [(f'07-talk', asker, 'say', 'Listen again.', f'talk:{no}；scene:{scene}；pass:2')]
+        S += [('07-talk', who, 'say', text, f'talk:{no}；scene:{scene}；pass:{ps}') for who, text in lines]
+    S += [('07-talk', asker, 'say', 'What day is today?', f'talk:{no}；card:What day is today?'), ('07-talk', '-', 'turn', SENT_TURN, f'talk:{no}；card:What day is today?；倒數條'),
+          ('07-talk', other, 'say', f"It's {day}!", f"talk:{no}；揭曉；card:It's {day}. = Today is {day}."),
+          ('07-talk', asker, 'say', f"Repeat after me. It's {day}.", f"talk:{no}；card:It's {day}. = Today is {day}."),
+          ('07-talk', '-', 'turn', SENT_TURN, f"talk:{no}；card:It's {day}. = Today is {day}.")]
+S += [('07-talk', 'cosmo', 'say', 'Wonderful, everyone!', 'Cosmo 比讚 P07')]
+# 8 看月曆猜星期（2026-10-29 老師：維持 3 題）
 QUIZ = [('Game time! Look at the calendar.', 'What day is it?', 'Tuesday'),
-        ('Next one.', 'What day is it?', 'Friday'), ('Next one.', 'What day is today?', 'Sunday'),
-        ('Next one.', 'What day is it?', 'Wednesday'), ('Last one.', 'What day is today?', 'Thursday')]
+        ('Next one.', 'What day is it?', 'Friday'), ('Last one.', 'What day is today?', 'Thursday')]
 for k, (lead, q, day) in enumerate(QUIZ):
     S += [('08-quiz', 'cosmo', 'say', f'{lead} {q}', f'quiz:{day}；card:{q}'), ('08-quiz', '-', 'turn', SENT_TURN, f'quiz:{day}；倒數條'),
           ('08-quiz', 'nova', 'say', f"It's {day}!" + (' Great job, class!' if k == len(QUIZ) - 1 else ''), f"quiz:{day}；揭曉；card:It's {day}.")]
