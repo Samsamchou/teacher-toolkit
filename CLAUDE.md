@@ -45,6 +45,10 @@
 - `tools/2026 AI VIDEOS SENSE BAR/`：照「山獅霸」工作流（shanshiba-workflow 兩個 repo）在 Google Colab G4
   做 AI 短片；上游 repo clone 在裡面但不入庫，各片設定存 `films/<片名>/`。先讀 `HANDOFF.md`；
   範本片〈被狗吃掉的作業〉2026-10-23 驗收。影片與圖片音檔不入庫。
+- `tools/vocabulary web/`：5 年級 HWG5／6（https://hwg6u01voc.web.app）與 6 年級 HWG7／8
+  （https://hwg8u01voc.web.app）單字練習網站，2026-10-30 從 C 槽搬來，**之後只在這裡更新**。
+  整個資料夾不入庫（.gitignore）；部署用 `stage-for-deploy.ps1` 到 C 槽暫存再 deploy，`--account u9431818@gmail.com`。
+  先讀該資料夾 `CLAUDE.md`、`HANDOFF.md`。
 
 ## 工作注意事項
 

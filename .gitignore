@@ -38,3 +38,6 @@ __pycache__/
 # OS metadata
 Thumbs.db
 .DS_Store
+
+# 5、6 年級單字網站：只放雲端硬碟，不進公開 repo（含課本教材）
+tools/vocabulary web/
