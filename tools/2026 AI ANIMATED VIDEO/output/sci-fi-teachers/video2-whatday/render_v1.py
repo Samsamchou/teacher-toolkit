@@ -257,6 +257,7 @@ def paste_art(L, k, cx, cy, w, h, scale=1.0, border=CYAN):
 sys.path.insert(0, str(HERE))
 from script_v1 import TALKS
 import talk_scene as TS
+import talk_deluxe as TD
 TAGS = ('card', 'cal', 'img', 'quiz', 'talk', 'scene', 'pass')
 def tags(s):
     out = {}
@@ -385,6 +386,30 @@ def kid_gesture(text):
     if "what's that" in tl: return 'point'
     return 'talk'
 
+# 2026-10-30 老師：學生對嘴有些嘴型跟不上單字 → 改成「聲音大小決定張多大、單字字母只決定圓嘴或扁嘴」，
+# 每 1/15 秒最多換一次嘴型；字和字之間聲音變小時自然閉嘴。
+_ENV = None
+def voice_env():
+    global _ENV
+    if _ENV is None:
+        import soundfile as sf, numpy as np
+        a, sr = sf.read(str(HERE / 'voice_v1.wav'), dtype='float32')
+        if a.ndim > 1: a = a.mean(1)
+        hop = sr // 100; n = len(a) // hop
+        rms = np.sqrt((a[:n * hop].reshape(n, hop) ** 2).mean(1))
+        rms = np.convolve(rms, np.ones(3) / 3, 'same')
+        _ENV = (rms / max(np.percentile(rms[rms > 1e-4], 95), 1e-6)).clip(0, 1.2)
+    return _ENV
+def kid_mouth(w, t):
+    tq = math.floor(t * 15) / 15 + 1 / 30
+    env = voice_env(); e = float(env[min(len(env) - 1, int(tq * 100))])
+    v = mouth_at(w, tq) or 'M08_mid'
+    if e < .12: return 'M01_rest'
+    if v in ('M04_O', 'M05_U'): return 'M05_U' if e < .35 else 'M04_O'
+    if v == 'M03_E': return 'M03_E' if e < .7 else 'M02_A'
+    if v in ('M06_FV', 'M07_L'): return 'M08_mid'
+    return 'M02_A' if e > .55 else 'M08_mid'
+
 def board_talk(L, d, t):
     s = last_seg(t); tg = tags(s); cur = seg_at(t)
     if 'talk' not in tg:   # 段落開頭的標題
@@ -392,21 +417,17 @@ def board_talk(L, d, t):
         text_center(d, 'Listen to Amy and Ben!', CX, 380, font(F_EN, 62 * k), (*CYAN, 255), 4, (*NAVY, 255)); return
     no = int(tg['talk']); scene = next(sc for n, sc, dy, ln, _ in TALKS if n == no)
     t_in = next(x for x in SEGS if tags(x).get('talk') == str(no))['t0'] - .3
-    spk = cur['who'] if cur and cur['who'] in ('amy', 'ben') else None
-    said = [x for x in SEGS if tags(x).get('talk') == str(no) and x['who'] in ('amy', 'ben') and x['t0'] <= t and tags(x).get('pass') == tg.get('pass')]
-    st = {}
-    for who in ('amy', 'ben'):
-        g = kid_gesture(cur['text']) if spk == who else 'idle'
-        prop = {1: 'crayons', 2: 'backpack', 3: 'guitar'}[no] if who == 'ben' else None
-        if who == 'amy' and no == 2 and any('basketball' in x['text'] for x in said): prop = 'basketball'
-        if prop in ('crayons', 'basketball') and g == 'idle': g = 'hold'
-        st[who] = {'mouth': mouth_at(who, t), 'blink': is_blink(who, t), 'gesture': g, 'talking': spk == who, 'prop': prop}
-    if no == 2 and spk == 'ben' and 'late' in cur['text']: st['sweat'] = clamp((t - cur['t0']) / .3)
-    P = TS.panel(scene, t, st)
-    k = clamp((t - t_in) / .4); x0, y0 = CX - TS.PW // 2, 92
+    # 2026-10-30 華麗版（規格卡 RDQ-spec-video2-dialogues-deluxe）：Codex 生圖素材＋程式剪紙動畫，每句有自己的鏡頭與動作
+    ps_ = tg.get('pass') or '2'   # 問答時停在第二遍最後一句的畫面
+    lines = [(x['t0'], x['t1'], x['who'], x['text']) for x in SEGS if tags(x).get('talk') == str(no) and tags(x).get('pass') == ps_ and x['who'] in ('amy', 'ben')]
+    tt = t if tg.get('pass') else lines[-1][1] - .05
+    talking_fn = lambda w, tq: bool(seg_at(tq) and seg_at(tq)['who'] == w)
+    mouth_fn = kid_mouth
+    P = TD.panel(no, tt, lines, mouth_fn, talking_fn)
+    k = clamp((t - t_in) / .4); x0, y0 = CX - TD.PW // 2, 92
     if k < 1:
-        P = P.resize((max(2, round(TS.PW * (.9 + .1 * k))), max(2, round(TS.PH * (.9 + .1 * k)))))
-        x0, y0 = CX - P.width // 2, 92 + (TS.PH - P.height) // 2
+        P = P.resize((max(2, round(TD.PW * (.9 + .1 * k))), max(2, round(TD.PH * (.9 + .1 * k)))))
+        x0, y0 = CX - P.width // 2, 92 + (TD.PH - P.height) // 2
     d.rounded_rectangle((x0 - 6, y0 - 6, x0 + P.width + 6, y0 + P.height + 6), 34, fill=(*CYAN, 255))
     L.alpha_composite(P, (x0, y0))
     ps = tg.get('pass')
