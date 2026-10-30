@@ -1,0 +1,12 @@
+Create a 2D game SPRITE SHEET of the boy in the reference image (Ken), drawn as a cute chibi fantasy-adventure hero for a children's English quiz RPG.
+
+Character (must stay IDENTICAL in all 16 frames): spiky brown hair, big brown eyes, white short-sleeve polo shirt with navy collar and a small gear badge, navy shorts, red sneakers, orange-and-navy backpack. Chibi proportions (head about 1/3 of body height). Clean anime cel shading, bold dark outlines, bright colors. NO weapons of any kind.
+
+Layout: exactly 4 columns x 4 rows of equal square cells on ONE canvas (square image). No grid lines, no borders, no text, no numbers. Pure flat white (#FFFFFF) background everywhere, no shadows on the ground, no scenery.
+In every cell the character is the SAME size, faces RIGHT (side 3/4 view), is horizontally centered, and the soles of the feet sit on the same baseline near the bottom of the cell. Leave empty margin around the character inside each cell; nothing may touch or cross a cell edge.
+
+Rows (read left to right, a smooth 4-frame loop per row):
+Row 1 IDLE: gentle breathing bob, frame 1 neutral, 2 slight squash, 3 slight rise, 4 neutral; hands in ready fists.
+Row 2 ATTACK: frame 1 wind-up leaning back with one hand glowing golden, 2 lunge forward, 3 thrust palm forward releasing a burst of golden clock-gear light, 4 recover.
+Row 3 HURT: frame 1 flinch with eyes squeezed shut, 2 knocked back leaning away, 3 stagger, 4 regain balance.
+Row 4 VICTORY: frame 1 crouch, 2 jump with fist raised, 3 peak with big smile and sparkles, 4 land with thumbs up.

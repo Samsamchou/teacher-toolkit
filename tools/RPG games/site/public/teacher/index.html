@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>答題紀錄後台</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Noto+Sans+TC:wght@500;700;900&display=swap">
+<style>
+  :root { --ink:#2a2350; --sub:#6b6496; --line:#e4defa; --purple:#6b3fd4; --bg:#f6f4ff; --ok:#16a34a; --bad:#dc2626;
+          --font:"Noto Sans TC","Microsoft JhengHei",sans-serif; --en:"Comic Relief","Noto Sans TC",sans-serif; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font); }
+  header { display:flex; align-items:center; gap:12px; padding:12px 16px; background:#2a2350; color:#fff; flex-wrap:wrap; }
+  header h1 { font-size:20px; margin:0; } header .sp { flex:1; }
+  main { padding:16px; max-width:1200px; margin:0 auto; }
+  .card { background:#fff; border-radius:16px; padding:16px; box-shadow:0 4px 16px rgba(42,35,80,.08); margin-bottom:16px; }
+  button, select, input { font:inherit; }
+  .btn { border:0; border-radius:10px; padding:8px 14px; background:var(--purple); color:#fff; font-weight:700; cursor:pointer; }
+  .btn.light { background:#ece8fb; color:var(--purple); }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  select, input { padding:7px 10px; border-radius:10px; border:2px solid var(--line); }
+  table { border-collapse:collapse; width:100%; font-size:15px; }
+  th, td { border-bottom:1px solid var(--line); padding:7px 8px; text-align:left; white-space:nowrap; }
+  th { color:var(--sub); font-weight:700; position:sticky; top:0; background:#fff; }
+  td.num, th.num { text-align:right; font-family:var(--en); }
+  tr.click { cursor:pointer; } tr.click:hover td { background:#f3f0ff; }
+  .scroll { overflow:auto; max-height:60vh; }
+  .score { font-weight:700; } .low { color:var(--bad); } .high { color:var(--ok); }
+  .bar { display:inline-block; height:10px; border-radius:6px; background:var(--bad); vertical-align:middle; }
+  .muted { color:var(--sub); } .en { font-family:var(--en); }
+  .login { max-width:360px; margin:60px auto; text-align:center; }
+  .login input { font:700 28px var(--en); letter-spacing:8px; text-align:center; width:100%; margin:10px 0; }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:16px; }
+  .ans { display:inline-block; min-width:22px; text-align:center; border-radius:6px; margin:1px; font:700 12px var(--en); padding:1px 3px; }
+  .ans.y { background:#dcfce7; color:var(--ok); } .ans.n { background:#fee2e2; color:var(--bad); }
+</style>
+</head>
+<body>
+<header><h1>📊 時鐘塔答題大作戰・老師後台</h1><span class="sp"></span><button class="btn light" id="logout" hidden>登出</button></header>
+<main>
+  <form class="card login" id="login">
+    <h2>老師登入</h2>
+    <p class="muted">輸入闖關任務後台同一組 6 位數通行碼</p>
+    <input id="code" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password">
+    <button class="btn" style="width:100%">登入</button>
+    <p id="loginMsg" class="low"></p>
+  </form>
+  <div id="dash" hidden>
+    <div class="card row">
+      <label>題組 <select id="quiz"></select></label>
+      <label>班級 <select id="cls"></select></label>
+      <span class="sp"></span>
+      <button class="btn light" id="reload">重新讀取</button>
+      <button class="btn" id="csvBest">匯出成績 CSV</button>
+      <button class="btn" id="csvAll">匯出每次紀錄 CSV</button>
+      <span class="muted" id="msg"></span>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>學生成績（取最高分）</h3><div class="scroll"><table id="students"></table></div></div>
+      <div class="card"><h3>每題答錯率</h3><p class="muted" style="margin-top:-6px">算法：每位學生每題取「最近一次」作答</p><div class="scroll"><table id="items"></table></div></div>
+    </div>
+    <div class="card" id="detail" hidden></div>
+  </div>
+</main>
+<script type="module" src="teacher.mjs"></script>
+</body>
+</html>

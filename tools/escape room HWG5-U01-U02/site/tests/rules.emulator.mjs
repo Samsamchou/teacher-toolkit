@@ -76,6 +76,28 @@ await t("progress: ershui attempt with 51 items accepted in questAttempts", () =
   attempt("d5", "c1", { mission: "ershui-3d-quest", items: Array.from({ length: 51 }, (_, i) => ({ seq: i + 1, attempts: 1, quality: 4 })), summary: { score: 100 } }))));
 await t("english-portal: collection named questProgressX still behaves like other collections", () => assertSucceeds(setDoc(doc(anon("p1"), "questProgressX/doc1"), { v: 1 })));
 
+// ---- rpgAttempts（時鐘塔答題大作戰 RPG）
+const rpg = (uid, id = "50101-mgx1a2b3", extra = {}) => ({ uid, quiz: "hwg5-u01-u02", studentId: "50101", attemptId: id,
+  startedAt: "2026-10-30T00:00:00Z", updatedAt: "2026-10-30T00:05:00Z", finished: false, score: 3, correct: 1, answered: 2, total: 32,
+  answers: [{ id: "Q01", chosen: "time / 9:50", ok: true }, { id: "Q02", chosen: "do / Monday", ok: false }],
+  game: { defeated: 0, monsters: 3, maxCombo: 1, ults: 0, kos: 0, durationSec: 40 }, version: 1, activeDays: ["2026-10-30"], ...extra });
+await t("rpg: student creates own attempt", () => assertSucceeds(setDoc(doc(anon("r1"), "rpgAttempts/50101-mgx1a2b3"), rpg("r1"))));
+await t("rpg: student finishes (updates) own attempt", () => assertSucceeds(setDoc(doc(anon("r1"), "rpgAttempts/50101-mgx1a2b3"),
+  rpg("r1", "50101-mgx1a2b3", { finished: true, finishedAt: "2026-10-30T00:09:00Z", score: 84, correct: 27, answered: 32, expiresAt: days(456) }))));
+await t("rpg: student cannot read own attempt back", () => assertFails(getDoc(doc(anon("r1"), "rpgAttempts/50101-mgx1a2b3"))));
+await t("rpg: other device cannot overwrite it", () => assertFails(setDoc(doc(anon("r2"), "rpgAttempts/50101-mgx1a2b3"), rpg("r2", "50101-mgx1a2b3", { score: 100 }))));
+await t("rpg: cannot change studentId on update", () => assertFails(setDoc(doc(anon("r1"), "rpgAttempts/50101-mgx1a2b3"), rpg("r1", "50101-mgx1a2b3", { studentId: "50102" }))));
+await t("rpg: score above 100 rejected", () => assertFails(setDoc(doc(anon("r3"), "rpgAttempts/50101-mgx1a2c1"), rpg("r3", "50101-mgx1a2c1", { score: 101 }))));
+await t("rpg: correct above total rejected", () => assertFails(setDoc(doc(anon("r3"), "rpgAttempts/50101-mgx1a2c2"), rpg("r3", "50101-mgx1a2c2", { correct: 33, answered: 33 }))));
+await t("rpg: bad student id (seat 31) rejected", () => assertFails(setDoc(doc(anon("r3"), "rpgAttempts/50131-mgx1a2c3"), rpg("r3", "50131-mgx1a2c3", { studentId: "50131" }))));
+await t("rpg: doc id must equal attemptId", () => assertFails(setDoc(doc(anon("r3"), "rpgAttempts/50101-zzzzzzzz"), rpg("r3", "50101-mgx1a2c4"))));
+await t("rpg: name field rejected", () => assertFails(setDoc(doc(anon("r3"), "rpgAttempts/50101-mgx1a2c5"), rpg("r3", "50101-mgx1a2c5", { name: "Real Name" }))));
+await t("rpg: signed-out cannot write", () => assertFails(setDoc(doc(env.unauthenticatedContext().firestore(), "rpgAttempts/50101-mgx1a2c6"), rpg("x", "50101-mgx1a2c6"))));
+await t("rpg: teacher can list", async () => { const s = await assertSucceeds(getDocs(collection(teacher(), "rpgAttempts"))); assert.ok(s.size >= 1); });
+await t("rpg: anonymous cannot list", () => assertFails(getDocs(collection(anon("r9"), "rpgAttempts"))));
+await t("rpg: nobody can delete", () => assertFails(deleteDoc(doc(anon("r1"), "rpgAttempts/50101-mgx1a2b3"))));
+await t("rpg: questAttempts rules unchanged (student still creates)", () => assertSucceeds(setDoc(doc(anon("r7"), "questAttempts/z1"), attempt("r7", "z1"))));
+
 await env.cleanup();
 for (const [s, n] of results) console.log(s, n);
 const failed = results.filter(r => r[0] === "FAIL").length;

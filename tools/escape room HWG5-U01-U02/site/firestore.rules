@@ -13,7 +13,8 @@ service cloud.firestore {
 
     // ---- english-portal (unchanged behaviour for all other collections)
     match /{collection}/{document=**} {
-      allow read, write: if request.auth != null && collection != 'questAttempts' && collection != 'questProgress';
+      allow read, write: if request.auth != null && collection != 'questAttempts' && collection != 'questProgress'
+        && collection != 'rpgAttempts';
     }
 
     // ---- English Mission Quest: one document per student attempt
@@ -47,6 +48,43 @@ service cloud.firestore {
         && validShape(request.resource.data);
       // only the teacher account can read (students never read records back)
       allow get, list: if isTeacher();
+      allow delete: if false;
+    }
+
+    // ---- 時鐘塔答題大作戰（RPG 答題網站 rpg-quiz-battle.web.app）：每次作答一份文件
+    // 學生裝置匿名登入，只能新增／更新自己的紀錄，讀不回；只有老師帳號能讀。沒有姓名，只有學號。
+    match /rpgAttempts/{attemptId} {
+      function isRpgTeacher() {
+        return request.auth != null && request.auth.uid == 'z2obFrDz3jf44ip49UmVIiPvJN73'
+          && request.auth.token.firebase.sign_in_provider == 'password';
+      }
+      function validRpg(d) {
+        return d.keys().hasAll(['uid', 'quiz', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'finished',
+                                'score', 'correct', 'answered', 'total', 'answers', 'game'])
+          && d.keys().hasOnly(['uid', 'quiz', 'studentId', 'attemptId', 'startedAt', 'updatedAt', 'finishedAt', 'finished',
+                               'score', 'correct', 'answered', 'total', 'answers', 'game', 'version', 'activeDays', 'expiresAt'])
+          && d.quiz is string && d.quiz.matches('^[a-z0-9-]{3,40}$')
+          && d.studentId is string && d.studentId.matches('^[3-6][0-9]{2}(0[1-9]|[12][0-9]|30)$')
+          && d.attemptId == attemptId && attemptId.matches('^[0-9]{5}-[a-z0-9]{6,12}$')
+          && d.finished is bool
+          && d.score is int && d.score >= 0 && d.score <= 100
+          && d.total is int && d.total > 0 && d.total <= 100
+          && d.correct is int && d.correct >= 0 && d.correct <= d.total
+          && d.answered is int && d.answered >= d.correct && d.answered <= d.total
+          && d.answers is list && d.answers.size() <= 100
+          && d.game is map && d.game.size() <= 12
+          && (!('activeDays' in d) || (d.activeDays is list && d.activeDays.size() <= 60))
+          && (!('expiresAt' in d) || (d.expiresAt is timestamp
+              && d.expiresAt > request.time && d.expiresAt < request.time + duration.value(470, 'd')));
+      }
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid
+        && validRpg(request.resource.data);
+      allow update: if request.auth != null && resource.data.uid == request.auth.uid
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.studentId == resource.data.studentId
+        && request.resource.data.quiz == resource.data.quiz
+        && validRpg(request.resource.data);
+      allow get, list: if isRpgTeacher();
       allow delete: if false;
     }
 

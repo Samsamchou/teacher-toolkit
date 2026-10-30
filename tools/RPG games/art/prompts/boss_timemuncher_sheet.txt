@@ -1,0 +1,10 @@
+Create a 2D game SPRITE SHEET of the BOSS shown in the reference image: "Time Muncher", a round purple-and-gold clockwork creature with a big hinged golden jaw (mouth like a pocket-watch lid), glowing amber eyes, a small crown-like knob on top, gears on its back, and long golden clock-hand arms. Keep its design IDENTICAL to the reference and identical in all 16 frames. Bright chibi game-art style, clean cel shading, bold dark outlines. A little intimidating but still friendly for 10-year-olds. No weapons.
+
+Layout: exactly 4 columns x 4 rows of equal square cells on ONE canvas (square image). No grid lines, no borders, no text, no numbers. Pure flat white (#FFFFFF) background everywhere, no ground shadows, no scenery.
+In every cell the boss is the SAME size, faces LEFT, is horizontally centered, and the bottom of its body sits on the same baseline near the bottom of the cell. Leave empty margin inside each cell; nothing may touch or cross a cell edge.
+
+Rows (read left to right, smooth 4-frame loop per row):
+Row 1 IDLE: floating bob, jaw slowly opening and closing, gears turning.
+Row 2 ATTACK: frame 1 rear back with jaw wide open, 2 lunge to the left, 3 chomp releasing a purple swirl of clock numbers-free time energy, 4 recover.
+Row 3 HURT: frame 1 flinch with eyes squeezed, 2 knocked back to the right with jaw snapped shut, 3 wobble with small stars and loose gears, 4 regain balance.
+Row 4 DEFEATED: frame 1 dizzy spiral eyes, 2 tipping over with gears popping out, 3 lying down with jaw open and spiral eyes, 4 turning into a big burst of golden sparkles and tiny gears.

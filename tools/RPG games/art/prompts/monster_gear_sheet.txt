@@ -1,0 +1,10 @@
+Create a 2D game SPRITE SHEET of a small cute-but-mischievous monster for a children's English quiz RPG, matching the style of the reference image (purple-and-gold clockwork creature): "Gear Gremlin", a round purple body the size of a ball, one big golden gear on its back, two glowing amber eyes, little brass clock-hand arms, stubby brass feet, a tiny clock face on its belly. Chibi, bright colors, clean cel shading, bold dark outlines. The design must stay IDENTICAL in all 16 frames. Not scary; suitable for 10-year-olds.
+
+Layout: exactly 4 columns x 4 rows of equal square cells on ONE canvas (square image). No grid lines, no borders, no text, no numbers. Pure flat white (#FFFFFF) background everywhere, no ground shadows, no scenery.
+In every cell the monster is the SAME size, faces LEFT, is horizontally centered, and its feet sit on the same baseline near the bottom of the cell. Leave empty margin inside each cell; nothing may touch or cross a cell edge.
+
+Rows (read left to right, smooth 4-frame loop per row):
+Row 1 IDLE: bouncing hover, gear slowly turning.
+Row 2 ATTACK: frame 1 crouch wind-up, 2 lunge to the left, 3 swipe with clock-hand arms leaving a purple spark arc, 4 recover.
+Row 3 HURT: frame 1 flinch with dizzy eyes, 2 knocked back to the right, 3 wobble with small stars, 4 regain balance.
+Row 4 DEFEATED: frame 1 dizzy, 2 tipping over, 3 lying down with spiral eyes, 4 turning into a puff of golden sparkles.

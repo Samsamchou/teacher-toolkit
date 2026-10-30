@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>精靈幀樣張</title>
+<style>
+  :root { --bg:#1d2340; --card:#2a3360; --ink:#f4f6ff; --sub:#b8c0e8; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif; padding:16px; }
+  h1 { font-size:22px; margin:4px 0 2px; } p { color:var(--sub); margin:0 0 16px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+  .card { background:var(--card); border-radius:14px; padding:12px; text-align:center; }
+  .card b { display:block; margin-bottom:6px; }
+  .sprite { width:200px; height:200px; margin:0 auto; background-size:400% 400%; background-repeat:no-repeat;
+            animation: play var(--dur,0.6s) steps(4) infinite; }
+  @keyframes play { from { background-position-x:0%; } to { background-position-x:133.333%; } }
+  .speed { margin:10px 0 18px; }
+  .arena { margin-top:22px; background:linear-gradient(#8fd3ff,#d9f2ff 60%,#9bd17a 60%,#6fb35a); border-radius:16px;
+           height:300px; position:relative; overflow:hidden; }
+  .arena .sprite { position:absolute; bottom:18px; width:220px; height:220px; }
+  #hero { left:8%; } #mon { right:8%; }
+  .btns { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+  button { font-size:16px; padding:8px 14px; border-radius:10px; border:0; background:#ffd25e; cursor:pointer; }
+</style>
+</head>
+<body>
+<h1>精靈幀：Ken＋三隻怪物</h1>
+<p>4×4 精靈圖，每列 4 幀，用 CSS steps() 逐格播放。</p>
+<label class="speed">速度 <input id="spd" type="range" min="0.3" max="1.4" step="0.1" value="0.6"> <span id="spdv">0.6</span> 秒／輪</label>
+<div class="grid" id="grid"></div>
+
+<h2>小擂台試玩</h2>
+<div class="arena"><div id="hero" class="sprite"></div><div id="mon" class="sprite"></div></div>
+<div class="btns">
+  <button data-act="hit">答對：Ken 攻擊</button>
+  <button data-act="miss">答錯：怪物反擊</button>
+  <button data-act="win">打倒怪物</button>
+</div>
+
+<script>
+const SHEETS = {
+  hero: { src: "assets/sprites/hero_ken.webp", name: "Ken", rows: ["待機", "攻擊", "受傷", "勝利"] },
+  mon:  { src: "assets/sprites/monster_gear.webp", name: "齒輪小怪", rows: ["待機", "攻擊", "受傷", "倒下"] },
+  mon2: { src: "assets/sprites/monster_windup.webp", name: "發條兔兔", rows: ["待機", "攻擊", "受傷", "倒下"] },
+  boss: { src: "assets/sprites/boss_timemuncher.webp", name: "時間吞噬者", rows: ["待機", "攻擊", "受傷", "倒下"] },
+};
+const rowY = r => `${(r * 100) / 3}%`;
+const grid = document.getElementById("grid");
+for (const [key, s] of Object.entries(SHEETS)) {
+  s.rows.forEach((label, r) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<b>${s.name}・${label}</b><div class="sprite"></div>`;
+    const el = card.querySelector(".sprite");
+    el.style.backgroundImage = `url(${s.src})`;
+    el.style.backgroundPositionY = rowY(r);
+    grid.appendChild(card);
+  });
+}
+const spd = document.getElementById("spd");
+spd.oninput = () => { document.documentElement.style.setProperty("--dur", spd.value + "s"); spdv.textContent = spd.value; };
+
+// 擂台：播一次某列再回到待機
+function setRow(el, src, r, loop = true) {
+  el.style.backgroundImage = `url(${src})`;
+  el.style.backgroundPositionY = rowY(r);
+  el.style.animation = "none"; void el.offsetWidth;
+  el.style.animation = `play var(--dur,0.6s) steps(4) ${loop ? "infinite" : "1 forwards"}`;
+}
+const hero = document.getElementById("hero"), mon = document.getElementById("mon");
+const idle = () => { setRow(hero, SHEETS.hero.src, 0); setRow(mon, SHEETS.mon.src, 0); };
+idle();
+const dur = () => parseFloat(spd.value) * 1000;
+document.querySelectorAll("button").forEach(b => b.onclick = () => {
+  const a = b.dataset.act;
+  if (a === "hit") { setRow(hero, SHEETS.hero.src, 1, false); setTimeout(() => setRow(mon, SHEETS.mon.src, 2, false), dur() * 0.5); setTimeout(idle, dur() * 1.6); }
+  if (a === "miss") { setRow(mon, SHEETS.mon.src, 1, false); setTimeout(() => setRow(hero, SHEETS.hero.src, 2, false), dur() * 0.5); setTimeout(idle, dur() * 1.6); }
+  if (a === "win") { setRow(hero, SHEETS.hero.src, 1, false); setTimeout(() => setRow(mon, SHEETS.mon.src, 3, false), dur() * 0.5); setTimeout(() => setRow(hero, SHEETS.hero.src, 3), dur() * 1.2); }
+});
+</script>
+</body>
+</html>

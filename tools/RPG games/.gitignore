@@ -1,0 +1,11 @@
+art/raw/
+art/check/
+art/raw_*.log
+site/firestore.rules.emu
+site/*.log
+site/.firebase/
+__pycache__/
+# 題目圖、讀題音檔可由 tools/build_bank_hwg5.py + tools/make_quiz.py 重建（來源在 escape room 資料夾），不入庫
+content/*/images/
+site/public/quizzes/*/images/
+site/public/quizzes/*/audio/

@@ -1,0 +1,1039 @@
+{
+ "id": "hwg5-u01-u02",
+ "title": "HWG5 U01–U02 時鐘塔大冒險",
+ "subtitle": "What day is it? / Do you have … class?",
+ "grade": 5,
+ "fullScore": 100,
+ "weekOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekLabels": {
+  "Sun": "Sun.",
+  "Mon": "Mon.",
+  "Tue": "Tue.",
+  "Wed": "Wed.",
+  "Thu": "Thu.",
+  "Fri": "Fri.",
+  "Sat": "Sat."
+ },
+ "items": [
+  {
+   "id": "Q01",
+   "type": "drag",
+   "image": "images/Q01.webp",
+   "context": "Ken looks up at the clock.",
+   "explanation": "問時間用 What time is it?。短針靠近 10、長針指著 10，所以是 9:50。",
+   "correctEn": "It's 9:50. The clock stopped at 9:50.",
+   "audio": "audio/Q01.mp3",
+   "weekStrip": null,
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What {1} is it?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "blanks": [
+    "time",
+    "9:50"
+   ],
+   "distractors": [
+    "day",
+    "9:15",
+    "5:50"
+   ],
+   "answerText": "time / 9:50",
+   "readText": "What blank is it? It's blank."
+  },
+  {
+   "id": "Q02",
+   "type": "drag",
+   "image": "images/Q02.webp",
+   "context": "Kids are coming to school.",
+   "explanation": "問星期幾用 What day is it?，it 後面配 is。圖上亮的是 Monday（星期一）。",
+   "correctEn": "It's Monday. A new school week starts.",
+   "audio": "audio/Q02.mp3",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What day {1} it?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "blanks": [
+    "is",
+    "Monday"
+   ],
+   "distractors": [
+    "do",
+    "are",
+    "Sunday"
+   ],
+   "answerText": "is / Monday",
+   "readText": "What day blank it? It's blank."
+  },
+  {
+   "id": "Q03",
+   "type": "drag",
+   "image": "images/Q03.webp",
+   "context": "Tick points at the room.",
+   "explanation": "問「今天是星期一嗎？」用 Is it Monday today?，肯定回答是 Yes, it is.",
+   "correctEn": "Yes, it is. Today is Monday.",
+   "audio": "audio/Q03.mp3",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it {1} today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, it {2}."
+    }
+   ],
+   "blanks": [
+    "Monday",
+    "is"
+   ],
+   "distractors": [
+    "Sunday",
+    "isn't",
+    "does"
+   ],
+   "answerText": "Monday / is",
+   "readText": "Is it blank today? Yes, it blank."
+  },
+  {
+   "id": "Q04",
+   "type": "drag",
+   "image": "images/Q04.webp",
+   "context": "Jenny is painting a picture.",
+   "explanation": "圖中在畫畫，是 art（美術）課。用 Do you…? 問，就用 Yes, I do. 回答。",
+   "correctEn": "Yes, I do. Ken has art class on Monday.",
+   "audio": "audio/Q04.mp3",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have {1} class on Monday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, I {2}."
+    }
+   ],
+   "blanks": [
+    "art",
+    "do"
+   ],
+   "distractors": [
+    "PE",
+    "does",
+    "don't"
+   ],
+   "answerText": "art / do",
+   "readText": "Do you have blank class on Monday? Yes, I blank."
+  },
+  {
+   "id": "Q05",
+   "type": "spell",
+   "image": "images/Q05.webp",
+   "context": "Tick turns a big page. A new day starts.",
+   "explanation": "Tuesday（星期二）拼成 T-u-e-s-d-a-y，u 和 e 不要寫反。",
+   "correctEn": "Tuesday. T-u-e-s-d-a-y.",
+   "audio": "audio/Q05.mp3",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": "星期二"
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "Tuesday",
+    "distractorLetters": "hrn",
+    "groups": [
+     7
+    ]
+   },
+   "answerText": "Tuesday",
+   "readText": "Tick turns a big page. A new day starts. Spell the word."
+  },
+  {
+   "id": "Q06",
+   "type": "drag",
+   "image": "images/Q06.webp",
+   "context": "Tick points at the art room. Ken shakes his head.",
+   "explanation": "今天不是星期一，要說 No, it isn't.，再補一句 It's Tuesday.",
+   "correctEn": "No, it isn't. It's Tuesday.",
+   "audio": "audio/Q06.mp3",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it Monday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, it {1}. It's {2}."
+    }
+   ],
+   "blanks": [
+    "isn't",
+    "Tuesday"
+   ],
+   "distractors": [
+    "is",
+    "doesn't",
+    "Sunday"
+   ],
+   "answerText": "isn't / Tuesday",
+   "readText": "Is it Monday today? No, it blank. It's blank."
+  },
+  {
+   "id": "Q07",
+   "type": "spell",
+   "image": "images/Q07.webp",
+   "context": "Ken plays a recorder. Listen to the notes!",
+   "explanation": "music（音樂）拼成 m-u-s-i-c，結尾是 c，不是 k。",
+   "correctEn": "Music. M-u-s-i-c.",
+   "audio": "audio/Q07.mp3",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "music",
+    "distractorLetters": "ka",
+    "groups": [
+     5
+    ]
+   },
+   "answerText": "music",
+   "readText": "Ken plays a recorder. Listen to the notes! Spell the word."
+  },
+  {
+   "id": "Q08",
+   "type": "drag",
+   "image": "images/Q08.webp",
+   "context": "Jenny listens to Ken. She smiles.",
+   "explanation": "吹直笛是 music（音樂）課。用 Do you…? 問，就回答 Yes, I do.",
+   "correctEn": "Yes, I do. Ken has music class on Tuesday.",
+   "audio": "audio/Q08.mp3",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have {1} class on Tuesday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "Yes, I {2}."
+    }
+   ],
+   "blanks": [
+    "music",
+    "do"
+   ],
+   "distractors": [
+    "art",
+    "does",
+    "is"
+   ],
+   "answerText": "music / do",
+   "readText": "Do you have blank class on Tuesday? Yes, I blank."
+  },
+  {
+   "id": "Q09",
+   "type": "spell",
+   "image": "images/Q09.webp",
+   "context": "The blocks spin. A new day starts.",
+   "explanation": "Wednesday（星期三）拼成 W-e-d-n-e-s-d-a-y，中間的 d 不發音，但要寫出來。",
+   "correctEn": "Wednesday. W-e-d-n-e-s-d-a-y.",
+   "audio": "audio/Q09.mp3",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": "星期三"
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "Wednesday",
+    "distractorLetters": "st",
+    "groups": [
+     9
+    ]
+   },
+   "answerText": "Wednesday",
+   "readText": "The blocks spin. A new day starts. Spell the word."
+  },
+  {
+   "id": "Q10",
+   "type": "drag",
+   "image": "images/Q10.webp",
+   "context": "Tick holds a shiny gear. Ken looks at it.",
+   "explanation": "問「今天星期幾？」用 What day is today?，回答 It's Wednesday.",
+   "correctEn": "It's Wednesday. Tick gets the Wednesday gear.",
+   "audio": "audio/Q10.mp3",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What {1} is today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "blanks": [
+    "day",
+    "Wednesday"
+   ],
+   "distractors": [
+    "time",
+    "Monday",
+    "Tuesday"
+   ],
+   "answerText": "day / Wednesday",
+   "readText": "What blank is today? It's blank."
+  },
+  {
+   "id": "Q11",
+   "type": "spell",
+   "image": "images/Q11.webp",
+   "context": "Look at the desk. What class is it?",
+   "explanation": "math（數學）拼成 m-a-t-h，結尾是 th。",
+   "correctEn": "Math. M-a-t-h.",
+   "audio": "audio/Q11.mp3",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "math",
+    "distractorLetters": "en",
+    "groups": [
+     4
+    ]
+   },
+   "answerText": "math",
+   "readText": "Look at the desk. What class is it? Spell the word."
+  },
+  {
+   "id": "Q12",
+   "type": "drag",
+   "image": "images/Q12.webp",
+   "context": "Jack is busy with the abacus.",
+   "explanation": "主詞 Jack 是他（第三人稱單數），問句開頭用 Does。算盤代表 math（數學）。",
+   "correctEn": "Does Jack have math class? Yes, he does.",
+   "audio": "audio/Q12.mp3",
+   "weekStrip": {
+    "highlight": "Wed",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1} Jack have {2} class on Wednesday?"
+    },
+    {
+     "speaker": "Jenny",
+     "text": "Yes, he does."
+    }
+   ],
+   "blanks": [
+    "Does",
+    "math"
+   ],
+   "distractors": [
+    "Do",
+    "Is",
+    "music"
+   ],
+   "answerText": "Does / math",
+   "readText": "blank Jack have blank class on Wednesday? Yes, he does."
+  },
+  {
+   "id": "Q13",
+   "type": "spell",
+   "image": "images/Q13.webp",
+   "context": "Ken stands in the long hall. A new day starts.",
+   "explanation": "Thursday（星期四）拼成 T-h-u-r-s-d-a-y，開頭是 Th。",
+   "correctEn": "Thursday. T-h-u-r-s-d-a-y.",
+   "audio": "audio/Q13.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": "星期四"
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "Thursday",
+    "distractorLetters": "en",
+    "groups": [
+     8
+    ]
+   },
+   "answerText": "Thursday",
+   "readText": "Ken stands in the long hall. A new day starts. Spell the word."
+  },
+  {
+   "id": "Q14",
+   "type": "drag",
+   "image": "images/Q14.webp",
+   "context": "Ken and Tick look out the window.",
+   "explanation": "問「今天星期幾？」用 What day is today?，圖上亮的是 Thursday（星期四）。",
+   "correctEn": "It's Thursday. The long hall is open.",
+   "audio": "audio/Q14.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "What day is {1}?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "It's {2}."
+    }
+   ],
+   "blanks": [
+    "today",
+    "Thursday"
+   ],
+   "distractors": [
+    "it",
+    "Tuesday",
+    "Wednesday"
+   ],
+   "answerText": "today / Thursday",
+   "readText": "What day is blank? It's blank."
+  },
+  {
+   "id": "Q15",
+   "type": "spell",
+   "image": "images/Q15.webp",
+   "context": "Look at the book on the desk.",
+   "explanation": "Chinese（國語）拼成 C-h-i-n-e-s-e，開頭 C 要大寫。",
+   "correctEn": "Chinese. C-h-i-n-e-s-e.",
+   "audio": "audio/Q15.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "Chinese",
+    "distractorLetters": "as",
+    "groups": [
+     7
+    ]
+   },
+   "answerText": "Chinese",
+   "readText": "Look at the book on the desk. Spell the word."
+  },
+  {
+   "id": "Q16",
+   "type": "drag",
+   "image": "images/Q16.webp",
+   "context": "Jenny looks at the class schedule.",
+   "explanation": "主詞是 you，問句開頭用 Do，不用 Does 或 Is。",
+   "correctEn": "No, I don't. Ken doesn't have Chinese class on Thursday.",
+   "audio": "audio/Q16.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "{1} you have {2} class on Thursday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, I don't."
+    }
+   ],
+   "blanks": [
+    "Do",
+    "Chinese"
+   ],
+   "distractors": [
+    "Does",
+    "Is",
+    "math"
+   ],
+   "answerText": "Do / Chinese",
+   "readText": "blank you have blank class on Thursday? No, I don't."
+  },
+  {
+   "id": "Q17",
+   "type": "spell",
+   "image": "images/Q17.webp",
+   "context": "Look at the headphones and the book.",
+   "explanation": "English（英語）拼成 E-n-g-l-i-s-h，開頭 E 要大寫。",
+   "correctEn": "English. E-n-g-l-i-s-h.",
+   "audio": "audio/Q17.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "English",
+    "distractorLetters": "ae",
+    "groups": [
+     7
+    ]
+   },
+   "answerText": "English",
+   "readText": "Look at the headphones and the book. Spell the word."
+  },
+  {
+   "id": "Q18",
+   "type": "drag",
+   "image": "images/Q18.webp",
+   "context": "Tom reads a picture book. He has headphones.",
+   "explanation": "戴耳機看英文書是 English（英語）課。Does he…? 就用 Yes, he does. 回答。",
+   "correctEn": "Yes, he does. Tom has English class on Thursday.",
+   "audio": "audio/Q18.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Does he have {1} class on Thursday?"
+    },
+    {
+     "speaker": "Jenny",
+     "text": "Yes, he {2}."
+    }
+   ],
+   "blanks": [
+    "English",
+    "does"
+   ],
+   "distractors": [
+    "Chinese",
+    "do",
+    "is"
+   ],
+   "answerText": "English / does",
+   "readText": "Does he have blank class on Thursday? Yes, he blank."
+  },
+  {
+   "id": "Q19",
+   "type": "spell",
+   "image": "images/Q19.webp",
+   "context": "Look at the microscope and the tubes.",
+   "explanation": "science（自然）拼成 s-c-i-e-n-c-e，開頭是 sc。",
+   "correctEn": "Science. S-c-i-e-n-c-e.",
+   "audio": "audio/Q19.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "science",
+    "distractorLetters": "sk",
+    "groups": [
+     7
+    ]
+   },
+   "answerText": "science",
+   "readText": "Look at the microscope and the tubes. Spell the word."
+  },
+  {
+   "id": "Q20",
+   "type": "drag",
+   "image": "images/Q20.webp",
+   "context": "Jenny looks into a microscope.",
+   "explanation": "Jenny 是她（第三人稱單數），問句開頭用 Does。顯微鏡代表 science（自然）。",
+   "correctEn": "Does Jenny have science class? Yes, she does.",
+   "audio": "audio/Q20.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "{1} Jenny have {2} class on Thursday?"
+    },
+    {
+     "speaker": "Tom",
+     "text": "Yes, she does."
+    }
+   ],
+   "blanks": [
+    "Does",
+    "science"
+   ],
+   "distractors": [
+    "Do",
+    "Is",
+    "English"
+   ],
+   "answerText": "Does / science",
+   "readText": "blank Jenny have blank class on Thursday? Yes, she does."
+  },
+  {
+   "id": "Q21",
+   "type": "spell",
+   "image": "images/Q21.webp",
+   "context": "The school week is almost over.",
+   "explanation": "Friday（星期五）拼成 F-r-i-d-a-y。",
+   "correctEn": "Friday. F-r-i-d-a-y.",
+   "audio": "audio/Q21.mp3",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": "星期五"
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "Friday",
+    "distractorLetters": "er",
+    "groups": [
+     6
+    ]
+   },
+   "answerText": "Friday",
+   "readText": "The school week is almost over. Spell the word."
+  },
+  {
+   "id": "Q22",
+   "type": "drag",
+   "image": "images/Q22.webp",
+   "context": "Jenny walks past the gym.",
+   "explanation": "體育館代表 PE（體育）。Does she…? 的否定回答是 No, she doesn't.",
+   "correctEn": "No, she doesn't. Jenny doesn't have PE class on Friday.",
+   "audio": "audio/Q22.mp3",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Does she have {1} class on Friday?"
+    },
+    {
+     "speaker": "Tom",
+     "text": "No, she {2}."
+    }
+   ],
+   "blanks": [
+    "PE",
+    "doesn't"
+   ],
+   "distractors": [
+    "art",
+    "don't",
+    "isn't"
+   ],
+   "answerText": "PE / doesn't",
+   "readText": "Does she have blank class on Friday? No, she blank."
+  },
+  {
+   "id": "Q23",
+   "type": "spell",
+   "image": "images/Q23.webp",
+   "context": "Look at the globe and the map.",
+   "explanation": "social studies（社會）是兩個字：social＋studies。",
+   "correctEn": "Social studies. S-o-c-i-a-l  s-t-u-d-i-e-s.",
+   "audio": "audio/Q23.mp3",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "social studies",
+    "distractorLetters": "en",
+    "groups": [
+     6,
+     7
+    ]
+   },
+   "answerText": "social studies",
+   "readText": "Look at the globe and the map. Spell the word."
+  },
+  {
+   "id": "Q24",
+   "type": "drag",
+   "image": "images/Q24.webp",
+   "context": "The four friends look at the board.",
+   "explanation": "地球儀和地圖代表 social studies（社會）。Do we…? 的否定回答是 No, we don't.",
+   "correctEn": "No, we don't. We don't have social studies on Friday.",
+   "audio": "audio/Q24.mp3",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do we have {1} class on Friday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, we {2}."
+    }
+   ],
+   "blanks": [
+    "social studies",
+    "don't"
+   ],
+   "distractors": [
+    "science",
+    "doesn't",
+    "aren't"
+   ],
+   "answerText": "social studies / don't",
+   "readText": "Do we have blank class on Friday? No, we blank."
+  },
+  {
+   "id": "Q25",
+   "type": "drag",
+   "image": "images/Q25.webp",
+   "context": "Tick looks at the park.",
+   "explanation": "問「今天是…嗎？」用 Is it…?，否定回答是 No, it isn't.",
+   "correctEn": "No, it isn't. It isn't Sunday.",
+   "audio": "audio/Q25.mp3",
+   "weekStrip": {
+    "highlight": "Sat",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "{1} it Sunday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "No, it {2}."
+    }
+   ],
+   "blanks": [
+    "Is",
+    "isn't"
+   ],
+   "distractors": [
+    "Do",
+    "Does",
+    "don't"
+   ],
+   "answerText": "Is / isn't",
+   "readText": "blank it Sunday today? No, it blank."
+  },
+  {
+   "id": "Q26",
+   "type": "spell",
+   "image": "images/Q26.webp",
+   "context": "Kids are playing in the park.",
+   "explanation": "Saturday（星期六）拼成 S-a-t-u-r-d-a-y。",
+   "correctEn": "Saturday. S-a-t-u-r-d-a-y.",
+   "audio": "audio/Q26.mp3",
+   "weekStrip": {
+    "highlight": "Sat",
+    "zhLabel": "星期六"
+   },
+   "mirror": false,
+   "prompt": "Spell the word.",
+   "spell": {
+    "answer": "Saturday",
+    "distractorLetters": "ne",
+    "groups": [
+     8
+    ]
+   },
+   "answerText": "Saturday",
+   "readText": "Kids are playing in the park. Spell the word."
+  },
+  {
+   "id": "Q27",
+   "type": "drag",
+   "image": "images/Q03.webp",
+   "context": "Time Muncher drops a magic mirror. Look inside!",
+   "explanation": "Is it…? 的肯定回答是 Yes, it is.",
+   "correctEn": "Yes, it is. The mirror shows Monday.",
+   "audio": "audio/Q27.mp3",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "mirror": true,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it Monday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "blanks": [
+    "Yes, it is."
+   ],
+   "distractors": [
+    "No, it isn't.",
+    "Yes, it does.",
+    "Yes, I do."
+   ],
+   "answerText": "Yes, it is.",
+   "readText": "Is it Monday today? blank"
+  },
+  {
+   "id": "Q28",
+   "type": "drag",
+   "image": "images/Q06.webp",
+   "context": "The mirror shows Tick and Ken again.",
+   "explanation": "今天不是星期一，是星期二，所以說 No, it isn't. It's Tuesday.",
+   "correctEn": "No, it isn't. It's Tuesday.",
+   "audio": "audio/Q28.mp3",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "mirror": true,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tick",
+     "text": "Is it Monday today?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "blanks": [
+    "No, it isn't. It's Tuesday."
+   ],
+   "distractors": [
+    "Yes, it is.",
+    "No, it isn't. It's Thursday.",
+    "No, I don't. It's Tuesday."
+   ],
+   "answerText": "No, it isn't. It's Tuesday.",
+   "readText": "Is it Monday today? blank"
+  },
+  {
+   "id": "Q29",
+   "type": "drag",
+   "image": "images/Q04.webp",
+   "context": "The mirror shows the art room.",
+   "explanation": "Do you…? 的肯定回答是 Yes, I do.",
+   "correctEn": "Yes, I do. Ken has art class on Monday.",
+   "audio": "audio/Q29.mp3",
+   "weekStrip": {
+    "highlight": "Mon",
+    "zhLabel": null
+   },
+   "mirror": true,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have art class on Monday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "blanks": [
+    "Yes, I do."
+   ],
+   "distractors": [
+    "Yes, he does.",
+    "No, I don't.",
+    "Yes, it is."
+   ],
+   "answerText": "Yes, I do.",
+   "readText": "Do you have art class on Monday? blank"
+  },
+  {
+   "id": "Q30",
+   "type": "drag",
+   "image": "images/Q16.webp",
+   "context": "The mirror shows Jenny and Ken in the hall.",
+   "explanation": "Do you…? 的否定回答是 No, I don't.",
+   "correctEn": "No, I don't. Ken doesn't have Chinese class on Thursday.",
+   "audio": "audio/Q30.mp3",
+   "weekStrip": {
+    "highlight": "Thu",
+    "zhLabel": null
+   },
+   "mirror": true,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Jenny",
+     "text": "Do you have Chinese class on Thursday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "blanks": [
+    "No, I don't."
+   ],
+   "distractors": [
+    "Yes, I do.",
+    "No, she doesn't.",
+    "No, it isn't."
+   ],
+   "answerText": "No, I don't.",
+   "readText": "Do you have Chinese class on Thursday? blank"
+  },
+  {
+   "id": "Q31",
+   "type": "drag",
+   "image": "images/Q31.webp",
+   "context": "The mirror shows Tom in the gym.",
+   "explanation": "Tom 是男生，所以用 he：Yes, he does.",
+   "correctEn": "Yes, he does. Tom has PE class on Tuesday.",
+   "audio": "audio/Q31.mp3",
+   "weekStrip": {
+    "highlight": "Tue",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Ken",
+     "text": "Does Tom have PE class on Tuesday?"
+    },
+    {
+     "speaker": "Jenny",
+     "text": "{1}"
+    }
+   ],
+   "blanks": [
+    "Yes, he does."
+   ],
+   "distractors": [
+    "Yes, I do.",
+    "No, he doesn't.",
+    "Yes, she does."
+   ],
+   "answerText": "Yes, he does.",
+   "readText": "Does Tom have PE class on Tuesday? blank"
+  },
+  {
+   "id": "Q32",
+   "type": "drag",
+   "image": "images/Q32.webp",
+   "context": "The last mirror shows Jenny.",
+   "explanation": "Jenny 是女生，所以用 she：No, she doesn't.",
+   "correctEn": "No, she doesn't. Jenny doesn't have music class on Friday.",
+   "audio": "audio/Q32.mp3",
+   "weekStrip": {
+    "highlight": "Fri",
+    "zhLabel": null
+   },
+   "mirror": false,
+   "prompt": "Drag the cards into the blanks.",
+   "lines": [
+    {
+     "speaker": "Tom",
+     "text": "Does Jenny have music class on Friday?"
+    },
+    {
+     "speaker": "Ken",
+     "text": "{1}"
+    }
+   ],
+   "blanks": [
+    "No, she doesn't."
+   ],
+   "distractors": [
+    "No, he doesn't.",
+    "Yes, she does.",
+    "No, I don't."
+   ],
+   "answerText": "No, she doesn't.",
+   "readText": "Does Jenny have music class on Friday? blank"
+  }
+ ]
+}

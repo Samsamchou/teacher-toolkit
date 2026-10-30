@@ -1,0 +1,11 @@
+Create a 2D game SPRITE SHEET of a small cute-but-mischievous monster for a children's English quiz RPG, matching the bright chibi clockwork style of the reference image (but a DIFFERENT creature):
+"Wind-up Bunny Bot": a teal-and-silver tin toy robot shaped like a round bunny, long springy metal ears, a big brass wind-up key turning on its back, a little pendulum tail, two bright cyan eyes, a small alarm-bell nose, tiny brass feet. Chibi, bright colors, clean cel shading, bold dark outlines. The design must stay IDENTICAL in all 16 frames. Not scary; suitable for 10-year-olds. No weapons.
+
+Layout: exactly 4 columns x 4 rows of equal square cells on ONE canvas (square image). No grid lines, no borders, no text, no numbers. Pure flat white (#FFFFFF) background everywhere, no ground shadows, no scenery.
+In every cell the monster is the SAME size, faces LEFT, is horizontally centered, and its feet sit on the same baseline near the bottom of the cell. Leave empty margin inside each cell; nothing may touch or cross a cell edge.
+
+Rows (read left to right, smooth 4-frame loop per row):
+Row 1 IDLE: hopping in place, key slowly turning, ears bouncing.
+Row 2 ATTACK: frame 1 crouch with ears pulled back, 2 spring jump to the left, 3 ear-spring smack releasing a cyan ring of sound waves, 4 recover.
+Row 3 HURT: frame 1 flinch with eyes shut, 2 knocked back to the right, 3 wobble with small stars and a loose spring, 4 regain balance.
+Row 4 DEFEATED: frame 1 dizzy, 2 key stops and it tips over, 3 lying down with spiral eyes, 4 turning into a puff of cyan and golden sparkles.
