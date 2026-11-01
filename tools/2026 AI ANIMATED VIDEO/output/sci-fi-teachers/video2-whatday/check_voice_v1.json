@@ -185,7 +185,7 @@
   "i": 44,
   "who": "cosmo",
   "text": "Repeat after me. What day is it?",
-  "heard": "Repeat after me  What day is it?",
+  "heard": "Repeat after me.  What day is it?",
   "ok": true
  },
  {
@@ -345,8 +345,8 @@
  {
   "i": 82,
   "who": "cosmo",
-  "text": "It's Wednesday. I have art on Wednesday.",
-  "heard": "It's Wednesday.  I have art on Wednesday.",
+  "text": "It's Wednesday. I have art class on Wednesday.",
+  "heard": "It's Wednesday.  I have art class on Wednesday.",
   "ok": true
  },
  {
@@ -380,8 +380,8 @@
  {
   "i": 92,
   "who": "nova",
-  "text": "I have art on Wednesday. Repeat after me. I have art on Wednesday.",
-  "heard": "I have art on Wednesday.  Repeat after me.  I have art on Wednesday.",
+  "text": "I have art class on Wednesday. Repeat after me. I have art class on Wednesday.",
+  "heard": "I have art class on Wednesday.  Repeat after me.  I have art class on Wednesday.",
   "ok": true
  },
  {
@@ -507,8 +507,8 @@
   "i": 124,
   "who": "amy",
   "text": "Crayons? Why?",
-  "heard": "Clans?  Why?",
-  "ok": false
+  "heard": "Crayons?  Why?",
+  "ok": true
  },
  {
   "i": 125,
@@ -563,8 +563,8 @@
   "i": 132,
   "who": "amy",
   "text": "Crayons? Why?",
-  "heard": "Clans?  Why?",
-  "ok": false
+  "heard": "Crayons?  Why?",
+  "ok": true
  },
  {
   "i": 133,
@@ -577,7 +577,7 @@
   "i": 134,
   "who": "amy",
   "text": "Oh, no! My crayons are at home.",
-  "heard": "Oh no! My crayons are at home!",
+  "heard": "Oh, no. My crayons are at home.",
   "ok": true
  },
  {
@@ -612,7 +612,7 @@
   "i": 140,
   "who": "nova",
   "text": "Repeat after me. It's Wednesday.",
-  "heard": "Repeat after me. It's Wednesday.",
+  "heard": "Repeat after me, it's Wednesday.",
   "ok": true
  },
  {
@@ -710,7 +710,7 @@
   "i": 156,
   "who": "cosmo",
   "text": "Repeat after me. It's Saturday.",
-  "heard": "Repeat after me.  It's Saturday.",
+  "heard": "Repeat after me  It's Saturday",
   "ok": true
  },
  {
@@ -745,7 +745,7 @@
   "i": 162,
   "who": "amy",
   "text": "Yay! Let's sing together!",
-  "heard": "Yay!  Let's sing together!",
+  "heard": "Yay, let's sing together.",
   "ok": true
  },
  {

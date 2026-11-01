@@ -57,7 +57,7 @@ S += [('05-demo', 'nova', 'say', "Let's practice together. What day is it?", 'ca
 # 6 五種生活語境
 CTX = [('Sunday', 'What day is today?', 'I can read at home.', '我可以在家看書。', 'ctx2-sun-read'),
        ('Monday', 'What day is it?', 'Time for school.', '上學時間到了。', 'ctx2-mon-school'),
-       ('Wednesday', 'What day is today?', 'I have art on Wednesday.', '我星期三有美術課。', 'v1-ctx-mon'),
+       ('Wednesday', 'What day is today?', 'I have art class on Wednesday.', '我星期三有美術課。', 'v1-ctx-mon'),
        ('Thursday', 'What day is it?', 'I have music class.', '我有音樂課。', 'v1-ctx-wed'),
        ('Saturday', 'What day is today?', "Let's play outside.", '我們去外面玩吧。', 'v1-ctx-sun')]
 S += [('06-ctx', 'nova', 'zh', '接下來換你問、換你答！', '情境標題')]

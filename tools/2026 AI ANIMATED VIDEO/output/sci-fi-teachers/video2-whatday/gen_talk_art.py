@@ -81,6 +81,22 @@ for k in OPEN:
         'same framing and size, same plain pure green (#00FF00) background. Change ONLY the mouth: lips gently closed in a soft relaxed '
         'expression that still matches the emotion of the face (no teeth showing, mouth not open).', [f'{k}.png'])
 GROUPS['closed'] = [f'{k}-closed' for k in OPEN]
+# 斜臉嘴型（2026-11-01 規格卡 RDQ-spec-video2-tilted-mouths）：程式畫的正面嘴對不上斜臉 → 每個說話姿勢生 4 種同角度張嘴圖，
+# 以閉嘴底圖為參考；程式只取嘴巴附近一小塊、自動對位後疊回（mouth_variants.py）
+TALKING = ['amy-basketball', 'amy-calm', 'amy-hug', 'amy-point', 'amy-puzzled', 'amy-shocked', 'amy-sing', 'amy-wave',
+           'ben-cheer', 'ben-crayons', 'ben-excited', 'ben-frozen', 'ben-offer', 'ben-panic', 'ben-show', 'ben-strum']
+MSHAPE = {'mid': 'mouth slightly open as if speaking softly, a small gap between the lips, a hint of the upper teeth',
+          'ah': 'mouth opened wide saying "ah", jaw dropped a little, tongue visible inside',
+          'oh': 'lips rounded into an open "o" shape saying "oh"',
+          'ee': 'lips apart in a wide "ee" shape, upper and lower teeth showing'}
+for k in TALKING:
+    base = f'{k}-closed' if k in OPEN else k
+    for sh, desc in MSHAPE.items():
+        ART[f'mp-{k}-{sh}'] = ('Edit the attached image. Keep EVERYTHING exactly the same: same character, same pose, same head tilt, '
+            'same eyes, eyebrows and expression, same hands, same outfit, same framing and size, same plain pure green (#00FF00) background. '
+            f'Change ONLY the mouth: {desc}. The mouth must stay in exactly the same place on the face and follow the head\'s tilt and '
+            '3/4 angle (rotated and foreshortened the same way as the face), not a flat front-facing mouth.', [f'{base}.png'])
+GROUPS['mouthpose'] = [f'mp-{k}-{sh}' for k in TALKING for sh in MSHAPE]
 
 def gen(k):
     out = OUT / f'{k}.png'
@@ -111,5 +127,5 @@ def gen(k):
 
 if __name__ == '__main__':
     keys = [k for a in sys.argv[1:] for k in GROUPS.get(a, [a])]
-    with cf.ThreadPoolExecutor(3) as ex:
+    with cf.ThreadPoolExecutor(4) as ex:
         for k, st in ex.map(gen, keys): print(k, st, flush=True)

@@ -32,17 +32,20 @@ def scene(name, blur=False):
         _c[k] = im.convert('RGBA')
     return _c[k]
 
-def pose_img(who, pose, closed=False):
+def pose_img(who, pose, closed=False, shape=None):
     key = f'sheet-{who}' if pose == 'sheet' else f'{who}-{pose}'
-    if closed and f'{key}-closed' in META: key = f'{key}-closed'   # 說話時用閉嘴版當底圖（程式畫的嘴才蓋得乾淨）
+    if closed and f'{key}-closed' in META: key = f'{key}-closed'   # 說話時用閉嘴版當底圖
+    if shape:   # 2026-11-01 斜臉嘴型換圖；某個嘴型還沒生出來時先用半開代替
+        key = next((f'{who}-{pose}-m-{s}' for s in (shape, 'mid') if f'{who}-{pose}-m-{s}' in META), key)
     if key not in _c:
         im = Image.open(CUT / f'{key}.png').convert('RGBA'); mo = list(META[key]['mouth'])
         s = HEIGHT[who] / META[f'sheet-{who}']['size'][1]          # 同一角色所有姿勢用同一個比例（以定裝圖身高為準）
-        if key.replace('-closed', '') in FLIP: im = im.transpose(Image.FLIP_LEFT_RIGHT); mo[0] = im.width - mo[0]
+        if key.replace('-closed', '').split('-m-')[0] in FLIP: im = im.transpose(Image.FLIP_LEFT_RIGHT); mo[0] = im.width - mo[0]
         im = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
         _c[key] = (im, [mo[0] * s, mo[1] * s, mo[2] * s])
     return _c[key]
 
+SHAPE_OF = {'M01_rest': 'closed', 'M02_A': 'ah', 'M03_E': 'ee', 'M04_O': 'oh', 'M05_U': 'oh', 'M06_FV': 'mid', 'M07_L': 'mid', 'M08_mid': 'mid'}
 MOUTH_OF = {'M01_rest': 'closed', 'M02_A': 'ah', 'M03_E': 'ee', 'M04_O': 'oh', 'M05_U': 'oo', 'M06_FV': 'mid', 'M07_L': 'mid', 'M08_mid': 'mid'}
 def mouth_patch(who, shape, width):
     """嘴形格子只取嘴唇附近（羽化橢圓），縮放到這個姿勢的嘴寬。"""
@@ -71,6 +74,11 @@ def _skin_mean(arr, alpha):
 
 def char_frame(who, pose, mouth, lt):
     """一個角色的圖（含嘴形），回傳 (圖, 腳底在圖中的 x, y, 嘴巴 y)。"""
+    # 2026-11-01 規格卡 RDQ-spec-video2-tilted-mouths：說話時換成同角度的 Codex 張嘴圖（mouth_variants.py 已對位），不再程式畫嘴、不再補色塊
+    if mouth and f'{who}-{pose}-m-mid' in META:
+        sh = SHAPE_OF.get(mouth, 'mid')
+        im, mo = pose_img(who, pose, closed=True, shape=None if sh == 'closed' else sh)
+        return im, im.width / 2, im.height, mo[1]
     im, mo = pose_img(who, pose, closed=bool(mouth))
     if mouth:   # 2026-10-30：貼真實嘴形照片會有色差，改成「先用膚色蓋掉原本的嘴，再用程式畫立體感的嘴」
         im = im.copy(); im.alpha_composite(drawn_mouth(who, pose + ('-c' if f'{who}-{pose}-closed' in META else ''), im, mo, MOUTH_OF.get(mouth, 'mid')), (0, 0))

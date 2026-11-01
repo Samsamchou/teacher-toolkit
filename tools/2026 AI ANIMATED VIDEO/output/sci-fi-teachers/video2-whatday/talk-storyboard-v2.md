@@ -49,3 +49,10 @@
 | 嘴形 | 2 | 各一張臉部特寫的 6 種嘴形（閉、啊、咿、喔、嗚、半開），程式切開使用 |
 | 場景 | 3 | 教室（含空白畫架）、Ben 的房間（窗外公園）、置物櫃走廊 |
 | 合計 | 約 23 | 不滿意的再重生 |
+
+## 定案紀錄（2026-11-01，影片 2 v2.2 定案）
+- 正式版：`renders/video2-whatday-v2.2.mp4`（1080p，11:28，20,645 格；影音檔不進 Git），720p 預覽版 `video2-whatday-v2.2-720p.mp4`（28 MB）。
+- v2：三部對話改成華麗版（Codex 素材＋程式剪紙動畫，規格卡 RDQ-spec-video2-dialogues-deluxe-20261030）。
+- v2.1：5:05 起三處 "I have art on Wednesday." 改成 "I have art class on Wednesday."（重配音、全片重渲染）。
+- v2.2：斜臉嘴型（規格卡 RDQ-spec-video2-tilted-mouths-20261101）——16 個說話姿勢 × 4 種同角度張嘴圖（61 張 Codex＋3 張 gpt-image-2 API，因 Codex 用量到頂、老師同意），`mouth_variants.py` 對位只貼嘴部小塊，不再程式畫嘴與補色；說話句的近景（amy-close、ben-close、ben-insert）改中景。對話段 446.5–621 s 局部重渲染、依格接回 v2.1。
+- 整套流程與踩坑整理成 skill `3d-teacher-lesson-video`（~/.claude/skills）。

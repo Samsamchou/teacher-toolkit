@@ -4,21 +4,22 @@
 運動：push＝慢慢推近；pushfast＝快速推近；pan＝往右平移；shake＝晃動；hold＝固定
 特效：sparkle、question、question2bang、paint、sweat、cloud、glow、stars、speed、notes、spin
 """
+# 2026-11-01（RDQ-spec-video2-tilted-mouths）：說話句一律中景，原本的 amy-close、ben-close、ben-insert 改成 amy／ben
 SHOTS = {
  1: [('wave',    'sheet',   'wide',       'pan',      ['glow']),
      ('sheet',   'crayons', 'ben',        'push',     ['sparkle']),
-     ('puzzled', 'crayons', 'amy-close',  'push',     ['question']),
+     ('puzzled', 'crayons', 'amy',        'push',     ['question']),
      ('puzzled', 'excited', 'ben',        'hold',     ['paint']),
-     ('shocked', 'sheet',   'amy-close',  'pushfast', ['sweat', 'cloud', 'shake']),
+     ('shocked', 'sheet',   'amy',        'pushfast', ['sweat', 'cloud', 'shake']),
      ('sheet',   'offer',   'two',        'push',     ['sparkle']),
      ('hug',     'sheet',   'two',        'push',     ['stars'])],
  2: [('sheet',   'panic',   'wide',       'shake',    ['sweat', 'speed']),
      ('calm',    'panic',   'amy',        'hold',     ['glow']),
-     ('calm',    'frozen',  'ben-close',  'push',     ['question2bang']),
+     ('calm',    'frozen',  'ben',        'push',     ['question2bang']),
      ('basketball', 'frozen', 'amy',      'hold',     ['spin']),
      ('cheer',   'cheer',   'wide',       'pan',      ['stars'])],
  3: [('point',   'case',    'wide',       'hold',     []),
-     ('point',   'show',    'ben-insert', 'push',     ['sparkle']),
+     ('point',   'show',    'ben',        'push',     ['sparkle']),
      ('puzzled', 'show',    'amy',        'hold',     ['stars']),
      ('sheet',   'strum',   'ben',        'hold',     ['notes']),
      ('sing',    'strum',   'two',        'push',     ['notes', 'stars'])],
