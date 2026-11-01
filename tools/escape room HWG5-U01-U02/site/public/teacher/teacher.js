@@ -3,7 +3,7 @@
 // Flow: login → list of days that have answers (Taiwan time) → click a day → that day's class list
 // → click a student → result-page summary + the questions that needed retries.
 import { FIREBASE_CONFIG, SDK, COLLECTION, useEmulators, RETENTION_DAYS } from "../shared/quest-cloud.mjs";
-import { MISSIONS } from "../shared/missions.mjs";
+import { MISSIONS, QUEST_SETS } from "../shared/missions.mjs";
 
 const TEACHER_EMAIL = "quest-teacher@hwg5-clock-tower.web.app";
 const [{ initializeApp }, A, F] = await Promise.all([
@@ -40,7 +40,7 @@ A.onAuthStateChanged(auth, user => {
   const ok = Boolean(user && !user.isAnonymous && user.email === TEACHER_EMAIL);
   $("login").hidden = ok; $("logout").hidden = !ok;
   if (ok) { $("loginMsg").textContent = ""; showDates(); load(); }
-  else { $("dates").hidden = true; $("day").hidden = true; }
+  else { $("dates").hidden = true; $("day").hidden = true; $("overview").hidden = true; }
 });
 
 // ---------------------------------------------------------------- data
@@ -62,6 +62,7 @@ async function load() {
     }));
     renderDates();
     if (day && !$("day").hidden) renderDay();
+    if (!$("overview").hidden) renderOverview();
   } catch (err) {
     $("datesMsg").textContent = "讀取失敗：" + (err?.code || err?.message || err);
   }
@@ -69,7 +70,7 @@ async function load() {
 $("refresh").addEventListener("click", load);
 
 // ---------------------------------------------------------------- step 1: dates
-function showDates() { $("dates").hidden = false; $("day").hidden = true; }
+function showDates() { $("dates").hidden = false; $("day").hidden = true; $("overview").hidden = true; }
 const weekday = d => "日一二三四五六"[new Date(d + "T12:00:00+08:00").getUTCDay()];
 function renderDates() {
   const byDay = new Map();
@@ -186,6 +187,7 @@ $("table").addEventListener("click", e => {
 function questionText(seq, rec) {
   const it = bank().items.find(i => i.seq === seq);
   if (!it) return "";
+  if (it.qText) return it.qText;   // 二水 3D 闖關綜合小考的題目（選擇、排序、標籤…）
   if (it.type === "choice") return rec?.q ? `${rec.q} → ${rec.a}（選了：${rec.pick}）` : "";
   if (it.type === "spell") return `拼字：${it.spell.answer}`;
   if (it.type === "listen") return `聽力：${it.transcript ? it.transcript + " → " : ""}${it.answerText}`;
@@ -234,5 +236,47 @@ $("csv").addEventListener("click", () => {
     download: `${mission}-${day}.csv` });
   a.click(); URL.revokeObjectURL(a.href);
 });
+
+// ---------------------------------------------------------------- 二水 3D 闖關：四套完成總覽
+let grade = Object.keys(QUEST_SETS)[0];
+$("showOverview").addEventListener("click", () => { $("dates").hidden = true; $("overview").hidden = false; renderOverview(); });
+$("backFromOverview").addEventListener("click", () => { showDates(); renderDates(); });
+$("gradeTabs").addEventListener("click", e => {
+  const b = e.target.closest("[data-grade]"); if (!b) return;
+  grade = b.dataset.grade; renderOverview();
+});
+$("ovSearch").addEventListener("input", renderOverview);
+// 每位學生、每一套：完成過的最高分；沒完成過就顯示進行中的進度
+export function setStatus(records, slug, items) {
+  const rs = records.filter(r => r.mission === slug);
+  const done = rs.filter(r => r.completedAt);
+  if (done.length) return { done: true, best: Math.max(...done.map(r => (typeof r.summary?.score === "number" ? r.summary.score : 0))), times: done.length };
+  if (!rs.length) return null;
+  const latest = rs.sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)))[0];
+  return { done: false, finished: finished(latest), total: items || latest.summary?.total || 0 };
+}
+function renderOverview() {
+  const g = QUEST_SETS[grade];
+  $("gradeTabs").innerHTML = Object.entries(QUEST_SETS).map(([k, v]) =>
+    `<button role="tab" class="tab ${k === grade ? "on" : ""}" data-grade="${k}">${esc(v.unit)}</button>`).join("");
+  const slugs = g.sets.map(s => s.slug);
+  const q = $("ovSearch").value.trim();
+  const mine = all.filter(r => slugs.includes(r.mission) && (!q || r.studentId.includes(q)));
+  const ids = [...new Set(mine.map(r => r.studentId))];
+  const rows = ids.map(sid => {
+    const recs = mine.filter(r => r.studentId === sid);
+    const st = g.sets.map(s => setStatus(recs, s.slug, banks[s.slug]?.items?.length));
+    return { sid, st, n: st.filter(x => x?.done).length };
+  }).sort((a, b) => b.n - a.n || a.sid.localeCompare(b.sid));
+  $("ovTable").tHead.innerHTML = `<tr><th>學號</th>${g.sets.map((s, i) => `<th>第 ${i + 1} 套<br><small>${esc(s.short)}</small></th>`).join("")}<th>完成套數</th></tr>`;
+  $("ovTable").tBodies[0].innerHTML = rows.map(r => `<tr>
+      <td class="sid">${esc(r.sid)}</td>
+      ${r.st.map(x => !x ? `<td class="hint">—</td>` : x.done
+        ? `<td><span class="pill done">✓ ${x.best}</span>${x.times > 1 ? `<small> 完成 ${x.times} 次</small>` : ""}</td>`
+        : `<td><span class="pill">進行中 ${x.finished}/${x.total}</span></td>`).join("")}
+      <td class="n">${r.n} / ${g.sets.length}</td></tr>`).join("")
+    || `<tr><td colspan="${g.sets.length + 2}" class="hint">還沒有學生玩過這個年級的 3D 闖關。</td></tr>`;
+  $("ovMsg").textContent = `${g.unit}｜${rows.length} 位學生，四套都完成 ${rows.filter(r => r.n === g.sets.length).length} 位`;
+}
 
 console.info(`records are kept ${RETENTION_DAYS} days after the last activity`);

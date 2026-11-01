@@ -1,0 +1,1334 @@
+{
+ "mission": "ershui-3d-quest-hwg7u02",
+ "unit": "二水 3D 英語闖關 HWG7-U02 綜合小考",
+ "title": "Ershui 3D Quest · HWG7 U02",
+ "short": "HWG7-U02 綜合小考",
+ "weekStripOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekStripLabels": {},
+ "items": [
+  {
+   "seq": 1,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "born"
+    },
+    {
+     "text": "barn"
+    },
+    {
+     "text": "burn"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L1-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"born\".",
+   "correctEn": "Answer: barn\nbarn",
+   "teacherText": "聽力：barn（barn）",
+   "transcript": "barn barn"
+  },
+  {
+   "seq": 2,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "cord"
+    },
+    {
+     "text": "curd"
+    },
+    {
+     "text": "card"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L1-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"curd\".",
+   "correctEn": "Answer: cord\ncord",
+   "teacherText": "聽力：cord（cord）",
+   "transcript": "cord cord"
+  },
+  {
+   "seq": 3,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "dirt"
+    },
+    {
+     "text": "dote"
+    },
+    {
+     "text": "dart"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L1-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"dirt\".",
+   "correctEn": "Answer: dart\ndart",
+   "teacherText": "聽力：dart（dart）",
+   "transcript": "dart dart"
+  },
+  {
+   "seq": 4,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "ea"
+    },
+    {
+     "text": "oa"
+    },
+    {
+     "text": "ar"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L2-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ea\".",
+   "correctEn": "Answer: ar\nart",
+   "teacherText": "聽力：ar（art）",
+   "transcript": "art art"
+  },
+  {
+   "seq": 5,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "ea"
+    },
+    {
+     "text": "or"
+    },
+    {
+     "text": "ir"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L2-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ea\".",
+   "correctEn": "Answer: or\nlord",
+   "teacherText": "聽力：or（lord）",
+   "transcript": "lord lord"
+  },
+  {
+   "seq": 6,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "ar"
+    },
+    {
+     "text": "ee"
+    },
+    {
+     "text": "i"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L2-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ee\".",
+   "correctEn": "Answer: ar\nsharp",
+   "teacherText": "聽力：ar（sharp）",
+   "transcript": "sharp sharp"
+  },
+  {
+   "seq": 7,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-1",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "porch",
+    "torn",
+    "far"
+   ],
+   "answer": [
+    "torn",
+    "far",
+    "porch"
+   ],
+   "audio": "audio/listening/L3-1.mp3",
+   "hint1En": "The first word is \"torn\".",
+   "hint2En": "It starts with \"torn\", then \"far\".",
+   "correctEn": "torn → far → porch",
+   "teacherText": "聽力排序：torn → far → porch"
+  },
+  {
+   "seq": 8,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-2",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "bard",
+    "cart",
+    "born"
+   ],
+   "answer": [
+    "cart",
+    "born",
+    "bard"
+   ],
+   "audio": "audio/listening/L3-2.mp3",
+   "hint1En": "The first word is \"cart\".",
+   "hint2En": "It starts with \"cart\", then \"born\".",
+   "correctEn": "cart → born → bard",
+   "teacherText": "聽力排序：cart → born → bard"
+  },
+  {
+   "seq": 9,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的圖片",
+   "options": [
+    {
+     "image": "listening/tr_car.webp",
+     "text": "汽車圖"
+    },
+    {
+     "image": "listening/tr_scooter.webp",
+     "text": "機車圖"
+    },
+    {
+     "image": "listening/tr_boat.webp",
+     "text": "船圖"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L4-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 機車圖\nGirl: I go to school by scooter with my mom.",
+   "teacherText": "聽力：機車圖（Girl: I go to school by scooter with my mom.）",
+   "transcript": "Girl: I go to school by scooter with my mom."
+  },
+  {
+   "seq": 10,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的圖片",
+   "options": [
+    {
+     "image": "listening/tr_plane.webp",
+     "text": "飛機圖"
+    },
+    {
+     "image": "listening/tr_train.webp",
+     "text": "火車圖"
+    },
+    {
+     "image": "listening/tr_bus.webp",
+     "text": "公車圖"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L4-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 2.",
+   "correctEn": "Answer: 飛機圖\nBoy: My grandma goes to Japan by plane.",
+   "teacherText": "聽力：飛機圖（Boy: My grandma goes to Japan by plane.）",
+   "transcript": "Boy: My grandma goes to Japan by plane."
+  },
+  {
+   "seq": 11,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的圖片",
+   "options": [
+    {
+     "image": "listening/tr_taxi.webp",
+     "text": "計程車圖"
+    },
+    {
+     "image": "listening/tr_bike.webp",
+     "text": "腳踏車圖"
+    },
+    {
+     "image": "listening/tr_metro.webp",
+     "text": "捷運圖"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L4-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 捷運圖\nGirl: We go to the museum by metro.",
+   "teacherText": "聽力：捷運圖（Girl: We go to the museum by metro.）",
+   "transcript": "Girl: We go to the museum by metro."
+  },
+  {
+   "seq": 12,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-1",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/l5_girl_bike.webp",
+   "audio": "audio/listening/L5-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nBoy: How do you go to school, Amy?  Girl: I go to school by bike.",
+   "teacherText": "聽力：O（Boy: How do you go to school, Amy? / Girl: I go to school by bike.）",
+   "transcript": "Boy: How do you go to school, Amy? Girl: I go to school by bike."
+  },
+  {
+   "seq": 13,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-2",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/l5_boy_bus.webp",
+   "audio": "audio/listening/L5-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nGirl: Does Tom go to school by taxi?  Boy: Yes, he does.",
+   "teacherText": "聽力：X（Girl: Does Tom go to school by taxi? / Boy: Yes, he does.）",
+   "transcript": "Girl: Does Tom go to school by taxi? Boy: Yes, he does."
+  },
+  {
+   "seq": 14,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-3",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/l5_girls_walk.webp",
+   "audio": "audio/listening/L5-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Do you and your sister go to school by metro?  Girl: Yes, we do.",
+   "teacherText": "聽力：X（Boy: Do you and your sister go to school by metro? / Girl: Yes, we do.）",
+   "transcript": "Boy: Do you and your sister go to school by metro? Girl: Yes, we do."
+  },
+  {
+   "seq": 15,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-4",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/l5_man_train.webp",
+   "audio": "audio/listening/L5-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Does your father go to work by car?  Boy: No, he doesn't. He goes to work by train.",
+   "teacherText": "聽力：O（Girl: Does your father go to work by car? / Boy: No, he doesn't. He goes to work by train.）",
+   "transcript": "Girl: Does your father go to work by car? Boy: No, he doesn't. He goes to work by train."
+  },
+  {
+   "seq": 16,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "I go there by bus."
+    },
+    {
+     "text": "It's on Monday."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, I do.\".",
+   "correctEn": "Answer: I go there by bus.\nGirl: How do you go to the library?",
+   "teacherText": "聽力：I go there by bus.（Girl: How do you go to the library?）",
+   "transcript": "Girl: How do you go to the library?"
+  },
+  {
+   "seq": 17,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "No, he doesn't. He goes to school by bike."
+    },
+    {
+     "text": "No, I don't."
+    },
+    {
+     "text": "Yes, he is."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L6-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"No, I don't.\".",
+   "correctEn": "Answer: No, he doesn't. He goes to school by bike.\nBoy: Does your brother go to school by MRT?",
+   "teacherText": "聽力：No, he doesn't. He goes to school by bike.（Boy: Does your brother go to school by MRT?）",
+   "transcript": "Boy: Does your brother go to school by MRT?"
+  },
+  {
+   "seq": 18,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "We go to school."
+    },
+    {
+     "text": "Yes, we do."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L6-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, he does.\".",
+   "correctEn": "Answer: Yes, we do.\nGirl: Do you and Ben go to the zoo by car?",
+   "teacherText": "聽力：Yes, we do.（Girl: Do you and Ben go to the zoo by car?）",
+   "transcript": "Girl: Do you and Ben go to the zoo by car?"
+  },
+  {
+   "seq": 19,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "She goes to school by train."
+    },
+    {
+     "text": "She's from India."
+    },
+    {
+     "text": "She's twelve."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"She goes to school by train.\".",
+   "correctEn": "Answer: She's from India.\nBoy: Where is Lisa from?",
+   "teacherText": "聽力：She's from India.（Boy: Where is Lisa from?）",
+   "transcript": "Boy: Where is Lisa from?"
+  },
+  {
+   "seq": 20,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Max goes to school on foot."
+    },
+    {
+     "text": "Max goes to school by train."
+    },
+    {
+     "text": "Max's sister goes to school by train."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Max goes to school on foot.\".",
+   "correctEn": "Answer: Max goes to school by train.\nGirl: Hi, Max. How do you go to school?  Boy: I go to school by train. My sister goes to school on foot.",
+   "teacherText": "聽力：Max goes to school by train.（Girl: Hi, Max. How do you go to school? / Boy: I go to school by train. My sister goes to school on foot.）",
+   "transcript": "Girl: Hi, Max. How do you go to school? Boy: I go to school by train. My sister goes to school on foot."
+  },
+  {
+   "seq": 21,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Mrs. Lin goes to the bank by taxi."
+    },
+    {
+     "text": "Mrs. Lin goes to the bank by scooter."
+    },
+    {
+     "text": "Mrs. Lin goes to school by taxi."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L7-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Mrs. Lin goes to the bank by scooter.\".",
+   "correctEn": "Answer: Mrs. Lin goes to the bank by taxi.\nBoy: Does Mrs. Lin go to the bank by scooter?  Girl: No, she doesn't. She goes there by taxi.",
+   "teacherText": "聽力：Mrs. Lin goes to the bank by taxi.（Boy: Does Mrs. Lin go to the bank by scooter? / Girl: No, she doesn't. She goes there by taxi.）",
+   "transcript": "Boy: Does Mrs. Lin go to the bank by scooter? Girl: No, she doesn't. She goes there by taxi."
+  },
+  {
+   "seq": 22,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Hiro goes to school by bus."
+    },
+    {
+     "text": "Hiro is from Korea."
+    },
+    {
+     "text": "Hiro goes to school by MRT."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L7-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Hiro goes to school by bus.\".",
+   "correctEn": "Answer: Hiro goes to school by MRT.",
+   "teacherText": "聽力：Hiro goes to school by MRT.",
+   "transcript": "Girl: Where are you from, Hiro? Boy: I'm from Japan. Girl: Do you go to school by bus? Boy: No, I don't. I go to school by MRT."
+  },
+  {
+   "seq": 23,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "The girl goes to the museum by bus."
+    },
+    {
+     "text": "The boy goes to the museum by bus."
+    },
+    {
+     "text": "It is sunny today."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"The girl goes to the museum by bus.\".",
+   "correctEn": "Answer: The boy goes to the museum by bus.",
+   "teacherText": "聽力：The boy goes to the museum by bus.",
+   "transcript": "Boy: It's rainy today. How do you go to the museum? Girl: My dad and I go there by car. Boy: I go there by bus."
+  },
+  {
+   "seq": 24,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-5",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Grandpa goes to Green Island by plane."
+    },
+    {
+     "text": "The girl goes there by boat."
+    },
+    {
+     "text": "The girl goes to Green Island by plane."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L7-5.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Grandpa goes to Green Island by plane.\".",
+   "correctEn": "Answer: The girl goes to Green Island by plane.",
+   "teacherText": "聽力：The girl goes to Green Island by plane.",
+   "transcript": "Girl: Look! My grandpa goes to Green Island by boat. Boy: Cool! Do you go with him? Girl: No, I don't. I go there by plane."
+  },
+  {
+   "seq": 25,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-1",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/sp_train.webp",
+   "chunks": [
+    "i",
+    "r",
+    "t",
+    "a",
+    "n"
+   ],
+   "answer": [
+    "t",
+    "r",
+    "a",
+    "i",
+    "n"
+   ],
+   "hint1En": "It starts with \"t\".",
+   "hint2En": "It starts with \"tr\".",
+   "correctEn": "train",
+   "teacherText": "字母排序：train"
+  },
+  {
+   "seq": 26,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-2",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "questions/sp_bike.webp",
+   "spell": {
+    "answer": "bike",
+    "distractorLetters": "",
+    "groups": [
+     4
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"b\".",
+   "hint2En": "It starts with \"bi\" and has 4 letters.",
+   "correctEn": "bike",
+   "teacherText": "拼字：bike"
+  },
+  {
+   "seq": 27,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-3",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/sp_scooter.webp",
+   "chunks": [
+    "oo",
+    "s",
+    "t",
+    "er",
+    "c"
+   ],
+   "answer": [
+    "s",
+    "c",
+    "oo",
+    "t",
+    "er"
+   ],
+   "hint1En": "It starts with \"s\".",
+   "hint2En": "It starts with \"sc\".",
+   "correctEn": "scooter",
+   "teacherText": "字母排序：scooter"
+  },
+  {
+   "seq": 28,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-4",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/sp_metro.webp",
+   "chunks": [
+    "m",
+    "o",
+    "e",
+    "r",
+    "t"
+   ],
+   "answer": [
+    "m",
+    "e",
+    "t",
+    "r",
+    "o"
+   ],
+   "hint1En": "It starts with \"m\".",
+   "hint2En": "It starts with \"me\".",
+   "correctEn": "metro",
+   "teacherText": "字母排序：metro"
+  },
+  {
+   "seq": 29,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-1",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "go"
+    },
+    {
+     "text": "goes"
+    },
+    {
+     "text": "going"
+    }
+   ],
+   "answer": 1,
+   "stem": "My cousin ______ to school by bus.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"go\".",
+   "correctEn": "Answer: goes",
+   "teacherText": "閱讀：My cousin ______ to school by bus. → goes"
+  },
+  {
+   "seq": 30,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-2",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "do"
+    },
+    {
+     "text": "does"
+    },
+    {
+     "text": "are"
+    }
+   ],
+   "answer": 0,
+   "stem": "A: How ______ you and Tom go to the park?  B: We go there by bike.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"does\".",
+   "correctEn": "Answer: do",
+   "teacherText": "閱讀：A: How ______ you and Tom go to the park?  B: We go there by bike. → do"
+  },
+  {
+   "seq": 31,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-3",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "Do"
+    },
+    {
+     "text": "Is"
+    },
+    {
+     "text": "Does"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: ______ Ms. Wang go to work by train?  B: Yes, she does.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Do\".",
+   "correctEn": "Answer: Does",
+   "teacherText": "閱讀：A: ______ Ms. Wang go to work by train?  B: Yes, she does. → Does"
+  },
+  {
+   "seq": 32,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-4",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "by"
+    },
+    {
+     "text": "on"
+    },
+    {
+     "text": "in"
+    }
+   ],
+   "answer": 1,
+   "stem": "We go home ______ foot.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"by\".",
+   "correctEn": "Answer: on",
+   "teacherText": "閱讀：We go home ______ foot. → on"
+  },
+  {
+   "seq": 33,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-1",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "He goes to work by car."
+    },
+    {
+     "text": "He is from Spain."
+    },
+    {
+     "text": "Yes, he does."
+    }
+   ],
+   "answer": 0,
+   "stem": "A: How does your father go to work?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"He is from Spain.\".",
+   "correctEn": "Answer: He goes to work by car.",
+   "teacherText": "閱讀：A: How does your father go to work?  B: ______ → He goes to work by car."
+  },
+  {
+   "seq": 34,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-2",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "How do they go to school?"
+    },
+    {
+     "text": "Does she go to school by bus?"
+    },
+    {
+     "text": "Do Ken and Joe go to school by bus?"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: ______  B: No, they don't. They go to school by metro.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"How do they go to school?\".",
+   "correctEn": "Answer: Do Ken and Joe go to school by bus?",
+   "teacherText": "閱讀：A: ______  B: No, they don't. They go to school by metro. → Do Ken and Joe go to school by bus?"
+  },
+  {
+   "seq": 35,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-3",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "No, she isn't."
+    },
+    {
+     "text": "Yes, she does."
+    },
+    {
+     "text": "Yes, I do."
+    }
+   ],
+   "answer": 1,
+   "stem": "A: Does Amy go to the library on foot?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"No, she isn't.\".",
+   "correctEn": "Answer: Yes, she does.",
+   "teacherText": "閱讀：A: Does Amy go to the library on foot?  B: ______ → Yes, she does."
+  },
+  {
+   "seq": 36,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R4",
+   "type": "label",
+   "prompt": "Read and Label 把句子拖到相符的圖片上",
+   "image": "questions/label_scene_2x2.webp",
+   "labels": [
+    {
+     "text": "They go to school on foot.",
+     "panel": 1
+    },
+    {
+     "text": "I go to school by MRT.",
+     "panel": 2
+    },
+    {
+     "text": "She goes to school by bike.",
+     "panel": 3
+    },
+    {
+     "text": "My dad goes to work by scooter.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture 1: \"They go to school on foot.\"",
+   "hint2En": "Picture 1: \"They go to school on foot.\"  Picture 2: \"I go to school by MRT.\"",
+   "correctEn": "1. They go to school on foot.\n2. I go to school by MRT.\n3. She goes to school by bike.\n4. My dad goes to work by scooter.",
+   "teacherText": "標籤題：1. They go to school on foot.　2. I go to school by MRT.　3. She goes to school by bike.　4. My dad goes to work by scooter."
+  },
+  {
+   "seq": 37,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "How does Leo go to school?"
+    },
+    {
+     "speaker": "B",
+     "text": "He {1} to school by bus."
+    },
+    {
+     "speaker": "A",
+     "text": "{2} Mia go to school by bike?"
+    },
+    {
+     "speaker": "B",
+     "text": "No, she doesn't. She goes to school {3}."
+    }
+   ],
+   "id": "R5",
+   "type": "drag",
+   "prompt": "Read and Copy 看表格，把正確的字拖進空格",
+   "image": "questions/table_who_how.webp",
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "goes"
+    },
+    {
+     "id": 2,
+     "answer": "Does"
+    },
+    {
+     "id": 3,
+     "answer": "on foot"
+    }
+   ],
+   "distractors": [
+    "go",
+    "by car"
+   ],
+   "hint1En": "Blank 1 is \"goes\".",
+   "hint2En": "Blank 1 is \"goes\", blank 2 is \"Does\".",
+   "correctEn": "A: How does Leo go to school?\nB: He goes to school by bus.\nA: Does Mia go to school by bike?\nB: No, she doesn't. She goes to school on foot.",
+   "teacherText": "拖放：A: How does Leo go to school?　B: He goes to school by bus.　A: Does Mia go to school by bike?　B: No, she doesn't. She goes to school on foot."
+  },
+  {
+   "seq": 38,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-1",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "How",
+    "do",
+    "they",
+    "go to the zoo?"
+   ],
+   "answer": [
+    "How",
+    "do",
+    "they",
+    "go to the zoo?"
+   ],
+   "hint1En": "The first part is \"How\".",
+   "hint2En": "It starts with \"How do\".",
+   "correctEn": "How do they go to the zoo?",
+   "teacherText": "句子重組：How do they go to the zoo?"
+  },
+  {
+   "seq": 39,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-2",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "Does",
+    "Mr. Chen",
+    "go to work",
+    "by train?"
+   ],
+   "answer": [
+    "Does",
+    "Mr. Chen",
+    "go to work",
+    "by train?"
+   ],
+   "hint1En": "The first part is \"Does\".",
+   "hint2En": "It starts with \"Does Mr. Chen\".",
+   "correctEn": "Does Mr. Chen go to work by train?",
+   "teacherText": "句子重組：Does Mr. Chen go to work by train?"
+  },
+  {
+   "seq": 40,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-3",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "My brother",
+    "goes",
+    "to school",
+    "on foot."
+   ],
+   "answer": [
+    "My brother",
+    "goes",
+    "to school",
+    "on foot."
+   ],
+   "hint1En": "The first part is \"My brother\".",
+   "hint2En": "It starts with \"My brother goes\".",
+   "correctEn": "My brother goes to school on foot.",
+   "teacherText": "句子重組：My brother goes to school on foot."
+  },
+  {
+   "seq": 41,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7-1",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Jenny's Busy Saturday），選出正確的答案",
+   "options": [
+    {
+     "text": "the USA"
+    },
+    {
+     "text": "Taiwan"
+    },
+    {
+     "text": "Japan"
+    }
+   ],
+   "answer": 1,
+   "stem": "Where is Jenny from?",
+   "passage": "Hi, I'm Jenny. I'm from Taiwan. Today is Saturday, and my family is busy. I go to the library by bike. My brother Ben goes to the park on foot. My mother goes to the bank by car, and my father goes to the post office by scooter. My cousin Kevin is from the USA. He comes to Taiwan by plane today! In the afternoon, my grandpa and I go to the airport by MRT to meet him.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"the USA\".",
+   "correctEn": "Answer: Taiwan",
+   "teacherText": "閱讀：Where is Jenny from? → Taiwan"
+  },
+  {
+   "seq": 42,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7-2",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Jenny's Busy Saturday），選出正確的答案",
+   "options": [
+    {
+     "text": "By car."
+    },
+    {
+     "text": "By scooter."
+    },
+    {
+     "text": "On foot."
+    }
+   ],
+   "answer": 0,
+   "stem": "How does Jenny's mother go to the bank?",
+   "passage": "Hi, I'm Jenny. I'm from Taiwan. Today is Saturday, and my family is busy. I go to the library by bike. My brother Ben goes to the park on foot. My mother goes to the bank by car, and my father goes to the post office by scooter. My cousin Kevin is from the USA. He comes to Taiwan by plane today! In the afternoon, my grandpa and I go to the airport by MRT to meet him.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By scooter.\".",
+   "correctEn": "Answer: By car.",
+   "teacherText": "閱讀：How does Jenny's mother go to the bank? → By car."
+  },
+  {
+   "seq": 43,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7-3",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Jenny's Busy Saturday），選出正確的答案",
+   "options": [
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "No, he doesn't. He goes there on foot."
+    },
+    {
+     "text": "No, she doesn't."
+    }
+   ],
+   "answer": 1,
+   "stem": "Does Ben go to the park by bike?",
+   "passage": "Hi, I'm Jenny. I'm from Taiwan. Today is Saturday, and my family is busy. I go to the library by bike. My brother Ben goes to the park on foot. My mother goes to the bank by car, and my father goes to the post office by scooter. My cousin Kevin is from the USA. He comes to Taiwan by plane today! In the afternoon, my grandpa and I go to the airport by MRT to meet him.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, he does.\".",
+   "correctEn": "Answer: No, he doesn't. He goes there on foot.",
+   "teacherText": "閱讀：Does Ben go to the park by bike? → No, he doesn't. He goes there on foot."
+  },
+  {
+   "seq": 44,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7-4",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Jenny's Busy Saturday），選出正確的答案",
+   "options": [
+    {
+     "text": "By boat."
+    },
+    {
+     "text": "By MRT."
+    },
+    {
+     "text": "By plane."
+    }
+   ],
+   "answer": 2,
+   "stem": "How does Kevin come to Taiwan?",
+   "passage": "Hi, I'm Jenny. I'm from Taiwan. Today is Saturday, and my family is busy. I go to the library by bike. My brother Ben goes to the park on foot. My mother goes to the bank by car, and my father goes to the post office by scooter. My cousin Kevin is from the USA. He comes to Taiwan by plane today! In the afternoon, my grandpa and I go to the airport by MRT to meet him.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By boat.\".",
+   "correctEn": "Answer: By plane.",
+   "teacherText": "閱讀：How does Kevin come to Taiwan? → By plane."
+  }
+ ],
+ "locations": {
+  "station": [
+   "L1-1",
+   "L1-2",
+   "L1-3"
+  ],
+  "inn": [
+   "L2-1",
+   "L2-2",
+   "L2-3"
+  ],
+  "seven": [
+   "L3-1",
+   "L3-2",
+   "L4-1"
+  ],
+  "school": [
+   "L4-2",
+   "L4-3",
+   "L5-1"
+  ],
+  "teatop": [
+   "L5-2",
+   "L5-3",
+   "L5-4"
+  ],
+  "market": [
+   "L6-1",
+   "L6-2",
+   "L6-3"
+  ],
+  "post": [
+   "L6-4",
+   "L7-1",
+   "L7-2"
+  ],
+  "bookstore": [
+   "L7-3",
+   "L7-4",
+   "L7-5"
+  ],
+  "pxmart": [
+   "R1-1",
+   "R1-2",
+   "R1-3",
+   "R1-4"
+  ],
+  "library": [
+   "R2-1",
+   "R2-2",
+   "R2-3",
+   "R2-4"
+  ],
+  "farm": [
+   "R3-1",
+   "R3-2",
+   "R3-3",
+   "R4"
+  ],
+  "park": [
+   "R5",
+   "R6-1",
+   "R6-2",
+   "R6-3"
+  ],
+  "lawn": [
+   "R7-1",
+   "R7-2",
+   "R7-3",
+   "R7-4"
+  ]
+ },
+ "fonts": {
+  "regular": "fonts/cjk-regular.ttf",
+  "bold": "fonts/cjk-bold.ttf"
+ },
+ "pak": "bank-0b64af430516.pak"
+}

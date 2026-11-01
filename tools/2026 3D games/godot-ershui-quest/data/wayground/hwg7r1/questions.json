@@ -1,0 +1,1199 @@
+{
+ "items": [
+  {
+   "seq": 1,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-1",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "fort",
+    "stir",
+    "vendor"
+   ],
+   "answer": [
+    "vendor",
+    "stir",
+    "fort"
+   ],
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L3-1.mp3",
+   "hint1En": "The first word is \"vendor\".",
+   "hint2En": "It starts with \"vendor\", then \"stir\".",
+   "correctEn": "vendor → stir → fort",
+   "teacherText": "聽力排序：vendor → stir → fort"
+  },
+  {
+   "seq": 2,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-2",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "chart",
+    "reader",
+    "birch"
+   ],
+   "answer": [
+    "birch",
+    "chart",
+    "reader"
+   ],
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L3-2.mp3",
+   "hint1En": "The first word is \"birch\".",
+   "hint2En": "It starts with \"birch\", then \"chart\".",
+   "correctEn": "birch → chart → reader",
+   "teacherText": "聽力排序：birch → chart → reader"
+  },
+  {
+   "seq": 3,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\num_315.png",
+     "text": "315"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\num_350.png",
+     "text": "350"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\num_305.png",
+     "text": "305"
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L4-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 2.",
+   "correctEn": "Answer: 315\nBoy: My room number is three one five.",
+   "teacherText": "聽力：315（Boy: My room number is three one five.）",
+   "transcript": "Boy: My room number is three one five."
+  },
+  {
+   "seq": 4,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\pct_19.png",
+     "text": "19%"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\pct_90.png",
+     "text": "90%"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\pct_99.png",
+     "text": "99%"
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L4-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 90%\nGirl: There's a ninety percent chance of rain tomorrow.",
+   "teacherText": "聽力：90%（Girl: There's a ninety percent chance of rain tomorrow.）",
+   "transcript": "Girl: There's a ninety percent chance of rain tomorrow."
+  },
+  {
+   "seq": 5,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-1",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\l5_japan_walk.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L5-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O",
+   "teacherText": "聽力：O",
+   "transcript": "Girl: Nick, where are you from? Boy: I'm from Japan. Girl: Do you go to school by bike? Boy: No. I go to school on foot."
+  },
+  {
+   "seq": 6,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-2",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\l5_australia_scooter.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L5-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X",
+   "teacherText": "聽力：X",
+   "transcript": "Boy: Is Leo from Australia? Girl: Yes, he is. Boy: Does he go to school by scooter? Girl: No, he doesn't. He goes to school by bus."
+  },
+  {
+   "seq": 7,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-3",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\l5_spain_train.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L5-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Where is Maria from?  Boy: She's from Spain. She goes to school by train.",
+   "teacherText": "聽力：O（Girl: Where is Maria from? / Boy: She's from Spain. She goes to school by train.）",
+   "transcript": "Girl: Where is Maria from? Boy: She's from Spain. She goes to school by train."
+  },
+  {
+   "seq": 8,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-4",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\l5_korea_taxi.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L5-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Mina is from Korea. Does she go to the zoo by taxi?  Girl: No, she doesn't. She goes there by MRT.",
+   "teacherText": "聽力：X（Boy: Mina is from Korea. Does she go to the zoo by taxi? / Girl: No, she doesn't. She goes there by MRT.）",
+   "transcript": "Boy: Mina is from Korea. Does she go to the zoo by taxi? Girl: No, she doesn't. She goes there by MRT."
+  },
+  {
+   "seq": 9,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, he is."
+    },
+    {
+     "text": "Yes, they are. They're from Australia."
+    },
+    {
+     "text": "No, I'm not."
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L6-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, he is.\".",
+   "correctEn": "Answer: Yes, they are. They're from Australia.\nGirl: Are Tim and Ben from Australia?",
+   "teacherText": "聽力：Yes, they are. They're from Australia.（Girl: Are Tim and Ben from Australia?）",
+   "transcript": "Girl: Are Tim and Ben from Australia?"
+  },
+  {
+   "seq": 10,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "I'm going to the zoo."
+    },
+    {
+     "text": "I'm from India."
+    },
+    {
+     "text": "By bus."
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L6-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"I'm from India.\".",
+   "correctEn": "Answer: I'm going to the zoo.\nBoy: Where are you going?",
+   "teacherText": "聽力：I'm going to the zoo.（Boy: Where are you going?）",
+   "transcript": "Boy: Where are you going?"
+  },
+  {
+   "seq": 11,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "I'm from Jupiter."
+    },
+    {
+     "text": "You can go there by bus. Follow me!"
+    },
+    {
+     "text": "No, I don't."
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L6-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"I'm from Jupiter.\".",
+   "correctEn": "Answer: You can go there by bus. Follow me!\nGirl: How do I go to the night market?",
+   "teacherText": "聽力：You can go there by bus. Follow me!（Girl: How do I go to the night market?）",
+   "transcript": "Girl: How do I go to the night market?"
+  },
+  {
+   "seq": 12,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "It's my soda."
+    },
+    {
+     "text": "No, thank you."
+    }
+   ],
+   "answer": 2,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L6-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, he does.\".",
+   "correctEn": "Answer: No, thank you.\nBoy: Would you like some tofu?",
+   "teacherText": "聽力：No, thank you.（Boy: Would you like some tofu?）",
+   "transcript": "Boy: Would you like some tofu?"
+  },
+  {
+   "seq": 13,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "Singapore."
+    },
+    {
+     "text": "The UK."
+    },
+    {
+     "text": "India."
+    }
+   ],
+   "answer": 2,
+   "stem": "(對話一) Where is Wilson from?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Singapore.\".",
+   "correctEn": "Answer: India.",
+   "teacherText": "聽力：(對話一) Where is Wilson from? → India.",
+   "transcript": "Girl: Hi, I'm Penny. I'm from Singapore. This is my classmate, Wilson. Boy: Hi, I'm Wilson. I'm from India. Girl: Wilson and I go to school by MRT. Boy: Our teacher, Mr. Brown, is from the UK. He goes to school by bike."
+  },
+  {
+   "seq": 14,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "By bike."
+    },
+    {
+     "text": "By MRT."
+    },
+    {
+     "text": "On foot."
+    }
+   ],
+   "answer": 0,
+   "stem": "(對話一) How does Mr. Brown go to school?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"By MRT.\".",
+   "correctEn": "Answer: By bike.",
+   "teacherText": "聽力：(對話一) How does Mr. Brown go to school? → By bike."
+  },
+  {
+   "seq": 15,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "Penny is from India."
+    },
+    {
+     "text": "Penny and Wilson go to school by MRT."
+    },
+    {
+     "text": "Mr. Brown is from the USA."
+    }
+   ],
+   "answer": 1,
+   "stem": "(對話一) Which is true?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Penny is from India.\".",
+   "correctEn": "Answer: Penny and Wilson go to school by MRT.",
+   "teacherText": "聽力：(對話一) Which is true? → Penny and Wilson go to school by MRT."
+  },
+  {
+   "seq": 16,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "Kaohsiung."
+    },
+    {
+     "text": "Taipei."
+    },
+    {
+     "text": "Taichung."
+    }
+   ],
+   "answer": 0,
+   "stem": "(對話二) What is Annie's hometown?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Taipei.\".",
+   "correctEn": "Answer: Kaohsiung.",
+   "teacherText": "聽力：(對話二) What is Annie's hometown? → Kaohsiung.",
+   "transcript": "Boy: Annie, is Kaohsiung your hometown? Girl: Yes, it is. I love Kaohsiung. Boy: How do you go to Shoushan Zoo? Girl: I go there by metro and bus."
+  },
+  {
+   "seq": 17,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-5",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "By scooter."
+    },
+    {
+     "text": "By train and bike."
+    },
+    {
+     "text": "By metro and bus."
+    }
+   ],
+   "answer": 2,
+   "stem": "(對話二) How does Annie go to Shoushan Zoo?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"By scooter.\".",
+   "correctEn": "Answer: By metro and bus.",
+   "teacherText": "聽力：(對話二) How does Annie go to Shoushan Zoo? → By metro and bus."
+  },
+  {
+   "seq": 18,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-6",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "By scooter."
+    },
+    {
+     "text": "By taxi."
+    },
+    {
+     "text": "By bus."
+    }
+   ],
+   "answer": 1,
+   "stem": "(對話三) How do Jack and his sister go to school today?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-6.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"By scooter.\".",
+   "correctEn": "Answer: By taxi.",
+   "teacherText": "聽力：(對話三) How do Jack and his sister go to school today? → By taxi.",
+   "transcript": "Girl: It's rainy today. Do you go to school by scooter, Jack? Boy: No, I don't. My sister and I go to school by taxi today. Girl: Oh. I go to school by bus."
+  },
+  {
+   "seq": 19,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-7",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "By bus."
+    },
+    {
+     "text": "By taxi."
+    },
+    {
+     "text": "On foot."
+    }
+   ],
+   "answer": 0,
+   "stem": "(對話三) How does the girl go to school?",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\音檔_0.8倍速_每題\\L7-6.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"By taxi.\".",
+   "correctEn": "Answer: By bus.",
+   "teacherText": "聽力：(對話三) How does the girl go to school? → By bus."
+  },
+  {
+   "seq": 20,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R4",
+   "type": "label",
+   "prompt": "Read and Label 把句子拖到相符的圖片上",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\label_scene_2x2.png",
+   "labels": [
+    {
+     "text": "My grandma is from Australia.",
+     "panel": 1
+    },
+    {
+     "text": "I'm from Japan.",
+     "panel": 2
+    },
+    {
+     "text": "He goes to the bank by scooter.",
+     "panel": 3
+    },
+    {
+     "text": "We go to the museum by train.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture 1: \"My grandma is from Australia.\"",
+   "hint2En": "Picture 1: \"My grandma is from Australia.\"  Picture 2: \"I'm from Japan.\"",
+   "correctEn": "1. My grandma is from Australia.\n2. I'm from Japan.\n3. He goes to the bank by scooter.\n4. We go to the museum by train.",
+   "teacherText": "標籤題：1. My grandma is from Australia.　2. I'm from Japan.　3. He goes to the bank by scooter.　4. We go to the museum by train."
+  },
+  {
+   "seq": 21,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "{1} are you from, Yuki?"
+    },
+    {
+     "speaker": "B",
+     "text": "I'm from {2}."
+    },
+    {
+     "speaker": "A",
+     "text": "{3} do you go to school?"
+    },
+    {
+     "speaker": "B",
+     "text": "I go to school {4} foot."
+    }
+   ],
+   "id": "R5",
+   "type": "drag",
+   "prompt": "Read and Copy 看 Yuki 的學生卡，把正確的字拖進空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG7_小考_Review1_20261101\\_紀錄\\images\\card_yuki.png",
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Where"
+    },
+    {
+     "id": 2,
+     "answer": "Japan"
+    },
+    {
+     "id": 3,
+     "answer": "How"
+    },
+    {
+     "id": 4,
+     "answer": "on"
+    }
+   ],
+   "distractors": [
+    "by",
+    "Does"
+   ],
+   "hint1En": "Blank 1 is \"Where\".",
+   "hint2En": "Blank 1 is \"Where\", blank 2 is \"Japan\".",
+   "correctEn": "A: Where are you from, Yuki?\nB: I'm from Japan.\nA: How do you go to school?\nB: I go to school on foot.",
+   "teacherText": "拖放：A: Where are you from, Yuki?　B: I'm from Japan.　A: How do you go to school?　B: I go to school on foot."
+  },
+  {
+   "seq": 22,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-1",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "Is",
+    "Mike",
+    "from",
+    "Singapore?"
+   ],
+   "answer": [
+    "Is",
+    "Mike",
+    "from",
+    "Singapore?"
+   ],
+   "hint1En": "The first part is \"Is\".",
+   "hint2En": "It starts with \"Is Mike\".",
+   "correctEn": "Is Mike from Singapore?",
+   "teacherText": "句子重組：Is Mike from Singapore?"
+  },
+  {
+   "seq": 23,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-2",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "My brothers",
+    "go to",
+    "the museum",
+    "by train."
+   ],
+   "answer": [
+    "My brothers",
+    "go to",
+    "the museum",
+    "by train."
+   ],
+   "hint1En": "The first part is \"My brothers\".",
+   "hint2En": "It starts with \"My brothers go to\".",
+   "correctEn": "My brothers go to the museum by train.",
+   "teacherText": "句子重組：My brothers go to the museum by train."
+  },
+  {
+   "seq": 24,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-3",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "Does",
+    "your sister",
+    "go to school",
+    "on foot?"
+   ],
+   "answer": [
+    "Does",
+    "your sister",
+    "go to school",
+    "on foot?"
+   ],
+   "hint1En": "The first part is \"Does\".",
+   "hint2En": "It starts with \"Does your sister\".",
+   "correctEn": "Does your sister go to school on foot?",
+   "teacherText": "句子重組：Does your sister go to school on foot?"
+  },
+  {
+   "seq": 25,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-1",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Ethan's Trip），選出正確的答案",
+   "options": [
+    {
+     "text": "India."
+    },
+    {
+     "text": "The USA."
+    },
+    {
+     "text": "Japan."
+    }
+   ],
+   "answer": 1,
+   "stem": "Where is Ethan from?",
+   "passage": "Hi, I'm Ethan. I'm from the USA. Now I'm in India with my family. We go to the Taj Mahal by train. There are many people there. Two girls are from Japan, and a boy is from Spain. They go there by bus. I like India, but I miss my hometown. Tomorrow we go to Singapore by plane.",
+   "notes": [
+    "* Taj Mahal 泰姬瑪哈陵",
+    "* miss 想念",
+    "* hometown 故鄉",
+    "* tomorrow 明天"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"India.\".",
+   "correctEn": "Answer: The USA.",
+   "teacherText": "閱讀：Where is Ethan from? → The USA."
+  },
+  {
+   "seq": 26,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-2",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Ethan's Trip），選出正確的答案",
+   "options": [
+    {
+     "text": "By train."
+    },
+    {
+     "text": "By bus."
+    },
+    {
+     "text": "By plane."
+    }
+   ],
+   "answer": 0,
+   "stem": "How does Ethan's family go to the Taj Mahal?",
+   "passage": "Hi, I'm Ethan. I'm from the USA. Now I'm in India with my family. We go to the Taj Mahal by train. There are many people there. Two girls are from Japan, and a boy is from Spain. They go there by bus. I like India, but I miss my hometown. Tomorrow we go to Singapore by plane.",
+   "notes": [
+    "* Taj Mahal 泰姬瑪哈陵",
+    "* miss 想念",
+    "* hometown 故鄉",
+    "* tomorrow 明天"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By bus.\".",
+   "correctEn": "Answer: By train.",
+   "teacherText": "閱讀：How does Ethan's family go to the Taj Mahal? → By train."
+  },
+  {
+   "seq": 27,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-3",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Ethan's Trip），選出正確的答案",
+   "options": [
+    {
+     "text": "Spain."
+    },
+    {
+     "text": "India."
+    },
+    {
+     "text": "Japan."
+    }
+   ],
+   "answer": 2,
+   "stem": "Where are the two girls from?",
+   "passage": "Hi, I'm Ethan. I'm from the USA. Now I'm in India with my family. We go to the Taj Mahal by train. There are many people there. Two girls are from Japan, and a boy is from Spain. They go there by bus. I like India, but I miss my hometown. Tomorrow we go to Singapore by plane.",
+   "notes": [
+    "* Taj Mahal 泰姬瑪哈陵",
+    "* miss 想念",
+    "* hometown 故鄉",
+    "* tomorrow 明天"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Spain.\".",
+   "correctEn": "Answer: Japan.",
+   "teacherText": "閱讀：Where are the two girls from? → Japan."
+  },
+  {
+   "seq": 28,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-4",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Ethan's Trip），選出正確的答案",
+   "options": [
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "No, he doesn't. He goes there by bus."
+    },
+    {
+     "text": "No, he isn't."
+    }
+   ],
+   "answer": 1,
+   "stem": "Does the boy from Spain go to the Taj Mahal by train?",
+   "passage": "Hi, I'm Ethan. I'm from the USA. Now I'm in India with my family. We go to the Taj Mahal by train. There are many people there. Two girls are from Japan, and a boy is from Spain. They go there by bus. I like India, but I miss my hometown. Tomorrow we go to Singapore by plane.",
+   "notes": [
+    "* Taj Mahal 泰姬瑪哈陵",
+    "* miss 想念",
+    "* hometown 故鄉",
+    "* tomorrow 明天"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, he does.\".",
+   "correctEn": "Answer: No, he doesn't. He goes there by bus.",
+   "teacherText": "閱讀：Does the boy from Spain go to the Taj Mahal by train? → No, he doesn't. He goes there by bus."
+  },
+  {
+   "seq": 29,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-5",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀短文（Ethan's Trip），選出正確的答案",
+   "options": [
+    {
+     "text": "By plane."
+    },
+    {
+     "text": "By boat."
+    },
+    {
+     "text": "By MRT."
+    }
+   ],
+   "answer": 0,
+   "stem": "How do they go to Singapore tomorrow?",
+   "passage": "Hi, I'm Ethan. I'm from the USA. Now I'm in India with my family. We go to the Taj Mahal by train. There are many people there. Two girls are from Japan, and a boy is from Spain. They go there by bus. I like India, but I miss my hometown. Tomorrow we go to Singapore by plane.",
+   "notes": [
+    "* Taj Mahal 泰姬瑪哈陵",
+    "* miss 想念",
+    "* hometown 故鄉",
+    "* tomorrow 明天"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By boat.\".",
+   "correctEn": "Answer: By plane.",
+   "teacherText": "閱讀：How do they go to Singapore tomorrow? → By plane."
+  },
+  {
+   "seq": 30,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-1",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀對話（Kevin 和媽媽），選出正確的答案",
+   "options": [
+    {
+     "text": "In Kaohsiung."
+    },
+    {
+     "text": "In Taipei."
+    },
+    {
+     "text": "In India."
+    }
+   ],
+   "answer": 1,
+   "stem": "Where are Kevin and his mom now?",
+   "passage": "Kevin: Mom, where are we now?\nMom: We're in Taipei.\nKevin: Can we go to Taipei 101?\nMom: Sure. We can go there by bus or by MRT.\nKevin: Let's go there by MRT!\nMom: OK. After that, let's go to the zoo.\nKevin: How do we go to the zoo?\nMom: By taxi. It's fast.",
+   "notes": [
+    "* Sure. 當然。",
+    "* after that 在那之後",
+    "* fast 快的"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"In Kaohsiung.\".",
+   "correctEn": "Answer: In Taipei.",
+   "teacherText": "閱讀：Where are Kevin and his mom now? → In Taipei."
+  },
+  {
+   "seq": 31,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-2",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀對話（Kevin 和媽媽），選出正確的答案",
+   "options": [
+    {
+     "text": "By bus or by MRT."
+    },
+    {
+     "text": "By taxi."
+    },
+    {
+     "text": "On foot."
+    }
+   ],
+   "answer": 0,
+   "stem": "How can they go to Taipei 101?",
+   "passage": "Kevin: Mom, where are we now?\nMom: We're in Taipei.\nKevin: Can we go to Taipei 101?\nMom: Sure. We can go there by bus or by MRT.\nKevin: Let's go there by MRT!\nMom: OK. After that, let's go to the zoo.\nKevin: How do we go to the zoo?\nMom: By taxi. It's fast.",
+   "notes": [
+    "* Sure. 當然。",
+    "* after that 在那之後",
+    "* fast 快的"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By taxi.\".",
+   "correctEn": "Answer: By bus or by MRT.",
+   "teacherText": "閱讀：How can they go to Taipei 101? → By bus or by MRT."
+  },
+  {
+   "seq": 32,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-3",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀對話（Kevin 和媽媽），選出正確的答案",
+   "options": [
+    {
+     "text": "By bus."
+    },
+    {
+     "text": "By scooter."
+    },
+    {
+     "text": "By MRT."
+    }
+   ],
+   "answer": 2,
+   "stem": "How do they go to Taipei 101?",
+   "passage": "Kevin: Mom, where are we now?\nMom: We're in Taipei.\nKevin: Can we go to Taipei 101?\nMom: Sure. We can go there by bus or by MRT.\nKevin: Let's go there by MRT!\nMom: OK. After that, let's go to the zoo.\nKevin: How do we go to the zoo?\nMom: By taxi. It's fast.",
+   "notes": [
+    "* Sure. 當然。",
+    "* after that 在那之後",
+    "* fast 快的"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By bus.\".",
+   "correctEn": "Answer: By MRT.",
+   "teacherText": "閱讀：How do they go to Taipei 101? → By MRT."
+  },
+  {
+   "seq": 33,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-4",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀對話（Kevin 和媽媽），選出正確的答案",
+   "options": [
+    {
+     "text": "By taxi."
+    },
+    {
+     "text": "By MRT."
+    },
+    {
+     "text": "By bus."
+    }
+   ],
+   "answer": 0,
+   "stem": "How do they go to the zoo?",
+   "passage": "Kevin: Mom, where are we now?\nMom: We're in Taipei.\nKevin: Can we go to Taipei 101?\nMom: Sure. We can go there by bus or by MRT.\nKevin: Let's go there by MRT!\nMom: OK. After that, let's go to the zoo.\nKevin: How do we go to the zoo?\nMom: By taxi. It's fast.",
+   "notes": [
+    "* Sure. 當然。",
+    "* after that 在那之後",
+    "* fast 快的"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By MRT.\".",
+   "correctEn": "Answer: By taxi.",
+   "teacherText": "閱讀：How do they go to the zoo? → By taxi."
+  },
+  {
+   "seq": 34,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-5",
+   "type": "choice",
+   "prompt": "Read and Answer 閱讀對話（Kevin 和媽媽），選出正確的答案",
+   "options": [
+    {
+     "text": "Kevin and his mom go to the zoo first."
+    },
+    {
+     "text": "Kevin wants to go to Taipei 101 by MRT."
+    },
+    {
+     "text": "They go to Taipei 101 by taxi."
+    }
+   ],
+   "answer": 1,
+   "stem": "Which is true?",
+   "passage": "Kevin: Mom, where are we now?\nMom: We're in Taipei.\nKevin: Can we go to Taipei 101?\nMom: Sure. We can go there by bus or by MRT.\nKevin: Let's go there by MRT!\nMom: OK. After that, let's go to the zoo.\nKevin: How do we go to the zoo?\nMom: By taxi. It's fast.",
+   "notes": [
+    "* Sure. 當然。",
+    "* after that 在那之後",
+    "* fast 快的"
+   ],
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Kevin and his mom go to the zoo first.\".",
+   "correctEn": "Answer: Kevin wants to go to Taipei 101 by MRT.",
+   "teacherText": "閱讀：Which is true? → Kevin wants to go to Taipei 101 by MRT."
+  },
+  {
+   "seq": 35,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-1",
+   "type": "choice",
+   "prompt": "Read and Choose 看「Our Friends' Trips in Taiwan」表格，選出正確的答案",
+   "options": [
+    {
+     "text": "Korea."
+    },
+    {
+     "text": "Japan."
+    },
+    {
+     "text": "Spain."
+    }
+   ],
+   "answer": 1,
+   "stem": "Where is Hana from?",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 3D games\\godot-ershui-quest\\data\\wayground\\hwg7r1\\R8_chart.png",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Korea.\".",
+   "correctEn": "Answer: Japan.",
+   "teacherText": "閱讀：Where is Hana from? → Japan."
+  },
+  {
+   "seq": 36,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-2",
+   "type": "choice",
+   "prompt": "Read and Choose 看「Our Friends' Trips in Taiwan」表格，選出正確的答案",
+   "options": [
+    {
+     "text": "By bus."
+    },
+    {
+     "text": "By train."
+    },
+    {
+     "text": "By MRT."
+    }
+   ],
+   "answer": 0,
+   "stem": "How does Leo go to Sun Moon Lake?",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 3D games\\godot-ershui-quest\\data\\wayground\\hwg7r1\\R8_chart.png",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"By train.\".",
+   "correctEn": "Answer: By bus.",
+   "teacherText": "閱讀：How does Leo go to Sun Moon Lake? → By bus."
+  },
+  {
+   "seq": 37,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-3",
+   "type": "choice",
+   "prompt": "Read and Choose 看「Our Friends' Trips in Taiwan」表格，選出正確的答案",
+   "options": [
+    {
+     "text": "Yes, she does."
+    },
+    {
+     "text": "No, she isn't."
+    },
+    {
+     "text": "No, she doesn't. She goes there by boat."
+    }
+   ],
+   "answer": 2,
+   "stem": "Does Maria go to Green Island by plane?",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 3D games\\godot-ershui-quest\\data\\wayground\\hwg7r1\\R8_chart.png",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, she does.\".",
+   "correctEn": "Answer: No, she doesn't. She goes there by boat.",
+   "teacherText": "閱讀：Does Maria go to Green Island by plane? → No, she doesn't. She goes there by boat."
+  },
+  {
+   "seq": 38,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-4",
+   "type": "choice",
+   "prompt": "Read and Choose 看「Our Friends' Trips in Taiwan」表格，選出正確的答案",
+   "options": [
+    {
+     "text": "Hana."
+    },
+    {
+     "text": "Mina."
+    },
+    {
+     "text": "Linh."
+    }
+   ],
+   "answer": 0,
+   "stem": "Which friend goes to Kaohsiung by train?",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 3D games\\godot-ershui-quest\\data\\wayground\\hwg7r1\\R8_chart.png",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Mina.\".",
+   "correctEn": "Answer: Hana.",
+   "teacherText": "閱讀：Which friend goes to Kaohsiung by train? → Hana."
+  },
+  {
+   "seq": 39,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-5",
+   "type": "choice",
+   "prompt": "Read and Choose 看「Our Friends' Trips in Taiwan」表格，選出正確的答案",
+   "options": [
+    {
+     "text": "Japan; by bus"
+    },
+    {
+     "text": "Korea; by MRT"
+    },
+    {
+     "text": "Korea; by train"
+    }
+   ],
+   "answer": 1,
+   "stem": "Mina is from ______. She goes to Taipei 101 ______.",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 3D games\\godot-ershui-quest\\data\\wayground\\hwg7r1\\R8_chart.png",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Japan; by bus\".",
+   "correctEn": "Answer: Korea; by MRT",
+   "teacherText": "閱讀：Mina is from ______. She goes to Taipei 101 ______. → Korea; by MRT"
+  },
+  {
+   "seq": 40,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-6",
+   "type": "choice",
+   "prompt": "Read and Choose 看「Our Friends' Trips in Taiwan」表格，選出正確的答案",
+   "options": [
+    {
+     "text": "Linh is from Vietnam. She goes to Kinmen by plane."
+    },
+    {
+     "text": "Leo is from the USA."
+    },
+    {
+     "text": "Maria goes to Green Island by MRT."
+    }
+   ],
+   "answer": 0,
+   "stem": "Which is true?",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 3D games\\godot-ershui-quest\\data\\wayground\\hwg7r1\\R8_chart.png",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Leo is from the USA.\".",
+   "correctEn": "Answer: Linh is from Vietnam. She goes to Kinmen by plane.",
+   "teacherText": "閱讀：Which is true? → Linh is from Vietnam. She goes to Kinmen by plane."
+  }
+ ]
+}

@@ -1,0 +1,1233 @@
+{
+ "mission": "ershui-3d-quest-hwg5r1",
+ "unit": "二水 3D 英語闖關 HWG5-review1 綜合小考",
+ "title": "Ershui 3D Quest · HWG5 Review 1",
+ "short": "HWG5-review1 綜合小考",
+ "weekStripOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekStripLabels": {},
+ "items": [
+  {
+   "seq": 1,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-1",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "tail",
+    "tile",
+    "seal"
+   ],
+   "answer": [
+    "tile",
+    "seal",
+    "tail"
+   ],
+   "audio": "audio/listening/L3-1.mp3",
+   "hint1En": "The first word is \"tile\".",
+   "hint2En": "It starts with \"tile\", then \"seal\".",
+   "correctEn": "tile → seal → tail",
+   "teacherText": "聽力排序：tile → seal → tail"
+  },
+  {
+   "seq": 2,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-2",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "bay",
+    "peel",
+    "sky"
+   ],
+   "answer": [
+    "peel",
+    "bay",
+    "sky"
+   ],
+   "audio": "audio/listening/L3-2.mp3",
+   "hint1En": "The first word is \"peel\".",
+   "hint2En": "It starts with \"peel\", then \"bay\".",
+   "correctEn": "peel → bay → sky",
+   "teacherText": "聽力排序：peel → bay → sky"
+  },
+  {
+   "seq": 3,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_16.webp",
+     "text": "16"
+    },
+    {
+     "image": "listening/num_60.webp",
+     "text": "60"
+    },
+    {
+     "image": "listening/num_66.webp",
+     "text": "66"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L4-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 60\nsixty",
+   "teacherText": "聽力：60（sixty）",
+   "transcript": "sixty sixty"
+  },
+  {
+   "seq": 4,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_13.webp",
+     "text": "13"
+    },
+    {
+     "image": "listening/num_33.webp",
+     "text": "33"
+    },
+    {
+     "image": "listening/num_30.webp",
+     "text": "30"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L4-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 30\nthirty",
+   "teacherText": "聽力：30（thirty）",
+   "transcript": "thirty thirty"
+  },
+  {
+   "seq": 5,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-1",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/cal_wed_music.webp",
+   "audio": "audio/listening/L5-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Is it Wednesday today?  Boy: Yes, it is. I have music class today.",
+   "teacherText": "聽力：O（Girl: Is it Wednesday today? / Boy: Yes, it is. I have music class today.）",
+   "transcript": "Girl: Is it Wednesday today? Boy: Yes, it is. I have music class today."
+  },
+  {
+   "seq": 6,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-2",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/cal_sat_pe.webp",
+   "audio": "audio/listening/L5-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Do you have PE class on Saturday?  Girl: No, I don't. It's Saturday. Let's go out!",
+   "teacherText": "聽力：X（Boy: Do you have PE class on Saturday? / Girl: No, I don't. It's Saturday. Let's go out!）",
+   "transcript": "Boy: Do you have PE class on Saturday? Girl: No, I don't. It's Saturday. Let's go out!"
+  },
+  {
+   "seq": 7,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-3",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/cal_thu_chinese.webp",
+   "audio": "audio/listening/L5-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Does Steve have Chinese class on Thursday?  Boy: Yes, he does.",
+   "teacherText": "聽力：O（Girl: Does Steve have Chinese class on Thursday? / Boy: Yes, he does.）",
+   "transcript": "Girl: Does Steve have Chinese class on Thursday? Boy: Yes, he does."
+  },
+  {
+   "seq": 8,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-4",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/cal_mon_english.webp",
+   "audio": "audio/listening/L5-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: What day is today?  Girl: It's Tuesday. I have English class today.",
+   "teacherText": "聽力：X（Boy: What day is today? / Girl: It's Tuesday. I have English class today.）",
+   "transcript": "Boy: What day is today? Girl: It's Tuesday. I have English class today."
+  },
+  {
+   "seq": 9,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Don't worry."
+    },
+    {
+     "text": "Good idea!"
+    },
+    {
+     "text": "See you later!"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L6-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Good idea!\".",
+   "correctEn": "Answer: Don't worry.\nBoy: Sorry, I'm late.",
+   "teacherText": "聽力：Don't worry.（Boy: Sorry, I'm late.）",
+   "transcript": "Boy: Sorry, I'm late."
+  },
+  {
+   "seq": 10,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "No, it isn't. It's Thursday."
+    },
+    {
+     "text": "I like Friday."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, I do.\".",
+   "correctEn": "Answer: No, it isn't. It's Thursday.\nGirl: Is it Friday today?",
+   "teacherText": "聽力：No, it isn't. It's Thursday.（Girl: Is it Friday today?）",
+   "transcript": "Girl: Is it Friday today?"
+  },
+  {
+   "seq": 11,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "Watch out!"
+    },
+    {
+     "text": "No, I don't. I have math class."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L6-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, he does.\".",
+   "correctEn": "Answer: No, I don't. I have math class.\nBoy: Do you have art class on Monday?",
+   "teacherText": "聽力：No, I don't. I have math class.（Boy: Do you have art class on Monday?）",
+   "transcript": "Boy: Do you have art class on Monday?"
+  },
+  {
+   "seq": 12,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Thank you."
+    },
+    {
+     "text": "Good idea!"
+    },
+    {
+     "text": "No, she doesn't."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Thank you.\".",
+   "correctEn": "Answer: Good idea!\nGirl: It's Saturday. Let's go to the park.",
+   "teacherText": "聽力：Good idea!（Girl: It's Saturday. Let's go to the park.）",
+   "transcript": "Girl: It's Saturday. Let's go to the park."
+  },
+  {
+   "seq": 13,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "Tuesday."
+    },
+    {
+     "text": "Wednesday."
+    },
+    {
+     "text": "Thursday."
+    }
+   ],
+   "answer": 1,
+   "stem": "(對話一) What day is today?",
+   "audio": "audio/listening/L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Tuesday.\".",
+   "correctEn": "Answer: Wednesday.",
+   "teacherText": "聽力：(對話一) What day is today? → Wednesday.",
+   "transcript": "Girl: Hi, Andy. What day is today? Boy: It's Wednesday. Girl: Oh, I have science class today. Science is my favorite subject. Boy: Do you have PE class today, too? Girl: No, I don't. I have PE class on Thursday."
+  },
+  {
+   "seq": 14,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "science"
+    },
+    {
+     "text": "PE"
+    },
+    {
+     "text": "art"
+    }
+   ],
+   "answer": 0,
+   "stem": "(對話一) What's the girl's favorite subject?",
+   "audio": "audio/listening/L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"PE\".",
+   "correctEn": "Answer: science",
+   "teacherText": "聽力：(對話一) What's the girl's favorite subject? → science"
+  },
+  {
+   "seq": 15,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "On Wednesday."
+    },
+    {
+     "text": "On Friday."
+    },
+    {
+     "text": "On Thursday."
+    }
+   ],
+   "answer": 2,
+   "stem": "(對話一) When does the girl have PE class?",
+   "audio": "audio/listening/L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"On Wednesday.\".",
+   "correctEn": "Answer: On Thursday.",
+   "teacherText": "聽力：(對話一) When does the girl have PE class? → On Thursday."
+  },
+  {
+   "seq": 16,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "Saturday."
+    },
+    {
+     "text": "Sunday."
+    },
+    {
+     "text": "Monday."
+    }
+   ],
+   "answer": 1,
+   "stem": "(對話二) What day is it?",
+   "audio": "audio/listening/L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Saturday.\".",
+   "correctEn": "Answer: Sunday.",
+   "teacherText": "聽力：(對話二) What day is it? → Sunday.（Boy: Amy, it's Sunday. Let's go swimming. / Girl: Good idea! See you later!）",
+   "transcript": "Boy: Amy, it's Sunday. Let's go swimming. Girl: Good idea! See you later!"
+  },
+  {
+   "seq": 17,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-5",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "Go swimming."
+    },
+    {
+     "text": "Watch a football game."
+    },
+    {
+     "text": "Have art class."
+    }
+   ],
+   "answer": 0,
+   "stem": "(對話二) What do they want to do?",
+   "audio": "audio/listening/L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Watch a football game.\".",
+   "correctEn": "Answer: Go swimming.",
+   "teacherText": "聽力：(對話二) What do they want to do? → Go swimming."
+  },
+  {
+   "seq": 18,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-6",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "music"
+    },
+    {
+     "text": "math"
+    },
+    {
+     "text": "PE"
+    }
+   ],
+   "answer": 1,
+   "stem": "(對話三) What class do they have now?",
+   "audio": "audio/listening/L7-6.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"music\".",
+   "correctEn": "Answer: math",
+   "teacherText": "聽力：(對話三) What class do they have now? → math",
+   "transcript": "Girl: Ben, you're late! It's ten o'clock. Boy: Sorry, I'm late. Do we have music class now? Girl: No, we don't. We have math class now. Music class is on Friday."
+  },
+  {
+   "seq": 19,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-7",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽一段對話，看題目，選出正確的答案",
+   "options": [
+    {
+     "text": "On Friday."
+    },
+    {
+     "text": "At ten o'clock."
+    },
+    {
+     "text": "On Monday."
+    }
+   ],
+   "answer": 0,
+   "stem": "(對話三) When is music class?",
+   "audio": "audio/listening/L7-6.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"At ten o'clock.\".",
+   "correctEn": "Answer: On Friday.",
+   "teacherText": "聽力：(對話三) When is music class? → On Friday."
+  },
+  {
+   "seq": 20,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R4",
+   "type": "label",
+   "prompt": "Read and Label 把句子拖到相符的圖片上",
+   "image": "questions/label_scene_2x2.webp",
+   "labels": [
+    {
+     "text": "Don't worry.",
+     "panel": 1
+    },
+    {
+     "text": "It's Saturday. Let's go out!",
+     "panel": 2
+    },
+    {
+     "text": "Sorry, I'm late.",
+     "panel": 3
+    },
+    {
+     "text": "I have science class today.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture 1: \"Don't worry.\"",
+   "hint2En": "Picture 1: \"Don't worry.\"  Picture 2: \"It's Saturday. Let's go out!\"",
+   "correctEn": "1. Don't worry.\n2. It's Saturday. Let's go out!\n3. Sorry, I'm late.\n4. I have science class today.",
+   "teacherText": "標籤題：1. Don't worry.　2. It's Saturday. Let's go out!　3. Sorry, I'm late.　4. I have science class today."
+  },
+  {
+   "seq": 21,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "What {1} is today?"
+    },
+    {
+     "speaker": "B",
+     "text": "It's Friday."
+    },
+    {
+     "speaker": "A",
+     "text": "{2} you have PE class today?"
+    },
+    {
+     "speaker": "B",
+     "text": "No, I {3}. I have {4} class."
+    }
+   ],
+   "id": "R5",
+   "type": "drag",
+   "prompt": "Read and Copy 看 Tom 的課表，把正確的字拖進空格",
+   "image": "questions/schedule_tom.webp",
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "day"
+    },
+    {
+     "id": 2,
+     "answer": "Do"
+    },
+    {
+     "id": 3,
+     "answer": "don't"
+    },
+    {
+     "id": 4,
+     "answer": "art"
+    }
+   ],
+   "distractors": [
+    "Does",
+    "doesn't"
+   ],
+   "hint1En": "Blank 1 is \"day\".",
+   "hint2En": "Blank 1 is \"day\", blank 2 is \"Do\".",
+   "correctEn": "A: What day is today?\nB: It's Friday.\nA: Do you have PE class today?\nB: No, I don't. I have art class.",
+   "teacherText": "拖放：A: What day is today?　B: It's Friday.　A: Do you have PE class today?　B: No, I don't. I have art class."
+  },
+  {
+   "seq": 22,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-1",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "Friday",
+    "Is",
+    "today?",
+    "it"
+   ],
+   "answer": [
+    "Is",
+    "it",
+    "Friday",
+    "today?"
+   ],
+   "hint1En": "The first part is \"Is\".",
+   "hint2En": "It starts with \"Is it\".",
+   "correctEn": "Is it Friday today?",
+   "teacherText": "句子重組：Is it Friday today?"
+  },
+  {
+   "seq": 23,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-2",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "PE class",
+    "Does",
+    "on Tuesday?",
+    "Andy",
+    "have"
+   ],
+   "answer": [
+    "Does",
+    "Andy",
+    "have",
+    "PE class",
+    "on Tuesday?"
+   ],
+   "hint1En": "The first part is \"Does\".",
+   "hint2En": "It starts with \"Does Andy\".",
+   "correctEn": "Does Andy have PE class on Tuesday?",
+   "teacherText": "句子重組：Does Andy have PE class on Tuesday?"
+  },
+  {
+   "seq": 24,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-3",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "favorite",
+    "My",
+    "is science.",
+    "subject"
+   ],
+   "answer": [
+    "My",
+    "favorite",
+    "subject",
+    "is science."
+   ],
+   "hint1En": "The first part is \"My\".",
+   "hint2En": "It starts with \"My favorite\".",
+   "correctEn": "My favorite subject is science.",
+   "teacherText": "句子重組：My favorite subject is science."
+  },
+  {
+   "seq": 25,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-1",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第一篇：Steve）",
+   "options": [
+    {
+     "text": "Tuesday."
+    },
+    {
+     "text": "Thursday."
+    },
+    {
+     "text": "Friday."
+    }
+   ],
+   "answer": 1,
+   "stem": "What day is today?",
+   "passage": "Today is Thursday. Steve is in Class 514. His favorite subject is music. He has music class on Monday and Thursday, so Thursday is his favorite day. Steve doesn't like math. He has math class on Tuesday and Friday. Today Steve has Chinese class, too. At four o'clock, he plays basketball with his friend, Andy.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Tuesday.\".",
+   "correctEn": "Answer: Thursday.",
+   "teacherText": "閱讀：What day is today? → Thursday."
+  },
+  {
+   "seq": 26,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-2",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第一篇：Steve）",
+   "options": [
+    {
+     "text": "math"
+    },
+    {
+     "text": "Chinese"
+    },
+    {
+     "text": "music"
+    }
+   ],
+   "answer": 2,
+   "stem": "What's Steve's favorite subject?",
+   "passage": "Today is Thursday. Steve is in Class 514. His favorite subject is music. He has music class on Monday and Thursday, so Thursday is his favorite day. Steve doesn't like math. He has math class on Tuesday and Friday. Today Steve has Chinese class, too. At four o'clock, he plays basketball with his friend, Andy.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"math\".",
+   "correctEn": "Answer: music",
+   "teacherText": "閱讀：What's Steve's favorite subject? → music"
+  },
+  {
+   "seq": 27,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-3",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第一篇：Steve）",
+   "options": [
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "No, he doesn't."
+    },
+    {
+     "text": "Yes, it is."
+    }
+   ],
+   "answer": 0,
+   "stem": "Does Steve have math class on Friday?",
+   "passage": "Today is Thursday. Steve is in Class 514. His favorite subject is music. He has music class on Monday and Thursday, so Thursday is his favorite day. Steve doesn't like math. He has math class on Tuesday and Friday. Today Steve has Chinese class, too. At four o'clock, he plays basketball with his friend, Andy.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"No, he doesn't.\".",
+   "correctEn": "Answer: Yes, he does.",
+   "teacherText": "閱讀：Does Steve have math class on Friday? → Yes, he does."
+  },
+  {
+   "seq": 28,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-4",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第一篇：Steve）",
+   "options": [
+    {
+     "text": "He has music class."
+    },
+    {
+     "text": "He has math class."
+    },
+    {
+     "text": "He doesn't go to school."
+    }
+   ],
+   "answer": 0,
+   "stem": "Why is Thursday Steve's favorite day?",
+   "passage": "Today is Thursday. Steve is in Class 514. His favorite subject is music. He has music class on Monday and Thursday, so Thursday is his favorite day. Steve doesn't like math. He has math class on Tuesday and Friday. Today Steve has Chinese class, too. At four o'clock, he plays basketball with his friend, Andy.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"He has math class.\".",
+   "correctEn": "Answer: He has music class.",
+   "teacherText": "閱讀：Why is Thursday Steve's favorite day? → He has music class."
+  },
+  {
+   "seq": 29,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7a-5",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第一篇：Steve）",
+   "options": [
+    {
+     "text": "He has music class."
+    },
+    {
+     "text": "He plays basketball."
+    },
+    {
+     "text": "He goes swimming."
+    }
+   ],
+   "answer": 1,
+   "stem": "What does Steve do at four o'clock?",
+   "passage": "Today is Thursday. Steve is in Class 514. His favorite subject is music. He has music class on Monday and Thursday, so Thursday is his favorite day. Steve doesn't like math. He has math class on Tuesday and Friday. Today Steve has Chinese class, too. At four o'clock, he plays basketball with his friend, Andy.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"He has music class.\".",
+   "correctEn": "Answer: He plays basketball.",
+   "teacherText": "閱讀：What does Steve do at four o'clock? → He plays basketball."
+  },
+  {
+   "seq": 30,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-1",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第二篇：Mia 和 Teddy 的對話）",
+   "options": [
+    {
+     "text": "Tuesday."
+    },
+    {
+     "text": "Wednesday."
+    },
+    {
+     "text": "Friday."
+    }
+   ],
+   "answer": 1,
+   "stem": "What day is today?",
+   "passage": "Mia: Hi, Teddy. Is it Tuesday today?\nTeddy: No, it isn't. It's Wednesday.\nMia: Oh, no! I don't have my art book.\nTeddy: Don't worry. We don't have art class today. We have art class on Friday.\nMia: Good! What class do we have now?\nTeddy: We have English class now. Follow me!\nMia: OK. Let's go!",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Tuesday.\".",
+   "correctEn": "Answer: Wednesday.",
+   "teacherText": "閱讀：What day is today? → Wednesday."
+  },
+  {
+   "seq": 31,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-2",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第二篇：Mia 和 Teddy 的對話）",
+   "options": [
+    {
+     "text": "She is late."
+    },
+    {
+     "text": "She doesn't have her art book."
+    },
+    {
+     "text": "She doesn't like English."
+    }
+   ],
+   "answer": 1,
+   "stem": "Why does Mia say \"Oh, no!\"?",
+   "passage": "Mia: Hi, Teddy. Is it Tuesday today?\nTeddy: No, it isn't. It's Wednesday.\nMia: Oh, no! I don't have my art book.\nTeddy: Don't worry. We don't have art class today. We have art class on Friday.\nMia: Good! What class do we have now?\nTeddy: We have English class now. Follow me!\nMia: OK. Let's go!",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"She is late.\".",
+   "correctEn": "Answer: She doesn't have her art book.",
+   "teacherText": "閱讀：Why does Mia say \"Oh, no!\"? → She doesn't have her art book."
+  },
+  {
+   "seq": 32,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-3",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第二篇：Mia 和 Teddy 的對話）",
+   "options": [
+    {
+     "text": "On Friday."
+    },
+    {
+     "text": "On Wednesday."
+    },
+    {
+     "text": "On Tuesday."
+    }
+   ],
+   "answer": 0,
+   "stem": "When do they have art class?",
+   "passage": "Mia: Hi, Teddy. Is it Tuesday today?\nTeddy: No, it isn't. It's Wednesday.\nMia: Oh, no! I don't have my art book.\nTeddy: Don't worry. We don't have art class today. We have art class on Friday.\nMia: Good! What class do we have now?\nTeddy: We have English class now. Follow me!\nMia: OK. Let's go!",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"On Wednesday.\".",
+   "correctEn": "Answer: On Friday.",
+   "teacherText": "閱讀：When do they have art class? → On Friday."
+  },
+  {
+   "seq": 33,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-4",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第二篇：Mia 和 Teddy 的對話）",
+   "options": [
+    {
+     "text": "art"
+    },
+    {
+     "text": "math"
+    },
+    {
+     "text": "English"
+    }
+   ],
+   "answer": 2,
+   "stem": "What class do they have now?",
+   "passage": "Mia: Hi, Teddy. Is it Tuesday today?\nTeddy: No, it isn't. It's Wednesday.\nMia: Oh, no! I don't have my art book.\nTeddy: Don't worry. We don't have art class today. We have art class on Friday.\nMia: Good! What class do we have now?\nTeddy: We have English class now. Follow me!\nMia: OK. Let's go!",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"art\".",
+   "correctEn": "Answer: English",
+   "teacherText": "閱讀：What class do they have now? → English"
+  },
+  {
+   "seq": 34,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R7b-5",
+   "type": "choice",
+   "prompt": "Reading Comprehension 閱讀測驗（第二篇：Mia 和 Teddy 的對話）",
+   "options": [
+    {
+     "text": "Teddy is sad."
+    },
+    {
+     "text": "Mia and Teddy go to English class."
+    },
+    {
+     "text": "It's Tuesday today."
+    }
+   ],
+   "answer": 1,
+   "stem": "Which is true?",
+   "passage": "Mia: Hi, Teddy. Is it Tuesday today?\nTeddy: No, it isn't. It's Wednesday.\nMia: Oh, no! I don't have my art book.\nTeddy: Don't worry. We don't have art class today. We have art class on Friday.\nMia: Good! What class do we have now?\nTeddy: We have English class now. Follow me!\nMia: OK. Let's go!",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Teddy is sad.\".",
+   "correctEn": "Answer: Mia and Teddy go to English class.",
+   "teacherText": "閱讀：Which is true? → Mia and Teddy go to English class."
+  },
+  {
+   "seq": 35,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-1",
+   "type": "choice",
+   "prompt": "Read and Choose 看 Class 514 的課表，選出正確的答案",
+   "options": [
+    {
+     "text": "Yes, they do."
+    },
+    {
+     "text": "No, they don't."
+    },
+    {
+     "text": "Yes, it is."
+    }
+   ],
+   "answer": 1,
+   "stem": "Do they have PE class on Monday?",
+   "image": "questions/schedule_514.webp",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, they do.\".",
+   "correctEn": "Answer: No, they don't.",
+   "teacherText": "閱讀：Do they have PE class on Monday? → No, they don't."
+  },
+  {
+   "seq": 36,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-2",
+   "type": "choice",
+   "prompt": "Read and Choose 看 Class 514 的課表，選出正確的答案",
+   "options": [
+    {
+     "text": "Tuesday."
+    },
+    {
+     "text": "Thursday."
+    },
+    {
+     "text": "Friday."
+    }
+   ],
+   "answer": 1,
+   "stem": "On which day do they have music class?",
+   "image": "questions/schedule_514.webp",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Tuesday.\".",
+   "correctEn": "Answer: Thursday.",
+   "teacherText": "閱讀：On which day do they have music class? → Thursday."
+  },
+  {
+   "seq": 37,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-3",
+   "type": "choice",
+   "prompt": "Read and Choose 看 Class 514 的課表，選出正確的答案",
+   "options": [
+    {
+     "text": "Yes, they do."
+    },
+    {
+     "text": "No, they don't."
+    },
+    {
+     "text": "No, it isn't."
+    }
+   ],
+   "answer": 0,
+   "stem": "Today is Wednesday. Do they have art class today?",
+   "image": "questions/schedule_514.webp",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"No, they don't.\".",
+   "correctEn": "Answer: Yes, they do.",
+   "teacherText": "閱讀：Today is Wednesday. Do they have art class today? → Yes, they do."
+  },
+  {
+   "seq": 38,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-4",
+   "type": "choice",
+   "prompt": "Read and Choose 看 Class 514 的課表，選出正確的答案",
+   "options": [
+    {
+     "text": "Tuesday and Thursday."
+    },
+    {
+     "text": "Monday and Friday."
+    },
+    {
+     "text": "Wednesday and Friday."
+    }
+   ],
+   "answer": 0,
+   "stem": "Jessie likes science. Which days are her favorite days?",
+   "image": "questions/schedule_514.webp",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Monday and Friday.\".",
+   "correctEn": "Answer: Tuesday and Thursday.",
+   "teacherText": "閱讀：Jessie likes science. Which days are her favorite days? → Tuesday and Thursday."
+  },
+  {
+   "seq": 39,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-5",
+   "type": "choice",
+   "prompt": "Read and Choose 看 Class 514 的課表，選出正確的答案",
+   "options": [
+    {
+     "text": "art"
+    },
+    {
+     "text": "Chinese"
+    },
+    {
+     "text": "English"
+    }
+   ],
+   "answer": 1,
+   "stem": "It's 9:30 on Friday. What class do they have?",
+   "image": "questions/schedule_514.webp",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"art\".",
+   "correctEn": "Answer: Chinese",
+   "teacherText": "閱讀：It's 9:30 on Friday. What class do they have? → Chinese"
+  },
+  {
+   "seq": 40,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R8-6",
+   "type": "choice",
+   "prompt": "Read and Choose 看 Class 514 的課表，選出正確的答案",
+   "options": [
+    {
+     "text": "They have PE class on Tuesday, Thursday, and Friday."
+    },
+    {
+     "text": "They have science class on Monday."
+    },
+    {
+     "text": "They don't have math class on Thursday."
+    }
+   ],
+   "answer": 0,
+   "stem": "Which is true?",
+   "image": "questions/schedule_514.webp",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"They have science class on Monday.\".",
+   "correctEn": "Answer: They have PE class on Tuesday, Thursday, and Friday.",
+   "teacherText": "閱讀：Which is true? → They have PE class on Tuesday, Thursday, and Friday."
+  }
+ ],
+ "locations": {
+  "station": [
+   "L3-1",
+   "L3-2"
+  ],
+  "inn": [
+   "L4-1",
+   "L4-2"
+  ],
+  "seven": [
+   "L5-1",
+   "L5-2"
+  ],
+  "school": [
+   "L5-3",
+   "L5-4"
+  ],
+  "teatop": [
+   "L6-1",
+   "L6-2"
+  ],
+  "market": [
+   "L6-3",
+   "L6-4"
+  ],
+  "post": [
+   "L7-1",
+   "L7-2",
+   "L7-3"
+  ],
+  "bookstore": [
+   "L7-4",
+   "L7-5"
+  ],
+  "pxmart": [
+   "L7-6",
+   "L7-7"
+  ],
+  "library": [
+   "R4",
+   "R5"
+  ],
+  "farm": [
+   "R6-1",
+   "R6-2",
+   "R6-3"
+  ],
+  "park": [
+   "R7a-1",
+   "R7a-2",
+   "R7a-3",
+   "R7a-4",
+   "R7a-5",
+   "R7b-1",
+   "R7b-2",
+   "R7b-3",
+   "R7b-4",
+   "R7b-5"
+  ],
+  "lawn": [
+   "R8-1",
+   "R8-2",
+   "R8-3",
+   "R8-4",
+   "R8-5",
+   "R8-6"
+  ]
+ },
+ "fonts": {
+  "regular": "fonts/cjk-regular.ttf",
+  "bold": "fonts/cjk-bold.ttf"
+ },
+ "pak": "bank-8eac40f66512.pak"
+}

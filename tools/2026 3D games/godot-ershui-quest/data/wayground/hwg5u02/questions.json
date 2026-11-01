@@ -1,0 +1,1237 @@
+{
+ "items": [
+  {
+   "seq": 1,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "Kate"
+    },
+    {
+     "text": "kite"
+    },
+    {
+     "text": "kit"
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L1-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Kate\".",
+   "correctEn": "Answer: kite\nkite",
+   "teacherText": "聽力：kite（kite）",
+   "transcript": "kite kite"
+  },
+  {
+   "seq": 2,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "lay"
+    },
+    {
+     "text": "lie"
+    },
+    {
+     "text": "leak"
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L1-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"lie\".",
+   "correctEn": "Answer: lay\nlay",
+   "teacherText": "聽力：lay（lay）",
+   "transcript": "lay lay"
+  },
+  {
+   "seq": 3,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "fail"
+    },
+    {
+     "text": "free"
+    },
+    {
+     "text": "fry"
+    }
+   ],
+   "answer": 2,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L1-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"fail\".",
+   "correctEn": "Answer: fry\nfry",
+   "teacherText": "聽力：fry（fry）",
+   "transcript": "fry fry"
+  },
+  {
+   "seq": 4,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "ie"
+    },
+    {
+     "text": "ay"
+    },
+    {
+     "text": "a_e"
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L2-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ay\".",
+   "correctEn": "Answer: ie\npie",
+   "teacherText": "聽力：ie（pie）",
+   "transcript": "pie pie"
+  },
+  {
+   "seq": 5,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "i_e"
+    },
+    {
+     "text": "a_e"
+    },
+    {
+     "text": "y"
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L2-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"i_e\".",
+   "correctEn": "Answer: a_e\nsale",
+   "teacherText": "聽力：a_e（sale）",
+   "transcript": "sale sale"
+  },
+  {
+   "seq": 6,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "ai"
+    },
+    {
+     "text": "a_e"
+    },
+    {
+     "text": "y"
+    }
+   ],
+   "answer": 2,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L2-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ai\".",
+   "correctEn": "Answer: y\nsky",
+   "teacherText": "聽力：y（sky）",
+   "transcript": "sky sky"
+  },
+  {
+   "seq": 7,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-1",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "way",
+    "wide",
+    "die"
+   ],
+   "answer": [
+    "die",
+    "way",
+    "wide"
+   ],
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L3-1.mp3",
+   "hint1En": "The first word is \"die\".",
+   "hint2En": "It starts with \"die\", then \"way\".",
+   "correctEn": "die → way → wide",
+   "teacherText": "聽力排序：die → way → wide"
+  },
+  {
+   "seq": 8,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-2",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "rail",
+    "try",
+    "name"
+   ],
+   "answer": [
+    "try",
+    "name",
+    "rail"
+   ],
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L3-2.mp3",
+   "hint1En": "The first word is \"try\".",
+   "hint2En": "It starts with \"try\", then \"name\".",
+   "correctEn": "try → name → rail",
+   "teacherText": "聽力排序：try → name → rail"
+  },
+  {
+   "seq": 9,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_80.png",
+     "text": "80"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_18.png",
+     "text": "18"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_88.png",
+     "text": "88"
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L4-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 2.",
+   "correctEn": "Answer: 80\neighty",
+   "teacherText": "聽力：80（eighty）",
+   "transcript": "eighty eighty"
+  },
+  {
+   "seq": 10,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_15.png",
+     "text": "15"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_50.png",
+     "text": "50"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_55.png",
+     "text": "55"
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L4-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 50\nfifty",
+   "teacherText": "聽力：50（fifty）",
+   "transcript": "fifty fifty"
+  },
+  {
+   "seq": 11,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_10.png",
+     "text": "10"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_90.png",
+     "text": "90"
+    },
+    {
+     "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\num_100.png",
+     "text": "100"
+    }
+   ],
+   "answer": 2,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L4-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 100\none hundred",
+   "teacherText": "聽力：100（one hundred）",
+   "transcript": "one hundred one hundred"
+  },
+  {
+   "seq": 12,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-1",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\cal_mon_pe.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L5-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Do you have PE class on Monday?  Boy: Yes, I do.",
+   "teacherText": "聽力：O（Girl: Do you have PE class on Monday? / Boy: Yes, I do.）",
+   "transcript": "Girl: Do you have PE class on Monday? Boy: Yes, I do."
+  },
+  {
+   "seq": 13,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-2",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\cal_thu_music.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L5-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Does Amy have English class on Thursday?  Girl: Yes, she does.",
+   "teacherText": "聽力：X（Boy: Does Amy have English class on Thursday? / Girl: Yes, she does.）",
+   "transcript": "Boy: Does Amy have English class on Thursday? Girl: Yes, she does."
+  },
+  {
+   "seq": 14,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-3",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\cal_fri_art.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L5-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Does he have art class on Friday?  Boy: Yes, he does.",
+   "teacherText": "聽力：O（Girl: Does he have art class on Friday? / Boy: Yes, he does.）",
+   "transcript": "Girl: Does he have art class on Friday? Boy: Yes, he does."
+  },
+  {
+   "seq": 15,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-4",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\cal_tue_science.png",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L5-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Do you have science class on Tuesday?  Girl: No, I don't. I have math class on Tuesday.",
+   "teacherText": "聽力：X（Boy: Do you have science class on Tuesday? / Girl: No, I don't. I have math class on Tuesday.）",
+   "transcript": "Boy: Do you have science class on Tuesday? Girl: No, I don't. I have math class on Tuesday."
+  },
+  {
+   "seq": 16,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "No, he doesn't."
+    },
+    {
+     "text": "It's Friday."
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L6-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, I do.\".",
+   "correctEn": "Answer: No, he doesn't.\nGirl: Does Alan have English class on Friday?",
+   "teacherText": "聽力：No, he doesn't.（Girl: Does Alan have English class on Friday?）",
+   "transcript": "Girl: Does Alan have English class on Friday?"
+  },
+  {
+   "seq": 17,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "Yes, she does."
+    },
+    {
+     "text": "I like art."
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L6-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, she does.\".",
+   "correctEn": "Answer: Yes, I do.\nBoy: Do you have music class today?",
+   "teacherText": "聽力：Yes, I do.（Boy: Do you have music class today?）",
+   "transcript": "Boy: Do you have music class today?"
+  },
+  {
+   "seq": 18,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Watch out!"
+    },
+    {
+     "text": "Sure! Follow me."
+    },
+    {
+     "text": "No, I don't."
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L6-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Watch out!\".",
+   "correctEn": "Answer: Sure! Follow me.\nGirl: Can we go and watch?",
+   "teacherText": "聽力：Sure! Follow me.（Girl: Can we go and watch?）",
+   "transcript": "Girl: Can we go and watch?"
+  },
+  {
+   "seq": 19,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "I'm in a hurry."
+    },
+    {
+     "text": "Sorry, I'm late."
+    },
+    {
+     "text": "Yes, I do."
+    }
+   ],
+   "answer": 2,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L6-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"I'm in a hurry.\".",
+   "correctEn": "Answer: Yes, I do.\nBoy: Cool drawing! Do you like art?",
+   "teacherText": "聽力：Yes, I do.（Boy: Cool drawing! Do you like art?）",
+   "transcript": "Boy: Cool drawing! Do you like art?"
+  },
+  {
+   "seq": 20,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Ted has art class on Tuesday."
+    },
+    {
+     "text": "Ted has English class on Tuesday."
+    },
+    {
+     "text": "Ted doesn't like English."
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Ted has art class on Tuesday.\".",
+   "correctEn": "Answer: Ted has English class on Tuesday.\nGirl: Ted, do you have art class on Tuesday?  Boy: No, I don't. I have English class on Tuesday.",
+   "teacherText": "聽力：Ted has English class on Tuesday.（Girl: Ted, do you have art class on Tuesday? / Boy: No, I don't. I have English class on Tuesday.）",
+   "transcript": "Girl: Ted, do you have art class on Tuesday? Boy: No, I don't. I have English class on Tuesday."
+  },
+  {
+   "seq": 21,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Minnie has Chinese class on Thursday."
+    },
+    {
+     "text": "Minnie doesn't have math class."
+    },
+    {
+     "text": "Minnie has math class on Thursday."
+    }
+   ],
+   "answer": 2,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L7-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Minnie has Chinese class on Thursday.\".",
+   "correctEn": "Answer: Minnie has math class on Thursday.\nBoy: Does Minnie have Chinese class on Thursday?  Girl: No, she doesn't. She has math class.",
+   "teacherText": "聽力：Minnie has math class on Thursday.（Boy: Does Minnie have Chinese class on Thursday? / Girl: No, she doesn't. She has math class.）",
+   "transcript": "Boy: Does Minnie have Chinese class on Thursday? Girl: No, she doesn't. She has math class."
+  },
+  {
+   "seq": 22,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "The girl has PE class now."
+    },
+    {
+     "text": "The boy is in a hurry."
+    },
+    {
+     "text": "The girl has music class now."
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L7-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"The boy is in a hurry.\".",
+   "correctEn": "Answer: The girl has PE class now.",
+   "teacherText": "聽力：The girl has PE class now.",
+   "transcript": "Girl: Oops, sorry! I'm in a hurry. Boy: Do you have PE class now? Girl: Yes, I do."
+  },
+  {
+   "seq": 23,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "The boy wants to try ice hockey."
+    },
+    {
+     "text": "The girl doesn't like PE."
+    },
+    {
+     "text": "They have music class."
+    }
+   ],
+   "answer": 0,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"The girl doesn't like PE.\".",
+   "correctEn": "Answer: The boy wants to try ice hockey.",
+   "teacherText": "聽力：The boy wants to try ice hockey.",
+   "transcript": "Boy: What's that? Girl: It's an ice hockey stick. They're my teammates. Boy: Can we try? Girl: Sure!"
+  },
+  {
+   "seq": 24,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-5",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Joe has social studies class on Monday."
+    },
+    {
+     "text": "Joe has science class on Monday."
+    },
+    {
+     "text": "It's Tuesday today."
+    }
+   ],
+   "answer": 1,
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\音檔_0.8倍速_每題\\L7-5.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Joe has social studies class on Monday.\".",
+   "correctEn": "Answer: Joe has science class on Monday.\nGirl: It's Monday. Do you have social studies class today, Joe?  Boy: No, I don't. I have science class on Monday.",
+   "teacherText": "聽力：Joe has science class on Monday.（Girl: It's Monday. Do you have social studies class today, Joe? / Boy: No, I don't. I have science class on Monday.）",
+   "transcript": "Girl: It's Monday. Do you have social studies class today, Joe? Boy: No, I don't. I have science class on Monday."
+  },
+  {
+   "seq": 25,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-1",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\icon_music.png",
+   "spell": {
+    "answer": "music",
+    "distractorLetters": "",
+    "groups": [
+     5
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"m\".",
+   "hint2En": "It starts with \"mu\" and has 5 letters.",
+   "correctEn": "music",
+   "teacherText": "拼字：music"
+  },
+  {
+   "seq": 26,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-2",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\icon_science.png",
+   "chunks": [
+    "e",
+    "s",
+    "ci",
+    "en",
+    "c"
+   ],
+   "answer": [
+    "s",
+    "ci",
+    "en",
+    "c",
+    "e"
+   ],
+   "hint1En": "It starts with \"s\".",
+   "hint2En": "It starts with \"sci\".",
+   "correctEn": "science",
+   "teacherText": "字母排序：science"
+  },
+  {
+   "seq": 27,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-3",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\icon_english.png",
+   "chunks": [
+    "sh",
+    "ng",
+    "l",
+    "i",
+    "E"
+   ],
+   "answer": [
+    "E",
+    "ng",
+    "l",
+    "i",
+    "sh"
+   ],
+   "hint1En": "It starts with \"E\".",
+   "hint2En": "It starts with \"Eng\".",
+   "correctEn": "English",
+   "teacherText": "字母排序：English"
+  },
+  {
+   "seq": 28,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-4",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\icon_chinese.png",
+   "chunks": [
+    "e",
+    "n",
+    "Ch",
+    "se",
+    "i"
+   ],
+   "answer": [
+    "Ch",
+    "i",
+    "n",
+    "e",
+    "se"
+   ],
+   "hint1En": "It starts with \"Ch\".",
+   "hint2En": "It starts with \"Chi\".",
+   "correctEn": "Chinese",
+   "teacherText": "字母排序：Chinese"
+  },
+  {
+   "seq": 29,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-5",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\icon_math.png",
+   "spell": {
+    "answer": "math",
+    "distractorLetters": "",
+    "groups": [
+     4
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"m\".",
+   "hint2En": "It starts with \"ma\" and has 4 letters.",
+   "correctEn": "math",
+   "teacherText": "拼字：math"
+  },
+  {
+   "seq": 30,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-1",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "Do"
+    },
+    {
+     "text": "Does"
+    },
+    {
+     "text": "Is"
+    }
+   ],
+   "answer": 0,
+   "stem": "______ you have PE class on Monday?",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Does\".",
+   "correctEn": "Answer: Do",
+   "teacherText": "閱讀：______ you have PE class on Monday? → Do"
+  },
+  {
+   "seq": 31,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-2",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "Do"
+    },
+    {
+     "text": "Are"
+    },
+    {
+     "text": "Does"
+    }
+   ],
+   "answer": 2,
+   "stem": "______ Patty have math class on Friday?",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Do\".",
+   "correctEn": "Answer: Does",
+   "teacherText": "閱讀：______ Patty have math class on Friday? → Does"
+  },
+  {
+   "seq": 32,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-3",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "don't"
+    },
+    {
+     "text": "doesn't"
+    },
+    {
+     "text": "isn't"
+    }
+   ],
+   "answer": 1,
+   "stem": "A: Does he have music class today?  B: No, he ______.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"don't\".",
+   "correctEn": "Answer: doesn't",
+   "teacherText": "閱讀：A: Does he have music class today?  B: No, he ______. → doesn't"
+  },
+  {
+   "seq": 33,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-4",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "don't"
+    },
+    {
+     "text": "doesn't"
+    },
+    {
+     "text": "not"
+    }
+   ],
+   "answer": 0,
+   "stem": "We ______ have art class on Sunday.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"doesn't\".",
+   "correctEn": "Answer: don't",
+   "teacherText": "閱讀：We ______ have art class on Sunday. → don't"
+  },
+  {
+   "seq": 34,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-5",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "has"
+    },
+    {
+     "text": "have"
+    },
+    {
+     "text": "is"
+    }
+   ],
+   "answer": 1,
+   "stem": "Does she ______ Chinese class on Tuesday?",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"has\".",
+   "correctEn": "Answer: have",
+   "teacherText": "閱讀：Does she ______ Chinese class on Tuesday? → have"
+  },
+  {
+   "seq": 35,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-1",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "Yes, he does."
+    },
+    {
+     "text": "I like math."
+    }
+   ],
+   "answer": 0,
+   "stem": "A: Do you have math class on Thursday?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, he does.\".",
+   "correctEn": "Answer: Yes, I do.",
+   "teacherText": "閱讀：A: Do you have math class on Thursday?  B: ______ → Yes, I do."
+  },
+  {
+   "seq": 36,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-2",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "No, I don't."
+    },
+    {
+     "text": "No, she doesn't."
+    },
+    {
+     "text": "Yes, I do."
+    }
+   ],
+   "answer": 1,
+   "stem": "A: Does she have science class on Monday?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"No, I don't.\".",
+   "correctEn": "Answer: No, she doesn't.",
+   "teacherText": "閱讀：A: Does she have science class on Monday?  B: ______ → No, she doesn't."
+  },
+  {
+   "seq": 37,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-3",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Sure!"
+    },
+    {
+     "text": "Watch out!"
+    },
+    {
+     "text": "It's Sunday."
+    }
+   ],
+   "answer": 0,
+   "stem": "A: Can we try?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Watch out!\".",
+   "correctEn": "Answer: Sure!",
+   "teacherText": "閱讀：A: Can we try?  B: ______ → Sure!"
+  },
+  {
+   "seq": 38,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-4",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Do you have English class?"
+    },
+    {
+     "text": "Does he have English class today?"
+    },
+    {
+     "text": "Is it Monday today?"
+    }
+   ],
+   "answer": 1,
+   "stem": "A: ______  B: Yes, he does.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Do you have English class?\".",
+   "correctEn": "Answer: Does he have English class today?",
+   "teacherText": "閱讀：A: ______  B: Yes, he does. → Does he have English class today?"
+  },
+  {
+   "seq": 39,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-5",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Does she have art class on Friday?"
+    },
+    {
+     "text": "What day is today?"
+    },
+    {
+     "text": "Do you have music class on Friday?"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: ______  B: No, I don't. I have art class on Friday.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Does she have art class on Friday?\".",
+   "correctEn": "Answer: Do you have music class on Friday?",
+   "teacherText": "閱讀：A: ______  B: No, I don't. I have art class on Friday. → Do you have music class on Friday?"
+  },
+  {
+   "seq": 40,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R4",
+   "type": "label",
+   "prompt": "Read and Label 把句子拖到相符的圖片上",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\label_scene_2x2.png",
+   "labels": [
+    {
+     "text": "Cool drawing!",
+     "panel": 1
+    },
+    {
+     "text": "We have PE class today.",
+     "panel": 2
+    },
+    {
+     "text": "Watch out!",
+     "panel": 3
+    },
+    {
+     "text": "They have music class today.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture 1: \"Cool drawing!\"",
+   "hint2En": "Picture 1: \"Cool drawing!\"  Picture 2: \"We have PE class today.\"",
+   "correctEn": "1. Cool drawing!\n2. We have PE class today.\n3. Watch out!\n4. They have music class today.",
+   "teacherText": "標籤題：1. Cool drawing!　2. We have PE class today.　3. Watch out!　4. They have music class today."
+  },
+  {
+   "seq": 41,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "Does Amy have {1} class on Tuesday?"
+    },
+    {
+     "speaker": "B",
+     "text": "Yes, she {2}."
+    },
+    {
+     "speaker": "A",
+     "text": "Does she have art class on Wednesday?"
+    },
+    {
+     "speaker": "B",
+     "text": "No, she {3}. She has math class."
+    }
+   ],
+   "id": "R5",
+   "type": "drag",
+   "prompt": "Read and Copy 看課表，把正確的字拖進空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\HWG5_小考_U02_20261031\\_紀錄\\images\\schedule_amy.png",
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "music"
+    },
+    {
+     "id": 2,
+     "answer": "does"
+    },
+    {
+     "id": 3,
+     "answer": "doesn't"
+    }
+   ],
+   "distractors": [
+    "do",
+    "don't"
+   ],
+   "hint1En": "Blank 1 is \"music\".",
+   "hint2En": "Blank 1 is \"music\", blank 2 is \"does\".",
+   "correctEn": "A: Does Amy have music class on Tuesday?\nB: Yes, she does.\nA: Does she have art class on Wednesday?\nB: No, she doesn't. She has math class.",
+   "teacherText": "拖放：A: Does Amy have music class on Tuesday?　B: Yes, she does.　A: Does she have art class on Wednesday?　B: No, she doesn't. She has math class."
+  },
+  {
+   "seq": 42,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-1",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "have",
+    "Do",
+    "on Friday?",
+    "you",
+    "math class"
+   ],
+   "answer": [
+    "Do",
+    "you",
+    "have",
+    "math class",
+    "on Friday?"
+   ],
+   "hint1En": "The first part is \"Do\".",
+   "hint2En": "It starts with \"Do you\".",
+   "correctEn": "Do you have math class on Friday?",
+   "teacherText": "句子重組：Do you have math class on Friday?"
+  },
+  {
+   "seq": 43,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-2",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "music class",
+    "Does",
+    "today?",
+    "she",
+    "have"
+   ],
+   "answer": [
+    "Does",
+    "she",
+    "have",
+    "music class",
+    "today?"
+   ],
+   "hint1En": "The first part is \"Does\".",
+   "hint2En": "It starts with \"Does she\".",
+   "correctEn": "Does she have music class today?",
+   "teacherText": "句子重組：Does she have music class today?"
+  },
+  {
+   "seq": 44,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-3",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "doesn't.",
+    "he",
+    "No,"
+   ],
+   "answer": [
+    "No,",
+    "he",
+    "doesn't."
+   ],
+   "hint1En": "The first part is \"No,\".",
+   "hint2En": "It starts with \"No, he\".",
+   "correctEn": "No, he doesn't.",
+   "teacherText": "句子重組：No, he doesn't."
+  }
+ ]
+}

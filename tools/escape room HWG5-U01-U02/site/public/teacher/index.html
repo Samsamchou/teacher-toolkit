@@ -27,11 +27,25 @@
   <main id="dates" class="board" hidden>
     <div class="dates-head">
       <h2>作答日期</h2>
+      <button class="btn ghost" id="showOverview">二水 3D 闖關：四套完成總覽</button>
       <button class="btn ghost" id="refresh">重新整理</button>
     </div>
     <p class="msg" id="datesMsg" role="status"></p>
     <ul class="date-list" id="dateList"></ul>
     <p class="note">紀錄保存一年三個月：每筆紀錄在學生最後一次作答後 15 個月自動刪除。</p>
+  </main>
+
+  <!-- 二水 3D 闖關四套完成總覽：每位學生一行，每套顯示最高分（✓）或進行中 -->
+  <main id="overview" class="board" hidden>
+    <section class="controls">
+      <button class="btn ghost" id="backFromOverview">← 所有日期</button>
+      <h2>四套完成總覽</h2>
+      <div class="tabs" id="gradeTabs" role="tablist"></div>
+      <input id="ovSearch" type="search" inputmode="numeric" placeholder="搜尋學號">
+    </section>
+    <p class="msg" id="ovMsg" role="status"></p>
+    <table id="ovTable" class="overview"><thead></thead><tbody></tbody></table>
+    <p class="note">✓ 後面的數字是這一套完成過的最高分（滿分 100）；「進行中」是還沒打完的題數。四套都完成的學生排在最上面。</p>
   </main>
 
   <!-- step 2: the class list for one day -->

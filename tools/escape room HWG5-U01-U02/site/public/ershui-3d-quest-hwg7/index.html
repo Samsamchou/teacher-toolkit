@@ -10,11 +10,13 @@
 </head>
 <body>
   <main id="app"><p class="loading">Loading…</p></main>
-  <!-- 3D 任務：題庫在 ./bank/ 與 ./data.js；外框與遊戲是所有任務共用的 -->
+  <!-- 年級入口：四套題目輪流出（shared/missions.mjs 的 QUEST_SETS.hwg7）；外框與遊戲是所有任務共用的 -->
   <script type="module">
     import { BANK } from "./data.js";
     import { start } from "../shared/quest3d-app.mjs";
-    start(BANK);
+    import { QUEST_SETS } from "../shared/missions.mjs";
+    const G = QUEST_SETS.hwg7;
+    start(BANK, { sets: G.sets, unit: G.unit, title: G.title });
   </script>
 </body>
 </html>

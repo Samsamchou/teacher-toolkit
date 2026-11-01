@@ -52,3 +52,8 @@ th { color: var(--muted); font-size: .85rem; position: sticky; top: 0; backgroun
 .date-card:hover, .date-card:focus-visible { border-color: var(--gold); box-shadow: 0 4px 0 var(--gold-deep); }
 .mtag { color: var(--muted); }
 #dayTitle { margin: 0 6px; font-size: 1.3rem; }
+
+/* 四套完成總覽 */
+table.overview { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; }
+table.overview th, table.overview td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: center; }
+table.overview th small { font-weight: 400; color: #667; }

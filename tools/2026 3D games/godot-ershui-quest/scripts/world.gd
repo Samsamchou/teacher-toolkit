@@ -23,13 +23,13 @@ const CAR_LEN := 3.6           # 學生建議：汽車縮小（原 4.2）
 const NODES := {
 	"A": Vector2(480, 390), "B": Vector2(680, 390), "C": Vector2(920, 390), "D": Vector2(1450, 390),
 	"E": Vector2(1530, 650), "F": Vector2(1530, 1130), "G": Vector2(1530, 1330),
-	"H": Vector2(920, 1130), "L": Vector2(920, 1250), "I": Vector2(920, 1330),
-	"J": Vector2(470, 1100), "K": Vector2(470, 1250), "N": Vector2(680, 1130), "M": Vector2(1900, 1330),
+	"H": Vector2(920, 1130), "I": Vector2(920, 1330),
+	"J": Vector2(470, 1100), "K": Vector2(470, 1330), "N": Vector2(680, 1130), "M": Vector2(1900, 1330),
 }
 const EDGES := [
 	["A", "B"], ["B", "C"], ["C", "D"], ["D", "E"], ["E", "F"], ["F", "G"],
-	["C", "H"], ["H", "L"], ["L", "I"], ["H", "F"], ["I", "G"], ["G", "M"],
-	["A", "J"], ["J", "K"], ["K", "L"], ["J", "N"], ["N", "H"], ["B", "N"],
+	["C", "H"], ["H", "I"], ["H", "F"], ["I", "G"], ["G", "M"],
+	["A", "J"], ["J", "K"], ["K", "I"], ["J", "N"], ["N", "H"], ["B", "N"],
 ]
 
 # id, 中文名, 簡單英文, 模型, 簡圖位置, 門口(路上)位置, 最大邊長, 魔王區
@@ -42,7 +42,7 @@ const LOCS := [
 	{"id": "market", "zh": "二水超市", "word": "supermarket", "model": "bld_market", "pos": Vector2(600, 880), "door": Vector2(680, 880), "size": 10.0},
 	{"id": "post", "zh": "二水郵局", "word": "post office", "model": "bld_post", "pos": Vector2(830, 1195), "door": Vector2(830, 1130), "size": 9.0},
 	{"id": "bookstore", "zh": "書店", "word": "bookstore", "model": "bld_bookstore", "pos": Vector2(720, 1200), "door": Vector2(720, 1130), "size": 8.5},
-	{"id": "pxmart", "zh": "超市", "word": "supermarket", "model": "bld_pxmart", "pos": Vector2(565, 1205), "door": Vector2(565, 1130), "size": 12.0},
+	{"id": "pxmart", "zh": "超市", "word": "supermarket", "model": "bld_pxmart", "pos": Vector2(600, 1215), "door": Vector2(600, 1130), "size": 12.0},
 	{"id": "library", "zh": "二水鄉立圖書館", "word": "library", "model": "bld_library", "pos": Vector2(1230, 1240), "door": Vector2(1230, 1330), "size": 11.0},
 	{"id": "farm", "zh": "八堡圳農情館", "word": "coffee shop", "model": "farm_centre", "pos": Vector2(1780, 1250), "door": Vector2(1780, 1330), "size": 12.0},
 	{"id": "park", "zh": "二八水水公園", "word": "park", "model": "", "pos": Vector2(560, 520), "door": Vector2(680, 520), "size": 0.0, "boss": true},
@@ -168,6 +168,11 @@ func _ready() -> void:
 	var before := get_child_count()
 	_build_props()
 	_overlap_report()
+	_path_report()
+	if "--pathcheck" in OS.get_cmdline_user_args():
+		set_process(false)
+		get_tree().quit()
+		return
 	for i in range(before, get_child_count()):
 		occluders.append(get_child(i))
 	_build_player()
@@ -190,6 +195,8 @@ func _ready() -> void:
 		_run_perf()
 	elif "--shots" in OS.get_cmdline_user_args():
 		_run_shots()
+	elif "--allq" in OS.get_cmdline_user_args():
+		_run_allq()
 	elif test_mode:
 		_run_test()
 
@@ -421,6 +428,14 @@ func _build_locations() -> void:
 			# 建築前的小廣場地磚
 			_box(Vector3(wd + 2.0, 0.12, dp + 2.5), Color(0.86, 0.82, 0.74), Vector3(0, -0.02, 0.6), root)
 		root.position = base
+		if L["model"] != "":
+			# 2026-11-01：小行星復刻建築比舊模型深，好幾棟壓到 Ken 走的馬路（iPad 上看起來 Ken 穿牆）。
+			# 先往後退、還不夠再整棟等比例縮小，直到外框離每條路線中線至少 BLD_CLEAR。
+			var k := _fit_building(root, base, door, Vector2(wd / 2.0, dp / 2.0))
+			base = root.position
+			h *= k
+			wd *= k
+			dp *= k
 		if L["id"] == "park":
 			_build_park(root)
 			h = 7.0
@@ -581,6 +596,70 @@ func _place_ok(pname: String, pts: Array, r: float, check_props := false) -> boo
 
 func _mark_prop(pname: String, pts: Array, r: float) -> void:
 	prop_marks.append({"name": pname, "pts": pts, "r": r})
+
+## Ken 只沿著馬路中線走：檢查每棟建築（模型實際外框）離每條路線中線多遠。
+## 外框碰到 Ken 的身體（KEN_R＋0.35 m 手臂擺動）就會穿牆；壓到馬路上（< 路寬一半）也算問題。
+## 結果印在主控台：PATH CHECK: n problems
+const BLD_CLEAR := 2.3        # 建築外框離路線中線至少多遠（路寬一半 2 m＋0.3 m）：Ken 和馬路都不會被建築蓋到
+const BLD_PUSH_MAX := 4.0     # 建築最多往後退幾公尺
+const BLD_MIN_SCALE := 0.6    # 最多縮到原本的幾倍
+
+func _bld_clearance(id: String) -> Dictionary:
+	var info: Dictionary = loc_world[id]
+	return _clearance_of(info["root"], info["half"])
+
+## 往後退（離開門口方向）＋等比例縮小，找第一個不壓到路的位置；回傳縮放倍率
+func _fit_building(root: Node3D, base: Vector3, door: Vector3, half: Vector2) -> float:
+	var back := base - door
+	back.y = 0
+	back = back.normalized()
+	var k := 1.0
+	while k >= BLD_MIN_SCALE - 0.001:
+		var push := 0.0
+		while push <= BLD_PUSH_MAX + 0.001:
+			root.position = base + back * push
+			root.scale = Vector3.ONE * k
+			if _clearance_of(root, half * k)["d"] >= BLD_CLEAR:
+				print("BLD FIT %s push=%.1f scale=%.2f half=%.1fx%.1f at %s" % [root.name, push, k, half.x * k, half.y * k, root.position])
+				return k
+			push += 0.5
+		k -= 0.05
+	# 找不到：用最小倍率、退最遠（PATH CHECK 會報出來）
+	root.position = base + back * BLD_PUSH_MAX
+	root.scale = Vector3.ONE * BLD_MIN_SCALE
+	print("BLD FIT %s FAILED" % root.name)
+	return BLD_MIN_SCALE
+
+func _clearance_of(root: Node3D, half: Vector2) -> Dictionary:
+	# 只用位置與旋轉（縮放已經算進 half）
+	var tf := Transform3D(Basis(Vector3.UP, root.rotation.y), root.position)
+	var inv: Transform3D = tf.affine_inverse()
+	var best := {"d": 1e9, "edge": ""}
+	for e in EDGES:
+		var a: Vector3 = w(NODES[e[0]])
+		var b: Vector3 = w(NODES[e[1]])
+		var n := int(ceil(a.distance_to(b) / 0.25))
+		for k in n + 1:
+			var lp: Vector3 = inv * a.lerp(b, float(k) / n)
+			var dx := maxf(absf(lp.x) - half.x, 0.0)
+			var dz := maxf(absf(lp.z) - half.y, 0.0)
+			var d := sqrt(dx * dx + dz * dz)
+			if d < best["d"]:
+				best = {"d": d, "edge": "%s-%s" % [e[0], e[1]]}
+	return best
+
+func _path_report() -> int:
+	var problems := 0
+	for L in LOCS:
+		if L["model"] == "":
+			continue
+		var c := _bld_clearance(L["id"])
+		var bad: bool = c["d"] < BLD_CLEAR - 0.01
+		if bad:
+			problems += 1
+		print("PATH %s clearance=%.2f m (edge %s)%s" % [L["id"], c["d"], c["edge"], "  <-- on road / Ken clips" if bad else ""])
+	print("PATH CHECK: %d problems" % problems)
+	return problems
 
 ## 擺完後再檢查一次全部機車與汽車（自動重疊檢查）；結果印在主控台，測試時看這一行
 func _overlap_report() -> int:
@@ -2093,6 +2172,53 @@ func _run_perf() -> void:
 		print("PERF ", id, " attack_max_ms=", spikes)
 		while busy:
 			await get_tree().process_frame
+	get_tree().quit()
+
+## --allq：每個地點進入戰鬥，每一題先答錯一次（看提示）再答對；每種題型第一次出現時截圖（答題中、答對後）。
+## 不跑攻擊動畫，答對後直接下一題。最後印 ALLQ DONE 題數。
+func _run_allq() -> void:
+	quiz.reset_results()
+	await get_tree().create_timer(1.0).timeout
+	var tag := "q"
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--tag="):
+			tag = a.substr(6)
+	var seen := {}
+	var total := 0
+	for L in LOCS:
+		var id: String = L["id"]
+		_end_battle()
+		quiz.visible = false
+		player.position = loc_world[id]["door"]
+		_start_battle(id, quiz.plan[id].size())
+		quiz.start(id, "%s %s" % [L["zh"], L["word"]])
+		await get_tree().create_timer(1.5).timeout
+		while quiz.qi < quiz.queue.size():
+			var it: Dictionary = quiz.item
+			var key := String(it["type"]) + "_" + String(it["id"]).split("-")[0]
+			quiz.debug_fill(false)
+			quiz.debug_check()
+			await get_tree().create_timer(0.3).timeout
+			if not seen.has(key):
+				await _shot("%s_%s_%s_wrong" % [tag, key, it["id"]])
+			quiz.debug_fill(true)
+			if not seen.has(key):
+				await get_tree().create_timer(0.2).timeout
+				await _shot("%s_%s_%s_filled" % [tag, key, it["id"]])
+			quiz.debug_check()
+			await get_tree().create_timer(0.3).timeout
+			if not seen.has(key):
+				await _shot("%s_%s_%s_correct" % [tag, key, it["id"]])
+				seen[key] = true
+			if not quiz.results.get(it["id"], {}).get("finalCorrect", false):
+				print("ALLQ FAIL ", it["id"], " not graded correct")
+			total += 1
+			quiz.qi += 1
+			if quiz.qi < quiz.queue.size():
+				quiz._show_item()
+				await get_tree().create_timer(0.4).timeout
+		print("ALLQ ", id, " ", quiz.queue.size())
+	print("ALLQ DONE ", total, " types=", seen.keys())
 	get_tree().quit()
 
 func _run_test() -> void:

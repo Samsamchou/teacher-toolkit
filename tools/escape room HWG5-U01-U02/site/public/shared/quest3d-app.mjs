@@ -8,13 +8,18 @@
 //   - 本機存檔（localStorage）與跨裝置進度（Firestore questProgress，用學號讀寫）
 //   - 教師後台紀錄（Firestore questAttempts，格式與 HWG5／HWG7 任務相同，另加 summary.score 與 items[].quality）
 // 計分：每題 100/題數 分 × 品質/4（一次答對 4、錯一次 3、錯兩次 2、三次以上 1），總分四捨五入。
+// 四套輪替（2026-11-01）：start(BANK, { sets: QUEST_SETS.hwg5 })。學生登入後先接續「做到一半的套」，
+//   沒有的話從「還沒完成的套」隨機抽一套；四套都完成後再隨機抽一套重玩（開新紀錄，教師後台看每套最高分）。
+//   每一套是獨立的任務代號（自己的 data.js、bank/、進度與教師紀錄）。老師測試：網址加 ?set=2 直接玩第 2 套。
 import { uploadAttempt, loadProgress, saveProgress } from "./quest-cloud.mjs";
+import { pickSet } from "./quest-sets.mjs";
 
 let BANK = null;
 let MISSION = "";
 let OPTS = {};
 // 第一個任務沿用原本的存檔鍵，學生舊進度不會不見
-const KEY = sid => MISSION === "ershui-3d-quest" ? `ershui3d:v1:${sid}` : `quest3d:v1:${MISSION}:${sid}`;
+const keyOf = (m, sid) => m === "ershui-3d-quest" ? `ershui3d:v1:${sid}` : `quest3d:v1:${m}:${sid}`;
+const KEY = sid => keyOf(MISSION, sid);
 const STUDENT_ID = /^\d{5,8}$/u;
 const app = document.getElementById("app");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
@@ -23,7 +28,7 @@ let state = null;
 
 // ------------------------------------------------------------------ storage
 const local = {
-  load(sid) { try { const r = localStorage.getItem(KEY(sid)); return r ? JSON.parse(r) : null; } catch { return null; } },
+  load(sid, m = MISSION) { try { const r = localStorage.getItem(keyOf(m, sid)); return r ? JSON.parse(r) : null; } catch { return null; } },
   save(s) { try { localStorage.setItem(KEY(s.studentId), JSON.stringify(s)); } catch { /* private mode: cloud still works */ } },
 };
 function newAttempt(studentId) {
@@ -111,6 +116,8 @@ window.ershuiHost = {
     } else if (m.type === "complete") {
       state.completedAt = new Date().toISOString();
       persist(true);
+      const cur = SET_INFO.find(i => i.slug === MISSION);
+      if (cur) cur.saved = { ...state };
       renderResult();
     }
   },
@@ -120,8 +127,8 @@ window.ershuiHost = {
 function renderStart(message = "") {
   state = null;
   app.innerHTML = `<main class="screen"><section class="panel">
-    <h1>${esc(BANK.unit)}</h1>
-    <p class="en">${esc(BANK.title)}</p>
+    <h1>${esc(OPTS.unit || BANK.unit)}</h1>
+    <p class="en">${esc(OPTS.title || BANK.title)}</p>
     <p>${OPTS.intro || "走進二水的街道，在每個地點回答英文問題、打敗怪物！<br>Walk around Ershui, answer questions and beat the monsters!"}</p>
     <form id="startForm">
       <label for="sid">學號 Student ID</label>
@@ -129,7 +136,7 @@ function renderStart(message = "") {
       <p class="msg" id="msg">${esc(message)}</p>
       <button class="btn primary" type="submit">▶ Start</button>
     </form>
-    <p class="small">${BANK.items.length} questions · ${BANK.battles.length} ${esc(OPTS.meta || "places")} · iPad 請橫放<br>English audio is AI-generated, not a human recording.<br>${esc(OPTS.credits || "Music: Suno · Sound effects: Kenney (CC0)")}</p>
+    <p class="small">${OPTS.sets ? `${OPTS.sets.length} sets 四套題目輪流出` : `${BANK.items.length} questions`} · ${BANK.battles.length} ${esc(OPTS.meta || "places")} · iPad 請橫放<br>English audio is AI-generated, not a human recording.<br>${esc(OPTS.credits || "Music: Suno · Sound effects: Kenney (CC0)")}</p>
     <a class="home" href="../">← 回到任務首頁</a>
   </section></main>`;
   const form = app.querySelector("#startForm");
@@ -139,6 +146,10 @@ function renderStart(message = "") {
     if (!STUDENT_ID.test(sid)) { app.querySelector("#msg").textContent = "請輸入 5–8 位數字的學號。"; return; }
     form.querySelector("button").disabled = true;
     app.querySelector("#msg").textContent = "讀取進度中… Loading your progress…";
+    if (OPTS.sets) {
+      await beginSet(sid);
+      return;
+    }
     const cloud = await withTimeout(loadProgress(MISSION, sid), 6000);
     const mine = local.load(sid);
     const saved = newer(mine, cloud && cloud.studentId === sid ? cloud : null);
@@ -157,6 +168,59 @@ function renderStart(message = "") {
     persist(true);
     renderGame();
   });
+}
+
+// ------------------------------------------------------------------ four sets (四套輪替)
+let SET_INFO = [];   // [{ slug, short, saved }] 這位學生每一套的進度
+async function loadSetInfo(sid) {
+  return Promise.all(OPTS.sets.map(async s => {
+    const cloud = await withTimeout(loadProgress(s.slug, sid), 6000);
+    const mine = local.load(sid, s.slug);
+    return { ...s, saved: newer(mine, cloud && cloud.studentId === sid ? cloud : null) };
+  }));
+}
+const doneCount = () => SET_INFO.filter(i => i.saved?.completedAt).length;
+async function beginSet(sid) {
+  SET_INFO = await loadSetInfo(sid);
+  const forced = Number(new URLSearchParams(location.search).get("set")) || 0;
+  const pick = pickSet(SET_INFO, forced);
+  try {
+    BANK = (await import(`../${pick.slug}/data.js`)).BANK;
+  } catch {
+    renderStart("題目讀取失敗，請重新整理再試一次。");
+    return;
+  }
+  MISSION = pick.slug;
+  OPTS.bankBase = `../${pick.slug}/bank/`;
+  const saved = pick.saved;
+  if (!saved || saved.completedAt) {
+    state = newAttempt(sid);   // 新的一套，或四套都完成後重玩（開新紀錄，舊分數留在教師後台）
+  } else {
+    state = { activeDays: [], cleared: [], results: {}, ...saved };
+    // 換了一台 iPad：教師紀錄只能由建立它的那台裝置更新，所以開一筆新紀錄、帶著全部作答結果繼續
+    const mine = local.load(sid);
+    if (mine?.attemptId !== saved.attemptId) state.attemptId = `${sid}-${Date.now().toString(36)}`;
+  }
+  persist(true);
+  renderSetIntro(pick);
+}
+function setDots() {
+  return `<p class="sets">${SET_INFO.map(i => `<span class="${i.saved?.completedAt ? "on" : ""} ${i.slug === MISSION ? "now" : ""}" title="${esc(i.short)}">${i.saved?.completedAt ? "✓" : "?"}</span>`).join("")}</p>`;
+}
+function renderSetIntro(pick) {
+  const n = Object.values(state.results).filter(r => r.finalCorrect).length;
+  const allDone = doneCount() === SET_INFO.length;
+  app.innerHTML = `<main class="screen"><section class="panel">
+    <h1>${n ? "繼續闖關！" : "這次的題目"}</h1>
+    <p class="en">${n ? "Continue your quest" : "Your question set"}</p>
+    <p class="set-name">${esc(pick.short)}</p>
+    <p>${BANK.items.length} questions${n ? `　已完成 ${n} 題` : ""}</p>
+    ${setDots()}
+    <p class="small">四套題目已完成 ${doneCount()} / ${SET_INFO.length} 套${allDone ? "（全部完成！這次是重玩，老師看每套最高分）" : ""}</p>
+    <button class="btn primary" id="go">▶ Start</button>
+    <br><a class="home" href="../">← 回到任務首頁</a>
+  </section></main>`;
+  app.querySelector("#go").addEventListener("click", renderGame);
 }
 
 function renderGame() {
@@ -179,15 +243,21 @@ function renderResult() {
         <div><b>${sm.firstTry}/${sm.total}</b><span>第一次就答對</span></div>
         <div><b>${sm.battlesDone}/${BANK.battles.length}</b><span>${esc(OPTS.clearedLabel || "通關地點")}</span></div>
       </div>
+      ${OPTS.sets ? `<p class="set-name small-set">${esc(BANK.short || BANK.unit)}</p>${setDots()}<p class="small">四套題目已完成 ${doneCount()} / ${SET_INFO.length} 套</p>` : ""}
       <button class="btn primary" id="cheer">🎉 Cheer again</button>
-      <button class="btn ghost" id="again">再玩一次 Play again</button>
+      <button class="btn ghost" id="again">${OPTS.sets ? "下一套 Next set" : "再玩一次 Play again"}</button>
       <br><a class="home" href="../">← 回到任務首頁</a>
     </section></main>`;
   const jingle = new Audio("../hwg5-u01-u02/assets/audio/sfx/celebrate.mp3");
   const play = () => { jingle.currentTime = 0; jingle.play().catch(() => {}); };
   play();
   app.querySelector("#cheer").addEventListener("click", play);
-  app.querySelector("#again").addEventListener("click", () => {
+  app.querySelector("#again").addEventListener("click", async () => {
+    if (OPTS.sets) {
+      app.querySelector("#again").disabled = true;
+      await beginSet(state.studentId);
+      return;
+    }
     if (!confirm("要開始新的一輪嗎？這一輪的分數會保留在老師的紀錄裡。")) return;
     state = newAttempt(state.studentId);
     persist(true);

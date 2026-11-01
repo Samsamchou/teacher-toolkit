@@ -109,3 +109,24 @@ pak 格式：`QB01` + 索引長度（4 位元組 little-endian）+ 索引 JSON `
 ```
 Godot_v4.7.2-stable_win64_console.exe --path . -- --test --bank=<site/public/任務/bank>
 ```
+
+## 2026-11-01 新增題型（Wayground 綜合小考）
+
+| type | 用途 | 欄位 |
+|---|---|---|
+| `choice` | 選擇題（聽力或閱讀；文字／圖片選項、O／X、題組） | `prompt` 說明、`stem` 題幹、`passage`＋`notes` 短文、`image` 圖、`audio` 題目音檔（有就有播放鍵）、`options`、`answer`（索引） |
+| `order` | 重新排序（聽力排序、句子重組、字母排成單字） | `prompt`、`chunks`（顯示順序，已打亂）、`answer`（正確順序）、可選 `image`、`audio` |
+| `label` | 標籤題（2×2 四格圖，算 1 題） | `prompt`、`image`、`labels: [{text, panel}]`（panel 1 左上、2 右上、3 左下、4 右下） |
+
+- 拼字、拖放題加 `prompt` 時圖片放大；`audio`（Tick 回饋）可省略，省略就不用「聽 Tick 說」直接下一題。
+- 有 `teacherText` 的題目，教師後台「需要重試的題目」顯示這段文字（data.js 的 `qText`）。
+- 六套綜合小考由 `tools/build_wayground_sets.py` 從 English exam 專案的 `quiz_items.json`＋0.8 倍速音檔＋圖片轉檔（含 11/01 改成重新排序的 12 題），
+  `tools/verify_wayground_sets.py` 逐題核對（題數、正解、音檔逐位元組、圖片、審閱稿文字），報告在 `data/wayground/驗證報告.md`。
+
+## 四套輪替（年級入口）
+
+- `shared/missions.mjs` 的 `QUEST_SETS.hwg5／hwg7`：每個年級 4 套（原任務＋3 套綜合小考），每套獨立任務代號（`ershui-3d-quest-hwg5u01` 等，不能再加連字號，Firestore 規則只接受一段代號）。
+- 年級入口頁 `ershui-3d-quest/`、`ershui-3d-quest-hwg7/` 呼叫 `start(BANK, { sets })`；抽套規則在 `shared/quest-sets.mjs`（做到一半先接續 → 未完成隨機 → 全完成隨機重玩、避開剛玩完的）。
+- 老師測試：網址加 `?set=N` 直接玩第 N 套；`?cloud=off` 不上傳。
+- 教師後台「四套完成總覽」：每生一行，每套最高分／進行中。
+- 測試：`--allq --bank=<bank>`（每題答錯一次再答對、每種題型截圖，看 `ALLQ DONE`）；`--pathcheck`（看 `PATH CHECK: 0 problems`）。

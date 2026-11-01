@@ -72,3 +72,12 @@ input[type=text]:focus { outline: none; border-color: var(--gold); }
 }
 @keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
 @media (prefers-reduced-motion: reduce) { .big-id, .confetti i { animation: none; } }
+
+/* 四套輪替 */
+.set-name { font-size: clamp(1.5rem, 4.5vw, 2.1rem); font-weight: 700; color: #2f6fd6; margin: 4px 0 8px; }
+.set-name.small-set { font-size: 1.3rem; margin: 10px 0 0; }
+.sets { display: flex; justify-content: center; gap: 10px; margin: 12px 0 4px; }
+.sets span { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.3rem;
+  background: #e9e2cf; color: var(--muted); }
+.sets span.on { background: var(--green); color: #fff; }
+.sets span.now { outline: 4px solid var(--gold); outline-offset: 2px; }

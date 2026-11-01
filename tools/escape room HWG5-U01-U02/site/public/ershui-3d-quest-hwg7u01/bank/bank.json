@@ -1,0 +1,1326 @@
+{
+ "mission": "ershui-3d-quest-hwg7u01",
+ "unit": "二水 3D 英語闖關 HWG7-U01 綜合小考",
+ "title": "Ershui 3D Quest · HWG7 U01",
+ "short": "HWG7-U01 綜合小考",
+ "weekStripOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekStripLabels": {},
+ "items": [
+  {
+   "seq": 1,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "duty"
+    },
+    {
+     "text": "dirty"
+    },
+    {
+     "text": "ditty"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L1-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"duty\".",
+   "correctEn": "Answer: dirty\ndirty",
+   "teacherText": "聽力：dirty（dirty）",
+   "transcript": "dirty dirty"
+  },
+  {
+   "seq": 2,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "burn"
+    },
+    {
+     "text": "bun"
+    },
+    {
+     "text": "bane"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L1-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"bun\".",
+   "correctEn": "Answer: burn\nburn",
+   "teacherText": "聽力：burn（burn）",
+   "transcript": "burn burn"
+  },
+  {
+   "seq": 3,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "lab"
+    },
+    {
+     "text": "later"
+    },
+    {
+     "text": "labor"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L1-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"lab\".",
+   "correctEn": "Answer: labor\nlabor",
+   "teacherText": "聽力：labor（labor）",
+   "transcript": "labor labor"
+  },
+  {
+   "seq": 4,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "o"
+    },
+    {
+     "text": "ir"
+    },
+    {
+     "text": "ea"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L2-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"o\".",
+   "correctEn": "Answer: ir\nchirp",
+   "teacherText": "聽力：ir（chirp）",
+   "transcript": "chirp chirp"
+  },
+  {
+   "seq": 5,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "u"
+    },
+    {
+     "text": "oa"
+    },
+    {
+     "text": "ur"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L2-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"u\".",
+   "correctEn": "Answer: ur\nturn",
+   "teacherText": "聽力：ur（turn）",
+   "transcript": "turn turn"
+  },
+  {
+   "seq": 6,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出母音的音組",
+   "options": [
+    {
+     "text": "-er"
+    },
+    {
+     "text": "ow"
+    },
+    {
+     "text": "ee"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L2-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ow\".",
+   "correctEn": "Answer: -er\nsilver",
+   "teacherText": "聽力：-er（silver）",
+   "transcript": "silver silver"
+  },
+  {
+   "seq": 7,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-1",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "turtle",
+    "baker",
+    "thirsty"
+   ],
+   "answer": [
+    "thirsty",
+    "turtle",
+    "baker"
+   ],
+   "audio": "audio/listening/L3-1.mp3",
+   "hint1En": "The first word is \"thirsty\".",
+   "hint2En": "It starts with \"thirsty\", then \"turtle\".",
+   "correctEn": "thirsty → turtle → baker",
+   "teacherText": "聽力排序：thirsty → turtle → baker"
+  },
+  {
+   "seq": 8,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-2",
+   "type": "order",
+   "prompt": "Listen and Number 仔細聽，依聽到的順序排列單字（每組混合不同音組）",
+   "chunks": [
+    "curl",
+    "sailor",
+    "whirl"
+   ],
+   "answer": [
+    "sailor",
+    "whirl",
+    "curl"
+   ],
+   "audio": "audio/listening/L3-2.mp3",
+   "hint1En": "The first word is \"sailor\".",
+   "hint2En": "It starts with \"sailor\", then \"whirl\".",
+   "correctEn": "sailor → whirl → curl",
+   "teacherText": "聽力排序：sailor → whirl → curl"
+  },
+  {
+   "seq": 9,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_461.webp",
+     "text": "461"
+    },
+    {
+     "image": "listening/num_416.webp",
+     "text": "416"
+    },
+    {
+     "image": "listening/num_406.webp",
+     "text": "406"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L4-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 416\nGirl: My room number is four one six.",
+   "teacherText": "聽力：416（Girl: My room number is four one six.）",
+   "transcript": "Girl: My room number is four one six."
+  },
+  {
+   "seq": 10,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/pct_13.webp",
+     "text": "13%"
+    },
+    {
+     "image": "listening/pct_33.webp",
+     "text": "33%"
+    },
+    {
+     "image": "listening/pct_30.webp",
+     "text": "30%"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L4-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 30%\nBoy: There's a thirty percent chance of rain today.",
+   "teacherText": "聽力：30%（Boy: There's a thirty percent chance of rain today.）",
+   "transcript": "Boy: There's a thirty percent chance of rain today."
+  },
+  {
+   "seq": 11,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_508.webp",
+     "text": "508"
+    },
+    {
+     "image": "listening/num_580.webp",
+     "text": "580"
+    },
+    {
+     "image": "listening/num_518.webp",
+     "text": "518"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L4-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 2.",
+   "correctEn": "Answer: 508\nGirl: Taipei 101 is five hundred and eight meters tall.",
+   "teacherText": "聽力：508（Girl: Taipei 101 is five hundred and eight meters tall.）",
+   "transcript": "Girl: Taipei 101 is five hundred and eight meters tall."
+  },
+  {
+   "seq": 12,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-1",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/l5_boy_japan.webp",
+   "audio": "audio/listening/L5-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Where are you from?  Boy: I'm from Japan.",
+   "teacherText": "聽力：O（Girl: Where are you from? / Boy: I'm from Japan.）",
+   "transcript": "Girl: Where are you from? Boy: I'm from Japan."
+  },
+  {
+   "seq": 13,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-2",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/l5_girl_australia.webp",
+   "audio": "audio/listening/L5-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Is she from Spain?  Girl: Yes, she is.",
+   "teacherText": "聽力：X（Boy: Is she from Spain? / Girl: Yes, she is.）",
+   "transcript": "Boy: Is she from Spain? Girl: Yes, she is."
+  },
+  {
+   "seq": 14,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-3",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/l5_kids_korea.webp",
+   "audio": "audio/listening/L5-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: Are they from Vietnam?  Boy: No, they aren't. They're from Korea.",
+   "teacherText": "聽力：O（Girl: Are they from Vietnam? / Boy: No, they aren't. They're from Korea.）",
+   "transcript": "Girl: Are they from Vietnam? Boy: No, they aren't. They're from Korea."
+  },
+  {
+   "seq": 15,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-4",
+   "type": "choice",
+   "prompt": "Listen and Mark 聽對話，和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/l5_phone_kevin.webp",
+   "audio": "audio/listening/L5-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nGirl: Kevin, what's your phone number?  Boy: It's zero nine five two, three eight one, seven six four.",
+   "teacherText": "聽力：X（Girl: Kevin, what's your phone number? / Boy: It's zero nine five two, three eight one, seven six four.）",
+   "transcript": "Girl: Kevin, what's your phone number? Boy: It's zero nine five two, three eight one, seven six four."
+  },
+  {
+   "seq": 16,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "I'm in the library."
+    },
+    {
+     "text": "I'm from Singapore."
+    },
+    {
+     "text": "It's sunny."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"I'm in the library.\".",
+   "correctEn": "Answer: I'm from Singapore.\nGirl: Where are you from?",
+   "teacherText": "聽力：I'm from Singapore.（Girl: Where are you from?）",
+   "transcript": "Girl: Where are you from?"
+  },
+  {
+   "seq": 17,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, he is."
+    },
+    {
+     "text": "Yes, she is."
+    },
+    {
+     "text": "No, I'm not."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L6-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, she is.\".",
+   "correctEn": "Answer: Yes, he is.\nBoy: Is your father from India?",
+   "teacherText": "聽力：Yes, he is.（Boy: Is your father from India?）",
+   "transcript": "Boy: Is your father from India?"
+  },
+  {
+   "seq": 18,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, we are."
+    },
+    {
+     "text": "No, they aren't. They're from Australia."
+    },
+    {
+     "text": "Yes, he is."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, we are.\".",
+   "correctEn": "Answer: No, they aren't. They're from Australia.\nGirl: Are Tim and Joe from the USA?",
+   "teacherText": "聽力：No, they aren't. They're from Australia.（Girl: Are Tim and Joe from the USA?）",
+   "transcript": "Girl: Are Tim and Joe from the USA?"
+  },
+  {
+   "seq": 19,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, please."
+    },
+    {
+     "text": "I'm from Japan."
+    },
+    {
+     "text": "It's my soda."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L6-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, please.\".",
+   "correctEn": "Answer: It's my soda.\nBoy: Whose soda is that on the chair?",
+   "teacherText": "聽力：It's my soda.（Boy: Whose soda is that on the chair?）",
+   "transcript": "Boy: Whose soda is that on the chair?"
+  },
+  {
+   "seq": 20,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "The boy is from Japan."
+    },
+    {
+     "text": "The boy is from Korea."
+    },
+    {
+     "text": "Mia is from Korea."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"The boy is from Japan.\".",
+   "correctEn": "Answer: The boy is from Korea.\nGirl: Hi, I'm Mia. Where are you from?  Boy: I'm from Korea. My friend Ken is from Japan.",
+   "teacherText": "聽力：The boy is from Korea.（Girl: Hi, I'm Mia. Where are you from? / Boy: I'm from Korea. My friend Ken is from Japan.）",
+   "transcript": "Girl: Hi, I'm Mia. Where are you from? Boy: I'm from Korea. My friend Ken is from Japan."
+  },
+  {
+   "seq": 21,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Her mother is from the UK."
+    },
+    {
+     "text": "Her father is from the UK."
+    },
+    {
+     "text": "Her mother is from Spain."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L7-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Her father is from the UK.\".",
+   "correctEn": "Answer: Her mother is from the UK.\nBoy: Is your mother from Spain?  Girl: No, she isn't. She's from the UK. My father is from Spain.",
+   "teacherText": "聽力：Her mother is from the UK.（Boy: Is your mother from Spain? / Girl: No, she isn't. She's from the UK. My father is from Spain.）",
+   "transcript": "Boy: Is your mother from Spain? Girl: No, she isn't. She's from the UK. My father is from Spain."
+  },
+  {
+   "seq": 22,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "They want to eat cake."
+    },
+    {
+     "text": "They are in Taiwan."
+    },
+    {
+     "text": "They are in India."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L7-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"They want to eat cake.\".",
+   "correctEn": "Answer: They are in India.\nGirl: Look! That's the Taj Mahal. It's so beautiful!  Boy: Yes. We are in India. Let's eat some curry.",
+   "teacherText": "聽力：They are in India.（Girl: Look! That's the Taj Mahal. It's so beautiful! / Boy: Yes. We are in India. Let's eat some curry.）",
+   "transcript": "Girl: Look! That's the Taj Mahal. It's so beautiful! Boy: Yes. We are in India. Let's eat some curry."
+  },
+  {
+   "seq": 23,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Lily is from Vietnam."
+    },
+    {
+     "text": "Lily's cousin is from Singapore."
+    },
+    {
+     "text": "Lily is from Australia."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Lily's cousin is from Singapore.\".",
+   "correctEn": "Answer: Lily is from Vietnam.\nBoy: Are you from Singapore, Lily?  Girl: No, I'm not. I'm from Vietnam. My cousin is from Australia.",
+   "teacherText": "聽力：Lily is from Vietnam.（Boy: Are you from Singapore, Lily? / Girl: No, I'm not. I'm from Vietnam. My cousin is from Australia.）",
+   "transcript": "Boy: Are you from Singapore, Lily? Girl: No, I'm not. I'm from Vietnam. My cousin is from Australia."
+  },
+  {
+   "seq": 24,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-5",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Sam would like some beef sandwiches."
+    },
+    {
+     "text": "Sam would like some cheeseburgers."
+    },
+    {
+     "text": "The soda is the girl's."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L7-5.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Sam would like some beef sandwiches.\".",
+   "correctEn": "Answer: Sam would like some cheeseburgers.",
+   "teacherText": "聽力：Sam would like some cheeseburgers.",
+   "transcript": "Girl: Would you like some beef sandwiches, Sam? Boy: No, thank you. I'd like some cheeseburgers. Girl: OK. Whose soda is that? Boy: It's my soda."
+  },
+  {
+   "seq": 25,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-1",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "questions/flag_japan.webp",
+   "spell": {
+    "answer": "Japan",
+    "distractorLetters": "",
+    "groups": [
+     5
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"J\".",
+   "hint2En": "It starts with \"Ja\" and has 5 letters.",
+   "correctEn": "Japan",
+   "teacherText": "拼字：Japan"
+  },
+  {
+   "seq": 26,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-2",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/flag_australia.webp",
+   "chunks": [
+    "tra",
+    "a",
+    "s",
+    "Au",
+    "li"
+   ],
+   "answer": [
+    "Au",
+    "s",
+    "tra",
+    "li",
+    "a"
+   ],
+   "hint1En": "It starts with \"Au\".",
+   "hint2En": "It starts with \"Aus\".",
+   "correctEn": "Australia",
+   "teacherText": "字母排序：Australia"
+  },
+  {
+   "seq": 27,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-3",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "questions/flag_taiwan.webp",
+   "spell": {
+    "answer": "Taiwan",
+    "distractorLetters": "",
+    "groups": [
+     6
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"T\".",
+   "hint2En": "It starts with \"Ta\" and has 6 letters.",
+   "correctEn": "Taiwan",
+   "teacherText": "拼字：Taiwan"
+  },
+  {
+   "seq": 28,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-4",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/flag_vietnam.webp",
+   "chunks": [
+    "Vi",
+    "e",
+    "n",
+    "am",
+    "t"
+   ],
+   "answer": [
+    "Vi",
+    "e",
+    "t",
+    "n",
+    "am"
+   ],
+   "hint1En": "It starts with \"Vi\".",
+   "hint2En": "It starts with \"Vie\".",
+   "correctEn": "Vietnam",
+   "teacherText": "字母排序：Vietnam"
+  },
+  {
+   "seq": 29,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-5",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/cal_thu_zh.webp",
+   "chunks": [
+    "s",
+    "Th",
+    "d",
+    "ay",
+    "ur"
+   ],
+   "answer": [
+    "Th",
+    "ur",
+    "s",
+    "d",
+    "ay"
+   ],
+   "hint1En": "It starts with \"Th\".",
+   "hint2En": "It starts with \"Thur\".",
+   "correctEn": "Thursday",
+   "teacherText": "字母排序：Thursday"
+  },
+  {
+   "seq": 30,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-1",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "What"
+    },
+    {
+     "text": "Where"
+    },
+    {
+     "text": "Whose"
+    }
+   ],
+   "answer": 1,
+   "stem": "A: ______ are Ben and Jack from?  B: They're from the UK.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"What\".",
+   "correctEn": "Answer: Where",
+   "teacherText": "閱讀：A: ______ are Ben and Jack from?  B: They're from the UK. → Where"
+  },
+  {
+   "seq": 31,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-2",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "am, is"
+    },
+    {
+     "text": "is, are"
+    },
+    {
+     "text": "are, am"
+    }
+   ],
+   "answer": 0,
+   "stem": "I ______ from Taiwan, and my friend Kenta ______ from Japan.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"is, are\".",
+   "correctEn": "Answer: am, is",
+   "teacherText": "閱讀：I ______ from Taiwan, and my friend Kenta ______ from Japan. → am, is"
+  },
+  {
+   "seq": 32,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-3",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "Is"
+    },
+    {
+     "text": "Are"
+    },
+    {
+     "text": "Do"
+    }
+   ],
+   "answer": 0,
+   "stem": "A: ______ she from Vietnam?  B: Yes, she is.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Are\".",
+   "correctEn": "Answer: Is",
+   "teacherText": "閱讀：A: ______ she from Vietnam?  B: Yes, she is. → Is"
+  },
+  {
+   "seq": 33,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-4",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "isn't"
+    },
+    {
+     "text": "aren't"
+    },
+    {
+     "text": "don't"
+    }
+   ],
+   "answer": 1,
+   "stem": "A: Are Tom and Ann from the USA?  B: No, they ______.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"isn't\".",
+   "correctEn": "Answer: aren't",
+   "teacherText": "閱讀：A: Are Tom and Ann from the USA?  B: No, they ______. → aren't"
+  },
+  {
+   "seq": 34,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-5",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "Where"
+    },
+    {
+     "text": "Would"
+    },
+    {
+     "text": "Whose"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: ______ soda is that on the chair?  B: It's my soda.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Where\".",
+   "correctEn": "Answer: Whose",
+   "teacherText": "閱讀：A: ______ soda is that on the chair?  B: It's my soda. → Whose"
+  },
+  {
+   "seq": 35,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-1",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "I'm from Korea."
+    },
+    {
+     "text": "I'm in the park."
+    },
+    {
+     "text": "Yes, I am."
+    }
+   ],
+   "answer": 0,
+   "stem": "A: Where are you from?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"I'm in the park.\".",
+   "correctEn": "Answer: I'm from Korea.",
+   "teacherText": "閱讀：A: Where are you from?  B: ______ → I'm from Korea."
+  },
+  {
+   "seq": 36,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-2",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Yes, she is."
+    },
+    {
+     "text": "No, he isn't. He's from Taiwan."
+    },
+    {
+     "text": "No, I'm not."
+    }
+   ],
+   "answer": 1,
+   "stem": "A: Is your grandpa from Japan?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, she is.\".",
+   "correctEn": "Answer: No, he isn't. He's from Taiwan.",
+   "teacherText": "閱讀：A: Is your grandpa from Japan?  B: ______ → No, he isn't. He's from Taiwan."
+  },
+  {
+   "seq": 37,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-3",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Where is Ken from?"
+    },
+    {
+     "text": "Are they from Australia?"
+    },
+    {
+     "text": "Where are Amy and Tina from?"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: ______  B: They're from Australia.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Where is Ken from?\".",
+   "correctEn": "Answer: Where are Amy and Tina from?",
+   "teacherText": "閱讀：A: ______  B: They're from Australia. → Where are Amy and Tina from?"
+  },
+  {
+   "seq": 38,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-4",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "It's so beautiful!"
+    },
+    {
+     "text": "Watch out!"
+    },
+    {
+     "text": "I'm hungry."
+    }
+   ],
+   "answer": 0,
+   "stem": "A: Look! That's the Taj Mahal.  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Watch out!\".",
+   "correctEn": "Answer: It's so beautiful!",
+   "teacherText": "閱讀：A: Look! That's the Taj Mahal.  B: ______ → It's so beautiful!"
+  },
+  {
+   "seq": 39,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-5",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "It's my soda."
+    },
+    {
+     "text": "Yes, please."
+    },
+    {
+     "text": "Good idea! Let's go."
+    }
+   ],
+   "answer": 1,
+   "stem": "A: Would you like some beef sandwiches?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"It's my soda.\".",
+   "correctEn": "Answer: Yes, please.",
+   "teacherText": "閱讀：A: Would you like some beef sandwiches?  B: ______ → Yes, please."
+  },
+  {
+   "seq": 40,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R4",
+   "type": "label",
+   "prompt": "Read and Label 把句子拖到相符的圖片上",
+   "image": "questions/label_scene_2x2.webp",
+   "labels": [
+    {
+     "text": "She's from Vietnam.",
+     "panel": 1
+    },
+    {
+     "text": "He's from Spain.",
+     "panel": 2
+    },
+    {
+     "text": "I'm from Japan.",
+     "panel": 3
+    },
+    {
+     "text": "They're from Australia.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture 1: \"She's from Vietnam.\"",
+   "hint2En": "Picture 1: \"She's from Vietnam.\"  Picture 2: \"He's from Spain.\"",
+   "correctEn": "1. She's from Vietnam.\n2. He's from Spain.\n3. I'm from Japan.\n4. They're from Australia.",
+   "teacherText": "標籤題：1. She's from Vietnam.　2. He's from Spain.　3. I'm from Japan.　4. They're from Australia."
+  },
+  {
+   "seq": 41,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "Is Mina from Singapore?"
+    },
+    {
+     "speaker": "B",
+     "text": "No, she {1}. She's from {2}."
+    },
+    {
+     "speaker": "A",
+     "text": "{3} are you from, Leo?"
+    },
+    {
+     "speaker": "B",
+     "text": "I'm from Taiwan."
+    }
+   ],
+   "id": "R5",
+   "type": "drag",
+   "prompt": "Read and Copy 看圖，把正確的字拖進空格",
+   "image": "questions/copy_mina_leo.webp",
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "isn't"
+    },
+    {
+     "id": 2,
+     "answer": "Vietnam"
+    },
+    {
+     "id": 3,
+     "answer": "Where"
+    }
+   ],
+   "distractors": [
+    "aren't",
+    "Whose"
+   ],
+   "hint1En": "Blank 1 is \"isn't\".",
+   "hint2En": "Blank 1 is \"isn't\", blank 2 is \"Vietnam\".",
+   "correctEn": "A: Is Mina from Singapore?\nB: No, she isn't. She's from Vietnam.\nA: Where are you from, Leo?\nB: I'm from Taiwan.",
+   "teacherText": "拖放：A: Is Mina from Singapore?　B: No, she isn't. She's from Vietnam.　A: Where are you from, Leo?　B: I'm from Taiwan."
+  },
+  {
+   "seq": 42,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-1",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "from?",
+    "is",
+    "Where",
+    "your father"
+   ],
+   "answer": [
+    "Where",
+    "is",
+    "your father",
+    "from?"
+   ],
+   "hint1En": "The first part is \"Where\".",
+   "hint2En": "It starts with \"Where is\".",
+   "correctEn": "Where is your father from?",
+   "teacherText": "句子重組：Where is your father from?"
+  },
+  {
+   "seq": 43,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-2",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "from",
+    "Sam and Lily",
+    "Singapore?",
+    "Are"
+   ],
+   "answer": [
+    "Are",
+    "Sam and Lily",
+    "from",
+    "Singapore?"
+   ],
+   "hint1En": "The first part is \"Are\".",
+   "hint2En": "It starts with \"Are Sam and Lily\".",
+   "correctEn": "Are Sam and Lily from Singapore?",
+   "teacherText": "句子重組：Are Sam and Lily from Singapore?"
+  },
+  {
+   "seq": 44,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-3",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "some soda?",
+    "like",
+    "Would",
+    "you"
+   ],
+   "answer": [
+    "Would",
+    "you",
+    "like",
+    "some soda?"
+   ],
+   "hint1En": "The first part is \"Would\".",
+   "hint2En": "It starts with \"Would you\".",
+   "correctEn": "Would you like some soda?",
+   "teacherText": "句子重組：Would you like some soda?"
+  }
+ ],
+ "locations": {
+  "station": [
+   "L1-1",
+   "L1-2",
+   "L1-3"
+  ],
+  "inn": [
+   "L2-1",
+   "L2-2",
+   "L2-3"
+  ],
+  "seven": [
+   "L3-1",
+   "L3-2",
+   "L4-1"
+  ],
+  "school": [
+   "L4-2",
+   "L4-3",
+   "L5-1"
+  ],
+  "teatop": [
+   "L5-2",
+   "L5-3",
+   "L5-4"
+  ],
+  "market": [
+   "L6-1",
+   "L6-2",
+   "L6-3"
+  ],
+  "post": [
+   "L6-4",
+   "L7-1",
+   "L7-2"
+  ],
+  "bookstore": [
+   "L7-3",
+   "L7-4",
+   "L7-5"
+  ],
+  "pxmart": [
+   "R1-1",
+   "R1-2",
+   "R1-3",
+   "R1-4"
+  ],
+  "library": [
+   "R1-5",
+   "R2-1",
+   "R2-2",
+   "R2-3"
+  ],
+  "farm": [
+   "R2-4",
+   "R2-5",
+   "R3-1",
+   "R3-2"
+  ],
+  "park": [
+   "R3-3",
+   "R3-4",
+   "R3-5",
+   "R4"
+  ],
+  "lawn": [
+   "R5",
+   "R6-1",
+   "R6-2",
+   "R6-3"
+  ]
+ },
+ "fonts": {
+  "regular": "fonts/cjk-regular.ttf",
+  "bold": "fonts/cjk-bold.ttf"
+ },
+ "pak": "bank-0603452d7ea0.pak"
+}

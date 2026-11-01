@@ -186,6 +186,8 @@ def main() -> None:
     ap.add_argument("--questions", required=True)
     ap.add_argument("--plan", required=True)
     ap.add_argument("--site", default=str(SITE), help="網站 public 資料夾（預設 hwg5-clock-tower 的 site/public）")
+    ap.add_argument("--short", default="", help="短名（四套輪替時給學生看「這次的題目」）")
+    ap.add_argument("--no-page", action="store_true", help="不產生任務頁 index.html（四套輪替的套題由年級入口頁載入）")
     a = ap.parse_args()
 
     q = json.loads(resolve(a.questions).read_text(encoding="utf-8"))
@@ -212,7 +214,8 @@ def main() -> None:
     texts = [a.unit]
     for it in q["items"]:
         it = dict(it)
-        listen = it["type"] == "listen"
+        # 題目音檔（聽力、選擇、排序、標籤）放 audio/listening；拼字、拖放的 audio 是答對後 Tick 的回饋語音
+        listen = it["type"] in ("listen", "choice", "order", "label")
         if it.get("image"):
             it["image"] = copy_asset(it["image"], out_dir, SUBDIR["image_q"], True)
         if it.get("audio"):
@@ -229,7 +232,7 @@ def main() -> None:
         items.append(it)
 
     bank = {
-        "mission": a.mission, "unit": a.unit, "title": a.title,
+        "mission": a.mission, "unit": a.unit, "title": a.title, "short": a.short,
         "weekStripOrder": q.get("weekStripOrder", ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]),
         "weekStripLabels": q.get("weekStripLabels", {}),
         "items": items,
@@ -254,8 +257,10 @@ def main() -> None:
                 row["blanks"] = it["blanks"]
             else:
                 row["transcript"] = it.get("transcript")
+            if it.get("teacherText"):
+                row["qText"] = it["teacherText"]   # 教師後台「需要重試的題目」顯示的題目與答案
             rows.append(row)
-    site_bank = {"mission": a.mission, "unit": a.unit, "title": a.title, "items": rows,
+    site_bank = {"mission": a.mission, "unit": a.unit, "title": a.title, "short": a.short, "items": rows,
                  "battles": [{"id": loc, "arena": zh, "word": en, "boss": loc in BOSS} for loc, zh, en in LOCS],
                  "rewardIcons": {}}
     (mission_dir / "data.js").write_text(
@@ -264,7 +269,7 @@ def main() -> None:
 
     # 任務頁：只載入自己的 data.js，外框與遊戲都用共用版（第一次建立才寫，之後不覆蓋）
     page = mission_dir / "index.html"
-    if not page.exists():
+    if not page.exists() and not a.no_page:
         page.write_text(INDEX_HTML.replace("{UNIT}", a.unit), encoding="utf-8")
 
     size = sum(f.stat().st_size for f in out_dir.rglob("*") if f.is_file())

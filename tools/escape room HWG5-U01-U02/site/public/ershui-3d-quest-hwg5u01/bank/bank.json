@@ -1,0 +1,1326 @@
+{
+ "mission": "ershui-3d-quest-hwg5u01",
+ "unit": "二水 3D 英語闖關 HWG5-U01 綜合小考",
+ "title": "Ershui 3D Quest · HWG5 U01",
+ "short": "HWG5-U01 綜合小考",
+ "weekStripOrder": [
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat"
+ ],
+ "weekStripLabels": {},
+ "items": [
+  {
+   "seq": 1,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "mail"
+    },
+    {
+     "text": "met"
+    },
+    {
+     "text": "meal"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L1-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"met\".",
+   "correctEn": "Answer: mail\nmail",
+   "teacherText": "聽力：mail（mail）",
+   "transcript": "mail mail"
+  },
+  {
+   "seq": 2,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "bay"
+    },
+    {
+     "text": "beak"
+    },
+    {
+     "text": "bake"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L1-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"bay\".",
+   "correctEn": "Answer: beak\nbeak",
+   "teacherText": "聽力：beak（beak）",
+   "transcript": "beak beak"
+  },
+  {
+   "seq": 3,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L1-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的發音例字",
+   "options": [
+    {
+     "text": "feel"
+    },
+    {
+     "text": "fat"
+    },
+    {
+     "text": "fail"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L1-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"feel\".",
+   "correctEn": "Answer: fail\nfail",
+   "teacherText": "聽力：fail（fail）",
+   "transcript": "fail fail"
+  },
+  {
+   "seq": 4,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出其母音的音組代號",
+   "options": [
+    {
+     "text": "ai"
+    },
+    {
+     "text": "ee"
+    },
+    {
+     "text": "e_e"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L2-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ee\".",
+   "correctEn": "Answer: ai\nsail",
+   "teacherText": "聽力：ai（sail）",
+   "transcript": "sail sail"
+  },
+  {
+   "seq": 5,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出其母音的音組代號",
+   "options": [
+    {
+     "text": "ay"
+    },
+    {
+     "text": "e_e"
+    },
+    {
+     "text": "a_e"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L2-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"ay\".",
+   "correctEn": "Answer: e_e\nSteve",
+   "teacherText": "聽力：e_e（Steve）",
+   "transcript": "Steve Steve"
+  },
+  {
+   "seq": 6,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L2-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 仔細聽單字，選出其母音的音組代號",
+   "options": [
+    {
+     "text": "a_e"
+    },
+    {
+     "text": "ay"
+    },
+    {
+     "text": "ea"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L2-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"a_e\".",
+   "correctEn": "Answer: ea\nleaf",
+   "teacherText": "聽力：ea（leaf）",
+   "transcript": "leaf leaf"
+  },
+  {
+   "seq": 7,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-1",
+   "type": "order",
+   "prompt": "Listen and Number 依聽到的順序排列單字",
+   "chunks": [
+    "rail",
+    "pay",
+    "fade"
+   ],
+   "answer": [
+    "fade",
+    "rail",
+    "pay"
+   ],
+   "audio": "audio/listening/L3-1.mp3",
+   "hint1En": "The first word is \"fade\".",
+   "hint2En": "It starts with \"fade\", then \"rail\".",
+   "correctEn": "fade → rail → pay",
+   "teacherText": "聽力排序：fade → rail → pay"
+  },
+  {
+   "seq": 8,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L3-2",
+   "type": "order",
+   "prompt": "Listen and Number 依聽到的順序排列單字",
+   "chunks": [
+    "three",
+    "jeans",
+    "Pete"
+   ],
+   "answer": [
+    "Pete",
+    "three",
+    "jeans"
+   ],
+   "audio": "audio/listening/L3-2.mp3",
+   "hint1En": "The first word is \"Pete\".",
+   "hint2En": "It starts with \"Pete\", then \"three\".",
+   "correctEn": "Pete → three → jeans",
+   "teacherText": "聽力排序：Pete → three → jeans"
+  },
+  {
+   "seq": 9,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-1",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_90.webp",
+     "text": "90"
+    },
+    {
+     "image": "listening/num_19.webp",
+     "text": "19"
+    },
+    {
+     "image": "listening/num_99.webp",
+     "text": "99"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L4-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 2.",
+   "correctEn": "Answer: 90\nninety",
+   "teacherText": "聽力：90（ninety）",
+   "transcript": "ninety ninety"
+  },
+  {
+   "seq": 10,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-2",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_14.webp",
+     "text": "14"
+    },
+    {
+     "image": "listening/num_40.webp",
+     "text": "40"
+    },
+    {
+     "image": "listening/num_44.webp",
+     "text": "44"
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L4-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 40\nforty",
+   "teacherText": "聽力：40（forty）",
+   "transcript": "forty forty"
+  },
+  {
+   "seq": 11,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L4-3",
+   "type": "choice",
+   "prompt": "Listen and Check 仔細聽，選出正確的數字圖片",
+   "options": [
+    {
+     "image": "listening/num_17.webp",
+     "text": "17"
+    },
+    {
+     "image": "listening/num_77.webp",
+     "text": "77"
+    },
+    {
+     "image": "listening/num_70.webp",
+     "text": "70"
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L4-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not picture 1.",
+   "correctEn": "Answer: 70\nseventy",
+   "teacherText": "聽力：70（seventy）",
+   "transcript": "seventy seventy"
+  },
+  {
+   "seq": 12,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-1",
+   "type": "choice",
+   "prompt": "Listen and Mark 錄音內容和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/cal_wed.webp",
+   "audio": "audio/listening/L5-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nGirl: What day is today?  Boy: It's Wednesday.",
+   "teacherText": "聽力：O（Girl: What day is today? / Boy: It's Wednesday.）",
+   "transcript": "Girl: What day is today? Boy: It's Wednesday."
+  },
+  {
+   "seq": 13,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-2",
+   "type": "choice",
+   "prompt": "Listen and Mark 錄音內容和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/cal_sat.webp",
+   "audio": "audio/listening/L5-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Is it Sunday today?  Girl: Yes, it is.",
+   "teacherText": "聽力：X（Boy: Is it Sunday today? / Girl: Yes, it is.）",
+   "transcript": "Boy: Is it Sunday today? Girl: Yes, it is."
+  },
+  {
+   "seq": 14,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-3",
+   "type": "choice",
+   "prompt": "Listen and Mark 錄音內容和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 0,
+   "image": "questions/cal_fri_football.webp",
+   "audio": "audio/listening/L5-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"X\".",
+   "correctEn": "Answer: O\nBoy: Is it Friday today?  Girl: Yes, it is. There's a football game today.",
+   "teacherText": "聽力：O（Boy: Is it Friday today? / Girl: Yes, it is. There's a football game today.）",
+   "transcript": "Boy: Is it Friday today? Girl: Yes, it is. There's a football game today."
+  },
+  {
+   "seq": 15,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L5-4",
+   "type": "choice",
+   "prompt": "Listen and Mark 錄音內容和圖片相符選 O，不符選 X",
+   "options": [
+    {
+     "text": "O"
+    },
+    {
+     "text": "X"
+    }
+   ],
+   "answer": 1,
+   "image": "questions/cal_mon.webp",
+   "audio": "audio/listening/L5-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"O\".",
+   "correctEn": "Answer: X\nBoy: Is it Monday today?  Girl: No, it isn't. It's Tuesday.",
+   "teacherText": "聽力：X（Boy: Is it Monday today? / Girl: No, it isn't. It's Tuesday.）",
+   "transcript": "Boy: Is it Monday today? Girl: No, it isn't. It's Tuesday."
+  },
+  {
+   "seq": 16,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "It's Friday."
+    },
+    {
+     "text": "It's ten."
+    },
+    {
+     "text": "Good idea!"
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L6-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"It's ten.\".",
+   "correctEn": "Answer: It's Friday.\nBoy: What day is today?",
+   "teacherText": "聽力：It's Friday.（Boy: What day is today?）",
+   "transcript": "Boy: What day is today?"
+  },
+  {
+   "seq": 17,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Yes, I do."
+    },
+    {
+     "text": "No, it isn't. It's Wednesday."
+    },
+    {
+     "text": "It's green."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Yes, I do.\".",
+   "correctEn": "Answer: No, it isn't. It's Wednesday.\nGirl: Is it Thursday today?",
+   "teacherText": "聽力：No, it isn't. It's Wednesday.（Girl: Is it Thursday today?）",
+   "transcript": "Girl: Is it Thursday today?"
+  },
+  {
+   "seq": 18,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Good idea!"
+    },
+    {
+     "text": "Thank you."
+    },
+    {
+     "text": "It's Monday."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L6-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Thank you.\".",
+   "correctEn": "Answer: Good idea!\nBoy: Let's go watch football.",
+   "teacherText": "聽力：Good idea!（Boy: Let's go watch football.）",
+   "transcript": "Boy: Let's go watch football."
+  },
+  {
+   "seq": 19,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L6-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽句子，選出適當的回應",
+   "options": [
+    {
+     "text": "Good job!"
+    },
+    {
+     "text": "Thank you."
+    },
+    {
+     "text": "It's Friday."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L6-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Good job!\".",
+   "correctEn": "Answer: Thank you.\nGirl: Have a good time!",
+   "teacherText": "聽力：Thank you.（Girl: Have a good time!）",
+   "transcript": "Girl: Have a good time!"
+  },
+  {
+   "seq": 20,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-1",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "Today is Tuesday."
+    },
+    {
+     "text": "Today is Wednesday."
+    },
+    {
+     "text": "Today is Thursday."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L7-1.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"Today is Tuesday.\".",
+   "correctEn": "Answer: Today is Wednesday.\nGirl: Is it Tuesday today?  Boy: No, it isn't. It's Wednesday.",
+   "teacherText": "聽力：Today is Wednesday.（Girl: Is it Tuesday today? / Boy: No, it isn't. It's Wednesday.）",
+   "transcript": "Girl: Is it Tuesday today? Boy: No, it isn't. It's Wednesday."
+  },
+  {
+   "seq": 21,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-2",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "It's Saturday today."
+    },
+    {
+     "text": "It's Sunday today."
+    },
+    {
+     "text": "Mia doesn't want to go out."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L7-2.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"It's Sunday today.\".",
+   "correctEn": "Answer: It's Saturday today.",
+   "teacherText": "聽力：It's Saturday today.",
+   "transcript": "Boy: What day is it, Mia? Girl: It's Saturday. Let's go out! Boy: Good idea!"
+  },
+  {
+   "seq": 22,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-3",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "They don't like football."
+    },
+    {
+     "text": "They want to watch football on Thursday."
+    },
+    {
+     "text": "They want to watch football on Tuesday."
+    }
+   ],
+   "answer": 1,
+   "audio": "audio/listening/L7-3.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"They don't like football.\".",
+   "correctEn": "Answer: They want to watch football on Thursday.",
+   "teacherText": "聽力：They want to watch football on Thursday.",
+   "transcript": "Boy: Is it Thursday today? Girl: Yes, it is. Let's go watch football. Boy: Good idea!"
+  },
+  {
+   "seq": 23,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-4",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "The football game is on Friday."
+    },
+    {
+     "text": "The girl can't play football."
+    },
+    {
+     "text": "The football game is on Monday."
+    }
+   ],
+   "answer": 0,
+   "audio": "audio/listening/L7-4.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"The girl can't play football.\".",
+   "correctEn": "Answer: The football game is on Friday.",
+   "teacherText": "聽力：The football game is on Friday.",
+   "transcript": "Boy: It's Friday. There's a football game today. Girl: Have a good time! Boy: Thank you."
+  },
+  {
+   "seq": 24,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "L7-5",
+   "type": "choice",
+   "prompt": "Listen and Choose 聽對話，選出符合對話內容的句子",
+   "options": [
+    {
+     "text": "It's two o'clock on Sunday."
+    },
+    {
+     "text": "It's ten o'clock on Monday."
+    },
+    {
+     "text": "It's ten o'clock on Sunday."
+    }
+   ],
+   "answer": 2,
+   "audio": "audio/listening/L7-5.mp3",
+   "hint1En": "Listen again carefully.",
+   "hint2En": "It is not \"It's two o'clock on Sunday.\".",
+   "correctEn": "Answer: It's ten o'clock on Sunday.",
+   "teacherText": "聽力：It's ten o'clock on Sunday.",
+   "transcript": "Girl: What time is it? Boy: It's ten o'clock. Girl: What day is it? Boy: It's Sunday."
+  },
+  {
+   "seq": 25,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-1",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/cal_wed_zh.webp",
+   "chunks": [
+    "Wed",
+    "a",
+    "d",
+    "y",
+    "nes"
+   ],
+   "answer": [
+    "Wed",
+    "nes",
+    "d",
+    "a",
+    "y"
+   ],
+   "hint1En": "It starts with \"Wed\".",
+   "hint2En": "It starts with \"Wednes\".",
+   "correctEn": "Wednesday",
+   "teacherText": "字母排序：Wednesday"
+  },
+  {
+   "seq": 26,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-2",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/cal_thu_zh.webp",
+   "chunks": [
+    "ay",
+    "Th",
+    "ur",
+    "d",
+    "s"
+   ],
+   "answer": [
+    "Th",
+    "ur",
+    "s",
+    "d",
+    "ay"
+   ],
+   "hint1En": "It starts with \"Th\".",
+   "hint2En": "It starts with \"Thur\".",
+   "correctEn": "Thursday",
+   "teacherText": "字母排序：Thursday"
+  },
+  {
+   "seq": 27,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-3",
+   "type": "order",
+   "prompt": "Look and Order 看圖，將字母排成正確的單字。",
+   "image": "questions/cal_sat_zh.webp",
+   "chunks": [
+    "d",
+    "t",
+    "ay",
+    "ur",
+    "Sa"
+   ],
+   "answer": [
+    "Sa",
+    "t",
+    "ur",
+    "d",
+    "ay"
+   ],
+   "hint1En": "It starts with \"Sa\".",
+   "hint2En": "It starts with \"Sat\".",
+   "correctEn": "Saturday",
+   "teacherText": "字母排序：Saturday"
+  },
+  {
+   "seq": 28,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-4",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "questions/cal_tue_zh.webp",
+   "spell": {
+    "answer": "Tuesday",
+    "distractorLetters": "",
+    "groups": [
+     7
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"T\".",
+   "hint2En": "It starts with \"Tu\" and has 7 letters.",
+   "correctEn": "Tuesday",
+   "teacherText": "拼字：Tuesday"
+  },
+  {
+   "seq": 29,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R1-5",
+   "type": "spell",
+   "prompt": "Look and Spell 看圖拼出正確的單字",
+   "image": "questions/tree.webp",
+   "spell": {
+    "answer": "tree",
+    "distractorLetters": "",
+    "groups": [
+     4
+    ],
+    "caseSensitive": true
+   },
+   "hint1En": "It starts with \"t\".",
+   "hint2En": "It starts with \"tr\" and has 4 letters.",
+   "correctEn": "tree",
+   "teacherText": "拼字：tree"
+  },
+  {
+   "seq": 30,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-1",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "color"
+    },
+    {
+     "text": "day"
+    },
+    {
+     "text": "time"
+    }
+   ],
+   "answer": 1,
+   "stem": "A: What ______ is it?  B: It's Monday.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"color\".",
+   "correctEn": "Answer: day",
+   "teacherText": "閱讀：A: What ______ is it?  B: It's Monday. → day"
+  },
+  {
+   "seq": 31,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-2",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "Is"
+    },
+    {
+     "text": "It"
+    },
+    {
+     "text": "Are"
+    }
+   ],
+   "answer": 0,
+   "stem": "______ it Thursday today?",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"It\".",
+   "correctEn": "Answer: Is",
+   "teacherText": "閱讀：______ it Thursday today? → Is"
+  },
+  {
+   "seq": 32,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-3",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "is"
+    },
+    {
+     "text": "aren't"
+    },
+    {
+     "text": "isn't"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: Is it Sunday today?  B: No, it ______. It's Saturday.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"is\".",
+   "correctEn": "Answer: isn't",
+   "teacherText": "閱讀：A: Is it Sunday today?  B: No, it ______. It's Saturday. → isn't"
+  },
+  {
+   "seq": 33,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-4",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "not"
+    },
+    {
+     "text": "isn't"
+    },
+    {
+     "text": "no"
+    }
+   ],
+   "answer": 0,
+   "stem": "It's Wednesday. It's ______ Tuesday.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"isn't\".",
+   "correctEn": "Answer: not",
+   "teacherText": "閱讀：It's Wednesday. It's ______ Tuesday. → not"
+  },
+  {
+   "seq": 34,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R2-5",
+   "type": "choice",
+   "prompt": "Read and Choose 文法選擇",
+   "options": [
+    {
+     "text": "am"
+    },
+    {
+     "text": "is"
+    },
+    {
+     "text": "are"
+    }
+   ],
+   "answer": 1,
+   "stem": "What day ______ today?",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"am\".",
+   "correctEn": "Answer: is",
+   "teacherText": "閱讀：What day ______ today? → is"
+  },
+  {
+   "seq": 35,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-1",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "It's blue."
+    },
+    {
+     "text": "It's Thursday."
+    },
+    {
+     "text": "Yes, it is."
+    }
+   ],
+   "answer": 1,
+   "stem": "A: What day is today?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"It's blue.\".",
+   "correctEn": "Answer: It's Thursday.",
+   "teacherText": "閱讀：A: What day is today?  B: ______ → It's Thursday."
+  },
+  {
+   "seq": 36,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-2",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Yes, I am."
+    },
+    {
+     "text": "It's six o'clock."
+    },
+    {
+     "text": "Yes, it is."
+    }
+   ],
+   "answer": 2,
+   "stem": "A: Is it Saturday today?  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Yes, I am.\".",
+   "correctEn": "Answer: Yes, it is.",
+   "teacherText": "閱讀：A: Is it Saturday today?  B: ______ → Yes, it is."
+  },
+  {
+   "seq": 37,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-3",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Good idea!"
+    },
+    {
+     "text": "Thank you."
+    },
+    {
+     "text": "No, it isn't."
+    }
+   ],
+   "answer": 0,
+   "stem": "A: Let's go watch football.  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Thank you.\".",
+   "correctEn": "Answer: Good idea!",
+   "teacherText": "閱讀：A: Let's go watch football.  B: ______ → Good idea!"
+  },
+  {
+   "seq": 38,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-4",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "Good afternoon!"
+    },
+    {
+     "text": "Thank you."
+    },
+    {
+     "text": "It's Sunday."
+    }
+   ],
+   "answer": 1,
+   "stem": "A: There's a football game today. Have a good time.  B: ______",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"Good afternoon!\".",
+   "correctEn": "Answer: Thank you.",
+   "teacherText": "閱讀：A: There's a football game today. Have a good time.  B: ______ → Thank you."
+  },
+  {
+   "seq": 39,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R3-5",
+   "type": "choice",
+   "prompt": "Read and Choose 選出正確的對應句",
+   "options": [
+    {
+     "text": "What day is today?"
+    },
+    {
+     "text": "What time is it?"
+    },
+    {
+     "text": "Is it Sunday today?"
+    }
+   ],
+   "answer": 2,
+   "stem": "A: ______  B: No, it isn't. It's Saturday.",
+   "hint1En": "Read it again carefully.",
+   "hint2En": "It is not \"What day is today?\".",
+   "correctEn": "Answer: Is it Sunday today?",
+   "teacherText": "閱讀：A: ______  B: No, it isn't. It's Saturday. → Is it Sunday today?"
+  },
+  {
+   "seq": 40,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R4",
+   "type": "label",
+   "prompt": "Read and Label 把句子拖到相符的圖片上",
+   "image": "questions/label_scene_2x2.webp",
+   "labels": [
+    {
+     "text": "Have a good time.",
+     "panel": 1
+    },
+    {
+     "text": "It's Monday today.",
+     "panel": 2
+    },
+    {
+     "text": "Good job, Rocky!",
+     "panel": 3
+    },
+    {
+     "text": "Let's go watch football.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture 1: \"Have a good time.\"",
+   "hint2En": "Picture 1: \"Have a good time.\"  Picture 2: \"It's Monday today.\"",
+   "correctEn": "1. Have a good time.\n2. It's Monday today.\n3. Good job, Rocky!\n4. Let's go watch football.",
+   "teacherText": "標籤題：1. Have a good time.　2. It's Monday today.　3. Good job, Rocky!　4. Let's go watch football."
+  },
+  {
+   "seq": 41,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "What day is today?"
+    },
+    {
+     "speaker": "B",
+     "text": "It's {1}."
+    },
+    {
+     "speaker": "A",
+     "text": "Let's go watch {2}."
+    },
+    {
+     "speaker": "B",
+     "text": "Good {3}!"
+    }
+   ],
+   "id": "R5",
+   "type": "drag",
+   "prompt": "Read and Copy 看圖，把正確的字拖進空格",
+   "image": "questions/cal_thu_football.webp",
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Thursday"
+    },
+    {
+     "id": 2,
+     "answer": "football"
+    },
+    {
+     "id": 3,
+     "answer": "idea"
+    }
+   ],
+   "distractors": [
+    "Tuesday",
+    "job"
+   ],
+   "hint1En": "Blank 1 is \"Thursday\".",
+   "hint2En": "Blank 1 is \"Thursday\", blank 2 is \"football\".",
+   "correctEn": "A: What day is today?\nB: It's Thursday.\nA: Let's go watch football.\nB: Good idea!",
+   "teacherText": "拖放：A: What day is today?　B: It's Thursday.　A: Let's go watch football.　B: Good idea!"
+  },
+  {
+   "seq": 42,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-1",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "is",
+    "What",
+    "today?",
+    "day"
+   ],
+   "answer": [
+    "What",
+    "day",
+    "is",
+    "today?"
+   ],
+   "hint1En": "The first part is \"What\".",
+   "hint2En": "It starts with \"What day\".",
+   "correctEn": "What day is today?",
+   "teacherText": "句子重組：What day is today?"
+  },
+  {
+   "seq": 43,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-2",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "Monday",
+    "Is",
+    "today?",
+    "it"
+   ],
+   "answer": [
+    "Is",
+    "it",
+    "Monday",
+    "today?"
+   ],
+   "hint1En": "The first part is \"Is\".",
+   "hint2En": "It starts with \"Is it\".",
+   "correctEn": "Is it Monday today?",
+   "teacherText": "句子重組：Is it Monday today?"
+  },
+  {
+   "seq": 44,
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": [],
+   "id": "R6-3",
+   "type": "order",
+   "prompt": "Unscramble 把字詞排成正確的句子",
+   "chunks": [
+    "watch",
+    "Let's",
+    "football.",
+    "go"
+   ],
+   "answer": [
+    "Let's",
+    "go",
+    "watch",
+    "football."
+   ],
+   "hint1En": "The first part is \"Let's\".",
+   "hint2En": "It starts with \"Let's go\".",
+   "correctEn": "Let's go watch football.",
+   "teacherText": "句子重組：Let's go watch football."
+  }
+ ],
+ "locations": {
+  "station": [
+   "L1-1",
+   "L1-2",
+   "L1-3"
+  ],
+  "inn": [
+   "L2-1",
+   "L2-2",
+   "L2-3"
+  ],
+  "seven": [
+   "L3-1",
+   "L3-2",
+   "L4-1"
+  ],
+  "school": [
+   "L4-2",
+   "L4-3",
+   "L5-1"
+  ],
+  "teatop": [
+   "L5-2",
+   "L5-3",
+   "L5-4"
+  ],
+  "market": [
+   "L6-1",
+   "L6-2",
+   "L6-3"
+  ],
+  "post": [
+   "L6-4",
+   "L7-1",
+   "L7-2"
+  ],
+  "bookstore": [
+   "L7-3",
+   "L7-4",
+   "L7-5"
+  ],
+  "pxmart": [
+   "R1-1",
+   "R1-2",
+   "R1-3",
+   "R1-4"
+  ],
+  "library": [
+   "R1-5",
+   "R2-1",
+   "R2-2",
+   "R2-3"
+  ],
+  "farm": [
+   "R2-4",
+   "R2-5",
+   "R3-1",
+   "R3-2"
+  ],
+  "park": [
+   "R3-3",
+   "R3-4",
+   "R3-5",
+   "R4"
+  ],
+  "lawn": [
+   "R5",
+   "R6-1",
+   "R6-2",
+   "R6-3"
+  ]
+ },
+ "fonts": {
+  "regular": "fonts/cjk-regular.ttf",
+  "bold": "fonts/cjk-bold.ttf"
+ },
+ "pak": "bank-d2fd5dc59fae.pak"
+}
