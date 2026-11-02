@@ -130,3 +130,40 @@ test("Y needs a vertical stem; a slanted lower stroke fails", () => {
 test("other letters are not affected by the straight-line rules", () => {
   assert.equal(v3.checkStrokeShape("A", [line([0.1, 0.68], [0.25, 0.08], [0.4, 0.68])]).ok, true);
 });
+
+// 2026-11-02 classroom data: stray taps below the letter, and g read as q.
+const pts = (...xy) => ({ points: xy.map(([x, y], t) => ({ x, y, t })) });
+const bowlG = (cx, cy, r) =>
+  pts(...Array.from({ length: 25 }, (_, k) => [cx + r * Math.cos((k / 24) * 2 * Math.PI), cy + 1.4 * r * Math.sin((k / 24) * 2 * Math.PI)]));
+
+test("a tiny tap below the letter is ignored; i/j dots above are kept", () => {
+  const d = [pts([0.8, 0.08], [0.8, 0.68]), bowlG(0.72, 0.56, 0.08)];
+  const withTap = [...d, pts([0.72, 0.93], [0.721, 0.935])];
+  assert.equal(v3.splitSides(withTap).right.length, 2);
+  assert.ok(v3.checkGeometry("right", v3.splitSides(withTap).right, "d").ok);
+  const i = [pts([0.75, 0.4], [0.75, 0.68]), pts([0.75, 0.25], [0.751, 0.252])];
+  assert.equal(v3.splitSides(i).right.length, 2);
+});
+
+test("g with a tail hooking left is accepted when AI reads it as q", () => {
+  const g = [bowlG(0.72, 0.52, 0.08), pts([0.8, 0.38], [0.8, 0.68], [0.8, 0.85], [0.76, 0.92], [0.68, 0.92], [0.64, 0.88])];
+  const q = [bowlG(0.72, 0.52, 0.08), pts([0.8, 0.38], [0.8, 0.68], [0.8, 0.92], [0.84, 0.9])];
+  const left = [pts([0.3, 0.1], [0.1, 0.3], [0.15, 0.6], [0.35, 0.65], [0.4, 0.45], [0.3, 0.45])];
+  const reading = ai([["G", 95]], [["q", 92], ["g", 5]]);
+  assert.equal(v3.evaluateV3({ targetLetter: "G", strokes: [...left, ...g], ai: reading }).detail.right.identity.rule, "g-hook");
+  assert.equal(v3.evaluateV3({ targetLetter: "G", strokes: [...left, ...q], ai: reading }).detail.right.identity.ok, false);
+});
+
+test("teacher 11/02: lowercase f may start a little below the top line; tiny f fails", () => {
+  const f = (top) => [pts([0.8, top], [0.75, top - 0.02], [0.72, top + 0.03], [0.72, 0.68]), pts([0.66, 0.4], [0.8, 0.4])];
+  assert.ok(v3.checkGeometry("right", f(0.27), "f").ok);
+  assert.equal(v3.checkGeometry("right", f(0.42), "f").ok, false);
+});
+
+test("teacher 11/02: j dot may sit on the midline, but a dotless j still fails", () => {
+  const stem = pts([0.75, 0.5], [0.75, 0.88], [0.7, 0.93], [0.64, 0.9]);
+  const dot = pts([0.75, 0.37], [0.77, 0.39], [0.75, 0.42], [0.73, 0.39], [0.75, 0.37]);
+  assert.ok(v3.checkGeometry("right", [dot, stem], "j").ok);
+  const dotless = pts([0.75, 0.37], [0.75, 0.88], [0.7, 0.93], [0.64, 0.9]);
+  assert.equal(v3.checkGeometry("right", [dotless], "j").ok, false);
+});

@@ -42,6 +42,38 @@ const ZONE_LABEL = {
   dottedDescender: "從中線上方寫到底線",
 };
 
+// Teacher decisions 2026-11-02 (classroom data):
+// - lowercase f may start lower than the top line, down to 70% of the way to
+//   the midline (children wrote f tops at 0.20–0.27; tiny f at 0.40+ still fails);
+// - the dot of j may sit right on the midline.
+const F_TOP_LIMIT = LINES.top + (LINES.mid - LINES.top) * 0.7;
+const J_TOP_LIMIT = LINES.mid + 0.02;
+
+// A separate small mark that sits wholly above the rest: the dot of i/j.
+// Children often draw the dot as a little circle, so size matters, not length.
+function hasDotAbove(strokes) {
+  return strokes.some((dot) => {
+    const others = strokes.filter((s) => s !== dot);
+    if (!others.length) return false;
+    const xs = dot.points.map((p) => p.x);
+    const ys = dot.points.map((p) => p.y);
+    if (Math.max(...ys) - Math.min(...ys) > 0.1 || Math.max(...xs) - Math.min(...xs) > 0.08) return false;
+    const dotBottom = Math.max(...ys);
+    const restTop = Math.min(...others.flatMap((s) => s.points.map((p) => p.y)));
+    return dotBottom < restTop;
+  });
+}
+
+// Allowed range for the top and bottom of the bounding box for one glyph.
+// The relaxed j limit only applies when j really has its dot (a dotless j
+// whose stem starts at the midline must still fail).
+function glyphRange(glyph, strokes = []) {
+  const range = zoneRange(zoneOfGlyph(glyph));
+  if (glyph === "f") return { ...range, top: [0, F_TOP_LIMIT] };
+  if (glyph === "j" && hasDotAbove(strokes)) return { ...range, top: [0, J_TOP_LIMIT] };
+  return range;
+}
+
 // Allowed range for the top and bottom of the bounding box in each zone.
 function zoneRange(zone) {
   const t = TOLERANCE;
@@ -67,6 +99,32 @@ function inRange(value, [low, high]) {
   return value >= low && value <= high;
 }
 
+function strokeLength(stroke) {
+  const p = stroke.points || [];
+  let length = 0;
+  for (let i = 1; i < p.length; i += 1) {
+    length += Math.hypot((p[i].x - p[i - 1].x) * CANVAS_ASPECT, p[i].y - p[i - 1].y);
+  }
+  return length;
+}
+
+// A tap or tiny dot below everything else on that side is an accidental touch
+// (2026-11-02: five correct letters failed as "too low" because of one).
+// No letter has a dot below it, so i/j dots above the letter are kept.
+const STRAY_MAX_LENGTH = 0.06;
+const STRAY_GAP = 0.05;
+function dropStrayMarks(strokes) {
+  if (strokes.length < 2) return strokes;
+  const isTiny = (stroke) => strokeLength(stroke) < STRAY_MAX_LENGTH;
+  const body = strokes.filter((stroke) => !isTiny(stroke));
+  if (!body.length) return strokes;
+  const bodyBottom = Math.max(...body.flatMap((s) => s.points.map((p) => p.y)));
+  return strokes.filter(
+    (stroke) =>
+      !isTiny(stroke) || Math.min(...stroke.points.map((p) => p.y)) <= bodyBottom + STRAY_GAP,
+  );
+}
+
 // Each stroke belongs to the half that holds its average x.
 function splitSides(strokes) {
   const left = [];
@@ -77,7 +135,23 @@ function splitSides(strokes) {
     const meanX = points.reduce((sum, p) => sum + p.x, 0) / points.length;
     (meanX < 0.5 ? left : right).push(stroke);
   }
-  return { left, right };
+  return { left: dropStrayMarks(left), right: dropStrayMarks(right) };
+}
+
+// g and q differ by the tail: g hooks back to the left under the bowl, q goes
+// straight down or flicks right. AI often reads a child's g as q
+// (2026-11-02: 7 of 7 such misreadings had a hook ≥ 0.7 of the letter width).
+const G_HOOK_SHARE = 0.45;
+function tailHooksLeft(strokes) {
+  const points = strokes.flatMap((stroke) => stroke.points || []);
+  if (!points.length) return false;
+  const below = points.filter((p) => p.y > LINES.base + 0.03);
+  const atBase = points.filter((p) => Math.abs(p.y - LINES.base) < 0.04);
+  if (!below.length || !atBase.length) return false;
+  const stemX = Math.max(...atBase.map((p) => p.x));
+  const width = Math.max(...points.map((p) => p.x)) - Math.min(...points.map((p) => p.x));
+  const hook = stemX - Math.min(...below.map((p) => p.x));
+  return width > 0 && hook >= 0.06 && hook / width >= G_HOOK_SHARE;
 }
 
 function measureSide(strokes) {
@@ -112,7 +186,7 @@ function outside(value, [low, high]) {
 
 function checkGeometry(side, strokes, glyph) {
   const zone = zoneOfGlyph(glyph);
-  const range = zoneRange(zone);
+  const range = glyphRange(glyph, strokes);
   const box = measureSide(strokes);
   const issues = [];
   if (!box || box.pathLength < 0.08) {
@@ -337,9 +411,19 @@ function evaluateV3({ targetLetter, strokes, ai }) {
   const leftIdentity = sides.left.length
     ? checkIdentity(leftCandidates, upper, leftGeometry.ok, fits("left", sides.left))
     : { ok: false, rule: "empty", probability: 0, seen: "?" };
-  const rightIdentity = sides.right.length
+  let rightIdentity = sides.right.length
     ? checkIdentity(rightCandidates, lower, rightGeometry.ok, fits("right", sides.right))
     : { ok: false, rule: "empty", probability: 0, seen: "?" };
+  // The hook decides; AI's g percentage varies run to run (1–10%).
+  if (
+    !rightIdentity.ok &&
+    lower === "g" &&
+    rightCandidates[0]?.glyph === "q" &&
+    rightGeometry.ok &&
+    tailHooksLeft(sides.right)
+  ) {
+    rightIdentity = { ok: true, rule: "g-hook", probability: rightCandidates[0].probability, seen: "g" };
+  }
 
   const leftShape = checkStrokeShape(upper, sides.left);
 
@@ -534,6 +618,8 @@ module.exports = {
   zoneOfGlyph,
   zoneRange,
   splitSides,
+  dropStrayMarks,
+  tailHooksLeft,
   measureSide,
   checkGeometry,
   checkIdentity,

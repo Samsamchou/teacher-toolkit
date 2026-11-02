@@ -474,16 +474,26 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
   const [checking, setChecking] = useState(false);
   const [audioState, setAudioState] = useState("loading");
   const [playing, setPlaying] = useState(false);
+  const [playCount, setPlayCount] = useState(0);
+  const [showSkip, setShowSkip] = useState(false);
   const [writingUnlocked, setWritingUnlocked] = useState(false);
   const [celebrating, setCelebrating] = useState(false);
   const [slotOpportunity, setSlotOpportunity] = useState(null);
   const [slotScore, setSlotScore] = useState(0);
   const [savingFinal, setSavingFinal] = useState(false);
   const audioCache = useRef(new Map());
+  // Each press of the listen button gets a new run id; the skip button and
+  // question changes bump it so a stuck run can never hold the page.
+  const playRun = useRef(0);
+  const currentAudio = useRef(null);
+  const skipWait = useRef(null);
   const celebrationTimer = useRef(null);
   const targetLetter = questions[questionIndex];
   const completedCount = questionIndex + (feedback?.passed ? 1 : 0);
 
+  // One shared <audio> element per letter, so replays never download again.
+  // iPad Safari may never fire load events, so loading also settles after 4 s
+  // and the real play() call fetches the file.
   const loadAudio = useCallback((letter) => {
     if (audioCache.current.has(letter)) {
       return audioCache.current.get(letter);
@@ -493,16 +503,20 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
       const audio = new Audio(source);
       audio.preload = "auto";
       let settled = false;
+      let timer = null;
       const ready = () => {
         if (settled) return;
         settled = true;
-        resolve(source);
+        window.clearTimeout(timer);
+        resolve(audio);
       };
+      timer = window.setTimeout(ready, 4000);
       audio.oncanplaythrough = ready;
       audio.onloadeddata = ready;
       audio.onerror = () => {
         if (settled) return;
         settled = true;
+        window.clearTimeout(timer);
         audioCache.current.delete(letter);
         reject(new Error("指定字母音檔載入失敗"));
       };
@@ -514,6 +528,12 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
 
   useEffect(() => {
     let active = true;
+    playRun.current += 1;
+    currentAudio.current?.pause();
+    skipWait.current?.();
+    setPlaying(false);
+    setPlayCount(0);
+    setShowSkip(false);
     setAudioState("loading");
     setWritingUnlocked(false);
     loadAudio(targetLetter)
@@ -532,32 +552,108 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
     [],
   );
 
+  // Plays the clip once. Always settles: on "ended", on pause/stall/abort/
+  // error, when play() is refused, after a timeout (clip length + 2 s,
+  // 6 s if unknown), or when the student presses the skip button.
   const playOnce = (audio) =>
-    new Promise((resolve, reject) => {
-      audio.onended = resolve;
-      audio.onerror = () => reject(new Error("字母音檔播放失敗"));
-      audio.currentTime = 0;
-      audio.play().catch(reject);
+    new Promise((resolve) => {
+      let finished = false;
+      let timer = null;
+      // "stalled" is left to the timeout: slow Wi-Fi can still finish the clip.
+      const events = ["ended", "pause", "abort", "error"];
+      const onEvent = (event) => finish(audio.ended ? "ended" : event.type);
+      const armTimer = () => {
+        window.clearTimeout(timer);
+        const length =
+          Number.isFinite(audio.duration) && audio.duration > 0
+            ? audio.duration
+            : 4;
+        timer = window.setTimeout(() => finish("timeout"), (length + 2) * 1000);
+      };
+      const finish = (reason) => {
+        if (finished) return;
+        finished = true;
+        window.clearTimeout(timer);
+        events.forEach((name) => audio.removeEventListener(name, onEvent));
+        audio.removeEventListener("loadedmetadata", armTimer);
+        skipWait.current = null;
+        resolve(reason);
+      };
+      skipWait.current = () => finish("skip");
+      try {
+        // A clip that got stuck last time is reloaded before playing again.
+        if (audio.error || audio.networkState === 3) audio.load();
+        audio.currentTime = 0;
+      } catch {
+        // Safari can refuse to seek before metadata loads; play anyway.
+      }
+      events.forEach((name) => audio.addEventListener(name, onEvent));
+      audio.addEventListener("loadedmetadata", armTimer);
+      armTimer();
+      try {
+        const started = audio.play();
+        if (started?.catch) started.catch(() => finish("refused"));
+      } catch {
+        finish("refused");
+      }
     });
+
+  const endListening = () => {
+    currentAudio.current = null;
+    setPlaying(false);
+    setShowSkip(false);
+    setPlayCount(0);
+    setWritingUnlocked(true);
+  };
 
   const playLetter = async () => {
     if (playing) return;
+    const run = playRun.current + 1;
+    playRun.current = run;
+    const stillCurrent = () => playRun.current === run;
     setPlaying(true);
-    setWritingUnlocked(false);
+    setPlayCount(1);
+    setShowSkip(false);
+    const skipTimer = window.setTimeout(() => {
+      if (stillCurrent()) setShowSkip(true);
+    }, 8000);
+    let audio = null;
     try {
-      const source = await loadAudio(targetLetter);
-      const audio = new Audio(source);
-      audio.preload = "auto";
-      for (let count = 0; count < 3; count += 1) {
-        await playOnce(audio);
-        if (count < 2) await wait(1000);
-      }
-      setWritingUnlocked(true);
+      audio = await loadAudio(targetLetter);
+      setAudioState("ready");
     } catch (error) {
+      console.error(error);
+      // The file could not be fetched at all: let the student write anyway.
       setAudioState("error");
-      window.alert(readableError(error));
+    }
+    try {
+      if (audio && stillCurrent()) {
+        currentAudio.current = audio;
+        for (let count = 0; count < 3 && stillCurrent(); count += 1) {
+          setPlayCount(count + 1);
+          const reason = await playOnce(audio);
+          if (reason !== "ended") console.warn("letter audio:", reason);
+          if (reason === "skip" || !stillCurrent()) break;
+          if (count < 2) await wait(1000);
+        }
+      }
     } finally {
-      setPlaying(false);
+      window.clearTimeout(skipTimer);
+      if (stillCurrent()) {
+        audio?.pause();
+        endListening();
+      }
+    }
+  };
+
+  const skipListening = () => {
+    currentAudio.current?.pause();
+    if (skipWait.current) {
+      skipWait.current();
+    } else {
+      // During the 1-second gap between plays: end the run directly.
+      playRun.current += 1;
+      endListening();
     }
   };
 
@@ -703,7 +799,7 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
           )}
           <span>
             {playing
-              ? "正在播放 3 次，請仔細聽…"
+              ? `正在播放第 ${playCount}／3 次，請仔細聽…`
               : audioState === "loading"
                 ? "指定字母音檔準備中…"
                 : writingUnlocked
@@ -712,7 +808,12 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
             <small>指定音檔・每次完整播放・中間停頓 1 秒</small>
           </span>
         </button>
-        {audioState === "error" && (
+        {playing && showSkip && (
+          <button className="skip-audio" type="button" onClick={skipListening}>
+            我聽完了，開始寫
+          </button>
+        )}
+        {audioState === "error" && !playing && (
           <button className="retry-audio" type="button" onClick={playLetter}>
             音檔載入失敗，點此重試
           </button>
@@ -720,8 +821,8 @@ function StudentPractice({ student, questionSet, soundOn, onComplete }) {
 
         <DrawingCanvas
           key={targetLetter}
-          disabled={checking || feedback?.passed || !writingUnlocked || playing}
-          writingLocked={!writingUnlocked || playing}
+          disabled={checking || feedback?.passed || !writingUnlocked}
+          writingLocked={!writingUnlocked}
           onSubmit={submitAttempt}
         />
 

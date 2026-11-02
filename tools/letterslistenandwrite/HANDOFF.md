@@ -102,6 +102,33 @@
   題後各一回共 5 回、每回 3 拉、分數與圖案一致、完成頁 810 分、資料庫紀錄有題組名稱。
   老師的「出題設定」只在本機假資料測過（不知道教師密碼），正式站請老師實際建一組試試。
 
+## iPad 音檔卡住修復（2026-11-02）
+
+規格卡：`rdq/RDQ-spec-ipad-audio-stuck-20261102.md`（confirmed）。
+
+- **事件**：11/02 課堂 7 台 iPad 同時聽寫，約 4 台卡在「正在播放 3 次」，手寫板一直鎖住。
+- **原因**：`playOnce()` 只等 `ended` 事件，沒有逾時保護；iPad Safari 在網路卡住或聲音被打斷時不會送 `ended`。
+- **修法**（只動 `src/App.jsx` 和 `src/styles.css`）：每次播放一定會結束（播完、pause／abort／error、
+  play() 被拒、逾時＝音檔長度＋2 秒、學生按跳過）；播放 8 秒後出現「我聽完了，開始寫」；
+  最後一律解鎖手寫，不跳警告視窗；每個字母共用一個 `<audio>`（不重複下載），預載 4 秒沒有回應就直接播；
+  解鎖後按「再聽一次」不會重新鎖住手寫板；按鈕顯示「第 N／3 次」；換題時停掉上一題的播放。
+- **測試**：本機 Chromium 模擬四種情況（不出聲、play 永不回應、被打斷、正常）都通過；沒有用 WebKit 測
+  （本機沒裝 Playwright WebKit）。
+- **部署**：11/02 先上預覽頻道 `ipad-audio-fix`，老師同意後同晚上正式站（`index-CneT5Qod.js`）。
+
+## 11/02 筆跡資料集與辨識修正（2026-11-02）
+
+規格卡 `rdq/RDQ-spec-handwriting-data-20261102.md`、報告 `rdq/ACCEPTANCE-handwriting-data-20261102.md`。
+
+- 用 `scripts/export-attempts.mjs`（gcloud u9431818 唯讀）匯出 11/02 共 120 筆到 `outputs/handwriting-20261102/`
+  （不入庫），逐張看圖標記成 `labels.json`（對 94、錯 18、待老師決定 8）。
+- `recognition-v3.js` 兩個新規則：忽略字母下方的誤觸小點（`dropStrayMarks`）；目標 g 被 AI 讀成 q
+  但尾巴往左勾時判對（`tailHooksLeft`，rule `g-hook`）。離線重算：寫對判對 82/94 → 94/94，寫錯仍 18/18。
+- **以後改辨識先跑**：`node scripts/rescore-labeled.cjs outputs/handwriting-20261102`（0 元，用存好的 AI 結果）。
+- 老師決定（11/02 晚）：小寫 f 頂端在頂線往下 70%（0.28）以內算對；j 的點可落在中線上（但一定要有點）；
+  g-hook 不要求 AI 的 g 百分比。最終離線 100/100 對、19/19 錯；正式站 dryRun 抽測全對；AI 約 US$0.7–1。
+- 已部署 `analyzeLetterAttemptV3`（11/02 晚）。30115 是老師預覽測試（labels 標 `teacherTest`）。
+
 ## 已知問題與待辦
 
 - AI 偶爾認錯：r 被讀成 v／Y、h 讀成 b、g 讀成 q、來回描兩次的 N 讀成 M（約 2%）；老師可用改判按鈕補救。
