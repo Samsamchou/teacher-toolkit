@@ -1,0 +1,793 @@
+[
+ {
+  "i": 0,
+  "who": "nova",
+  "text": "Hi, class! I'm Ms. Nova.",
+  "heard": "Hi, class. I'm Ms. Nova.",
+  "ok": true
+ },
+ {
+  "i": 1,
+  "who": "cosmo",
+  "text": "And I'm Mr. Cosmo! Welcome back to our space classroom!",
+  "heard": "And I'm Mr. Cosmo.  Welcome back to our space classroom.",
+  "ok": true
+ },
+ {
+  "i": 2,
+  "who": "nova",
+  "text": "Last time, we learned a question. What day is today?",
+  "heard": "Last time, we learned a question.  What day is today?",
+  "ok": true
+ },
+ {
+  "i": 3,
+  "who": "cosmo",
+  "text": "Let me check! It's Friday!",
+  "heard": "Let me check.  It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 5,
+  "who": "cosmo",
+  "text": "Today, we will learn a new question. Is it Friday today?",
+  "heard": "Today, we will learn a new question.  Is it Friday today?",
+  "ok": true
+ },
+ {
+  "i": 7,
+  "who": "nova",
+  "text": "Look at this sentence. It is Monday today.",
+  "heard": "Look at this sentence.  It is Monday today.",
+  "ok": true
+ },
+ {
+  "i": 9,
+  "who": "cosmo",
+  "text": "Now watch. It and is change places!",
+  "heard": "Now watch It and Is Change Places",
+  "ok": true
+ },
+ {
+  "i": 11,
+  "who": "nova",
+  "text": "Is it Monday today?",
+  "heard": "Is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 13,
+  "who": "cosmo",
+  "text": "Listen. The end of the question goes up. Today?",
+  "heard": "Listen! The end of the question goes up.  Today,",
+  "ok": true
+ },
+ {
+  "i": 15,
+  "who": "nova",
+  "text": "Repeat after me. Is it Monday?",
+  "heard": "Repeat after me.  Is it Monday?",
+  "ok": true
+ },
+ {
+  "i": 17,
+  "who": "nova",
+  "text": "Is it Monday?",
+  "heard": "Is it Monday?",
+  "ok": true
+ },
+ {
+  "i": 19,
+  "who": "cosmo",
+  "text": "Repeat after me. Is it Monday today?",
+  "heard": "Repeat after me.  Is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 21,
+  "who": "cosmo",
+  "text": "Is it Monday today?",
+  "heard": "Is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 23,
+  "who": "nova",
+  "text": "Mr. Cosmo, is it Monday today?",
+  "heard": "Mr. Cosmo, is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 24,
+  "who": "cosmo",
+  "text": "Let me check! Yes, it is!",
+  "heard": "Let me check.  Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 27,
+  "who": "cosmo",
+  "text": "Repeat after me. Yes, it is.",
+  "heard": "Repeat after me  Yes, it is",
+  "ok": true
+ },
+ {
+  "i": 29,
+  "who": "cosmo",
+  "text": "Yes, it is.",
+  "heard": "Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 31,
+  "who": "cosmo",
+  "text": "My turn. Ms. Nova, is it Monday today?",
+  "heard": "My turn.  Ms. Nova, is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 32,
+  "who": "nova",
+  "text": "Hmm... No, it isn't. It's Tuesday.",
+  "heard": "Hmm. No, it isn't. It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 34,
+  "who": "cosmo",
+  "text": "Look at isn't. Is not... becomes isn't!",
+  "heard": "Look at isn't, is not, becomes isn't.",
+  "ok": true
+ },
+ {
+  "i": 36,
+  "who": "cosmo",
+  "text": "Repeat after me. Is not. Isn't.",
+  "heard": "Repeat after me.  Is not.  Isn't.",
+  "ok": true
+ },
+ {
+  "i": 38,
+  "who": "cosmo",
+  "text": "Is not. Isn't.",
+  "heard": "is not  isn't",
+  "ok": true
+ },
+ {
+  "i": 40,
+  "who": "nova",
+  "text": "Repeat after me. No, it isn't.",
+  "heard": "Repeat after me. No, it isn't.",
+  "ok": true
+ },
+ {
+  "i": 42,
+  "who": "nova",
+  "text": "No, it isn't.",
+  "heard": "No, it isn't.",
+  "ok": true
+ },
+ {
+  "i": 44,
+  "who": "nova",
+  "text": "Repeat after me. No, it isn't. It's Tuesday.",
+  "heard": "Repeat after me.  No, it isn't.  It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 46,
+  "who": "nova",
+  "text": "No, it isn't. It's Tuesday.",
+  "heard": "No, it isn't. It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 48,
+  "who": "nova",
+  "text": "Let's practice together. Is it Thursday today?",
+  "heard": "Let's practice together.  Is it Thursday today?",
+  "ok": true
+ },
+ {
+  "i": 49,
+  "who": "cosmo",
+  "text": "Yes, it is!",
+  "heard": "Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 50,
+  "who": "cosmo",
+  "text": "Is it Sunday today?",
+  "heard": "Is it Sunday today?",
+  "ok": true
+ },
+ {
+  "i": 51,
+  "who": "nova",
+  "text": "No, it isn't. It's Saturday!",
+  "heard": "No, it isn't. It's Saturday.",
+  "ok": true
+ },
+ {
+  "i": 52,
+  "who": "cosmo",
+  "text": "Awesome! Now let's go to five places in our day.",
+  "heard": "Awesome now, let's go to five places in our day",
+  "ok": true
+ },
+ {
+  "i": 54,
+  "who": "nova",
+  "text": "Is it Sunday today?",
+  "heard": "Is it Sunday today?",
+  "ok": true
+ },
+ {
+  "i": 55,
+  "who": "cosmo",
+  "text": "Yes, it is. I can read at home.",
+  "heard": "Yes, it is. I can read at home.",
+  "ok": true
+ },
+ {
+  "i": 57,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 59,
+  "who": "cosmo",
+  "text": "Now answer. Yes, it is.",
+  "heard": "Now answer.  Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 61,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 63,
+  "who": "nova",
+  "text": "I can read at home. Repeat after me. I can read at home.",
+  "heard": "I can read at home.  Repeat after me.  I can read at home.",
+  "ok": true
+ },
+ {
+  "i": 65,
+  "who": "nova",
+  "text": "Is it Saturday today?",
+  "heard": "Is it Saturday today?",
+  "ok": true
+ },
+ {
+  "i": 66,
+  "who": "cosmo",
+  "text": "No, it isn't. It's Monday. Time for school.",
+  "heard": "No, it isn't. It's Monday.  Time for school.",
+  "ok": true
+ },
+ {
+  "i": 68,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 70,
+  "who": "cosmo",
+  "text": "Now answer. No, it isn't. It's Monday.",
+  "heard": "Now answer. No, it isn't. It's Monday.",
+  "ok": true
+ },
+ {
+  "i": 72,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 74,
+  "who": "nova",
+  "text": "Time for school. Repeat after me. Time for school.",
+  "heard": "Time for school.  Repeat after me.  Time for school.",
+  "ok": true
+ },
+ {
+  "i": 76,
+  "who": "nova",
+  "text": "Is it Wednesday today?",
+  "heard": "Is it Wednesday today?",
+  "ok": true
+ },
+ {
+  "i": 77,
+  "who": "cosmo",
+  "text": "Yes, it is. I have art class on Wednesday.",
+  "heard": "Yes, it is.  I have art class on Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 79,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 81,
+  "who": "cosmo",
+  "text": "Now answer. Yes, it is.",
+  "heard": "Now answer.  Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 83,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 85,
+  "who": "nova",
+  "text": "I have art class on Wednesday. Repeat after me. I have art class on Wednesday.",
+  "heard": "I have art class on Wednesday.  Repeat after me.  I have art class on Wednesday.",
+  "ok": true
+ },
+ {
+  "i": 87,
+  "who": "nova",
+  "text": "Is it Tuesday today?",
+  "heard": "Is it Tuesday today?",
+  "ok": true
+ },
+ {
+  "i": 88,
+  "who": "cosmo",
+  "text": "No, it isn't. It's Thursday. I have music class.",
+  "heard": "No, it isn't.  It's Thursday.  I have music class.",
+  "ok": true
+ },
+ {
+  "i": 90,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 92,
+  "who": "cosmo",
+  "text": "Now answer. No, it isn't. It's Thursday.",
+  "heard": "Now answer.  No, it isn't.  It's Thursday.",
+  "ok": true
+ },
+ {
+  "i": 94,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 96,
+  "who": "nova",
+  "text": "I have music class. Repeat after me. I have music class.",
+  "heard": "I have music class.  Repeat after me.  I have music class.",
+  "ok": true
+ },
+ {
+  "i": 98,
+  "who": "nova",
+  "text": "Is it Saturday today?",
+  "heard": "Is it Saturday today?",
+  "ok": true
+ },
+ {
+  "i": 99,
+  "who": "cosmo",
+  "text": "Yes, it is. Let's play outside.",
+  "heard": "Yes, it is.  Let's play outside.",
+  "ok": true
+ },
+ {
+  "i": 101,
+  "who": "nova",
+  "text": "Your turn. Ask the question.",
+  "heard": "Your turn.  Ask the question.",
+  "ok": true
+ },
+ {
+  "i": 103,
+  "who": "cosmo",
+  "text": "Now answer. Yes, it is.",
+  "heard": "Now answer.  Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 105,
+  "who": "cosmo",
+  "text": "One more time!",
+  "heard": "One more time.",
+  "ok": true
+ },
+ {
+  "i": 107,
+  "who": "nova",
+  "text": "Let's play outside. Repeat after me. Let's play outside.",
+  "heard": "Let's play outside.  Repeat after me.  Let's play outside.",
+  "ok": true
+ },
+ {
+  "i": 109,
+  "who": "cosmo",
+  "text": "Now let's watch Amy and Ben. Listen carefully!",
+  "heard": "Now let's watch Amy and Ben.  Listen carefully.",
+  "ok": true
+ },
+ {
+  "i": 111,
+  "who": "ben",
+  "text": "Good morning, Amy! Is it Sunday today?",
+  "heard": "Good morning, Amy.  Is it Sunday today?",
+  "ok": true
+ },
+ {
+  "i": 112,
+  "who": "amy",
+  "text": "No, it isn't. It's Monday.",
+  "heard": "No, it isn't.  It's Monday.",
+  "ok": true
+ },
+ {
+  "i": 113,
+  "who": "ben",
+  "text": "Oh, no! I'm so sleepy.",
+  "heard": "Oh no, I'm so sleepy.",
+  "ok": true
+ },
+ {
+  "i": 114,
+  "who": "amy",
+  "text": "Look! We have P.E. class today.",
+  "heard": "Look, we have PE class today.",
+  "ok": true
+ },
+ {
+  "i": 115,
+  "who": "ben",
+  "text": "P.E. class? Yay! Let's go!",
+  "heard": "PE class, yay, let's go.",
+  "ok": true
+ },
+ {
+  "i": 116,
+  "who": "nova",
+  "text": "Listen again.",
+  "heard": "Listen again.",
+  "ok": true
+ },
+ {
+  "i": 117,
+  "who": "ben",
+  "text": "Good morning, Amy! Is it Sunday today?",
+  "heard": "Good morning, Amy.  Is it Sunday today?",
+  "ok": true
+ },
+ {
+  "i": 118,
+  "who": "amy",
+  "text": "No, it isn't. It's Monday.",
+  "heard": "No, it isn't.  It's Monday.",
+  "ok": true
+ },
+ {
+  "i": 119,
+  "who": "ben",
+  "text": "Oh, no! I'm so sleepy.",
+  "heard": "Oh no, I'm so sleepy.",
+  "ok": true
+ },
+ {
+  "i": 120,
+  "who": "amy",
+  "text": "Look! We have P.E. class today.",
+  "heard": "Look, we have PE class today.",
+  "ok": true
+ },
+ {
+  "i": 121,
+  "who": "ben",
+  "text": "P.E. class? Yay! Let's go!",
+  "heard": "PE class, yay, let's go.",
+  "ok": true
+ },
+ {
+  "i": 122,
+  "who": "nova",
+  "text": "Is it Monday today?",
+  "heard": "Is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 124,
+  "who": "cosmo",
+  "text": "Yes, it is.",
+  "heard": "Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 125,
+  "who": "nova",
+  "text": "Repeat after me. Yes, it is.",
+  "heard": "Repeat after me.  Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 127,
+  "who": "amy",
+  "text": "Ben, is it Friday today?",
+  "heard": "Ben, is it Friday today?",
+  "ok": true
+ },
+ {
+  "i": 128,
+  "who": "ben",
+  "text": "Yes, it is!",
+  "heard": "Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 129,
+  "who": "amy",
+  "text": "Great! Let's play basketball after school.",
+  "heard": "Great! Let's play basketball after school.",
+  "ok": true
+ },
+ {
+  "i": 130,
+  "who": "ben",
+  "text": "Sure! I love Fridays!",
+  "heard": "Sure. I love Fridays.",
+  "ok": true
+ },
+ {
+  "i": 131,
+  "who": "cosmo",
+  "text": "Listen again.",
+  "heard": "Listen again.",
+  "ok": true
+ },
+ {
+  "i": 132,
+  "who": "amy",
+  "text": "Ben, is it Friday today?",
+  "heard": "Ben, is it Friday today?",
+  "ok": true
+ },
+ {
+  "i": 133,
+  "who": "ben",
+  "text": "Yes, it is!",
+  "heard": "Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 134,
+  "who": "amy",
+  "text": "Great! Let's play basketball after school.",
+  "heard": "Great! Let's play basketball after school.",
+  "ok": true
+ },
+ {
+  "i": 135,
+  "who": "ben",
+  "text": "Sure! I love Fridays!",
+  "heard": "Sure. I love Fridays.",
+  "ok": true
+ },
+ {
+  "i": 136,
+  "who": "cosmo",
+  "text": "Is it Thursday today?",
+  "heard": "Is it Thursday today?",
+  "ok": true
+ },
+ {
+  "i": 138,
+  "who": "nova",
+  "text": "No, it isn't. It's Friday.",
+  "heard": "No, it isn't. It's Friday.",
+  "ok": true
+ },
+ {
+  "i": 139,
+  "who": "cosmo",
+  "text": "Repeat after me. No, it isn't. It's Friday.",
+  "heard": "Repeat after me  No, it isn't  It's Friday",
+  "ok": true
+ },
+ {
+  "i": 141,
+  "who": "ben",
+  "text": "Amy, is it Wednesday today? I have my crayons.",
+  "heard": "Amy, is it Wednesday today?  I have my crayons.",
+  "ok": true
+ },
+ {
+  "i": 142,
+  "who": "amy",
+  "text": "No, it isn't. It's Tuesday.",
+  "heard": "No, it isn't.  It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 143,
+  "who": "ben",
+  "text": "Tuesday? Oh, no! No art class today.",
+  "heard": "Tuesday, oh no, no art class today.",
+  "ok": true
+ },
+ {
+  "i": 144,
+  "who": "amy",
+  "text": "That's OK. We have music class today. Let's sing!",
+  "heard": "That's okay.  We have music class today.  Let's sing!",
+  "ok": false
+ },
+ {
+  "i": 145,
+  "who": "ben",
+  "text": "Ha ha! OK!",
+  "heard": "Haha, okay",
+  "ok": false
+ },
+ {
+  "i": 146,
+  "who": "nova",
+  "text": "Listen again.",
+  "heard": "Listen again.",
+  "ok": true
+ },
+ {
+  "i": 147,
+  "who": "ben",
+  "text": "Amy, is it Wednesday today? I have my crayons.",
+  "heard": "Amy, is it Wednesday today?  I have my crayons.",
+  "ok": true
+ },
+ {
+  "i": 148,
+  "who": "amy",
+  "text": "No, it isn't. It's Tuesday.",
+  "heard": "No, it isn't.  It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 149,
+  "who": "ben",
+  "text": "Tuesday? Oh, no! No art class today.",
+  "heard": "Tuesday, oh no, no art class today.",
+  "ok": true
+ },
+ {
+  "i": 150,
+  "who": "amy",
+  "text": "That's OK. We have music class today. Let's sing!",
+  "heard": "That's okay.  We have music class today.  Let's sing!",
+  "ok": false
+ },
+ {
+  "i": 151,
+  "who": "ben",
+  "text": "Ha ha! OK!",
+  "heard": "Haha, okay",
+  "ok": false
+ },
+ {
+  "i": 152,
+  "who": "nova",
+  "text": "Is it Wednesday today?",
+  "heard": "Is it Wednesday today?",
+  "ok": true
+ },
+ {
+  "i": 154,
+  "who": "cosmo",
+  "text": "No, it isn't. It's Tuesday.",
+  "heard": "No, it isn't.  It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 155,
+  "who": "nova",
+  "text": "Repeat after me. No, it isn't. It's Tuesday.",
+  "heard": "Repeat after me.  No, it isn't.  It's Tuesday.",
+  "ok": true
+ },
+ {
+  "i": 157,
+  "who": "cosmo",
+  "text": "Wonderful, everyone!",
+  "heard": "Wonderful, everyone.",
+  "ok": true
+ },
+ {
+  "i": 158,
+  "who": "cosmo",
+  "text": "Game time! Look at the calendar. Is it Sunday today?",
+  "heard": "Game time!  Look at the calendar!  Is it Sunday today?",
+  "ok": true
+ },
+ {
+  "i": 160,
+  "who": "nova",
+  "text": "Yes, it is.",
+  "heard": "Yes, it is.",
+  "ok": true
+ },
+ {
+  "i": 161,
+  "who": "cosmo",
+  "text": "Next one. Is it Friday today?",
+  "heard": "Next one. Is it Friday today?",
+  "ok": true
+ },
+ {
+  "i": 163,
+  "who": "nova",
+  "text": "No, it isn't. It's Thursday.",
+  "heard": "No, it isn't. It's Thursday.",
+  "ok": true
+ },
+ {
+  "i": 164,
+  "who": "cosmo",
+  "text": "Last one. Is it Wednesday today?",
+  "heard": "Last one.  Is it Wednesday today?",
+  "ok": true
+ },
+ {
+  "i": 166,
+  "who": "nova",
+  "text": "Yes, it is. Great job, class!",
+  "heard": "Yes, it is. Great job, class.",
+  "ok": true
+ },
+ {
+  "i": 167,
+  "who": "nova",
+  "text": "Today we learned a new question. Is it Monday today?",
+  "heard": "Today we learned a new question.  Is it Monday today?",
+  "ok": true
+ },
+ {
+  "i": 168,
+  "who": "cosmo",
+  "text": "And two answers. Yes, it is. No, it isn't.",
+  "heard": "and two answers.  Yes, it is.  No, it isn't.",
+  "ok": true
+ },
+ {
+  "i": 170,
+  "who": "cosmo",
+  "text": "See you next time!",
+  "heard": "See you next time.",
+  "ok": true
+ },
+ {
+  "i": 171,
+  "who": "nova",
+  "text": "Bye-bye, class!",
+  "heard": "Bye-bye class.",
+  "ok": true
+ }
+]

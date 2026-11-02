@@ -132,7 +132,8 @@ class Teacher:
             d = sorted(glob.glob(str(ST / f'characters/{self.who}/face-{self.who}-{pose}-*')))[-1]
             ver = d.rsplit('-', 1)[1]
             base = ST / f'characters/{self.who}/renders/{self.who}-{pose}-{ver}-yaw0-x2.png'
-            patches = json.loads((pathlib.Path(d) / 'patches/patches.json').read_text(encoding='utf-8'))
+            pd = pathlib.Path(d) / ('patches-v2' if (pathlib.Path(d) / 'patches-v2/patches.json').exists() else 'patches')   # 2026-11-02 斜臉嘴型 v2（face_set2.py）
+            patches = json.loads((pd / 'patches.json').read_text(encoding='utf-8')); patches['_dir'] = str(pd)
             self.cfg[pose] = (base, pathlib.Path(d), patches)
         return self.cfg[pose]
     def image(self, pose, mouth, blink):
@@ -142,7 +143,7 @@ class Teacher:
             im = Image.open(base).convert('RGBA')
             for vid in ([mouth] if mouth else []) + (['B01_blink'] if blink else []):
                 if vid in pj['patches']:
-                    im.alpha_composite(Image.open(d / 'patches' / f'{vid}.png').convert('RGBA'), tuple(pj['patches'][vid]['x2_xy']))
+                    im.alpha_composite(Image.open(pathlib.Path(pj['_dir']) / f'{vid}.png').convert('RGBA'), tuple(pj['patches'][vid]['x2_xy']))
             self.cache[key] = im.resize((round(im.width * K), round(im.height * K)), Image.LANCZOS)
         return self.cache[key]
     def face_xy(self, pose):
