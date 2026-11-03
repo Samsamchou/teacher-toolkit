@@ -109,8 +109,8 @@ S += [('12-abbr', 'nova', 'say', 'We can write the days in a short way. Take the
       ('12-abbr', 'cosmo', 'say', 'Friday, F, R, I. Fri. Saturday, S, A, T. Sat.', '縮成 Fri. Sat.'),
       ('12-abbr', 'nova', 'zh', '別忘了，縮寫的第一個字母也要大寫，最後要加點喔！', '七個縮寫排成一列')]
 # 13 複習與再見
-S += [('13-end', 'cosmo', 'say', "Let's say all seven days together!", '七張星期卡排成一圈'),
-      ('13-end', 'both', 'say', 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday!', '每張卡依序亮起'),
+S += [('13-end', 'cosmo', 'say', "Let's say all seven days!", '七張星期卡排成一圈'),
+      ('13-end', 'relay', 'say', 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday!', '每張卡依序亮起'),
       ('13-end', 'nova', 'say', 'Your turn! Say all seven days.', 'Your turn! 換你唸！'),
       ('13-end', '-', 'turn', REVIEW_TURN, '卡片依序亮起當提示'),
       ('13-end', 'cosmo', 'say', 'Awesome! See you next time!', 'Cosmo 比讚 P07'),

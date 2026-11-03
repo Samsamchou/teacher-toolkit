@@ -52,3 +52,6 @@
 ## 定案紀錄 v1.3（2026-11-03）
 - 正式版改為 `renders/video1-days-v1.3.mp4`（8:45，15,746 格，與 v1.2 相同時間軸）＋720p。
 - 只換老師嘴型：v2.1 斜臉嘴型（`engine/face_set2.py`，13 個說話姿勢 × 8 嘴型，同角度生成→對位→只貼嘴部、只貼在角色身上、範圍加高並柔化），消除嘴邊灰色痕跡與 Cosmo／Nova 臉頰凹洞；P01／P08 交接瞬間不貼嘴型。規格卡 rdq/RDQ-spec-teacher-tilted-mouths-20261102、RDQ-spec-cosmo-cheek-dimple-20261103。
+
+## 定案紀錄 v1.4（2026-11-04）
+- 正式版改為 `renders/video1-days-v1.4.mp4`（8:47）＋720p。老師：兩位老師一起唸聲音重疊 → 結尾七天改 Nova／Cosmo 接力（`who=relay`），字幕整串留著、正在唸的字與星期卡同步變亮；「Let's say all seven days together!」去掉 together。規格卡 `rdq/RDQ-spec-relay-slash-quiz-20261104.md`。

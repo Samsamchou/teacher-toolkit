@@ -64,7 +64,7 @@ for k, (w, parts, hs, short, zh) in enumerate(WORDS):
     if short:
         S += [(sec, oth, 'say', f'We can also say {short}.', f'{v}；short:{short}')]
         S += [(sec, oth, 'say', f'Repeat after me. {short.capitalize()}.', f'{v}；short:{short}'), (sec, '-', 'turn', WORD_TURN, f'{v}；short:{short}；Your turn! 換你唸！')]
-    S += [(sec, oth, 'zh', f'{w} 就是「{zh}」。', f'{v}；「{zh}」')]
+    S += [(sec, oth, 'zh', f'{w} 就是「' + zh.replace('／', '」或「') + '」。', f'{v}；「{zh}」')]   # 2026-11-04 老師：「／」會被唸成斜線，台詞改「或」
 # 6 句型 He's my ___. / She's my ___.
 S += [('06-sent', 'cosmo', 'say', "Now let's say a sentence. He's my father.", "mem:father；card:He's my father.；he"),
       ('06-sent', 'cosmo', 'zh', "He's 就是 He is，「他是」。男生用 He's：father、grandfather、brother。", "card:He's = He is；he；「他是」"),
@@ -86,16 +86,19 @@ for i, (who, text) in enumerate(TALK[1:]):
     teacher = 'nova' if i % 2 == 0 else 'cosmo'
     S += [('07-talk', teacher, 'say', f'Repeat after me. {text}', f'talk:1；card:{text}；{tl}'), ('07-talk', '-', 'turn', SENT_TURN, f'talk:1；card:{text}；{tl}')]
 S += [('07-talk', 'cosmo', 'say', 'Wonderful, everyone!', 'Cosmo 比讚 P07')]
-# 8 猜猜看（3 題）：指著家人 → 學生說句子 → 揭曉
+# 8 猜猜看（2026-11-04 老師：六位家人都要練，男女交錯）：指著家人 → 學生說句子 → 揭曉
 QUIZ = [('Game time! Look at Emma\'s family. Who is he?', 'grandfather', "He's my grandfather.", 'he'),
         ('Next one. Who is she?', 'sister', "She's my sister.", 'she'),
-        ('Last one. Who is he?', 'brother', "He's my brother.", 'he')]
+        ('Next one. Who is she?', 'mother', "She's my mother.", 'she'),
+        ('Next one. Who is he?', 'brother', "He's my brother.", 'he'),
+        ('Next one. Who is she?', 'grandmother', "She's my grandmother.", 'she'),
+        ('Last one. Who is he?', 'father', "He's my father.", 'he')]
 for k, (q, mem, ans, hs) in enumerate(QUIZ):
     S += [('08-quiz', 'cosmo', 'say', q, f'family；quiz:{mem}'), ('08-quiz', '-', 'turn', SENT_TURN, f'family；quiz:{mem}；倒數條'),
           ('08-quiz', 'nova', 'say', ans + (' Great job, class!' if k == len(QUIZ) - 1 else ''), f'family；quiz:{mem}；揭曉；card:{ans}；{hs}')]
 # 9 複習與再見
 S += [('09-end', 'nova', 'say', 'Today we learned six family words.', '六張單字卡排兩排'),
-      ('09-end', 'both', 'say', 'Father, mother, grandfather, grandmother, brother, sister!', '六張卡依序亮起'),
+      ('09-end', 'relay', 'say', 'Father, mother, grandfather, grandmother, brother, sister!', '六張卡依序亮起'),
       ('09-end', 'cosmo', 'say', "And two sentences. He's my father. She's my mother.", "card:He's my ___. / She's my ___.；he；she"),
       ('09-end', 'nova', 'zh', "介紹男生家人用 He's my，女生家人用 She's my；說自己就是 It's me.", '三張字卡排在一起'),
       ('09-end', 'cosmo', 'say', 'See you next time!', 'Cosmo 比讚 P07'),

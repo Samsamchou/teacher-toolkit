@@ -95,14 +95,14 @@ def build_tracks():
     tr = {'nova': [], 'cosmo': [], 'amy': [], 'ben': []}
     for s in SEGS:
         if s['kind'] not in ('say', 'zh'): continue
-        whos = ['nova', 'cosmo'] if s['who'] == 'both' else [s['who']]
+        whos = ['nova', 'cosmo'] if s['who'] == 'both' else [] if s['who'] == 'relay' else [s['who']]
         for w in s['words']:
             if all(ord(c) < 128 for c in w['w']): vs = word_visemes(w['w'])
             else:  # 中文：WordBoundary 字串在 Windows 可能亂碼，只用時間；每個詞依長度輪流張合
                 n = max(1, round((w['t1'] - w['t0']) / .2)); vs = [ZH_CYCLE[(hash(w['t0']) + k) % len(ZH_CYCLE)] for k in range(n)]
             wt = [1.0 if v in VOWEL else .6 for v in vs]; tot = sum(wt); t = w['t0']; d = max(w['t1'] - w['t0'], .08)
             for v, k in zip(vs, wt):
-                for who in whos: tr[who].append((t, t + d * k / tot, v))
+                for who in (whos if s['who'] != 'relay' else [w['who']]): tr[who].append((t, t + d * k / tot, v))
                 t += d * k / tot
     return tr
 TRACKS = build_tracks()
@@ -115,10 +115,18 @@ def mouth_at(who, t):
         vs = s['visemes']; return vs[min(len(vs) - 1, int(len(vs) * (t - s['t0']) / (s['t1'] - s['t0'])))]
     for t0, t1, v in TRACKS[who]:
         if t0 - .03 <= t < t1 + .03: return v
-    if s and s['kind'] in ('say', 'zh') and s['who'] in (who, 'both'): return 'M08_mid'
+    if s and s['kind'] in ('say', 'zh') and speaks(s, who, t): return 'M08_mid'
     return None
 def talking(who, t):
-    s = seg_at(t); return bool(s and s['kind'] in ('say', 'zh') and s['who'] in (who, 'both'))
+    s = seg_at(t); return bool(s and s['kind'] in ('say', 'zh') and speaks(s, who, t))
+def speaks(s, who, t):
+    """這位老師此刻是否在說話；relay（接力）只算輪到他的那個字。"""
+    if s['who'] == 'relay': return any(w['who'] == who and w['t0'] - .05 <= t < w['t1'] + .1 for w in s['words'])
+    return s['who'] in (who, 'both', 'relay')
+def relay_word(s, t):
+    """接力段：目前唸到（或剛唸完）的字，去掉標點；還沒開始回傳 None。"""
+    ws = [w for w in s['words'] if w['t0'] <= t]
+    return ws[-1]['w'].strip(',!.') if ws else None
 
 # ---------- 人物與姿勢 ----------
 K = 0.42; TOP = 24; HEAD_Y = 114
@@ -169,12 +177,12 @@ def build_pose_track(who):
     tr = []; lead = None; hold = None
     for s in SEGS:
         vp = vis_poses(s)
-        if s['kind'] in ('say', 'zh', 'sound') and s['who'] in (who, 'both'): lead = s
+        if s['kind'] in ('say', 'zh', 'sound') and s['who'] in (who, 'both', 'relay'): lead = s
         if s['who'] in ('amy', 'ben'): p = 'P08'   # 學生對話時老師聆聽
         elif who in vp: p = vp[who]; hold = (p, s['sec'])
         elif s['kind'] == 'turn':
-            p = 'P08' if lead is not None and lead['sec'] == s['sec'] and lead['who'] in (who, 'both') else 'P01'
-        elif s['who'] in (who, 'both'):
+            p = 'P08' if lead is not None and lead['sec'] == s['sec'] and lead['who'] in (who, 'both', 'relay') else 'P01'
+        elif s['who'] in (who, 'both', 'relay'):
             if hold and hold[1] == s['sec'] and s['kind'] != 'zh' and tr and tr[-1][1] == hold[0]: p = hold[0]
             elif s['kind'] == 'zh': p = 'P05'
             elif s['sec'] in ('02-q1', '03-ans', '04-q2', '05-demo', '06-ctx', '07-talk', '08-quiz'): p = POINT[who]
@@ -470,15 +478,17 @@ def subtitle(t):
     else: txt, col = 'Your turn!  換你唸！', (255, 255, 255, 255)
     if s['who'] == 'cosmo' and s['kind'] == 'say': col = (150, 225, 255, 255)
     if s['who'] in KID_COL: txt, col = f"{s['who'].title()}: {txt}", KID_COL[s['who']]
+    cw = relay_word(s, t) if s['who'] == 'relay' else None   # 接力：整串留著，正在唸的字變橘色
     d = ImageDraw.Draw(L); lines = wrap_sub(d, txt); lh = SUB_SIZE + 14
     ws = [mixed_width(d, ln, SUB_SIZE, F_EN_REG) for ln in lines]; w = max(ws)
     top = SUB_BOTTOM - len(lines) * lh - 2 * SUB_PAD
     d.rounded_rectangle((W / 2 - w / 2 - 36, top, W / 2 + w / 2 + 36, SUB_BOTTOM), 24, fill=(10, 20, 45, 205))
     for k, (ln, lw) in enumerate(zip(lines, ws)):
         x = W / 2 - lw / 2; y = top + SUB_PAD + k * lh
-        for part in DAY_RE.split(ln):
+        for part in (re.split(r'(\b%s\b)' % re.escape(cw), ln, maxsplit=1) if cw else DAY_RE.split(ln)):
             if not part: continue
-            draw_mixed(d, x, y, part, SUB_SIZE, (*ORANGE, 255) if DAY_RE.fullmatch(part) else col, F_EN_REG)
+            hot = (part == cw) if cw else DAY_RE.fullmatch(part)
+            draw_mixed(d, x, y, part, SUB_SIZE, (*ORANGE, 255) if hot else col, F_EN_REG)
             x += mixed_width(d, part, SUB_SIZE, F_EN_REG)
     return L
 

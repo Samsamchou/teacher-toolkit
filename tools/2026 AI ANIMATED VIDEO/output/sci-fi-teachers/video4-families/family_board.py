@@ -109,6 +109,8 @@ def words_grid(L, d, t, s, k=1.0):
         kk = R.back(R.prog(t, s['t0'] - 2 + .1 * i, .3)) if k < 1 else 1
         on = (('th' in hi and 'th' in w) or ('er' in hi) or ('a' in hi and w.startswith('grand')) or ('i' in hi and w == 'sister')
               or ('o' in hi and w in OAS_U) or ('v' in hi))
+        cur = R.relay_word(s, t) if s and s.get('who') == 'relay' else None
+        if s and s.get('who') == 'relay': on = (cur or '').lower() == w   # 2026-11-04 接力：唸到哪張亮哪張
         d.rounded_rectangle((cx - 125, cy - 120, cx + 125, cy + 130), 26, fill=(10, 20, 45, 225), outline=(*(R.ORANGE if on else R.CYAN), 255), width=5 if on else 3)
         im = scaled(f'{w}-wave', 170); L.alpha_composite(_dim(im, 1 if on else .5), (round(cx - im.width / 2), round(cy - 115)))
         draw_word(d, w, cx, cy + 92, 40 if len(w) > 7 else 46, hi, u_above='o' in hi)

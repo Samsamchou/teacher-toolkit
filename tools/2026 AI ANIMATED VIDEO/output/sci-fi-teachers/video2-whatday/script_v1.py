@@ -15,7 +15,7 @@ S = []
 S += [('01-open', 'nova', 'say', "Hi, class! I'm Ms. Nova.", 'Nova 揮手 P02，名牌在臉旁'),
       ('01-open', 'cosmo', 'say', "And I'm Mr. Cosmo! Welcome back to our space classroom!", 'Cosmo 揮手 P02，名牌在臉旁'),
       ('01-open', 'nova', 'say', 'Do you remember the seven days of the week?', '七張星期卡排成一列'),
-      ('01-open', 'both', 'say', 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday!', '每張卡依序亮起'),
+      ('01-open', 'relay', 'say', 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday!', '每張卡依序亮起'),
       ('01-open', 'cosmo', 'say', 'Great! Today, we will learn how to ask about the day, and how to answer.', '標題 What day is today?'),
       ('01-open', 'nova', 'zh', '今天我們要學怎麼問「今天星期幾」，還有怎麼回答。', '中文字幕')]
 # 2 問句 What day is today?

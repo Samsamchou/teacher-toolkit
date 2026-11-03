@@ -72,6 +72,14 @@ def trim(a):
 
 async def speak(who, kind, text):
     """回傳 (音訊, words, voices)。both＝兩人齊唸，各自合成後疊加，字詞時間取 Nova 的。"""
+    if who == 'relay':   # 2026-11-04 老師：整串單字不齊唸（聲音重疊），Nova、Cosmo 輪流各唸一個字，字與字間隔 0.3 秒
+        toks = [x.strip() for x in text.split(',') if x.strip()]; parts = []; words = []; t = 0.0; voices = []
+        for k, tok in enumerate(toks):
+            w = ('nova', 'cosmo')[k % 2]; v = VOICE[(w, kind)]; f, _ = await synth(tts_text(tok.strip('!.') + '!'), v)
+            a, _ = trim(decode(f)); a = a * 0.9
+            words.append({'w': tok + (',' if k < len(toks) - 1 else ''), 't0': t, 't1': t + len(a) / SR, 'who': w})
+            parts += [a, np.zeros(int(.3 * SR), np.float32)]; t += len(a) / SR + .3; voices.append(v)
+        return np.concatenate(parts[:-1]), words, sorted(set(voices))
     whos = ['nova', 'cosmo'] if who == 'both' else [who]
     parts = []
     for w in whos:
@@ -92,7 +100,7 @@ async def main():
         seg = {'i': i, 'sec': sec, 'who': who, 'kind': kind, 'vis': vis}
         if kind in ('say', 'zh'):
             a, words, voices = await speak(who, kind, val)
-            seg.update(text=val, voices=voices, words=[{'w': w['w'], 't0': round(t + w['t0'], 3), 't1': round(t + w['t1'], 3)} for w in words])
+            seg.update(text=val, voices=voices, words=[{**w, 't0': round(t + w['t0'], 3), 't1': round(t + w['t1'], 3)} for w in words])
         elif kind == 'sound':
             a, sr = sf.read(str(PA / f'{val}.wav'), dtype='float32'); assert sr == SR, val
             a = a * 0.8; seg.update(clip=val, visemes=SOUND_VIS[val])
