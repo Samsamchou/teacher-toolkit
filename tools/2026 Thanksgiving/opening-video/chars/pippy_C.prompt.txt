@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create one image.
+
+Character model sheet: Pippy, an original cute mascot character for a children's English lesson video. His whole body is one small round pumpkin pie standing upright like a disc: a golden-brown crimped pie-crust rim forms a ring around his face, and the smooth orange pumpkin filling is his face. Big friendly dark-brown eyes with white highlights, rosy cheeks, small eyebrows, and a clear, simple mouth that can open wide when he talks (mouth gently open in a happy smile here). A swirl of whipped cream on top of his head like a hair tuft. He wears a small plain black tall hat with a narrow brown band (no buckle) tilted on the whipped cream, and a small white collar under his chin. Short cream-colored arms with four-finger hands, short legs with little brown boots. He is short and round, as tall as a pie standing up. Cheerful, curious, a little clumsy.
+Show the same character twice side by side, full body: left = front view, right = three-quarter view facing left, both waving one hand with a big smile. Plain flat light-gray background, no floor shadows, no props. 16:9 landscape image. The image contains no writing of any kind: no letters, no numbers, no words, no logos.
+
+Style: Japanese anime cel-shaded style: clean confident line art, flat cel shading with soft gradients, bright warm palette, TV-anime key-visual finish.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

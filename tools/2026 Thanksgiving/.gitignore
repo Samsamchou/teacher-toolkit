@@ -1,0 +1,26 @@
+# 影片、圖片、音檔不入庫（只留在 G 槽）；字型不入公開 repo
+*.mp4
+*.mov
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.wav
+*.mp3
+*.flac
+*.zip
+*.ttf
+*.ttc
+*.otf
+**/fonts/
+opening-video/work/
+opening-video/h3/
+opening-video/music/*/s*/
+opening-video/voice-audition/voices/
+opening-video/voice-audition/edge/
+opening-video/voice-audition/final/
+opening-video/sfx/raw/
+thankful-35/renders/
+thankful-35/qa/
+thankful-35/audio/*.mp3
+thankful-35/sfx/

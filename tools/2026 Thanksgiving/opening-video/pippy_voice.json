@@ -1,0 +1,7 @@
+{
+ "engine": "edge-tts",
+ "voice": "en-US-AnaNeural",
+ "rate": "-20%",
+ "pitch": "+0Hz",
+ "note": "老師 2026-11-03 選 D，語速直接設 0.8 倍（不拉長變速）"
+}

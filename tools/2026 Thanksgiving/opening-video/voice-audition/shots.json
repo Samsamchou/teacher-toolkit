@@ -1,0 +1,68 @@
+{
+ "title": "Pippy voice audition",
+ "shots": [
+  {
+   "id": "A_S01",
+   "line": {
+    "who": "pippy_a",
+    "text": "Hi, everyone! I'm Pippy, the Pumpkin Pie Kid. Happy Thanksgiving!"
+   }
+  },
+  {
+   "id": "A_S03",
+   "line": {
+    "who": "pippy_a",
+    "text": "Long ago, in 1620, a ship sailed from England to America."
+   }
+  },
+  {
+   "id": "A_S07",
+   "line": {
+    "who": "pippy_a",
+    "text": "The first winter was very cold and hard."
+   }
+  },
+  {
+   "id": "B_S01",
+   "line": {
+    "who": "pippy_b",
+    "text": "Hi, everyone! I'm Pippy, the Pumpkin Pie Kid. Happy Thanksgiving!"
+   }
+  },
+  {
+   "id": "B_S03",
+   "line": {
+    "who": "pippy_b",
+    "text": "Long ago, in 1620, a ship sailed from England to America."
+   }
+  },
+  {
+   "id": "B_S07",
+   "line": {
+    "who": "pippy_b",
+    "text": "The first winter was very cold and hard."
+   }
+  },
+  {
+   "id": "C_S01",
+   "line": {
+    "who": "pippy_c",
+    "text": "Hi, everyone! I'm Pippy, the Pumpkin Pie Kid. Happy Thanksgiving!"
+   }
+  },
+  {
+   "id": "C_S03",
+   "line": {
+    "who": "pippy_c",
+    "text": "Long ago, in 1620, a ship sailed from England to America."
+   }
+  },
+  {
+   "id": "C_S07",
+   "line": {
+    "who": "pippy_c",
+    "text": "The first winter was very cold and hard."
+   }
+  }
+ ]
+}

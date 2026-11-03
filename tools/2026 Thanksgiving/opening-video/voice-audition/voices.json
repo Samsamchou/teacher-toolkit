@@ -1,0 +1,27 @@
+{
+ "version": 1,
+ "design_text": "Hi, everyone! I'm Pippy. Let's learn about Thanksgiving together. It's going to be so much fun!",
+ "takes": 3,
+ "voices": {
+  "pippy_a": "A cute, sweet, bright cartoon character voice like a six-year-old child, small and round, playful and giggly, very clear American English",
+  "pippy_b": "An energetic, bouncy, high-pitched cartoon mascot voice, excited and funny, like a character on a children's TV show, very clear American English",
+  "pippy_c": "A warm, friendly, gentle cartoon character voice in a medium pitch, cozy and kind like a storybook buddy, very clear American English"
+ },
+ "tone": {
+  "A_S01": "happy, excited greeting",
+  "A_S03": "lively storytelling, a little amazed",
+  "A_S07": "shivering a little, sad and serious",
+  "B_S01": "happy, excited greeting",
+  "B_S03": "lively storytelling, a little amazed",
+  "B_S07": "shivering a little, sad and serious",
+  "C_S01": "happy, excited greeting",
+  "C_S03": "lively storytelling, a little amazed",
+  "C_S07": "shivering a little, sad and serious"
+ },
+ "split": [
+  "A_S01",
+  "B_S01",
+  "C_S01"
+ ],
+ "split_gap": 0.3
+}

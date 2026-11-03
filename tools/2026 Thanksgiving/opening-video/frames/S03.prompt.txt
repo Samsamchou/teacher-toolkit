@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Film frame on the deck of the Mayflower, a 17th-century wooden sailing ship, crossing the wide blue Atlantic Ocean. In the lower-right foreground stands Pippy (exactly the character in the attached reference sheet: a small round pumpkin pie with a golden crimped crust rim around his orange face, big brown eyes, rosy cheeks, a swirl of whipped cream on top, a small plain black tall hat with a brown band and no buckle, white collar, short cream arms, little brown boots), about one quarter of the frame height, facing the camera in three-quarter view, one hand holding his hat against the sea wind, the other hand pointing ahead, excited expression, mouth gently closed, face fully visible and well lit. Behind him the ship's bow cuts through waves, big cream-colored canvas sails full of wind, ropes and rigging, white sea spray, seagulls, bright sky with soft clouds. Plenty of open sea visible so the sailing motion reads clearly.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.
