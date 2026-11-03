@@ -1,0 +1,54 @@
+{
+  "note": "五年級版句型鷹架 35 句（7 個對象 × 5 句）。對象一律取表格第一個選項（my mom、my grandma、my dog），代名詞照對象。",
+  "groups": [
+    {"id": "mom", "target": "my mom", "zh_target": "我的媽媽", "items": [
+      {"reason": "she cooks for me", "zh": "我感謝我的媽媽，因為她煮飯給我吃。"},
+      {"reason": "she loves me", "zh": "我感謝我的媽媽，因為她愛我。"},
+      {"reason": "she helps me", "zh": "我感謝我的媽媽，因為她幫助我。"},
+      {"reason": "she reads books with me", "zh": "我感謝我的媽媽，因為她陪我讀書。"},
+      {"reason": "she takes care of me", "zh": "我感謝我的媽媽，因為她照顧我。"}
+    ]},
+    {"id": "grandma", "target": "my grandma", "zh_target": "我的奶奶", "items": [
+      {"reason": "she tells me stories", "zh": "我感謝我的奶奶，因為她講故事給我聽。"},
+      {"reason": "she takes care of me", "zh": "我感謝我的奶奶，因為她照顧我。"},
+      {"reason": "she gives me hugs", "zh": "我感謝我的奶奶，因為她給我擁抱。"},
+      {"reason": "she makes yummy food", "zh": "我感謝我的奶奶，因為她做好吃的食物。"},
+      {"reason": "she plays games with me", "zh": "我感謝我的奶奶，因為她陪我玩遊戲。"}
+    ]},
+    {"id": "teacher", "target": "my teacher", "zh_target": "我的老師", "items": [
+      {"reason": "she teaches me English", "zh": "我感謝我的老師，因為她教我英文。"},
+      {"reason": "she helps me", "zh": "我感謝我的老師，因為她幫助我。"},
+      {"reason": "she is kind to me", "zh": "我感謝我的老師，因為她對我很好。"},
+      {"reason": "she tells funny stories", "zh": "我感謝我的老師，因為她講好笑的故事。"},
+      {"reason": "she listens to me", "zh": "我感謝我的老師，因為她聽我說話。"}
+    ]},
+    {"id": "friends", "target": "my friends", "zh_target": "我的朋友們", "items": [
+      {"reason": "they play with me", "zh": "我感謝我的朋友們，因為他們陪我玩。"},
+      {"reason": "they make me happy", "zh": "我感謝我的朋友們，因為他們讓我快樂。"},
+      {"reason": "they help me", "zh": "我感謝我的朋友們，因為他們幫助我。"},
+      {"reason": "they share snacks with me", "zh": "我感謝我的朋友們，因為他們和我分享點心。"},
+      {"reason": "they talk with me", "zh": "我感謝我的朋友們，因為他們和我聊天。"}
+    ]},
+    {"id": "dog", "target": "my dog", "zh_target": "我的狗", "items": [
+      {"reason": "it is cute", "zh": "我感謝我的狗，因為牠很可愛。"},
+      {"reason": "it plays with me", "zh": "我感謝我的狗，因為牠陪我玩。"},
+      {"reason": "it makes me happy", "zh": "我感謝我的狗，因為牠讓我快樂。"},
+      {"reason": "it is my good friend", "zh": "我感謝我的狗，因為牠是我的好朋友。"},
+      {"reason": "it waits for me at home", "zh": "我感謝我的狗，因為牠在家等我。"}
+    ]},
+    {"id": "school", "target": "my school", "zh_target": "我的學校", "items": [
+      {"reason": "I can learn new things", "zh": "我感謝我的學校，因為我可以學新東西。"},
+      {"reason": "I can see my friends", "zh": "我感謝我的學校，因為我可以見到朋友。"},
+      {"reason": "I can play basketball", "zh": "我感謝我的學校，因為我可以打籃球。"},
+      {"reason": "I can read books", "zh": "我感謝我的學校，因為我可以讀書。"},
+      {"reason": "I can eat lunch with my friends", "zh": "我感謝我的學校，因為我可以和朋友一起吃午餐。"}
+    ]},
+    {"id": "family", "target": "my family", "zh_target": "我的家人", "items": [
+      {"reason": "they love me", "zh": "我感謝我的家人，因為他們愛我。"},
+      {"reason": "they help me", "zh": "我感謝我的家人，因為他們幫助我。"},
+      {"reason": "they eat dinner with me", "zh": "我感謝我的家人，因為他們和我一起吃晚餐。"},
+      {"reason": "they are always with me", "zh": "我感謝我的家人，因為他們一直陪著我。"},
+      {"reason": "they make me happy", "zh": "我感謝我的家人，因為他們讓我快樂。"}
+    ]}
+  ]
+}

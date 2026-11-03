@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I'm Thankful For… 感謝句動畫</title>
+<style>
+  @font-face { font-family: 'Comic Relief'; src: url('fonts/ComicRelief-Regular.ttf'); }
+  :root { --bg: #2b1d14; --panel: #3d2a1d; --accent: #ff9f1c; --text: #fff7ec; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Comic Relief', 'Microsoft JhengHei', sans-serif; }
+  #stage { display: block; width: 100%; max-width: calc(100vh * 16 / 9 - 140px); margin: 0 auto; aspect-ratio: 16/9; background: #000; }
+  #bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; padding: 10px 16px; background: var(--panel); }
+  button { font: inherit; font-size: 18px; border: 0; border-radius: 12px; padding: 8px 14px; background: #5a3d28; color: var(--text); cursor: pointer; }
+  button.on { background: var(--accent); color: #2b1d14; }
+  .grp { display: flex; gap: 4px; }
+  label { font-size: 16px; display: flex; align-items: center; gap: 4px; }
+  body.full #bar { display: none; }
+  body.full #stage { max-width: calc(100vh * 16 / 9); }
+  #hint { text-align: center; font-size: 13px; opacity: .6; padding: 4px; }
+</style>
+</head>
+<body>
+<canvas id="stage" width="1600" height="900"></canvas>
+<div id="bar">
+  <div class="grp" id="groups"></div>
+  <div class="grp" id="nums"></div>
+  <button id="prev">◀</button><button id="play">▶ 播放</button><button id="next">▶▶</button>
+  <label><input type="checkbox" id="auto" checked> 自動下一句</label>
+  <label><input type="checkbox" id="zh" checked> 中文</label>
+  <button id="full">全螢幕</button>
+</div>
+<div id="hint">鍵盤：← → 換句｜空白鍵 重播｜F 全螢幕</div>
+<script src="engine.js"></script>
+<script src="data.js"></script>
+<script src="scenes_mom.js"></script>
+<script src="scenes_grandma.js"></script>
+<script src="scenes_teacher.js"></script>
+<script src="scenes_friends.js"></script>
+<script src="scenes_dog.js"></script>
+<script src="scenes_school.js"></script>
+<script src="scenes_family.js"></script>
+<script>
+const ctx = document.getElementById('stage').getContext('2d');
+const S = window.SENTENCES.filter(s => SCENES[s.key]);   // 只列出已做好的句子
+const GROUP_ZH = { mom: '媽媽', grandma: '奶奶', teacher: '老師', friends: '朋友', dog: '狗', school: '學校', family: '家人' };
+const LEAD = 0.6;   // 語音開始前的空白
+const SHOW_ZH = () => document.getElementById('zh').checked;
+
+function timing(s) {
+  const w = s.words, last = w[w.length - 1];
+  const bec = (w.find(x => x.w.toLowerCase() === 'because') || last).t;
+  const tgt = (w.find(x => x.w.toLowerCase() === s.target.split(' ').pop()) || w[3]).t;
+  const tB = LEAD + bec;
+  return { tB, tTarget: LEAD + tgt, end: tB + SCENES[s.key].dur, speechEnd: LEAD + last.t + last.d };
+}
+
+// ---------- 第一步：出現感謝的對象 ----------
+function drawIntro(s, T, tm) {
+  BG.sky(ctx, T, '#ffcf8a', '#fff4dc');
+  FX.rays(ctx, T, 800, 520, 1100, 'rgba(255,255,255,.18)', 18);
+  BG.bunting(ctx, T); BG.leaves(ctx, T, 16, 5);
+  ctx.fillStyle = '#9ccc65'; ctx.beginPath(); ctx.ellipse(800, 830, 1150, 200, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.save(); zoom();
+  // 孩子 + 心跳
+  const beat = 1 + .08 * Math.max(0, E.wave(T, 1.4));
+  drawPerson(ctx, 'kid', 480, 800, 1.1, { t: T, armL: 10, armR: 20 + 25 * Math.max(0, E.wave(T, 1.3)), mouth: T > LEAD && T < tm.tB ? 'talk' : 'smile', eyes: 'open' });
+  heart(ctx, 480, 490, 66 * beat, '#ff5d8f', '#fff');
+  // 對象跳出來
+  const k = E.pop(T, tm.tTarget - .25, .5);
+  if (k > 0) {
+    glow(ctx, 1100, 560, 380 * k, 'rgba(255,255,255,.9)');
+    FX.sparkles(ctx, T, 1100, 560, 280 * k, 12, 2);
+    ctx.save(); ctx.translate(1100, 800); ctx.scale(k, k); ctx.translate(-1100, -800);
+    TARGETS[s.group].draw(ctx, 1100, 800, 1.1, T, 1); ctx.restore();
+    // 心形光束連起來
+    const kk = E.seg(T, tm.tTarget, tm.tTarget + .5);
+    for (let i = 0; i < 6; i++) { const p = ((T * .8 + i / 6) % 1) * kk; heart(ctx, E.lerp(520, 1000, p), 470 - Math.sin(p * Math.PI) * 120, 26, '#ff7aa8'); }
+  }
+  ctx.restore();
+  if (k > 0) {
+    // 名牌
+    const nk = E.pop(T, tm.tTarget, .4);
+    ctx.save(); ctx.translate(1380, 96); ctx.scale(nk, nk);
+    rr(ctx, -190, -48, 380, 96, 48); ctx.fillStyle = TARGETS[s.group].color; ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 6; ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '52px "Comic Relief"'; ctx.fillText(s.target, 0, SHOW_ZH() ? -12 : 0);
+    if (SHOW_ZH()) { ctx.font = '26px "Microsoft JhengHei"'; ctx.fillText(s.zh_target || '', 0, 32); }
+    ctx.restore();
+  }
+}
+
+// ---------- 字幕 ----------
+function drawCaption(s, T, tm) {
+  const words = s.words; const y = SHOW_ZH() ? 745 : 770;
+  ctx.save();
+  const g = ctx.createLinearGradient(0, 665, 0, H); g.addColorStop(0, 'rgba(30,18,8,0)'); g.addColorStop(.25, 'rgba(30,18,8,.72)'); g.addColorStop(1, 'rgba(30,18,8,.85)');
+  ctx.fillStyle = g; ctx.fillRect(0, 655, W, H - 655);
+  let fs = 58; ctx.font = `${fs}px "Comic Relief"`; const fullW = ctx.measureText(s.text).width;
+  if (fullW > 1520) { fs = Math.floor(58 * 1520 / fullW); ctx.font = `${fs}px "Comic Relief"`; }
+  ctx.textBaseline = 'middle';
+  const parts = words.map(w => w.w); const text = s.text;
+  // 依 text 斷字，保留標點
+  const tokens = text.split(' ');
+  const widths = tokens.map(tk => ctx.measureText(tk + ' ').width);
+  let x = (W - widths.reduce((a, b) => a + b, 0)) / 2;
+  const becIdx = tokens.findIndex(tk => tk.toLowerCase() === 'because');
+  tokens.forEach((tk, i) => {
+    const w = words[i]; const said = w && T >= LEAD + w.t;
+    const now = w && T >= LEAD + w.t && T < LEAD + w.t + w.d;
+    let col = '#ffffff';
+    if (said) col = i > becIdx ? '#7fe3ff' : '#ffd54f';
+    ctx.lineWidth = 10; ctx.strokeStyle = 'rgba(0,0,0,.6)'; ctx.lineJoin = 'round';
+    const lift = now ? -6 : 0;
+    ctx.strokeText(tk, x, y + lift); ctx.fillStyle = col; ctx.fillText(tk, x, y + lift);
+    x += widths[i];
+  });
+  if (SHOW_ZH()) {
+    ctx.font = '36px "Microsoft JhengHei"'; ctx.textAlign = 'center'; ctx.fillStyle = '#fff1d6';
+    ctx.strokeStyle = 'rgba(0,0,0,.55)'; ctx.lineWidth = 6; ctx.strokeText(s.zh, W / 2, 808); ctx.fillText(s.zh, W / 2, 808);
+  }
+  ctx.restore();
+}
+
+// 場景以地面 y=790 設計，放大 1.3 倍讓人物變大、腳底落在字幕帶上方
+function zoom() { ctx.translate(800, 650); ctx.scale(1.3, 1.3); ctx.translate(-800, -790); }
+
+// ---------- 一句的完整畫面 ----------
+function renderAt(idx, T) {
+  const s = S[idx], tm = timing(s), sc = SCENES[s.key];
+  ctx.save(); ctx.clearRect(0, 0, W, H);
+  if (T < tm.tB + .5) drawIntro(s, T, tm);
+  if (T >= tm.tB) {
+    const u = T - tm.tB, k = E.easeInOut(E.seg(u, 0, .5));
+    ctx.save();
+    if (k < 1) { ctx.beginPath(); ctx.arc(1150, 560, k * 1900, 0, Math.PI * 2); ctx.clip(); }
+    zoom(); sc.draw(ctx, u, T); ctx.restore();
+  }
+  // 左上角進度
+  ctx.font = '30px "Comic Relief"'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; const lab = `${s.target}  ${s.n} / 5`;
+  const lw = ctx.measureText(lab).width; rr(ctx, 16, 14, lw + 36, 50, 25); ctx.fillStyle = 'rgba(40,24,12,.7)'; ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.fillText(lab, 34, 40);
+  drawCaption(s, T, tm);
+  ctx.restore();
+}
+window.renderAt = renderAt; window.timingOf = i => timing(S[i]); window.SENT = S;
+
+// ---------- 播放 ----------
+const sfxCache = {};
+function sfx(name) { const a = (sfxCache[name] ||= new Audio(`sfx/${name}.wav`)).cloneNode(); a.volume = .45; a.play().catch(() => {}); }
+let cur = 0, t0 = 0, playing = false, voice = null, fired = new Set(), voicePlayed = false;
+function start(i) {
+  cur = (i + S.length) % S.length; t0 = performance.now(); playing = true; fired = new Set(); voicePlayed = false; pausedT = null;
+  if (voice) voice.pause(); voice = new Audio(S[cur].audio);
+  updateUI();
+}
+function tick() {
+  const s = S[cur], tm = timing(s);
+  let T = playing ? (performance.now() - t0) / 1000 : 0;
+  if (playing) {
+    if (!voicePlayed && T >= LEAD) { voice.currentTime = 0; voice.play().catch(() => {}); voicePlayed = true; }
+    SCENES[s.key].sfx.forEach(([u, n], j) => { if (!fired.has(j) && T >= tm.tB + u) { fired.add(j); sfx(n); } });
+    if (T >= tm.end) { if (document.getElementById('auto').checked) start(cur + 1); else { playing = false; pausedT = tm.end - .01; updateUI(); } }
+  }
+  renderAt(cur, playing ? T : (pausedT ?? tm.tTarget + .6));
+  requestAnimationFrame(tick);
+}
+let pausedT = null;
+function updateUI() {
+  const s = S[cur];
+  document.querySelectorAll('#groups button').forEach(b => b.classList.toggle('on', b.dataset.g === s.group));
+  const nums = document.getElementById('nums'); nums.innerHTML = '';
+  S.forEach((x, i) => { if (x.group !== s.group) return; const b = document.createElement('button'); b.textContent = x.n; b.className = i === cur ? 'on' : ''; b.onclick = () => start(i); nums.appendChild(b); });
+  document.getElementById('play').textContent = playing ? '↺ 重播' : '▶ 播放';
+}
+const gs = [...new Set(S.map(s => s.group))];
+gs.forEach(g => { const b = document.createElement('button'); b.textContent = GROUP_ZH[g]; b.dataset.g = g; b.onclick = () => start(S.findIndex(s => s.group === g)); document.getElementById('groups').appendChild(b); });
+document.getElementById('prev').onclick = () => start(cur - 1);
+document.getElementById('next').onclick = () => start(cur + 1);
+document.getElementById('play').onclick = () => start(cur);
+document.getElementById('full').onclick = () => toggleFull();
+function toggleFull() { if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); document.body.classList.add('full'); } else { document.exitFullscreen(); } }
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) document.body.classList.remove('full'); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') start(cur + 1); else if (e.key === 'ArrowLeft') start(cur - 1);
+  else if (e.key === ' ') { e.preventDefault(); start(cur); } else if (e.key.toLowerCase() === 'f') toggleFull();
+});
+if (!window.EXPORT_MODE) { document.fonts.load('58px "Comic Relief"').then(() => { updateUI(); requestAnimationFrame(tick); }); }
+</script>
+</body>
+</html>
