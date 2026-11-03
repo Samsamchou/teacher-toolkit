@@ -91,9 +91,12 @@ elif mode == 'patch':
     BODY = np.asarray(A_, np.float32) / 255
     mx, my = (MOUTH[0] + MOUTH[2]) / 2, (MOUTH[1] + MOUTH[3]) / 2; mw, mh = (MOUTH[2] - MOUTH[0]) / 2, (MOUTH[3] - MOUTH[1]) / 2
     Y, X = np.mgrid[0:1024, 0:1024]
-    near = ((X - mx) / (mw * 1.35)) ** 2 + ((Y - my - mh * .15) / (mh * 1.5)) ** 2 < 1
-    core = ((X - mx) / (mw * .7)) ** 2 + ((Y - my) / (mh * .55)) ** 2 < 1
-    hole = ((X - mx) / (mw * 1.4)) ** 2 + ((Y - my) / (mh * 1.6)) ** 2 < 1
+    # 2026-11-03 老師：Cosmo 左臉頰有一個洞 → 原圖笑紋尾端留在貼片外；範圍往左右加寬，把整條笑紋蓋掉
+    # 2026-11-03：Cosmo 笑紋往上翹，尾端在貼片上緣被切斷 → 範圍加高（往上也涵蓋），邊界改成柔和漸層，不再硬切
+    near = ((X - mx) / (mw * 1.9)) ** 2 + ((Y - my) / (mh * 2.1)) ** 2 < 1
+    NEAR_SOFT = np.asarray(Image.fromarray(near.astype(np.uint8) * 255).filter(ImageFilter.GaussianBlur(22)), np.float32) / 255
+    core = ((X - mx) / (mw * 1.2)) ** 2 + ((Y - my) / (mh * .6)) ** 2 < 1
+    hole = ((X - mx) / (mw * 1.9)) ** 2 + ((Y - my) / (mh * 1.6)) ** 2 < 1
     log = {}; tiles = []
     for vid in SHAPES:
         f = D / f'face2-{vid}.png'
@@ -103,7 +106,7 @@ elif mode == 'patch':
         dx, dy, peak = phase_shift(ga, gb); V = np.roll(np.roll(V, dy, 0), dx, 1)
         diff = np.abs(B - V).max(2) > 26
         m = Image.fromarray(((diff & near) | core).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(11)).filter(ImageFilter.GaussianBlur(9))
-        M = np.asarray(m, np.float32) / 255 * near
+        M = np.asarray(m, np.float32) / 255 * NEAR_SOFT
         M = np.asarray(Image.fromarray((M * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3)), np.float32) / 255
         M = M * BODY
         ring = (M > .05) & (M < .6)

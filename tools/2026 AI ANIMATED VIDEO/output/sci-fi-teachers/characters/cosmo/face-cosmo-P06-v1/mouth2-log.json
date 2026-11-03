@@ -5,7 +5,7 @@
    0
   ],
   "peak": 0.498,
-  "area_px": 29202
+  "area_px": 39014
  },
  "M02_A": {
   "shift": [
@@ -13,54 +13,54 @@
    0
   ],
   "peak": 0.508,
-  "area_px": 37183
+  "area_px": 46289
  },
  "M03_E": {
   "shift": [
    0,
    0
   ],
-  "peak": 0.518,
-  "area_px": 34649
+  "peak": 0.515,
+  "area_px": 45253
  },
  "M04_O": {
   "shift": [
    0,
    0
   ],
-  "peak": 0.511,
-  "area_px": 31999
+  "peak": 0.506,
+  "area_px": 43938
  },
  "M05_U": {
   "shift": [
    0,
    0
   ],
-  "peak": 0.511,
-  "area_px": 31045
+  "peak": 0.505,
+  "area_px": 43806
  },
  "M06_FV": {
   "shift": [
    0,
    0
   ],
-  "peak": 0.51,
-  "area_px": 31889
+  "peak": 0.506,
+  "area_px": 42674
  },
  "M07_L": {
   "shift": [
    0,
    0
   ],
-  "peak": 0.495,
-  "area_px": 35333
+  "peak": 0.493,
+  "area_px": 45555
  },
  "M08_mid": {
   "shift": [
    0,
    0
   ],
-  "peak": 0.504,
-  "area_px": 30290
+  "peak": 0.495,
+  "area_px": 39908
  }
 }

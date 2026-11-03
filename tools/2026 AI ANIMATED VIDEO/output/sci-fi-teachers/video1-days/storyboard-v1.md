@@ -48,3 +48,7 @@
 - v1.2：Saturday 的 ur 唸 /ɚ/（同 teacher 的 -er，不是 Thursday 的 /ɝ/），改用老師錄的 `references/er.mp3`（`split_er.py` → `processed/ref-er-1.wav`）；Cosmo 台詞改成 "And here, U and R sound like the end of teacher. Listen."。
 - v1.2：情境句跟唸時學生要看得到句子 → 每句字卡放在插圖正下方（星期單字橘色）。
 - 試聽過但未採用：`phonics-audio/long-u/`（13 個 long u 候選）、`phonics-audio/er/`（從 teacher 切出的 -er）。
+
+## 定案紀錄 v1.3（2026-11-03）
+- 正式版改為 `renders/video1-days-v1.3.mp4`（8:45，15,746 格，與 v1.2 相同時間軸）＋720p。
+- 只換老師嘴型：v2.1 斜臉嘴型（`engine/face_set2.py`，13 個說話姿勢 × 8 嘴型，同角度生成→對位→只貼嘴部、只貼在角色身上、範圍加高並柔化），消除嘴邊灰色痕跡與 Cosmo／Nova 臉頰凹洞；P01／P08 交接瞬間不貼嘴型。規格卡 rdq/RDQ-spec-teacher-tilted-mouths-20261102、RDQ-spec-cosmo-cheek-dimple-20261103。

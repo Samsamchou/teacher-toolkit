@@ -142,6 +142,7 @@ class Teacher:
         if key not in self.cache:
             base, d, pj = self.pose_files(pose)
             im = Image.open(base).convert('RGBA')
+            if mouth and pathlib.Path(pj['_dir']).name != 'patches-v2': mouth = None   # 2026-11-03：沒有新嘴型的姿勢（P01／P08 交接瞬間）不貼舊嘴型，避免灰痕
             for vid in ([mouth] if mouth else []) + (['B01_blink'] if blink else []):
                 if vid in pj['patches']:
                     im.alpha_composite(Image.open(pathlib.Path(pj['_dir']) / f'{vid}.png').convert('RGBA'), tuple(pj['patches'][vid]['x2_xy']))
