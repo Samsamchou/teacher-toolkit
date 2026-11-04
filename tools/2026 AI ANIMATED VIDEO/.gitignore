@@ -1,0 +1,27 @@
+# Secrets / 秘密與本機憑證
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+service-account*.json
+# Caches and environments / 快取與環境
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.log
+# OS metadata / 系統檔
+Thumbs.db
+.DS_Store
+
+# 第三方 YouTube 風格研究截圖（不入庫）/ third-party reference frames
+research/style-refs-*/
+
+# 第三方影片原檔、抽格總表、逐字稿（不入庫）
+資料/
+research/*/sheets/
+research/*/transcripts/

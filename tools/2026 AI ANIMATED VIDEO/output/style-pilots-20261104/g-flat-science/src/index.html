@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ground: #140f3a;
+        --ink: #ffffff;
+        --accent: #e8433a;
+        --sub: #c9b8ff;
+        --font-display: "Nunito", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 100%; height: 100%; font-family: var(--font-display); }
+      .scene { position: absolute; inset: 0; }
+      .scene svg { position: absolute; inset: 0; width: 1920px; height: 1080px; }
+      svg text { font-family: var(--font-display); font-weight: 900; }
+      .lab-main { font-size: 44px; fill: var(--ink); }
+      .lab-sub { font-size: 28px; fill: var(--sub); font-weight: 800; }
+      .label { opacity: 0; }
+      #sentence { position: absolute; left: 0; right: 0; top: 120px; text-align: center;
+        font-size: 112px; font-weight: 900; color: var(--ink); letter-spacing: -0.01em; }
+      #sentence .w { display: inline-block; margin: 0 14px; opacity: 0; }
+      #sentence .red { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+
+      <!-- ===== 場景一：清晨山谷＋公車站 / valley ===== -->
+      <div id="valley" class="clip scene" data-start="0" data-duration="7.0" data-track-index="0" data-track-kind="graphics" data-layout-allow-overflow data-layout-allow-overlap>
+        <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#140f3a" />
+              <stop offset="0.42" stop-color="#2b1a63" />
+              <stop offset="0.56" stop-color="#7a2a7a" />
+              <stop offset="0.62" stop-color="#e0457b" />
+            </linearGradient>
+            <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#fff4d6" stop-opacity="0.55" />
+              <stop offset="1" stop-color="#fff4d6" stop-opacity="0" />
+            </linearGradient>
+            <filter id="glowS" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8" /></filter>
+            <filter id="glowL" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" /></filter>
+            <filter id="glowXL" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="60" /></filter>
+          </defs>
+
+          <g id="valleyInner">
+          <g id="cam">
+            <rect width="1920" height="1080" fill="url(#sky)" />
+            <g id="stars" fill="#fff4d6">
+              <circle cx="120" cy="90" r="2.4" /><circle cx="260" cy="210" r="1.6" /><circle cx="390" cy="60" r="2" />
+              <circle cx="530" cy="160" r="1.4" /><circle cx="660" cy="80" r="2.6" /><circle cx="800" cy="240" r="1.5" />
+              <circle cx="940" cy="120" r="2" /><circle cx="1060" cy="50" r="1.6" /><circle cx="1180" cy="190" r="2.2" />
+              <circle cx="1320" cy="90" r="1.5" /><circle cx="1450" cy="230" r="2" /><circle cx="1580" cy="70" r="2.4" />
+              <circle cx="1700" cy="170" r="1.6" /><circle cx="1830" cy="100" r="2" /><circle cx="210" cy="330" r="1.4" />
+              <circle cx="720" cy="330" r="1.4" /><circle cx="1250" cy="320" r="1.5" /><circle cx="1760" cy="300" r="1.4" />
+            </g>
+            <g id="twinkle" fill="#fff4d6" filter="url(#glowS)">
+              <circle cx="660" cy="80" r="7" /><circle cx="1580" cy="70" r="7" /><circle cx="120" cy="90" r="6" />
+            </g>
+            <!-- 日出光暈＋太陽 / sunrise glow + sun -->
+            <ellipse cx="560" cy="600" rx="1100" ry="170" fill="#ff5d8f" opacity="0.7" filter="url(#glowXL)" />
+            <circle id="sunGlow" cx="560" cy="585" r="190" fill="#ffb38a" opacity="0.55" filter="url(#glowXL)" />
+            <circle id="sun" cx="560" cy="600" r="70" fill="#ffd9b0" />
+            <!-- 大雲團（下緣受光）/ big cloud bank with lit underside -->
+            <g id="cloudPos" transform="translate(-640 -70)"><g id="cloud">
+              <path d="M980 420 C 940 330 1040 280 1110 310 C 1140 220 1290 200 1340 290 C 1400 230 1530 250 1530 340 C 1620 330 1680 400 1640 460 L 1000 460 C 950 460 940 440 980 420 Z" fill="#3a2477" />
+              <path d="M1060 330 C 1090 280 1150 280 1180 320 C 1220 260 1310 250 1340 320" fill="none" stroke="#6a3f9e" stroke-width="10" stroke-linecap="round" opacity="0.8" />
+              <path d="M1000 460 L1640 460 C 1650 445 1648 430 1640 420 C 1500 450 1200 448 990 432 Z" fill="#ff7aa8" opacity="0.9" />
+              <path d="M1000 460 L1640 460" stroke="#ffb3c9" stroke-width="5" stroke-linecap="round" opacity="0.9" filter="url(#glowS)" />
+            </g>
+            </g>
+            <g id="cloud2" opacity="0.85" transform="translate(1430 -30)">
+              <path d="M120 300 C 110 250 180 230 220 250 C 250 200 340 205 360 255 C 420 245 460 290 430 320 L 140 320 C 110 320 105 310 120 300 Z" fill="#33206d" />
+              <path d="M140 320 L430 320" stroke="#ff8fb6" stroke-width="5" stroke-linecap="round" opacity="0.8" />
+            </g>
+            <path d="M0 640 C 200 560 360 600 520 570 C 700 535 820 610 1000 580 C 1200 545 1320 600 1500 560 C 1680 525 1800 580 1920 560 L1920 1080 L0 1080 Z" fill="#2a1d5c" />
+            <path d="M0 640 C 200 560 360 600 520 570 C 700 535 820 610 1000 580 C 1200 545 1320 600 1500 560 C 1680 525 1800 580 1920 560" fill="none" stroke="#5a3388" stroke-width="3" />
+            <path d="M0 720 C 240 660 420 700 640 680 C 860 660 1040 720 1260 690 C 1480 660 1700 700 1920 680 L1920 1080 L0 1080 Z" fill="#211650" />
+            <g id="village">
+              <g transform="translate(300 668)"><path d="M0 0 L26 -24 L52 0 L52 30 L0 30 Z" fill="#1a1245" /><rect x="10" y="8" width="12" height="12" fill="#ffd36b" /></g>
+              <g transform="translate(372 676)"><path d="M0 0 L20 -18 L40 0 L40 24 L0 24 Z" fill="#1a1245" /><rect x="14" y="6" width="10" height="10" fill="#ffb94a" /></g>
+              <g transform="translate(820 668)"><path d="M0 0 L30 -28 L60 0 L60 34 L0 34 Z" fill="#1a1245" /><rect x="10" y="8" width="13" height="13" fill="#ffd36b" /><rect x="34" y="8" width="13" height="13" fill="#ffd36b" /></g>
+              <g transform="translate(1420 668)"><path d="M0 0 L24 -22 L48 0 L48 28 L0 28 Z" fill="#1a1245" /><rect x="18" y="8" width="11" height="11" fill="#ffd36b" /></g>
+              <g fill="#ffd36b" opacity="0.7" filter="url(#glowS)">
+                <rect x="310" y="676" width="12" height="12" /><rect x="386" y="682" width="10" height="10" />
+                <rect x="830" y="676" width="13" height="13" /><rect x="854" y="676" width="13" height="13" /><rect x="1438" y="676" width="11" height="11" />
+              </g>
+            </g>
+            <!-- 中景樹 / mid trees -->
+            <g fill="#1c1349">
+              <ellipse cx="560" cy="700" rx="46" ry="60" /><rect x="555" y="700" width="10" height="50" />
+              <ellipse cx="640" cy="712" rx="34" ry="44" /><rect x="636" y="712" width="8" height="40" />
+              <ellipse cx="1080" cy="704" rx="40" ry="52" /><rect x="1075" y="704" width="10" height="46" />
+              <ellipse cx="1700" cy="700" rx="48" ry="62" /><rect x="1695" y="700" width="10" height="52" />
+            </g>
+            <path d="M0 800 C 400 770 900 790 1300 780 C 1600 772 1800 780 1920 776 L1920 1080 L0 1080 Z" fill="#160f3d" />
+            <!-- 路燈（發光）/ street lamp with glow -->
+            <g id="lamp">
+              <rect x="1020" y="610" width="7" height="250" fill="#2e2368" />
+              <path d="M1023 612 Q1023 590 1050 590 L1070 590" stroke="#2e2368" stroke-width="7" fill="none" />
+              <rect x="1058" y="588" width="30" height="12" rx="4" fill="#2e2368" />
+              <ellipse cx="1073" cy="606" rx="70" ry="40" fill="#ffd36b" opacity="0.45" filter="url(#glowL)" />
+              <rect x="1062" y="598" width="22" height="7" rx="3" fill="#fff4d6" />
+              <polygon points="1062,604 1084,604 1150,860 996,860" fill="#ffd36b" opacity="0.08" />
+            </g>
+            <path d="M-20 862 C 500 850 1200 858 1940 846 L1940 900 C 1200 912 500 904 -20 916 Z" fill="#251a55" />
+            <path d="M-20 889 C 500 878 1200 885 1940 873" fill="none" stroke="#5b4a9a" stroke-width="5" stroke-dasharray="46 36" />
+            <g id="stop">
+              <rect x="1236" y="590" width="8" height="275" fill="#3a2d78" />
+              <circle cx="1240" cy="572" r="46" fill="#efe9ff" />
+              <rect x="1214" y="556" width="52" height="28" rx="7" fill="#2a1d5c" />
+              <rect x="1220" y="561" width="12" height="10" rx="2" fill="#efe9ff" /><rect x="1236" y="561" width="12" height="10" rx="2" fill="#efe9ff" /><rect x="1252" y="561" width="9" height="10" rx="2" fill="#efe9ff" />
+              <circle cx="1225" cy="588" r="5" fill="#2a1d5c" /><circle cx="1255" cy="588" r="5" fill="#2a1d5c" />
+            </g>
+
+            <g id="beamG" opacity="0"><polygon points="1300,770 1720,700 1720,880 1300,800" fill="url(#beam)" /></g>
+            <g id="busMove" transform="translate(-900 0)">
+            <g transform="translate(0 628) scale(0.85)">
+              <g id="busBody">
+                <rect x="0" y="0" width="760" height="240" rx="34" fill="#e8433a" />
+                <path d="M0 170 L760 170 L760 206 Q760 240 726 240 L34 240 Q0 240 0 206 Z" fill="#c2312b" />
+                <rect x="22" y="6" width="716" height="14" rx="7" fill="#ff6a5c" />
+                <g fill="#ffd36b" opacity="0.65" filter="url(#glowS)">
+                  <rect x="40" y="40" width="88" height="80" /><rect x="145" y="40" width="88" height="80" /><rect x="250" y="40" width="88" height="80" />
+                  <rect x="355" y="40" width="88" height="80" /><rect x="460" y="40" width="88" height="80" /><rect x="672" y="40" width="72" height="110" />
+                </g>
+                <rect x="40" y="40" width="88" height="80" rx="12" fill="#ffd36b" />
+                <rect x="145" y="40" width="88" height="80" rx="12" fill="#ffb94a" />
+                <rect x="250" y="40" width="88" height="80" rx="12" fill="#ffd36b" />
+                <rect x="355" y="40" width="88" height="80" rx="12" fill="#ffd36b" />
+                <rect x="460" y="40" width="88" height="80" rx="12" fill="#ffb94a" />
+                <rect x="566" y="36" width="78" height="180" rx="10" fill="#9e2722" />
+                <rect x="576" y="48" width="26" height="150" rx="6" fill="#ffd36b" opacity="0.85" />
+                <rect x="608" y="48" width="26" height="150" rx="6" fill="#ffd36b" opacity="0.85" />
+                <rect x="672" y="40" width="72" height="110" rx="12" fill="#ffe7a8" />
+                <rect x="646" y="-30" width="96" height="30" rx="8" fill="#2a1d5c" />
+                <text x="694" y="-6" text-anchor="middle" font-size="26" fill="#ffd36b" data-layout-ignore>7</text>
+                <circle cx="748" cy="185" r="40" fill="#fff4d6" opacity="0.8" filter="url(#glowL)" />
+                <circle cx="748" cy="185" r="12" fill="#fff4d6" />
+              </g>
+              <g id="wheelL"><circle cx="150" cy="245" r="46" fill="#1b1238" /><circle cx="150" cy="245" r="18" fill="#8c86b3" /><rect x="146" y="205" width="8" height="24" fill="#5c5590" /></g>
+              <g id="wheelR"><circle cx="600" cy="245" r="46" fill="#1b1238" /><circle cx="600" cy="245" r="18" fill="#8c86b3" /><rect x="596" y="205" width="8" height="24" fill="#5c5590" /></g>
+            </g>
+            </g>
+
+            <g id="kidMove" transform="translate(1560 1010)">
+              <ellipse cx="0" cy="0" rx="100" ry="15" fill="#0b0726" opacity="0.7" />
+              <g id="kidBody">
+                <rect x="-50" y="-175" width="40" height="165" rx="16" fill="#2c3a67" />
+                <rect x="10" y="-175" width="40" height="165" rx="16" fill="#2c3a67" />
+                <ellipse cx="-30" cy="-10" rx="32" ry="16" fill="#38b2a6" />
+                <ellipse cx="30" cy="-10" rx="32" ry="16" fill="#38b2a6" />
+                <rect x="-132" y="-385" width="44" height="200" rx="22" fill="#23857c" />
+                <rect x="88" y="-385" width="44" height="200" rx="22" fill="#23857c" />
+                <circle cx="-110" cy="-180" r="22" fill="#f6cba6" />
+                <circle cx="110" cy="-180" r="22" fill="#f6cba6" />
+                <rect x="-100" y="-405" width="200" height="250" rx="46" fill="#2fa59a" />
+                <rect x="-100" y="-190" width="200" height="35" rx="16" fill="#23857c" />
+                <rect x="-20" y="-430" width="40" height="34" rx="10" fill="#f6cba6" />
+                <rect x="-60" y="-405" width="22" height="60" rx="10" fill="#e3d0a8" />
+                <rect x="38" y="-405" width="22" height="60" rx="10" fill="#e3d0a8" />
+                <rect x="-78" y="-380" width="156" height="180" rx="34" fill="#f4e6c6" />
+                <path d="M-78 -330 Q0 -300 78 -330 L78 -346 Q78 -380 44 -380 L-44 -380 Q-78 -380 -78 -346 Z" fill="#e3d0a8" />
+                <rect x="-36" y="-262" width="72" height="40" rx="12" fill="#e3d0a8" />
+                <circle cx="-94" cy="-492" r="17" fill="#f6cba6" />
+                <circle cx="94" cy="-492" r="17" fill="#f6cba6" />
+                <circle cx="0" cy="-500" r="94" fill="#2a2024" />
+                <path d="M-60 -560 Q-10 -600 50 -570" fill="none" stroke="#4a3a52" stroke-width="10" stroke-linecap="round" />
+                <path d="M-70 -520 Q-60 -470 -40 -440" fill="none" stroke="#3a2d40" stroke-width="8" stroke-linecap="round" />
+                <path d="M-100 -405 Q0 -380 100 -405 L100 -390 Q0 -366 -100 -390 Z" fill="#23857c" />
+                <g id="pony">
+                  <rect x="-10" y="-560" width="20" height="18" rx="6" fill="#2fa59a" />
+                  <path d="M-26 -548 Q-38 -470 -6 -400 Q8 -392 14 -404 Q34 -470 26 -548 Z" fill="#2a2024" />
+                </g>
+                <path d="M60 -572 A94 94 0 0 1 86 -440" fill="none" stroke="#ff7aa8" stroke-width="6" stroke-linecap="round" opacity="0.65" />
+                <path d="M98 -372 L98 -200" fill="none" stroke="#ff7aa8" stroke-width="5" stroke-linecap="round" opacity="0.5" />
+              </g>
+            </g>
+            <!-- 前景草叢剪影 / foreground bush silhouettes -->
+            <g fill="#0d0829">
+              <path d="M-20 1080 L-20 930 C 20 880 70 900 90 940 C 120 890 190 900 200 960 C 240 940 290 970 280 1080 Z" />
+              <path d="M1940 1080 L1940 960 C 1910 930 1870 940 1860 980 C 1840 950 1790 960 1790 1010 L1780 1080 Z" />
+            </g>
+          </g>
+
+          <g id="lab1" class="label">
+            <circle cx="1500" cy="470" r="8" fill="#ffffff" />
+            <path d="M1500 470 L1420 330" stroke="#ffffff" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round" fill="none" />
+            <text class="lab-main" x="1408" y="312" text-anchor="end">7:10 a.m.</text>
+            <text class="lab-sub" x="1408" y="352" text-anchor="end">school starts at 7:40</text>
+          </g>
+          <g id="lab2" class="label">
+            <circle cx="930" cy="646" r="8" fill="#ffffff" />
+            <path d="M930 646 L860 480" stroke="#ffffff" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round" fill="none" />
+            <text class="lab-main" x="848" y="462" text-anchor="end">BUS 7</text>
+            <text class="lab-sub" x="848" y="502" text-anchor="end">40 seats</text>
+          </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- ===== 場景二：俯視地圖 / map ===== -->
+      <div id="map" class="clip scene" data-start="6.7" data-duration="3.3" data-track-index="1" data-track-kind="graphics" data-layout-allow-overflow data-layout-allow-overlap>
+        <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="mglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10" /></filter>
+            <radialGradient id="mground" cx="0.5" cy="0.6" r="0.75">
+              <stop offset="0" stop-color="#2b1d66" /><stop offset="1" stop-color="#140f3a" />
+            </radialGradient>
+          </defs>
+          <g id="mapInner">
+            <rect width="1920" height="1080" fill="url(#mground)" />
+            <path d="M0 980 C 300 900 520 1010 820 940 C 1100 880 1400 1000 1920 900" fill="none" stroke="#2f3f96" stroke-width="40" opacity="0.8" />
+            <!-- 稻田（有田埂線）/ rice paddies -->
+            <g id="paddies">
+              <g transform="translate(520 820) rotate(-4)"><rect width="190" height="110" rx="12" fill="#22665e" /><path d="M0 28 H190 M0 56 H190 M0 84 H190" stroke="#2e8a78" stroke-width="4" /></g>
+              <g transform="translate(730 830) rotate(-4)"><rect width="150" height="100" rx="12" fill="#1f5c56" /><path d="M0 25 H150 M0 50 H150 M0 75 H150" stroke="#2e8a78" stroke-width="4" /></g>
+              <g transform="translate(1160 380) rotate(3)"><rect width="210" height="120" rx="12" fill="#22665e" /><path d="M0 30 H210 M0 60 H210 M0 90 H210" stroke="#2e8a78" stroke-width="4" /></g>
+              <g transform="translate(160 430) rotate(2)"><rect width="170" height="120" rx="12" fill="#1f5c56" /><path d="M0 30 H170 M0 60 H170 M0 90 H170" stroke="#2e8a78" stroke-width="4" /></g>
+              <g transform="translate(1480 800) rotate(-3)"><rect width="220" height="110" rx="12" fill="#22665e" /><path d="M0 28 H220 M0 56 H220 M0 84 H220" stroke="#2e8a78" stroke-width="4" /></g>
+            </g>
+            <!-- 小屋 / small houses -->
+            <g fill="#3a2d78">
+              <rect x="840" y="440" width="44" height="32" rx="4" /><rect x="900" y="452" width="36" height="28" rx="4" />
+              <rect x="1300" y="760" width="44" height="32" rx="4" /><rect x="250" y="640" width="40" height="30" rx="4" />
+            </g>
+            <g fill="#ffd36b"><rect x="852" y="450" width="10" height="9" /><rect x="910" y="460" width="9" height="8" /><rect x="1312" y="770" width="10" height="9" /></g>
+            <g fill="#2e8a78">
+              <circle cx="470" cy="600" r="16" /><circle cx="500" cy="626" r="12" /><circle cx="760" cy="480" r="15" />
+              <circle cx="1120" cy="780" r="16" /><circle cx="1150" cy="804" r="11" /><circle cx="1720" cy="520" r="15" />
+              <circle cx="1360" cy="560" r="13" /><circle cx="300" cy="880" r="14" />
+            </g>
+            <path d="M380 760 C 640 760 700 560 960 600 S 1280 700 1450 660" fill="none" stroke="#33276e" stroke-width="48" stroke-linecap="round" />
+            <path id="route" d="M380 760 C 640 760 700 560 960 600 S 1280 700 1450 660" fill="none" stroke="#ffffff" stroke-width="8" stroke-dasharray="3 22" stroke-linecap="round" />
+            <path id="trail" d="M380 760 C 640 760 700 560 960 600 S 1280 700 1450 660" fill="none" stroke="#e8433a" stroke-width="10" stroke-linecap="round" stroke-dasharray="1400" stroke-dashoffset="1400" />
+            <g transform="translate(380 760)">
+              <ellipse cx="0" cy="18" rx="70" ry="14" fill="#0b0726" opacity="0.6" />
+              <path d="M-52 0 L0 -50 L52 0 L52 14 L-52 14 Z" fill="#c9b8ff" />
+              <rect x="-42" y="-6" width="84" height="26" fill="#f4e6c6" />
+              <rect x="-12" y="-2" width="22" height="20" fill="#ffd36b" />
+              <text x="0" y="70" text-anchor="middle" class="lab-sub">home</text>
+            </g>
+            <g transform="translate(1560 650)">
+              <ellipse cx="0" cy="24" rx="120" ry="16" fill="#0b0726" opacity="0.6" />
+              <rect x="-100" y="-60" width="200" height="84" fill="#efe9ff" />
+              <path d="M-112 -60 L0 -120 L112 -60 Z" fill="#c9b8ff" />
+              <circle cx="0" cy="-74" r="16" fill="#ffffff" stroke="#2a1d5c" stroke-width="4" />
+              <path d="M0 -84 L0 -74 L7 -70" stroke="#2a1d5c" stroke-width="3" fill="none" />
+              <g fill="#ffd36b"><rect x="-80" y="-40" width="26" height="22" /><rect x="-40" y="-40" width="26" height="22" /><rect x="14" y="-40" width="26" height="22" /><rect x="54" y="-40" width="26" height="22" /></g>
+              <rect x="-14" y="-6" width="28" height="30" fill="#2a1d5c" />
+              <rect x="96" y="-170" width="5" height="110" fill="#efe9ff" />
+              <path d="M101 -170 L146 -158 L101 -146 Z" fill="#2fa59a" />
+              <text x="0" y="80" text-anchor="middle" class="lab-sub">school</text>
+            </g>
+            <g id="mbus">
+              <rect x="-40" y="-22" width="80" height="44" rx="10" fill="#e8433a" opacity="0.6" filter="url(#mglow)" />
+              <rect x="-40" y="-22" width="80" height="44" rx="10" fill="#e8433a" />
+              <rect x="-30" y="-14" width="16" height="14" rx="3" fill="#ffd36b" /><rect x="-10" y="-14" width="16" height="14" rx="3" fill="#ffd36b" /><rect x="10" y="-14" width="22" height="14" rx="3" fill="#ffe7a8" />
+            </g>
+            <g id="lab3" class="label">
+              <circle cx="960" cy="600" r="8" fill="#ffffff" />
+              <path d="M960 600 L1010 470" stroke="#ffffff" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round" fill="none" />
+              <text class="lab-main" x="1022" y="452">3.2 km</text>
+              <text class="lab-sub" x="1022" y="492">about 12 minutes</text>
+            </g>
+          </g>
+        </svg>
+        <div id="sentence"><span class="w" id="w1">I</span><span class="w" id="w2">go</span><span class="w" id="w3">to</span><span class="w" id="w4">school</span><span class="w red" id="w5">by</span><span class="w red" id="w6">bus.</span></div>
+      </div>
+
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="10" data-track-index="5"></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // 相機慢推 / slow camera push
+      tl.fromTo("#cam", { scale: 1, svgOrigin: "1300 760" }, { scale: 1.07, svgOrigin: "1300 760", duration: 6.4, ease: "sine.inOut" }, 0);
+      tl.fromTo(["#sun", "#sunGlow"], { y: 30 }, { y: -10, duration: 6.2, ease: "sine.out" }, 0);
+      tl.fromTo("#cloud", { x: 0 }, { x: -40, duration: 6.2, ease: "none" }, 0);
+      tl.fromTo("#twinkle", { opacity: 0.25 }, { opacity: 0.9, duration: 0.8, ease: "sine.inOut", yoyo: true, repeat: 7 }, 0);
+      // 馬尾擺動、呼吸 / ponytail sway, breathing
+      tl.fromTo("#pony", { rotation: -4, svgOrigin: "0 -552" }, { rotation: 5, svgOrigin: "0 -552", duration: 0.9, ease: "sine.inOut", yoyo: true, repeat: 6 }, 0);
+      tl.fromTo("#kidBody", { scaleY: 1, svgOrigin: "0 0" }, { scaleY: 1.012, svgOrigin: "0 0", duration: 1.1, ease: "sine.inOut", yoyo: true, repeat: 5 }, 0);
+
+      // 標籤一 / label 1
+      tl.fromTo("#lab1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" }, 1.2);
+      tl.to("#lab1", { opacity: 0, duration: 0.3, ease: "power1.in" }, 3.4);
+
+      // 公車開入並停下 / bus drives in and stops
+      tl.fromTo("#busMove", { x: -900 }, { x: 654, duration: 1.7, ease: "power3.out" }, 3.5);
+      tl.fromTo("#wheelL", { rotation: 0, svgOrigin: "150 245" }, { rotation: 720, svgOrigin: "150 245", duration: 1.7, ease: "power3.out" }, 3.5);
+      tl.fromTo("#wheelR", { rotation: 0, svgOrigin: "600 245" }, { rotation: 720, svgOrigin: "600 245", duration: 1.7, ease: "power3.out" }, 3.5);
+      tl.fromTo("#beamG", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, 4.2);
+      tl.fromTo("#busBody", { y: 0 }, { y: 8, duration: 0.14, ease: "power2.out" }, 5.2);
+      tl.to("#busBody", { y: -4, duration: 0.18, ease: "sine.inOut" }, 5.34);
+      tl.to("#busBody", { y: 0, duration: 0.2, ease: "sine.out" }, 5.52);
+      // 學生往公車踏一步 / student steps toward the bus
+      tl.fromTo("#kidMove", { x: 1560 }, { x: 1520, duration: 0.5, ease: "power2.inOut" }, 5.7);
+
+      // 標籤二 / label 2
+      tl.fromTo("#lab2", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" }, 5.4);
+
+      // 轉場：拉遠到地圖 / zoom out to the map
+      // 鏡頭往上搖進天空，再從天空俯視到地圖 / tilt up into the sky, then down onto the map
+      tl.fromTo("#cam", { y: 0 }, { y: 760, duration: 0.55, ease: "power2.in" }, 6.25);
+      tl.to(["#lab2"], { opacity: 0, duration: 0.2 }, 6.25);
+      tl.fromTo("#mapInner", { scale: 1.35, opacity: 0, svgOrigin: "960 640" }, { scale: 1, opacity: 1, svgOrigin: "960 640", duration: 0.7, ease: "power2.out" }, 6.75);
+
+      // 地圖上的公車沿路線 / the bus along the route
+      const route = document.querySelector("#route");
+      const mbus = document.querySelector("#mbus");
+      const trail = document.querySelector("#trail");
+      const len = route.getTotalLength();
+      const prog = { p: 0 };
+      const placeBus = () => {
+        const L = len * prog.p;
+        const a = route.getPointAtLength(L);
+        const b = route.getPointAtLength(Math.min(len, L + 2));
+        const c = route.getPointAtLength(Math.max(0, L - 2));
+        const ang = Math.atan2(b.y - c.y, b.x - c.x) * 180 / Math.PI;
+        mbus.setAttribute("transform", `translate(${a.x} ${a.y}) rotate(${ang})`);
+        trail.setAttribute("stroke-dashoffset", String(1400 - L * 1400 / len));
+      };
+      placeBus();
+      tl.fromTo(prog, { p: 0 }, { p: 1, duration: 2.4, ease: "power1.inOut", onUpdate: placeBus }, 7.0);
+
+      tl.fromTo("#lab3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.6)" }, 7.6);
+
+      // 大句逐字 / sentence, word by word
+      ["#w1", "#w2", "#w3", "#w4", "#w5", "#w6"].forEach((id, i) => {
+        tl.fromTo(id, { opacity: 0, y: 40, scale: 0.6 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.8)" }, 7.4 + i * 0.18);
+      });
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
