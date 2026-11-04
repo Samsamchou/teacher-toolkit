@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Film frame of a cozy autumn reading corner by a window with autumn leaves outside. Pippy (exactly the character in the attached reference sheet: a small round pumpkin pie with a golden crimped crust rim around his orange face, big brown eyes, rosy cheeks, a swirl of whipped cream on top, a small plain black tall hat with a brown band and no buckle, white collar, short cream arms, little brown boots), about 40 percent of the frame height, stands in the center-left next to a giant open storybook on a low table; the open pages show only a painted picture of a wooden sailing ship on the sea, no writing. Pippy holds the edge of the page with one hand, ready to turn it, and looks at the camera with an excited face, mouth gently closed. Composition rule: the bottom 18 percent of the frame is plain ground or floor with nothing important; Pippy's face and hat are fully visible above it.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

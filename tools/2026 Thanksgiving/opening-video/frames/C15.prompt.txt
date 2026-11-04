@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Picture-card illustration: a Pilgrim family of four (Pilgrims in plain dark and earth-colored wool clothes, white collars and coifs, simple felt hats without buckles) standing together and smiling on a rocky shore in 1620, the whole family centered, simple soft background.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

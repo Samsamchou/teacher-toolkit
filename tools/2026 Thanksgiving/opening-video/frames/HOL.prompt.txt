@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Warm film illustration that explains the word 'holiday' for children: a family in plain 1860s clothes (father in a dark vest, mother in a long dress, two children, a grandmother) sits together around a dining table at home on Thanksgiving Day, a roast turkey, pumpkin pie, corn and potatoes on the table, everyone smiling and relaxed, warm lamp light, autumn leaves outside the window. Cozy, happy, nobody is working. Keep the turkey and the table clearly visible in the middle of the picture.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

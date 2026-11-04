@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Close-up film frame that explains the word 'Pilgrims': a Pilgrim family of four (father, mother, a boy and a girl, Pilgrims in plain dark and earth-colored wool clothes, white collars and coifs, simple felt hats without buckles) stands close together on a rocky shore in 1620, seen from the waist up, looking at the camera with kind, tired, hopeful faces. Behind them, softly blurred, more Pilgrim families stand on the shore and a small rowing boat rests on the pebbles. Cool morning light. Composition rules: keep the top 15 percent of the frame as plain soft blurred background, keep the bottom 20 percent plain with nothing important, and keep the lower-left corner (left 30 percent, bottom 40 percent) empty plain background. All important action stays in the middle and right area.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

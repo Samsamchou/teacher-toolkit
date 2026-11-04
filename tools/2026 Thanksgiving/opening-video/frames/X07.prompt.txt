@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Close-up film frame that explains 'very cold and hard winter': a pair of red, cold adult hands in worn wool sleeves held out toward a small weak campfire in the snow, frost on the sleeve, heavy snowflakes falling all around, a dark snowy night, a puff of white breath visible at the top right. Keep the right 18 percent of the frame plain dark snowy background (a thermometer will be added there later). Composition rules: keep the top 15 percent of the frame as plain soft blurred background, keep the bottom 20 percent plain with nothing important, and keep the lower-left corner (left 30 percent, bottom 40 percent) empty plain background. All important action stays in the middle and right area.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

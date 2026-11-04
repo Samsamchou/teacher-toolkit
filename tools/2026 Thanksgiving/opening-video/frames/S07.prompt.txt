@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Film frame of the Pilgrims' first winter in 1620: heavy snow falling on a few small timber-framed houses with thatched roofs covered in snow, and Pilgrims in plain dark and earth-colored wool clothes, white collars and coifs, simple felt hats without buckles wrapped in blankets huddled around a small campfire, shivering. Grey cold light. In the lower-right foreground Pippy (exactly the character in the attached reference sheet: a small round pumpkin pie with a golden crimped crust rim around his orange face, big brown eyes, rosy cheeks, a swirl of whipped cream on top, a small plain black tall hat with a brown band and no buckle, white collar, short cream arms, little brown boots), about one quarter of the frame height, is curled up shivering in the snow, arms hugging himself, a little pile of snow on his hat, teeth chattering, mouth gently closed, face fully visible. Composition rule: the bottom 18 percent of the frame is plain ground or floor with nothing important; Pippy's face and hat are fully visible above it.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

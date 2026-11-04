@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Close-up film frame for a children's lesson that explains 'plant corn'. A small mound of rich brown soil sits in the center-right of the frame, seen from a low side angle. Two gentle adult hands (warm brown skin, a simple deerskin sleeve edge at the wrist) are making a small hole in the top of the mound with one finger, and the other hand holds three yellow corn kernels ready to drop in. A tiny metal watering can rests on the soil at the right. Soft spring morning light, blurred green field and trees far behind. Composition rules: keep the top 15 percent of the frame as plain soft blurred background (no objects), keep the bottom 20 percent as plain flat soil with nothing important, and keep the lower-left corner (left 30 percent, bottom 40 percent) empty plain soil and background. All important action stays in the middle-right area.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

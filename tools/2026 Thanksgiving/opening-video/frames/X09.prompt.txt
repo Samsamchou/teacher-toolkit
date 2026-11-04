@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create one image.
+
+Close-up film frame that explains 'harvest' in autumn 1621: two hands (one with a deerskin sleeve, one with a dark wool sleeve) are picking a big yellow ear of corn from a tall green-gold corn stalk, above a woven basket already full of corn ears; orange pumpkins sit beside the basket; red and orange autumn leaves in the soft background. Composition rules: keep the top 15 percent of the frame as plain soft blurred background, keep the bottom 20 percent plain with nothing important, and keep the lower-left corner (left 30 percent, bottom 40 percent) empty plain background. All important action stays in the middle and right area.
+
+Style: Soft 3D animated-feature style matching the attached Pippy character sheet: rounded clay-like shapes, gentle subsurface lighting, warm cinematic color, smooth clean surfaces, like a modern family animation film. 16:9 landscape film frame. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles.
+
+Save the PNG as out.png in the current directory. Reply with the saved file path only.
