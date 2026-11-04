@@ -39,8 +39,9 @@ def scene():
 
 # ---------- 全家福 ----------
 FAMILY = [  # (人, 腳的 x, 腳的 y, 身高) — 後排站在沙發前，前排站在地毯上
- ('grandfather', 640, 900, 560), ('grandmother', 860, 900, 540), ('father', 1110, 900, 640), ('mother', 1340, 900, 610),
- ('sister', 560, 1030, 520), ('emma', 960, 1040, 440), ('brother', 1290, 1040, 360)]
+ ('grandfather', 640, 790, 505), ('grandmother', 860, 790, 486), ('father', 1110, 790, 576), ('mother', 1340, 790, 549),
+ ('sister', 560, 870, 468), ('emma', 960, 878, 396), ('brother', 1290, 878, 324)]
+# 2026-11-04 老師：Game time 字卡擋到前排 Emma、姊姊、弟弟的下半身 → 全家整體上移、縮小約 10%（前排腳在字卡上緣之上）
 def family_panel(t, focus=None, flash=0.0):
     W = scene().copy(); d = ImageDraw.Draw(W)
     for who, fx, fy, h in FAMILY:

@@ -1,6 +1,7 @@
 # 影片 4〈Families〉定案紀錄
 
-- 2026-11-04 老師「三支都定案」：正式版改為 `renders/video4-families-v1.2.mp4`（8:55）＋720p；v1.1 紀錄如下。
+- 2026-11-04 老師「兩支都定案」：正式版改為 `renders/video4-families-v1.3.mp4`（8:55）＋720p（Game time 全家福上移，見文末）。
+- 2026-11-04 老師「三支都定案」：`renders/video4-families-v1.2.mp4`；v1.1 紀錄如下。
 - 2026-11-03 老師「影片 4 定案」：`renders/video4-families-v1.1.mp4`（8:26，15,194 格，1080p）＋`video4-families-v1.1-720p.mp4`（25 MB）。影音檔與圖片不進 Git。
 - 出處 SF3 U01 Families（四年級）；規格卡 `2026 AI ANIMATED VIDEO/rdq/RDQ-spec-video4-families-20261103.md`、`sci-fi-teachers/rdq/RDQ-spec-video4-ipa-spoken-20261103.md`；腳本 Google 文件 1o0UIM0AncmkdPXBRDLTWWAh5T5Jk_S3aoHSl-Bby24U。
 - 單字：father (dad)、mother (mom)、grandfather (grandpa)、grandmother (grandma)、brother、sister。句型：He's my ___. / She's my ___. / It's me.
@@ -10,3 +11,4 @@
 - 配音修正（TTS_FIX）：Fa/Mo/Bro... ther → Fah/Muh/Bruh；"letter I, in sister"。
 - 版本：v1（8:27）→ v1.1：中文台詞裡的 KK 音標被 TTS 唸成「斜線」，3 句改成在音標處拆句、插老師錄音一次（vis 標「句中」，前後留 0.25 秒），字幕仍顯示音標；第 3 句改「像短 o 的音」。影片 1–3 已檢查，台詞沒有音標。
 - v1.2（2026-11-04）：「爺爺／外公」等 4 句被唸成「斜線」→ 台詞改「爺爺」或「外公」（字卡保留／）；Game time 擴成六位家人（grandfather → sister → mother → brother → grandmother → father）；結尾六個單字改 Nova／Cosmo 接力。規格卡 `rdq/RDQ-spec-relay-slash-quiz-20261104.md`。
+- v1.3（2026-11-04，和影片 5 一起）：Game time 揭曉字卡擋住前排 Emma、姊姊、弟弟下半身 → family_board.FAMILY 全家整體上移、縮小約 10%（後排腳 790、前排 870–878）。
