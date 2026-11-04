@@ -359,7 +359,7 @@ SCENES.grandma_3 = {
     BG.leaves(ctx, u, 10, 23);
 
     const gx = 1000;
-    const run = E.easeInOut(E.seg(u, .2, 1.85)), kx = E.lerp(260, gx - 168, run);
+    const run = E.easeInOut(E.seg(u, .2, 1.85)), kx = E.lerp(260, gx - 150, run);
     const running = run > 0 && run < 1;
     const hug = E.seg(u, 1.8, 2.05);
     const open = E.easeOut(E.seg(u, .4, 1.1));
@@ -374,25 +374,23 @@ SCENES.grandma_3 = {
         if (r > 0) heart(ctx, hx + Math.cos(a) * 270, 540 + Math.sin(a) * 190, 30 * r, i % 2 ? '#ff7aa8' : '#ffb3c7');
       }
     }
-    // 拍背：奶奶近側的手在孩子的背／肩上輕輕拍
+    // 跑過去（正面）→ 擁抱（側面、面對面）：雙手環抱對方的背，孩子臉貼在奶奶胸前，奶奶身體微微後仰低頭看孩子
     const patting = u > 2.6 && u < 7;
     const pat = patting ? Math.max(0, E.wave(u, 1.5)) : 0;
-    drawPerson(ctx, 'kid', kx, 790, 1.05, {
-      t: u, lean: sway, tilt: 8 * hug, bob: running ? -Math.abs(E.wave(u, 3)) * 16 : -10 * hug,
-      legL: running ? 26 * E.wave(u, 3) : 0, legR: running ? -26 * E.wave(u, 3) : 0,
-      eyes: hug > .5 ? 'happy' : 'open', mouth: hug > .5 ? 'open' : 'open',
-      armL: hug > .5 ? 30 : 95 + 10 * E.wave(u, 3), armR: 95, reachR: hug > .5 ? [gx - 46, 668] : null,
-    });
-    drawPerson(ctx, 'grandma', gx, 790, 1.05, {
-      t: u, flip: true, lean: sway, tilt: 8 * hug, blinkSeed: 2, eyes: hug > .5 ? 'happy' : 'open', mouth: hug > .5 ? 'smile' : 'open',
-      armL: hug > .5 ? 28 : E.lerp(12, 118, open), armR: E.lerp(12, 118, open), armFrontR: hug > .5,
-      reachR: hug > .5 ? [kx + 38, 650 - 16 * pat] : null,
-    });
+    if (hug < .5) {
+      drawPerson(ctx, 'grandma', gx, 790, 1.05, { t: u, flip: true, blinkSeed: 2, mouth: 'open', armL: E.lerp(12, 118, open), armR: E.lerp(12, 118, open) });
+      drawPerson(ctx, 'kid', kx, 790, 1.05, {
+        t: u, bob: running ? -Math.abs(E.wave(u, 3)) * 16 : 0,
+        legL: running ? 26 * E.wave(u, 3) : 0, legR: running ? -26 * E.wave(u, 3) : 0,
+        mouth: 'open', armL: 95 + 10 * E.wave(u, 3), armR: 95,
+      });
+    } else {
+      drawHugPair(ctx, u, 'grandma', gx, 1.05, .95, { pat: true });
+    }
     if (patting) {
-      // 每拍一下，手邊冒出一顆小愛心（在下巴下方，不擋臉）
       for (let i = 0; i < 7; i++) {
         const st = 2.85 + i * (1 / 1.5); const k = E.seg(u, st, st + .6); if (k <= 0 || k >= 1) continue;
-        ctx.save(); ctx.globalAlpha = 1 - k; heart(ctx, kx + 38 + 30 * k, 660 - 20 * k, 20 + 26 * E.easeOut(k), '#ff5d8f', '#fff'); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 1 - k; heart(ctx, gx - 175 - 20 * k, 690 - 30 * k, 20 + 26 * E.easeOut(k), '#ff5d8f', '#fff'); ctx.restore();
       }
     }
     if (hug > 0) { FX.burst(ctx, u, hx, 360, 1.95); FX.sparkles(ctx, u, hx, 520, 330, 12, 4); }

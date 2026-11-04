@@ -436,3 +436,144 @@ Object.assign(PROP, {
     ctx.strokeStyle = 'rgba(0,0,0,.12)'; ctx.lineWidth = 4; rr(ctx, -w / 2, -h / 2, w, h, 26); ctx.stroke(); ctx.restore();
   },
 });
+
+// ---------- 側面人物（面向右；flip 面向左）----------
+// 用在需要「看得出方向」的動作：擁抱、騎腳踏車、走路。座標 (x, y) = 腳底中心；坐姿 sit:true 時 y = 屁股（座位）高度。
+// p: { t, flip, lean, tilt, bob, eyes:'open'|'happy'|'closed', mouth:'smile'|'open'|'talk',
+//      nearArm/farArm: 角度（0 = 往下，正值 = 往前抬），reachNear/reachFar: [世界x, 世界y]，
+//      nearLeg/farLeg: 角度（0 = 往下，正值 = 往前），footNear/footFar: [世界x, 世界y]（例如踏板），
+//      sit, only: 'nearArm'（只畫靠近鏡頭的手臂，用來疊在別人身上）, skip: 'nearArm' }
+function drawSide(ctx, who, x, y, s, p = {}) {
+  const sp = typeof who === 'string' ? PEOPLE[who] : who;
+  const S = s * (sp.h || 1), F = p.flip ? -1 : 1;
+  const hipY = -70, shY = -153, headY = -235;
+  ctx.save();
+  ctx.translate(x, y + (p.bob || 0));
+  if (p.sit) ctx.translate(0, 70 * S);                 // 坐姿：屁股在 y
+  ctx.rotate(F * (p.lean || 0) * Math.PI / 180);
+  ctx.scale(S * F, S);
+  const toLocal = ([wx, wy]) => {
+    // 只處理平移、縮放、翻轉（lean 很小時誤差可忽略）
+    return [(wx - x) / (S * F), (wy - y - (p.bob || 0)) / S - (p.sit ? 70 : 0)];
+  };
+  const dark = (hex, k = .82) => { const n = parseInt(hex.slice(1), 16); const r = (n >> 16) * k, g = ((n >> 8) & 255) * k, b = (n & 255) * k; return `rgb(${r | 0},${g | 0},${b | 0})`; };
+  const ik = (sx, sy, tx, ty, L1, L2, bendSign) => {
+    let dx = tx - sx, dy = ty - sy, d = Math.hypot(dx, dy); const m = L1 + L2 - 1;
+    if (d > m) { dx *= m / d; dy *= m / d; d = m; }
+    const base = Math.atan2(dy, dx), off = Math.acos(E.clamp((L1 * L1 + d * d - L2 * L2) / (2 * L1 * (d || 1)), -1, 1));
+    const a = base + bendSign * off;
+    return { j: [sx + L1 * Math.cos(a), sy + L1 * Math.sin(a)], e: [sx + dx, sy + dy] };
+  };
+  const limb = (sx, sy, ang, len) => { const a = ang * Math.PI / 180; return [sx + Math.sin(a) * len, sy + Math.cos(a) * len]; };
+  const legCol = sp.dress ? sp.skin : sp.pants;
+  const leg = (near) => {
+    const hx = near ? 6 : -6, hy = hipY + (p.sit ? -6 : 0);
+    const tgt = near ? p.footNear : p.footFar;
+    let foot;
+    if (tgt) foot = toLocal(tgt); else foot = limb(hx, hy, (near ? p.nearLeg : p.farLeg) || 0, 70);
+    const r = ik(hx, hy, foot[0], foot[1], 36, 36, -1);   // 膝蓋往前彎
+    ctx.strokeStyle = near ? legCol : dark(legCol); ctx.lineWidth = 22; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(r.j[0], r.j[1]); ctx.lineTo(r.e[0], r.e[1]); ctx.stroke();
+    ctx.fillStyle = near ? sp.shoes : dark(sp.shoes); rr(ctx, r.e[0] - 12, r.e[1] - 6, 36, 18, 9); ctx.fill();
+  };
+  const arm = (near) => {
+    const sx = near ? 4 : -4, sy = shY;
+    const tgt = near ? p.reachNear : p.reachFar;
+    let hand;
+    if (tgt) hand = toLocal(tgt); else hand = limb(sx, sy, (near ? p.nearArm : p.farArm) ?? 8, 84);
+    const r = ik(sx, sy, hand[0], hand[1], 44, 42, 1);     // 手肘往下、往後彎
+    ctx.strokeStyle = near ? sp.shirt : dark(sp.shirt); ctx.lineWidth = 20; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(r.j[0], r.j[1]); ctx.lineTo(r.e[0], r.e[1]); ctx.stroke();
+    circle(ctx, r.e[0], r.e[1], 13, near ? sp.skin : dark(sp.skin, .9));
+  };
+  if (p.only === 'nearArm') { arm(true); ctx.restore(); return; }
+  if (!p.sit) { ctx.save(); ctx.globalAlpha = .18; ctx.fillStyle = '#000'; ctx.beginPath(); ctx.ellipse(0, 0, 50, 10, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+  // 後面的手腳
+  arm(false); leg(false);
+  // 身體
+  ctx.fillStyle = sp.shirt;
+  if (sp.dress) { ctx.beginPath(); ctx.moveTo(-24, -170); ctx.lineTo(26, -170); ctx.lineTo(42, hipY + 8); ctx.lineTo(-40, hipY + 8); ctx.closePath(); ctx.fill(); }
+  else { rr(ctx, -30, -175, 60, 112, 26); ctx.fill(); ctx.fillStyle = sp.pants; rr(ctx, -30, hipY - 18, 60, 30, 12); ctx.fill(); }
+  leg(true);
+  // 頭
+  ctx.save(); ctx.translate(6, headY); ctx.rotate((p.tilt || 0) * Math.PI / 180);
+  ctx.fillStyle = sp.hair;
+  if (sp.hairStyle === 'bun') circle(ctx, -46, -58, 28, sp.hair);
+  if (sp.hairStyle === 'pony') { ctx.beginPath(); ctx.ellipse(-82 + Math.sin((p.t || 0) * 4) * 3, 4, 22, 44, -.3, 0, Math.PI * 2); ctx.fill(); }
+  if (sp.hairStyle === 'pigtails') { ctx.beginPath(); ctx.ellipse(-74, 18 + Math.sin((p.t || 0) * 5) * 3, 20, 36, .3, 0, Math.PI * 2); ctx.fill(); circle(ctx, -62, -12, 9, '#ff4081'); }
+  if (sp.hairStyle === 'bob') { ctx.beginPath(); ctx.ellipse(-14, 4, 80, 74, 0, Math.PI * .55, Math.PI * 1.9); ctx.fill(); }
+  circle(ctx, 0, 0, 70, sp.skin);
+  circle(ctx, 66, 6, 10, sp.skin);                        // 鼻子
+  circle(ctx, -40, 4, 13, dark(sp.skin, .93));            // 耳朵
+  ctx.fillStyle = sp.hair; ctx.beginPath();
+  if (sp.hairStyle === 'spiky') {
+    ctx.moveTo(-72, 14);
+    for (let i = 0; i <= 7; i++) { const a = Math.PI * .85 + i / 7 * Math.PI * .95; const r2 = i % 2 ? 92 : 72; ctx.lineTo(Math.cos(a) * r2, Math.sin(a) * r2 - 4); }
+    ctx.quadraticCurveTo(40, -36, 10, -28); ctx.quadraticCurveTo(-30, -20, -44, -6); ctx.closePath();
+  } else {
+    ctx.arc(0, -4, 74, Math.PI * .8, Math.PI * 1.85); ctx.quadraticCurveTo(46, -38, 14, -30); ctx.quadraticCurveTo(-24, -24, -40, -4); ctx.quadraticCurveTo(-60, 20, -70, 20); ctx.closePath();
+  }
+  ctx.fill();
+  if (sp.glasses) { ctx.strokeStyle = '#444'; ctx.lineWidth = 4; circle(ctx, 38, 6, 16, null, '#444', 4); ctx.beginPath(); ctx.moveTo(22, 4); ctx.lineTo(-30, 0); ctx.stroke(); }
+  const e = p.eyes || 'open';
+  ctx.strokeStyle = '#2b2118'; ctx.fillStyle = '#2b2118'; ctx.lineWidth = 6; ctx.lineCap = 'round';
+  if (e === 'happy') { ctx.beginPath(); ctx.arc(38, 12, 11, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); }
+  else if (e === 'closed') { ctx.beginPath(); ctx.moveTo(28, 6); ctx.lineTo(48, 6); ctx.stroke(); }
+  else { ctx.beginPath(); ctx.ellipse(38, 6, 8, 11, 0, 0, Math.PI * 2); ctx.fill(); circle(ctx, 41, 2, 3, '#fff'); }
+  ctx.save(); ctx.globalAlpha = .55; circle(ctx, 30, 30, 12, '#ff8fa3'); ctx.restore();
+  const m = p.mouth || 'smile';
+  if (m === 'smile') { ctx.strokeStyle = '#2b2118'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(46, 30, 12, Math.PI * .2, Math.PI * .8); ctx.stroke(); }
+  else { const o = m === 'talk' ? (Math.sin((p.t || 0) * 22) + 1) / 2 : 1; ctx.fillStyle = '#c0392b'; ctx.beginPath(); ctx.ellipse(50, 36, 9, 4 + 7 * o, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+  if (p.skip !== 'nearArm') arm(true);
+  ctx.restore();
+}
+
+// ---------- 擁抱用的環抱手臂 ----------
+// 從肩膀 (x1,y1) 彎過對方身體，手掌停在對方背後邊緣 (x2,y2)；bulge = 往下彎的程度（正值往下）
+function drawWrapArm(ctx, x1, y1, x2, y2, shirt, skin, w = 24, bulge = 40) {
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + bulge;
+  ctx.save(); ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(0,0,0,.15)'; ctx.lineWidth = w + 6;
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo(mx, my, x2, y2); ctx.stroke();
+  ctx.strokeStyle = shirt; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo(mx, my, x2, y2); ctx.stroke();
+  circle(ctx, x2, y2, w * .62, skin); ctx.restore();
+}
+
+// ---------- 面對面擁抱（側面）：孩子面向右、大人面向左 ----------
+// 大人手臂從孩子頭後繞到背後（手掌露在孩子背後），孩子手臂環過大人的腰到背後。回傳孩子的 x。
+function drawHugPair(ctx, t, adult, ax, s = 1.05, kidS = .95, o = {}) {
+  const aS = s * PEOPLE[adult].h, kS = kidS * PEOPLE.kid.h;
+  const sw = 3 * E.wave(t, .5), pat = o.pat ? Math.max(0, E.wave(t, 1.5)) : 0;
+  const aLean = -8 + sw, kLean = 4 + sw;
+  const kx = ax - (30 * aS + 80 * kS) - 20;
+  drawSide(ctx, adult, ax, 790, s, { t, flip: true, lean: aLean, tilt: 14, eyes: 'happy', mouth: o.adultMouth || 'smile', skip: 'nearArm', farArm: 40 });
+  const [shX, shY] = sideShoulder(adult, ax, 790, s, { flip: true, lean: aLean });
+  drawSide(ctx, 'kid', kx, 790, kidS, { t, lean: kLean, tilt: -6, eyes: 'happy', mouth: 'open', skip: 'nearArm', farArm: 15 });
+  // 孩子近側的手：環過大人的腰，手掌在大人背後
+  drawWrapArm(ctx, kx + 4 * kS, 790 - 153 * kS, ax + 30 * aS + 6, 790 - 88 * aS, PEOPLE.kid.shirt, PEOPLE.kid.skin, 21, 18);
+  // 大人近側的手：肩膀 → 沿身側往下的上臂 → 腰部高度的手肘 → 前臂環過孩子的腰 → 手掌在孩子背上（整隻手連在一起、不擋臉）
+  const elbow = [shX - 10, 790 - 100 * aS];
+  const hand = [kx - 30 * kS - 6, 790 - 92 * kS - 8 * pat];
+  drawElbowArm(ctx, [shX, shY], elbow, hand, PEOPLE[adult].shirt, PEOPLE[adult].skin, 24);
+  circle(ctx, shX, shY, 16, PEOPLE[adult].shirt);           // 肩膀圓頭：手臂從身體長出來
+  return kx;
+}
+
+// 兩節手臂（指定手肘位置）：肩 → 肘 → 手，線條相連、圓角
+function drawElbowArm(ctx, sh, el, hd, shirt, skin, w = 24) {
+  ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.strokeStyle = 'rgba(0,0,0,.15)'; ctx.lineWidth = w + 6;
+  ctx.beginPath(); ctx.moveTo(...sh); ctx.lineTo(...el); ctx.lineTo(...hd); ctx.stroke();
+  ctx.strokeStyle = shirt; ctx.lineWidth = w;
+  ctx.beginPath(); ctx.moveTo(...sh); ctx.lineTo(...el); ctx.lineTo(...hd); ctx.stroke();
+  circle(ctx, hd[0], hd[1], w * .62, skin); ctx.restore();
+}
+
+// 側面人物近側肩膀的世界座標（和 drawSide 用同一套平移、翻轉、傾斜），手臂一定從這裡長出來
+function sideShoulder(who, x, y, s, p = {}) {
+  const sp = PEOPLE[who], S = s * (sp.h || 1), F = p.flip ? -1 : 1;
+  const a = F * (p.lean || 0) * Math.PI / 180;
+  const lx = 4 * S * F, ly = -153 * S;                       // 縮放＋翻轉後、旋轉前
+  const rx = lx * Math.cos(a) - ly * Math.sin(a), ry = lx * Math.sin(a) + ly * Math.cos(a);
+  return [x + rx, y + (p.bob || 0) + (p.sit ? 70 * S : 0) + ry];
+}

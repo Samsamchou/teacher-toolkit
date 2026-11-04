@@ -33,7 +33,19 @@
 - 交出前要抽大圖逐格檢查。
 - 已寫進記憶 `code-animation-logical-poses`。
 
-## 待老師看的地方
+## 11/04 老師驗收 ✅（v4）
+- 修正：
+  - 三句擁抱（mom_2、grandma_3、family_1）改成側面面對面環抱，使用 engine.js 的 `drawHugPair`。
+  - teacher_1 改成 turkey、pie 兩張圖：粉筆字逐字母出現，老師念、孩子跟讀，單字音檔由 `scripts/make_word_voices.py` 產生。
+  - family_2 孩子改側面騎車，雙腳踩兩邊踏板，座墊在後輪上方。
+- 新增引擎功能：
+  - `drawSide`：側面人物。
+  - `sideShoulder`：算出側面人物肩膀的世界座標，手臂一定從肩膀長出。
+  - `drawElbowArm`、`drawWrapArm`：手臂畫法。
+- 規格卡：`../rdq/RDQ-spec-thankful35-fixes-20261104.md`、`../rdq/RDQ-spec-thankful35-fixes2-20261104.md`。
+- 影片：`renders/thankful_all.mp4`（6:39）、`renders/thankful_all_720p.mp4`。
+
+## 待老師看的地方（11/03 列，部分已修）
 - 家人組爸爸頭頂接近畫面上緣。
 - 吃飯時筷子或湯匙到嘴邊，會短暫碰到下巴。
 - 腳踏車的孩子是正面畫法，腳沒有真的踩踏板。

@@ -180,68 +180,97 @@ function teacher_laughLines(ctx, u, x, y, s) {
   ctx.restore();
 }
 
-// 1. she teaches me English
+// 黑板上的兩張圖：火雞（turkey）、南瓜派（pie）
+function teacher_turkeyIcon(ctx) {
+  const fan = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa'];
+  fan.forEach((c, i) => { ctx.save(); ctx.rotate(-1.2 + i * .48); ctx.fillStyle = c; ctx.beginPath(); ctx.ellipse(0, -52, 16, 40, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
+  circle(ctx, 0, 6, 40, '#8d5a2b'); circle(ctx, 0, -30, 24, '#a1693a');
+  circle(ctx, -8, -34, 5, '#2b2118'); circle(ctx, 8, -34, 5, '#2b2118');
+  ctx.fillStyle = '#ffb300'; ctx.beginPath(); ctx.moveTo(-6, -26); ctx.lineTo(6, -26); ctx.lineTo(0, -16); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e53935'; ctx.beginPath(); ctx.ellipse(6, -16, 5, 9, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#ffb300'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+  [-14, 14].forEach(x => { ctx.beginPath(); ctx.moveTo(x, 42); ctx.lineTo(x, 58); ctx.moveTo(x - 8, 60); ctx.lineTo(x + 8, 60); ctx.stroke(); });
+}
+function teacher_pieIcon(ctx) {
+  ctx.fillStyle = '#d7a15e'; ctx.beginPath(); ctx.ellipse(0, 10, 66, 34, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#e8892b'; ctx.beginPath(); ctx.ellipse(0, 4, 54, 25, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#c98a45'; ctx.lineWidth = 6; for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2; ctx.beginPath(); ctx.arc(Math.cos(a) * 60, 6 + Math.sin(a) * 30, 6, 0, Math.PI * 2); ctx.stroke(); }
+  ctx.fillStyle = '#fffdf5'; [[-6, -8], [6, -12], [0, -18]].forEach(([x, y]) => { ctx.beginPath(); ctx.arc(x, y, 12, 0, Math.PI * 2); ctx.fill(); });
+  ctx.fillStyle = '#d7a15e'; rr(ctx, -66, 10, 132, 24, 10); ctx.fill();
+}
+// 粉筆字：一個字母一個字母出現
+function teacher_chalkWord(ctx, word, x, y, start, u, step = .14) {
+  if (u < start) return;
+  const n = Math.max(0, Math.min(word.length, Math.floor((u - start) / step) + 1));
+  ctx.save(); ctx.font = '60px "Comic Relief"'; ctx.textBaseline = 'middle';
+  const total = ctx.measureText(word).width; let cx = x - total / 2;
+  for (let i = 0; i < n; i++) {
+    const ch = word[i], w = ctx.measureText(ch).width, k = E.back(E.clamp((u - start - i * step) / .25));
+    ctx.save(); ctx.translate(cx + w / 2, y); ctx.scale(k, k);
+    ctx.shadowColor = 'rgba(255,255,255,.6)'; ctx.shadowBlur = 8; ctx.fillStyle = '#fbfbf2'; ctx.textAlign = 'center'; ctx.fillText(ch, 0, 0);
+    ctx.restore(); cx += w;
+  }
+  ctx.restore();
+}
+
+// 1. she teaches me English：老師用指揮棒指著黑板上的圖，寫出英文字並念出來，孩子舉手跟讀
 SCENES.teacher_1 = {
-  dur: 8.5, sfx: [[0.6, 'pop'], [0.75, 'chime'], [1.6, 'whoosh'], [2.4, 'pop'], [2.55, 'chime'], [3.2, 'whoosh'], [4.0, 'pop'], [4.15, 'chime'], [4.9, 'pop'], [6.2, 'ding'], [6.3, 'sparkle']],
+  dur: 10.5,
+  sfx: [[0.5, 'pop'], [0.6, 'chime'], [2.4, 'w_t_turkey'], [3.0, 'sparkle'], [4.1, 'w_k_turkey'], [4.9, 'whoosh'], [5.5, 'pop'], [5.6, 'chime'], [5.9, 'w_t_pie'], [6.4, 'sparkle'], [7.5, 'w_k_pie'], [8.5, 'ding'], [8.6, 'sparkle']],
   draw(ctx, u) {
     teacher_classroom(ctx, u, '#e8f4ea', '#d6eedc');
-    // 黑板 x 220–720、y 330–560，粉筆槽
     PROP.chalkboard(ctx, 470, 330, 500, 230);
     ctx.fillStyle = '#6d4c41'; rr(ctx, 206, 572, 528, 14, 6); ctx.fill();
     ctx.fillStyle = '#fff'; rr(ctx, 260, 564, 26, 8, 3); ctx.fill(); ctx.fillStyle = '#ffd54f'; rr(ctx, 300, 564, 22, 8, 3); ctx.fill();
-    // 老師點到哪裡，黑板上就跳出圖：蘋果 → 貓 → 太陽
-    const icons = [[330, 420, () => teacher_apple(ctx), .6], [470, 420, () => teacher_catFace(ctx), 2.4], [610, 420, () => teacher_sun(ctx, u), 4.0]];
-    icons.forEach(([x, y, f, t0]) => {
-      const k = E.pop(u, t0, .5); if (k <= 0) return;
-      glow(ctx, x, y, 90, 'rgba(255,255,220,.45)', Math.min(k, 1));
-      ctx.save(); ctx.translate(x, y); ctx.scale(k, k); f(); ctx.restore();
-      if (u < t0 + 1.2) FX.sparkles(ctx, u, x, y, 70, 6, t0 * 10, '#fffde7');
+    const items = [{ x: 345, f: teacher_turkeyIcon, t0: .5, word: 'turkey', w0: 2.45 }, { x: 595, f: teacher_pieIcon, t0: 5.5, word: 'pie', w0: 5.95 }];
+    items.forEach(it => {
+      const k = E.pop(u, it.t0, .5); if (k <= 0) return;
+      glow(ctx, it.x, 432, 100, 'rgba(255,255,220,.4)', Math.min(k, 1));
+      ctx.save(); ctx.translate(it.x, 428); ctx.scale(k * .85, k * .85); it.f(ctx); ctx.restore();
+      if (u < it.t0 + 1.2) FX.sparkles(ctx, u, it.x, 428, 80, 6, it.t0 * 10, '#fffde7');
+      teacher_chalkWord(ctx, it.word, it.x, 525, it.w0, u);
     });
-    // 指揮棒尖端沿著黑板滑過去，老師跟著走；尖端一直貼在圖示右下角
-    const m1 = E.easeInOut(E.seg(u, 1.6, 2.3)), m2 = E.easeInOut(E.seg(u, 3.2, 3.9));
-    const tip = [360 + 140 * m1 + 140 * m2, 454];
-    const tx = tip[0] + 287, walking = (m1 > 0 && m1 < 1) || (m2 > 0 && m2 < 1);
+    // 指揮棒尖端碰到正在教的那張圖（右下角），老師跟著走過去
+    const m = E.easeInOut(E.seg(u, 4.9, 5.5));
+    const tip = [398 + 250 * m, 470];
+    const tx = tip[0] + 287, walking = m > 0 && m < 1;
     const S = 1.05 * PEOPLE.teacher.h, len = 170;
     const sh = [tx - 40 * S, 790 - 153 * S];
     const dd = Math.hypot(sh[0] - tip[0], sh[1] - tip[1]);
     const hand = [tip[0] + (sh[0] - tip[0]) / dd * len, tip[1] + (sh[1] - tip[1]) / dd * len];
     const ang = teacher_aim(hand[0], hand[1], tip[0], tip[1]);
     const pointer = c => { c.strokeStyle = '#8d6e63'; c.lineWidth = 6; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, -12); c.lineTo(0, len / S); c.stroke(); circle(c, 0, len / S, 5, '#ef5350'); };
-    // 孩子坐在課桌後面，舉手回答
-    const kx = 1240, raise = E.easeOut(E.seg(u, 4.5, 4.9));
+    const tTalk = (u > 2.4 && u < 3.3) || (u > 5.9 && u < 6.7);
+    const kTalk = (u > 4.1 && u < 4.9) || (u > 7.5 && u < 8.3);
+    const kRaise = E.clamp(E.easeOut(E.seg(u, 3.7, 4.0)) * (1 - E.seg(u, 4.9, 5.2)) + E.easeOut(E.seg(u, 7.1, 7.4)));
+    const kx = 1240;
     teacher_chair(ctx, kx, 700);
     drawPerson(ctx, 'teacher', tx, 790, 1.05, {
-      t: u, flip: true, blinkSeed: 2, mouth: u > .5 && u < 4.5 ? 'talk' : 'smile', eyes: u > 6.2 ? 'happy' : 'open',
+      t: u, flip: true, blinkSeed: 2, mouth: tTalk ? 'talk' : 'smile', eyes: u > 8.5 ? 'happy' : 'open',
       bob: walking ? -Math.abs(E.wave(u, 3)) * 8 : 0,
-      reachR: hand, itemR: pointer, itemAngR: ang, armL: u > 4.8 ? 40 + 12 * E.wave(u, .8) : 12,
+      reachR: hand, itemR: pointer, itemAngR: ang, armL: kTalk ? 40 + 12 * E.wave(u, .8) : 12,
     });
     drawPerson(ctx, 'kid', kx, 700, 1.0, {
-      t: u, sit: true, flip: true, swing: 1, eyes: u > 6.2 ? 'happy' : 'open', mouth: u > 4.9 && u < 6.1 ? 'talk' : (u > 6.1 ? 'open' : 'smile'),
-      reachR: [kx - 45, 652], reachL: [E.lerp(kx + 45, kx + 125, raise), E.lerp(652, 470, raise)], armFrontL: raise > .5,
-      bob: u > 6.2 ? -Math.abs(E.wave(u, 2)) * 8 : 0,
+      t: u, sit: true, flip: true, swing: 1, eyes: u > 8.5 ? 'happy' : 'open', mouth: kTalk ? 'talk' : (u > 8.5 ? 'open' : 'smile'),
+      reachR: [kx - 45, 652], reachL: [E.lerp(kx + 45, kx + 125, kRaise), E.lerp(652, 470, kRaise)], armFrontL: kRaise > .5,
+      bob: u > 8.5 ? -Math.abs(E.wave(u, 2)) * 8 : 0,
     });
     teacher_desk(ctx, kx, 662, 240);
     PROP.book(ctx, kx, 632, .3, 1, 0, '#ef5350');
-    // 孩子跟著說出剛學的字（泡泡裡是三個圖）
-    const bk = E.pop(u, 4.9, .4) * (1 - E.seg(u, 6.0, 6.25));
-    teacher_bubble(ctx, 1260, 360, 270, 100, kx - 10, 448, bk);
-    if (bk > 0) {
-      ctx.save(); ctx.translate(1260, 360); ctx.scale(bk, bk);
-      [[-80, teacher_apple], [0, teacher_catFace], [80, () => teacher_sun(ctx, u)]].forEach(([dx, f], i) => {
-        const k = E.pop(u, 5.0 + i * .3, .3); if (k <= 0) return;
-        ctx.save(); ctx.translate(dx, 0); ctx.scale(.62 * k, .62 * k); f(ctx); ctx.restore();
-      });
-      ctx.restore();
-    }
-    // 答對了：金色星星
-    const sk = E.pop(u, 6.2, .55);
+    // 孩子跟讀時，泡泡裡出現那張圖
+    [[4.1, 4.95, teacher_turkeyIcon], [7.5, 8.35, teacher_pieIcon]].forEach(([a, b, f]) => {
+      const bk = E.pop(u, a, .35) * (1 - E.seg(u, b, b + .25)); if (bk <= 0) return;
+      teacher_bubble(ctx, 1075, 420, 170, 130, kx - 70, 470, bk);
+      ctx.save(); ctx.translate(1075, 420); ctx.scale(.62 * bk, .62 * bk); f(ctx); ctx.restore();
+    });
+    const sk = E.pop(u, 8.5, .55);
     if (sk > 0) {
       const sx = kx + 20, sy = 352 + 4 * E.wave(u, 1);
       FX.rays(ctx, u, sx, sy, 180 * Math.min(sk, 1), 'rgba(255,215,64,.25)', 14);
       glow(ctx, sx, sy, 110, 'rgba(255,230,120,.9)', Math.min(sk, 1));
       star(ctx, sx, sy, 54 * sk, '#ffc107', Math.sin(u * 2) * .15);
       star(ctx, sx, sy, 34 * sk, '#ffe082', Math.sin(u * 2) * .15);
-      FX.burst(ctx, u, sx, sy, 6.25); FX.sparkles(ctx, u, kx - 60, 520, 160, 8, 4);
+      FX.burst(ctx, u, sx, sy, 8.55); FX.sparkles(ctx, u, kx - 60, 520, 160, 8, 4);
     }
   },
 };

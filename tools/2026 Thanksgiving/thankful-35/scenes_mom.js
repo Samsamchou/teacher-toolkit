@@ -64,22 +64,19 @@ SCENES.mom_2 = {
     if (hs > 0) {
       FX.rays(ctx, u, cx, 470, 620, 'rgba(255,120,160,.18)', 16);
       glow(ctx, cx, 470, 420, 'rgba(255,140,180,.7)');
-      heart(ctx, cx, 520, 560 * hs * (1 + .04 * E.wave(u, 1.2)), '#ff7aa8');
-      heart(ctx, cx, 520, 450 * hs * (1 + .04 * E.wave(u, 1.2, .5)), '#ff9ec0');
+      heart(ctx, cx, 520, 560 * hs * (1 + .04 * E.wave(u, 1.2)), '#ffc4d8');
+      heart(ctx, cx, 520, 450 * hs * (1 + .04 * E.wave(u, 1.2, .5)), '#ffe0ea');
     }
     // 兩人並肩擁抱：頭不重疊；孩子的手環到媽媽背後，媽媽的手搭在孩子肩上（在臉的下方）
-    const kx = E.lerp(420, cx - 95, k), mx = E.lerp(1180, cx + 95, k);
+    const kx = E.lerp(420, cx - 70, k), mx = E.lerp(1180, cx + 70, k);
     const sway = 4 * E.wave(u, .6) * hug;
-    drawPerson(ctx, 'kid', kx, 800, 1.1, {
-      t: u, lean: 5 * hug + sway, eyes: hug > .5 ? 'happy' : 'open', mouth: hug > .5 ? 'open' : 'smile',
-      bob: k > 0 && k < 1 ? -Math.abs(E.wave(u, 3)) * 14 : 0,
-      armL: hug > .5 ? 150 + 10 * E.wave(u, 1.5) : 12, reachR: hug > .5 ? [mx - 25, 668] : null, armR: 12,
-    });
-    drawPerson(ctx, 'mom', mx, 800, 1.05, {
-      t: u, flip: true, lean: -5 * hug + sway, eyes: hug > .5 ? 'happy' : 'open', mouth: 'smile', blinkSeed: 1,
-      bob: k > 0 && k < 1 ? -Math.abs(E.wave(u, 3)) * 10 : 0,
-      reachR: hug > .5 ? [kx + 40, 640] : null, armR: 12, armL: hug > .5 ? 25 : 12,
-    });
+    // 走近（正面）→ 面對面擁抱（側面）：雙手環抱對方的背
+    if (hug < .5) {
+      drawPerson(ctx, 'kid', kx, 800, 1.1, { t: u, mouth: 'smile', bob: k > 0 && k < 1 ? -Math.abs(E.wave(u, 3)) * 14 : 0, armL: 12 + 100 * hug, armR: 12 + 100 * hug });
+      drawPerson(ctx, 'mom', mx, 800, 1.05, { t: u, flip: true, mouth: 'smile', blinkSeed: 1, bob: k > 0 && k < 1 ? -Math.abs(E.wave(u, 3)) * 10 : 0, armL: 12 + 100 * hug, armR: 12 + 100 * hug });
+    } else {
+      drawHugPair(ctx, u, 'mom', cx + 70, 1.05, .95, { pat: true });
+    }
     if (hug > 0) { FX.floatHearts(ctx, u, cx, 360, 10, 500, 9, 2); FX.sparkles(ctx, u, cx, 400, 420, 14, 2); }
   },
 };

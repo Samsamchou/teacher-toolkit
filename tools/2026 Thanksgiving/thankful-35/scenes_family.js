@@ -28,9 +28,9 @@ function family_chair(ctx, x, seatY, S, color = '#8d5a3b') {
   ctx.fillStyle = '#a86d45'; rr(ctx, x - 66 * S, seatY - 6, 132 * S, 16, 8); ctx.fill();
 }
 // 腳踏車（側面，面向右）。bx = 座墊下方的位置；座墊上緣 y = 652
-function family_bike(ctx, bx, rot) {
-  const wy = 735, R = 55, rear = [bx - 60, wy], front = [bx + 125, wy], BB = [bx + 15, wy + 3];
-  const st = [bx - 4, 664], ht = [bx + 104, 640], hb = [bx + 112, 670];
+function family_bike(ctx, bx, rot, seatY = 652, bbY = 738) {
+  const wy = 735, R = 55, rear = [bx - 60, wy], front = [bx + 125, wy], BB = [bx + 15, bbY];
+  const st = [bx - 4, seatY + 12], ht = [bx + 104, 640], hb = [bx + 112, 670];
   [rear, front].forEach(([wx]) => {
     ctx.strokeStyle = '#263238'; ctx.lineWidth = 11; ctx.beginPath(); ctx.arc(wx, wy, R, 0, Math.PI * 2); ctx.stroke();
     ctx.strokeStyle = '#cfd8dc'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(wx, wy, R - 7, 0, Math.PI * 2); ctx.stroke();
@@ -49,8 +49,8 @@ function family_bike(ctx, bx, rot) {
   ctx.strokeStyle = '#90a4ae'; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(bx + 24, 603); ctx.lineTo(bx + 108, 603); ctx.stroke();
   ctx.strokeStyle = '#37474f'; ctx.lineWidth = 11; ctx.beginPath(); ctx.moveTo(bx + 22, 603); ctx.lineTo(bx + 42, 603); ctx.moveTo(bx + 92, 603); ctx.lineTo(bx + 112, 603); ctx.stroke();
   // 座墊（後端翹出去讓爸爸扶）
-  ctx.strokeStyle = '#78909c'; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(...st); ctx.lineTo(bx - 8, 652); ctx.stroke();
-  ctx.fillStyle = '#3e2723'; ctx.beginPath(); ctx.ellipse(bx - 22, 652, 52, 11, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#78909c'; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(...st); ctx.lineTo(bx - 4, seatY); ctx.stroke();
+  ctx.fillStyle = '#3e2723'; ctx.beginPath(); ctx.ellipse(bx - 8, seatY, 46, 11, 0, 0, Math.PI * 2); ctx.fill();
   // 踏板
   const pa = rot * .8;
   ctx.strokeStyle = '#455a64'; ctx.lineWidth = 6;
@@ -196,19 +196,35 @@ SCENES.family_1 = {
     };
     const after = (who, t0) => u >= t0 && !arms ? { armL: 35 * (1 - E.seg(u, t0 + .3, t0 + .9)) + 10, armR: 35 * (1 - E.seg(u, t0 + .3, t0 + .9)) + 10 } : {};
     const happy = arms || u > 2.4;
-    // 妹妹（先畫，媽媽的手要蓋在她肩上）
-    drawPerson(ctx, 'sister', X.sister, 790, 1.05, Object.assign({ t: u, bob: b, eyes: happy ? 'happy' : 'open', mouth: happy ? 'open' : 'smile', blinkSeed: 2, tilt: arms ? 6 : 0 },
-      after('sister', 1.1), holdArms('sister') || {}, arms ? { reachL: [X.kid + 90, 690 + b], armR: 140 + 10 * E.wave(u, 1.2) } : {}));
-    // 孩子
-    drawPerson(ctx, 'kid', X.kid, 790, 1.05, {
-      t: u, bob: b, eyes: got > 0 ? 'happy' : 'open', mouth: got > 0 ? 'open' : (flying.length ? 'o' : 'smile'), tilt: arms ? -6 : 0,
-      reachL: arms ? [590, 660 + b] : null, reachR: arms ? [X.kid + 90, 690 + b] : null, armL: 10, armR: 10,
-    });
-    // 爸爸、媽媽
-    drawPerson(ctx, 'dad', X.dad, 790, 1.05, Object.assign({ t: u, bob: b, eyes: happy ? 'happy' : 'open', mouth: 'smile', blinkSeed: .5, tilt: arms ? 6 : 0 },
-      after('dad', .6), holdArms('dad') || {}, arms ? { reachR: [672, 624 + b], armL: 140 + 10 * E.wave(u, 1.2, .5) } : {}));
-    drawPerson(ctx, 'mom', X.mom, 790, 1.05, Object.assign({ t: u, bob: b, eyes: happy ? 'happy' : 'open', mouth: 'smile', blinkSeed: 1, tilt: arms ? -6 : 0 },
-      after('mom', 1.6), holdArms('mom') || {}, arms ? { reachL: [X.sister + 32, 646 + b], armR: 140 + 10 * E.wave(u, 1.2, .2) } : {}));
+    if (!arms) {
+      // 妹妹（先畫，媽媽的手要蓋在她肩上）
+      drawPerson(ctx, 'sister', X.sister, 790, 1.05, Object.assign({ t: u, bob: b, eyes: happy ? 'happy' : 'open', mouth: happy ? 'open' : 'smile', blinkSeed: 2, tilt: arms ? 6 : 0 },
+        after('sister', 1.1), holdArms('sister') || {}, arms ? { reachL: [X.kid + 90, 690 + b], armR: 140 + 10 * E.wave(u, 1.2) } : {}));
+      // 孩子
+      drawPerson(ctx, 'kid', X.kid, 790, 1.05, {
+        t: u, bob: b, eyes: got > 0 ? 'happy' : 'open', mouth: got > 0 ? 'open' : (flying.length ? 'o' : 'smile'), tilt: arms ? -6 : 0,
+        reachL: arms ? [590, 660 + b] : null, reachR: arms ? [X.kid + 90, 690 + b] : null, armL: 10, armR: 10,
+      });
+      // 爸爸、媽媽
+      drawPerson(ctx, 'dad', X.dad, 790, 1.05, Object.assign({ t: u, bob: b, eyes: happy ? 'happy' : 'open', mouth: 'smile', blinkSeed: .5, tilt: arms ? 6 : 0 },
+        after('dad', .6), holdArms('dad') || {}, arms ? { reachR: [672, 624 + b], armL: 140 + 10 * E.wave(u, 1.2, .5) } : {}));
+      drawPerson(ctx, 'mom', X.mom, 790, 1.05, Object.assign({ t: u, bob: b, eyes: happy ? 'happy' : 'open', mouth: 'smile', blinkSeed: 1, tilt: arms ? -6 : 0 },
+        after('mom', 1.6), holdArms('mom') || {}, arms ? { reachL: [X.sister + 32, 646 + b], armR: 140 + 10 * E.wave(u, 1.2, .2) } : {}));
+    } else {
+      // 全家面對面擁抱（側面）：孩子和媽媽面對面抱；爸爸從孩子背後抱住孩子，妹妹從媽媽背後抱住媽媽
+      const dS = 1.05 * PEOPLE.dad.h, sS = 1.05 * PEOPLE.sister.h, mS = 1.05 * PEOPLE.mom.h;
+      const mx = 905, sw = 3 * E.wave(u, .5);
+      const kx = mx - (30 * mS + 80 * .95), dx = kx - 150, sx = mx + 160;
+      drawSide(ctx, 'dad', dx, 790, 1.05, { t: u, lean: 6 + sw, tilt: 8, eyes: 'happy', mouth: 'smile', skip: 'nearArm', farArm: 50 });
+      drawSide(ctx, 'sister', sx, 790, 1.05, { t: u, flip: true, lean: 6 + sw, tilt: -4, eyes: 'happy', mouth: 'open', skip: 'nearArm', farArm: 50 });
+      drawHugPair(ctx, u, 'mom', mx, 1.05, .95, { pat: true });
+      // 爸爸的手從孩子背後環到孩子胸前（在下巴下方），妹妹的手環過媽媽的腰
+      const dSh = sideShoulder('dad', dx, 790, 1.05, { lean: 6 + sw }), sSh = sideShoulder('sister', sx, 790, 1.05, { flip: true, lean: 6 + sw });
+      drawWrapArm(ctx, dSh[0], dSh[1], kx + 30 * .95 + 4, 700, PEOPLE.dad.shirt, PEOPLE.dad.skin, 26, 45);
+      circle(ctx, dSh[0], dSh[1], 17, PEOPLE.dad.shirt);
+      drawWrapArm(ctx, sSh[0], sSh[1], mx - 30 * mS - 4, 712, PEOPLE.sister.shirt, PEOPLE.sister.skin, 18, 14);
+      circle(ctx, sSh[0], sSh[1], 12, PEOPLE.sister.shirt);
+    }
     // 捧在手上的愛心（手掌蓋在愛心兩側）
     Object.entries(holding).forEach(([who, h]) => {
       if (h.s <= 0) return;
@@ -220,8 +236,9 @@ SCENES.family_1 = {
     // 孩子胸口的愛心：收到越多越大、越亮
     if (got > 0) {
       const sz = 30 + got * 12 + (arms ? 6 * E.wave(u, 1.4) : 0);
-      glow(ctx, kidChest[0], kidChest[1] + b, 60 + got * 30, 'rgba(255,230,120,.9)');
-      heart(ctx, kidChest[0], kidChest[1] + b + 12, sz, '#ff3d7f', '#fff');
+      const hp = arms ? [800, 330] : [kidChest[0], kidChest[1] + b];
+      glow(ctx, hp[0], hp[1], 60 + got * 30, 'rgba(255,230,120,.9)');
+      heart(ctx, hp[0], hp[1] + 12, sz, '#ff3d7f', '#fff');
     }
     if (arms) { FX.floatHearts(ctx, u, 790, 380, 10, 700, 9, 3.4); FX.sparkles(ctx, u, 790, 470, 470, 16, 2); FX.burst(ctx, u, 790, 470, 3.35, 22); }
   },
@@ -256,19 +273,27 @@ SCENES.family_2 = {
       for (let i = 0; i < 4; i++) { const yy = 600 + i * 40, x0 = bx - 140 - (i % 2) * 30; ctx.beginPath(); ctx.moveTo(x0, yy); ctx.lineTo(x0 - 90 - 30 * E.wave(u, 3, i * .2), yy); ctx.stroke(); }
       ctx.restore();
     }
-    family_bike(ctx, bx, bx / 55);
-    // 孩子坐在座墊上、雙手握把手（戴安全帽）
-    drawPerson(ctx, 'kid', bx, 652, 1.0, { t: u, sit: true, swing: 1.5, reachL: [bx + 32, 603], reachR: [bx + 100, 603], eyes: free ? 'happy' : 'open', mouth: free ? 'open' : 'o' });
-    ctx.fillStyle = '#3e2723'; ctx.beginPath(); ctx.ellipse(bx - 62, 654, 22, 10, 0, 0, Math.PI * 2); ctx.fill();   // 座墊後端（爸爸扶的地方）
-    ctx.save(); ctx.fillStyle = '#29b6f6'; ctx.beginPath(); ctx.arc(bx, 470, 90, Math.PI, Math.PI * 2); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = '#ffffff'; ctx.fillRect(bx - 10, 382, 20, 88); ctx.fillStyle = '#0288d1'; rr(ctx, bx - 96, 462, 192, 12, 6); ctx.fill(); ctx.restore();
-    if (!free) for (let i = 0; i < 2; i++) { const k = (u * 1.3 + i * .5) % 1; ctx.save(); ctx.globalAlpha = 1 - k; ctx.fillStyle = '#4fc3f7'; ctx.beginPath(); ctx.ellipse(bx + 92 + i * 14, 470 + k * 50, 7, 11, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+    const SEAT = 652, BBY = 712, kS = 1.2;
+    family_bike(ctx, bx, bx / 55, SEAT, BBY);
+    // 孩子側面騎車：屁股坐在座墊上、雙手握把手、兩腳分別踩在兩邊踏板上，踏板轉、腳跟著轉
+    const pa = (bx / 55) * .8, BB = [bx + 15, BBY];
+    const pedal = o => [BB[0] + Math.cos(pa + o) * 24, BB[1] + Math.sin(pa + o) * 24 - 4];
+    drawSide(ctx, 'kid', bx - 6, SEAT, kS, {
+      t: u, sit: true, lean: 4, eyes: free ? 'happy' : 'open', mouth: free ? 'open' : 'o',
+      reachNear: [bx + 100, 605], reachFar: [bx + 96, 601], footNear: pedal(0), footFar: pedal(Math.PI),
+    });
+    ctx.fillStyle = '#3e2723'; ctx.beginPath(); ctx.ellipse(bx - 48, SEAT + 2, 18, 9, 0, 0, Math.PI * 2); ctx.fill();   // 座墊後端（爸爸扶的地方）
+    // 安全帽（側面，蓋在頭頂）
+    const hx = bx - 6 + 6 * kS + Math.sin(4 * Math.PI / 180) * 165 * kS, hy = SEAT - 165 * kS;
+    ctx.save(); ctx.fillStyle = '#29b6f6'; ctx.beginPath(); ctx.arc(hx - 10, hy - 26, 90, Math.PI, Math.PI * 2); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(hx - 20, hy - 114, 20, 88); ctx.fillStyle = '#0288d1'; rr(ctx, hx - 104, hy - 32, 200, 13, 6); ctx.fill(); ctx.restore();
+    if (!free) for (let i = 0; i < 2; i++) { const k = (u * 1.3 + i * .5) % 1; ctx.save(); ctx.globalAlpha = 1 - k; ctx.fillStyle = '#4fc3f7'; ctx.beginPath(); ctx.ellipse(bx - 100 - i * 14, 500 + k * 50, 7, 11, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
     // 爸爸：彎身扶著座墊後端一起跑 → 放手 → 舉手歡呼
     const dx = u < 3 ? bx - 187 : 669 - 187 + 40 * E.easeOut(E.seg(u, 3, 3.6));
     const run = u < 3, hold = u < 3, release = u >= 3 && u < 3.5;
     drawPerson(ctx, 'dad', dx, 790, 1.05, {
       t: u, blinkSeed: .5, legL: run ? 22 * E.wave(u, 1.6) : 0, legR: run ? -22 * E.wave(u, 1.6) : 0, bob: run ? -Math.abs(E.wave(u, 1.6)) * 8 : 0,
-      reachR: hold ? [bx - 66, 654] : (release ? [669 - 66 + 30, 640] : null), armR: 150, armL: u >= 3.5 ? 150 + 8 * E.wave(u, 1.5) : 12,
+      reachR: hold ? [bx - 52, SEAT + 2] : (release ? [669 - 66 + 30, 660] : null), armR: 150, armL: u >= 3.5 ? 150 + 8 * E.wave(u, 1.5) : 12,
       mouth: u >= 3.5 ? 'open' : 'smile', eyes: u >= 3.5 ? 'happy' : 'open',
     });
     if (win) {
