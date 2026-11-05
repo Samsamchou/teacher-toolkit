@@ -1,0 +1,14 @@
+# 含原曲音訊與歌詞的檔案不入庫（版權）
+sources/
+data/
+frames/
+planning/01-逐句分析表.md
+characters/*.png
+characters/poses/
+characters/*.jpg
+models/
+3d/engine/song-data.js
+3d/renders/
+planning/02-詞義畫面表.md
+3d/cards/
+3d/engine/cards-data.js

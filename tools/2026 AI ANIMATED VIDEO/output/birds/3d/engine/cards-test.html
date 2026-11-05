@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><style>body{margin:0;background:#556}</style><canvas id="c" width="1920" height="1080"></canvas>
+<script src="song-data.js"></script><script src="cards-data.js"></script>
+<script type="module">
+// 圖卡測試頁：把指定的句子 n 在 k≈.55 時各畫一張 / card test sheet
+import { drawCards, preloadCards } from './cards.js'; await preloadCards();
+const ns = (new URLSearchParams(location.search).get('n') || '15,18,19,20,23,38,40,32').split(',').map(Number);
+const c = document.getElementById('c').getContext('2d'); const out = document.createElement('canvas'); out.width = 1920; out.height = 1080; const o = out.getContext('2d');
+ns.forEach((n, i) => { const cue = SONG.cues[n - 1]; const ks = (new URLSearchParams(location.search).get('k') || '').split(',').map(Number); const st = cue[0] + (cue[1] - cue[0]) * (ks[i] || .55); o.clearRect(0, 0, 1920, 1080); drawCards(o, st);
+  c.drawImage(out, 1100, 0, 820, 640, (i % 4) * 480, Math.floor(i / 4) * 380, 480, 375); c.fillStyle = '#ff0'; c.font = '28px sans-serif'; c.fillText('#' + n, (i % 4) * 480 + 8, Math.floor(i / 4) * 380 + 30); });
+window.READY = true;
+</script>

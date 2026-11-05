@@ -1,0 +1,13 @@
+M1|mom|standing straight facing the viewer, both arms relaxed slightly away from her sides, calm gentle closed-mouth smile, eyes looking at the viewer
+M2|mom|standing facing the viewer with both arms opened wide to the sides at shoulder height, palms open, joyful warm smile, NO wings
+M3|mom|kneeling on one knee facing the viewer, both arms opened forward as if about to hug a small child, tender loving expression, NO wings
+D7A|d7|standing straight facing the viewer, both arms relaxed slightly away from her sides, happy closed-mouth smile
+D7B|d7|walking forward, her right arm raised up and forward as if holding the hand of a much taller adult, looking up happily
+D7C|d7|leaning slightly forward with both arms spread wide to the sides like a bird flying, big delighted open smile
+D7D|d7|sitting on the floor hugging her knees to her chest, chin resting on her knees, sad lonely expression
+D13A|d13|standing straight facing the viewer, both arms relaxed slightly away from her sides, quiet thoughtful expression
+D13B|d13|sitting on a simple wooden chair, both forearms resting on her knees, head bowed down, sad and alone
+D13C|d13|kneeling on both knees, cupping a small teal feather in both hands in front of her chest, looking down at it with teary eyes and a small hopeful smile
+D13D|d13|leaning slightly forward with both arms spread wide to the sides like a bird flying, determined brave expression, hair blown back
+A30|d30|walking calmly, her left arm lowered and reaching down to her side as if holding the hand of a small child, warm gentle smile looking down
+C1|child|standing facing the viewer, one arm raised up to the side as if holding a grown-up's hand, the other arm relaxed, cheerful smile

@@ -1,0 +1,62 @@
+<!doctype html><meta charset="utf-8"><title>Birds 3D player</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#wrap{position:relative;width:1920px;height:1080px}
+#gl,#ov{position:absolute;left:0;top:0;width:1920px;height:1080px}</style>
+<div id="wrap"><canvas id="gl" width="1920" height="1080"></canvas><canvas id="ov" width="1920" height="1080"></canvas></div>
+<script src="song-data.js"></script>
+<script src="cards-data.js"></script>
+<script type="importmap">{"imports":{"three":"../../../how-do-you-go/physical-v14/vendor/package/build/three.module.js","three/addons/":"../../../how-do-you-go/physical-v14/vendor/package/examples/jsm/"}}</script>
+<script type="module">
+// ?scene=s01[&nosub=1]：載入場景模組，提供 window.renderFrame(t)（t＝場景本地秒）、DUR、SONG0（給 render.py）
+// Loads a Birds scene module and exposes renderFrame(t), DUR and SONG0 for render.py.
+import { makeRenderer } from './world.js';
+import { preloadCards, drawCards, featherPulse, shotShift } from './cards.js';
+const nocard = new URLSearchParams(location.search).get('nocard') === '1';
+const q = new URLSearchParams(location.search), name = q.get('scene'), nosub = q.get('nosub') === '1';
+await document.fonts.load('800 60px "Comic Relief"').catch(() => {});
+await preloadCards();
+const renderer = makeRenderer(document.getElementById('gl'));
+const ov = document.getElementById('ov').getContext('2d');
+const mod = await import('../scenes/' + name + '.js');
+const S = await mod.setup({ renderer });
+const W = 1920;
+
+// 紙條字幕（英文 Comic Relief 大字＋中文句意；關鍵字紅色）/ paper-strip subtitles, keywords in red
+function paperStrip(c, parts, zh, y = 900) {
+  const fEN = '800 64px "Comic Relief","Comic Sans MS","Segoe UI",sans-serif', fZH = '700 44px "Microsoft JhengHei","Segoe UI",sans-serif';
+  c.save(); c.font = fEN; const ws = parts.map(p => c.measureText(p[0]).width), total = ws.reduce((a, b) => a + b, 0);
+  c.font = fZH; const bw = Math.max(total, c.measureText(zh).width) + 110, bh = 156;
+  c.translate(W / 2, y + bh / 2); c.rotate(-.006);
+  c.shadowColor = 'rgba(30,20,10,.35)'; c.shadowBlur = 18; c.shadowOffsetY = 6; c.fillStyle = 'rgba(247,239,220,.94)'; c.beginPath();
+  c.moveTo(-bw / 2, -bh / 2); c.lineTo(bw / 2, -bh / 2);
+  for (let i = 0; i <= 8; i++) c.lineTo(bw / 2 + (i % 2 ? -10 : 0), -bh / 2 + bh * i / 8);
+  c.lineTo(-bw / 2, bh / 2); for (let i = 8; i >= 0; i--) c.lineTo(-bw / 2 + (i % 2 ? 10 : 0), -bh / 2 + bh * i / 8);
+  c.closePath(); c.fill(); c.shadowColor = 'transparent'; c.strokeStyle = 'rgba(120,90,60,.25)'; c.lineWidth = 2; c.stroke();
+  c.textBaseline = 'alphabetic'; c.font = fEN; let x = -total / 2;
+  parts.forEach((p, i) => { c.fillStyle = p[1] ? '#d23b32' : '#3b2a2e'; c.fillText(p[0], x, -8); x += ws[i]; });
+  c.font = fZH; c.textAlign = 'center'; c.fillStyle = '#5a4636'; c.fillText(zh, 0, 52); c.restore();
+}
+// 關鍵字放大跳出（學習單挖空用）：唱到那個字時在畫面上方彈出 1.4 秒 / keyword pop above the action
+function popWord(c, word, k) {
+  if (k <= 0 || k >= 1) return; const inn = Math.min(1, k / .18), out = k > .78 ? 1 - (k - .78) / .22 : 1;
+  const s = (inn < 1 ? .4 + .75 * Math.sin(inn * Math.PI * .5) * (1 + .18 * Math.sin(inn * Math.PI)) : 1) * (.96 + .04 * out);
+  c.save(); c.globalAlpha = out; c.translate(470, 110); c.scale(s, s); c.rotate(-.03);
+  c.font = '800 96px "Comic Relief","Comic Sans MS",sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.lineJoin = 'round'; c.lineWidth = 14; c.strokeStyle = 'rgba(40,24,30,.85)'; c.strokeText(word, 0, 0);
+  c.fillStyle = '#fff4d8'; c.fillText(word, 0, 0); c.restore();
+}
+const KEYS = S.keys || [];   // 這個場景要標紅＋跳出的關鍵字 / keywords for this scene
+function subs(st) {
+  ov.clearRect(0, 0, 1920, 1080); if (nosub) return;
+  const cue = SONG.cues.find(c => st >= c[0] && st < c[1] + .25 && !SONG.cues.some(o => o !== c && st >= o[0] && o[0] > c[0])); if (!cue) return;
+  let parts = [[cue[2], false]];
+  for (const key of KEYS) parts = parts.flatMap(([s, k]) => { if (k) return [[s, k]]; const i = s.toLowerCase().indexOf(key.toLowerCase()); if (i < 0) return [[s, k]];
+    return [[s.slice(0, i), false], [s.slice(i, i + key.length), true], [s.slice(i + key.length), false]].filter(p => p[0]); });
+  paperStrip(ov, parts, cue[4]);
+  // 跳字時間＝那個字在逐字表裡的開始時間 / pop when the word is sung
+  for (const key of KEYS) { const w = cue[3].find(w => w[2].toLowerCase().replace(/[^a-z]/g, '').startsWith(key.toLowerCase().split(' ')[0].replace(/[^a-z]/g, '')));
+    if (w && cue[2].toLowerCase().includes(key.toLowerCase())) popWord(ov, key, (st - w[0] + .1) / 1.5); }
+}
+window.DUR = S.dur; window.SONG0 = S.songStart;
+window.renderFrame = t => { const st = t + S.songStart; window.FEATHER = featherPulse(st); window.SHOT_SHIFT = (nosub || nocard) ? null : shotShift; S.frame(t, st); subs(st); if (!nosub && !nocard) drawCards(ov, st, { gray: S.cardGray ? S.cardGray(st) : 0 }); if (S.overlay) S.overlay(ov, t, st); };
+window.READY = true;
+</script>
