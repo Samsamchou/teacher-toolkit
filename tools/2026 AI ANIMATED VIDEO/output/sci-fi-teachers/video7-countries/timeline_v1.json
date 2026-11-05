@@ -1,0 +1,5246 @@
+{
+ "dur": 568.049,
+ "voices": {
+  "nova-say": "en-US-AvaNeural",
+  "nova-zh": "zh-TW-HsiaoChenNeural",
+  "cosmo-say": "en-US-GuyNeural",
+  "cosmo-zh": "zh-TW-YunJheNeural",
+  "amy-say": "en-US-AnaNeural",
+  "ben-say": "en-US-RogerNeural",
+  "emma-say": "en-US-AriaNeural",
+  "mia-say": "en-AU-NatashaNeural",
+  "raj-say": "en-IN-PrabhatNeural",
+  "yuki-say": "en-US-JennyNeural",
+  "wei-say": "en-SG-WayneNeural",
+  "sofia-say": "en-IE-EmilyNeural",
+  "kai-say": "en-HK-SamNeural",
+  "lily-say": "en-GB-MaisieNeural",
+  "tom-say": "en-US-EricNeural",
+  "jisu-say": "en-NZ-MollyNeural",
+  "nam-say": "en-PH-JamesNeural"
+ },
+ "rate": "-20%",
+ "sections": {
+  "01-open": [
+   0.8,
+   23.664
+  ],
+  "02-words": [
+   24.664,
+   151.06
+  ],
+  "03-clap": [
+   152.06,
+   254.552
+  ],
+  "04-cap": [
+   255.552,
+   284.806
+  ],
+  "05-im": [
+   285.806,
+   430.846
+  ],
+  "06-heshe": [
+   431.846,
+   466.619
+  ],
+  "07-quiz": [
+   467.619,
+   538.38
+  ],
+  "08-end": [
+   539.38,
+   566.549
+  ]
+ },
+ "segs": [
+  {
+   "i": 0,
+   "sec": "01-open",
+   "who": "nova",
+   "kind": "say",
+   "vis": "Nova 揮手 P02，名牌在臉旁",
+   "text": "Hi, class! I'm Ms. Nova.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 0.625,
+     "t1": 1.016
+    },
+    {
+     "w": "class",
+     "t0": 1.047,
+     "t1": 1.672
+    },
+    {
+     "w": "I'm",
+     "t0": 2.138,
+     "t1": 2.497
+    },
+    {
+     "w": "Ms.",
+     "t0": 2.513,
+     "t1": 2.716
+    },
+    {
+     "w": "Nova",
+     "t0": 2.731,
+     "t1": 3.325
+    }
+   ],
+   "t0": 0.8,
+   "t1": 3.458
+  },
+  {
+   "i": 1,
+   "sec": "01-open",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "Cosmo 揮手 P02，名牌在臉旁",
+   "text": "And I'm Mr. Cosmo! Welcome back to our space classroom!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 3.801,
+     "t1": 4.035
+    },
+    {
+     "w": "I'm",
+     "t0": 4.067,
+     "t1": 4.301
+    },
+    {
+     "w": "Mr.",
+     "t0": 4.332,
+     "t1": 4.738
+    },
+    {
+     "w": "Cosmo",
+     "t0": 4.77,
+     "t1": 5.504
+    },
+    {
+     "w": "Welcome",
+     "t0": 6.626,
+     "t1": 7.188
+    },
+    {
+     "w": "back",
+     "t0": 7.22,
+     "t1": 7.517
+    },
+    {
+     "w": "to",
+     "t0": 7.548,
+     "t1": 7.704
+    },
+    {
+     "w": "our",
+     "t0": 7.72,
+     "t1": 7.876
+    },
+    {
+     "w": "space",
+     "t0": 7.907,
+     "t1": 8.282
+    },
+    {
+     "w": "classroom",
+     "t0": 8.298,
+     "t1": 8.985
+    }
+   ],
+   "t0": 3.908,
+   "t1": 9.119
+  },
+  {
+   "i": 2,
+   "sec": "01-open",
+   "who": "nova",
+   "kind": "say",
+   "vis": "world；十張照片卡飛進來",
+   "text": "Look! We have ten new friends from ten countries!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Look",
+     "t0": 9.404,
+     "t1": 10.013
+    },
+    {
+     "w": "We",
+     "t0": 10.479,
+     "t1": 10.713
+    },
+    {
+     "w": "have",
+     "t0": 10.729,
+     "t1": 10.932
+    },
+    {
+     "w": "ten",
+     "t0": 10.948,
+     "t1": 11.244
+    },
+    {
+     "w": "new",
+     "t0": 11.26,
+     "t1": 11.416
+    },
+    {
+     "w": "friends",
+     "t0": 11.432,
+     "t1": 11.838
+    },
+    {
+     "w": "from",
+     "t0": 11.854,
+     "t1": 12.073
+    },
+    {
+     "w": "ten",
+     "t0": 12.088,
+     "t1": 12.416
+    },
+    {
+     "w": "countries",
+     "t0": 12.432,
+     "t1": 13.229
+    }
+   ],
+   "t0": 9.569,
+   "t1": 13.332
+  },
+  {
+   "i": 3,
+   "sec": "01-open",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "card:I'm from Taiwan.",
+   "text": "Today, we will learn the countries, and say: I'm from Taiwan!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Today",
+     "t0": 13.674,
+     "t1": 14.158
+    },
+    {
+     "w": "we",
+     "t0": 14.393,
+     "t1": 14.518
+    },
+    {
+     "w": "will",
+     "t0": 14.533,
+     "t1": 14.69
+    },
+    {
+     "w": "learn",
+     "t0": 14.721,
+     "t1": 14.94
+    },
+    {
+     "w": "the",
+     "t0": 14.955,
+     "t1": 15.08
+    },
+    {
+     "w": "countries",
+     "t0": 15.111,
+     "t1": 15.643
+    },
+    {
+     "w": "and",
+     "t0": 15.846,
+     "t1": 16.018
+    },
+    {
+     "w": "say",
+     "t0": 16.049,
+     "t1": 16.44
+    },
+    {
+     "w": "I'm",
+     "t0": 16.69,
+     "t1": 16.877
+    },
+    {
+     "w": "from",
+     "t0": 16.893,
+     "t1": 17.096
+    },
+    {
+     "w": "Taiwan",
+     "t0": 17.127,
+     "t1": 17.768
+    }
+   ],
+   "t0": 13.782,
+   "t1": 17.907
+  },
+  {
+   "i": 4,
+   "sec": "01-open",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "card:I'm from Taiwan.",
+   "text": "今天要認識十個國家，還要學會說「我來自哪裡」。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "今天",
+     "t0": 18.251,
+     "t1": 18.735
+    },
+    {
+     "w": "要",
+     "t0": 18.767,
+     "t1": 18.985
+    },
+    {
+     "w": "認識",
+     "t0": 19.001,
+     "t1": 19.36
+    },
+    {
+     "w": "十",
+     "t0": 19.407,
+     "t1": 19.61
+    },
+    {
+     "w": "個",
+     "t0": 19.689,
+     "t1": 19.829
+    },
+    {
+     "w": "國家",
+     "t0": 19.907,
+     "t1": 20.517
+    },
+    {
+     "w": "還",
+     "t0": 20.86,
+     "t1": 21.032
+    },
+    {
+     "w": "要",
+     "t0": 21.048,
+     "t1": 21.204
+    },
+    {
+     "w": "學會",
+     "t0": 21.22,
+     "t1": 21.642
+    },
+    {
+     "w": "說",
+     "t0": 21.673,
+     "t1": 22.079
+    },
+    {
+     "w": "我",
+     "t0": 22.376,
+     "t1": 22.501
+    },
+    {
+     "w": "來自",
+     "t0": 22.564,
+     "t1": 22.892
+    },
+    {
+     "w": "哪裡",
+     "t0": 22.907,
+     "t1": 23.501
+    }
+   ],
+   "t0": 18.357,
+   "t1": 23.664
+  },
+  {
+   "i": 5,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "world",
+   "text": "Let's learn the countries. Look at the flags!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Let's",
+     "t0": 24.556,
+     "t1": 24.931
+    },
+    {
+     "w": "learn",
+     "t0": 24.946,
+     "t1": 25.228
+    },
+    {
+     "w": "the",
+     "t0": 25.259,
+     "t1": 25.384
+    },
+    {
+     "w": "countries",
+     "t0": 25.415,
+     "t1": 26.181
+    },
+    {
+     "w": "Look",
+     "t0": 27.287,
+     "t1": 27.6
+    },
+    {
+     "w": "at",
+     "t0": 27.631,
+     "t1": 27.725
+    },
+    {
+     "w": "the",
+     "t0": 27.756,
+     "t1": 27.896
+    },
+    {
+     "w": "flags",
+     "t0": 27.912,
+     "t1": 28.646
+    }
+   ],
+   "t0": 24.664,
+   "t1": 28.707
+  },
+  {
+   "i": 6,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "world",
+   "text": "看國旗、看地標，跟著唸兩次。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "看",
+     "t0": 29.054,
+     "t1": 29.273
+    },
+    {
+     "w": "國旗",
+     "t0": 29.351,
+     "t1": 30.023
+    },
+    {
+     "w": "看",
+     "t0": 30.367,
+     "t1": 30.539
+    },
+    {
+     "w": "地標",
+     "t0": 30.601,
+     "t1": 31.211
+    },
+    {
+     "w": "跟",
+     "t0": 31.554,
+     "t1": 31.726
+    },
+    {
+     "w": "著",
+     "t0": 31.804,
+     "t1": 31.961
+    },
+    {
+     "w": "唸",
+     "t0": 31.976,
+     "t1": 32.179
+    },
+    {
+     "w": "兩",
+     "t0": 32.195,
+     "t1": 32.429
+    },
+    {
+     "w": "次",
+     "t0": 32.476,
+     "t1": 32.851
+    }
+   ],
+   "t0": 29.157,
+   "t1": 33.024
+  },
+  {
+   "i": 7,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Mia；flag:Australia；card:Australia；中文 澳洲；第 1 輪",
+   "text": "Repeat after me. Australia.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 33.326,
+     "t1": 33.905
+    },
+    {
+     "w": "after",
+     "t0": 33.92,
+     "t1": 34.28
+    },
+    {
+     "w": "me",
+     "t0": 34.295,
+     "t1": 34.592
+    },
+    {
+     "w": "Australia",
+     "t0": 35.058,
+     "t1": 36.042
+    }
+   ],
+   "t0": 33.474,
+   "t1": 36.166
+  },
+  {
+   "i": 8,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Mia；flag:Australia；card:Australia；中文 澳洲；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 36.866,
+   "t1": 38.866
+  },
+  {
+   "i": 9,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Mia；flag:Australia；card:Australia；中文 澳洲；第 2 輪",
+   "text": "Australia.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Australia",
+     "t0": 39.156,
+     "t1": 40.14
+    }
+   ],
+   "t0": 39.316,
+   "t1": 40.275
+  },
+  {
+   "i": 10,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Mia；flag:Australia；card:Australia；中文 澳洲；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 40.975,
+   "t1": 42.975
+  },
+  {
+   "i": 11,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Raj；flag:India；card:India；中文 印度；第 1 輪",
+   "text": "Repeat after me. India.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 43.316,
+     "t1": 43.972
+    },
+    {
+     "w": "after",
+     "t0": 44.004,
+     "t1": 44.457
+    },
+    {
+     "w": "me",
+     "t0": 44.472,
+     "t1": 44.894
+    },
+    {
+     "w": "India",
+     "t0": 45.985,
+     "t1": 46.766
+    }
+   ],
+   "t0": 43.425,
+   "t1": 46.835
+  },
+  {
+   "i": 12,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Raj；flag:India；card:India；中文 印度；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 47.535,
+   "t1": 49.535
+  },
+  {
+   "i": 13,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Raj；flag:India；card:India；中文 印度；第 2 輪",
+   "text": "India.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "India",
+     "t0": 49.879,
+     "t1": 50.661
+    }
+   ],
+   "t0": 49.985,
+   "t1": 50.742
+  },
+  {
+   "i": 14,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Raj；flag:India；card:India；中文 印度；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 51.442,
+   "t1": 53.442
+  },
+  {
+   "i": 15,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Yuki；flag:Japan；card:Japan；中文 日本；第 1 輪",
+   "text": "Repeat after me. Japan.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 53.744,
+     "t1": 54.322
+    },
+    {
+     "w": "after",
+     "t0": 54.338,
+     "t1": 54.697
+    },
+    {
+     "w": "me",
+     "t0": 54.713,
+     "t1": 55.01
+    },
+    {
+     "w": "Japan",
+     "t0": 55.475,
+     "t1": 56.272
+    }
+   ],
+   "t0": 53.892,
+   "t1": 56.393
+  },
+  {
+   "i": 16,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Yuki；flag:Japan；card:Japan；中文 日本；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 57.093,
+   "t1": 59.093
+  },
+  {
+   "i": 17,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Yuki；flag:Japan；card:Japan；中文 日本；第 2 輪",
+   "text": "Japan.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Japan",
+     "t0": 59.382,
+     "t1": 60.178
+    }
+   ],
+   "t0": 59.543,
+   "t1": 60.31
+  },
+  {
+   "i": 18,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Yuki；flag:Japan；card:Japan；中文 日本；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 61.01,
+   "t1": 63.01
+  },
+  {
+   "i": 19,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Wei；flag:Singapore；card:Singapore；中文 新加坡；第 1 輪",
+   "text": "Repeat after me. Singapore.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 63.351,
+     "t1": 64.007
+    },
+    {
+     "w": "after",
+     "t0": 64.038,
+     "t1": 64.491
+    },
+    {
+     "w": "me",
+     "t0": 64.507,
+     "t1": 64.929
+    },
+    {
+     "w": "Singapore",
+     "t0": 66.019,
+     "t1": 67.16
+    }
+   ],
+   "t0": 63.46,
+   "t1": 67.205
+  },
+  {
+   "i": 20,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Wei；flag:Singapore；card:Singapore；中文 新加坡；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 67.905,
+   "t1": 69.905
+  },
+  {
+   "i": 21,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Wei；flag:Singapore；card:Singapore；中文 新加坡；第 2 輪",
+   "text": "Singapore.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Singapore",
+     "t0": 70.229,
+     "t1": 71.369
+    }
+   ],
+   "t0": 70.355,
+   "t1": 71.427
+  },
+  {
+   "i": 22,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Wei；flag:Singapore；card:Singapore；中文 新加坡；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 72.127,
+   "t1": 74.127
+  },
+  {
+   "i": 23,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Sofia；flag:Spain；card:Spain；中文 西班牙；第 1 輪",
+   "text": "Repeat after me. Spain.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 74.43,
+     "t1": 75.008
+    },
+    {
+     "w": "after",
+     "t0": 75.024,
+     "t1": 75.383
+    },
+    {
+     "w": "me",
+     "t0": 75.399,
+     "t1": 75.695
+    },
+    {
+     "w": "Spain",
+     "t0": 76.161,
+     "t1": 77.005
+    }
+   ],
+   "t0": 74.577,
+   "t1": 77.15
+  },
+  {
+   "i": 24,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Sofia；flag:Spain；card:Spain；中文 西班牙；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 77.85,
+   "t1": 79.85
+  },
+  {
+   "i": 25,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Sofia；flag:Spain；card:Spain；中文 西班牙；第 2 輪",
+   "text": "Spain.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Spain",
+     "t0": 80.144,
+     "t1": 80.987
+    }
+   ],
+   "t0": 80.3,
+   "t1": 81.144
+  },
+  {
+   "i": 26,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Sofia；flag:Spain；card:Spain；中文 西班牙；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 81.844,
+   "t1": 83.844
+  },
+  {
+   "i": 27,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Kai；flag:Taiwan；card:Taiwan；中文 臺灣；第 1 輪",
+   "text": "Repeat after me. Taiwan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 84.185,
+     "t1": 84.841
+    },
+    {
+     "w": "after",
+     "t0": 84.872,
+     "t1": 85.325
+    },
+    {
+     "w": "me",
+     "t0": 85.341,
+     "t1": 85.763
+    },
+    {
+     "w": "Taiwan",
+     "t0": 86.853,
+     "t1": 87.682
+    }
+   ],
+   "t0": 84.294,
+   "t1": 87.772
+  },
+  {
+   "i": 28,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Kai；flag:Taiwan；card:Taiwan；中文 臺灣；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 88.472,
+   "t1": 90.472
+  },
+  {
+   "i": 29,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Kai；flag:Taiwan；card:Taiwan；中文 臺灣；第 2 輪",
+   "text": "Taiwan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Taiwan",
+     "t0": 90.814,
+     "t1": 91.642
+    }
+   ],
+   "t0": 90.922,
+   "t1": 91.745
+  },
+  {
+   "i": 30,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Kai；flag:Taiwan；card:Taiwan；中文 臺灣；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 92.445,
+   "t1": 94.445
+  },
+  {
+   "i": 31,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Lily；flag:the UK；card:the UK；中文 英國；第 1 輪",
+   "text": "Repeat after me. the UK.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 94.748,
+     "t1": 95.326
+    },
+    {
+     "w": "after",
+     "t0": 95.341,
+     "t1": 95.701
+    },
+    {
+     "w": "me",
+     "t0": 95.716,
+     "t1": 96.013
+    },
+    {
+     "w": "the",
+     "t0": 96.479,
+     "t1": 96.651
+    },
+    {
+     "w": "UK",
+     "t0": 96.666,
+     "t1": 97.213
+    }
+   ],
+   "t0": 94.895,
+   "t1": 97.402
+  },
+  {
+   "i": 32,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Lily；flag:the UK；card:the UK；中文 英國；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 98.102,
+   "t1": 100.102
+  },
+  {
+   "i": 33,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Lily；flag:the UK；card:the UK；中文 英國；第 2 輪",
+   "text": "the UK.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "the",
+     "t0": 100.388,
+     "t1": 100.56
+    },
+    {
+     "w": "UK",
+     "t0": 100.575,
+     "t1": 101.122
+    }
+   ],
+   "t0": 100.552,
+   "t1": 101.322
+  },
+  {
+   "i": 34,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Lily；flag:the UK；card:the UK；中文 英國；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 102.022,
+   "t1": 104.022
+  },
+  {
+   "i": 35,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Tom；flag:the USA；card:the USA；中文 美國；第 1 輪",
+   "text": "Repeat after me. the USA.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 104.363,
+     "t1": 105.019
+    },
+    {
+     "w": "after",
+     "t0": 105.05,
+     "t1": 105.503
+    },
+    {
+     "w": "me",
+     "t0": 105.519,
+     "t1": 105.941
+    },
+    {
+     "w": "the",
+     "t0": 107.031,
+     "t1": 107.188
+    },
+    {
+     "w": "USA",
+     "t0": 107.219,
+     "t1": 108.266
+    }
+   ],
+   "t0": 104.472,
+   "t1": 108.35
+  },
+  {
+   "i": 36,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Tom；flag:the USA；card:the USA；中文 美國；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 109.05,
+   "t1": 111.05
+  },
+  {
+   "i": 37,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Tom；flag:the USA；card:the USA；中文 美國；第 2 輪",
+   "text": "the USA.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "the",
+     "t0": 111.383,
+     "t1": 111.539
+    },
+    {
+     "w": "USA",
+     "t0": 111.57,
+     "t1": 112.617
+    }
+   ],
+   "t0": 111.5,
+   "t1": 112.713
+  },
+  {
+   "i": 38,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Tom；flag:the USA；card:the USA；中文 美國；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 113.413,
+   "t1": 115.413
+  },
+  {
+   "i": 39,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Jisu；flag:Korea；card:Korea；中文 韓國；第 1 輪",
+   "text": "Repeat after me. Korea.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 115.716,
+     "t1": 116.294
+    },
+    {
+     "w": "after",
+     "t0": 116.31,
+     "t1": 116.669
+    },
+    {
+     "w": "me",
+     "t0": 116.685,
+     "t1": 116.981
+    },
+    {
+     "w": "Korea",
+     "t0": 117.447,
+     "t1": 118.181
+    }
+   ],
+   "t0": 115.863,
+   "t1": 118.277
+  },
+  {
+   "i": 40,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Jisu；flag:Korea；card:Korea；中文 韓國；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 118.977,
+   "t1": 120.977
+  },
+  {
+   "i": 41,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Jisu；flag:Korea；card:Korea；中文 韓國；第 2 輪",
+   "text": "Korea.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Korea",
+     "t0": 121.265,
+     "t1": 121.999
+    }
+   ],
+   "t0": 121.427,
+   "t1": 122.106
+  },
+  {
+   "i": 42,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Jisu；flag:Korea；card:Korea；中文 韓國；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 122.806,
+   "t1": 124.806
+  },
+  {
+   "i": 43,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Nam；flag:Vietnam；card:Vietnam；中文 越南；第 1 輪",
+   "text": "Repeat after me. Vietnam.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 125.147,
+     "t1": 125.803
+    },
+    {
+     "w": "after",
+     "t0": 125.834,
+     "t1": 126.287
+    },
+    {
+     "w": "me",
+     "t0": 126.303,
+     "t1": 126.725
+    },
+    {
+     "w": "Vietnam",
+     "t0": 127.815,
+     "t1": 128.909
+    }
+   ],
+   "t0": 125.256,
+   "t1": 129.02
+  },
+  {
+   "i": 44,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Nam；flag:Vietnam；card:Vietnam；中文 越南；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 129.72,
+   "t1": 131.72
+  },
+  {
+   "i": 45,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Nam；flag:Vietnam；card:Vietnam；中文 越南；第 2 輪",
+   "text": "Vietnam.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Vietnam",
+     "t0": 132.077,
+     "t1": 133.171
+    }
+   ],
+   "t0": 132.17,
+   "t1": 133.294
+  },
+  {
+   "i": 46,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Nam；flag:Vietnam；card:Vietnam；中文 越南；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 133.994,
+   "t1": 135.994
+  },
+  {
+   "i": 47,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "world",
+   "text": "Let's say all ten countries together!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Let's",
+     "t0": 136.336,
+     "t1": 136.664
+    },
+    {
+     "w": "say",
+     "t0": 136.695,
+     "t1": 136.929
+    },
+    {
+     "w": "all",
+     "t0": 136.961,
+     "t1": 137.211
+    },
+    {
+     "w": "ten",
+     "t0": 137.226,
+     "t1": 137.554
+    },
+    {
+     "w": "countries",
+     "t0": 137.586,
+     "t1": 138.117
+    },
+    {
+     "w": "together",
+     "t0": 138.132,
+     "t1": 138.82
+    }
+   ],
+   "t0": 136.444,
+   "t1": 138.886
+  },
+  {
+   "i": 48,
+   "sec": "02-words",
+   "who": "relay",
+   "kind": "say",
+   "vis": "world；接力，唸到誰亮誰",
+   "text": "Australia, India, Japan, Singapore, Spain, Taiwan, the UK, the USA, Korea, Vietnam!",
+   "voices": [
+    "en-US-AvaNeural",
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Australia,",
+     "t0": 139.336,
+     "t1": 140.238,
+     "who": "nova"
+    },
+    {
+     "w": "India,",
+     "t0": 140.538,
+     "t1": 141.34,
+     "who": "cosmo"
+    },
+    {
+     "w": "Japan,",
+     "t0": 141.64,
+     "t1": 142.436,
+     "who": "nova"
+    },
+    {
+     "w": "Singapore,",
+     "t0": 142.736,
+     "t1": 143.782,
+     "who": "cosmo"
+    },
+    {
+     "w": "Spain,",
+     "t0": 144.082,
+     "t1": 144.925,
+     "who": "nova"
+    },
+    {
+     "w": "Taiwan,",
+     "t0": 145.225,
+     "t1": 146.111,
+     "who": "cosmo"
+    },
+    {
+     "w": "the UK,",
+     "t0": 146.411,
+     "t1": 147.153,
+     "who": "nova"
+    },
+    {
+     "w": "the USA,",
+     "t0": 147.453,
+     "t1": 148.631,
+     "who": "cosmo"
+    },
+    {
+     "w": "Korea,",
+     "t0": 148.931,
+     "t1": 149.657,
+     "who": "nova"
+    },
+    {
+     "w": "Vietnam!",
+     "t0": 149.957,
+     "t1": 151.06,
+     "who": "cosmo"
+    }
+   ],
+   "t0": 139.336,
+   "t1": 151.06
+  },
+  {
+   "i": 49,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Japan；示範",
+   "text": "Now, let's clap the beats!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 151.906,
+     "t1": 152.438
+    },
+    {
+     "w": "let's",
+     "t0": 152.5,
+     "t1": 152.797
+    },
+    {
+     "w": "clap",
+     "t0": 152.813,
+     "t1": 153.078
+    },
+    {
+     "w": "the",
+     "t0": 153.094,
+     "t1": 153.219
+    },
+    {
+     "w": "beats",
+     "t0": 153.234,
+     "t1": 153.859
+    }
+   ],
+   "t0": 152.06,
+   "t1": 153.98
+  },
+  {
+   "i": 50,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "clap:Japan；示範",
+   "text": "每個國名有幾拍？一拍拍一下手。大大的那一拍要唸得比較重、比較大聲。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "每個",
+     "t0": 154.311,
+     "t1": 154.686
+    },
+    {
+     "w": "國名",
+     "t0": 154.764,
+     "t1": 155.139
+    },
+    {
+     "w": "有",
+     "t0": 155.186,
+     "t1": 155.342
+    },
+    {
+     "w": "幾",
+     "t0": 155.405,
+     "t1": 155.561
+    },
+    {
+     "w": "拍",
+     "t0": 155.623,
+     "t1": 155.998
+    },
+    {
+     "w": "一",
+     "t0": 157.136,
+     "t1": 157.308
+    },
+    {
+     "w": "拍拍",
+     "t0": 157.339,
+     "t1": 157.839
+    },
+    {
+     "w": "一下手",
+     "t0": 157.839,
+     "t1": 158.651
+    },
+    {
+     "w": "大",
+     "t0": 159.683,
+     "t1": 159.917
+    },
+    {
+     "w": "大的",
+     "t0": 159.933,
+     "t1": 160.261
+    },
+    {
+     "w": "那",
+     "t0": 160.276,
+     "t1": 160.511
+    },
+    {
+     "w": "一拍",
+     "t0": 160.511,
+     "t1": 160.886
+    },
+    {
+     "w": "要",
+     "t0": 160.901,
+     "t1": 161.073
+    },
+    {
+     "w": "唸",
+     "t0": 161.089,
+     "t1": 161.261
+    },
+    {
+     "w": "得",
+     "t0": 161.292,
+     "t1": 161.448
+    },
+    {
+     "w": "比較",
+     "t0": 161.526,
+     "t1": 161.886
+    },
+    {
+     "w": "重",
+     "t0": 161.948,
+     "t1": 162.276
+    },
+    {
+     "w": "比較",
+     "t0": 162.573,
+     "t1": 162.948
+    },
+    {
+     "w": "大聲",
+     "t0": 162.948,
+     "t1": 163.526
+    }
+   ],
+   "t0": 154.43,
+   "t1": 163.742
+  },
+  {
+   "i": 51,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Japan；示範",
+   "text": "Clap and say with me!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Clap",
+     "t0": 164.075,
+     "t1": 164.513
+    },
+    {
+     "w": "and",
+     "t0": 164.528,
+     "t1": 164.669
+    },
+    {
+     "w": "say",
+     "t0": 164.7,
+     "t1": 164.981
+    },
+    {
+     "w": "with",
+     "t0": 165.013,
+     "t1": 165.247
+    },
+    {
+     "w": "me",
+     "t0": 165.278,
+     "t1": 165.622
+    }
+   ],
+   "t0": 164.192,
+   "t1": 165.726
+  },
+  {
+   "i": 52,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Australia；flag:Australia；整個字",
+   "text": "Australia.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Australia",
+     "t0": 166.016,
+     "t1": 167.0
+    }
+   ],
+   "t0": 166.176,
+   "t1": 167.135
+  },
+  {
+   "i": 53,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Australia；flag:Australia；拍手 4 下",
+   "text": "Aus, TRA, li, a!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Awss",
+     "t0": 167.415,
+     "t1": 168.087
+    },
+    {
+     "w": "tray",
+     "t0": 168.243,
+     "t1": 168.649
+    },
+    {
+     "w": "lee",
+     "t0": 168.837,
+     "t1": 169.212
+    },
+    {
+     "w": "uh",
+     "t0": 169.368,
+     "t1": 169.54
+    }
+   ],
+   "t0": 167.585,
+   "t1": 169.683,
+   "claps": [
+    167.415,
+    168.243,
+    168.837,
+    169.368
+   ],
+   "stress": 1
+  },
+  {
+   "i": 54,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Australia；flag:Australia；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 170.383,
+   "t1": 173.883
+  },
+  {
+   "i": 55,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:India；flag:India；整個字",
+   "text": "India.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "India",
+     "t0": 174.228,
+     "t1": 175.009
+    }
+   ],
+   "t0": 174.333,
+   "t1": 175.09
+  },
+  {
+   "i": 56,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:India；flag:India；拍手 3 下",
+   "text": "IN, di, a!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "In",
+     "t0": 175.446,
+     "t1": 175.836
+    },
+    {
+     "w": "dee",
+     "t0": 176.133,
+     "t1": 176.571
+    },
+    {
+     "w": "uh",
+     "t0": 176.774,
+     "t1": 177.242
+    }
+   ],
+   "t0": 175.54,
+   "t1": 177.358,
+   "claps": [
+    175.446,
+    176.133,
+    176.774
+   ],
+   "stress": 0
+  },
+  {
+   "i": 57,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:India；flag:India；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 178.058,
+   "t1": 181.558
+  },
+  {
+   "i": 58,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Japan；flag:Japan；整個字",
+   "text": "Japan.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Japan",
+     "t0": 181.847,
+     "t1": 182.644
+    }
+   ],
+   "t0": 182.008,
+   "t1": 182.775
+  },
+  {
+   "i": 59,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Japan；flag:Japan；拍手 2 下",
+   "text": "Ja, PAN!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Juh",
+     "t0": 183.057,
+     "t1": 183.463
+    },
+    {
+     "w": "pan",
+     "t0": 183.51,
+     "t1": 184.103
+    }
+   ],
+   "t0": 183.225,
+   "t1": 184.258,
+   "claps": [
+    183.057,
+    183.51
+   ],
+   "stress": 1
+  },
+  {
+   "i": 60,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Japan；flag:Japan；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 184.958,
+   "t1": 188.458
+  },
+  {
+   "i": 61,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Singapore；flag:Singapore；整個字",
+   "text": "Singapore.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Singapore",
+     "t0": 188.781,
+     "t1": 189.922
+    }
+   ],
+   "t0": 188.908,
+   "t1": 189.98
+  },
+  {
+   "i": 62,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Singapore；flag:Singapore；拍手 3 下",
+   "text": "SIN, ga, pore!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Sing",
+     "t0": 190.314,
+     "t1": 190.923
+    },
+    {
+     "w": "uh",
+     "t0": 191.204,
+     "t1": 191.548
+    },
+    {
+     "w": "pore",
+     "t0": 191.798,
+     "t1": 192.345
+    }
+   ],
+   "t0": 190.43,
+   "t1": 192.408,
+   "claps": [
+    190.314,
+    191.204,
+    191.798
+   ],
+   "stress": 0
+  },
+  {
+   "i": 63,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Singapore；flag:Singapore；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 193.108,
+   "t1": 196.608
+  },
+  {
+   "i": 64,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Spain；flag:Spain；整個字",
+   "text": "Spain.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Spain",
+     "t0": 196.901,
+     "t1": 197.745
+    }
+   ],
+   "t0": 197.058,
+   "t1": 197.901
+  },
+  {
+   "i": 65,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Spain；flag:Spain；拍手 1 下",
+   "text": "Spain!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Spain",
+     "t0": 198.195,
+     "t1": 199.038
+    }
+   ],
+   "t0": 198.351,
+   "t1": 199.195,
+   "claps": [
+    198.195
+   ],
+   "stress": 0
+  },
+  {
+   "i": 66,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Spain；flag:Spain；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 199.895,
+   "t1": 203.395
+  },
+  {
+   "i": 67,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Taiwan；flag:Taiwan；整個字",
+   "text": "Taiwan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Taiwan",
+     "t0": 203.737,
+     "t1": 204.565
+    }
+   ],
+   "t0": 203.845,
+   "t1": 204.668
+  },
+  {
+   "i": 68,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Taiwan；flag:Taiwan；拍手 2 下",
+   "text": "Tai, WAN!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Tie",
+     "t0": 205.029,
+     "t1": 205.529
+    },
+    {
+     "w": "wahn",
+     "t0": 205.779,
+     "t1": 206.294
+    }
+   ],
+   "t0": 205.118,
+   "t1": 206.416,
+   "claps": [
+    205.029,
+    205.779
+   ],
+   "stress": 1
+  },
+  {
+   "i": 69,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Taiwan；flag:Taiwan；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 207.116,
+   "t1": 210.616
+  },
+  {
+   "i": 70,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:the UK；flag:the UK；整個字",
+   "text": "the UK.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "the",
+     "t0": 210.902,
+     "t1": 211.074
+    },
+    {
+     "w": "UK",
+     "t0": 211.089,
+     "t1": 211.636
+    }
+   ],
+   "t0": 211.066,
+   "t1": 211.836
+  },
+  {
+   "i": 71,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:the UK；flag:the UK；拍手 2 下",
+   "text": "U, K!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "U",
+     "t0": 212.127,
+     "t1": 212.752
+    },
+    {
+     "w": "K",
+     "t0": 213.249,
+     "t1": 213.764
+    }
+   ],
+   "t0": 212.286,
+   "t1": 213.883,
+   "claps": [
+    212.127,
+    213.249
+   ],
+   "stress": 1
+  },
+  {
+   "i": 72,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:the UK；flag:the UK；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 214.583,
+   "t1": 218.083
+  },
+  {
+   "i": 73,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:the USA；flag:the USA；整個字",
+   "text": "the USA.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "the",
+     "t0": 218.415,
+     "t1": 218.572
+    },
+    {
+     "w": "USA",
+     "t0": 218.603,
+     "t1": 219.65
+    }
+   ],
+   "t0": 218.533,
+   "t1": 219.746
+  },
+  {
+   "i": 74,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:the USA；flag:the USA；拍手 3 下",
+   "text": "U, S, A!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "U",
+     "t0": 220.05,
+     "t1": 220.706
+    },
+    {
+     "w": "S",
+     "t0": 221.828,
+     "t1": 222.469
+    },
+    {
+     "w": "A",
+     "t0": 223.547,
+     "t1": 224.094
+    }
+   ],
+   "t0": 220.196,
+   "t1": 224.189,
+   "claps": [
+    220.05,
+    221.828,
+    223.547
+   ],
+   "stress": 2
+  },
+  {
+   "i": 75,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:the USA；flag:the USA；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 224.889,
+   "t1": 228.389
+  },
+  {
+   "i": 76,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Korea；flag:Korea；整個字",
+   "text": "Korea.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Korea",
+     "t0": 228.677,
+     "t1": 229.411
+    }
+   ],
+   "t0": 228.839,
+   "t1": 229.517
+  },
+  {
+   "i": 77,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:Korea；flag:Korea；拍手 3 下",
+   "text": "Ko, RE, a!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Kuh",
+     "t0": 229.801,
+     "t1": 230.254
+    },
+    {
+     "w": "ree",
+     "t0": 230.473,
+     "t1": 230.91
+    },
+    {
+     "w": "uh",
+     "t0": 230.988,
+     "t1": 231.16
+    }
+   ],
+   "t0": 229.967,
+   "t1": 231.309,
+   "claps": [
+    229.801,
+    230.473,
+    230.988
+   ],
+   "stress": 1
+  },
+  {
+   "i": 78,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Korea；flag:Korea；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 232.009,
+   "t1": 235.509
+  },
+  {
+   "i": 79,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Vietnam；flag:Vietnam；整個字",
+   "text": "Vietnam.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Vietnam",
+     "t0": 235.867,
+     "t1": 236.961
+    }
+   ],
+   "t0": 235.959,
+   "t1": 237.084
+  },
+  {
+   "i": 80,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:Vietnam；flag:Vietnam；拍手 3 下",
+   "text": "Vi, et, NAM!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Vee",
+     "t0": 237.442,
+     "t1": 237.817
+    },
+    {
+     "w": "yet",
+     "t0": 238.083,
+     "t1": 238.38
+    },
+    {
+     "w": "nahm",
+     "t0": 238.63,
+     "t1": 239.192
+    }
+   ],
+   "t0": 237.534,
+   "t1": 239.325,
+   "claps": [
+    237.442,
+    238.083,
+    238.63
+   ],
+   "stress": 2
+  },
+  {
+   "i": 81,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:Vietnam；flag:Vietnam；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 240.025,
+   "t1": 243.525
+  },
+  {
+   "i": 82,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "clap:the USA；flag:the USA",
+   "text": "Spain 只有一拍；Australia 有四拍。the UK、the USA 是一個一個字母唸，最後一個字母最重。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "Spain",
+     "t0": 243.811,
+     "t1": 244.295
+    },
+    {
+     "w": "只有",
+     "t0": 244.295,
+     "t1": 244.576
+    },
+    {
+     "w": "一拍",
+     "t0": 244.576,
+     "t1": 245.186
+    },
+    {
+     "w": "Australia",
+     "t0": 245.451,
+     "t1": 246.045
+    },
+    {
+     "w": "有",
+     "t0": 246.045,
+     "t1": 246.17
+    },
+    {
+     "w": "四",
+     "t0": 246.17,
+     "t1": 246.373
+    },
+    {
+     "w": "拍",
+     "t0": 246.373,
+     "t1": 246.92
+    },
+    {
+     "w": "the",
+     "t0": 247.98,
+     "t1": 248.183
+    },
+    {
+     "w": "UK",
+     "t0": 248.183,
+     "t1": 248.792
+    },
+    {
+     "w": "the",
+     "t0": 248.948,
+     "t1": 249.089
+    },
+    {
+     "w": "USA",
+     "t0": 249.089,
+     "t1": 249.511
+    },
+    {
+     "w": "是",
+     "t0": 249.511,
+     "t1": 249.698
+    },
+    {
+     "w": "一個",
+     "t0": 249.698,
+     "t1": 249.901
+    },
+    {
+     "w": "一個",
+     "t0": 249.901,
+     "t1": 250.136
+    },
+    {
+     "w": "字母",
+     "t0": 250.136,
+     "t1": 250.48
+    },
+    {
+     "w": "唸",
+     "t0": 250.48,
+     "t1": 251.089
+    },
+    {
+     "w": "最後",
+     "t0": 251.23,
+     "t1": 251.667
+    },
+    {
+     "w": "一個",
+     "t0": 251.667,
+     "t1": 251.901
+    },
+    {
+     "w": "字母",
+     "t0": 251.901,
+     "t1": 252.261
+    },
+    {
+     "w": "最",
+     "t0": 252.261,
+     "t1": 252.433
+    },
+    {
+     "w": "重",
+     "t0": 252.433,
+     "t1": 253.058
+    }
+   ],
+   "t0": 243.975,
+   "t1": 252.922
+  },
+  {
+   "i": 83,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "Nova 比讚 P07",
+   "text": "Great clapping!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Great",
+     "t0": 253.215,
+     "t1": 253.605
+    },
+    {
+     "w": "clapping",
+     "t0": 253.621,
+     "t1": 254.386
+    }
+   ],
+   "t0": 253.372,
+   "t1": 254.552
+  },
+  {
+   "i": 84,
+   "sec": "04-cap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "cap；四張國名卡；第一個字母發光",
+   "text": "Look at the first letters. A, I, J, S!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Look",
+     "t0": 255.394,
+     "t1": 255.753
+    },
+    {
+     "w": "at",
+     "t0": 255.769,
+     "t1": 255.847
+    },
+    {
+     "w": "the",
+     "t0": 255.863,
+     "t1": 255.988
+    },
+    {
+     "w": "first",
+     "t0": 256.003,
+     "t1": 256.394
+    },
+    {
+     "w": "letters",
+     "t0": 256.409,
+     "t1": 257.05
+    },
+    {
+     "w": "A",
+     "t0": 257.516,
+     "t1": 257.969
+    },
+    {
+     "w": "I",
+     "t0": 258.063,
+     "t1": 258.375
+    },
+    {
+     "w": "J",
+     "t0": 258.422,
+     "t1": 258.875
+    },
+    {
+     "w": "S",
+     "t0": 258.922,
+     "t1": 259.391
+    }
+   ],
+   "t0": 255.552,
+   "t1": 259.503
+  },
+  {
+   "i": 85,
+   "sec": "04-cap",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "cap；四張國名卡；大寫字母放大",
+   "text": "國家名字的第一個字母一定要大寫。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "國家",
+     "t0": 259.843,
+     "t1": 260.327
+    },
+    {
+     "w": "名字的",
+     "t0": 260.327,
+     "t1": 260.905
+    },
+    {
+     "w": "第一",
+     "t0": 260.952,
+     "t1": 261.218
+    },
+    {
+     "w": "個",
+     "t0": 261.28,
+     "t1": 261.421
+    },
+    {
+     "w": "字母",
+     "t0": 261.483,
+     "t1": 261.921
+    },
+    {
+     "w": "一定",
+     "t0": 261.952,
+     "t1": 262.202
+    },
+    {
+     "w": "要",
+     "t0": 262.311,
+     "t1": 262.468
+    },
+    {
+     "w": "大寫",
+     "t0": 262.483,
+     "t1": 263.108
+    }
+   ],
+   "t0": 259.953,
+   "t1": 263.273
+  },
+  {
+   "i": 86,
+   "sec": "04-cap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "the；card:the UK / the USA；the 發光",
+   "text": "Now look. The UK. The USA. We say the!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 263.595,
+     "t1": 264.111
+    },
+    {
+     "w": "look",
+     "t0": 264.127,
+     "t1": 264.736
+    },
+    {
+     "w": "The",
+     "t0": 265.827,
+     "t1": 266.03
+    },
+    {
+     "w": "UK",
+     "t0": 266.061,
+     "t1": 266.936
+    },
+    {
+     "w": "The",
+     "t0": 268.03,
+     "t1": 268.186
+    },
+    {
+     "w": "USA",
+     "t0": 268.217,
+     "t1": 269.264
+    },
+    {
+     "w": "We",
+     "t0": 270.342,
+     "t1": 270.624
+    },
+    {
+     "w": "say",
+     "t0": 270.655,
+     "t1": 271.03
+    },
+    {
+     "w": "the",
+     "t0": 271.045,
+     "t1": 271.436
+    }
+   ],
+   "t0": 263.723,
+   "t1": 271.545
+  },
+  {
+   "i": 87,
+   "sec": "04-cap",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "the；card:the USA = the United States of America",
+   "text": "英國和美國前面要加 the。the USA 是 the United States of America，美利堅合眾國。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "英國",
+     "t0": 271.825,
+     "t1": 272.404
+    },
+    {
+     "w": "和美",
+     "t0": 272.404,
+     "t1": 272.732
+    },
+    {
+     "w": "國",
+     "t0": 272.732,
+     "t1": 272.904
+    },
+    {
+     "w": "前面",
+     "t0": 272.904,
+     "t1": 273.294
+    },
+    {
+     "w": "要",
+     "t0": 273.294,
+     "t1": 273.45
+    },
+    {
+     "w": "加",
+     "t0": 273.45,
+     "t1": 273.685
+    },
+    {
+     "w": "the",
+     "t0": 273.685,
+     "t1": 274.154
+    },
+    {
+     "w": "the",
+     "t0": 275.229,
+     "t1": 275.463
+    },
+    {
+     "w": "USA",
+     "t0": 275.463,
+     "t1": 275.979
+    },
+    {
+     "w": "是",
+     "t0": 275.979,
+     "t1": 276.166
+    },
+    {
+     "w": "the",
+     "t0": 276.166,
+     "t1": 276.213
+    },
+    {
+     "w": "United",
+     "t0": 276.213,
+     "t1": 276.572
+    },
+    {
+     "w": "States",
+     "t0": 276.572,
+     "t1": 276.916
+    },
+    {
+     "w": "of",
+     "t0": 276.916,
+     "t1": 276.979
+    },
+    {
+     "w": "America",
+     "t0": 276.979,
+     "t1": 277.744
+    },
+    {
+     "w": "美",
+     "t0": 277.885,
+     "t1": 278.135
+    },
+    {
+     "w": "利",
+     "t0": 278.135,
+     "t1": 278.26
+    },
+    {
+     "w": "堅合",
+     "t0": 278.26,
+     "t1": 278.619
+    },
+    {
+     "w": "眾國",
+     "t0": 278.619,
+     "t1": 279.479
+    }
+   ],
+   "t0": 271.995,
+   "t1": 279.348
+  },
+  {
+   "i": 88,
+   "sec": "04-cap",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "the；card:the UK = the United Kingdom",
+   "text": "the UK 是 the United Kingdom，聯合王國，就是英國。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "the",
+     "t0": 279.692,
+     "t1": 279.801
+    },
+    {
+     "w": "UK",
+     "t0": 279.817,
+     "t1": 280.301
+    },
+    {
+     "w": "是",
+     "t0": 280.348,
+     "t1": 280.536
+    },
+    {
+     "w": "the",
+     "t0": 280.567,
+     "t1": 280.676
+    },
+    {
+     "w": "United",
+     "t0": 280.692,
+     "t1": 281.223
+    },
+    {
+     "w": "Kingdom",
+     "t0": 281.286,
+     "t1": 281.864
+    },
+    {
+     "w": "聯合",
+     "t0": 282.192,
+     "t1": 282.629
+    },
+    {
+     "w": "王國",
+     "t0": 282.661,
+     "t1": 283.317
+    },
+    {
+     "w": "就是",
+     "t0": 283.645,
+     "t1": 283.942
+    },
+    {
+     "w": "英國",
+     "t0": 283.942,
+     "t1": 284.629
+    }
+   ],
+   "t0": 279.798,
+   "t1": 284.806
+  },
+  {
+   "i": 89,
+   "sec": "05-im",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "world",
+   "text": "Now, our friends will say hello. Listen!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 285.697,
+     "t1": 286.166
+    },
+    {
+     "w": "our",
+     "t0": 286.478,
+     "t1": 286.713
+    },
+    {
+     "w": "friends",
+     "t0": 286.744,
+     "t1": 287.166
+    },
+    {
+     "w": "will",
+     "t0": 287.182,
+     "t1": 287.353
+    },
+    {
+     "w": "say",
+     "t0": 287.385,
+     "t1": 287.635
+    },
+    {
+     "w": "hello",
+     "t0": 287.666,
+     "t1": 288.213
+    },
+    {
+     "w": "Listen",
+     "t0": 289.335,
+     "t1": 290.069
+    }
+   ],
+   "t0": 285.806,
+   "t1": 290.178
+  },
+  {
+   "i": 90,
+   "sec": "05-im",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "world",
+   "text": "I'm from 就是「我來自」。聽朋友們自我介紹，跟著說 I'm from 加國家。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 290.553,
+     "t1": 290.771
+    },
+    {
+     "w": "from",
+     "t0": 290.787,
+     "t1": 290.99
+    },
+    {
+     "w": "就是",
+     "t0": 291.053,
+     "t1": 291.553
+    },
+    {
+     "w": "我",
+     "t0": 291.834,
+     "t1": 291.959
+    },
+    {
+     "w": "來自",
+     "t0": 292.021,
+     "t1": 292.615
+    },
+    {
+     "w": "聽",
+     "t0": 293.721,
+     "t1": 293.924
+    },
+    {
+     "w": "朋友",
+     "t0": 293.956,
+     "t1": 294.362
+    },
+    {
+     "w": "們",
+     "t0": 294.378,
+     "t1": 294.549
+    },
+    {
+     "w": "自我",
+     "t0": 294.628,
+     "t1": 294.971
+    },
+    {
+     "w": "介紹",
+     "t0": 295.034,
+     "t1": 295.69
+    },
+    {
+     "w": "跟",
+     "t0": 295.971,
+     "t1": 296.128
+    },
+    {
+     "w": "著",
+     "t0": 296.19,
+     "t1": 296.331
+    },
+    {
+     "w": "說",
+     "t0": 296.346,
+     "t1": 296.581
+    },
+    {
+     "w": "I'm",
+     "t0": 296.612,
+     "t1": 296.831
+    },
+    {
+     "w": "from",
+     "t0": 296.846,
+     "t1": 297.018
+    },
+    {
+     "w": "加",
+     "t0": 297.081,
+     "t1": 297.284
+    },
+    {
+     "w": "國家",
+     "t0": 297.346,
+     "t1": 297.956
+    }
+   ],
+   "t0": 290.628,
+   "t1": 298.098
+  },
+  {
+   "i": 91,
+   "sec": "05-im",
+   "who": "mia",
+   "kind": "say",
+   "vis": "kid:Mia；flag:Australia；card:I'm from Australia.；朋友說話",
+   "text": "Hi! I'm Mia. I'm from Australia.",
+   "voices": [
+    "en-AU-NatashaNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 298.447,
+     "t1": 298.713
+    },
+    {
+     "w": "I'm",
+     "t0": 300.069,
+     "t1": 300.272
+    },
+    {
+     "w": "Mia",
+     "t0": 300.319,
+     "t1": 300.647
+    },
+    {
+     "w": "I'm",
+     "t0": 301.991,
+     "t1": 302.194
+    },
+    {
+     "w": "from",
+     "t0": 302.241,
+     "t1": 302.429
+    },
+    {
+     "w": "Australia",
+     "t0": 302.491,
+     "t1": 303.21
+    }
+   ],
+   "t0": 298.548,
+   "t1": 303.48
+  },
+  {
+   "i": 92,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Mia；flag:Australia；card:I'm from Australia.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 304.18,
+   "t1": 307.18
+  },
+  {
+   "i": 93,
+   "sec": "05-im",
+   "who": "raj",
+   "kind": "say",
+   "vis": "kid:Raj；flag:India；card:I'm from India.；朋友說話",
+   "text": "Hi! I'm Raj. I'm from India.",
+   "voices": [
+    "en-IN-PrabhatNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 307.538,
+     "t1": 307.882
+    },
+    {
+     "w": "I'm",
+     "t0": 308.988,
+     "t1": 309.41
+    },
+    {
+     "w": "Raj",
+     "t0": 309.504,
+     "t1": 310.035
+    },
+    {
+     "w": "I'm",
+     "t0": 311.16,
+     "t1": 311.472
+    },
+    {
+     "w": "from",
+     "t0": 311.472,
+     "t1": 311.894
+    },
+    {
+     "w": "India",
+     "t0": 311.957,
+     "t1": 312.457
+    }
+   ],
+   "t0": 307.63,
+   "t1": 312.615
+  },
+  {
+   "i": 94,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Raj；flag:India；card:I'm from India.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 313.315,
+   "t1": 316.315
+  },
+  {
+   "i": 95,
+   "sec": "05-im",
+   "who": "yuki",
+   "kind": "say",
+   "vis": "kid:Yuki；flag:Japan；card:I'm from Japan.；朋友說話",
+   "text": "Hi! I'm Yuki. I'm from Japan.",
+   "voices": [
+    "en-US-JennyNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 316.65,
+     "t1": 317.166
+    },
+    {
+     "w": "I'm",
+     "t0": 318.256,
+     "t1": 318.506
+    },
+    {
+     "w": "Yuki",
+     "t0": 318.522,
+     "t1": 319.194
+    },
+    {
+     "w": "I'm",
+     "t0": 320.272,
+     "t1": 320.491
+    },
+    {
+     "w": "from",
+     "t0": 320.506,
+     "t1": 320.725
+    },
+    {
+     "w": "Japan",
+     "t0": 320.741,
+     "t1": 321.491
+    }
+   ],
+   "t0": 316.765,
+   "t1": 321.58
+  },
+  {
+   "i": 96,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Yuki；flag:Japan；card:I'm from Japan.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 322.28,
+   "t1": 325.28
+  },
+  {
+   "i": 97,
+   "sec": "05-im",
+   "who": "wei",
+   "kind": "say",
+   "vis": "kid:Wei；flag:Singapore；card:I'm from Singapore.；朋友說話",
+   "text": "Hi! I'm Wei. I'm from Singapore.",
+   "voices": [
+    "en-SG-WayneNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 325.642,
+     "t1": 326.205
+    },
+    {
+     "w": "I'm",
+     "t0": 327.28,
+     "t1": 327.624
+    },
+    {
+     "w": "Wei",
+     "t0": 327.639,
+     "t1": 328.155
+    },
+    {
+     "w": "I'm",
+     "t0": 329.233,
+     "t1": 329.514
+    },
+    {
+     "w": "from",
+     "t0": 329.53,
+     "t1": 329.795
+    },
+    {
+     "w": "Singapore",
+     "t0": 329.811,
+     "t1": 330.795
+    }
+   ],
+   "t0": 325.73,
+   "t1": 330.778
+  },
+  {
+   "i": 98,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Wei；flag:Singapore；card:I'm from Singapore.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 331.478,
+   "t1": 334.478
+  },
+  {
+   "i": 99,
+   "sec": "05-im",
+   "who": "sofia",
+   "kind": "say",
+   "vis": "kid:Sofia；flag:Spain；card:I'm from Spain.；朋友說話",
+   "text": "Hi! I'm Sofia. I'm from Spain.",
+   "voices": [
+    "en-IE-EmilyNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 334.809,
+     "t1": 335.496
+    },
+    {
+     "w": "I'm",
+     "t0": 336.552,
+     "t1": 336.912
+    },
+    {
+     "w": "Sofia",
+     "t0": 336.912,
+     "t1": 337.912
+    },
+    {
+     "w": "I'm",
+     "t0": 338.959,
+     "t1": 339.318
+    },
+    {
+     "w": "from",
+     "t0": 339.318,
+     "t1": 339.599
+    },
+    {
+     "w": "Spain",
+     "t0": 339.599,
+     "t1": 340.506
+    }
+   ],
+   "t0": 334.928,
+   "t1": 340.507
+  },
+  {
+   "i": 100,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Sofia；flag:Spain；card:I'm from Spain.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 341.207,
+   "t1": 344.207
+  },
+  {
+   "i": 101,
+   "sec": "05-im",
+   "who": "kai",
+   "kind": "say",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；朋友說話",
+   "text": "Hi! I'm Kai. I'm from Taiwan.",
+   "voices": [
+    "en-HK-SamNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 344.51,
+     "t1": 345.222
+    },
+    {
+     "w": "I'm",
+     "t0": 346.439,
+     "t1": 346.856
+    },
+    {
+     "w": "Kai",
+     "t0": 346.89,
+     "t1": 347.55
+    },
+    {
+     "w": "I'm",
+     "t0": 348.748,
+     "t1": 349.095
+    },
+    {
+     "w": "from",
+     "t0": 349.13,
+     "t1": 349.408
+    },
+    {
+     "w": "Taiwan",
+     "t0": 349.442,
+     "t1": 350.276
+    }
+   ],
+   "t0": 344.657,
+   "t1": 350.401
+  },
+  {
+   "i": 102,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 351.101,
+   "t1": 354.101
+  },
+  {
+   "i": 103,
+   "sec": "05-im",
+   "who": "lily",
+   "kind": "say",
+   "vis": "kid:Lily；flag:the UK；card:I'm from the UK.；朋友說話",
+   "text": "Hi! I'm Lily. I'm from the UK.",
+   "voices": [
+    "en-GB-MaisieNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 354.459,
+     "t1": 355.006
+    },
+    {
+     "w": "I'm",
+     "t0": 356.081,
+     "t1": 356.315
+    },
+    {
+     "w": "Lily",
+     "t0": 356.331,
+     "t1": 356.878
+    },
+    {
+     "w": "I'm",
+     "t0": 357.971,
+     "t1": 358.221
+    },
+    {
+     "w": "from",
+     "t0": 358.237,
+     "t1": 358.471
+    },
+    {
+     "w": "the",
+     "t0": 358.487,
+     "t1": 358.581
+    },
+    {
+     "w": "UK",
+     "t0": 358.596,
+     "t1": 359.378
+    }
+   ],
+   "t0": 354.551,
+   "t1": 359.448
+  },
+  {
+   "i": 104,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Lily；flag:the UK；card:I'm from the UK.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 360.148,
+   "t1": 363.148
+  },
+  {
+   "i": 105,
+   "sec": "05-im",
+   "who": "tom",
+   "kind": "say",
+   "vis": "kid:Tom；flag:the USA；card:I'm from the USA.；朋友說話",
+   "text": "Hi! I'm Tom. I'm from the USA.",
+   "voices": [
+    "en-US-EricNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 363.499,
+     "t1": 364.108
+    },
+    {
+     "w": "I'm",
+     "t0": 365.199,
+     "t1": 365.464
+    },
+    {
+     "w": "Tom",
+     "t0": 365.48,
+     "t1": 366.074
+    },
+    {
+     "w": "I'm",
+     "t0": 367.167,
+     "t1": 367.464
+    },
+    {
+     "w": "from",
+     "t0": 367.48,
+     "t1": 367.683
+    },
+    {
+     "w": "the",
+     "t0": 367.699,
+     "t1": 367.777
+    },
+    {
+     "w": "USA",
+     "t0": 367.792,
+     "t1": 368.73
+    }
+   ],
+   "t0": 363.598,
+   "t1": 368.821
+  },
+  {
+   "i": 106,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Tom；flag:the USA；card:I'm from the USA.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 369.521,
+   "t1": 372.521
+  },
+  {
+   "i": 107,
+   "sec": "05-im",
+   "who": "jisu",
+   "kind": "say",
+   "vis": "kid:Jisu；flag:Korea；card:I'm from Korea.；朋友說話",
+   "text": "Hi! I'm Jisu. I'm from Korea.",
+   "voices": [
+    "en-NZ-MollyNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 372.865,
+     "t1": 373.145
+    },
+    {
+     "w": "I'm",
+     "t0": 374.575,
+     "t1": 374.789
+    },
+    {
+     "w": "Jisu",
+     "t0": 374.838,
+     "t1": 375.365
+    },
+    {
+     "w": "I'm",
+     "t0": 376.746,
+     "t1": 376.96
+    },
+    {
+     "w": "from",
+     "t0": 377.026,
+     "t1": 377.223
+    },
+    {
+     "w": "Korea",
+     "t0": 377.305,
+     "t1": 377.832
+    }
+   ],
+   "t0": 372.971,
+   "t1": 378.099
+  },
+  {
+   "i": 108,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Jisu；flag:Korea；card:I'm from Korea.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 378.799,
+   "t1": 381.799
+  },
+  {
+   "i": 109,
+   "sec": "05-im",
+   "who": "nam",
+   "kind": "say",
+   "vis": "kid:Nam；flag:Vietnam；card:I'm from Vietnam.；朋友說話",
+   "text": "Hi! I'm Nam. I'm from Vietnam.",
+   "voices": [
+    "en-PH-JamesNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 382.136,
+     "t1": 382.464
+    },
+    {
+     "w": "I'm",
+     "t0": 383.648,
+     "t1": 383.882
+    },
+    {
+     "w": "Nam",
+     "t0": 383.961,
+     "t1": 384.226
+    },
+    {
+     "w": "I'm",
+     "t0": 385.382,
+     "t1": 385.648
+    },
+    {
+     "w": "from",
+     "t0": 385.679,
+     "t1": 385.882
+    },
+    {
+     "w": "Vietnam",
+     "t0": 385.929,
+     "t1": 386.57
+    }
+   ],
+   "t0": 382.249,
+   "t1": 386.698
+  },
+  {
+   "i": 110,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Nam；flag:Vietnam；card:I'm from Vietnam.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 387.398,
+   "t1": 390.398
+  },
+  {
+   "i": 111,
+   "sec": "05-im",
+   "who": "nova",
+   "kind": "say",
+   "vis": "card:I am = I'm；merge",
+   "text": "Look at I'm. I am... becomes I'm!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Look",
+     "t0": 390.675,
+     "t1": 390.987
+    },
+    {
+     "w": "at",
+     "t0": 391.003,
+     "t1": 391.097
+    },
+    {
+     "w": "I'm",
+     "t0": 391.112,
+     "t1": 391.519
+    },
+    {
+     "w": "I",
+     "t0": 391.984,
+     "t1": 392.359
+    },
+    {
+     "w": "am",
+     "t0": 392.391,
+     "t1": 392.844
+    },
+    {
+     "w": "becomes",
+     "t0": 392.922,
+     "t1": 393.437
+    },
+    {
+     "w": "I'm",
+     "t0": 393.453,
+     "t1": 393.906
+    }
+   ],
+   "t0": 390.848,
+   "t1": 394.048
+  },
+  {
+   "i": 112,
+   "sec": "05-im",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "card:I am = I'm；merge 完成；撇號發光",
+   "text": "I am 合在一起，a 拿掉，換成一個小撇號，就變成 I'm。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 394.397,
+     "t1": 394.584
+    },
+    {
+     "w": "am",
+     "t0": 394.584,
+     "t1": 394.787
+    },
+    {
+     "w": "合",
+     "t0": 394.803,
+     "t1": 395.006
+    },
+    {
+     "w": "在一起",
+     "t0": 395.037,
+     "t1": 395.834
+    },
+    {
+     "w": "a",
+     "t0": 396.162,
+     "t1": 396.24
+    },
+    {
+     "w": "拿掉",
+     "t0": 396.272,
+     "t1": 396.897
+    },
+    {
+     "w": "換成",
+     "t0": 397.256,
+     "t1": 397.662
+    },
+    {
+     "w": "一個",
+     "t0": 397.662,
+     "t1": 397.928
+    },
+    {
+     "w": "小",
+     "t0": 397.944,
+     "t1": 398.178
+    },
+    {
+     "w": "撇號",
+     "t0": 398.24,
+     "t1": 398.881
+    },
+    {
+     "w": "就",
+     "t0": 399.24,
+     "t1": 399.381
+    },
+    {
+     "w": "變成",
+     "t0": 399.397,
+     "t1": 399.85
+    },
+    {
+     "w": "I'm",
+     "t0": 399.912,
+     "t1": 400.303
+    }
+   ],
+   "t0": 394.498,
+   "t1": 400.396
+  },
+  {
+   "i": 113,
+   "sec": "05-im",
+   "who": "nova",
+   "kind": "say",
+   "vis": "card:I am = I'm；第 1 輪",
+   "text": "Repeat after me. I am. I'm.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 400.699,
+     "t1": 401.277
+    },
+    {
+     "w": "after",
+     "t0": 401.292,
+     "t1": 401.652
+    },
+    {
+     "w": "me",
+     "t0": 401.667,
+     "t1": 401.964
+    },
+    {
+     "w": "I",
+     "t0": 402.43,
+     "t1": 402.727
+    },
+    {
+     "w": "am",
+     "t0": 402.742,
+     "t1": 403.164
+    },
+    {
+     "w": "I'm",
+     "t0": 403.617,
+     "t1": 404.289
+    }
+   ],
+   "t0": 400.846,
+   "t1": 404.438
+  },
+  {
+   "i": 114,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "card:I am = I'm；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 405.138,
+   "t1": 407.138
+  },
+  {
+   "i": 115,
+   "sec": "05-im",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.",
+   "text": "Now you! Where are you from? I'm from Taiwan!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 407.479,
+     "t1": 407.932
+    },
+    {
+     "w": "you",
+     "t0": 407.948,
+     "t1": 408.495
+    },
+    {
+     "w": "Where",
+     "t0": 409.601,
+     "t1": 409.913
+    },
+    {
+     "w": "are",
+     "t0": 409.945,
+     "t1": 410.085
+    },
+    {
+     "w": "you",
+     "t0": 410.116,
+     "t1": 410.273
+    },
+    {
+     "w": "from",
+     "t0": 410.304,
+     "t1": 410.851
+    },
+    {
+     "w": "I'm",
+     "t0": 411.96,
+     "t1": 412.288
+    },
+    {
+     "w": "from",
+     "t0": 412.32,
+     "t1": 412.57
+    },
+    {
+     "w": "Taiwan",
+     "t0": 412.601,
+     "t1": 413.382
+    }
+   ],
+   "t0": 407.588,
+   "t1": 413.495
+  },
+  {
+   "i": 116,
+   "sec": "05-im",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；中文 我來自臺灣。",
+   "text": "我們住在臺灣，所以說 I'm from Taiwan.",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "我們",
+     "t0": 413.759,
+     "t1": 414.166
+    },
+    {
+     "w": "住",
+     "t0": 414.166,
+     "t1": 414.322
+    },
+    {
+     "w": "在",
+     "t0": 414.322,
+     "t1": 414.462
+    },
+    {
+     "w": "臺灣",
+     "t0": 414.462,
+     "t1": 415.15
+    },
+    {
+     "w": "所以",
+     "t0": 415.291,
+     "t1": 415.728
+    },
+    {
+     "w": "說",
+     "t0": 415.728,
+     "t1": 416.087
+    },
+    {
+     "w": "I'm",
+     "t0": 416.087,
+     "t1": 416.244
+    },
+    {
+     "w": "from",
+     "t0": 416.244,
+     "t1": 416.416
+    },
+    {
+     "w": "Taiwan",
+     "t0": 416.416,
+     "t1": 417.166
+    }
+   ],
+   "t0": 413.945,
+   "t1": 417.096
+  },
+  {
+   "i": 117,
+   "sec": "05-im",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；第 1 輪",
+   "text": "Repeat after me. I'm from Taiwan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 417.437,
+     "t1": 418.094
+    },
+    {
+     "w": "after",
+     "t0": 418.125,
+     "t1": 418.578
+    },
+    {
+     "w": "me",
+     "t0": 418.594,
+     "t1": 419.016
+    },
+    {
+     "w": "I'm",
+     "t0": 420.106,
+     "t1": 420.419
+    },
+    {
+     "w": "from",
+     "t0": 420.45,
+     "t1": 420.7
+    },
+    {
+     "w": "Taiwan",
+     "t0": 420.731,
+     "t1": 421.481
+    }
+   ],
+   "t0": 417.546,
+   "t1": 421.601
+  },
+  {
+   "i": 118,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 422.301,
+   "t1": 425.301
+  },
+  {
+   "i": 119,
+   "sec": "05-im",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；第 2 輪",
+   "text": "I'm from Taiwan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 425.638,
+     "t1": 425.951
+    },
+    {
+     "w": "from",
+     "t0": 425.982,
+     "t1": 426.232
+    },
+    {
+     "w": "Taiwan",
+     "t0": 426.263,
+     "t1": 427.013
+    }
+   ],
+   "t0": 425.751,
+   "t1": 427.146
+  },
+  {
+   "i": 120,
+   "sec": "05-im",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Kai；flag:Taiwan；card:I'm from Taiwan.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 427.846,
+   "t1": 430.846
+  },
+  {
+   "i": 121,
+   "sec": "06-heshe",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Raj；flag:India；card:He's from India.；he",
+   "text": "This is Raj. He's from India.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "This",
+     "t0": 431.689,
+     "t1": 432.079
+    },
+    {
+     "w": "is",
+     "t0": 432.095,
+     "t1": 432.282
+    },
+    {
+     "w": "Raj",
+     "t0": 432.298,
+     "t1": 432.907
+    },
+    {
+     "w": "He's",
+     "t0": 433.373,
+     "t1": 433.779
+    },
+    {
+     "w": "from",
+     "t0": 433.795,
+     "t1": 434.014
+    },
+    {
+     "w": "India",
+     "t0": 434.029,
+     "t1": 434.623
+    }
+   ],
+   "t0": 431.846,
+   "t1": 434.736
+  },
+  {
+   "i": 122,
+   "sec": "06-heshe",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "kid:Raj；card:He is = He's；he；中文 他來自印度。",
+   "text": "介紹男生用 He's from，他來自。He's 就是 He is。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "介紹",
+     "t0": 435.092,
+     "t1": 435.576
+    },
+    {
+     "w": "男生",
+     "t0": 435.592,
+     "t1": 436.014
+    },
+    {
+     "w": "用",
+     "t0": 436.092,
+     "t1": 436.264
+    },
+    {
+     "w": "He's",
+     "t0": 436.295,
+     "t1": 436.529
+    },
+    {
+     "w": "from",
+     "t0": 436.561,
+     "t1": 436.967
+    },
+    {
+     "w": "他",
+     "t0": 437.17,
+     "t1": 437.404
+    },
+    {
+     "w": "來自",
+     "t0": 437.42,
+     "t1": 437.982
+    },
+    {
+     "w": "He's",
+     "t0": 439.12,
+     "t1": 439.354
+    },
+    {
+     "w": "就是",
+     "t0": 439.37,
+     "t1": 439.776
+    },
+    {
+     "w": "He",
+     "t0": 439.807,
+     "t1": 439.964
+    },
+    {
+     "w": "is",
+     "t0": 440.089,
+     "t1": 440.432
+    }
+   ],
+   "t0": 435.186,
+   "t1": 440.604
+  },
+  {
+   "i": 123,
+   "sec": "06-heshe",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Yuki；flag:Japan；card:She's from Japan.；she",
+   "text": "This is Yuki. She's from Japan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "This",
+     "t0": 440.945,
+     "t1": 441.304
+    },
+    {
+     "w": "is",
+     "t0": 441.32,
+     "t1": 441.507
+    },
+    {
+     "w": "Yuki",
+     "t0": 441.539,
+     "t1": 442.148
+    },
+    {
+     "w": "She's",
+     "t0": 443.254,
+     "t1": 443.692
+    },
+    {
+     "w": "from",
+     "t0": 443.723,
+     "t1": 443.942
+    },
+    {
+     "w": "Japan",
+     "t0": 443.973,
+     "t1": 444.645
+    }
+   ],
+   "t0": 441.054,
+   "t1": 444.763
+  },
+  {
+   "i": 124,
+   "sec": "06-heshe",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "kid:Yuki；card:She is = She's；she；中文 她來自日本。",
+   "text": "介紹女生用 She's from，她來自。She's 就是 She is。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "介紹",
+     "t0": 445.047,
+     "t1": 445.547
+    },
+    {
+     "w": "女生",
+     "t0": 445.547,
+     "t1": 446.078
+    },
+    {
+     "w": "用",
+     "t0": 446.078,
+     "t1": 446.234
+    },
+    {
+     "w": "She's",
+     "t0": 446.234,
+     "t1": 446.484
+    },
+    {
+     "w": "from",
+     "t0": 446.484,
+     "t1": 447.047
+    },
+    {
+     "w": "她",
+     "t0": 447.172,
+     "t1": 447.375
+    },
+    {
+     "w": "來自",
+     "t0": 447.375,
+     "t1": 448.219
+    },
+    {
+     "w": "She's",
+     "t0": 449.278,
+     "t1": 449.762
+    },
+    {
+     "w": "就是",
+     "t0": 449.762,
+     "t1": 450.137
+    },
+    {
+     "w": "She",
+     "t0": 450.137,
+     "t1": 450.34
+    },
+    {
+     "w": "is",
+     "t0": 450.34,
+     "t1": 450.872
+    }
+   ],
+   "t0": 445.213,
+   "t1": 450.914
+  },
+  {
+   "i": 125,
+   "sec": "06-heshe",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Tom；flag:the USA；card:He's from the USA.；he；第 1 輪",
+   "text": "Repeat after me. He's from the USA.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 451.255,
+     "t1": 451.911
+    },
+    {
+     "w": "after",
+     "t0": 451.943,
+     "t1": 452.396
+    },
+    {
+     "w": "me",
+     "t0": 452.411,
+     "t1": 452.833
+    },
+    {
+     "w": "He's",
+     "t0": 453.924,
+     "t1": 454.252
+    },
+    {
+     "w": "from",
+     "t0": 454.283,
+     "t1": 454.486
+    },
+    {
+     "w": "the",
+     "t0": 454.518,
+     "t1": 454.611
+    },
+    {
+     "w": "USA",
+     "t0": 454.643,
+     "t1": 455.564
+    }
+   ],
+   "t0": 451.364,
+   "t1": 455.646
+  },
+  {
+   "i": 126,
+   "sec": "06-heshe",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Tom；flag:the USA；card:He's from the USA.；he；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 456.346,
+   "t1": 459.346
+  },
+  {
+   "i": 127,
+   "sec": "06-heshe",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Jisu；flag:Korea；card:She's from Korea.；she；第 1 輪",
+   "text": "Repeat after me. She's from Korea.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 459.648,
+     "t1": 460.226
+    },
+    {
+     "w": "after",
+     "t0": 460.242,
+     "t1": 460.601
+    },
+    {
+     "w": "me",
+     "t0": 460.617,
+     "t1": 460.914
+    },
+    {
+     "w": "She's",
+     "t0": 461.38,
+     "t1": 461.864
+    },
+    {
+     "w": "from",
+     "t0": 461.88,
+     "t1": 462.098
+    },
+    {
+     "w": "Korea",
+     "t0": 462.114,
+     "t1": 462.801
+    }
+   ],
+   "t0": 459.796,
+   "t1": 462.919
+  },
+  {
+   "i": 128,
+   "sec": "06-heshe",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Jisu；flag:Korea；card:She's from Korea.；she；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 463.619,
+   "t1": 466.619
+  },
+  {
+   "i": 129,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "flagquiz",
+   "text": "Game time! Look at the flag. Say the country!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Game",
+     "t0": 467.462,
+     "t1": 467.821
+    },
+    {
+     "w": "time",
+     "t0": 467.837,
+     "t1": 468.368
+    },
+    {
+     "w": "Look",
+     "t0": 468.834,
+     "t1": 469.162
+    },
+    {
+     "w": "at",
+     "t0": 469.178,
+     "t1": 469.271
+    },
+    {
+     "w": "the",
+     "t0": 469.287,
+     "t1": 469.396
+    },
+    {
+     "w": "flag",
+     "t0": 469.412,
+     "t1": 470.037
+    },
+    {
+     "w": "Say",
+     "t0": 470.49,
+     "t1": 470.865
+    },
+    {
+     "w": "the",
+     "t0": 470.881,
+     "t1": 471.006
+    },
+    {
+     "w": "country",
+     "t0": 471.021,
+     "t1": 471.724
+    }
+   ],
+   "t0": 467.619,
+   "t1": 471.892
+  },
+  {
+   "i": 130,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "flagquiz",
+   "text": "看國旗，說出國家的名字。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "看",
+     "t0": 472.242,
+     "t1": 472.476
+    },
+    {
+     "w": "國旗",
+     "t0": 472.555,
+     "t1": 473.211
+    },
+    {
+     "w": "說出",
+     "t0": 473.492,
+     "t1": 473.976
+    },
+    {
+     "w": "國家的",
+     "t0": 474.008,
+     "t1": 474.586
+    },
+    {
+     "w": "名字",
+     "t0": 474.601,
+     "t1": 475.242
+    }
+   ],
+   "t0": 472.342,
+   "t1": 475.396
+  },
+  {
+   "i": 131,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "flag:Spain；quiz:Spain；card:?",
+   "text": "What country is it?",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "What",
+     "t0": 475.681,
+     "t1": 475.962
+    },
+    {
+     "w": "country",
+     "t0": 475.977,
+     "t1": 476.384
+    },
+    {
+     "w": "is",
+     "t0": 476.399,
+     "t1": 476.509
+    },
+    {
+     "w": "it",
+     "t0": 476.524,
+     "t1": 476.837
+    }
+   ],
+   "t0": 475.846,
+   "t1": 476.917
+  },
+  {
+   "i": 132,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "flag:Spain；quiz:Spain；card:?；倒數條",
+   "sec_len": 3.0,
+   "t0": 477.617,
+   "t1": 480.617
+  },
+  {
+   "i": 133,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "flag:Spain；quiz:Spain；揭曉；card:Spain",
+   "text": "Spain!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Spain",
+     "t0": 480.954,
+     "t1": 481.829
+    }
+   ],
+   "t0": 481.067,
+   "t1": 481.947
+  },
+  {
+   "i": 134,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "flag:Korea；quiz:Korea；card:?",
+   "text": "And this one?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 482.282,
+     "t1": 482.532
+    },
+    {
+     "w": "this",
+     "t0": 482.563,
+     "t1": 482.829
+    },
+    {
+     "w": "one",
+     "t0": 482.86,
+     "t1": 483.22
+    }
+   ],
+   "t0": 482.397,
+   "t1": 483.346
+  },
+  {
+   "i": 135,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "flag:Korea；quiz:Korea；card:?；倒數條",
+   "sec_len": 3.0,
+   "t0": 484.046,
+   "t1": 487.046
+  },
+  {
+   "i": 136,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "flag:Korea；quiz:Korea；揭曉；card:Korea",
+   "text": "Korea!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Korea",
+     "t0": 487.355,
+     "t1": 488.105
+    }
+   ],
+   "t0": 487.496,
+   "t1": 488.221
+  },
+  {
+   "i": 137,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "flag:the UK；quiz:the UK；card:?",
+   "text": "And this one?",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 488.507,
+     "t1": 488.772
+    },
+    {
+     "w": "this",
+     "t0": 488.788,
+     "t1": 489.022
+    },
+    {
+     "w": "one",
+     "t0": 489.038,
+     "t1": 489.382
+    }
+   ],
+   "t0": 488.671,
+   "t1": 489.524
+  },
+  {
+   "i": 138,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "flag:the UK；quiz:the UK；card:?；倒數條",
+   "sec_len": 3.0,
+   "t0": 490.224,
+   "t1": 493.224
+  },
+  {
+   "i": 139,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "flag:the UK；quiz:the UK；揭曉；card:the UK",
+   "text": "the UK!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "the",
+     "t0": 493.551,
+     "t1": 493.739
+    },
+    {
+     "w": "UK",
+     "t0": 493.77,
+     "t1": 494.723
+    }
+   ],
+   "t0": 493.674,
+   "t1": 494.822
+  },
+  {
+   "i": 140,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "flag:Vietnam；quiz:Vietnam；card:?",
+   "text": "And this one?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 495.158,
+     "t1": 495.408
+    },
+    {
+     "w": "this",
+     "t0": 495.439,
+     "t1": 495.705
+    },
+    {
+     "w": "one",
+     "t0": 495.736,
+     "t1": 496.095
+    }
+   ],
+   "t0": 495.272,
+   "t1": 496.221
+  },
+  {
+   "i": 141,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "flag:Vietnam；quiz:Vietnam；card:?；倒數條",
+   "sec_len": 3.0,
+   "t0": 496.921,
+   "t1": 499.921
+  },
+  {
+   "i": 142,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "flag:Vietnam；quiz:Vietnam；揭曉；card:Vietnam",
+   "text": "Vietnam!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Vietnam",
+     "t0": 500.234,
+     "t1": 501.156
+    }
+   ],
+   "t0": 500.371,
+   "t1": 501.307
+  },
+  {
+   "i": 143,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "find:Mia,Yuki,Sofia,Jisu",
+   "text": "Now listen. Who is it? Point to the friend!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 501.647,
+     "t1": 502.085
+    },
+    {
+     "w": "listen",
+     "t0": 502.1,
+     "t1": 502.788
+    },
+    {
+     "w": "Who",
+     "t0": 503.894,
+     "t1": 504.175
+    },
+    {
+     "w": "is",
+     "t0": 504.191,
+     "t1": 504.378
+    },
+    {
+     "w": "it",
+     "t0": 504.394,
+     "t1": 504.707
+    },
+    {
+     "w": "Point",
+     "t0": 505.816,
+     "t1": 506.16
+    },
+    {
+     "w": "to",
+     "t0": 506.191,
+     "t1": 506.3
+    },
+    {
+     "w": "the",
+     "t0": 506.316,
+     "t1": 506.472
+    },
+    {
+     "w": "friend",
+     "t0": 506.503,
+     "t1": 507.144
+    }
+   ],
+   "t0": 501.757,
+   "t1": 507.208
+  },
+  {
+   "i": 144,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "find:Mia,Yuki,Sofia,Jisu",
+   "text": "聽朋友說 I'm from 哪裡，找出是誰！",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "聽",
+     "t0": 507.491,
+     "t1": 507.804
+    },
+    {
+     "w": "朋友",
+     "t0": 507.804,
+     "t1": 508.163
+    },
+    {
+     "w": "說",
+     "t0": 508.163,
+     "t1": 508.554
+    },
+    {
+     "w": "I'm",
+     "t0": 508.554,
+     "t1": 508.71
+    },
+    {
+     "w": "from",
+     "t0": 508.71,
+     "t1": 508.866
+    },
+    {
+     "w": "哪裡",
+     "t0": 508.866,
+     "t1": 509.679
+    },
+    {
+     "w": "找出",
+     "t0": 509.804,
+     "t1": 510.179
+    },
+    {
+     "w": "是",
+     "t0": 510.179,
+     "t1": 510.335
+    },
+    {
+     "w": "誰",
+     "t0": 510.335,
+     "t1": 511.038
+    }
+   ],
+   "t0": 507.658,
+   "t1": 510.909
+  },
+  {
+   "i": 145,
+   "sec": "07-quiz",
+   "who": "sofia",
+   "kind": "say",
+   "vis": "find:Mia,Yuki,Sofia,Jisu；聲音",
+   "text": "I'm from Spain.",
+   "voices": [
+    "en-IE-EmilyNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 511.212,
+     "t1": 511.571
+    },
+    {
+     "w": "from",
+     "t0": 511.571,
+     "t1": 511.852
+    },
+    {
+     "w": "Spain",
+     "t0": 511.852,
+     "t1": 512.759
+    }
+   ],
+   "t0": 511.359,
+   "t1": 512.767
+  },
+  {
+   "i": 146,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "find:Mia,Yuki,Sofia,Jisu；倒數條",
+   "sec_len": 3.0,
+   "t0": 513.467,
+   "t1": 516.467
+  },
+  {
+   "i": 147,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "find:Mia,Yuki,Sofia,Jisu；揭曉:Sofia；card:She's from Spain.；she",
+   "text": "It's Sofia! She's from Spain.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 516.768,
+     "t1": 517.049
+    },
+    {
+     "w": "Sofia",
+     "t0": 517.065,
+     "t1": 517.908
+    },
+    {
+     "w": "She's",
+     "t0": 518.374,
+     "t1": 518.905
+    },
+    {
+     "w": "from",
+     "t0": 518.921,
+     "t1": 519.14
+    },
+    {
+     "w": "Spain",
+     "t0": 519.155,
+     "t1": 519.812
+    }
+   ],
+   "t0": 516.917,
+   "t1": 519.945
+  },
+  {
+   "i": 148,
+   "sec": "07-quiz",
+   "who": "wei",
+   "kind": "say",
+   "vis": "find:Raj,Wei,Kai,Nam；聲音",
+   "text": "I'm from Singapore.",
+   "voices": [
+    "en-SG-WayneNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 520.274,
+     "t1": 520.555
+    },
+    {
+     "w": "from",
+     "t0": 520.571,
+     "t1": 520.837
+    },
+    {
+     "w": "Singapore",
+     "t0": 520.852,
+     "t1": 521.837
+    }
+   ],
+   "t0": 520.395,
+   "t1": 521.818
+  },
+  {
+   "i": 149,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "find:Raj,Wei,Kai,Nam；倒數條",
+   "sec_len": 3.0,
+   "t0": 522.518,
+   "t1": 525.518
+  },
+  {
+   "i": 150,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "find:Raj,Wei,Kai,Nam；揭曉:Wei；card:He's from Singapore.；he",
+   "text": "It's Wei! He's from Singapore.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 525.859,
+     "t1": 526.172
+    },
+    {
+     "w": "Wei",
+     "t0": 526.187,
+     "t1": 526.812
+    },
+    {
+     "w": "He's",
+     "t0": 527.918,
+     "t1": 528.262
+    },
+    {
+     "w": "from",
+     "t0": 528.278,
+     "t1": 528.543
+    },
+    {
+     "w": "Singapore",
+     "t0": 528.575,
+     "t1": 529.497
+    }
+   ],
+   "t0": 525.968,
+   "t1": 529.548
+  },
+  {
+   "i": 151,
+   "sec": "07-quiz",
+   "who": "lily",
+   "kind": "say",
+   "vis": "find:Lily,Tom,Mia,Raj；聲音",
+   "text": "I'm from the UK.",
+   "voices": [
+    "en-GB-MaisieNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 529.914,
+     "t1": 530.164
+    },
+    {
+     "w": "from",
+     "t0": 530.179,
+     "t1": 530.414
+    },
+    {
+     "w": "the",
+     "t0": 530.429,
+     "t1": 530.523
+    },
+    {
+     "w": "UK",
+     "t0": 530.539,
+     "t1": 531.32
+    }
+   ],
+   "t0": 529.998,
+   "t1": 531.406
+  },
+  {
+   "i": 152,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "find:Lily,Tom,Mia,Raj；倒數條",
+   "sec_len": 3.0,
+   "t0": 532.106,
+   "t1": 535.106
+  },
+  {
+   "i": 153,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "find:Lily,Tom,Mia,Raj；揭曉:Lily；card:She's from the UK.；she",
+   "text": "It's Lily! She's from the UK.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 535.401,
+     "t1": 535.698
+    },
+    {
+     "w": "Lily",
+     "t0": 535.713,
+     "t1": 536.338
+    },
+    {
+     "w": "She's",
+     "t0": 536.804,
+     "t1": 537.288
+    },
+    {
+     "w": "from",
+     "t0": 537.304,
+     "t1": 537.507
+    },
+    {
+     "w": "the",
+     "t0": 537.523,
+     "t1": 537.585
+    },
+    {
+     "w": "UK",
+     "t0": 537.601,
+     "t1": 538.226
+    }
+   ],
+   "t0": 535.556,
+   "t1": 538.38
+  },
+  {
+   "i": 154,
+   "sec": "08-end",
+   "who": "nova",
+   "kind": "say",
+   "vis": "card:I'm from Taiwan.",
+   "text": "Today we learned ten countries. And we can say: I'm from Taiwan.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Today",
+     "t0": 539.226,
+     "t1": 539.757
+    },
+    {
+     "w": "we",
+     "t0": 539.773,
+     "t1": 539.945
+    },
+    {
+     "w": "learned",
+     "t0": 539.961,
+     "t1": 540.429
+    },
+    {
+     "w": "ten",
+     "t0": 540.445,
+     "t1": 540.789
+    },
+    {
+     "w": "countries",
+     "t0": 540.804,
+     "t1": 541.617
+    },
+    {
+     "w": "And",
+     "t0": 542.082,
+     "t1": 542.457
+    },
+    {
+     "w": "we",
+     "t0": 542.52,
+     "t1": 542.661
+    },
+    {
+     "w": "can",
+     "t0": 542.676,
+     "t1": 542.879
+    },
+    {
+     "w": "say",
+     "t0": 542.895,
+     "t1": 543.426
+    },
+    {
+     "w": "I'm",
+     "t0": 543.707,
+     "t1": 543.989
+    },
+    {
+     "w": "from",
+     "t0": 544.004,
+     "t1": 544.239
+    },
+    {
+     "w": "Taiwan",
+     "t0": 544.254,
+     "t1": 544.973
+    }
+   ],
+   "t0": 539.38,
+   "t1": 545.128
+  },
+  {
+   "i": 155,
+   "sec": "08-end",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "card:He's from India. / She's from Japan.；he；she",
+   "text": "He's from India. She's from Japan.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He's",
+     "t0": 545.414,
+     "t1": 545.773
+    },
+    {
+     "w": "from",
+     "t0": 545.805,
+     "t1": 546.055
+    },
+    {
+     "w": "India",
+     "t0": 546.086,
+     "t1": 546.695
+    },
+    {
+     "w": "She's",
+     "t0": 547.786,
+     "t1": 548.223
+    },
+    {
+     "w": "from",
+     "t0": 548.255,
+     "t1": 548.473
+    },
+    {
+     "w": "Japan",
+     "t0": 548.505,
+     "t1": 549.177
+    }
+   ],
+   "t0": 545.578,
+   "t1": 549.297
+  },
+  {
+   "i": 156,
+   "sec": "08-end",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "三張字卡排在一起",
+   "text": "說自己用 I'm from，說男生用 He's from，說女生用 She's from。國名第一個字母要大寫，the UK、the USA 要加 the！",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "說",
+     "t0": 549.644,
+     "t1": 549.988
+    },
+    {
+     "w": "自己",
+     "t0": 550.035,
+     "t1": 550.332
+    },
+    {
+     "w": "用",
+     "t0": 550.41,
+     "t1": 550.582
+    },
+    {
+     "w": "I'm",
+     "t0": 550.629,
+     "t1": 550.816
+    },
+    {
+     "w": "from",
+     "t0": 550.832,
+     "t1": 551.254
+    },
+    {
+     "w": "說",
+     "t0": 551.457,
+     "t1": 551.738
+    },
+    {
+     "w": "男生",
+     "t0": 551.769,
+     "t1": 552.16
+    },
+    {
+     "w": "用",
+     "t0": 552.223,
+     "t1": 552.363
+    },
+    {
+     "w": "He's",
+     "t0": 552.41,
+     "t1": 552.644
+    },
+    {
+     "w": "from",
+     "t0": 552.691,
+     "t1": 553.082
+    },
+    {
+     "w": "說",
+     "t0": 553.332,
+     "t1": 553.598
+    },
+    {
+     "w": "女生",
+     "t0": 553.613,
+     "t1": 553.988
+    },
+    {
+     "w": "用",
+     "t0": 554.051,
+     "t1": 554.207
+    },
+    {
+     "w": "She's",
+     "t0": 554.254,
+     "t1": 554.504
+    },
+    {
+     "w": "from",
+     "t0": 554.551,
+     "t1": 554.926
+    },
+    {
+     "w": "國名",
+     "t0": 555.954,
+     "t1": 556.376
+    },
+    {
+     "w": "第一",
+     "t0": 556.438,
+     "t1": 556.704
+    },
+    {
+     "w": "個",
+     "t0": 556.766,
+     "t1": 556.923
+    },
+    {
+     "w": "字母",
+     "t0": 556.969,
+     "t1": 557.344
+    },
+    {
+     "w": "要",
+     "t0": 557.376,
+     "t1": 557.563
+    },
+    {
+     "w": "大寫",
+     "t0": 557.579,
+     "t1": 558.235
+    },
+    {
+     "w": "the",
+     "t0": 558.548,
+     "t1": 558.626
+    },
+    {
+     "w": "UK",
+     "t0": 558.641,
+     "t1": 559.204
+    },
+    {
+     "w": "the",
+     "t0": 559.548,
+     "t1": 559.626
+    },
+    {
+     "w": "USA",
+     "t0": 559.641,
+     "t1": 560.235
+    },
+    {
+     "w": "要",
+     "t0": 560.266,
+     "t1": 560.407
+    },
+    {
+     "w": "加",
+     "t0": 560.454,
+     "t1": 560.688
+    },
+    {
+     "w": "the",
+     "t0": 560.688,
+     "t1": 560.907
+    }
+   ],
+   "t0": 549.747,
+   "t1": 561.044
+  },
+  {
+   "i": 157,
+   "sec": "08-end",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "card:Is she from India?；rise",
+   "text": "Next time, we will ask: Is she from India?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Next",
+     "t0": 561.374,
+     "t1": 561.749
+    },
+    {
+     "w": "time",
+     "t0": 561.78,
+     "t1": 562.14
+    },
+    {
+     "w": "we",
+     "t0": 562.405,
+     "t1": 562.562
+    },
+    {
+     "w": "will",
+     "t0": 562.593,
+     "t1": 562.812
+    },
+    {
+     "w": "ask",
+     "t0": 562.827,
+     "t1": 563.249
+    },
+    {
+     "w": "Is",
+     "t0": 563.499,
+     "t1": 563.64
+    },
+    {
+     "w": "she",
+     "t0": 563.655,
+     "t1": 563.859
+    },
+    {
+     "w": "from",
+     "t0": 563.89,
+     "t1": 564.109
+    },
+    {
+     "w": "India",
+     "t0": 564.14,
+     "t1": 564.718
+    }
+   ],
+   "t0": 561.494,
+   "t1": 564.785
+  },
+  {
+   "i": 158,
+   "sec": "08-end",
+   "who": "nova",
+   "kind": "say",
+   "vis": "兩位老師揮手 P02",
+   "text": "Bye-bye, class!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Bye-bye",
+     "t0": 565.069,
+     "t1": 565.725
+    },
+    {
+     "w": "class",
+     "t0": 565.757,
+     "t1": 566.429
+    }
+   ],
+   "t0": 565.235,
+   "t1": 566.549
+  }
+ ]
+}

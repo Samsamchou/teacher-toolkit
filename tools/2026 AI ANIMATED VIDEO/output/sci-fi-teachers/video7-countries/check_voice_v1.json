@@ -1,0 +1,646 @@
+[
+ {
+  "i": 0,
+  "who": "nova",
+  "text": "Hi, class! I'm Ms. Nova.",
+  "heard": "Hi, class. I'm Ms. Nova.",
+  "ok": true
+ },
+ {
+  "i": 1,
+  "who": "cosmo",
+  "text": "And I'm Mr. Cosmo! Welcome back to our space classroom!",
+  "heard": "And I'm Mr. Cosmo.  Welcome back to our space classroom.",
+  "ok": true
+ },
+ {
+  "i": 2,
+  "who": "nova",
+  "text": "Look! We have ten new friends from ten countries!",
+  "heard": "Look, we have 10 new friends from 10 countries.",
+  "ok": false
+ },
+ {
+  "i": 3,
+  "who": "cosmo",
+  "text": "Today, we will learn the countries, and say: I'm from Taiwan!",
+  "heard": "Today, we will learn the countries and say, I'm from Taiwan.",
+  "ok": true
+ },
+ {
+  "i": 5,
+  "who": "cosmo",
+  "text": "Let's learn the countries. Look at the flags!",
+  "heard": "Let's learn the countries.  Look at the flags.",
+  "ok": true
+ },
+ {
+  "i": 7,
+  "who": "nova",
+  "text": "Repeat after me. Australia.",
+  "heard": "Repeat after me, Australia.",
+  "ok": true
+ },
+ {
+  "i": 9,
+  "who": "nova",
+  "text": "Australia.",
+  "heard": "Australia.",
+  "ok": true
+ },
+ {
+  "i": 11,
+  "who": "cosmo",
+  "text": "Repeat after me. India.",
+  "heard": "Repeat after me.  India",
+  "ok": true
+ },
+ {
+  "i": 13,
+  "who": "cosmo",
+  "text": "India.",
+  "heard": "India",
+  "ok": true
+ },
+ {
+  "i": 15,
+  "who": "nova",
+  "text": "Repeat after me. Japan.",
+  "heard": "Repeat after me, Japan.",
+  "ok": true
+ },
+ {
+  "i": 17,
+  "who": "nova",
+  "text": "Japan.",
+  "heard": "Japan",
+  "ok": true
+ },
+ {
+  "i": 19,
+  "who": "cosmo",
+  "text": "Repeat after me. Singapore.",
+  "heard": "Repeat after me.  Singapore",
+  "ok": true
+ },
+ {
+  "i": 21,
+  "who": "cosmo",
+  "text": "Singapore.",
+  "heard": "Singapore",
+  "ok": true
+ },
+ {
+  "i": 23,
+  "who": "nova",
+  "text": "Repeat after me. Spain.",
+  "heard": "Repeat after me.  Spain.",
+  "ok": true
+ },
+ {
+  "i": 25,
+  "who": "nova",
+  "text": "Spain.",
+  "heard": "Spain.",
+  "ok": true
+ },
+ {
+  "i": 27,
+  "who": "cosmo",
+  "text": "Repeat after me. Taiwan.",
+  "heard": "Repeat after me.  Taiwan",
+  "ok": true
+ },
+ {
+  "i": 29,
+  "who": "cosmo",
+  "text": "Taiwan.",
+  "heard": "Taiwan",
+  "ok": true
+ },
+ {
+  "i": 31,
+  "who": "nova",
+  "text": "Repeat after me. the UK.",
+  "heard": "Repeat after me.  The UK.",
+  "ok": true
+ },
+ {
+  "i": 33,
+  "who": "nova",
+  "text": "the UK.",
+  "heard": "the UK.",
+  "ok": true
+ },
+ {
+  "i": 35,
+  "who": "cosmo",
+  "text": "Repeat after me. the USA.",
+  "heard": "Repeat after me.  The U.S.A.",
+  "ok": true
+ },
+ {
+  "i": 37,
+  "who": "cosmo",
+  "text": "the USA.",
+  "heard": "The USA.",
+  "ok": true
+ },
+ {
+  "i": 39,
+  "who": "nova",
+  "text": "Repeat after me. Korea.",
+  "heard": "Repeat after me.  Korea.",
+  "ok": true
+ },
+ {
+  "i": 41,
+  "who": "nova",
+  "text": "Korea.",
+  "heard": "Korea.",
+  "ok": true
+ },
+ {
+  "i": 43,
+  "who": "cosmo",
+  "text": "Repeat after me. Vietnam.",
+  "heard": "Repeat after me.  Vietnam",
+  "ok": true
+ },
+ {
+  "i": 45,
+  "who": "cosmo",
+  "text": "Vietnam.",
+  "heard": "Vietnam",
+  "ok": true
+ },
+ {
+  "i": 47,
+  "who": "cosmo",
+  "text": "Let's say all ten countries together!",
+  "heard": "Let's say all 10 countries together.",
+  "ok": false
+ },
+ {
+  "i": 48,
+  "who": "relay",
+  "text": "Australia, India, Japan, Singapore, Spain, Taiwan, the UK, the USA, Korea, Vietnam!",
+  "heard": "Australia. India. Japan. Singapore. Spain. Taiwan. The UK. The USA. Korea. Vietnam.",
+  "ok": true
+ },
+ {
+  "i": 49,
+  "who": "nova",
+  "text": "Now, let's clap the beats!",
+  "heard": "Now, let's clap the beats.",
+  "ok": true
+ },
+ {
+  "i": 51,
+  "who": "cosmo",
+  "text": "Clap and say with me!",
+  "heard": "Clap and say with me.",
+  "ok": true
+ },
+ {
+  "i": 52,
+  "who": "nova",
+  "text": "Australia.",
+  "heard": "Australia.",
+  "ok": true
+ },
+ {
+  "i": 53,
+  "who": "nova",
+  "text": "Aus, TRA, li, a!",
+  "heard": "us, Trey Lee.",
+  "ok": false
+ },
+ {
+  "i": 55,
+  "who": "cosmo",
+  "text": "India.",
+  "heard": "India",
+  "ok": true
+ },
+ {
+  "i": 56,
+  "who": "cosmo",
+  "text": "IN, di, a!",
+  "heard": "in D.I.",
+  "ok": false
+ },
+ {
+  "i": 58,
+  "who": "nova",
+  "text": "Japan.",
+  "heard": "Japan.",
+  "ok": true
+ },
+ {
+  "i": 59,
+  "who": "nova",
+  "text": "Ja, PAN!",
+  "heard": "Joe Pan.",
+  "ok": false
+ },
+ {
+  "i": 61,
+  "who": "cosmo",
+  "text": "Singapore.",
+  "heard": "Singapore",
+  "ok": true
+ },
+ {
+  "i": 62,
+  "who": "cosmo",
+  "text": "SIN, ga, pore!",
+  "heard": "sing, ah, pour.",
+  "ok": false
+ },
+ {
+  "i": 64,
+  "who": "nova",
+  "text": "Spain.",
+  "heard": "Spain.",
+  "ok": true
+ },
+ {
+  "i": 65,
+  "who": "nova",
+  "text": "Spain!",
+  "heard": "Spain.",
+  "ok": true
+ },
+ {
+  "i": 67,
+  "who": "cosmo",
+  "text": "Taiwan.",
+  "heard": "Taiwan",
+  "ok": true
+ },
+ {
+  "i": 68,
+  "who": "cosmo",
+  "text": "Tai, WAN!",
+  "heard": "Tie 1",
+  "ok": false
+ },
+ {
+  "i": 70,
+  "who": "nova",
+  "text": "the UK.",
+  "heard": "the UK.",
+  "ok": true
+ },
+ {
+  "i": 71,
+  "who": "nova",
+  "text": "U, K!",
+  "heard": "U. K.",
+  "ok": true
+ },
+ {
+  "i": 73,
+  "who": "cosmo",
+  "text": "the USA.",
+  "heard": "The USA.",
+  "ok": true
+ },
+ {
+  "i": 74,
+  "who": "cosmo",
+  "text": "U, S, A!",
+  "heard": "U S A",
+  "ok": true
+ },
+ {
+  "i": 76,
+  "who": "nova",
+  "text": "Korea.",
+  "heard": "Korea",
+  "ok": true
+ },
+ {
+  "i": 77,
+  "who": "nova",
+  "text": "Ko, RE, a!",
+  "heard": "Koo-ree!",
+  "ok": false
+ },
+ {
+  "i": 79,
+  "who": "cosmo",
+  "text": "Vietnam.",
+  "heard": "Vietnam",
+  "ok": true
+ },
+ {
+  "i": 80,
+  "who": "cosmo",
+  "text": "Vi, et, NAM!",
+  "heard": "The. Yet. Nam.",
+  "ok": false
+ },
+ {
+  "i": 83,
+  "who": "nova",
+  "text": "Great clapping!",
+  "heard": "Great clapping!",
+  "ok": true
+ },
+ {
+  "i": 84,
+  "who": "nova",
+  "text": "Look at the first letters. A, I, J, S!",
+  "heard": "Look at the first letters.  A-I-J-S.",
+  "ok": true
+ },
+ {
+  "i": 86,
+  "who": "cosmo",
+  "text": "Now look. The UK. The USA. We say the!",
+  "heard": "Now look, the UK, the USA, we say the",
+  "ok": true
+ },
+ {
+  "i": 89,
+  "who": "cosmo",
+  "text": "Now, our friends will say hello. Listen!",
+  "heard": "Now, our friends will say hello.  Listen!",
+  "ok": true
+ },
+ {
+  "i": 91,
+  "who": "mia",
+  "text": "Hi! I'm Mia. I'm from Australia.",
+  "heard": "Hi, I'm Nia. I'm from Australia.",
+  "ok": false
+ },
+ {
+  "i": 93,
+  "who": "raj",
+  "text": "Hi! I'm Raj. I'm from India.",
+  "heard": "Hi, I'm Raj, I'm from India.",
+  "ok": true
+ },
+ {
+  "i": 95,
+  "who": "yuki",
+  "text": "Hi! I'm Yuki. I'm from Japan.",
+  "heard": "Hi, I'm Yuki. I'm from Japan.",
+  "ok": true
+ },
+ {
+  "i": 97,
+  "who": "wei",
+  "text": "Hi! I'm Wei. I'm from Singapore.",
+  "heard": "Hi. I'm Wei. I'm from Singapore.",
+  "ok": true
+ },
+ {
+  "i": 99,
+  "who": "sofia",
+  "text": "Hi! I'm Sofia. I'm from Spain.",
+  "heard": "Hi, I'm Sofia. I'm from Spain.",
+  "ok": true
+ },
+ {
+  "i": 101,
+  "who": "kai",
+  "text": "Hi! I'm Kai. I'm from Taiwan.",
+  "heard": "Hi. I'm Kai. I'm from Taiwan.",
+  "ok": true
+ },
+ {
+  "i": 103,
+  "who": "lily",
+  "text": "Hi! I'm Lily. I'm from the UK.",
+  "heard": "Hi, I'm Leah, I'm from the UK.",
+  "ok": false
+ },
+ {
+  "i": 105,
+  "who": "tom",
+  "text": "Hi! I'm Tom. I'm from the USA.",
+  "heard": "Hi. I'm Tom. I'm from the USA.",
+  "ok": true
+ },
+ {
+  "i": 107,
+  "who": "jisu",
+  "text": "Hi! I'm Jisu. I'm from Korea.",
+  "heard": "Hi, I'm Jisoo. I'm from Korea.",
+  "ok": false
+ },
+ {
+  "i": 109,
+  "who": "nam",
+  "text": "Hi! I'm Nam. I'm from Vietnam.",
+  "heard": "Hi, I'm Nam, I'm from Vietnam.",
+  "ok": true
+ },
+ {
+  "i": 111,
+  "who": "nova",
+  "text": "Look at I'm. I am... becomes I'm!",
+  "heard": "Look at I'm. I am, becomes I'm.",
+  "ok": true
+ },
+ {
+  "i": 113,
+  "who": "nova",
+  "text": "Repeat after me. I am. I'm.",
+  "heard": "Repeat after me.  I am.  I'm.",
+  "ok": true
+ },
+ {
+  "i": 115,
+  "who": "cosmo",
+  "text": "Now you! Where are you from? I'm from Taiwan!",
+  "heard": "Now you.  Where are you from?  I'm from Taiwan.",
+  "ok": true
+ },
+ {
+  "i": 117,
+  "who": "cosmo",
+  "text": "Repeat after me. I'm from Taiwan.",
+  "heard": "Repeat after me.  I'm from Taiwan.",
+  "ok": true
+ },
+ {
+  "i": 119,
+  "who": "cosmo",
+  "text": "I'm from Taiwan.",
+  "heard": "I'm from Taiwan.",
+  "ok": true
+ },
+ {
+  "i": 121,
+  "who": "nova",
+  "text": "This is Raj. He's from India.",
+  "heard": "This is Raj. He's from India.",
+  "ok": true
+ },
+ {
+  "i": 123,
+  "who": "cosmo",
+  "text": "This is Yuki. She's from Japan.",
+  "heard": "This is Yuki.  She's from Japan.",
+  "ok": true
+ },
+ {
+  "i": 125,
+  "who": "cosmo",
+  "text": "Repeat after me. He's from the USA.",
+  "heard": "Repeat after me.  He's from the USA.",
+  "ok": true
+ },
+ {
+  "i": 127,
+  "who": "nova",
+  "text": "Repeat after me. She's from Korea.",
+  "heard": "Repeat after me.  She's from Korea.",
+  "ok": true
+ },
+ {
+  "i": 129,
+  "who": "nova",
+  "text": "Game time! Look at the flag. Say the country!",
+  "heard": "Game time look at the flag say the country",
+  "ok": true
+ },
+ {
+  "i": 131,
+  "who": "nova",
+  "text": "What country is it?",
+  "heard": "What country is it?",
+  "ok": true
+ },
+ {
+  "i": 133,
+  "who": "cosmo",
+  "text": "Spain!",
+  "heard": "Spain.",
+  "ok": true
+ },
+ {
+  "i": 134,
+  "who": "cosmo",
+  "text": "And this one?",
+  "heard": "And this one?",
+  "ok": true
+ },
+ {
+  "i": 136,
+  "who": "nova",
+  "text": "Korea!",
+  "heard": "Korea",
+  "ok": true
+ },
+ {
+  "i": 137,
+  "who": "nova",
+  "text": "And this one?",
+  "heard": "And this one?",
+  "ok": true
+ },
+ {
+  "i": 139,
+  "who": "cosmo",
+  "text": "the UK!",
+  "heard": "The UK",
+  "ok": true
+ },
+ {
+  "i": 140,
+  "who": "cosmo",
+  "text": "And this one?",
+  "heard": "And this one?",
+  "ok": true
+ },
+ {
+  "i": 142,
+  "who": "nova",
+  "text": "Vietnam!",
+  "heard": "Vietnam",
+  "ok": true
+ },
+ {
+  "i": 143,
+  "who": "cosmo",
+  "text": "Now listen. Who is it? Point to the friend!",
+  "heard": "Now listen. Who is it? Point to the friend.",
+  "ok": true
+ },
+ {
+  "i": 145,
+  "who": "sofia",
+  "text": "I'm from Spain.",
+  "heard": "I'm from Spain.",
+  "ok": true
+ },
+ {
+  "i": 147,
+  "who": "nova",
+  "text": "It's Sofia! She's from Spain.",
+  "heard": "It's Sophia. She's from Spain.",
+  "ok": false
+ },
+ {
+  "i": 148,
+  "who": "wei",
+  "text": "I'm from Singapore.",
+  "heard": "I'm from Singapore.",
+  "ok": true
+ },
+ {
+  "i": 150,
+  "who": "cosmo",
+  "text": "It's Wei! He's from Singapore.",
+  "heard": "It's Wei.  He's from Singapore.",
+  "ok": true
+ },
+ {
+  "i": 151,
+  "who": "lily",
+  "text": "I'm from the UK.",
+  "heard": "I'm from the UK.",
+  "ok": true
+ },
+ {
+  "i": 153,
+  "who": "nova",
+  "text": "It's Lily! She's from the UK.",
+  "heard": "It's Lily. She's from the UK.",
+  "ok": true
+ },
+ {
+  "i": 154,
+  "who": "nova",
+  "text": "Today we learned ten countries. And we can say: I'm from Taiwan.",
+  "heard": "Today we learned 10 countries, and we can say I'm from Taiwan.",
+  "ok": false
+ },
+ {
+  "i": 155,
+  "who": "cosmo",
+  "text": "He's from India. She's from Japan.",
+  "heard": "He's from India.  She's from Japan.",
+  "ok": true
+ },
+ {
+  "i": 157,
+  "who": "cosmo",
+  "text": "Next time, we will ask: Is she from India?",
+  "heard": "Next time, we will ask, is she from India?",
+  "ok": true
+ },
+ {
+  "i": 158,
+  "who": "nova",
+  "text": "Bye-bye, class!",
+  "heard": "Bye-bye class.",
+  "ok": true
+ }
+]
