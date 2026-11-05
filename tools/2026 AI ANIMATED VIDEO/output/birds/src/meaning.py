@@ -85,13 +85,17 @@ LABEL = {1: '心瓣', 2: '洪流', 3: '同一個身體', 4: '一個人生', 5: '
          22: '重溫過去', 23: '許願', 26: '變得堅硬', 38: '飛高', 39: '月亮往下看', 40: '照亮地面', 41: '飛上去', 42: '影子就是我'}
 STORY_SKIP = {15, 45, 49, 51, 53, 55}            # 故事畫面已經演出詞義 / the story already shows it
 ABSTRACT = {1, 2, 3, 4, 5, 10, 11, 12, 22, 26, 39, 41, 42}
+# 圖卡大小／位置的逐句設定（老師 11/05：#39–#42 以畫面為主→小卡；擋臉的句子改左上角）
+# size: 'tiny'＝畫面寬 20%、畫面不讓位；pos: 'tl'＝左上角（畫面往另一邊讓位）
+CARD_OPT = {7: {'size': 'tiny'}, 8: {'size': 'tiny'}, 11: {'size': 'tiny'},   # 母女同框、大卡會擋臉 / both faces in frame
+            39: {'size': 'tiny'}, 40: {'size': 'tiny'}, 41: {'size': 'tiny', 'pos': 'tl'}, 42: {'size': 'tiny'}}
 def card_rows():
     rows, seen = [], set()
     for n, (a, b, how, code) in MEAN.items():
         if how == '—' or n in STORY_SKIP: continue
         first = code not in seen; seen.add(code)
         src = (LABEL.get(n) or next(LABEL[m] for m, v in MEAN.items() if v[3] == code and m in LABEL))
-        rows.append({'n': n, 'code': code, 'how': how, 'big': (n in ABSTRACT) or (first and n >= 7), 'label': src, 'repeat': not first})
+        rows.append({'n': n, 'code': code, 'how': how, 'big': (n in ABSTRACT) or (first and n >= 7), 'label': src, 'repeat': not first, **CARD_OPT.get(n, {})})
     return rows
 if __name__ == '__main__':
     rows = card_rows()

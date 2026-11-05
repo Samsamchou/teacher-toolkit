@@ -38,3 +38,10 @@
 - 修跳字字型：player.html popWord 改 800 粗（900 沒載入，'d' 變 'a'），s01–s08 全部重渲。
 - 全片：`3d/renders/Birds-3D-full-v1.mp4`（222.5 秒，1 GB，crf 20，暗場顆粒難壓）＋ `-720p.mp4`（23 MB）。總表 `renders/qa/full-v1-sheet.jpg`。
 - 待老師看：同學是膠囊小人（較簡單）、s04 #28 越肩鏡頭她很小、s03 教室她偏小；之後 KIE 飛翔鏡頭報價、聽力版 nosub=1。
+
+## 11/05 晚 V02→V04（老師看 V01 回饋，RDQ `rdq/RDQ-spec-birds-storm-chase-20261105.md`）
+- s06 Bridge 照原作重寫：#39 餐廳排擠（背後笑、悄悄話、沒人同坐）→ #40 夜裡衝出門、兩人長翅膀起飛 → #41 KIE 暴風追趕（AI 鏡頭）→ #42 側面中遠景兩手快碰到 → 間奏閃電 3 下、白光後只剩羽毛 → 漸黑接 s07。
+- s05：媽媽不再飛走，改成檯燈旁抱著安慰。
+- 圖卡：meaning.py `CARD_OPT`（size 'tiny'＝20% 不讓位；pos 'tl'＝左上）；#7/#8/#11、#39–#42 小卡，#41 左上。
+- KIE #41：`kie/seedance.py`（上限 200），480p 30.4＋720p 65.6＝96 credits；畫格 `kie/K41/f720/`，player.html 的 `AI` 陣列在 145.4–153.2 用畫格取代 3D，前後 0.15 秒暗一下（`?noai=1` 可關）。
+- 全片 `3d/renders/Birds-3D-full-v4(-720p).mp4`。待老師看；之後聽力版（nosub=1）。

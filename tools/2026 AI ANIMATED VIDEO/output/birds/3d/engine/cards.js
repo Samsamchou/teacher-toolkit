@@ -25,17 +25,19 @@ export function cardStates(st) { return windows().filter(x => st >= x.t0 && st <
 export function cardState(st) { const a = cardStates(st); return a.length ? a[a.length - 1] : null; }
 // 鏡頭平移（以鏡頭為單位）：這個鏡頭 [a, b] 期間只要有圖卡，就整個鏡頭固定讓位 1，否則 0
 // Shot-based shift: 1 for the whole shot if any card shows during it — constant inside a shot, changes only at cuts.
-export function shotShift(a, b) { return windows().some(x => x.t0 < b && x.t1 > a) ? 1 : 0; }
+// 小卡（tiny）不讓位；左上角的卡（pos 'tl'）讓位方向相反 / tiny cards don't shift; top-left cards shift the other way
+export const cardShift = card => card.size === 'tiny' ? 0 : card.pos === 'tl' ? -1 : 1;
+export function shotShift(a, b) { const x = windows().find(x => x.t0 < b && x.t1 > a && cardShift(x.card) !== 0); return x ? cardShift(x.card) : 0; }
 export function featherPulse(st) { const s = cardState(st); if (!s) return 0; return Math.max(0, 1 - s.tIn / .7) * Math.sin(Math.min(1, s.tIn / .12) * Math.PI / 2); }
 
 export function drawCards(c, st, opt = {}) { for (const s of cardStates(st)) drawOne(c, s, opt); }   // 先畫滑出的、再畫落下的
 function drawOne(c, s, { gray = 0 } = {}) {
-  const { card } = s; const W = card.big ? 768 : 576, PH = W * .62, M = W * .045, BOT = W * .14;   // 40% 或 30% 畫面寬
+  const { card } = s; const W = card.size === 'tiny' ? 384 : card.big ? 768 : 576, PH = W * .62, M = W * .045, BOT = W * .14;   // 40% 或 30% 畫面寬
   const H = PH + M + BOT;
   const inK = clamp(s.tIn / .38), outK = clamp(1 - s.tOut / .32);
-  const x0 = 1920 - 40 - W, y0 = 36;
+  const x0 = card.pos === 'tl' ? 40 : 1920 - 40 - W, y0 = 36;
   c.save();
-  c.translate(x0 + W / 2 + outK * 900, y0 + H / 2 - (1 - easeOut(inK)) * 260);
+  c.translate(x0 + W / 2 + outK * (card.pos === 'tl' ? -900 : 900), y0 + H / 2 - (1 - easeOut(inK)) * 260);
   c.rotate((-4 + (card.repeat ? 3 : 0)) * Math.PI / 180 + (1 - inK) * .12);
   const sc = .7 + .3 * backOut(inK); c.scale(sc, sc); c.globalAlpha = Math.min(1, inK * 2.2) * (1 - outK * .6);
   // 拍立得白框＋陰影 / polaroid frame

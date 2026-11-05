@@ -183,7 +183,7 @@ export function camAt(cam, keys, t) {
   let e0 = i + 1; while (e0 < keys.length && keys[e0][4] !== 'cut') e0++;
   const shotA = keys[s0][0], shotB = e0 < keys.length ? keys[e0][0] : keys[keys.length - 1][0];
   const sh = (typeof window !== 'undefined' && window.SHOT_SHIFT) ? window.SHOT_SHIFT(shotA, Math.max(shotB, shotA + .01)) : 0;
-  if (sh > .001) cam.setViewOffset(W, H, W * .2 * sh, 0, W, H); else cam.clearViewOffset();   // 純平移不放大 / pure shift, no zoom
+  if (Math.abs(sh) > .001) cam.setViewOffset(W, H, W * .2 * sh, 0, W, H); else cam.clearViewOffset();   // 純平移不放大 / pure shift, no zoom
   cam.updateProjectionMatrix(); cam.lookAt(look);
   return look;
 }

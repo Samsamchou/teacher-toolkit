@@ -1,7 +1,7 @@
 <!doctype html><meta charset="utf-8"><title>Birds 3D player</title>
 <style>html,body{margin:0;background:#000;overflow:hidden}#wrap{position:relative;width:1920px;height:1080px}
-#gl,#ov{position:absolute;left:0;top:0;width:1920px;height:1080px}</style>
-<div id="wrap"><canvas id="gl" width="1920" height="1080"></canvas><canvas id="ov" width="1920" height="1080"></canvas></div>
+#gl,#ai,#ov{position:absolute;left:0;top:0;width:1920px;height:1080px}#ai{display:none;object-fit:cover}</style>
+<div id="wrap"><canvas id="gl" width="1920" height="1080"></canvas><img id="ai"><canvas id="ov" width="1920" height="1080"></canvas></div>
 <script src="song-data.js"></script>
 <script src="cards-data.js"></script>
 <script type="importmap">{"imports":{"three":"../../../how-do-you-go/physical-v14/vendor/package/build/three.module.js","three/addons/":"../../../how-do-you-go/physical-v14/vendor/package/examples/jsm/"}}</script>
@@ -57,6 +57,18 @@ function subs(st) {
     if (w && cue[2].toLowerCase().includes(key.toLowerCase())) popWord(ov, key, (st - w[0] + .1) / 1.5); }
 }
 window.DUR = S.dur; window.SONG0 = S.songStart;
-window.renderFrame = t => { const st = t + S.songStart; window.FEATHER = featherPulse(st); window.SHOT_SHIFT = (nosub || nocard) ? null : shotShift; S.frame(t, st); subs(st); if (!nosub && !nocard) drawCards(ov, st, { gray: S.cardGray ? S.cardGray(st) : 0 }); if (S.overlay) S.overlay(ov, t, st); };
+// AI 鏡頭（KIE Seedance）：這段時間用影片畫格取代 3D 畫面，字幕與圖卡照常疊上；換鏡前後 0.15 秒暗一下
+// AI clips: inside [t0, t1) show the extracted clip frame instead of the 3D render; subtitles/cards still on top; short dip at both cuts.
+const AI = [{ t0: 145.4, t1: 153.2, dir: '../../kie/K41/f720/', fps: 24, n: 193 }];
+const aiImg = document.getElementById('ai'), glEl = document.getElementById('gl');
+async function aiFrame(st) {
+  const a = q.get('noai') === '1' ? null : AI.find(a => st >= a.t0 && st < a.t1);
+  aiImg.style.display = a ? 'block' : 'none'; glEl.style.visibility = a ? 'hidden' : 'visible'; if (!a) return;
+  const i = Math.min(a.n, 1 + Math.floor((st - a.t0) * a.fps)), src = a.dir + String(i).padStart(4, '0') + '.jpg';
+  if (!aiImg.src.endsWith(src.slice(5))) await new Promise(r => { aiImg.onload = r; aiImg.onerror = r; aiImg.src = src; });
+}
+function aiDip(st) { for (const a of AI) for (const e of [a.t0, a.t1]) { const d = Math.abs(st - e); if (d < .15) { ov.fillStyle = `rgba(0,0,0,${(1 - d / .15) * .85})`; ov.fillRect(0, 0, 1920, 1080); } } }
+window.renderFrame = async t => { const st0 = t + S.songStart; await aiFrame(st0); window._r(t); aiDip(st0); };
+window._r = t => { const st = t + S.songStart; window.FEATHER = featherPulse(st); window.SHOT_SHIFT = (nosub || nocard) ? null : shotShift; S.frame(t, st); subs(st); if (!nosub && !nocard) drawCards(ov, st, { gray: S.cardGray ? S.cardGray(st) : 0 }); if (S.overlay) S.overlay(ov, t, st); };
 window.READY = true;
 </script>

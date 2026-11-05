@@ -1,0 +1,24 @@
+[
+ {
+  "shot": "K41",
+  "res": "480p",
+  "take": 1,
+  "taskId": "9a874f70ab16af3f9ee2275f98f89528",
+  "state": "success",
+  "credits": 30.4,
+  "secs": 168,
+  "fail": "",
+  "file": "K41/480p_1.mp4"
+ },
+ {
+  "shot": "K41",
+  "res": "720p",
+  "take": 1,
+  "taskId": "bcd9b4ef678bce03b6aa0d14a0a196de",
+  "state": "success",
+  "credits": 65.6,
+  "secs": 142,
+  "fail": "",
+  "file": "K41/720p_1.mp4"
+ }
+]

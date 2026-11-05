@@ -3,8 +3,8 @@
 //   #31  98.40 （Ooh）→ 灰暗臥室，13 歲女孩（D13B）坐在窗前椅子上低頭，特寫
 //   #32 100.58 Birds fly in different directions → 從她背後看窗外：窗台上一隻白鳥飛走
 //   #33 104.46 （Ooh）→ 媽媽（M3）跪在她身邊張開雙臂抱她，媽媽身上帶暖光（回憶）
-//   #34 108.52 I hope to see you again → 灰色天空：媽媽（M2＋翅膀）展開翅膀，慢慢飛遠
-//   #35 111.96 （Ooh）→ 雲中媽媽回頭看最後一眼，再轉身飛進雲裡
+//   #34 108.52 I hope to see you again → 房間裡：媽媽（M3）抱住坐著的她，檯燈暖光（V02：媽媽不提早離開，暴風夜才被閃電帶走）
+//   #35 111.96 （Ooh）→ 兩人臉部近景（她含淚、媽媽溫柔）→ 拉遠：灰色房間裡只有媽媽身邊一圈暖光，媽媽輕拍她的背
 //   #36 117.14 Birds fly in different directions → 女孩（D13C）跪著把羽毛放進回憶木箱 → 特寫蓋上
 //   #37 120.70 （Ooh）→ 學校走廊，灰色同學從她兩邊走過，她一個人站著（D13A）
 //   #38 124.82 So fly high → 她轉向窗戶，窗外白鳥起飛 → 仰角：白鳥越飛越高
@@ -36,17 +36,18 @@ export async function setup({ renderer }) {
   const featR = feather({ glow: 1.4 }); featR.scale.setScalar(.12); R.add(featR);
   const featRL = new THREE.PointLight('#5ff2df', 0, .7, 2); R.add(featRL);
   const rCam = new THREE.PerspectiveCamera(32, 16 / 9, .03, 300);
+  // V02 安慰段：小桌＋檯燈（暖光只在媽媽身邊）、眼淚 / comfort beat: side table + warm lamp, a tear
+  const dl = new THREE.Group(); R.add(dl);
+  { const wd = new THREE.MeshStandardMaterial({ color: '#6b5444', roughness: .8 });
+    const top = new THREE.Mesh(new THREE.BoxGeometry(.42, .04, .42), wd); top.position.y = .58; top.castShadow = top.receiveShadow = true; dl.add(top);
+    for (const [x, z] of [[-.17, -.17], [.17, -.17], [-.17, .17], [.17, .17]]) { const lg = new THREE.Mesh(new THREE.BoxGeometry(.035, .58, .035), wd); lg.position.set(x, .29, z); lg.castShadow = true; dl.add(lg); }
+    const base = new THREE.Mesh(new THREE.CylinderGeometry(.06, .07, .03, 16), new THREE.MeshStandardMaterial({ color: '#3d3833', roughness: .5 })); base.position.y = .615; dl.add(base);
+    const pole = new THREE.Mesh(new THREE.CylinderGeometry(.01, .01, .26, 8), base.material); pole.position.y = .74; dl.add(pole); }
+  const dShade = new THREE.Mesh(new THREE.CylinderGeometry(.08, .13, .15, 20, 1, true), new THREE.MeshStandardMaterial({ color: '#f2e2c4', side: THREE.DoubleSide, emissive: '#ffc67a', emissiveIntensity: 0 })); dShade.position.y = .9; dl.add(dShade);
+  const dLamp = new THREE.PointLight('#ffbb70', 0, 1.9, 1.8); dLamp.position.y = .86; dl.add(dLamp);
+  const tear = new THREE.Mesh(new THREE.SphereGeometry(.006, 10, 8), new THREE.MeshStandardMaterial({ color: '#e8f4ff', emissive: '#bfe2ff', emissiveIntensity: .35, roughness: .05, transparent: true, opacity: .9 }));
+  tear.scale.set(1, 1.5, .8); girlR.add(tear); tear.visible = false;
   const CH = V(-.4, 0, -.85);   // 椅子位置（面向窗戶）/ the chair, facing the window
-
-  // ════════ G. 灰色天空（媽媽飛走）/ the grey sky ════════
-  const G = new THREE.Scene(); G.background = C('#a7adb5'); G.fog = new THREE.Fog('#a7adb5', 12, 140);
-  const gSky = skyDome(); G.add(gSky); setSky(gSky, { top: '#808894', mid: '#b4b9c0', bot: '#c9ccd0', sunDir: V(.3, .25, -1), sunCol: '#f4f6fa', sunSize: 0, sunGlow: .35 });
-  const gL = lightRig(G); gL.key.color.set('#eef1f6'); gL.key.intensity = 2.0; gL.key.position.set(8, 12, -6); gL.rim.color.set('#ffffff'); gL.rim.intensity = 1.2; gL.rim.position.set(-4, 6, -20); gL.hemi.color.set('#d6dbe2'); gL.hemi.intensity = 1.0;
-  const gSea = cloudField({ n: 200, area: [400, 500], y: [-9, -4], size: [24, 50], seed: 21, color: '#dfe2e6', opacity: .95 }); gSea.position.z = -160; G.add(gSea);
-  const gPuffs = cloudField({ n: 70, area: [140, 260], y: [-2, 18], size: [8, 20], seed: 23, color: '#cfd3d9', opacity: .6 }); gPuffs.position.z = -110; G.add(gPuffs);
-  const momG = await makeChar(M, { M2: 'M2.glb' }, { default: 1.65 }); G.add(momG);
-  const wingG = await loadModel(M + 'WINGS.glb', 2.6, { axis: 'xz' }); centerPivot(wingG); momG.add(wingG); wingG.position.set(0, 1.32, -.15);
-  const gCam = new THREE.PerspectiveCamera(34, 16 / 9, .05, 900);
 
   // ════════ W. 學校走廊 / the school corridor ════════
   const Wc = new THREE.Scene(); Wc.background = C('#b3b7bc'); Wc.fog = new THREE.Fog('#b3b7bc', 10, 80);
@@ -69,6 +70,7 @@ export async function setup({ renderer }) {
   const girlW = await makeChar(M, { D13A: 'D13A.glb' }, { default: 1.55 }); Wc.add(girlW);
   const mates = []; for (let i = 0; i < 10; i++) { const c = classmate(i); Wc.add(c); mates.push(c); }
   const birdW = await loadModel(M + 'BIRD.glb', .45, { axis: 'xz' }); Wc.add(birdW);
+  const flock = []; for (let i = 0; i < 2; i++) { const b = await loadModel(M + 'BIRD.glb', .45, { axis: 'xz' }); Wc.add(b); flock.push(b); }   // #38 尾：兩隻小鳥跟著飛 / two followers
   const hopeGlow = new THREE.PointLight('#fff2d8', 0, 30, 2); Wc.add(hopeGlow);
   const wCam = new THREE.PerspectiveCamera(30, 16 / 9, .05, 600);
 
@@ -78,41 +80,44 @@ export async function setup({ renderer }) {
 
   // 關鍵字依句子切換（播放頁拿的是同一個陣列）：#38 只標 fly high，避免 fly 和 fly high 同時跳出
   const keys = ['fly', 'directions', 'again'];
+  // ───── #34–#35 安慰（108.52–117.14）：媽媽跪在她身邊抱住她、輕拍背 / mom kneels and holds her, patting her back
+  // 椅子轉向房間（換鏡頭重新擺位），媽媽在她側邊，張開的雙臂一前一後環住她；身體前後輕擺＝拍背
+  const GY = .55, GF = V(Math.sin(GY), 0, Math.cos(GY)), GS = V(Math.cos(GY), 0, -Math.sin(GY));
+  const TEAR = [.047, .982, .142];   // 眼淚：左眼下（女孩模型座標）/ tear under her left eye (girl-local)
+  const HUG = { d: .42, fwd: -.13, yawAdd: 0 };
+  function comfort(st) {
+    girlR.setPose('D13B'); girlR.position.copy(CH); girlR.rotation.set(0, GY, 0); mbox.visible = false;
+    const mp = CH.clone().add(GS.clone().multiplyScalar(HUG.d)).add(GF.clone().multiplyScalar(HUG.fwd));
+    momR.setPose('M3'); momR.position.copy(mp);
+    const pat = Math.max(0, Math.sin((st - 108.52) * Math.PI * 1.6));          // 拍背節奏 / patting rhythm
+    momR.rotation.order = 'YXZ'; momR.rotation.set(.03 + .035 * pat, yawTo(mp, CH) + HUG.yawAdd, 0);
+    dl.visible = true; dl.position.copy(CH).sub(GS.clone().multiplyScalar(.62)).sub(GF.clone().multiplyScalar(.15));
+    const lk = ease(prog(st, 108.52, 109.4)); dLamp.intensity = 1.1 * lk + .25; dShade.material.emissiveIntensity = .4 + .9 * lk;
+    momWarm.intensity = .45; momWarm.position.copy(mp).add(V(0, 1.05, 0)).add(GF.clone().multiplyScalar(.45));
+    room.lamp.intensity = 0; room.shade.material.emissiveIntensity = .15;
+    const head = CH.clone().add(GS.clone().multiplyScalar(HUG.d * .5)).add(V(0, 1.0, 0));
+    const at = (f, s, y) => { const p = CH.clone().add(GF.clone().multiplyScalar(f)).add(GS.clone().multiplyScalar(s)); return [p.x, y, p.z]; };
+    const hv = [head.x, head.y - .05, head.z];
+    if (st < 111.96) {        // #34 兩人中景，慢慢推近 / two-shot, slow push in
+      camAt(rCam, [[108.52, at(2.4, .55, 1.15), hv, 32, 'cut'], [111.96, at(2.05, .5, 1.12), hv, 31]], st);
+      fill(rL, rCam, 1.0, '#f4e6d4', 4);
+      post.set({ focus: rCam.position.distanceTo(head), aperture: .002, maxblur: .008, bloom: .5, threshold: .84 });
+    } else if (st < 114.6) {  // #35a 臉部近景 / faces close-up
+      camAt(rCam, [[111.96, at(1.05, .42, 1.0), [head.x, head.y - .02, head.z], 30, 'cut'], [114.6, at(.95, .4, .99), [head.x, head.y - .02, head.z], 28]], st);
+      fill(rL, rCam, 1.1, '#f6e8d6', 3);
+      tear.visible = true; const tk = ease(prog(st, 112.3, 114.4)); tear.position.set(TEAR[0] + .002 * tk, TEAR[1] - .02 * tk, TEAR[2] + .004 * tk);
+      post.set({ focus: rCam.position.distanceTo(head), aperture: .003, maxblur: .01, bloom: .5, threshold: .84 });
+    } else {                  // #35b 拉遠：灰房間裡一圈暖光 / pull back: one warm pool in the grey room
+      camAt(rCam, [[114.6, at(2.6, -.9, 1.45), [head.x, .8, head.z], 34, 'cut'], [117.14, at(3.1, -1.1, 1.55), [head.x, .78, head.z], 36]], st);
+      fill(rL, rCam, .5, '#e8ecf2', 4);
+      post.set({ focus: rCam.position.distanceTo(head), aperture: .0016, maxblur: .007, bloom: .55, threshold: .82 });
+    }
+  }
   function frame(t, st) {
     keys.length = 0; if (st >= 124.82) keys.push('fly high'); else keys.push('fly', 'directions', 'again');
-    const sat = valAt([[98.4, .26], [104.2, .26], [105.2, .42], [108.2, .42], [108.8, .24], [124.8, .24], [127.5, .32]], st);
-    const tint = valAt([[98.4, '#e3e6eb'], [104.2, '#e3e6eb'], [105.2, '#f2ebe2'], [108.2, '#f2ebe2'], [108.8, '#e4e7ec'], [128.6, '#e8e8ea']], st);
+    const sat = valAt([[98.4, .26], [104.2, .26], [105.2, .42], [108.4, .42], [109.2, .36], [116.6, .36], [117.3, .24], [124.8, .24], [127.5, .32]], st);
+    const tint = valAt([[98.4, '#e3e6eb'], [104.2, '#e3e6eb'], [105.2, '#f2ebe2'], [108.4, '#f2ebe2'], [109.2, '#e6e7ea'], [116.6, '#e6e7ea'], [117.3, '#e4e7ec'], [128.6, '#e8e8ea']], st);
     post.set({ sat, tint, vig: .45, fade: 0, fadeCol: '#000000', t: st });
-
-    // ───────── 天空 #34–#35（108.52–117.14）
-    if (st >= 108.52 && st < 117.14) {
-      post.set({ scene: G, camera: gCam }); momG.setPose('M2');
-      if (st < 111.96) {   // #34 展翅、飛遠 / spread the wings, fly away
-        const wg = easeOut(prog(st, 108.6, 109.7)), go = Math.max(0, st - 109.5), d = Math.pow(go, 1.6) * 2.2;
-        const P = V(0, 2 + d * .22, -d);
-        momG.position.copy(P); flyPose(momG, Math.PI, lerp(.12, .75, clamp(go / 1.5)), .05 * Math.sin(st * 1.3));
-        wingG.scale.set(Math.max(.02, wg), Math.max(.02, wg), 1); wingG.children[0].rotation.x = .28 * Math.sin(st * 3.4) * wg;
-        camAt(gCam, [[108.52, [.9, 2.3, 4.6], [0, 3.0, 0], 34], [111.96, [.9, 2.6, 3.4], [0, 3.6, -6], 32]], st);
-        fill(gL, gCam, 1.0);
-        post.set({ focus: gCam.position.distanceTo(P), aperture: .0012, maxblur: .006, bloom: .45, threshold: .85 });
-      } else {             // #35 回頭看最後一眼 / one last look back
-        const B = V(0, 3, -30 - (st - 111.96) * .9);
-        const camP = V(B.x + 1.5, B.y + 1.5, B.z + 3.3), toCam = yawTo(B, camP);
-        const tIn = ease(prog(st, 112.3, 113.6)), tOut = ease(prog(st, 115.3, 116.2));
-        const yaw = lerp(lerp(Math.PI, toCam, tIn), Math.PI, tOut);
-        const away = Math.pow(Math.max(0, st - 116.0), 1.5) * 4;
-        momG.position.set(B.x, B.y + Math.sin(st * 1.2) * .06 + away * .15, B.z - away);
-        flyPose(momG, yaw, lerp(lerp(.45, .05, tIn), .7, tOut), 0);
-        wingG.scale.set(1, 1, 1); wingG.children[0].rotation.x = .16 * Math.sin(st * 2.6);
-        camAt(gCam, [[111.96, [camP.x + .3, camP.y, camP.z + .8], [B.x, B.y + 1.4, B.z], 30], [117.14, [camP.x, camP.y - .05, camP.z], [B.x, B.y + 1.4, B.z], 27]], st);
-        fill(gL, gCam, 2.2, '#f4f0ea', 8);
-        // 飛進雲裡：霧變濃 / she disappears into the cloud
-        G.fog.near = lerp(12, .5, prog(st, 116.0, 117.1)); G.fog.far = lerp(140, 9, prog(st, 116.0, 117.1));
-        post.set({ focus: gCam.position.distanceTo(momG.position.clone().add(V(0, 1.4, 0))), aperture: .0018, maxblur: .007, bloom: .45, threshold: .85 });
-      }
-      if (st < 111.96) { G.fog.near = 12; G.fog.far = 140; }
-      post.render(); return;
-    }
 
     // ───────── 走廊 #37–#38（120.7–128.64）
     if (st >= 120.7) {
@@ -121,6 +126,7 @@ export async function setup({ renderer }) {
         const z = dir > 0 ? -14 + ((st - 118 + hash(i + 6) * 14) * sp) % 17 : 3 - ((st - 118 + hash(i + 7) * 14) * sp) % 17;
         m.position.set(x, Math.abs(Math.sin(st * 6 + i)) * .03, z); m.rotation.y = dir > 0 ? 0 : Math.PI; m.rotation.z = Math.sin(st * 6 + i) * .03; });
       birdW.visible = st >= 124.82; birdW.scale.setScalar(1);
+      flock.forEach(b => { b.visible = false; });
       if (st < 124.82) {   // #37 一個人站在走廊 / alone in the corridor
         girlW.position.set(.1, 0, 0); girlW.rotation.y = .05;
         camAt(wCam, [[120.7, [.25, 1.42, 3.6], [.1, 1.32, 0], 30], [124.82, [.22, 1.42, 2.9], [.1, 1.34, 0], 28]], st);
@@ -135,14 +141,19 @@ export async function setup({ renderer }) {
         post.set({ focus: wCam.position.distanceTo(V(-1.75, 1.2, -.9)), aperture: .0016, maxblur: .006, bloom: .45, threshold: .85 });
       } else {             // #38b 仰角：白鳥越飛越高 / looking up: the bird flies higher and higher
         const k = prog(st, 126.7, 128.64), bp = V(lerp(-4.2, -7.5, k), lerp(3.2, 10, ease(k)), lerp(-1.6, -4.5, k));
-        birdW.scale.setScalar(1.8); birdW.position.copy(bp); birdW.rotation.set(-.7, -Math.PI / 2 - .5, .1 * Math.sin(st * 2)); birdFlap(birdW, st, 9);
+        birdW.scale.setScalar(2.8); birdW.position.copy(bp); birdW.rotation.set(-.7, -Math.PI / 2 - .5, .1 * Math.sin(st * 2)); birdFlap(birdW, st, 9);
+        // 後面兩隻小鳥跟著飛（V02：天空不再只有一隻）/ two smaller birds follow
+        flock.forEach((b, i) => { const kk = clamp(k * 1.1 - .05), off = i ? V(-2.2, 2.6, -4.5) : V(1.2, 1.6, -3.0);
+          b.visible = true; b.scale.setScalar(1.6 - i * .2);
+          b.position.set(lerp(-4.0, -7.2, kk) + off.x, lerp(3.0, 9.6, ease(kk)) + off.y, lerp(-1.6, -4.5, kk) + off.z);
+          b.rotation.set(-.65, -Math.PI / 2 - .5 + (i ? .2 : -.15), .1 * Math.sin(st * 2.3 + i)); birdFlap(b, st + i * .7, 10 + i); });
         camAt(wCam, [[126.7, [-2.6, 1.6, 2.4], [-4.6, 3.8, -1.8], 40], [128.64, [-2.7, 1.5, 2.5], [-7.2, 9.4, -4.4], 38]], st);
         hopeGlow.position.set(bp.x - 2, bp.y + 4, bp.z - 3); hopeGlow.intensity = 0;
-        setSky(wSky, { sunDir: V(-.55, lerp(.55, .8, k), -.4), sunGlow: lerp(.4, .7, k), sunCol: '#fff4e0' });
-        fill(wL, wCam, 0);
-        post.set({ focus: wCam.position.distanceTo(bp), aperture: .0006, maxblur: .004, bloom: .55, threshold: .82 });
+        setSky(wSky, { top: '#545c68', mid: '#78808a', bot: '#8a9098', sunDir: V(-.55, lerp(.55, .8, k), -.4), sunGlow: lerp(.25, .4, k), sunCol: '#fff1d8' });   // V02：天空調暗，鳥才看得清楚
+        fill(wL, wCam, 2.6, '#fff6ea', 40);   // 從鏡頭方向打亮白鳥（逆光時鳥會變黑）/ light the birds from the camera side
+        post.set({ focus: wCam.position.distanceTo(bp), aperture: .0006, maxblur: .004, bloom: .45, threshold: .86 });
       }
-      if (st < 126.7) setSky(wSky, { sunDir: V(-1, .55, -.4), sunGlow: .5 });
+      Wc.fog.color.set(st < 126.7 ? '#b3b7bc' : '#858b94'); if (st < 126.7) setSky(wSky, { top: '#8a919b', mid: '#bcc0c6', bot: '#cdd0d3', sunDir: V(-1, .55, -.4), sunGlow: .5, sunCol: '#ffffff' });
       post.render(); return;
     }
 
@@ -152,6 +163,7 @@ export async function setup({ renderer }) {
     momR.setPose(null); birdR.visible = false; featR.visible = false; featRL.intensity = 0; momWarm.intensity = 0; holdGlow.set(0);
     mbox.position.set(.45, 0, .32); mbox.rotation.y = 0; mbox.setOpen(1);
     room.lamp.intensity = .5; room.shade.material.emissiveIntensity = .5;
+    dl.visible = false; dLamp.intensity = 0; dShade.material.emissiveIntensity = 0; tear.visible = false; girlR.rotation.set(0, Math.PI, 0); momR.rotation.set(0, 0, 0);
     if (st < 117.14) {
       girlR.setPose('D13B'); girlR.position.copy(CH); girlR.rotation.y = Math.PI; mbox.visible = false;
       if (st < 100.58) {   // #31 窗前低頭特寫 / bowed head by the window, close-up
@@ -164,13 +176,13 @@ export async function setup({ renderer }) {
         camAt(rCam, [[100.58, [.15, 1.2, .7], [-.55, 1.2, -2.2], 36], [104.46, [.1, 1.18, .45], [-.55, 1.25, -2.2], 34]], st);
         fill(rL, rCam, .5, '#e8ecf2', 3);
         post.set({ focus: rCam.position.distanceTo(V(-.4, 1.0, -2.2)), aperture: .0018, maxblur: .008, bloom: .4, threshold: .86 });
-      } else {             // #33 媽媽來抱她（暖光）/ mom comes and holds her, warm light
+      } else if (st < 108.52) {   // #33 媽媽來抱她（暖光）/ mom comes and holds her, warm light
         momR.setPose('M3'); momR.position.set(CH.x + .62, 0, CH.z + .12); momR.rotation.y = yawTo(momR.position, CH) + .15;
         const wk = prog(st, 104.46, 105.6); momWarm.intensity = 1.6 * wk; momWarm.position.set(CH.x + .4, 1.1, CH.z + .5);
         camAt(rCam, [[104.46, [-1.95, 1.05, .1], [-.05, .8, -.85], 36], [108.52, [-1.8, 1.0, -.05], [-.05, .8, -.85], 34]], st);
         fill(rL, rCam, 1.2, '#f2ece4', 4);
         post.set({ focus: rCam.position.distanceTo(V(-.1, .85, -.85)), aperture: .0022, maxblur: .008, bloom: .45, threshold: .85 });
-      }
+      } else comfort(st);
     } else {               // #36 把羽毛收進木箱 / the feather goes into the memory box
       girlR.setPose('D13C'); girlR.position.set(.45, 0, -.15); girlR.rotation.y = 0; mbox.visible = true; holdGlow.set(window.FEATHER || 0);
       const hand = V(.45, .56, .06), inBox = mbox.position.clone().add(V(0, .06, 0));
