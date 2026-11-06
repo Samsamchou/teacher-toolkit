@@ -466,6 +466,8 @@ func _build_choice_body() -> void:
 		body.add_child(hb2)
 	else:
 		body.add_child(right)
+		# 沒有短文／圖時 left 沒放進畫面，要自己釋放，不然每題留下一個沒人管的節點（2026-11-06 記憶體檢查找到）
+		left.free()
 
 ## 字磚區（拼字、拖放、排序、標籤題共用）
 func _make_bank(texts: Array, font_size: int, min_w: float) -> Control:

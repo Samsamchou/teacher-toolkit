@@ -191,7 +191,9 @@ func _ready() -> void:
 	_refresh_ui()
 	_detect_mobile()
 	await _prewarm()
-	if "--perf" in OS.get_cmdline_user_args():
+	if "--mem" in OS.get_cmdline_user_args():
+		_run_mem()
+	elif "--perf" in OS.get_cmdline_user_args():
 		_run_perf()
 	elif "--shots" in OS.get_cmdline_user_args():
 		_run_shots()
@@ -2172,6 +2174,106 @@ func _run_perf() -> void:
 		print("PERF ", id, " attack_max_ms=", spikes)
 		while busy:
 			await get_tree().process_frame
+	get_tree().quit()
+
+## --mem：依序打完 13 個地點（答題＋全部攻擊），每場結束後印記憶體與物件數，用來找「每場留下沒清掉的東西」。
+## iPad 第 9 代打幾場後當機（2026-11-06）就是靠這個比較修改前後。
+func _mem_line(tag: String) -> void:
+	print("MEM %-10s static_mb=%.1f video_mb=%.1f tex_mb=%.1f buf_mb=%.1f objects=%d nodes=%d orphans=%d resources=%d" % [
+		tag,
+		OS.get_static_memory_usage() / 1048576.0,
+		Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED) / 1048576.0,
+		Performance.get_monitor(Performance.RENDER_TEXTURE_MEM_USED) / 1048576.0,
+		Performance.get_monitor(Performance.RENDER_BUFFER_MEM_USED) / 1048576.0,
+		int(Performance.get_monitor(Performance.OBJECT_COUNT)),
+		int(Performance.get_monitor(Performance.OBJECT_NODE_COUNT)),
+		int(Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT)),
+		int(Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT))])
+
+func _run_mem() -> void:
+	quiz.reset_results()
+	await get_tree().create_timer(2.0).timeout
+	_mem_line("start")
+	if "--texlist" in OS.get_cmdline_user_args():
+		# 走過場景裡所有材質，把用到的貼圖依大小列出（同一張貼圖只算一次）
+		var seen := {}
+		var stack: Array = [self]
+		while not stack.is_empty():
+			var n: Node = stack.pop_back()
+			stack.append_array(n.get_children())
+			var mats: Array = []
+			if n is MeshInstance3D:
+				var mi := n as MeshInstance3D
+				if mi.material_override != null:
+					mats.append(mi.material_override)
+				if mi.mesh != null:
+					for si in mi.mesh.get_surface_count():
+						var sm := mi.get_active_material(si)
+						if sm != null:
+							mats.append(sm)
+			for m in mats:
+				if m is BaseMaterial3D:
+					for prop in ["albedo_texture", "normal_texture", "roughness_texture", "metallic_texture", "emission_texture", "orm_texture"]:
+						var t = m.get(prop)
+						if t is Texture2D and not seen.has(t):
+							var img: Image = t.get_image()
+							var bytes := 0 if img == null else img.get_data().size()
+							seen[t] = [bytes, t.resource_path, t.get_width(), t.get_height(), prop]
+		var rows := seen.values()
+		rows.sort_custom(func(a, b): return a[0] > b[0])
+		var total := 0
+		for r in rows:
+			total += r[0]
+		for r in rows.slice(0, 30):
+			print("TEX %6.2f MB %4dx%-4d %-18s %s" % [r[0] / 1048576.0, r[2], r[3], r[4], r[1]])
+		print("TEXTOTAL %.1f MB in %d textures (as stored in pck, before GPU upload)" % [total / 1048576.0, rows.size()])
+		var bank_bytes := 0
+		for p in bank.textures:
+			var bi: Image = bank.textures[p].get_image()
+			bank_bytes += bi.get_data().size()
+		print("BANKTEX %.1f MB in %d question pictures" % [bank_bytes / 1048576.0, bank.textures.size()])
+	var rounds := 1
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--rounds="):
+			rounds = int(a.substr(9))
+	for r in rounds:
+		for L in LOCS:
+			var id: String = L["id"]
+			_end_battle()
+			quiz.visible = false
+			cleared.clear()
+			if r > 0:
+				quiz.reset_results()
+			player.position = loc_world[id]["door"]
+			target_id = id
+			_arrive()
+			while not quiz.visible:
+				await get_tree().process_frame
+			await get_tree().create_timer(0.6).timeout
+			if r == 0 and id == "station":
+				_mem_line("arrive1")
+			while quiz.visible:
+				quiz.debug_fill(true)
+				quiz.debug_check()
+				await get_tree().create_timer(0.12).timeout
+				quiz.debug_next()
+				await get_tree().create_timer(0.15).timeout
+			while not atk_ui.visible and not foes.is_empty():
+				await get_tree().process_frame
+			while not atk_pending.is_empty():
+				_on_attack_pressed()
+				await get_tree().process_frame
+				while atk_running:
+					await get_tree().process_frame
+				await get_tree().create_timer(0.3).timeout
+			while busy:
+				await get_tree().process_frame
+			_end_battle()
+			await get_tree().create_timer(2.0).timeout   # 等特效與 queue_free 收完
+			_mem_line("%d:%s" % [r + 1, id])
+	print("MEM DONE")
+	if "--orphans" in OS.get_cmdline_user_args():
+		Node.print_orphan_nodes()
 	get_tree().quit()
 
 ## --allq：每個地點進入戰鬥，每一題先答錯一次（看提示）再答對；每種題型第一次出現時截圖（答題中、答對後）。
