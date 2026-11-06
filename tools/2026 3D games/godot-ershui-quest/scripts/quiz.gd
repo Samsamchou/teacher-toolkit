@@ -49,6 +49,7 @@ var footer: VBoxContainer
 var audio: AudioStreamPlayer
 
 var bank: Node = null          # scripts/bank.gd：題目與素材都從任務資料夾讀進來
+var next_text := ""            # 答對後按鈕文字（Jump Island 用「Go! 繼續」；空字串＝下一題／完成）
 
 func setup(f: Font, fb: Font, p_test: bool, p_bank: Node) -> void:
 	bank = p_bank
@@ -263,7 +264,27 @@ func _show_item() -> void:
 		body.add_child(_prompt_row())
 	if item.get("weekStrip") != null:
 		body.add_child(_week_strip(item["weekStrip"]))
-	body.add_child(_picture())
+	# 有圖的拼字、拖放題：圖片放左邊大圖、句子和字磚放右邊（2026-11-09：原本高 78 像素，學生看不清楚）
+	var pic := _picture()
+	var main: Container = body
+	if pic.get_child_count() > 0:
+		var vp := get_viewport().get_visible_rect().size
+		var pw := vp.x * 0.38
+		var ph := minf(pw * 0.8, vp.y * (0.42 if battle_on else 0.55))
+		pic.custom_minimum_size = Vector2(pw, ph)
+		pic.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		pic.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		var hb := HBoxContainer.new()
+		hb.add_theme_constant_override("separation", 20)
+		body.add_child(hb)
+		hb.add_child(pic)
+		var right := VBoxContainer.new()
+		right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		right.add_theme_constant_override("separation", 14)
+		hb.add_child(right)
+		main = right
+	else:
+		body.add_child(pic)
 	# 字磚
 	var texts: Array = []
 	if item["type"] == "spell":
@@ -295,7 +316,7 @@ func _show_item() -> void:
 	# 題目句子
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	body.add_child(box)
+	main.add_child(box)
 	for line in item["lines"]:
 		box.add_child(_line_row(line["speaker"], line["text"]))
 	if item["type"] == "spell":
@@ -307,7 +328,7 @@ func _show_item() -> void:
 	bank.add_theme_constant_override("h_separation", 10)
 	bank.add_theme_constant_override("v_separation", 10)
 	bank.custom_minimum_size = Vector2(0, 70)
-	body.add_child(bank)
+	main.add_child(bank)
 	for t in tiles:
 		var tb := QuizTile.new()
 		tb.quiz = self
@@ -886,7 +907,7 @@ func _on_correct() -> void:
 	play_btn.pressed.connect(_play_feedback)
 	play_btn.visible = is_listen or needs_tick
 	row.add_child(play_btn)
-	next_btn = _button("下一題" if qi + 1 < queue.size() else "完成", 26)
+	next_btn = _button(next_text if next_text != "" else ("下一題" if qi + 1 < queue.size() else "完成"), 26)
 	_skin(next_btn, Color("6fc276"), Color("3d8b44"), Color.WHITE)
 	next_btn.disabled = needs_tick and not test_mode
 	next_btn.pressed.connect(_on_next)

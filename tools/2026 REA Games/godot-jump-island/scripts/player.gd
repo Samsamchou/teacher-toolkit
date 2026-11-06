@@ -11,6 +11,7 @@ extends CharacterBody3D
 
 signal jumped(kind: String)
 signal landed(kind: String)
+signal style(move: String)           # 自動跑版的華麗動作：flip、spin、vault、wallkick（game.gd 計數、放特效與音效）
 
 const U := 0.0137                  # 1 遊戲單位 = 0.0137 m
 const V := U * 30.0                # 單位/格 → m/s
@@ -46,6 +47,9 @@ const STOMP_VY := 35.0 * V
 var move := Vector3.ZERO           # 世界座標的移動方向（長度 0–1）
 var jump_held := false
 var frozen := false
+## iPad 自動跑版（2026-11-09）：> 0 時 Ken 固定以這個速度往 +X 跑，只在 z = 0 這條線上移動
+var run_cap := 0.0
+var grav_mul := 1.0             # 自動跑版用 0.7：在空中久一點、跳得比較遠（小朋友比較好過缺口）
 
 var facing := 0.0                  # 面向（弧度，0 = +Z）
 var fwd := 0.0                     # 地面前進速度
@@ -64,6 +68,14 @@ var was_floor := true
 var visual: Node3D                 # 角色外觀（Ken 模型），只轉這個，不轉碰撞體
 var anim: AnimationPlayer
 var flip_t := -1.0                 # 三段跳翻滾進度
+var spin_t := -1.0                 # 空中旋轉進度（自動跑版：空中再點一下）
+var spun := false                  # 這次跳躍已經轉過了
+var flipped := false               # 這次跳躍已經翻過了
+var vaulting := false              # 這次是自動跨越（翻身）
+var wall_kick_on := false          # 第 4 關以後才開踢牆跳
+var on_wall_slide := false
+const JUMP_ANIM_FROM := 0.35       # jump 動畫從第幾秒開始（跳過原地蹲下的部分）
+const JUMP_ANIM_SPEED := 1.6       # 播放速度（自動跑版一跳約 0.9–1.1 秒）
 
 func _ready() -> void:
 	floor_max_angle = deg_to_rad(46)
@@ -77,7 +89,41 @@ func _ready() -> void:
 	add_child(cs)
 
 func press_jump() -> void:
+	if run_cap > 0.0 and not is_on_floor() and since_floor >= COYOTE and kind != "":
+		_air_tap()
+		return
 	buf_jump = JUMP_BUFFER
+
+## 自動跑版：空中再點一下 → 跨越中就跳更高（翻身）；貼著牆就踢牆跳；其他時候空中旋轉（只一次）
+func _air_tap() -> void:
+	if on_wall_slide and wall_kick_on:
+		velocity.y = JUMP1 * 0.95
+		velocity.x = -5.0
+		fwd = 0.0
+		kind = "single"
+		cut_done = true
+		spun = false
+		flipped = false
+		flip_t = 0.0
+		style.emit("wallkick")
+		return
+	if vaulting and not flipped:
+		velocity.y = maxf(velocity.y, JUMP1 * 0.9)
+		cut_done = true
+		flipped = true
+		flip_t = 0.0
+		style.emit("vault")
+		return
+	if not spun:
+		spun = true
+		spin_t = 0.0
+		velocity.y = maxf(velocity.y, 6.0)
+		style.emit("spin")
+
+## 自動跨越矮台階／史萊姆：小跳＋翻身
+func vault() -> void:
+	buf_jump = JUMP_BUFFER
+	vaulting = true
 
 func press_long() -> void:
 	buf_long = JUMP_BUFFER
@@ -144,6 +190,11 @@ func _physics_process(dt: float) -> void:
 	if not (on_floor and kind == ""):
 		_air(dt, input, mag)
 	was_floor = on_floor
+	if run_cap > 0.0:
+		velocity.z = (0.0 - position.z) * 8.0   # 自動跑：拉回 z = 0 這條線
+		on_wall_slide = wall_kick_on and not on_floor and is_on_wall() and velocity.y < 0.0
+		if on_wall_slide:
+			velocity.y = maxf(velocity.y, -3.0)     # 貼牆慢慢滑下來，這時點一下就踢牆跳
 	move_and_slide()
 	# 撞牆：前進速度不超過實際速度太多（不會卡著累積速度），但保留餘裕讓 Ken 能沿著牆滑開，
 	# 不會斜斜頂著牆就整個停住（2026-10-23 自動闖關在網頁版發現：頂著高柱 0.5 m/s 卡死）
@@ -164,8 +215,10 @@ func _ground(dt: float, input: Vector3, mag: float) -> void:
 		else:
 			var rate := TURN_RATE if fwd > 3.0 else 30.0
 			set_facing(rotate_toward(facing, want, rate * dt))
-			var target := RUN_MAX * mag
-			if fwd < target:
+			var target := run_cap if run_cap > 0.0 else RUN_MAX * mag
+			if run_cap > 0.0 and fwd < target:
+				fwd = minf(target, fwd + ACCEL * 3.0 * dt)   # 自動跑：很快就到跑速
+			elif fwd < target:
 				fwd = minf(target, fwd + ACCEL * dt * (1.0 - 0.45 * fwd / RUN_MAX))
 			else:
 				fwd = maxf(target, fwd - DECEL * dt)
@@ -187,6 +240,17 @@ func _start_jump(long_btn: bool) -> void:
 		kind = "long"
 		velocity.y = LONG_VY
 		fwd = minf(fwd * LONG_MUL, LONG_MAX)
+	elif run_cap > 0.0:
+		# 自動跑版只有一種跳（點一下矮、按住高），不做二段、三段跳：距離固定，小朋友比較好抓
+		kind = "single"
+		velocity.y = JUMP1 + bonus
+		spun = false
+		flipped = false
+		spin_t = -1.0
+		if vaulting:
+			flip_t = 0.0
+			flipped = true
+			style.emit("vault")
 	elif since_land <= COMBO_WINDOW and last_land_kind == "double" and fwd >= TRIPLE_MIN:
 		kind = "triple"
 		velocity.y = JUMP3
@@ -204,7 +268,7 @@ func _start_jump(long_btn: bool) -> void:
 	jumped.emit(kind)
 
 func _air(dt: float, input: Vector3, mag: float) -> void:
-	var g := GRAV_LONG if kind == "long" else GRAV
+	var g := (GRAV_LONG if kind == "long" else GRAV) * grav_mul
 	if kind == "" and since_floor >= COYOTE:
 		kind = "fall"
 	if (kind == "single" or kind == "double") and not jump_held and not cut_done and air_t >= CUT_AFTER and velocity.y > 20.0 * V:
@@ -214,6 +278,8 @@ func _air(dt: float, input: Vector3, mag: float) -> void:
 	velocity.y = maxf(-TERMINAL, velocity.y - g * dt)
 	var hv := Vector3(velocity.x, 0, velocity.z)
 	var cap := maxf(hv.length(), RUN_MAX * 0.75)
+	if run_cap > 0.0:
+		cap = run_cap
 	if mag > 0.05:
 		var acc := AIR_ACCEL_LONG if kind == "long" else AIR_ACCEL
 		hv += input * acc * dt
@@ -234,8 +300,12 @@ func _on_landed() -> void:
 	since_land = 0.0
 	kind = ""
 	flip_t = -1.0
+	spin_t = -1.0
+	vaulting = false
 	if visual:
 		visual.rotation.x = 0.0
+		if run_cap > 0.0:
+			visual.rotation.y = facing
 	# 落地時保留朝面向的速度
 	var hv := Vector3(velocity.x, 0, velocity.z)
 	fwd = hv.dot(forward()) if hv.length() > 0.1 else 0.0
@@ -247,7 +317,19 @@ func _visual(dt: float) -> void:
 		return
 	visual.visible = invuln <= 0.0 or int(invuln * 12.0) % 2 == 0
 	# 三段跳：上升時往前翻一圈
-	if kind == "triple" and flip_t >= 0.0:
+	if run_cap > 0.0 and kind == "single":
+		# 按住跳：上升 0.18 秒還按著 → 前空翻（一次）
+		if not flipped and jump_held and air_t > 0.18 and velocity.y > 0.0:
+			flipped = true
+			flip_t = 0.0
+			style.emit("flip")
+		if flip_t >= 0.0:
+			flip_t += dt
+			visual.rotation.x = minf(1.0, flip_t / 0.5) * TAU
+		if spin_t >= 0.0:
+			spin_t += dt
+			visual.rotation.y = facing + minf(1.0, spin_t / 0.45) * TAU * 2.0
+	elif kind == "triple" and flip_t >= 0.0:
 		flip_t += dt
 		visual.rotation.x = minf(1.0, flip_t / 0.55) * TAU
 	elif kind == "long":
@@ -255,6 +337,15 @@ func _visual(dt: float) -> void:
 	elif kind == "":
 		visual.rotation.x = 0.0
 	if anim:
+		# 2026-11-10：Tripo 預設「jump」動畫（原地跳，約 2.2 秒）。在空中時播，從起跳那一格開始、加快到配合跳躍時間；
+		# 沒有 jump 動畫的舊模型照舊（走路／待機）
+		if not is_on_floor() and kind != "" and kind != "knock" and anim.has_animation("jump"):
+			if anim.current_animation != "jump":
+				anim.get_animation("jump").loop_mode = Animation.LOOP_NONE
+				anim.play("jump", 0.08)
+				anim.seek(JUMP_ANIM_FROM, true)
+			anim.speed_scale = JUMP_ANIM_SPEED
+			return
 		var moving := is_on_floor() and fwd > 0.6
 		_play(moving)
 		anim.speed_scale = clampf(fwd / 4.0, 0.9, 2.6) if moving else 1.0

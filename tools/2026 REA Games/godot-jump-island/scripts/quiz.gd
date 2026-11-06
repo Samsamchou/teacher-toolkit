@@ -47,9 +47,10 @@ var header_label: Label
 var body: VBoxContainer
 var footer: VBoxContainer
 var audio: AudioStreamPlayer
+var slow_audio: AudioStreamPlayer
 
 var bank: Node = null          # scripts/bank.gd：題目與素材都從任務資料夾讀進來
-var next_text := ""            # 答對後按鈕文字（跳跳島用「Go! 繼續」）
+var next_text := ""            # 答對後按鈕文字（Jump Island 用「Go! 繼續」；空字串＝下一題／完成）
 
 func setup(f: Font, fb: Font, p_test: bool, p_bank: Node) -> void:
 	bank = p_bank
@@ -107,6 +108,10 @@ func setup(f: Font, fb: Font, p_test: bool, p_bank: Node) -> void:
 	audio = AudioStreamPlayer.new()
 	audio.finished.connect(_on_audio_finished)
 	add_child(audio)
+	# 慢速再聽一次（2026-11-11 教師 RDQ ④）：播事先做好的 0.7 倍慢速檔（題目的 audioSlow）。
+	# 不要在執行中新增音效匯流排或改 stream 播放：網頁版會讓全部聲音都消失（11/11 教師 iPad 實測）。
+	slow_audio = AudioStreamPlayer.new()
+	add_child(slow_audio)
 
 # ---------- 小工具 ----------
 func _label(t: String, size: int, bold := false) -> Label:
@@ -141,8 +146,7 @@ func _skin(b: Button, bg: Color, border: Color, font_color := INK) -> void:
 
 # ---------- 存檔 ----------
 func _load_results() -> void:
-	results = {}
-	if Host.connected():
+	if Host.on_web():
 		var init := Host.initial()
 		if typeof(init.get("results")) == TYPE_DICTIONARY:
 			results = init["results"]
@@ -153,7 +157,7 @@ func _load_results() -> void:
 			results = d
 
 func _save_results() -> void:
-	if Host.connected():
+	if Host.on_web():
 		return
 	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if f:
@@ -192,6 +196,7 @@ func start(id: String, zh: String) -> void:
 
 func _on_close() -> void:
 	audio.stop()
+	slow_audio.stop()
 	visible = false
 	closed.emit()
 
@@ -209,8 +214,30 @@ func _clear_body() -> void:
 		footer.remove_child(c)
 		c.queue_free()
 
+## 題型（2026-11-01 加入 Wayground 綜合小考的題型）：
+## - listen：聽力選擇（舊題庫）        - choice：選擇題（可有音檔、圖片、短文、題幹；選項文字或圖片）
+## - spell：拼字（字母磚）            - drag：拖放填空（對話句子裡的空格）
+## - order：重新排序（字卡依序放進格子；聽力排序、句子重組、字母排成單字）
+## - label：標籤題（2×2 四格圖，把句子拖到圖上的格子）
+func _is_choice() -> bool:
+	return item.get("type", "") in ["listen", "choice"]
+
+func _has_q_audio() -> bool:
+	# 題目音檔（按「播放」聽）；拼字、拖放題的 audio 是答對後的 Tick 回饋語音
+	return item.get("type", "") in ["listen", "choice", "order", "label"] and bank.stream(item.get("audio", "")) != null
+
+func _tall() -> bool:
+	# 有圖、短文、標籤題：題目面板拉高，少捲動（打怪時怪物會被擋住一部分）
+	if item.get("type", "") == "label":
+		return true
+	if str(item.get("passage", "")) != "":
+		return true
+	# 綜合小考的題目（有 prompt）附圖時
+	return str(item.get("prompt", "")) != "" and str(item.get("image", "")) != ""
+
 func _show_item() -> void:
 	audio.stop()
+	slow_audio.stop()
 	_clear_body()
 	item = items_by_id[queue[qi]]
 	attempts = 0
@@ -219,19 +246,52 @@ func _show_item() -> void:
 	heard = false
 	solved = false
 	_update_header()
-	if item["type"] == "listen":
+	_apply_layout()
+	if _is_choice():
 		tiles = []
 		slots = []
 		slot_buttons = []
 		tile_buttons = {}
 		listen_choice = -1
-		_build_listen_body()
+		_build_choice_body()
 		_build_footer()
 		_play_item_audio()
 		return
-	if item["weekStrip"] != null:
+	if item["type"] == "label":
+		_build_label_body()
+		_build_footer()
+		return
+	if item["type"] == "order":
+		_build_order_body()
+		_build_footer()
+		if _has_q_audio():
+			_play_item_audio()
+		return
+	if str(item.get("prompt", "")) != "":
+		body.add_child(_prompt_row())
+	if item.get("weekStrip") != null:
 		body.add_child(_week_strip(item["weekStrip"]))
-	body.add_child(_picture())
+	# 有圖的拼字、拖放題：圖片放左邊大圖、句子和字磚放右邊（2026-11-09：原本高 78 像素，學生看不清楚）
+	var pic := _picture()
+	var main: Container = body
+	if pic.get_child_count() > 0:
+		var vp := get_viewport().get_visible_rect().size
+		var pw := vp.x * 0.38
+		var ph := minf(pw * 0.8, vp.y * (0.42 if battle_on else 0.55))
+		pic.custom_minimum_size = Vector2(pw, ph)
+		pic.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		pic.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		var hb := HBoxContainer.new()
+		hb.add_theme_constant_override("separation", 20)
+		body.add_child(hb)
+		hb.add_child(pic)
+		var right := VBoxContainer.new()
+		right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		right.add_theme_constant_override("separation", 14)
+		hb.add_child(right)
+		main = right
+	else:
+		body.add_child(pic)
 	# 字磚
 	var texts: Array = []
 	if item["type"] == "spell":
@@ -263,7 +323,7 @@ func _show_item() -> void:
 	# 題目句子
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
-	body.add_child(box)
+	main.add_child(box)
 	for line in item["lines"]:
 		box.add_child(_line_row(line["speaker"], line["text"]))
 	if item["type"] == "spell":
@@ -275,7 +335,7 @@ func _show_item() -> void:
 	bank.add_theme_constant_override("h_separation", 10)
 	bank.add_theme_constant_override("v_separation", 10)
 	bank.custom_minimum_size = Vector2(0, 70)
-	body.add_child(bank)
+	main.add_child(bank)
 	for t in tiles:
 		var tb := QuizTile.new()
 		tb.quiz = self
@@ -321,40 +381,252 @@ var play_btn: Button
 var listen_choice := -1
 var option_buttons: Array = []
 
-## 聽力題：上方播放鍵，下方 3 個選項（圖片或文字），點選後按「檢查答案」。
-func _build_listen_body() -> void:
+## 題目說明列：說明文字（例：Listen and Check 仔細聽…）＋有題目音檔時的播放鍵
+func _prompt_row() -> Control:
 	var top := HBoxContainer.new()
-	top.alignment = BoxContainer.ALIGNMENT_CENTER
 	top.add_theme_constant_override("separation", 18)
-	body.add_child(top)
-	top.add_child(_label("Listen and choose.  聽音檔，選出正確答案。", 28, true))
-	var pb := _button("▶ Listen 播放", 28)
-	_skin(pb, Color("cfe3ff"), Color("2f6fd6"))
-	pb.custom_minimum_size = Vector2(230, 66)
-	pb.pressed.connect(_play_item_audio)
-	top.add_child(pb)
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 20)
-	body.add_child(row)
+	var p := str(item.get("prompt", ""))
+	if p == "" and item.get("type", "") == "listen":
+		p = "Listen and choose.  聽音檔，選出正確答案。"
+	var pl := _label(p, 24, true)
+	pl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	pl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	pl.custom_minimum_size = Vector2(300, 0)
+	top.add_child(pl)
+	if _has_q_audio():
+		var pb := _button("▶ Listen 播放", 26)
+		_skin(pb, Color("cfe3ff"), Color("2f6fd6"))
+		pb.custom_minimum_size = Vector2(220, 60)
+		pb.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		pb.pressed.connect(_play_item_audio)
+		top.add_child(pb)
+	if _has_q_audio() and bank.stream(item.get("audioSlow", "")) != null:
+		var sb := _button("慢速再聽 Slow", 24)
+		_skin(sb, Color("e6f6d8"), Color("3f8f2a"))
+		sb.custom_minimum_size = Vector2(190, 60)
+		sb.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		sb.pressed.connect(_play_item_audio_slow)
+		top.add_child(sb)
+	return top
+
+func _texture_box(path: String, size: Vector2) -> Control:
+	var tr := TextureRect.new()
+	tr.texture = bank.tex(path)
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.custom_minimum_size = size
+	return tr
+
+## 選擇題（含舊的聽力題）：說明列＋（左：短文／圖片）＋（右：題幹、選項）。點選項後按「檢查答案」。
+func _build_choice_body() -> void:
+	body.add_child(_prompt_row())
+	var left := VBoxContainer.new()
+	left.add_theme_constant_override("separation", 8)
+	var passage := str(item.get("passage", ""))
+	if passage != "":
+		var pc := PanelContainer.new()
+		var st := _style(Color("ffffff"), Color("d8c9a5"), 12)
+		st.set_content_margin_all(12)
+		pc.add_theme_stylebox_override("panel", st)
+		var pl := _label(passage, 22)
+		pl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		pl.custom_minimum_size = Vector2(540, 0)
+		pc.add_child(pl)
+		left.add_child(pc)
+		for n in item.get("notes", []):
+			var nl := _label(str(n), 18)
+			nl.add_theme_color_override("font_color", Color("6b5a3a"))
+			left.add_child(nl)
+	if str(item.get("image", "")) != "" and bank.tex(item["image"]) != null:
+		# 課表、圖表要看得清楚：寬 540，高度照圖的比例（直式圖表最高 760，面板可以捲動）
+		var ts: Vector2 = bank.tex(item["image"]).get_size()
+		var bh := clampf(540.0 * ts.y / maxf(1.0, ts.x), 200.0, 300.0 if passage != "" else 760.0)
+		left.add_child(_texture_box(item["image"], Vector2(540, bh)))
+	var has_left := left.get_child_count() > 0
+	var right := VBoxContainer.new()
+	right.add_theme_constant_override("separation", 12)
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var stem := str(item.get("stem", ""))
+	if stem != "":
+		var sl := _label(stem, 28, true)
+		sl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		sl.custom_minimum_size = Vector2(360, 0)
+		right.add_child(sl)
+	var opts: Array = item["options"]
+	var has_img := false
+	var longest := 0
+	for o in opts:
+		if o.has("image"):
+			has_img = true
+		longest = maxi(longest, str(o.get("text", "")).length())
+	var row: Container
+	if has_img or not has_left:
+		var hb := HBoxContainer.new()
+		hb.alignment = BoxContainer.ALIGNMENT_CENTER
+		hb.add_theme_constant_override("separation", 20)
+		row = hb
+	else:
+		var vb := VBoxContainer.new()
+		vb.add_theme_constant_override("separation", 10)
+		row = vb
+	right.add_child(row)
 	option_buttons = []
-	for i in item["options"].size():
-		var opt: Dictionary = item["options"][i]
+	for i in opts.size():
+		var opt: Dictionary = opts[i]
 		var b := Button.new()
 		b.add_theme_font_override("font", font)
-		b.add_theme_font_size_override("font_size", 30)
+		b.add_theme_font_size_override("font_size", 44 if longest <= 2 else (30 if longest <= 24 else 24))
 		if opt.has("image"):
 			b.icon = bank.tex(opt["image"])
 			b.expand_icon = true
 			b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			b.custom_minimum_size = Vector2(240, 240)
+			b.custom_minimum_size = Vector2(200, 200) if has_left else Vector2(240, 240)
 		else:
 			b.text = opt["text"]
 			b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			b.custom_minimum_size = Vector2(270, 120)
+			if has_left:
+				b.custom_minimum_size = Vector2(360, 64)
+			elif longest <= 2:
+				b.custom_minimum_size = Vector2(200, 120)
+			else:
+				b.custom_minimum_size = Vector2(300 if longest > 24 else 270, 110)
 		b.pressed.connect(_on_option.bind(i))
 		row.add_child(b)
 		option_buttons.append(b)
+	if has_left:
+		var hb2 := HBoxContainer.new()
+		hb2.add_theme_constant_override("separation", 24)
+		hb2.add_child(left)
+		hb2.add_child(right)
+		body.add_child(hb2)
+	else:
+		body.add_child(right)
+		# 沒有短文／圖時 left 沒放進畫面，要自己釋放，不然每題留下一個沒人管的節點（2026-11-06 記憶體檢查找到）
+		left.free()
+
+## 字磚區（拼字、拖放、排序、標籤題共用）
+func _make_bank(texts: Array, font_size: int, min_w: float) -> Control:
+	tiles = []
+	for i in texts.size():
+		tiles.append({"id": "t%d" % i, "text": texts[i]})
+	tile_buttons = {}
+	var tb_area := QuizBank.new()
+	tb_area.quiz = self
+	tb_area.alignment = FlowContainer.ALIGNMENT_CENTER
+	tb_area.add_theme_constant_override("h_separation", 10)
+	tb_area.add_theme_constant_override("v_separation", 10)
+	tb_area.custom_minimum_size = Vector2(0, 70)
+	for t in tiles:
+		var tb := QuizTile.new()
+		tb.quiz = self
+		tb.tile_id = t["id"]
+		tb.text = t["text"]
+		if min_w >= 300.0:
+			tb.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # 標籤題的長句子
+		tb.add_theme_font_override("font", font)
+		tb.add_theme_font_size_override("font_size", font_size)
+		_skin(tb, Color("ffd86b"), Color("c99a1a"))
+		tb.custom_minimum_size = Vector2(min_w, 60)
+		tb.pressed.connect(_on_tile_pressed.bind(t["id"]))
+		tb_area.add_child(tb)
+		tile_buttons[t["id"]] = tb
+	return tb_area
+
+func _shuffled(texts: Array) -> Array:
+	var out := texts.duplicate()
+	var rng := RandomNumberGenerator.new()
+	rng.seed = hash(item["id"])
+	for i in range(out.size() - 1, 0, -1):
+		var j := rng.randi_range(0, i)
+		var tmp = out[i]
+		out[i] = out[j]
+		out[j] = tmp
+	return out
+
+## 重新排序：字卡（題庫已排成打亂的順序）依序放進 1、2、3… 格
+func _build_order_body() -> void:
+	body.add_child(_prompt_row())
+	var chunks: Array = item["chunks"]
+	slot_buttons = []
+	slots = []
+	for i in chunks.size():
+		slots.append("")
+	var longest := 1
+	for c in chunks:
+		longest = maxi(longest, str(c).length())
+	var short := longest <= 3
+	var w := 70.0 if short else maxf(110.0, longest * 15.0 + 30.0)
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation", 14)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var row := HFlowContainer.new()
+	row.alignment = FlowContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("h_separation", 6 if short else 10)
+	row.add_theme_constant_override("v_separation", 10)
+	for i in chunks.size():
+		var cell := HBoxContainer.new()
+		cell.add_theme_constant_override("separation", 4)
+		if not short:
+			var n := _label("%d." % (i + 1), 22, true)
+			n.add_theme_color_override("font_color", Color("8a7a5a"))
+			cell.add_child(n)
+		var s := _make_slot(i)
+		s.custom_minimum_size = Vector2(w, 58)
+		cell.add_child(s)
+		row.add_child(cell)
+	content.add_child(row)
+	content.add_child(_make_bank(chunks, 28, 70.0 if short else 100.0))
+	if str(item.get("image", "")) != "" and bank.tex(item["image"]) != null:
+		var hb := HBoxContainer.new()
+		hb.add_theme_constant_override("separation", 20)
+		hb.add_child(_texture_box(item["image"], Vector2(300, 260)))
+		hb.add_child(content)
+		body.add_child(hb)
+	else:
+		body.add_child(content)
+
+## 標籤題：四格圖（1 左上、2 右上、3 左下、4 右下），每格下方一個空格；句子卡在右邊
+const LABEL_SIZE := 470.0
+func _build_label_body() -> void:
+	body.add_child(_prompt_row())
+	var labels: Array = item["labels"]
+	slot_buttons = []
+	slots = []
+	for i in 4:
+		slots.append("")
+	var hb := HBoxContainer.new()
+	hb.add_theme_constant_override("separation", 20)
+	body.add_child(hb)
+	var holder := Control.new()
+	holder.custom_minimum_size = Vector2(LABEL_SIZE, LABEL_SIZE)
+	hb.add_child(holder)
+	var tr := TextureRect.new()
+	tr.texture = bank.tex(item.get("image", ""))
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	holder.add_child(tr)
+	var half := LABEL_SIZE / 2.0
+	for p in 4:
+		var s := _make_slot(p)
+		s.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		s.add_theme_font_size_override("font_size", 18)
+		s.position = Vector2((p % 2) * half + 8.0, (p / 2) * half + half - 70.0)
+		s.size = Vector2(half - 16.0, 60.0)
+		s.custom_minimum_size = Vector2(half - 16.0, 60.0)
+		holder.add_child(s)
+	var texts: Array = []
+	for l in labels:
+		texts.append(l["text"])
+	var right := VBoxContainer.new()
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	right.add_theme_constant_override("separation", 10)
+	var tip := _label("點句子，再點圖上的空格；或直接拖過去。", 20)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	right.add_child(tip)
+	var area := _make_bank(_shuffled(texts), 22, 320.0)
+	right.add_child(area)
+	hb.add_child(right)
 
 func _on_option(i: int) -> void:
 	if solved:
@@ -365,8 +637,17 @@ func _on_option(i: int) -> void:
 func _play_item_audio() -> void:
 	var stream = bank.stream(item.get("audio", ""))
 	if stream != null:
+		slow_audio.stop()
 		audio.stream = stream
 		audio.play()
+
+func _play_item_audio_slow() -> void:
+	var stream = bank.stream(item.get("audioSlow", ""))
+	if stream != null:
+		audio.stop()
+		slow_audio.stop()
+		slow_audio.stream = stream
+		slow_audio.play()
 
 func _slot_count() -> int:
 	if item["type"] == "spell":
@@ -394,7 +675,8 @@ func _week_strip(ws: Dictionary) -> Control:
 
 func _picture() -> Control:
 	var holder := Control.new()
-	holder.custom_minimum_size = Vector2(0, 78)
+	# 綜合小考的拼字、拖放題（有 prompt）圖片要看得清楚：放大
+	holder.custom_minimum_size = Vector2(0, 220 if str(item.get("prompt", "")) != "" else 78)
 	holder.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var tex: Texture2D = bank.tex(item.get("image", ""))
 	if tex == null:
@@ -406,7 +688,7 @@ func _picture() -> Control:
 	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	tr.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	holder.add_child(tr)
-	if item["clock"] != null:
+	if item.get("clock") != null:
 		var co := ClockOverlay.new()
 		co.clock = item["clock"]
 		co.image_size = tex.get_size()
@@ -477,8 +759,14 @@ func _tile_text(tid: String) -> String:
 			return t["text"]
 	return ""
 
+var picked_tile := ""        # 標籤題：先點句子（選起來），再點圖上的空格
+
 func _on_tile_pressed(tid: String) -> void:
 	if solved or slots.has(tid):
+		return
+	if item.get("type", "") == "label":
+		picked_tile = "" if picked_tile == tid else tid
+		_refresh()
 		return
 	var i := slots.find("")
 	if i >= 0:
@@ -487,6 +775,11 @@ func _on_tile_pressed(tid: String) -> void:
 
 func _on_slot_pressed(idx: int) -> void:
 	if solved:
+		return
+	if picked_tile != "":
+		slots[idx] = picked_tile
+		picked_tile = ""
+		_refresh()
 		return
 	if slots[idx] != "":
 		slots[idx] = ""
@@ -516,10 +809,11 @@ func _on_reset() -> void:
 	for i in slots.size():
 		slots[i] = ""
 	listen_choice = -1
+	picked_tile = ""
 	_refresh()
 
 func _refresh() -> void:
-	if item.get("type", "") == "listen":
+	if _is_choice():
 		for i in option_buttons.size():
 			var ob: Button = option_buttons[i]
 			if solved and i == int(item["answer"]):
@@ -536,6 +830,10 @@ func _refresh() -> void:
 		var tb: Button = tile_buttons[tid]
 		tb.modulate = Color(1, 1, 1, 0.0) if placed else Color.WHITE
 		tb.disabled = placed or solved
+		if tid == picked_tile:
+			_skin(tb, Color("cfe3ff"), Color("2f6fd6"))
+		else:
+			_skin(tb, Color("ffd86b"), Color("c99a1a"))
 	for i in slot_buttons.size():
 		var b: Button = slot_buttons[i]
 		if b == null:
@@ -551,8 +849,18 @@ func _refresh() -> void:
 	check_btn.disabled = solved or slots.has("")
 
 func _grade() -> bool:
-	if item["type"] == "listen":
+	if _is_choice():
 		return listen_choice == int(item["answer"])
+	if item["type"] == "order":
+		for i in item["answer"].size():
+			if _tile_text(slots[i]) != str(item["answer"][i]):
+				return false
+		return true
+	if item["type"] == "label":
+		for l in item["labels"]:
+			if _tile_text(slots[int(l["panel"]) - 1]) != str(l["text"]):
+				return false
+		return true
 	if item["type"] == "spell":
 		var s := ""
 		for tid in slots:
@@ -564,7 +872,7 @@ func _grade() -> bool:
 	return true
 
 func _on_check() -> void:
-	if solved or slots.has("") or (item["type"] == "listen" and listen_choice < 0):
+	if solved or slots.has("") or (_is_choice() and listen_choice < 0):
 		return
 	attempts += 1
 	var ok := _grade()
@@ -588,6 +896,7 @@ func _on_check() -> void:
 		for i in slots.size():
 			slots[i] = ""
 		listen_choice = -1
+		picked_tile = ""
 		_refresh()
 
 func _on_correct() -> void:
@@ -613,18 +922,20 @@ func _on_correct() -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	feedback_box.add_child(row)
-	var is_listen: bool = item["type"] == "listen"
+	# 拼字、拖放題有 Tick 回饋語音：要聽完才能下一題；其他題型（題目音檔或沒有音檔）可以直接下一題
+	var is_listen := _has_q_audio()
+	var needs_tick: bool = item["type"] in ["spell", "drag"] and bank.stream(item.get("audio", "")) != null
 	play_btn = _button("再聽一次 Listen again" if is_listen else "聽 Tick 說", 26)
 	_skin(play_btn, Color("cfe3ff"), Color("2f6fd6"))
 	play_btn.pressed.connect(_play_feedback)
+	play_btn.visible = is_listen or needs_tick
 	row.add_child(play_btn)
-	var nt := next_text if next_text != "" else ("下一題" if qi + 1 < queue.size() else "完成")
-	next_btn = _button(nt, 26)
+	next_btn = _button(next_text if next_text != "" else ("下一題" if qi + 1 < queue.size() else "完成"), 26)
 	_skin(next_btn, Color("6fc276"), Color("3d8b44"), Color.WHITE)
-	next_btn.disabled = not (test_mode or is_listen)
+	next_btn.disabled = needs_tick and not test_mode
 	next_btn.pressed.connect(_on_next)
 	row.add_child(next_btn)
-	if not test_mode and not is_listen:
+	if not test_mode and needs_tick:
 		var tip := _label("按「聽 Tick 說」聽完之後，才能按下一步。", 20)
 		feedback_box.add_child(tip)
 	feedback_box.visible = true
@@ -640,11 +951,6 @@ func _play_feedback() -> void:
 	audio.stream = stream
 	audio.play()
 	play_btn.disabled = true
-	# 保險：聲音沒有播完的訊號（例如瀏覽器擋住聲音）也會在音檔長度＋2 秒後開放下一步
-	var waited_item: String = item.get("id", "")
-	get_tree().create_timer(stream.get_length() + 2.0).timeout.connect(func():
-		if visible and item.get("id", "") == waited_item and not heard:
-			_on_audio_finished())
 
 func _on_audio_finished() -> void:
 	heard = true
@@ -654,7 +960,13 @@ func _on_audio_finished() -> void:
 		next_btn.disabled = false
 
 ## 第一人稱戰鬥時：題目面板只佔畫面下半部，上半部看得到怪物。
+## 圖片大、有短文或標籤題時面板拉高（_tall），少捲動。
+var battle_on := false
+func _apply_layout() -> void:
+	panel.offset_top = (64.0 if (item.size() > 0 and _tall()) else 178.0) if battle_on else 10.0
+
 func set_battle_layout(on: bool) -> void:
+	battle_on = on
 	dim.color = Color(0, 0, 0, 0.0 if on else 0.55)
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE if on else Control.MOUSE_FILTER_STOP
 	mouse_filter = Control.MOUSE_FILTER_IGNORE if on else Control.MOUSE_FILTER_STOP
@@ -673,6 +985,7 @@ func _update_header() -> void:
 
 func _on_next() -> void:
 	audio.stop()
+	slow_audio.stop()
 	if turn_done.get_connections().size() > 0:
 		visible = false
 		turn_done.emit(qi + 1 >= queue.size())
@@ -690,6 +1003,7 @@ func resume() -> void:
 
 func _show_summary() -> void:
 	audio.stop()
+	slow_audio.stop()
 	_clear_body()
 	solved = true
 	header_label.text = "%s　任務完成" % loc_zh
@@ -720,13 +1034,19 @@ func _show_summary() -> void:
 
 # ---------- 自動測試用 ----------
 func debug_fill(correct: bool) -> void:
-	if item["type"] == "listen":
+	if _is_choice():
 		var a := int(item["answer"])
 		listen_choice = a if correct else (a + 1) % item["options"].size()
 		_refresh()
 		return
 	var answer: Array = []
-	if item["type"] == "spell":
+	if item["type"] == "order":
+		answer = item["answer"].duplicate()
+	elif item["type"] == "label":
+		answer = ["", "", "", ""]
+		for l in item["labels"]:
+			answer[int(l["panel"]) - 1] = l["text"]
+	elif item["type"] == "spell":
 		for ch in String(item["spell"]["answer"]).replace(" ", ""):
 			answer.append(ch)
 	else:

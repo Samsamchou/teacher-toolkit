@@ -132,6 +132,17 @@ var flash_rect: ColorRect
 var glow_cache := {}
 var particle_mesh: SphereMesh
 var is_mobile := false
+# iPad 防過熱（2026-11-09）：不限張數時 iPad 每秒畫 60 張，連作答時也一直畫，玩十幾分鐘就發燙當機。
+# 只在 iPad：平常每秒 30 張；題目面板開著、沒在走路或打怪時降到 15 張；打怪、走路回到 30 張。
+const FPS_PLAY := 30
+const FPS_QUIZ := 15
+const FPS_REST := 5           # 休息提醒畫面
+var fps_cap_on := false        # _detect_mobile() 之後決定；--nolimit 可關掉（量測修改前用）
+# 連續玩滿 15 分鐘提醒休息（打怪中延到這場結束），按了才繼續
+const REST_AFTER_MS := 15 * 60 * 1000
+var play_ms := 0
+var last_tick_ms := 0
+var rest_layer: CanvasLayer = null
 var vfx_scale := 1.0           # 粒子數量倍率（行動裝置 0.5）
 var vfx_size := 1.0            # 粒子大小倍率（行動裝置 1.4，看起來一樣華麗）
 var frame_max := 0.0           # 測試用：攻擊期間最長的一格（秒）
@@ -193,6 +204,10 @@ func _ready() -> void:
 	await _prewarm()
 	if "--mem" in OS.get_cmdline_user_args():
 		_run_mem()
+	elif "--fps" in OS.get_cmdline_user_args():
+		_run_fps()
+	elif "--resttest" in OS.get_cmdline_user_args():
+		_run_resttest()
 	elif "--perf" in OS.get_cmdline_user_args():
 		_run_perf()
 	elif "--shots" in OS.get_cmdline_user_args():
@@ -1785,6 +1800,82 @@ Could not load the questions. Please reload.
 	layer.queue_free()
 	return true
 
+## iPad 防過熱：依目前在做什麼決定每秒畫幾張（電腦版不限制）
+func _update_fps_cap() -> void:
+	if not fps_cap_on:
+		return
+	var want := FPS_PLAY
+	if rest_layer != null and rest_layer.visible:
+		want = FPS_REST
+	elif quiz != null and quiz.visible and not atk_running and not busy and path.size() <= 1:
+		want = FPS_QUIZ
+	if Engine.max_fps != want:
+		Engine.max_fps = want
+
+## 連續玩滿 15 分鐘提醒休息；打怪中（battle_loc 不是空的）等這場結束才跳
+func _tick_rest_timer() -> void:
+	var now := Time.get_ticks_msec()
+	if last_tick_ms == 0:
+		last_tick_ms = now
+	var dt := now - last_tick_ms
+	last_tick_ms = now
+	if rest_layer != null and rest_layer.visible:
+		return
+	if dt > 0 and dt < 5000:     # 分頁被切走時不算時間
+		play_ms += dt
+	if play_ms >= REST_AFTER_MS and battle_loc == "" and not busy:
+		_show_rest()
+
+func _show_rest() -> void:
+	if rest_layer == null:
+		rest_layer = CanvasLayer.new()
+		rest_layer.layer = 60
+		add_child(rest_layer)
+		var cover := ColorRect.new()
+		cover.color = Color(0.1, 0.16, 0.3, 0.88)
+		cover.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		cover.mouse_filter = Control.MOUSE_FILTER_STOP
+		rest_layer.add_child(cover)
+		var box := VBoxContainer.new()
+		box.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+		box.alignment = BoxContainer.ALIGNMENT_CENTER
+		box.add_theme_constant_override("separation", 24)
+		box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		box.grow_vertical = Control.GROW_DIRECTION_BOTH
+		cover.add_child(box)
+		# 網頁版沒有系統字型，不要放表情符號（會變方框）
+		for t in [["休息一下，讓 iPad 降溫", 44], ["你已經玩了 15 分鐘。眼睛看看遠方，iPad 放平休息一下。", 28],
+				["Take a short break and let the iPad cool down.", 24], ["進度已經存好，按下面的按鈕就能繼續。", 24]]:
+			var l := Label.new()
+			l.text = t[0]
+			l.add_theme_font_override("font", font_bold)
+			l.add_theme_font_size_override("font_size", t[1])
+			l.add_theme_color_override("font_color", Color.WHITE)
+			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			box.add_child(l)
+		var btn := Button.new()
+		btn.text = "▶ 繼續 Continue"
+		btn.add_theme_font_override("font", font_bold)
+		btn.add_theme_font_size_override("font_size", 34)
+		btn.custom_minimum_size = Vector2(320, 80)
+		btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("3fae57")
+		sb.set_corner_radius_all(18)
+		btn.add_theme_stylebox_override("normal", sb)
+		btn.add_theme_stylebox_override("hover", sb)
+		btn.add_theme_stylebox_override("pressed", sb)
+		btn.add_theme_color_override("font_color", Color.WHITE)
+		btn.pressed.connect(_hide_rest)
+		box.add_child(btn)
+	rest_layer.visible = true
+	set_music_duck(true)
+
+func _hide_rest() -> void:
+	play_ms = 0
+	rest_layer.visible = false
+	set_music_duck(quiz != null and quiz.visible)
+
 func _detect_mobile() -> void:
 	particle_mesh = SphereMesh.new()
 	particle_mesh.radius = 0.16
@@ -1800,6 +1891,12 @@ func _detect_mobile() -> void:
 	if is_mobile:
 		vfx_scale = 0.5
 		vfx_size = 1.4
+	fps_cap_on = is_mobile and not "--nolimit" in OS.get_cmdline_user_args()
+	if fps_cap_on:
+		Engine.max_fps = FPS_PLAY
+	# 電腦測試用 --resttest：休息提醒提早到 20 秒後出現，方便確認畫面
+	if "--resttest" in OS.get_cmdline_user_args():
+		play_ms = REST_AFTER_MS - 20000
 
 func _build_pools() -> void:
 	var big_n := int(48 * vfx_scale)
@@ -2007,6 +2104,8 @@ func _end_battle() -> void:
 
 # ---------- 每幀 ----------
 func _process(delta: float) -> void:
+	_update_fps_cap()
+	_tick_rest_timer()
 	if path.size() > 1:
 		var nxt: Vector3 = path[1]
 		var d := nxt - player.position
@@ -2274,6 +2373,67 @@ func _run_mem() -> void:
 	print("MEM DONE")
 	if "--orphans" in OS.get_cmdline_user_args():
 		Node.print_orphan_nodes()
+	get_tree().quit()
+
+## --fps：量「作答中」與「打怪中」每秒實際畫幾張、每張花多少毫秒（iPad 防過熱用；加 --mobile 模擬 iPad，--nolimit 看不限張數時）
+func _fps_window(tag: String, sec: float) -> void:
+	var f0 := Engine.get_frames_drawn()
+	var t0 := Time.get_ticks_usec()
+	var proc := 0.0
+	var n := 0
+	while Time.get_ticks_usec() - t0 < int(sec * 1e6):
+		await get_tree().process_frame
+		proc += Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0
+		n += 1
+	var secs := (Time.get_ticks_usec() - t0) / 1e6
+	print("FPS %-8s frames_per_sec=%.1f  avg_process_ms=%.2f  max_fps=%d" % [tag, (Engine.get_frames_drawn() - f0) / secs, proc / maxi(1, n), Engine.max_fps])
+
+func _run_fps() -> void:
+	quiz.reset_results()
+	await get_tree().create_timer(2.0).timeout
+	await _fps_window("street", 4.0)
+	player.position = loc_world["station"]["door"]
+	target_id = "station"
+	_arrive()
+	while not quiz.visible:
+		await get_tree().process_frame
+	await get_tree().create_timer(1.0).timeout
+	await _fps_window("quiz", 6.0)
+	while quiz.visible:
+		quiz.debug_fill(true)
+		quiz.debug_check()
+		await get_tree().create_timer(0.12).timeout
+		quiz.debug_next()
+		await get_tree().create_timer(0.15).timeout
+	while not atk_ui.visible and not foes.is_empty():
+		await get_tree().process_frame
+	_on_attack_all_pressed()
+	await get_tree().process_frame
+	await _fps_window("attack", 4.0)
+	while busy:
+		await get_tree().process_frame
+	print("FPS DONE")
+	get_tree().quit()
+
+## --resttest：休息提醒提早到 20 秒；先進戰鬥確認打怪中不會跳出，戰鬥結束後才出現，截圖後按繼續
+func _run_resttest() -> void:
+	await get_tree().create_timer(1.0).timeout
+	player.position = loc_world["station"]["door"]
+	target_id = "station"
+	_arrive()
+	await get_tree().create_timer(25.0).timeout
+	print("REST during battle visible=", rest_layer != null and rest_layer.visible)
+	_end_battle()
+	quiz.visible = false
+	var t0 := Time.get_ticks_msec()
+	while (rest_layer == null or not rest_layer.visible) and Time.get_ticks_msec() - t0 < 5000:
+		await get_tree().process_frame
+	await get_tree().create_timer(0.5).timeout
+	print("REST after battle visible=", rest_layer != null and rest_layer.visible, " max_fps=", Engine.max_fps)
+	await _shot("rest_reminder")
+	_hide_rest()
+	await get_tree().create_timer(0.5).timeout
+	print("REST after continue visible=", rest_layer.visible, " play_ms=", play_ms, " max_fps=", Engine.max_fps)
 	get_tree().quit()
 
 ## --allq：每個地點進入戰鬥，每一題先答錯一次（看提示）再答對；每種題型第一次出現時截圖（答題中、答對後）。

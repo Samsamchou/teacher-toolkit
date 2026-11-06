@@ -1,0 +1,1129 @@
+{
+ "source": "SF3 四年級期中範圍讀寫小考 v2（Wayground 2026-11-01）",
+ "items": [
+  {
+   "id": "R1-1",
+   "seq": 1,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A01_father.png",
+   "chunks": [
+    "th",
+    "r",
+    "f",
+    "e",
+    "a"
+   ],
+   "answer": [
+    "f",
+    "a",
+    "th",
+    "e",
+    "r"
+   ],
+   "hint1En": "It starts with \"f\".",
+   "hint2En": "It starts with \"fa\".",
+   "correctEn": "father",
+   "teacherText": "看圖排字：father",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-2",
+   "seq": 2,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A02_mother.png",
+   "chunks": [
+    "e",
+    "m",
+    "r",
+    "th",
+    "o"
+   ],
+   "answer": [
+    "m",
+    "o",
+    "th",
+    "e",
+    "r"
+   ],
+   "hint1En": "It starts with \"m\".",
+   "hint2En": "It starts with \"mo\".",
+   "correctEn": "mother",
+   "teacherText": "看圖排字：mother",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-3",
+   "seq": 3,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A03_sister.png",
+   "chunks": [
+    "st",
+    "r",
+    "i",
+    "e",
+    "s"
+   ],
+   "answer": [
+    "s",
+    "i",
+    "st",
+    "e",
+    "r"
+   ],
+   "hint1En": "It starts with \"s\".",
+   "hint2En": "It starts with \"si\".",
+   "correctEn": "sister",
+   "teacherText": "看圖排字：sister",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-4",
+   "seq": 4,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A04_brother.png",
+   "chunks": [
+    "o",
+    "e",
+    "th",
+    "br",
+    "r"
+   ],
+   "answer": [
+    "br",
+    "o",
+    "th",
+    "e",
+    "r"
+   ],
+   "hint1En": "It starts with \"br\".",
+   "hint2En": "It starts with \"bro\".",
+   "correctEn": "brother",
+   "teacherText": "看圖排字：brother",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-5",
+   "seq": 5,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A05_grandmother.png",
+   "chunks": [
+    "th",
+    "gra",
+    "er",
+    "mo",
+    "nd"
+   ],
+   "answer": [
+    "gra",
+    "nd",
+    "mo",
+    "th",
+    "er"
+   ],
+   "hint1En": "It starts with \"gra\".",
+   "hint2En": "It starts with \"grand\".",
+   "correctEn": "grandmother",
+   "teacherText": "看圖排字：grandmother",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-6",
+   "seq": 6,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A06_teacher.png",
+   "chunks": [
+    "ch",
+    "r",
+    "ea",
+    "t",
+    "e"
+   ],
+   "answer": [
+    "t",
+    "ea",
+    "ch",
+    "e",
+    "r"
+   ],
+   "hint1En": "It starts with \"t\".",
+   "hint2En": "It starts with \"tea\".",
+   "correctEn": "teacher",
+   "teacherText": "看圖排字：teacher",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-7",
+   "seq": 7,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A07_student.png",
+   "chunks": [
+    "e",
+    "nt",
+    "st",
+    "d",
+    "u"
+   ],
+   "answer": [
+    "st",
+    "u",
+    "d",
+    "e",
+    "nt"
+   ],
+   "hint1En": "It starts with \"st\".",
+   "hint2En": "It starts with \"stu\".",
+   "correctEn": "student",
+   "teacherText": "看圖排字：student",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-8",
+   "seq": 8,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A08_doctor.png",
+   "chunks": [
+    "t",
+    "or",
+    "d",
+    "c",
+    "o"
+   ],
+   "answer": [
+    "d",
+    "o",
+    "c",
+    "t",
+    "or"
+   ],
+   "hint1En": "It starts with \"d\".",
+   "hint2En": "It starts with \"do\".",
+   "correctEn": "doctor",
+   "teacherText": "看圖排字：doctor",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-9",
+   "seq": 9,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A09_nurse.png",
+   "chunks": [
+    "s",
+    "e",
+    "n",
+    "r",
+    "u"
+   ],
+   "answer": [
+    "n",
+    "u",
+    "r",
+    "s",
+    "e"
+   ],
+   "hint1En": "It starts with \"n\".",
+   "hint2En": "It starts with \"nu\".",
+   "correctEn": "nurse",
+   "teacherText": "看圖排字：nurse",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R1-10",
+   "seq": 10,
+   "type": "order",
+   "prompt": "Look and Order 看圖，把字卡排成正確的單字",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A10_farmer.png",
+   "chunks": [
+    "m",
+    "er",
+    "a",
+    "f",
+    "r"
+   ],
+   "answer": [
+    "f",
+    "a",
+    "r",
+    "m",
+    "er"
+   ],
+   "hint1En": "It starts with \"f\".",
+   "hint2En": "It starts with \"fa\".",
+   "correctEn": "farmer",
+   "teacherText": "看圖排字：farmer",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "R2-1",
+   "seq": 11,
+   "type": "label",
+   "prompt": "Read and Match 讀一讀，把句子拖到相符的圖片上",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\B_match_q1.png",
+   "labels": [
+    {
+     "text": "Sorry, I'm late. / Come in, please.",
+     "panel": 1
+    },
+    {
+     "text": "Is he a nurse? Yes, he is.",
+     "panel": 2
+    },
+    {
+     "text": "He's a driver.",
+     "panel": 3
+    },
+    {
+     "text": "Who's she? She's my grandma.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture (a): \"Sorry, I'm late. / Come in, please.\"",
+   "hint2En": "Picture (a): \"Sorry, I'm late. / Come in, please.\"  Picture (b): \"Is he a nurse? Yes, he is.\"",
+   "correctEn": "(a) Sorry, I'm late. / Come in, please.\n(b) Is he a nurse? Yes, he is.\n(c) He's a driver.\n(d) Who's she? She's my grandma.",
+   "teacherText": "Read and Match：(a) Sorry, I'm late. / Come in, please.　(b) Is he a nurse? Yes, he is.　(c) He's a driver.　(d) Who's she? She's my grandma.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "R2-2",
+   "seq": 12,
+   "type": "label",
+   "prompt": "Read and Match 讀一讀，把句子拖到相符的圖片上",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\C_match_q2.png",
+   "labels": [
+    {
+     "text": "Is she a farmer? Yes, she is.",
+     "panel": 1
+    },
+    {
+     "text": "My dad is a cook.",
+     "panel": 2
+    },
+    {
+     "text": "Have a seat, please. / Thank you.",
+     "panel": 3
+    },
+    {
+     "text": "Who's he? He's my brother.",
+     "panel": 4
+    }
+   ],
+   "hint1En": "Picture (a): \"Is she a farmer? Yes, she is.\"",
+   "hint2En": "Picture (a): \"Is she a farmer? Yes, she is.\"  Picture (b): \"My dad is a cook.\"",
+   "correctEn": "(a) Is she a farmer? Yes, she is.\n(b) My dad is a cook.\n(c) Have a seat, please. / Thank you.\n(d) Who's he? He's my brother.",
+   "teacherText": "Read and Match：(a) Is she a farmer? Yes, she is.　(b) My dad is a cook.　(c) Have a seat, please. / Thank you.　(d) Who's he? He's my brother.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "R3-1",
+   "seq": 13,
+   "type": "drag",
+   "prompt": "Read and Write 讀一讀，把字卡拖進對話的空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A03_sister.png",
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "{1} she?"
+    },
+    {
+     "speaker": "B",
+     "text": "She's my {2}."
+    }
+   ],
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "Who's"
+    },
+    {
+     "id": 2,
+     "answer": "sister"
+    }
+   ],
+   "distractors": [
+    "What's",
+    "brother"
+   ],
+   "hint1En": "Blank 1 is \"Who's\".",
+   "hint2En": "Blank 1 is \"Who's\", blank 2 is \"sister\".",
+   "correctEn": "A: Who's she?\nB: She's my sister.",
+   "teacherText": "對話填空：A: Who's she?　B: She's my sister.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "R3-2",
+   "seq": 14,
+   "type": "drag",
+   "prompt": "Read and Write 讀一讀，把字卡拖進對話的空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A12_doctor_female.png",
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "Is she a {1}?"
+    },
+    {
+     "speaker": "B",
+     "text": "{2}, she is."
+    }
+   ],
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "doctor"
+    },
+    {
+     "id": 2,
+     "answer": "Yes"
+    }
+   ],
+   "distractors": [
+    "No",
+    "nurse"
+   ],
+   "hint1En": "Blank 1 is \"doctor\".",
+   "hint2En": "Blank 1 is \"doctor\", blank 2 is \"Yes\".",
+   "correctEn": "A: Is she a doctor?\nB: Yes, she is.",
+   "teacherText": "對話填空：A: Is she a doctor?　B: Yes, she is.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "R3-3",
+   "seq": 15,
+   "type": "drag",
+   "prompt": "Read and Write 讀一讀，把字卡拖進對話的空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A11_grandpa.png",
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "Who's he?"
+    },
+    {
+     "speaker": "B",
+     "text": "{1} my {2}."
+    }
+   ],
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "He's"
+    },
+    {
+     "id": 2,
+     "answer": "grandpa"
+    }
+   ],
+   "distractors": [
+    "She's",
+    "grandma"
+   ],
+   "hint1En": "Blank 1 is \"He's\".",
+   "hint2En": "Blank 1 is \"He's\", blank 2 is \"grandpa\".",
+   "correctEn": "A: Who's he?\nB: He's my grandpa.",
+   "teacherText": "對話填空：A: Who's he?　B: He's my grandpa.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "R3-4",
+   "seq": 16,
+   "type": "drag",
+   "prompt": "Read and Write 讀一讀，把字卡拖進對話的空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\B_c_driver.png",
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "Is your father a teacher?"
+    },
+    {
+     "speaker": "B",
+     "text": "No, he {1}. He's a {2}."
+    }
+   ],
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "isn't"
+    },
+    {
+     "id": 2,
+     "answer": "driver"
+    }
+   ],
+   "distractors": [
+    "is",
+    "farmer"
+   ],
+   "hint1En": "Blank 1 is \"isn't\".",
+   "hint2En": "Blank 1 is \"isn't\", blank 2 is \"driver\".",
+   "correctEn": "A: Is your father a teacher?\nB: No, he isn't. He's a driver.",
+   "teacherText": "對話填空：A: Is your father a teacher?　B: No, he isn't. He's a driver.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "R3-5",
+   "seq": 17,
+   "type": "drag",
+   "prompt": "Read and Write 讀一讀，把字卡拖進對話的空格",
+   "image": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\English exam\\teachingmaterial-backup-20261017\\output\\SF3_小考_期中範圍讀寫_20261101\\_紀錄\\images\\A07_student.png",
+   "lines": [
+    {
+     "speaker": "A",
+     "text": "Is your brother a cook?"
+    },
+    {
+     "speaker": "B",
+     "text": "{1}, he isn't. He's a {2}."
+    }
+   ],
+   "blanks": [
+    {
+     "id": 1,
+     "answer": "No"
+    },
+    {
+     "id": 2,
+     "answer": "student"
+    }
+   ],
+   "distractors": [
+    "Yes",
+    "teacher"
+   ],
+   "hint1En": "Blank 1 is \"No\".",
+   "hint2En": "Blank 1 is \"No\", blank 2 is \"student\".",
+   "correctEn": "A: Is your brother a cook?\nB: No, he isn't. He's a student.",
+   "teacherText": "對話填空：A: Is your brother a cook?　B: No, he isn't. He's a student.",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false
+  },
+  {
+   "id": "L1a",
+   "seq": 18,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L1a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L1a_slow.mp3",
+   "options": [
+    {
+     "text": "bed"
+    },
+    {
+     "text": "pet"
+    },
+    {
+     "text": "bad"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"b\".",
+   "correctEn": "bed",
+   "teacherText": "聽力（選例字）：bed",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L1b",
+   "seq": 19,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L1b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L1b_slow.mp3",
+   "options": [
+    {
+     "text": "d"
+    },
+    {
+     "text": "p"
+    },
+    {
+     "text": "t"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"top\". What is the first letter?",
+   "correctEn": "top → t",
+   "teacherText": "聽力（選開頭字母）：top",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L2a",
+   "seq": 20,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L2a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L2a_slow.mp3",
+   "options": [
+    {
+     "text": "big"
+    },
+    {
+     "text": "pig"
+    },
+    {
+     "text": "pin"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"p\".",
+   "correctEn": "pig",
+   "teacherText": "聽力（選例字）：pig",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L2b",
+   "seq": 21,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L2b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L2b_slow.mp3",
+   "options": [
+    {
+     "text": "p"
+    },
+    {
+     "text": "b"
+    },
+    {
+     "text": "d"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"bat\". What is the first letter?",
+   "correctEn": "bat → b",
+   "teacherText": "聽力（選開頭字母）：bat",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L3a",
+   "seq": 22,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L3a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L3a_slow.mp3",
+   "options": [
+    {
+     "text": "bat"
+    },
+    {
+     "text": "pat"
+    },
+    {
+     "text": "bet"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"b\".",
+   "correctEn": "bat",
+   "teacherText": "聽力（選例字）：bat",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L3b",
+   "seq": 23,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L3b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L3b_slow.mp3",
+   "options": [
+    {
+     "text": "t"
+    },
+    {
+     "text": "b"
+    },
+    {
+     "text": "d"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"dip\". What is the first letter?",
+   "correctEn": "dip → d",
+   "teacherText": "聽力（選開頭字母）：dip",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L4a",
+   "seq": 24,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L4a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L4a_slow.mp3",
+   "options": [
+    {
+     "text": "dot"
+    },
+    {
+     "text": "pit"
+    },
+    {
+     "text": "pot"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"p\".",
+   "correctEn": "pot",
+   "teacherText": "聽力（選例字）：pot",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L4b",
+   "seq": 25,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L4b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L4b_slow.mp3",
+   "options": [
+    {
+     "text": "p"
+    },
+    {
+     "text": "b"
+    },
+    {
+     "text": "d"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"big\". What is the first letter?",
+   "correctEn": "big → b",
+   "teacherText": "聽力（選開頭字母）：big",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L5a",
+   "seq": 26,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L5a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L5a_slow.mp3",
+   "options": [
+    {
+     "text": "bus"
+    },
+    {
+     "text": "bun"
+    },
+    {
+     "text": "bat"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"b\".",
+   "correctEn": "bus",
+   "teacherText": "聽力（選例字）：bus",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L5b",
+   "seq": 27,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L5b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L5b_slow.mp3",
+   "options": [
+    {
+     "text": "d"
+    },
+    {
+     "text": "t"
+    },
+    {
+     "text": "p"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"tub\". What is the first letter?",
+   "correctEn": "tub → t",
+   "teacherText": "聽力（選開頭字母）：tub",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L6a",
+   "seq": 28,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L6a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L6a_slow.mp3",
+   "options": [
+    {
+     "text": "tin"
+    },
+    {
+     "text": "den"
+    },
+    {
+     "text": "ten"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"t\".",
+   "correctEn": "ten",
+   "teacherText": "聽力（選例字）：ten",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L6b",
+   "seq": 29,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L6b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L6b_slow.mp3",
+   "options": [
+    {
+     "text": "p"
+    },
+    {
+     "text": "b"
+    },
+    {
+     "text": "t"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"pin\". What is the first letter?",
+   "correctEn": "pin → p",
+   "teacherText": "聽力（選開頭字母）：pin",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L7a",
+   "seq": 30,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L7a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L7a_slow.mp3",
+   "options": [
+    {
+     "text": "tip"
+    },
+    {
+     "text": "dip"
+    },
+    {
+     "text": "dig"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"d\".",
+   "correctEn": "dip",
+   "teacherText": "聽力（選例字）：dip",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L7b",
+   "seq": 31,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L7b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L7b_slow.mp3",
+   "options": [
+    {
+     "text": "d"
+    },
+    {
+     "text": "t"
+    },
+    {
+     "text": "b"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"duck\". What is the first letter?",
+   "correctEn": "duck → d",
+   "teacherText": "聽力（選開頭字母）：duck",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L8a",
+   "seq": 32,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L8a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L8a_slow.mp3",
+   "options": [
+    {
+     "text": "tuck"
+    },
+    {
+     "text": "dock"
+    },
+    {
+     "text": "duck"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"d\".",
+   "correctEn": "duck",
+   "teacherText": "聽力（選例字）：duck",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L8b",
+   "seq": 33,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L8b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L8b_slow.mp3",
+   "options": [
+    {
+     "text": "p"
+    },
+    {
+     "text": "b"
+    },
+    {
+     "text": "t"
+    }
+   ],
+   "answer": 0,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"pat\". What is the first letter?",
+   "correctEn": "pat → p",
+   "teacherText": "聽力（選開頭字母）：pat",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L9a",
+   "seq": 34,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L9a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L9a_slow.mp3",
+   "options": [
+    {
+     "text": "tab"
+    },
+    {
+     "text": "tug"
+    },
+    {
+     "text": "tub"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"t\".",
+   "correctEn": "tub",
+   "teacherText": "聽力（選例字）：tub",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L9b",
+   "seq": 35,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L9b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L9b_slow.mp3",
+   "options": [
+    {
+     "text": "t"
+    },
+    {
+     "text": "d"
+    },
+    {
+     "text": "b"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"dad\". What is the first letter?",
+   "correctEn": "dad → d",
+   "teacherText": "聽力（選開頭字母）：dad",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L10a",
+   "seq": 36,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，選出聽到的單字",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L10a.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L10a_slow.mp3",
+   "options": [
+    {
+     "text": "tad"
+    },
+    {
+     "text": "did"
+    },
+    {
+     "text": "dad"
+    }
+   ],
+   "answer": 2,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "Listen to the first sound: \"d\".",
+   "correctEn": "dad",
+   "teacherText": "聽力（選例字）：dad",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  },
+  {
+   "id": "L10b",
+   "seq": 37,
+   "type": "listen",
+   "prompt": "Listen and Choose 聽一聽，這個字的開頭是哪個字母？",
+   "audio": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L10b.mp3",
+   "audioSlow": "G:\\我的雲端硬碟\\teacher-toolkit\\tools\\2026 REA Games\\godot-jump-island\\data\\sf3\\listen_audio\\L10b_slow.mp3",
+   "options": [
+    {
+     "text": "b"
+    },
+    {
+     "text": "p"
+    },
+    {
+     "text": "t"
+    }
+   ],
+   "answer": 1,
+   "transcript": null,
+   "hint1En": "Tap ▶ Listen and listen again.  再聽一次。",
+   "hint2En": "The word is \"pot\". What is the first letter?",
+   "correctEn": "pot → p",
+   "teacherText": "聽力（選開頭字母）：pot",
+   "weekStrip": null,
+   "clock": null,
+   "mirrorFrame": false,
+   "lines": []
+  }
+ ]
+}

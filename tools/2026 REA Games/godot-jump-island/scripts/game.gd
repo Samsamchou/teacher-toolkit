@@ -1,5 +1,6 @@
 extends Node3D
-## Ken's Jump Island：13 關 3D 平台遊戲＋HWG5 英語題（RDQ：rdq/RDQ-spec-ken-jump-island-20261023.md）。
+## Ken's Jump Island：13 關 3D 平台遊戲＋英語題（RDQ：rdq/RDQ-spec-ken-jump-island-20261023.md；
+## 2026-11-09 改 iPad 自動跑版＋SF3 R1 題庫：rdq/RDQ-spec-jump-island-run-ipad-20261109.md）。
 ## 星星＝題目：碰到星星 → 出這關的下一題（沿用二水 3D 闖關的 quiz.gd）→ 答對收下星星；集滿過關。
 ## 魔王關：答對 → 魔王暈 5 秒 → 踩頭扣血。
 ##
@@ -19,6 +20,32 @@ const TouchPad := preload("res://scripts/touch_pad.gd")
 const QA := preload("res://scripts/qa.gd")
 const BankScript := preload("res://scripts/bank.gd")
 const QuizScript := preload("res://scripts/quiz.gd")
+const RunLevels := preload("res://scripts/run_levels.gd")
+
+## ---- iPad 自動跑版（2026-11-09 RDQ）：Ken 自己往右跑，點螢幕跳、按住跳更高；掉下去泡泡帶回來 ----
+const RUN_SPEED := 7.5           # 自動跑速（m/s），一關約 45 秒
+const RUN_GRAV := 0.7            # 自動跑時重力打七折：按住約可跳過 8 m 的缺口
+var fall_spots: Array = []       # 泡泡救援的位置；同一處掉 2 次以上，下次到邊緣自動幫忙跳
+var run_mode := false
+var tap_pressed := false         # 這一格有沒有新的點擊
+var tap_held := false            # 手指還按著（按住跳更高）
+var auto_hold := 0.0             # 自動跨越矮台階／史萊姆時，假裝按住一下
+var safe_hist: Array = []        # 最近站在地上的位置（掉下去時帶回約 1 秒前的位置）
+var safe_t := 0.0
+var bubble: MeshInstance3D = null
+## ---- 華麗動作、金幣、地標（2026-11-10 RDQ：rdq/RDQ-spec-jump-island-moves-landmarks-20261110.md）----
+var coins: Array = []            # 金幣節點
+var coin_count := 0
+var style_count := 0             # 華麗動作次數（過關時顯示，不算分）
+var stomp_chain := 0             # 空中連續踩幾隻（落地歸零）
+## ---- iPad 防過熱（沿用二水 3D 闖關 2026-11-09）----
+const FPS_PLAY := 30
+const FPS_QUIZ := 15
+const FPS_REST := 5
+const REST_AFTER_MS := 15 * 60 * 1000
+var play_ms := 0
+var last_tick_ms := 0
+var rest_layer: CanvasLayer = null
 
 ## 正式版依序解鎖（過了前一關才開下一關）；電腦測試可加 -- --unlock 全部打開
 const PREVIEW := false
@@ -27,10 +54,12 @@ const KEN_H := 2.2
 const DEATH_Y := -14.0
 const SAVE_CLEARED := "user://jump_cleared.json"
 const SFX := {
-	"jump": "atk_wind", "triple": "atk_star", "long": "atk_wind", "land": "footstep_1", "stomp": "hit",
+	"jump": "run_jump", "triple": "atk_star", "long": "atk_wind", "land": "run_land", "stomp": "run_stomp",
 	"knock": "monster_laugh", "star": "unlock", "question": "question", "flag": "arrive", "clear": "victory",
 	"boss": "boss_appear", "slam": "atk_fire", "defeat": "defeat", "fall": "wrong", "click": "click",
 	"correct": "correct", "wrong": "wrong",
+	# 自動跑版華麗動作（2026-11-10；Kenney 新音效下載後換成專用音效）
+	"coin": "run_coin", "flip": "run_flip", "spin": "run_spin", "vault": "run_vault", "wallkick": "run_wallkick", "cheer": "run_cheer",
 }
 
 var font: FontFile
@@ -330,7 +359,7 @@ func _set_hud_visible(on: bool) -> void:
 	menu_btn.visible = on
 	boss_bar.visible = on and boss != null
 	boss_hp.visible = boss_bar.visible
-	touch.visible = on and is_mobile and state == "play"
+	touch.visible = on and is_mobile and state == "play" and not run_mode
 	touch.reset()
 
 func show_toast(t: String, secs := 2.2) -> void:
@@ -440,7 +469,7 @@ func show_menu() -> void:
 	var total_done := 0
 	for Lv in Levels.LEVELS:
 		total_done += level_done(String(Lv["id"]))
-	var sub := _label("二水英語跳跳島 HWG5　★ %d / %d　通關 %d / 13" % [total_done, bank.data["items"].size(), cleared.size()], 28)
+	var sub := _label("%s　★ %d / %d　通關 %d / 13" % [String(bank.data.get("unit", "Ken's Jump Island")), total_done, bank.data["items"].size(), cleared.size()], 28)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(sub)
 	var grid := GridContainer.new()
@@ -487,7 +516,7 @@ func show_menu() -> void:
 			sfx("click")
 			start_level(n))
 		grid.add_child(b)
-	var help := _label("移動：搖桿／WASD　跳：JUMP／Space　跳遠：跑步時按 LONG／Shift　打敗兩個魔王就完成任務！", 20)
+	var help := _label("第 1 關：Ken 自己往前跑，點一下螢幕就跳、按住跳更高（電腦按空白鍵或滑鼠）　第 2 關以後：搖桿／WASD 移動、JUMP 跳", 20)
 	help.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	box.add_child(help)
@@ -503,6 +532,10 @@ func _clear_level() -> void:
 	slimes = []
 	flags = []
 	movers = []
+	coins = []
+	coin_count = 0
+	style_count = 0
+	stomp_chain = 0
 	mover_t = 0.0
 	mats = {}
 	active_star = null
@@ -513,7 +546,17 @@ func start_level(n: int, custom_layout := {}) -> void:
 		menu_layer.queue_free()
 		menu_layer = null
 	L = Levels.by_n(n)
-	D = custom_layout if not custom_layout.is_empty() else Levels.layout(String(L["layout"]))
+	run_mode = custom_layout.is_empty() and RunLevels.has(String(L["id"]))
+	if not custom_layout.is_empty():
+		D = custom_layout
+	elif run_mode:
+		D = RunLevels.layout(String(L["id"]))
+	else:
+		D = Levels.layout(String(L["layout"]))
+	safe_hist = []
+	fall_spots = []
+	tap_pressed = false
+	tap_held = false
 	world = Node3D.new()
 	add_child(world)
 	TH = Levels.theme(String(D.get("theme", "meadow")))
@@ -566,6 +609,12 @@ func start_level(n: int, custom_layout := {}) -> void:
 			if boss and state != "clear":
 				boss.start_fight()
 				_spawn_boss_star(false))
+	elif run_mode:
+		player.run_cap = RUN_SPEED
+		player.grav_mul = RUN_GRAV
+		player.wall_kick_on = bool(D.get("wall_kick", false))
+		state = "intro"
+		_run_intro(n)
 	else:
 		show_toast("第 %d 關 %s\n%s" % [n, L["zh"], L["en"]], 2.0)
 
@@ -786,10 +835,16 @@ func _spawn_player() -> void:
 	player.global_position = checkpoint
 	player.set_facing(checkpoint_yaw)
 	cam_yaw = checkpoint_yaw + PI
-	player.jumped.connect(func(k): sfx("triple" if k == "triple" else "jump"))
+	player.jumped.connect(func(k):
+		sfx("triple" if k == "triple" else "jump")
+		if run_mode:
+			_squash())
 	player.landed.connect(func(k):
-		if k != "fall":
+		if run_mode:
+			_run_landed(k)
+		elif k != "fall":
 			sfx("land"))
+	player.style.connect(_on_style)
 	shadow = MeshInstance3D.new()
 	var cyl := CylinderMesh.new()
 	cyl.top_radius = 0.6
@@ -852,16 +907,27 @@ func _find_anim(n: Node) -> AnimationPlayer:
 func _physics_process(dt: float) -> void:
 	if player == null or state == "menu":
 		return
+	if run_mode and args.has("runbot"):
+		_runbot(dt)
 	_read_input()
 	if state == "play":
 		_move_movers(dt)
 		_check_stars()
 		_check_flags()
 		_check_enemies()
+		if run_mode:
+			_run_tick(dt)
 		if player.global_position.y < DEATH_Y:
-			_respawn()
+			if run_mode:
+				_bubble_rescue()
+			else:
+				_respawn()
 
 func _process(dt: float) -> void:
+	if run_mode and state == "play" and play_t0 > 0 and Time.get_ticks_msec() - play_t0 < 4000:
+		max_dt_ms = maxf(max_dt_ms, dt * 1000.0)
+	_update_fps_cap()
+	_tick_rest_timer()
 	if player == null:
 		return
 	var t := Time.get_ticks_msec() / 1000.0
@@ -874,6 +940,13 @@ func _process(dt: float) -> void:
 	_update_cam(dt)
 
 func _read_input() -> void:
+	if run_mode and state == "play" and not test_drive:
+		player.move = Vector3.RIGHT
+		player.jump_held = Input.is_action_pressed("jump") or tap_held or auto_hold > 0.0
+		if Input.is_action_just_pressed("jump") or tap_pressed:
+			player.press_jump()
+		tap_pressed = false
+		return
 	if state != "play" or test_drive:
 		if not test_drive:
 			player.move = Vector3.ZERO
@@ -909,6 +982,16 @@ func _update_cam(dt: float) -> void:
 		cam.global_position = ctr + Vector3(r * 0.55, r * 0.75 + 15.0, r * 0.55 + 10.0)
 		cam.look_at(ctr, Vector3.UP)
 		return
+	if run_mode and boss == null:
+		# 側面鏡頭：Ken 在畫面左邊三分之一，前面留空間看路；高度慢慢跟
+		var rp := player.global_position
+		var fy2: float = rp.y + 1.4 if cam_snap else lerpf(cam_focus.y, rp.y + 1.4, minf(1.0, dt * 3.0))
+		cam_focus = Vector3(rp.x + 4.5, fy2, 0.0)
+		cam.fov = 50
+		cam.global_position = cam_focus + Vector3(0, 1.8, 13.0)   # 2026-11-10 拉近：Ken 大一點，看得清楚跳躍動作
+		cam.look_at(cam_focus, Vector3.UP)
+		cam_snap = false
+		return
 	var p := player.global_position
 	var spd := clampf(player.fwd / PlayerScript.RUN_MAX, 0.0, 1.0)
 	var behind := player.facing + PI
@@ -942,6 +1025,15 @@ func _update_shadow() -> void:
 
 # ---------------------------------------------------------------- 星星與題目
 func _check_stars() -> void:
+	if run_mode and boss == null:
+		# 自動跑：Ken 的 x 跑過星星就出題（不管跳多高），所以星星不會漏掉
+		for s in stars:
+			if s["done"] or s["cool"]:
+				continue
+			if player.global_position.x >= (s["node"] as Node3D).global_position.x - 0.6:
+				_touch_star(s)
+				return
+		return
 	var pc := player.global_position + Vector3(0, 1.1, 0)
 	for s in stars:
 		if s["done"]:
@@ -1021,7 +1113,7 @@ func _freeze(on: bool) -> void:
 		sl.frozen = on
 	if boss:
 		boss.frozen = on
-	touch.visible = not on and is_mobile and state == "play"
+	touch.visible = not on and is_mobile and state == "play" and not run_mode
 	touch.reset()
 	menu_btn.disabled = on
 	_duck_music(on and state == "quiz")
@@ -1029,6 +1121,8 @@ func _freeze(on: bool) -> void:
 func _update_hud() -> void:
 	var id: String = L["id"]
 	hud.text = "第 %d 關 %s　★ %d / %d" % [L["n"], L["zh"], level_done(id), level_total(id)]
+	if run_mode:
+		hud.text += "　金幣 %d" % coin_count
 	if boss:
 		boss_bar.visible = true
 		boss_bar.text = "%s %s　HP %d / %d" % [D["boss"]["zh"], D["boss"]["en"], boss.hp, boss.max_hp]
@@ -1068,7 +1162,15 @@ func _check_enemies() -> void:
 			if player.velocity.y < -0.5 and d.y > SlimeScript.H * 0.4:
 				sl.stomp()
 				player.bounce()
-				sfx("stomp")
+				if run_mode:
+					_run_stomp()
+				else:
+					sfx("stomp")
+			elif run_mode:
+				# 自動跑：從旁邊碰到也不會被彈開，直接把史萊姆踩扁、Ken 彈起來繼續跑（不扣分）
+				sl.stomp()
+				player.bounce()
+				_run_stomp()
 			elif player.invuln <= 0.0:
 				player.knock(sl.global_position)
 				sfx("knock")
@@ -1102,6 +1204,647 @@ func _check_enemies() -> void:
 				player.knock(wc, 9.0)
 				sfx("knock")
 				break
+
+# ---------------------------------------------------------------- 地標、招牌、終點門、金幣、華麗動作（2026-11-10）
+## 自動跑關卡的額外布置：地點建築（網站下載）、起點大招牌、終點門、金幣
+func _build_run_extras() -> void:
+	var place: Array = D.get("place", [String(L["zh"]), String(L["en"])])
+	_big_sign(Vector3(16, 0, -4.5), place[0], place[1])
+	var gate := String(D.get("gate", ""))
+	if gate != "":
+		_goal_gate(gate, float(D["goal"]))
+	for c in D.get("coins", []):
+		_add_coin(c)
+	_update_hud()
+
+## 進自動跑關卡（2026-11-11 教師 iPad：進關會卡一下）：
+## 先蓋「載入中…」畫面＋進度條，把地點建築下載、解析好，並在畫面後面先把粒子、彈出字
+## 各畫一次（第一次畫才會編譯著色器，iPad 會停頓），全部好了再 3、2、1、GO! 倒數才開始跑。
+var intro_t0 := 0
+var play_t0 := 0
+var max_dt_ms := 0.0
+func _run_intro(n: int) -> void:
+	intro_t0 = Time.get_ticks_msec()
+	var id := String(L["id"])
+	var lay := CanvasLayer.new()
+	lay.layer = 30
+	add_child(lay)
+	var bg := ColorRect.new()
+	bg.color = Color(0.1, 0.16, 0.3)
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_STOP
+	lay.add_child(bg)
+	var title := _label("第 %d 關 %s\n%s\n\n載入中… Loading" % [n, L["zh"], L["en"]], 44)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	title.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	title.grow_vertical = Control.GROW_DIRECTION_BOTH
+	bg.add_child(title)
+	var bar := ProgressBar.new()
+	bar.show_percentage = false
+	bar.custom_minimum_size = Vector2(520, 28)
+	bar.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	bar.position.y -= 140
+	bar.value = 15
+	bg.add_child(bar)
+	await get_tree().process_frame
+	if not _intro_ok(id, lay):
+		return
+	_build_run_extras()
+	bar.value = 35
+	await get_tree().process_frame
+	var lm: Dictionary = D.get("landmark", {})
+	if not lm.is_empty():
+		await _load_landmark(id, lm)
+	if not _intro_ok(id, lay):
+		return
+	bar.value = 70
+	# 在 Ken 旁邊先畫一次特效（被載入畫面蓋住，學生看不到）
+	_burst(player.global_position + Vector3(2, 1, 0), Color(1.0, 0.9, 0.3), 4)
+	_pop_text("Nice!", Color(0.5, 1.0, 0.5), true)
+	for i in 6:
+		await get_tree().process_frame
+		bar.value = 70 + i * 5
+	if not _intro_ok(id, lay):
+		return
+	bar.value = 100
+	print("RUNBOT load_ms=%d" % (Time.get_ticks_msec() - intro_t0))
+	bg.queue_free()
+	var big := _label("", 150)
+	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	big.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	big.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	big.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
+	big.add_theme_color_override("font_outline_color", Color(0.08, 0.08, 0.25))
+	big.add_theme_constant_override("outline_size", 26)
+	big.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lay.add_child(big)
+	for w in ["3", "2", "1", "GO!"]:
+		big.text = w
+		big.pivot_offset = big.size / 2.0
+		big.scale = Vector2.ONE * 1.6
+		var tw := create_tween()
+		tw.tween_property(big, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		sfx_pitch("coin", 1.5 if w == "GO!" else 1.0)
+		await get_tree().create_timer(0.2 if args.has("runbot") else 0.6).timeout
+		if not _intro_ok(id, lay):
+			return
+	lay.queue_free()
+	state = "play"
+	play_t0 = Time.get_ticks_msec()
+	max_dt_ms = 0.0
+	show_toast("點一下螢幕就跳 Tap to jump!", 2.0)
+
+func _intro_ok(id: String, lay: CanvasLayer) -> bool:
+	if state == "intro" and world != null and String(L.get("id", "")) == id:
+		return true
+	lay.queue_free()
+	return false
+
+## 起點的大地名招牌（面向鏡頭，不跟著轉）
+func _big_sign(pos: Vector3, zh: String, en: String) -> void:
+	var root := Node3D.new()
+	root.position = pos
+	world.add_child(root)
+	for sx in [-3.8, 3.8]:
+		var post := MeshInstance3D.new()
+		var cm := CylinderMesh.new()
+		cm.top_radius = 0.15
+		cm.bottom_radius = 0.15
+		cm.height = 3.0
+		post.mesh = cm
+		post.position = Vector3(sx, 1.5, 0)
+		root.add_child(post)
+	var board := MeshInstance3D.new()
+	var bm := BoxMesh.new()
+	bm.size = Vector3(9.0, 2.6, 0.25)
+	board.mesh = bm
+	board.position = Vector3(0, 3.6, 0)
+	var m := StandardMaterial3D.new()
+	m.albedo_color = Color(0.16, 0.34, 0.66)
+	board.material_override = m
+	root.add_child(board)
+	var t := Label3D.new()
+	t.text = "%s\n%s" % [zh, en]
+	t.font = font_bold
+	t.font_size = 96
+	t.pixel_size = 0.0085
+	t.outline_size = 16
+	t.outline_modulate = Color(0.05, 0.1, 0.25)
+	t.position = Vector3(0, 3.6, 0.2)
+	root.add_child(t)
+
+## 終點門。station＝剪票口：一排剪票機＋上方「出口 EXIT」看板；其他關先用彩色拱門
+func _goal_gate(style: String, x: float) -> void:
+	var root := Node3D.new()
+	root.position = Vector3(x, 0, 0)
+	world.add_child(root)
+	var mat := func(c: Color) -> StandardMaterial3D:
+		var mm := StandardMaterial3D.new()
+		mm.albedo_color = c
+		mm.roughness = 0.5
+		return mm
+	if style == "ticket":
+		for z in [-2.6, -1.3, 1.3, 2.6]:
+			var body := MeshInstance3D.new()
+			var b := BoxMesh.new()
+			b.size = Vector3(1.6, 1.1, 0.5)
+			body.mesh = b
+			body.material_override = mat.call(Color(0.82, 0.84, 0.88))
+			body.position = Vector3(0, 0.55, z)
+			root.add_child(body)
+			var flap := MeshInstance3D.new()
+			var fb := BoxMesh.new()
+			fb.size = Vector3(0.12, 0.5, 0.5)
+			flap.mesh = fb
+			flap.material_override = mat.call(Color(1.0, 0.82, 0.2))
+			flap.position = Vector3(0.6, 0.9, z + (0.45 if z < 0 else -0.45))
+			root.add_child(flap)
+		var beam := MeshInstance3D.new()
+		var bb := BoxMesh.new()
+		bb.size = Vector3(0.6, 1.2, 7.0)
+		beam.mesh = bb
+		beam.material_override = mat.call(Color(0.12, 0.3, 0.62))
+		beam.position = Vector3(0, 4.6, 0)
+		root.add_child(beam)
+		for z in [-3.3, 3.3]:
+			var pole := MeshInstance3D.new()
+			var pb := BoxMesh.new()
+			pb.size = Vector3(0.4, 4.6, 0.4)
+			pole.mesh = pb
+			pole.material_override = mat.call(Color(0.7, 0.72, 0.78))
+			pole.position = Vector3(0, 2.3, z)
+			root.add_child(pole)
+		# 看板放在剪票口後面、面向鏡頭（側面鏡頭看得到）
+		var board := MeshInstance3D.new()
+		var bd := BoxMesh.new()
+		bd.size = Vector3(6.5, 1.8, 0.2)
+		board.mesh = bd
+		board.material_override = mat.call(Color(0.12, 0.3, 0.62))
+		board.position = Vector3(0, 6.6, -3.3)
+		root.add_child(board)
+		var sign := Label3D.new()
+		sign.text = "剪票口 出口
+EXIT  GOAL!"
+		sign.font = font_bold
+		sign.font_size = 72
+		sign.pixel_size = 0.009
+		sign.outline_size = 14
+		sign.outline_modulate = Color(0.05, 0.1, 0.25)
+		sign.position = Vector3(0, 6.6, -3.15)
+		root.add_child(sign)
+
+## 地點建築：網頁版從 jump3d/landmarks/<代號>.glb 下載（tools/make_landmarks.py 做的輕量版）；
+## 電腦測試用 --landmarks=<資料夾>。載入失敗就略過（不影響玩）。
+func _load_landmark(id: String, lm: Dictionary) -> void:
+	var bytes := PackedByteArray()
+	if OS.has_feature("web"):
+		var href = JavaScriptBridge.eval("location.href", true)
+		var base := String(href)
+		base = base.substr(0, base.rfind("/") + 1)
+		var req := HTTPRequest.new()
+		add_child(req)
+		if req.request(base + "landmarks/%s.glb" % id) != OK:
+			req.queue_free()
+			return
+		var res: Array = await req.request_completed
+		req.queue_free()
+		if int(res[0]) != HTTPRequest.RESULT_SUCCESS or int(res[1]) != 200:
+			return
+		bytes = res[3]
+	elif args.has("landmarks"):
+		var path := String(args["landmarks"]).path_join("%s.glb" % id)
+		if FileAccess.file_exists(path):
+			bytes = FileAccess.get_file_as_bytes(path)
+	if bytes.is_empty() or world == null or String(L.get("id", "")) != id:
+		return
+	var doc := GLTFDocument.new()
+	var st := GLTFState.new()
+	if doc.append_from_buffer(bytes, "", st) != OK:
+		return
+	var scene: Node3D = doc.generate_scene(st)
+	if scene == null:
+		return
+	var boxes: Array = []
+	_collect_aabb(scene, Transform3D.IDENTITY, boxes)
+	if boxes.is_empty():
+		return
+	var bb: AABB = boxes[0]
+	for i in range(1, boxes.size()):
+		bb = bb.merge(boxes[i])
+	var holder := Node3D.new()
+	var k := float(lm.get("h", 12.0)) / maxf(0.01, bb.size.y)
+	scene.position = Vector3(-(bb.position.x + bb.size.x / 2.0), -bb.position.y, -(bb.position.z + bb.size.z / 2.0))
+	holder.add_child(scene)
+	holder.scale = Vector3.ONE * k
+	holder.position = Vector3(float(lm.get("x", 20.0)), float(lm.get("y", 0.0)), float(lm.get("z", -12.0)))
+	holder.rotation.y = float(lm.get("yaw", 0.0))
+	world.add_child(holder)
+
+## 金幣：轉圈、吃到叮一聲（不算分）
+func _add_coin(pos: Vector3) -> void:
+	var mi := MeshInstance3D.new()
+	var cm := CylinderMesh.new()
+	cm.top_radius = 0.42
+	cm.bottom_radius = 0.42
+	cm.height = 0.1
+	cm.radial_segments = 16
+	mi.mesh = cm
+	var m := StandardMaterial3D.new()
+	m.albedo_color = Color(1.0, 0.82, 0.15)
+	m.metallic = 0.6
+	m.roughness = 0.25
+	m.emission_enabled = true
+	m.emission = Color(1.0, 0.7, 0.1) * 0.35
+	mi.material_override = m
+	mi.position = pos
+	mi.rotation.x = PI / 2.0
+	world.add_child(mi)
+	coins.append(mi)
+
+func _check_coins(p: Vector3) -> void:
+	var t := Time.get_ticks_msec() / 1000.0
+	var c := p + Vector3(0, 1.1, 0)
+	for i in range(coins.size() - 1, -1, -1):
+		var n: MeshInstance3D = coins[i]
+		n.rotation.y = t * 4.0
+		if n.position.distance_to(c) < 1.3:
+			coins.remove_at(i)
+			coin_count += 1
+			sfx("coin")
+			var tw := create_tween()
+			tw.tween_property(n, "position:y", n.position.y + 1.5, 0.25)
+			tw.parallel().tween_property(n, "scale", Vector3.ONE * 0.1, 0.25)
+			tw.tween_callback(n.queue_free)
+			_update_hud()
+
+## 起跳：先蹲再拉長
+func _squash() -> void:
+	var v := player.visual
+	if v == null:
+		return
+	var tw := create_tween()
+	tw.tween_property(v, "scale", Vector3(1.18, 0.82, 1.18), 0.05)
+	tw.tween_property(v, "scale", Vector3(0.88, 1.18, 0.88), 0.09)
+	tw.tween_property(v, "scale", Vector3.ONE, 0.14)
+
+func _on_style(move: String) -> void:
+	style_count += 1
+	match move:
+		"flip":
+			sfx("flip")
+		"spin":
+			sfx("spin")
+			_burst(player.global_position + Vector3(0, 1.2, 0), Color(0.6, 0.9, 1.0), 14)
+		"vault":
+			sfx("vault")
+		"wallkick":
+			sfx("wallkick")
+			_pop_text("Wall Kick!", Color(0.6, 0.9, 1.0))
+
+func _run_landed(k: String) -> void:
+	if k == "fall":
+		return
+	sfx("land")
+	var feet := player.global_position + Vector3(0, 0.1, 0)
+	_burst(feet, Color(0.85, 0.8, 0.7), 10, 0.45)
+	if player.flipped or player.spun:
+		_burst(feet + Vector3(0, 0.8, 0), Color(1.0, 0.9, 0.3), 16)
+
+## 連續踩史萊姆：Nice → Great → Excellent!，音調越來越高
+var last_stomp_ms := 0
+var bot_stomps := 0
+var bot_words := {}
+func _run_stomp() -> void:
+	# 1.5 秒內接著踩就連下去（3 隻一組，中間碰到地也算連續）
+	if Time.get_ticks_msec() - last_stomp_ms > 1500:
+		stomp_chain = 0
+	last_stomp_ms = Time.get_ticks_msec()
+	bot_stomps += 1
+	stomp_chain += 1
+	sfx_pitch("stomp", 1.0 + 0.18 * (stomp_chain - 1))
+	var words := ["Nice!", "Great!", "Excellent!"]
+	var cols := [Color(0.5, 1.0, 0.5), Color(0.4, 0.8, 1.0), Color(1.0, 0.8, 0.2)]
+	var i := mini(stomp_chain, 3) - 1
+	_pop_text(words[i], cols[i])
+	bot_words[words[i]] = int(bot_words.get(words[i], 0)) + 1
+	if args.has("runbot"):
+		print("RUNBOT stomp %s t=%.2f" % [words[i], bot_t])
+	if stomp_chain >= 2:
+		style_count += 1
+		sfx("cheer")
+
+## 華麗動作的字：畫面正上方大字（2026-11-11 教師 RDQ ①：原本放在 Ken 頭上，Ken 一跑就出畫面）
+func _pop_text(text: String, col: Color, warm := false) -> void:
+	var l := _label(text, 110)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.add_theme_color_override("font_color", col)
+	l.add_theme_color_override("font_outline_color", Color(0.08, 0.08, 0.2))
+	l.add_theme_constant_override("outline_size", 22)
+	l.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	l.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	l.position.y = 70
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.get_parent().add_child(l)
+	if warm:
+		l.modulate.a = 0.01
+		get_tree().create_timer(0.2).timeout.connect(l.queue_free)
+		return
+	l.pivot_offset = Vector2(l.get_combined_minimum_size().x / 2.0, 60)
+	l.scale = Vector2.ONE * 0.4
+	var tw := create_tween()
+	tw.tween_property(l, "scale", Vector2.ONE * 1.15, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(l, "scale", Vector2.ONE, 0.1)
+	tw.tween_interval(0.35)
+	tw.tween_property(l, "modulate:a", 0.0, 0.3)
+	tw.tween_callback(l.queue_free)
+
+## 小粒子爆開（落地煙塵、旋轉、星光）
+func _burst(at: Vector3, col: Color, n: int, life := 0.6) -> void:
+	var p := CPUParticles3D.new()
+	p.one_shot = true
+	p.amount = n
+	p.lifetime = life
+	p.explosiveness = 1.0
+	var sm := SphereMesh.new()
+	sm.radius = 0.12
+	sm.height = 0.24
+	sm.radial_segments = 6
+	sm.rings = 3
+	p.mesh = sm
+	var m := StandardMaterial3D.new()
+	m.albedo_color = col
+	m.emission_enabled = true
+	m.emission = col * 0.5
+	p.material_override = m
+	p.direction = Vector3.UP
+	p.spread = 70.0
+	p.initial_velocity_min = 2.0
+	p.initial_velocity_max = 5.0
+	p.gravity = Vector3(0, -6, 0)
+	p.position = at
+	world.add_child(p)
+	p.emitting = true
+	get_tree().create_timer(life + 0.3).timeout.connect(p.queue_free)
+
+func sfx_pitch(key: String, pitch: float) -> void:
+	var st: AudioStream = sfx_streams.get(SFX.get(key, key))
+	if st == null or test_mode:
+		return
+	for ap in sfx_pool:
+		if not ap.playing:
+			ap.stream = st
+			ap.pitch_scale = pitch
+			ap.play()
+			ap.finished.connect(func(): ap.pitch_scale = 1.0, CONNECT_ONE_SHOT)
+			return
+
+# ---------------------------------------------------------------- iPad 自動跑版
+## 點螢幕＝跳：iPad 只看手指（InputEventScreenTouch），電腦只看滑鼠左鍵（避免觸控模擬滑鼠算兩次）；
+## 點在「選關」按鈕上不算跳。空白鍵走 _read_input 的 "jump"。
+func _unhandled_input(event: InputEvent) -> void:
+	if not run_mode:
+		return
+	var down := false
+	var up := false
+	var pos := Vector2.ZERO
+	if event is InputEventScreenTouch:
+		down = event.pressed
+		up = not event.pressed
+		pos = event.position
+	elif event is InputEventMouseButton and not is_mobile and event.button_index == MOUSE_BUTTON_LEFT:
+		down = event.pressed
+		up = not event.pressed
+		pos = event.position
+	else:
+		return
+	if up:
+		tap_held = false
+		return
+	if down and state == "play":
+		if menu_btn.visible and menu_btn.get_global_rect().has_point(pos):
+			return
+		tap_pressed = true
+		tap_held = true
+
+## --runbot：自動測試用「機器人小朋友」：看到前面有缺口或擋路的台階就點（高的就按住），題目自動答對。
+## 印 RUNBOT 結果：花幾秒、泡泡救援幾次、有沒有過關。
+var bot_hold := 0.0
+var bot_t := 0.0
+var bot_bubbles := 0
+func _runbot(dt: float) -> void:
+	bot_t += dt
+	if state == "quiz":
+		if not quiz.solved:
+			quiz.debug_fill(true)
+			quiz.debug_check()
+		else:
+			quiz.debug_next()
+		return
+	if state != "play":
+		return
+	bot_hold = maxf(0.0, bot_hold - dt)
+	tap_held = bot_hold > 0.0
+	if not player.is_on_floor():
+		return
+	var p := player.global_position
+	var space := get_world_3d().direct_space_state
+	var ahead := 2.2
+	# 前面地面還在嗎（缺口）
+	var q := PhysicsRayQueryParameters3D.create(p + Vector3(ahead, 1.0, 0), p + Vector3(ahead, -3.0, 0))
+	q.exclude = [player.get_rid()]
+	var gap := space.intersect_ray(q).is_empty()
+	# 前面有沒有比 1 m 高的牆
+	var w := PhysicsRayQueryParameters3D.create(p + Vector3(0, 1.3, 0), p + Vector3(1.9, 1.3, 0))
+	w.exclude = [player.get_rid()]
+	var wall := not space.intersect_ray(w).is_empty()
+	if gap or wall:
+		if args.has("botlog"):
+			print("BOT tap x=%.1f gap=%s wall=%s fwd=%.1f" % [p.x, gap, wall, player.fwd])
+		tap_pressed = true
+		bot_hold = 0.35 if (wall or gap) else 0.0
+
+func _run_tick(dt: float) -> void:
+	auto_hold = maxf(0.0, auto_hold - dt)
+	var p := player.global_position
+	# 記錄最近站在地上的位置（每 0.1 秒一筆，留 3 秒）
+	safe_t += dt
+	if player.is_on_floor() and safe_t >= 0.1:
+		safe_t = 0.0
+		safe_hist.append(p)
+		if safe_hist.size() > 30:
+			safe_hist.pop_front()
+	_check_coins(p)
+	if boss == null:
+		_auto_vault(p)
+		# 終點：題目都答完才過關；有星星沒答（中途按離開）就帶回星星前面
+		if p.x >= float(D.get("goal", 1e9)):
+			var id: String = L["id"]
+			if quiz.remaining(id) == 0:
+				_level_clear()
+			else:
+				for s in stars:
+					if not s["done"]:
+						s["cool"] = false
+						show_toast("還有星星沒回答喔！\nAnswer the star question first.", 2.2)
+						_bubble_to((s["node"] as Node3D).global_position.x - 10.0)
+						return
+
+## 自動跨越：前面有矮台階（低於約 1 m）或史萊姆時自動小跳，像 Super Mario Run 一樣不會被小東西擋住
+func _auto_vault(p: Vector3) -> void:
+	if not player.is_on_floor() or player.kind != "":
+		return
+	var space := get_world_3d().direct_space_state
+	var low := PhysicsRayQueryParameters3D.create(p + Vector3(0, 0.35, 0), p + Vector3(1.4, 0.35, 0))
+	low.exclude = [player.get_rid()]
+	var high := PhysicsRayQueryParameters3D.create(p + Vector3(0, 1.15, 0), p + Vector3(1.8, 1.15, 0))
+	high.exclude = [player.get_rid()]
+	var want := not space.intersect_ray(low).is_empty() and space.intersect_ray(high).is_empty()
+	# 史萊姆不再自動跨過去（2026-11-11 教師 RDQ 3A）：撞到就踩扁，才看得到 Nice / Great / Excellent!
+	if not want and _needs_help(p.x):
+		var q := PhysicsRayQueryParameters3D.create(p + Vector3(0.9, 1.0, 0), p + Vector3(0.9, -3.0, 0))
+		q.exclude = [player.get_rid()]
+		if space.intersect_ray(q).is_empty():
+			auto_hold = 0.4
+			player.press_jump()
+			show_toast("幫你跳！ Jump!", 0.8)
+			return
+	if want:
+		auto_hold = 0.18
+		player.vault()
+
+## 同一個地方（前後 12 m 內）已經掉下去 2 次以上 → 到邊緣時自動幫忙跳
+func _needs_help(x: float) -> bool:
+	var n := 0
+	for fx in fall_spots:
+		if fx - x > 0.0 and fx - x < 12.0:
+			n += 1
+	return n >= 2
+
+## 掉下去：泡泡包住 Ken，飄回大約 1 秒前站過的地方，不扣分
+func _bubble_rescue() -> void:
+	bot_bubbles += 1
+	print("RUNBOT bubble at x=%.1f" % player.global_position.x)
+	fall_spots.append(player.global_position.x)
+	var target_x := player.global_position.x - 6.0
+	if not safe_hist.is_empty():
+		var i := maxi(0, safe_hist.size() - 11)
+		target_x = (safe_hist[i] as Vector3).x
+	sfx("fall")
+	_bubble_to(target_x)
+
+func _bubble_to(target_x: float) -> void:
+	if state != "play":
+		return
+	state = "bubble"
+	player.frozen = true
+	player.reset_motion()
+	# 找目標位置的地面高度
+	var space := get_world_3d().direct_space_state
+	var q := PhysicsRayQueryParameters3D.create(Vector3(target_x, 30, 0), Vector3(target_x, -20, 0))
+	q.exclude = [player.get_rid()]
+	var hit := space.intersect_ray(q)
+	var dest := Vector3(target_x, (hit["position"].y if not hit.is_empty() else 0.0) + 0.3, 0)
+	if bubble == null or not is_instance_valid(bubble):
+		bubble = MeshInstance3D.new()
+		var sm := SphereMesh.new()
+		sm.radius = 1.6
+		sm.height = 3.2
+		bubble.mesh = sm
+		var m := StandardMaterial3D.new()
+		m.albedo_color = Color(0.6, 0.85, 1.0, 0.35)
+		m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		m.emission_enabled = true
+		m.emission = Color(0.4, 0.7, 1.0) * 0.4
+		m.cull_mode = BaseMaterial3D.CULL_DISABLED
+		bubble.material_override = m
+		bubble.position.y = 1.1
+		player.add_child(bubble)
+	bubble.visible = true
+	bubble.scale = Vector3.ONE * 0.3
+	player.global_position.y = maxf(player.global_position.y, -5.0)
+	var tw := create_tween()
+	tw.tween_property(bubble, "scale", Vector3.ONE, 0.25)
+	tw.tween_property(player, "global_position", dest + Vector3(0, 2.0, 0), 1.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(player, "global_position", dest, 0.35)
+	tw.tween_callback(func():
+		bubble.visible = false
+		sfx("land")
+		player.frozen = false
+		player.reset_motion()
+		player.fwd = RUN_SPEED
+		safe_hist = [dest]
+		if state == "bubble":
+			state = "play")
+	show_toast("泡泡救援！ Bubble rescue!", 1.2)
+
+## iPad 防過熱：平常每秒 30 張、答題 15 張、休息畫面 5 張（電腦版不限制）；連續玩 15 分鐘提醒休息
+func _update_fps_cap() -> void:
+	if not is_mobile or args.has("nolimit"):
+		return
+	var want := FPS_PLAY
+	if rest_layer != null and rest_layer.visible:
+		want = FPS_REST
+	elif state == "quiz":
+		want = FPS_QUIZ
+	if Engine.max_fps != want:
+		Engine.max_fps = want
+
+func _tick_rest_timer() -> void:
+	var now := Time.get_ticks_msec()
+	if last_tick_ms == 0:
+		last_tick_ms = now
+	var dt := now - last_tick_ms
+	last_tick_ms = now
+	if rest_layer != null and rest_layer.visible:
+		return
+	if (state == "play" or state == "quiz" or state == "bubble") and dt > 0 and dt < 5000:
+		play_ms += dt
+	# 不在關卡中途打斷：回到選關畫面或剛過關時才跳出
+	if play_ms >= REST_AFTER_MS and (state == "menu" or state == "clear"):
+		_show_rest()
+
+func _show_rest() -> void:
+	if rest_layer == null:
+		rest_layer = CanvasLayer.new()
+		rest_layer.layer = 60
+		add_child(rest_layer)
+		var cover := ColorRect.new()
+		cover.color = Color(0.1, 0.16, 0.3, 0.88)
+		cover.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		cover.mouse_filter = Control.MOUSE_FILTER_STOP
+		rest_layer.add_child(cover)
+		var box := VBoxContainer.new()
+		box.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+		box.alignment = BoxContainer.ALIGNMENT_CENTER
+		box.add_theme_constant_override("separation", 24)
+		box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		box.grow_vertical = Control.GROW_DIRECTION_BOTH
+		cover.add_child(box)
+		# 網頁版沒有系統字型，不要放表情符號（會變方框）
+		for t in [["休息一下，讓 iPad 降溫", 44], ["你已經玩了 15 分鐘。眼睛看看遠方，iPad 放平休息一下。", 28],
+				["Take a short break and let the iPad cool down.", 24], ["進度已經存好，按下面的按鈕就能繼續。", 24]]:
+			var l := _label(t[0], t[1])
+			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			box.add_child(l)
+		var btn := Button.new()
+		btn.text = "▶ 繼續 Continue"
+		btn.add_theme_font_override("font", font_bold)
+		btn.add_theme_font_size_override("font_size", 34)
+		btn.custom_minimum_size = Vector2(320, 80)
+		btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("3fae57")
+		sb.set_corner_radius_all(18)
+		for st in ["normal", "hover", "pressed"]:
+			btn.add_theme_stylebox_override(st, sb)
+		btn.add_theme_color_override("font_color", Color.WHITE)
+		btn.pressed.connect(func():
+			play_ms = 0
+			rest_layer.visible = false)
+		box.add_child(btn)
+	rest_layer.visible = true
 
 # ---------------------------------------------------------------- 旗子、掉落、過關
 func _check_flags() -> void:
@@ -1138,7 +1881,15 @@ func _level_clear() -> void:
 	if cleared.size() >= Levels.LEVELS.size():
 		Host.report({"type": "complete"})
 	sfx("clear")
-	show_toast("過關！ Level Clear!\n%s" % L["zh"], 3.0)
+	if args.has("runbot"):
+		print("RUNBOT clear level=%d secs=%.1f bubbles=%d answered=%d stomps=%d words=%s first4s_max_frame_ms=%.0f" % [L["n"], bot_t, bot_bubbles, level_done(id), bot_stomps, bot_words, max_dt_ms])
+		get_tree().quit()
+	if run_mode:
+		show_toast("過關！ Level Clear!
+%s
+金幣 %d　華麗動作 %d 次" % [L["zh"], coin_count, style_count], 3.0)
+	else:
+		show_toast("過關！ Level Clear!\n%s" % L["zh"], 3.0)
 	if not test_mode:
 		get_tree().create_timer(3.2).timeout.connect(func():
 			if state == "clear":

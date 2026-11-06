@@ -1,0 +1,186 @@
+{
+  "rate": 0.8,
+  "voice": "Leda",
+  "model": "gemini-3.8-flash-tts",
+  "questions": {
+    "L1a": {
+      "word": "bed",
+      "seconds": 4.34,
+      "sha256": "46d27e4031cc38c05600118617a9b79de56ffee7d8cd7fbb0879b79bdebbb7ae",
+      "slow_seconds": 6.16
+    },
+    "L1b": {
+      "word": "top",
+      "seconds": 4.03,
+      "sha256": "1e5c404688e68498fd7a94dacadcb71ab5c0f37de83b73a1b37cf684fa59e1eb",
+      "slow_seconds": 5.72
+    },
+    "L2a": {
+      "word": "pig",
+      "seconds": 4.45,
+      "sha256": "7f897eff188d941932a27142e3415e343bbec8d82f5b759ca558de24bc04ad4e",
+      "slow_seconds": 6.33
+    },
+    "L2b": {
+      "word": "bat",
+      "seconds": 4.48,
+      "sha256": "7b80a2661e7379ca431817b88bb475491ddbdaa29a1c2cdfca933536c24d845b",
+      "slow_seconds": 6.35
+    },
+    "L3a": {
+      "word": "bat",
+      "seconds": 4.48,
+      "sha256": "7b80a2661e7379ca431817b88bb475491ddbdaa29a1c2cdfca933536c24d845b",
+      "slow_seconds": 6.35
+    },
+    "L3b": {
+      "word": "dip",
+      "seconds": 4.16,
+      "sha256": "6f6bc1f582ac7c4b72f17dc2e22d6b7e8b54da57745d19a56267e9d6dca9178b",
+      "slow_seconds": 5.9
+    },
+    "L4a": {
+      "word": "pot",
+      "seconds": 4.8,
+      "sha256": "df6b62618a0198664ebd05824172ee5b14405a8dd88cb8b92114d6c4dd6e69b4",
+      "slow_seconds": 6.82
+    },
+    "L4b": {
+      "word": "big",
+      "seconds": 4.36,
+      "sha256": "81e598a1d94295ffcef27e9c81bc7ba3bce0ba0e2d30f84be469fdf7f13e3654",
+      "slow_seconds": 6.18
+    },
+    "L5a": {
+      "word": "bus",
+      "seconds": 4.53,
+      "sha256": "f7367329d2fb3fbbefcbf7c0a21a3de72df566d4e32d1ae45262e0f715b0b4d6",
+      "slow_seconds": 6.44
+    },
+    "L5b": {
+      "word": "tub",
+      "seconds": 4.51,
+      "sha256": "fa305ec23129b949494317c0f9ac709cd6da6cacfddc3eb145578192b5f26339",
+      "slow_seconds": 6.41
+    },
+    "L6a": {
+      "word": "ten",
+      "seconds": 4.51,
+      "sha256": "99da74cbc3dee2b254e3618d434f7807755f873b7a2749907163d178c2bdacfb",
+      "slow_seconds": 6.41
+    },
+    "L6b": {
+      "word": "pin",
+      "seconds": 4.4,
+      "sha256": "50c9439921533f13954d17b88eedcb87f18c9ae2e29563792f5a158ffb7ec6f0",
+      "slow_seconds": 6.25
+    },
+    "L7a": {
+      "word": "dip",
+      "seconds": 4.16,
+      "sha256": "6f6bc1f582ac7c4b72f17dc2e22d6b7e8b54da57745d19a56267e9d6dca9178b",
+      "slow_seconds": 5.9
+    },
+    "L7b": {
+      "word": "duck",
+      "seconds": 4.15,
+      "sha256": "b3e270110038f948bc170291e5c33df16fd0832c2ab8fb4db585f0c68598f873",
+      "slow_seconds": 5.89
+    },
+    "L8a": {
+      "word": "duck",
+      "seconds": 4.15,
+      "sha256": "b3e270110038f948bc170291e5c33df16fd0832c2ab8fb4db585f0c68598f873",
+      "slow_seconds": 5.89
+    },
+    "L8b": {
+      "word": "pat",
+      "seconds": 4.8,
+      "sha256": "41f5e1d4d2fb954c34d2058edcb823de5fb92a136a46fc3ebbb783112b8f4470",
+      "slow_seconds": 6.82
+    },
+    "L9a": {
+      "word": "tub",
+      "seconds": 4.51,
+      "sha256": "fa305ec23129b949494317c0f9ac709cd6da6cacfddc3eb145578192b5f26339",
+      "slow_seconds": 6.41
+    },
+    "L9b": {
+      "word": "dad",
+      "seconds": 4.81,
+      "sha256": "9a7525693ae0fbe1f6b2abaee2d0f6f035bf52a2241e1a89ee026bfd8582768a",
+      "slow_seconds": 6.83
+    },
+    "L10a": {
+      "word": "dad",
+      "seconds": 4.81,
+      "sha256": "9a7525693ae0fbe1f6b2abaee2d0f6f035bf52a2241e1a89ee026bfd8582768a",
+      "slow_seconds": 6.83
+    },
+    "L10b": {
+      "word": "pot",
+      "seconds": 4.8,
+      "sha256": "df6b62618a0198664ebd05824172ee5b14405a8dd88cb8b92114d6c4dd6e69b4",
+      "slow_seconds": 6.82
+    }
+  },
+  "asr": {
+    "bat": {
+      "heard": "Bat!",
+      "match": true
+    },
+    "bed": {
+      "heard": "BED.",
+      "match": true
+    },
+    "big": {
+      "heard": "BIG!",
+      "match": true
+    },
+    "bus": {
+      "heard": "bus.",
+      "match": true
+    },
+    "dad": {
+      "heard": "DAD",
+      "match": true
+    },
+    "dip": {
+      "heard": "DIP!",
+      "match": true
+    },
+    "duck": {
+      "heard": "Duck!",
+      "match": true
+    },
+    "pat": {
+      "heard": "Pat.",
+      "match": true
+    },
+    "pig": {
+      "heard": "PIG!",
+      "match": true
+    },
+    "pin": {
+      "heard": "Pin",
+      "match": true
+    },
+    "pot": {
+      "heard": "pot",
+      "match": true
+    },
+    "ten": {
+      "heard": "10",
+      "match": false
+    },
+    "top": {
+      "heard": "top.",
+      "match": true
+    },
+    "tub": {
+      "heard": "TUB",
+      "match": true
+    }
+  },
+  "spent_usd": 0.2589
+}

@@ -13,7 +13,12 @@ signal progress(done: int, total: int)   # 0–100（下載佔 0–90，解開�
 var base := ""                # 網址或本機資料夾，結尾有 /
 var web := false
 var data := {}                # bank.json 內容
-var textures := {}            # 相對路徑 → Texture2D
+## 題目插圖不在開場全部變成貼圖：只留壓縮過的原始檔（webp，每張幾十 KB），出題時才解開。
+## 2026-11-06：41 張插圖全部變成貼圖要吃掉約 110 MB 顯示記憶體，iPad 第 9 代打幾場就當機。
+var image_bytes := {}         # 相對路徑 → 原始圖檔位元組
+var textures := {}            # 最近用過的幾張：相對路徑 → Texture2D（最多 TEX_KEEP 張）
+var tex_order: Array = []     # 用過的先後，最舊的在前面
+const TEX_KEEP := 8           # 一題最多 1 張題目圖＋3–4 張選項圖，留 8 張剛好夠前後兩題用
 var streams := {}             # 相對路徑 → AudioStream
 var font_regular: FontFile = null
 var font_bold: FontFile = null
@@ -106,10 +111,10 @@ func _decode_all(files: Dictionary) -> bool:
 		if ok:
 			match job[0]:
 				"tex":
-					var t := _to_texture(path, bytes)
-					ok = t != null
+					# 先試解一次確定圖檔沒壞（只在記憶體裡解、不上傳成貼圖），然後只留原始檔
+					ok = _to_image(path, bytes) != null
 					if ok:
-						textures[path] = t
+						image_bytes[path] = bytes
 				"snd":
 					var s := _to_stream(path, bytes)
 					ok = s != null
@@ -170,7 +175,7 @@ func _get_bytes(path: String, p_from: int, p_to: int) -> PackedByteArray:
 	progress.emit(p_to, 100)
 	return result[2]
 
-func _to_texture(path: String, bytes: PackedByteArray) -> Texture2D:
+func _to_image(path: String, bytes: PackedByteArray) -> Image:
 	var img := Image.new()
 	var low := path.to_lower()
 	var err := ERR_FILE_UNRECOGNIZED
@@ -182,7 +187,7 @@ func _to_texture(path: String, bytes: PackedByteArray) -> Texture2D:
 		err = img.load_jpg_from_buffer(bytes)
 	if err != OK:
 		return null
-	return ImageTexture.create_from_image(img)
+	return img
 
 func _to_stream(path: String, bytes: PackedByteArray) -> AudioStream:
 	var low := path.to_lower()
@@ -194,8 +199,24 @@ func _to_stream(path: String, bytes: PackedByteArray) -> AudioStream:
 		return AudioStreamOggVorbis.load_from_buffer(bytes)
 	return null
 
+## 出題時才把插圖解開成貼圖；只留最近用過的 TEX_KEEP 張，較舊的放掉
+## （畫面上還在用的貼圖不會被收走，等那一題的畫面關掉才真的釋放）。
 func tex(path: String) -> Texture2D:
-	return textures.get(path)
+	if path == "" or not image_bytes.has(path):
+		return null
+	if textures.has(path):
+		tex_order.erase(path)
+		tex_order.append(path)
+		return textures[path]
+	var img := _to_image(path, image_bytes[path])
+	if img == null:
+		return null
+	var t := ImageTexture.create_from_image(img)
+	textures[path] = t
+	tex_order.append(path)
+	while tex_order.size() > TEX_KEEP:
+		textures.erase(tex_order.pop_front())
+	return t
 
 func stream(path: String) -> AudioStream:
 	return streams.get(path)

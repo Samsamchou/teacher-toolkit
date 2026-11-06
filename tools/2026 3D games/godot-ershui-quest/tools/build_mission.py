@@ -220,6 +220,9 @@ def main() -> None:
             it["image"] = copy_asset(it["image"], out_dir, SUBDIR["image_q"], True)
         if it.get("audio"):
             it["audio"] = copy_asset(it["audio"], out_dir, SUBDIR["audio_l" if listen else "audio_f"], False)
+        if it.get("audioSlow"):
+            # 選用：事先做好的慢速版（Jump Island「慢速再聽 Slow」按鈕）
+            it["audioSlow"] = copy_asset(it["audioSlow"], out_dir, SUBDIR["audio_l"], False)
         opts = []
         for o in it.get("options", []):
             o = dict(o)

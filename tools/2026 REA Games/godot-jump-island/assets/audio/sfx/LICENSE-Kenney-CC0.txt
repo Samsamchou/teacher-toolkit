@@ -24,3 +24,6 @@ Downloaded 2026-10-21.
 
 	Follow on Twitter for updates:
 	http://twitter.com/KenneyNL
+
+Added 2026-11-10 (run_*.ogg): Kenney Digital Audio 1.0 and RPG Audio 1.0, CC0 (www.kenney.nl).
+run_jump=phaseJump1 run_flip=phaserUp3 run_spin=highUp run_vault=phaserUp1 run_wallkick=phaseJump2 run_land=footstep05(RPG) run_stomp=pepSound2 run_coin=handleCoins2(RPG) run_cheer=powerUp7

@@ -5,7 +5,7 @@ export const MISSIONS = [
   { slug: "hwg7-u01-u02", unit: "HWG7 U01+U02", title: "Ken and the World Map Mix-Up" },
   { slug: "ershui-3d-quest", unit: "二水 3D 英語闖關 HWG5 R1", title: "Ershui 3D English Quest" },
   { slug: "ershui-3d-quest-hwg7", unit: "二水 3D 英語闖關 HWG7 U01-U02", title: "Ershui 3D English Quest 6" },
-  { slug: "ershui-3d-quest-jump", unit: "Ken's Jump Island 跳跳島 HWG5", title: "Ken's Jump Island" },
+  { slug: "ershui-3d-quest-jump", unit: "Ken's Jump Island SF3 R1", title: "Ken's Jump Island · SF3 R1" },
   { slug: "ershui-3d-quest-planet", unit: "二水小行星逛街版", title: "Ershui Planet Street Walk" },
   { slug: "ershui-3d-quest-hwg5u01", unit: "二水 3D 英語闖關 HWG5-U01 綜合小考", title: "Ershui 3D Quest · HWG5 U01" },
   { slug: "ershui-3d-quest-hwg5u02", unit: "二水 3D 英語闖關 HWG5-U02 綜合小考", title: "Ershui 3D Quest · HWG5 U02" },

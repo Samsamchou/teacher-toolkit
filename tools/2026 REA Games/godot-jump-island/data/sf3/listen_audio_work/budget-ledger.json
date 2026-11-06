@@ -1,0 +1,436 @@
+{
+  "limit_usd": 0.5,
+  "calls": [
+    {
+      "word": "bat",
+      "attempt": 1,
+      "liability_usd": 0.000316,
+      "time": "2026-11-06T11:29:37.980097+00:00",
+      "usage": {
+        "input": 2,
+        "output": 35
+      },
+      "status": "complete",
+      "sha256": "26d31a412a72c548a24fee351cd33665e1ceaee2e6aaee27e8cb95e794b605cd"
+    },
+    {
+      "word": "bed",
+      "attempt": 1,
+      "liability_usd": 0.00028,
+      "time": "2026-11-06T11:29:43.682718+00:00",
+      "usage": {
+        "input": 2,
+        "output": 31
+      },
+      "status": "complete",
+      "sha256": "ea736be94dd1e883801a52af4774758f46a8cbb0422b84213996c721f423aade"
+    },
+    {
+      "word": "big",
+      "attempt": 1,
+      "liability_usd": 0.000271,
+      "time": "2026-11-06T11:29:47.527383+00:00",
+      "usage": {
+        "input": 2,
+        "output": 30
+      },
+      "status": "complete",
+      "sha256": "c9f0d920da9b5017e1e61546d298e48e2b6c0161643cf6da239b9a19941daa05"
+    },
+    {
+      "word": "bus",
+      "attempt": 1,
+      "liability_usd": 0.000289,
+      "time": "2026-11-06T11:29:52.254877+00:00",
+      "usage": {
+        "input": 2,
+        "output": 32
+      },
+      "status": "complete",
+      "sha256": "ef85c2d425b360423a6b06d629b93256927c14501657fa60371e24ab0a351e67"
+    },
+    {
+      "word": "dad",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T11:29:57.961900+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "a90024af7d5e5dbd387404ffc79e466355a8ccf930fd9d51ada172e8d7fe99a8"
+    },
+    {
+      "word": "dip",
+      "attempt": 1,
+      "liability_usd": 0.000235,
+      "time": "2026-11-06T11:30:03.158370+00:00",
+      "usage": {
+        "input": 2,
+        "output": 26
+      },
+      "status": "complete",
+      "sha256": "d34d3e72d9602235b0d9d07b9ac9e0d228c451b3a169a59622c32ac325fd392b"
+    },
+    {
+      "word": "duck",
+      "attempt": 1,
+      "liability_usd": 0.000217,
+      "time": "2026-11-06T11:30:08.134509+00:00",
+      "usage": {
+        "input": 2,
+        "output": 24
+      },
+      "status": "complete",
+      "sha256": "e3266092eb30ec2d9356680504a557b21427fdc73c4a207aa2f259b69f2108f4"
+    },
+    {
+      "word": "pat",
+      "attempt": 1,
+      "liability_usd": 0.000271,
+      "time": "2026-11-06T11:30:13.738442+00:00",
+      "usage": {
+        "input": 2,
+        "output": 30
+      },
+      "status": "complete",
+      "sha256": "62251c90fea02e3027805d5a9dd45848b74c5bb20feebc37cd9b58961d9e33bc"
+    },
+    {
+      "word": "pig",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T11:30:18.403679+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "f65dbba37cb625f3f4972102e4e6cc5833b53923ae62fbd64885f34174e73d64"
+    },
+    {
+      "word": "pin",
+      "attempt": 1,
+      "liability_usd": 0.05,
+      "time": "2026-11-06T11:30:22.096772+00:00",
+      "status": "failed: HTTPError"
+    },
+    {
+      "word": "pin",
+      "attempt": 2,
+      "liability_usd": 0.05,
+      "time": "2026-11-06T11:30:25.391274+00:00",
+      "status": "failed: HTTPError"
+    },
+    {
+      "word": "pin",
+      "attempt": 3,
+      "liability_usd": 0.05,
+      "time": "2026-11-06T11:30:31.760279+00:00",
+      "status": "failed: HTTPError"
+    },
+    {
+      "word": "pin",
+      "attempt": 1,
+      "liability_usd": 0.000289,
+      "time": "2026-11-06T11:31:06.866968+00:00",
+      "usage": {
+        "input": 2,
+        "output": 32
+      },
+      "status": "complete",
+      "sha256": "ce53a779e0971b425cef9f8d40c5222987087fab8aee07ddf0257437887e294d"
+    },
+    {
+      "word": "pot",
+      "attempt": 1,
+      "liability_usd": 0.000289,
+      "time": "2026-11-06T11:31:11.802550+00:00",
+      "usage": {
+        "input": 2,
+        "output": 32
+      },
+      "status": "complete",
+      "sha256": "8de9127c9f67badc2e3d2c653aa823f341beead87eebccb4f799548363508d16"
+    },
+    {
+      "word": "ten",
+      "attempt": 1,
+      "liability_usd": 0.000235,
+      "time": "2026-11-06T11:31:16.538075+00:00",
+      "usage": {
+        "input": 2,
+        "output": 26
+      },
+      "status": "complete",
+      "sha256": "bb6d9c299f5f4b86dabb403e29665c8f3e31105c708ba4fff1d5a234b9b1a951"
+    },
+    {
+      "word": "top",
+      "attempt": 1,
+      "liability_usd": 0.000289,
+      "time": "2026-11-06T11:31:20.808635+00:00",
+      "usage": {
+        "input": 2,
+        "output": 32
+      },
+      "status": "complete",
+      "sha256": "0bf3ca3581dc59806c4d1e8994c1e660e7fcc3cc6d2012ec0023a747c12a610e"
+    },
+    {
+      "word": "tub",
+      "attempt": 1,
+      "liability_usd": 0.000271,
+      "time": "2026-11-06T11:31:25.317512+00:00",
+      "usage": {
+        "input": 2,
+        "output": 30
+      },
+      "status": "complete",
+      "sha256": "531d895c28b0ec925ab33854f7563413b827ed21bb3967e9565042f9147a9121"
+    },
+    {
+      "word": "bat",
+      "attempt": 1,
+      "liability_usd": 0.000271,
+      "time": "2026-11-06T11:32:52.669806+00:00",
+      "usage": {
+        "input": 2,
+        "output": 30
+      },
+      "status": "complete",
+      "sha256": "5eab93aada86a9dbc2be739656d517b5e5c550d96482d762b9fe03a239b68d17"
+    },
+    {
+      "word": "dip",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T11:32:57.329549+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "f367283cf6b30e75520eefbe1ff0e415fdfc60c4c41834b5fda5cc3102c3b452"
+    },
+    {
+      "word": "bat",
+      "attempt": 1,
+      "liability_usd": 0.000307,
+      "time": "2026-11-06T14:23:13.245570+00:00",
+      "usage": {
+        "input": 2,
+        "output": 34
+      },
+      "status": "complete",
+      "sha256": "dc02fd4636b9a76f4eef2679457a50760088b7d0e6ae725dabb2c8ece6917666"
+    },
+    {
+      "word": "bed",
+      "attempt": 1,
+      "liability_usd": 0.000271,
+      "time": "2026-11-06T14:23:17.714012+00:00",
+      "usage": {
+        "input": 2,
+        "output": 30
+      },
+      "status": "complete",
+      "sha256": "7ffedc187dfb5926af483628224ce208131a4afb2c38c7a681cf7f81ec52d918"
+    },
+    {
+      "word": "big",
+      "attempt": 1,
+      "liability_usd": 0.000307,
+      "time": "2026-11-06T14:23:22.012709+00:00",
+      "usage": {
+        "input": 2,
+        "output": 34
+      },
+      "status": "complete",
+      "sha256": "cb44a1409f97610194f4ac74114ae48ff2e430d7158bc6634bc12d3b01c4cbb2"
+    },
+    {
+      "word": "bus",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T14:23:27.150907+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "ea5ca5a0c02acc2ba1c04fbbc79d073d666f185576ccced00e63e92b6367a893"
+    },
+    {
+      "word": "dad",
+      "attempt": 1,
+      "liability_usd": 0.000289,
+      "time": "2026-11-06T14:23:32.172968+00:00",
+      "usage": {
+        "input": 2,
+        "output": 32
+      },
+      "status": "complete",
+      "sha256": "5f4a7abb9881111c0e75ad82eeca1c84e92004301d1f4de727e14dea2bbe34f8"
+    },
+    {
+      "word": "dip",
+      "attempt": 1,
+      "liability_usd": 0.000235,
+      "time": "2026-11-06T14:23:36.536596+00:00",
+      "usage": {
+        "input": 2,
+        "output": 26
+      },
+      "status": "complete",
+      "sha256": "14ae9e5566b156058caf62141aafb07f87151c4b236db5b8332dee67045f0d53"
+    },
+    {
+      "word": "duck",
+      "attempt": 1,
+      "liability_usd": 0.000217,
+      "time": "2026-11-06T14:23:41.576451+00:00",
+      "usage": {
+        "input": 2,
+        "output": 24
+      },
+      "status": "complete",
+      "sha256": "73c520cc039b3a5f9ffd37b06e43915b6221522ed0e473f5a4ebdf05ae2a2542"
+    },
+    {
+      "word": "pat",
+      "attempt": 1,
+      "liability_usd": 0.000271,
+      "time": "2026-11-06T14:23:45.683892+00:00",
+      "usage": {
+        "input": 2,
+        "output": 30
+      },
+      "status": "complete",
+      "sha256": "700e64e87736a142f464d081430d02e55347de8d309d187ced9525778be00cc2"
+    },
+    {
+      "word": "pig",
+      "attempt": 1,
+      "liability_usd": 0.00028,
+      "time": "2026-11-06T14:23:51.349629+00:00",
+      "usage": {
+        "input": 2,
+        "output": 31
+      },
+      "status": "complete",
+      "sha256": "67f16a2f74341f447a38a374b6566b691c6605a96530f7b1ace3efdb779df852"
+    },
+    {
+      "word": "pin",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T14:23:56.515230+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "09a71b2c3bb15e2ad8ea82fab32cb0e6790939b1bd1a5b7ef66f4a39498e5924"
+    },
+    {
+      "word": "pot",
+      "attempt": 1,
+      "liability_usd": 0.00028,
+      "time": "2026-11-06T14:24:00.596201+00:00",
+      "usage": {
+        "input": 2,
+        "output": 31
+      },
+      "status": "complete",
+      "sha256": "4cb3a7681969998094328733b73ae72c29d96bcb8455eb8878b111ca88b5c2e5"
+    },
+    {
+      "word": "ten",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T14:24:05.027447+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "be9a5356dcad2ee269dda16dfba4e75e9b614e6895cbe6955ce5c14800210b92"
+    },
+    {
+      "word": "top",
+      "attempt": 1,
+      "liability_usd": 0.05,
+      "time": "2026-11-06T14:24:10.099139+00:00",
+      "status": "failed: HTTPError"
+    },
+    {
+      "word": "top",
+      "attempt": 2,
+      "liability_usd": 0.05,
+      "time": "2026-11-06T14:24:13.338786+00:00",
+      "status": "failed: HTTPError"
+    },
+    {
+      "word": "top",
+      "attempt": 3,
+      "liability_usd": 0.00028,
+      "time": "2026-11-06T14:24:19.654545+00:00",
+      "usage": {
+        "input": 2,
+        "output": 31
+      },
+      "status": "complete",
+      "sha256": "6fe583fb6d76ff6c7cf6ca3679f779c891223727a8f53329ddc7052c2ddac472"
+    },
+    {
+      "word": "tub",
+      "attempt": 1,
+      "liability_usd": 0.000289,
+      "time": "2026-11-06T14:24:24.954191+00:00",
+      "usage": {
+        "input": 2,
+        "output": 32
+      },
+      "status": "complete",
+      "sha256": "30250086c5d08777d76100fbc14a9a661dabc425d47f17adc8f69a1d12932302"
+    },
+    {
+      "word": "pin",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T14:30:05.659259+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "ca41430cfa3731f708309be67b36b4b2f6133d17b5cf55fb9339a5da45a1543b"
+    },
+    {
+      "word": "pin",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T14:31:03.654866+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "f687160ca6ee6982451061820b20c25f9a2845e9bf3884b528b486414d27f3a2"
+    },
+    {
+      "word": "pin",
+      "attempt": 1,
+      "liability_usd": 0.000262,
+      "time": "2026-11-06T14:31:10.026209+00:00",
+      "usage": {
+        "input": 2,
+        "output": 29
+      },
+      "status": "complete",
+      "sha256": "0efdb31326fea2276c09b490204f74d467257550463a61b3dbb6d30bbf329197"
+    }
+  ]
+}

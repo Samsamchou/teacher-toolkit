@@ -81,3 +81,11 @@ godot --headless --path . --export-release "Web" "../../escape room HWG5-U01-U02
 1. 老師在預覽網址用學號試：登入 → 第 1 關 → 換一台 iPad 用同學號 → 進度還在；教師後台看得到「Ken's Jump Island」。
 2. 確認後部署正式站（`firebase deploy --only hosting --project g6-english-online-learning --account u9431818@gmail.com`）。
 3. 可選：jump3d 直接讀 `../quest3d/index.wasm`（同一顆引擎），省 7 MB 下載。
+
+## 2026-11-11 iPad 自動跑版（第 1 關已由老師確認）
+- 規格卡：`../rdq/RDQ-spec-jump-island-run-ipad-20261109.md`、`-moves-landmarks-20261110.md`、`-level1-feedback-20261111.md`。
+- 自動跑關卡在 `scripts/run_levels.gd`（目前只有 station）；`game.gd` 的 `_run_intro`（載入畫面＋3-2-1-GO）、`_run_stomp`（1.5 秒內連踩）、`_pop_text`（畫面上方大字）、`_load_landmark`。
+- 題庫：`tools/make_sf3_listen_audio.py`（TTS＋慢速檔）→ `tools/build_sf3_bank.py` → 網站 `ershui-3d-quest-jump/bank/`。地標：`tools/make_landmarks.py`。匯出後一定跑 `tools/patch_jump_shell.py`。
+- 測試：`--runbot --level=1 --bank=<bank 資料夾> --landmarks=<landmarks 資料夾> --nolimit`，印出 load_ms、stomps、first4s_max_frame_ms。
+- 勿在網頁版執行中新增音效匯流排（全部聲音會消失）。`data/` 有 `.gdignore`，素材不進 pck。
+- 下一步：第 2–13 關改自動跑（建築、招牌、終點門；第 4 關起踢牆跳；12、13 關側面魔王；農情館無模型）。正式站尚未上。

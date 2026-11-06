@@ -18,3 +18,6 @@ godot-jump-island/.godot/
 3D planet/資料/osm/
 *.pck
 *.wasm
+
+# Jump Island 聽力音檔工作檔（WAV 不入庫，2026-11-11）
+godot-jump-island/data/**/*.wav
