@@ -1,0 +1,7 @@
+work/
+renders/
+out/
+qa/
+*.glb
+*.png
+*.mp4
