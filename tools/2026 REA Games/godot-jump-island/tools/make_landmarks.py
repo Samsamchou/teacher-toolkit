@@ -19,11 +19,12 @@ from PIL import Image
 
 SRC = Path(r"G:\我的雲端硬碟\teacher-toolkit\tools\2026 3D games\godot-ershui-quest\assets\models")
 OUT = Path(r"G:\我的雲端硬碟\teacher-toolkit\tools\escape room HWG5-U01-U02\site\public\jump3d\landmarks")
-# 關卡代號 → 二水 3D 闖關的建築檔（farm 沒有小行星版建築，之後另外處理）
+# 關卡代號 → 二水 3D 闖關的建築檔
 FILES = {
     "station": "bld_station", "inn": "bld_inn", "seven": "bld_seven", "school": "bld_school",
     "teatop": "bld_teatop", "market": "bld_market", "post": "bld_post", "bookstore": "bld_bookstore",
     "pxmart": "bld_pxmart", "library": "bld_library", "park": "bld_waterpark", "lawn": "bld_lawn",
+    "farm": "farm_centre",   # 八堡圳農情館：二水 3D 闖關的木造遊客中心（2026-11-07）
 }
 # 2026-11-11 iPad 進關卡頓：768 → 512 px（背景建築看不出差別，顯示記憶體約剩 45%）
 MAX_PX, QUALITY = 512, 80

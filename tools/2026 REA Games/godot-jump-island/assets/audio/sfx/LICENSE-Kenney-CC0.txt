@@ -27,3 +27,5 @@ Downloaded 2026-10-21.
 
 Added 2026-11-10 (run_*.ogg): Kenney Digital Audio 1.0 and RPG Audio 1.0, CC0 (www.kenney.nl).
 run_jump=phaseJump1 run_flip=phaserUp3 run_spin=highUp run_vault=phaserUp1 run_wallkick=phaseJump2 run_land=footstep05(RPG) run_stomp=pepSound2 run_coin=handleCoins2(RPG) run_cheer=powerUp7
+Added 2026-11-07: run_fruit=powerUp2 run_box=twoTone1 run_hurt=lowDown (Kenney Digital Audio 1.0, CC0)
+Added 2026-11-07: run_fanfare=jingles_NES00 run_results=jingles_NES13 run_starding=jingles_HIT07 run_record=jingles_HIT10 (Kenney Music Jingles 1.0, CC0); run_tick=tone1 run_firework=pepSound1 (Kenney Digital Audio 1.0, CC0)

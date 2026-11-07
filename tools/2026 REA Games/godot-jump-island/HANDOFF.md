@@ -89,3 +89,13 @@ godot --headless --path . --export-release "Web" "../../escape room HWG5-U01-U02
 - 測試：`--runbot --level=1 --bank=<bank 資料夾> --landmarks=<landmarks 資料夾> --nolimit`，印出 load_ms、stomps、first4s_max_frame_ms。
 - 勿在網頁版執行中新增音效匯流排（全部聲音會消失）。`data/` 有 `.gdignore`，素材不進 pck。
 - 下一步：第 2–13 關改自動跑（建築、招牌、終點門；第 4 關起踢牆跳；12、13 關側面魔王；農情館無模型）。正式站尚未上。
+
+## 2026-11-07 第 2–13 關自動跑版完成，已上正式站
+- 規格卡：`../rdq/RDQ-spec-jump-island-levels-2-13-20261107.md`（分三批、側面魔王、慢慢變難）、`-score-items-hazards-20261107.md`（分數只顯示不送後台、水果＋寶箱、刺殼蝸牛 −50）、`-clear-screen-more-items-20261107.md`（華麗過關、蝸牛／寶箱逐關增加）。
+- `run_levels.gd`：路線積木 `c_flat/c_gap/c_up/c_down/c_stones/c_slimes/c_star/c_hop/c_sign/c_wall/c_movers/c_goal/c_fruit/c_qbox/c_snail`；`_level(theme,time,place,gate,lm_h)`、`_finish` → `_fill_items`（SNAILS／QBOXES 表，第 7 關起紅殼快蝸牛，離史萊姆組 12 m）；魔王場 `_arena`（左右高牆、goal=1e9）。
+- `game.gd`：`_apply_time`（7 種天色）、`_gate_custom`（終點門轉 90 度）、`_wall_help`、分數 `_gain/_hurt`＋本機最高分 `user://jump_best.json`、`_celebrate` → `_results_screen`（1–3 星 60/75/90%、NEW RECORD!）、側面魔王 `_sb_*`（泡泡國王／雷雲大王，踩頭掉星、3 題倒下 → 彩虹門）。
+- 答完最後一題**不會**立刻過關，要跑到終點門（runbot 一定加 `--fresh` 才測得到）。
+- runbot 參數：`--fresh --botlog --hitsnails --atx=X --goalview=N --capture=PNG --shot=s --clearshot=PATH --bossdown`。截圖總表在 `screenshots/`（jpg 不入庫，資料夾有 .gdignore）。
+- 結果（--fresh）：13 關全過、0 掉落；1–11 關 46–63 秒；魔王 56／68 秒。
+- **正式站 2026-11-07 已上**：用 staging `C:/Users/User/AppData/Local/Temp/ershui-4sets-stage`（加 jump3d/、ershui-3d-quest-jump/，換 index.html＋shared/missions.mjs）部署 hosting；部署前先 `hosting:channel:list` 確認 live 時間＝staging 時間。
+- 待辦：老師 iPad 課堂實測（魔王難度、衝擊波、踩頭手感）。
