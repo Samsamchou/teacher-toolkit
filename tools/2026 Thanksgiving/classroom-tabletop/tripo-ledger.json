@@ -1,1 +1,78 @@
-{"2026-11-06":[{"item":"mayflower (HD, 30000 faces, 4K PBR, no rig)","points":55,"balance_after":1125}]}
+{
+ "2026-11-06": [
+  {
+   "item": "mayflower (HD, 30000 faces, 4K PBR, no rig)",
+   "points": 55,
+   "balance_after": 1125
+  }
+ ],
+ "2026-11-07": [
+  {
+   "item": "pilgrim_man (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "pilgrim_woman (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "pilgrim_child (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "wampanoag_man (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "wampanoag_woman (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "wampanoag_child (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "wetu (HD 30000, 4K PBR)",
+   "points": 55,
+   "balance_after": 620
+  }
+ ],
+ "2026-11-07 batch2": [
+  {
+   "item": "tisquantum (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "massasoit (HD 30000, 4K PBR, Humanoid Mixamo rig)",
+   "points": 75
+  },
+  {
+   "item": "cottage (HD 30000, 4K PBR)",
+   "points": 55
+  },
+  {
+   "item": "corn (HD 30000, 4K PBR)",
+   "points": 55
+  },
+  {
+   "item": "harvest_basket (HD 30000, 4K PBR)",
+   "points": 55
+  },
+  {
+   "item": "feast_table (HD 30000, 4K PBR)",
+   "points": 55
+  },
+  {
+   "item": "desk_calendar (HD 30000, 4K PBR)",
+   "points": 55,
+   "balance_after": 195
+  }
+ ],
+ "2026-11-07 v3": [
+  {
+   "item": "turkey (HD 30000, 4K PBR, no rig) — S11 holiday 立牌",
+   "points": 55,
+   "balance_after": 140
+  }
+ ]
+}

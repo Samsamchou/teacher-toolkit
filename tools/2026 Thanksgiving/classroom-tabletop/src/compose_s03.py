@@ -20,7 +20,7 @@ KW_EN = {"1620", "ship", "England", "America"}
 KW_ZH = ["1620", "船", "英國", "美洲"]
 CARDS = [("1620", "一六二〇年"), ("ship", "船"), ("England", "英國"), ("America", "美洲")]
 YEARS = ["1620", "1621", "1863", "Today"]; NOW = 0
-SAY = 3.0; PAUSE = 0.8 + SAY + 0.8
+SAY = 5.0; PAUSE = 0.8 + SAY + 0.8
 RED = (230, 60, 60); GOLD = (255, 215, 0)
 
 
@@ -148,7 +148,7 @@ def pause_frames(bg_png, dst, sentence=True):
             d.ellipse([bx - 200 * k, by - 105 * k, bx + 200 * k, by + 105 * k], fill=(255, 255, 255, 245), outline=(230, 120, 40, 255), width=7)
             d.text((bx, by - 30 * k), "Say it! 跟著念", font=f(int(52 * k), True), anchor="mm", fill=(220, 60, 30, 255))
             if 0.8 <= t < 0.8 + SAY:
-                num = 3 - int(t - 0.8); u = (t - 0.8) % 1; z = 1.25 - 0.25 * min(1, u / 0.25)
+                num = int(SAY) - int(t - 0.8); u = (t - 0.8) % 1; z = 1.25 - 0.25 * min(1, u / 0.25)
                 d.text((bx, by + 45 * k), str(num), font=f(int(78 * z)), anchor="mm", fill=(90, 70, 200, 255))
         im.alpha_composite(tl)
         im.convert("RGB").save(dst / f"{i:04d}.png")
@@ -182,7 +182,7 @@ def main(rd):
               f"[v0][3:v]overlay=0:0:enable='lt(t,{TP:.3f})'[v1];[v1]{sub}format=yuv420p[v]")
         # 聲音：兩次配音＋voyage 配樂（小聲）＋倒數嗶聲
         mus = OV / "music" / "voyage" / "s23" / "tg_voyage_23_00001_(Instrumental)_model_bs_roformer_ep_317_sdr_12.wav"
-        tk = tick([TP + 0.8 + k for k in range(3)], TOTAL + 1)
+        tk = tick([TP + 0.8 + k for k in range(int(SAY))], TOTAL + 1)
         with wave.open(str(WORK / "tick.wav"), "wb") as g:
             g.setnchannels(1); g.setsampwidth(2); g.setframerate(SR); g.writeframes((tk * 32767).astype("<i2").tobytes())
         af = (f"[4:a]adelay={int(LEAD * 1000)}|{int(LEAD * 1000)}[v1];"
