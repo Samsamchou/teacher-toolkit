@@ -1,0 +1,14 @@
+{
+ "2026-11-08": [
+  {"item": "bike (HD, 1.9M faces from home-page generate, 2k texture)", "points": 55},
+  {"item": "car (HD ~28k faces)", "points": 55},
+  {"item": "metro (HD ~26k faces)", "points": 55},
+  {"item": "scooter (HD ~28k faces)", "points": 55},
+  {"item": "taxi (HD ~27k faces)", "points": 55},
+  {"item": "train (HD ~26k faces)", "points": 55},
+  {"item": "boat (HD ~28k faces)", "points": 55},
+  {"item": "plane (HD ~28k faces)", "points": 55}
+ ],
+ "total_points": 440, "balance_before": 1140, "balance_after": 700,
+ "reused": ["bus.glb, school.glb, stop.glb from style-pilots-20261104/h-tabletop/props"]
+}

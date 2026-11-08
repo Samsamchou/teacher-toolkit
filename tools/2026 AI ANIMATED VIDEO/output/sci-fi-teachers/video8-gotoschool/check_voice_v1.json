@@ -1,0 +1,716 @@
+[
+ {
+  "i": 0,
+  "who": "nova",
+  "text": "Hi, class! I'm Ms. Nova.",
+  "heard": "Hi, class. I'm Ms. Nova.",
+  "ok": true
+ },
+ {
+  "i": 1,
+  "who": "cosmo",
+  "text": "And I'm Mr. Cosmo! How do you go to school?",
+  "heard": "And I'm Mr. Cosmo.  How do you go to school?",
+  "ok": true
+ },
+ {
+  "i": 2,
+  "who": "nova",
+  "text": "Look! This is Mr. Chou, your English teacher. He goes to school by car.",
+  "heard": "Look, this is Mr. Cho, your English teacher.  He goes to school by car.",
+  "ok": false
+ },
+ {
+  "i": 4,
+  "who": "cosmo",
+  "text": "Let's learn how we go to school!",
+  "heard": "Let's learn how we go to school.",
+  "ok": true
+ },
+ {
+  "i": 6,
+  "who": "nova",
+  "text": "Repeat after me. By bike.",
+  "heard": "Repeat after me.  Bye, bike.",
+  "ok": false
+ },
+ {
+  "i": 8,
+  "who": "nova",
+  "text": "By bike.",
+  "heard": "Bye, bike.",
+  "ok": false
+ },
+ {
+  "i": 10,
+  "who": "cosmo",
+  "text": "Repeat after me. By bus.",
+  "heard": "Repeat after me  Bye bus",
+  "ok": false
+ },
+ {
+  "i": 12,
+  "who": "cosmo",
+  "text": "By bus.",
+  "heard": "Bye bus.",
+  "ok": false
+ },
+ {
+  "i": 14,
+  "who": "nova",
+  "text": "Repeat after me. By car.",
+  "heard": "Repeat after me, by car.",
+  "ok": true
+ },
+ {
+  "i": 16,
+  "who": "nova",
+  "text": "By car.",
+  "heard": "by KAR.",
+  "ok": false
+ },
+ {
+  "i": 18,
+  "who": "cosmo",
+  "text": "Repeat after me. By metro. By MRT.",
+  "heard": "Repeat after me  by Metro  by MRT",
+  "ok": true
+ },
+ {
+  "i": 20,
+  "who": "cosmo",
+  "text": "By metro. By MRT.",
+  "heard": "by Metro, by MRT.",
+  "ok": true
+ },
+ {
+  "i": 22,
+  "who": "nova",
+  "text": "Repeat after me. By scooter.",
+  "heard": "Repeat After Me by Scooter.",
+  "ok": true
+ },
+ {
+  "i": 24,
+  "who": "nova",
+  "text": "By scooter.",
+  "heard": "by Scooter.",
+  "ok": true
+ },
+ {
+  "i": 26,
+  "who": "cosmo",
+  "text": "Repeat after me. By taxi.",
+  "heard": "Repeat after me  Buy taxi",
+  "ok": false
+ },
+ {
+  "i": 28,
+  "who": "cosmo",
+  "text": "By taxi.",
+  "heard": "Buy taxi.",
+  "ok": false
+ },
+ {
+  "i": 30,
+  "who": "nova",
+  "text": "Repeat after me. By train.",
+  "heard": "Repeat after me by train.",
+  "ok": true
+ },
+ {
+  "i": 32,
+  "who": "nova",
+  "text": "By train.",
+  "heard": "by Train.",
+  "ok": true
+ },
+ {
+  "i": 34,
+  "who": "cosmo",
+  "text": "Repeat after me. On foot.",
+  "heard": "Repeat after me.  On foot.",
+  "ok": true
+ },
+ {
+  "i": 36,
+  "who": "cosmo",
+  "text": "On foot.",
+  "heard": "ON FOOT",
+  "ok": true
+ },
+ {
+  "i": 38,
+  "who": "nova",
+  "text": "Repeat after me. By boat.",
+  "heard": "Repeat after me, by boat.",
+  "ok": true
+ },
+ {
+  "i": 40,
+  "who": "nova",
+  "text": "By boat.",
+  "heard": "by Boat.",
+  "ok": true
+ },
+ {
+  "i": 42,
+  "who": "cosmo",
+  "text": "Repeat after me. By plane.",
+  "heard": "Repeat after me.  I plane.",
+  "ok": false
+ },
+ {
+  "i": 44,
+  "who": "cosmo",
+  "text": "By plane.",
+  "heard": "iPlane",
+  "ok": false
+ },
+ {
+  "i": 46,
+  "who": "nova",
+  "text": "Repeat after me. School.",
+  "heard": "Repeat after me.  School.",
+  "ok": true
+ },
+ {
+  "i": 49,
+  "who": "nova",
+  "text": "By bike. By scooter. We ride!",
+  "heard": "by bike, by scooter, we ride.",
+  "ok": true
+ },
+ {
+  "i": 51,
+  "who": "cosmo",
+  "text": "Walking? Say: on foot. Not by foot!",
+  "heard": "walking  say on foot  not by foot",
+  "ok": true
+ },
+ {
+  "i": 53,
+  "who": "cosmo",
+  "text": "Repeat after me. On foot.",
+  "heard": "Repeat after me.  On foot.",
+  "ok": true
+ },
+ {
+  "i": 55,
+  "who": "nova",
+  "text": "Let's say them all together!",
+  "heard": "Let's say them all together.",
+  "ok": true
+ },
+ {
+  "i": 56,
+  "who": "relay",
+  "text": "By bike, by bus, by car, by metro, by MRT, by scooter, by taxi, by train, on foot, by boat, by plane!",
+  "heard": "by bike, by bus, by car, by metro, by MRT, by scooter, by taxi, by train, on foot, by  boat, by plane.",
+  "ok": true
+ },
+ {
+  "i": 57,
+  "who": "nova",
+  "text": "Now, let's clap the beats!",
+  "heard": "Now, let's clap the beats.",
+  "ok": true
+ },
+ {
+  "i": 59,
+  "who": "nova",
+  "text": "metro.",
+  "heard": "METRO",
+  "ok": true
+ },
+ {
+  "i": 60,
+  "who": "nova",
+  "text": "ME, tro!",
+  "heard": "M E T R O",
+  "ok": false
+ },
+ {
+  "i": 62,
+  "who": "cosmo",
+  "text": "MRT.",
+  "heard": "MRT.",
+  "ok": true
+ },
+ {
+  "i": 63,
+  "who": "cosmo",
+  "text": "M, R, T!",
+  "heard": "M R T",
+  "ok": true
+ },
+ {
+  "i": 65,
+  "who": "nova",
+  "text": "scooter.",
+  "heard": "Scooter.",
+  "ok": true
+ },
+ {
+  "i": 66,
+  "who": "nova",
+  "text": "SCOO, ter!",
+  "heard": "SKU-TER",
+  "ok": false
+ },
+ {
+  "i": 68,
+  "who": "cosmo",
+  "text": "taxi.",
+  "heard": "Taxi",
+  "ok": true
+ },
+ {
+  "i": 69,
+  "who": "cosmo",
+  "text": "TAX, i!",
+  "heard": "TAC-C.",
+  "ok": false
+ },
+ {
+  "i": 72,
+  "who": "nova",
+  "text": "Great clapping!",
+  "heard": "Great clapping!",
+  "ok": true
+ },
+ {
+  "i": 73,
+  "who": "cosmo",
+  "text": "Now, our friends will tell us. Listen!",
+  "heard": "Now, our friends will tell us.  Listen!",
+  "ok": true
+ },
+ {
+  "i": 75,
+  "who": "mia",
+  "text": "I'm Mia. I go to school by boat.",
+  "heard": "I'm Mia.  I go to school by boat.",
+  "ok": true
+ },
+ {
+  "i": 77,
+  "who": "raj",
+  "text": "I'm Raj. I go to school by train.",
+  "heard": "I'm Raj. I go to school by train.",
+  "ok": true
+ },
+ {
+  "i": 79,
+  "who": "yuki",
+  "text": "I'm Yuki. I go to school by bike.",
+  "heard": "I'm Yuki.  I go to school by bike.",
+  "ok": true
+ },
+ {
+  "i": 81,
+  "who": "wei",
+  "text": "I'm Wei. I go to school by MRT.",
+  "heard": "I'm way.  I go to school by MRT.",
+  "ok": false
+ },
+ {
+  "i": 83,
+  "who": "sofia",
+  "text": "I'm Sofia. I go to school by plane.",
+  "heard": "I'm Sofia. I go to school by plane.",
+  "ok": true
+ },
+ {
+  "i": 85,
+  "who": "kai",
+  "text": "I'm Kai. I go to school by scooter.",
+  "heard": "I'm Kai, I go to school by scooter.",
+  "ok": true
+ },
+ {
+  "i": 87,
+  "who": "lily",
+  "text": "I'm Lily. I go to school by bus.",
+  "heard": "I go to school by bus.",
+  "ok": false
+ },
+ {
+  "i": 89,
+  "who": "tom",
+  "text": "I'm Tom. I go to school by car.",
+  "heard": "I'm Tom.  I go to school by car.",
+  "ok": true
+ },
+ {
+  "i": 91,
+  "who": "jisu",
+  "text": "I'm Jisu. I go to school by taxi.",
+  "heard": "I'm Jisoo.  I go to school by taxi.",
+  "ok": false
+ },
+ {
+  "i": 93,
+  "who": "nam",
+  "text": "I'm Nam. I go to school on foot.",
+  "heard": "I'm numb, I go to school on foot",
+  "ok": false
+ },
+ {
+  "i": 95,
+  "who": "cosmo",
+  "text": "Now you! How do you go to school?",
+  "heard": "Now you!  How do you go to school?",
+  "ok": true
+ },
+ {
+  "i": 97,
+  "who": "cosmo",
+  "text": "Repeat after me. I go to school on foot.",
+  "heard": "Repeat after me.  I go to school on foot.",
+  "ok": true
+ },
+ {
+  "i": 99,
+  "who": "nova",
+  "text": "Repeat after me. I go to school by scooter.",
+  "heard": "Repeat after me.  I go to school by scooter.",
+  "ok": true
+ },
+ {
+  "i": 101,
+  "who": "nova",
+  "text": "Now look. I go. But he goes. She goes.",
+  "heard": "Now look. I go. But he goes. She goes.",
+  "ok": true
+ },
+ {
+  "i": 103,
+  "who": "cosmo",
+  "text": "Go... plus E, S... goes!",
+  "heard": "Go, plus e, s, goes.",
+  "ok": true
+ },
+ {
+  "i": 105,
+  "who": "cosmo",
+  "text": "Repeat after me. Go. Goes.",
+  "heard": "Repeat after me  go  goes",
+  "ok": true
+ },
+ {
+  "i": 107,
+  "who": "cosmo",
+  "text": "Go. Goes.",
+  "heard": "dough  doughs",
+  "ok": false
+ },
+ {
+  "i": 109,
+  "who": "nova",
+  "text": "This is Lily. She goes to school by bus.",
+  "heard": "This is Lily. She goes to school by bus.",
+  "ok": true
+ },
+ {
+  "i": 111,
+  "who": "cosmo",
+  "text": "This is Raj. He goes to school by train.",
+  "heard": "This is Raj. He goes to school by train.",
+  "ok": true
+ },
+ {
+  "i": 113,
+  "who": "nova",
+  "text": "Yuki goes to school by bike. A name... goes!",
+  "heard": "Yuki goes to school by bike.  A name goes.",
+  "ok": true
+ },
+ {
+  "i": 115,
+  "who": "nova",
+  "text": "Repeat after me. She goes to school by bus.",
+  "heard": "Repeat after me. She goes to school by bus.",
+  "ok": true
+ },
+ {
+  "i": 117,
+  "who": "cosmo",
+  "text": "Repeat after me. He goes to school by train.",
+  "heard": "Repeat after me.  He goes to school by train.",
+  "ok": true
+ },
+ {
+  "i": 119,
+  "who": "nova",
+  "text": "It's morning in Story Town. Let's watch!",
+  "heard": "It's morning in Storytown.  Let's watch.",
+  "ok": false
+ },
+ {
+  "i": 121,
+  "who": "mia",
+  "text": "I go to school by boat.",
+  "heard": "I go to school by boat.",
+  "ok": true
+ },
+ {
+  "i": 122,
+  "who": "nova",
+  "text": "She goes to school by boat.",
+  "heard": "She goes to school by boat.",
+  "ok": true
+ },
+ {
+  "i": 124,
+  "who": "raj",
+  "text": "I go to school by train.",
+  "heard": "I go to school by train.",
+  "ok": true
+ },
+ {
+  "i": 125,
+  "who": "cosmo",
+  "text": "He goes to school by train.",
+  "heard": "He goes to school by train.",
+  "ok": true
+ },
+ {
+  "i": 127,
+  "who": "yuki",
+  "text": "I go to school by bike.",
+  "heard": "I go to school by bike.",
+  "ok": true
+ },
+ {
+  "i": 128,
+  "who": "nova",
+  "text": "She goes to school by bike.",
+  "heard": "She goes to school by bike.",
+  "ok": true
+ },
+ {
+  "i": 130,
+  "who": "wei",
+  "text": "I go to school by MRT.",
+  "heard": "I go to school by MRT.",
+  "ok": true
+ },
+ {
+  "i": 131,
+  "who": "cosmo",
+  "text": "He goes to school by MRT.",
+  "heard": "He goes to school by MRT.",
+  "ok": true
+ },
+ {
+  "i": 133,
+  "who": "sofia",
+  "text": "I go to school by plane.",
+  "heard": "I go to school by plane.",
+  "ok": true
+ },
+ {
+  "i": 134,
+  "who": "nova",
+  "text": "She goes to school by plane.",
+  "heard": "She goes to school by plane.",
+  "ok": true
+ },
+ {
+  "i": 136,
+  "who": "kai",
+  "text": "I go to school by scooter.",
+  "heard": "I go to school by scooter.",
+  "ok": true
+ },
+ {
+  "i": 137,
+  "who": "cosmo",
+  "text": "He goes to school by scooter.",
+  "heard": "He goes to school by scooter.",
+  "ok": true
+ },
+ {
+  "i": 139,
+  "who": "lily",
+  "text": "I go to school by bus.",
+  "heard": "I go to school by bus.",
+  "ok": true
+ },
+ {
+  "i": 140,
+  "who": "nova",
+  "text": "She goes to school by bus.",
+  "heard": "She goes to school by bus.",
+  "ok": true
+ },
+ {
+  "i": 142,
+  "who": "tom",
+  "text": "I go to school by car.",
+  "heard": "I go to school by car.",
+  "ok": true
+ },
+ {
+  "i": 143,
+  "who": "cosmo",
+  "text": "He goes to school by car.",
+  "heard": "He goes to school by car.",
+  "ok": true
+ },
+ {
+  "i": 145,
+  "who": "jisu",
+  "text": "I go to school by taxi.",
+  "heard": "I go to school by taxi.",
+  "ok": true
+ },
+ {
+  "i": 146,
+  "who": "nova",
+  "text": "She goes to school by taxi.",
+  "heard": "She goes to school by taxi.",
+  "ok": true
+ },
+ {
+  "i": 148,
+  "who": "nam",
+  "text": "I go to school on foot.",
+  "heard": "I go to school on foot.",
+  "ok": true
+ },
+ {
+  "i": 149,
+  "who": "cosmo",
+  "text": "He goes to school on foot.",
+  "heard": "He goes to school on foot.",
+  "ok": true
+ },
+ {
+  "i": 151,
+  "who": "nova",
+  "text": "Everyone is at school. Good morning!",
+  "heard": "Everyone is at school.  Good morning.",
+  "ok": true
+ },
+ {
+  "i": 152,
+  "who": "cosmo",
+  "text": "Game time! How does she go to school?",
+  "heard": "Game time!  How does she go to school?",
+  "ok": true
+ },
+ {
+  "i": 155,
+  "who": "nova",
+  "text": "She goes to school by boat!",
+  "heard": "She goes to school by boat.",
+  "ok": true
+ },
+ {
+  "i": 156,
+  "who": "nova",
+  "text": "And Jisu?",
+  "heard": "and Jisoo.",
+  "ok": false
+ },
+ {
+  "i": 158,
+  "who": "cosmo",
+  "text": "She goes to school by taxi!",
+  "heard": "She goes to school by taxi.",
+  "ok": true
+ },
+ {
+  "i": 159,
+  "who": "cosmo",
+  "text": "And Nam?",
+  "heard": "And nom?",
+  "ok": false
+ },
+ {
+  "i": 161,
+  "who": "nova",
+  "text": "He goes to school on foot!",
+  "heard": "He goes to school on foot.",
+  "ok": true
+ },
+ {
+  "i": 162,
+  "who": "nova",
+  "text": "Now, go or goes? Listen!",
+  "heard": "Now, go or goes.  Listen.",
+  "ok": true
+ },
+ {
+  "i": 164,
+  "who": "cosmo",
+  "text": "I... blank... to school by bike.",
+  "heard": "I – blank – to school by bike.",
+  "ok": true
+ },
+ {
+  "i": 166,
+  "who": "nova",
+  "text": "Go! I go to school by bike.",
+  "heard": "Go. I go to school by bike.",
+  "ok": true
+ },
+ {
+  "i": 167,
+  "who": "cosmo",
+  "text": "Wei... blank... to school by MRT.",
+  "heard": "way, blank, to school by MRT.",
+  "ok": false
+ },
+ {
+  "i": 169,
+  "who": "nova",
+  "text": "Goes! Wei goes to school by MRT.",
+  "heard": "GOES – Way Goes to School by MRT",
+  "ok": false
+ },
+ {
+  "i": 170,
+  "who": "cosmo",
+  "text": "She... blank... to school by plane.",
+  "heard": "She'd blank to school by playing.",
+  "ok": false
+ },
+ {
+  "i": 172,
+  "who": "nova",
+  "text": "Goes! She goes to school by plane.",
+  "heard": "goes. She goes to school by plane.",
+  "ok": true
+ },
+ {
+  "i": 173,
+  "who": "nova",
+  "text": "Today we learned: I go to school by bus.",
+  "heard": "Today we learned, I go to school by bus.",
+  "ok": true
+ },
+ {
+  "i": 174,
+  "who": "cosmo",
+  "text": "He goes to school by train. She goes to school by bike.",
+  "heard": "He goes to school by train.  She goes to school by bike.",
+  "ok": true
+ },
+ {
+  "i": 176,
+  "who": "cosmo",
+  "text": "How do you go to school? Tell your friends!",
+  "heard": "How do you go to school?  Tell your friends.",
+  "ok": true
+ },
+ {
+  "i": 177,
+  "who": "nova",
+  "text": "Bye-bye, class!",
+  "heard": "Bye-bye class.",
+  "ok": true
+ }
+]

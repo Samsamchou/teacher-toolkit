@@ -1,0 +1,6572 @@
+{
+ "dur": 646.477,
+ "voices": {
+  "nova-say": "en-US-AvaNeural",
+  "nova-zh": "zh-TW-HsiaoChenNeural",
+  "cosmo-say": "en-US-GuyNeural",
+  "cosmo-zh": "zh-TW-YunJheNeural",
+  "amy-say": "en-US-AnaNeural",
+  "ben-say": "en-US-RogerNeural",
+  "emma-say": "en-US-AriaNeural",
+  "mia-say": "en-AU-NatashaNeural",
+  "raj-say": "en-IN-PrabhatNeural",
+  "yuki-say": "en-US-JennyNeural",
+  "wei-say": "en-SG-WayneNeural",
+  "sofia-say": "en-IE-EmilyNeural",
+  "kai-say": "en-HK-SamNeural",
+  "lily-say": "en-GB-MaisieNeural",
+  "tom-say": "en-US-EricNeural",
+  "jisu-say": "en-NZ-MollyNeural",
+  "nam-say": "en-PH-JamesNeural"
+ },
+ "rate": "-20%",
+ "sections": {
+  "01-open": [
+   0.8,
+   25.801
+  ],
+  "02-words": [
+   26.801,
+   201.845
+  ],
+  "03-clap": [
+   202.845,
+   251.861
+  ],
+  "04-igo": [
+   252.861,
+   374.549
+  ],
+  "05-goes": [
+   375.549,
+   454.201
+  ],
+  "06-story": [
+   455.201,
+   553.876
+  ],
+  "07-quiz": [
+   554.876,
+   620.658
+  ],
+  "08-end": [
+   621.658,
+   644.977
+  ]
+ },
+ "segs": [
+  {
+   "i": 0,
+   "sec": "01-open",
+   "who": "nova",
+   "kind": "say",
+   "vis": "Nova 揮手 P02，名牌在臉旁",
+   "text": "Hi, class! I'm Ms. Nova.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Hi",
+     "t0": 0.625,
+     "t1": 1.016
+    },
+    {
+     "w": "class",
+     "t0": 1.047,
+     "t1": 1.672
+    },
+    {
+     "w": "I'm",
+     "t0": 2.138,
+     "t1": 2.497
+    },
+    {
+     "w": "Ms.",
+     "t0": 2.513,
+     "t1": 2.716
+    },
+    {
+     "w": "Nova",
+     "t0": 2.731,
+     "t1": 3.325
+    }
+   ],
+   "t0": 0.8,
+   "t1": 3.458
+  },
+  {
+   "i": 1,
+   "sec": "01-open",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "Cosmo 揮手 P02",
+   "text": "And I'm Mr. Cosmo! How do you go to school?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 3.801,
+     "t1": 4.035
+    },
+    {
+     "w": "I'm",
+     "t0": 4.067,
+     "t1": 4.301
+    },
+    {
+     "w": "Mr.",
+     "t0": 4.332,
+     "t1": 4.738
+    },
+    {
+     "w": "Cosmo",
+     "t0": 4.77,
+     "t1": 5.504
+    },
+    {
+     "w": "How",
+     "t0": 6.626,
+     "t1": 6.845
+    },
+    {
+     "w": "do",
+     "t0": 6.876,
+     "t1": 6.985
+    },
+    {
+     "w": "you",
+     "t0": 7.001,
+     "t1": 7.142
+    },
+    {
+     "w": "go",
+     "t0": 7.173,
+     "t1": 7.329
+    },
+    {
+     "w": "to",
+     "t0": 7.345,
+     "t1": 7.454
+    },
+    {
+     "w": "school",
+     "t0": 7.485,
+     "t1": 8.157
+    }
+   ],
+   "t0": 3.908,
+   "t1": 8.183
+  },
+  {
+   "i": 2,
+   "sec": "01-open",
+   "who": "nova",
+   "kind": "say",
+   "vis": "photo:chou；card:He goes to school by car.",
+   "text": "Look! This is Mr. Chou, your English teacher. He goes to school by car.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Look",
+     "t0": 8.468,
+     "t1": 9.078
+    },
+    {
+     "w": "This",
+     "t0": 9.543,
+     "t1": 9.871
+    },
+    {
+     "w": "is",
+     "t0": 9.887,
+     "t1": 10.043
+    },
+    {
+     "w": "Mr.",
+     "t0": 10.059,
+     "t1": 10.496
+    },
+    {
+     "w": "Chou",
+     "t0": 10.512,
+     "t1": 10.918
+    },
+    {
+     "w": "your",
+     "t0": 11.028,
+     "t1": 11.168
+    },
+    {
+     "w": "English",
+     "t0": 11.215,
+     "t1": 11.684
+    },
+    {
+     "w": "teacher",
+     "t0": 11.7,
+     "t1": 12.262
+    },
+    {
+     "w": "He",
+     "t0": 12.715,
+     "t1": 12.95
+    },
+    {
+     "w": "goes",
+     "t0": 12.965,
+     "t1": 13.262
+    },
+    {
+     "w": "to",
+     "t0": 13.278,
+     "t1": 13.387
+    },
+    {
+     "w": "school",
+     "t0": 13.403,
+     "t1": 13.887
+    },
+    {
+     "w": "by",
+     "t0": 13.903,
+     "t1": 14.09
+    },
+    {
+     "w": "car",
+     "t0": 14.106,
+     "t1": 14.637
+    }
+   ],
+   "t0": 8.633,
+   "t1": 14.766
+  },
+  {
+   "i": 3,
+   "sec": "01-open",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "photo:chou；中文 他搭汽車上學。",
+   "text": "這是周老師。他搭汽車上學。今天要學交通工具，還要學會說「我怎麼上學」。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "這是",
+     "t0": 15.119,
+     "t1": 15.556
+    },
+    {
+     "w": "周",
+     "t0": 15.588,
+     "t1": 15.853
+    },
+    {
+     "w": "老師",
+     "t0": 15.885,
+     "t1": 16.51
+    },
+    {
+     "w": "他",
+     "t0": 17.647,
+     "t1": 17.897
+    },
+    {
+     "w": "搭",
+     "t0": 17.913,
+     "t1": 18.116
+    },
+    {
+     "w": "汽車",
+     "t0": 18.116,
+     "t1": 18.569
+    },
+    {
+     "w": "上學",
+     "t0": 18.585,
+     "t1": 19.288
+    },
+    {
+     "w": "今天",
+     "t0": 20.413,
+     "t1": 20.881
+    },
+    {
+     "w": "要",
+     "t0": 20.913,
+     "t1": 21.1
+    },
+    {
+     "w": "學",
+     "t0": 21.131,
+     "t1": 21.35
+    },
+    {
+     "w": "交通",
+     "t0": 21.381,
+     "t1": 21.772
+    },
+    {
+     "w": "工具",
+     "t0": 21.881,
+     "t1": 22.475
+    },
+    {
+     "w": "還",
+     "t0": 22.85,
+     "t1": 23.038
+    },
+    {
+     "w": "要",
+     "t0": 23.053,
+     "t1": 23.21
+    },
+    {
+     "w": "學會",
+     "t0": 23.225,
+     "t1": 23.647
+    },
+    {
+     "w": "說",
+     "t0": 23.678,
+     "t1": 24.085
+    },
+    {
+     "w": "我",
+     "t0": 24.366,
+     "t1": 24.522
+    },
+    {
+     "w": "怎麼",
+     "t0": 24.569,
+     "t1": 24.897
+    },
+    {
+     "w": "上學",
+     "t0": 24.913,
+     "t1": 25.631
+    }
+   ],
+   "t0": 15.216,
+   "t1": 25.801
+  },
+  {
+   "i": 4,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride 總覽（十一張圖卡）",
+   "text": "Let's learn how we go to school!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Let's",
+     "t0": 26.707,
+     "t1": 27.02
+    },
+    {
+     "w": "learn",
+     "t0": 27.035,
+     "t1": 27.285
+    },
+    {
+     "w": "how",
+     "t0": 27.316,
+     "t1": 27.473
+    },
+    {
+     "w": "we",
+     "t0": 27.504,
+     "t1": 27.66
+    },
+    {
+     "w": "go",
+     "t0": 27.691,
+     "t1": 27.848
+    },
+    {
+     "w": "to",
+     "t0": 27.863,
+     "t1": 27.957
+    },
+    {
+     "w": "school",
+     "t0": 27.988,
+     "t1": 28.613
+    }
+   ],
+   "t0": 26.801,
+   "t1": 28.686
+  },
+  {
+   "i": 5,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "ride 總覽",
+   "text": "看圖，跟著唸兩次。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "看",
+     "t0": 29.035,
+     "t1": 29.285
+    },
+    {
+     "w": "圖",
+     "t0": 29.348,
+     "t1": 29.739
+    },
+    {
+     "w": "跟",
+     "t0": 29.989,
+     "t1": 30.16
+    },
+    {
+     "w": "著",
+     "t0": 30.239,
+     "t1": 30.395
+    },
+    {
+     "w": "唸",
+     "t0": 30.41,
+     "t1": 30.614
+    },
+    {
+     "w": "兩",
+     "t0": 30.614,
+     "t1": 30.848
+    },
+    {
+     "w": "次",
+     "t0": 30.91,
+     "t1": 31.285
+    }
+   ],
+   "t0": 29.136,
+   "t1": 31.446
+  },
+  {
+   "i": 6,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by bike；card:by bike；中文 騎腳踏車；第 1 輪",
+   "text": "Repeat after me. By bike.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 31.749,
+     "t1": 32.327
+    },
+    {
+     "w": "after",
+     "t0": 32.343,
+     "t1": 32.702
+    },
+    {
+     "w": "me",
+     "t0": 32.718,
+     "t1": 33.015
+    },
+    {
+     "w": "By",
+     "t0": 33.48,
+     "t1": 33.73
+    },
+    {
+     "w": "bike",
+     "t0": 33.746,
+     "t1": 34.324
+    }
+   ],
+   "t0": 31.896,
+   "t1": 34.453
+  },
+  {
+   "i": 7,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by bike；card:by bike；中文 騎腳踏車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 35.153,
+   "t1": 37.153
+  },
+  {
+   "i": 8,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by bike；card:by bike；中文 騎腳踏車；第 2 輪",
+   "text": "By bike.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 37.441,
+     "t1": 37.691
+    },
+    {
+     "w": "bike",
+     "t0": 37.707,
+     "t1": 38.285
+    }
+   ],
+   "t0": 37.603,
+   "t1": 38.426
+  },
+  {
+   "i": 9,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by bike；card:by bike；中文 騎腳踏車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 39.126,
+   "t1": 41.126
+  },
+  {
+   "i": 10,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by bus；card:by bus；中文 搭公車；第 1 輪",
+   "text": "Repeat after me. By bus.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 41.467,
+     "t1": 42.123
+    },
+    {
+     "w": "after",
+     "t0": 42.154,
+     "t1": 42.607
+    },
+    {
+     "w": "me",
+     "t0": 42.623,
+     "t1": 43.045
+    },
+    {
+     "w": "By",
+     "t0": 44.135,
+     "t1": 44.495
+    },
+    {
+     "w": "bus",
+     "t0": 44.51,
+     "t1": 45.182
+    }
+   ],
+   "t0": 41.576,
+   "t1": 45.224
+  },
+  {
+   "i": 11,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by bus；card:by bus；中文 搭公車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 45.924,
+   "t1": 47.924
+  },
+  {
+   "i": 12,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by bus；card:by bus；中文 搭公車；第 2 輪",
+   "text": "By bus.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 48.252,
+     "t1": 48.611
+    },
+    {
+     "w": "bus",
+     "t0": 48.627,
+     "t1": 49.299
+    }
+   ],
+   "t0": 48.374,
+   "t1": 49.369
+  },
+  {
+   "i": 13,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by bus；card:by bus；中文 搭公車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 50.069,
+   "t1": 52.069
+  },
+  {
+   "i": 14,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by car；card:by car；中文 搭汽車；第 1 輪",
+   "text": "Repeat after me. By car.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 52.372,
+     "t1": 52.95
+    },
+    {
+     "w": "after",
+     "t0": 52.966,
+     "t1": 53.325
+    },
+    {
+     "w": "me",
+     "t0": 53.341,
+     "t1": 53.638
+    },
+    {
+     "w": "By",
+     "t0": 54.103,
+     "t1": 54.369
+    },
+    {
+     "w": "car",
+     "t0": 54.384,
+     "t1": 54.9
+    }
+   ],
+   "t0": 52.519,
+   "t1": 55.017
+  },
+  {
+   "i": 15,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by car；card:by car；中文 搭汽車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 55.717,
+   "t1": 57.717
+  },
+  {
+   "i": 16,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by car；card:by car；中文 搭汽車；第 2 輪",
+   "text": "By car.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 57.995,
+     "t1": 58.261
+    },
+    {
+     "w": "car",
+     "t0": 58.277,
+     "t1": 58.792
+    }
+   ],
+   "t0": 58.167,
+   "t1": 58.92
+  },
+  {
+   "i": 17,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by car；card:by car；中文 搭汽車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 59.62,
+   "t1": 61.62
+  },
+  {
+   "i": 18,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by metro. By MRT；card:by metro. By MRT；中文 搭捷運；第 1 輪",
+   "text": "Repeat after me. By metro. By MRT.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 61.961,
+     "t1": 62.617
+    },
+    {
+     "w": "after",
+     "t0": 62.649,
+     "t1": 63.102
+    },
+    {
+     "w": "me",
+     "t0": 63.117,
+     "t1": 63.539
+    },
+    {
+     "w": "By",
+     "t0": 64.63,
+     "t1": 64.849
+    },
+    {
+     "w": "metro",
+     "t0": 64.864,
+     "t1": 65.599
+    },
+    {
+     "w": "By",
+     "t0": 66.677,
+     "t1": 67.02
+    },
+    {
+     "w": "MRT",
+     "t0": 67.036,
+     "t1": 68.192
+    }
+   ],
+   "t0": 62.07,
+   "t1": 68.28
+  },
+  {
+   "i": 19,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by metro. By MRT；card:by metro. By MRT；中文 搭捷運；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 68.98,
+   "t1": 70.98
+  },
+  {
+   "i": 20,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by metro. By MRT；card:by metro. By MRT；中文 搭捷運；第 2 輪",
+   "text": "By metro. By MRT.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 71.324,
+     "t1": 71.543
+    },
+    {
+     "w": "metro",
+     "t0": 71.559,
+     "t1": 72.293
+    },
+    {
+     "w": "By",
+     "t0": 73.384,
+     "t1": 73.727
+    },
+    {
+     "w": "MRT",
+     "t0": 73.743,
+     "t1": 74.899
+    }
+   ],
+   "t0": 71.43,
+   "t1": 74.987
+  },
+  {
+   "i": 21,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by metro. By MRT；card:by metro. By MRT；中文 搭捷運；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 75.687,
+   "t1": 77.687
+  },
+  {
+   "i": 22,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by scooter；card:by scooter；中文 騎機車；第 1 輪",
+   "text": "Repeat after me. By scooter.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 77.99,
+     "t1": 78.568
+    },
+    {
+     "w": "after",
+     "t0": 78.584,
+     "t1": 78.943
+    },
+    {
+     "w": "me",
+     "t0": 78.959,
+     "t1": 79.256
+    },
+    {
+     "w": "By",
+     "t0": 79.721,
+     "t1": 79.956
+    },
+    {
+     "w": "scooter",
+     "t0": 79.971,
+     "t1": 80.581
+    }
+   ],
+   "t0": 78.137,
+   "t1": 80.702
+  },
+  {
+   "i": 23,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by scooter；card:by scooter；中文 騎機車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 81.402,
+   "t1": 83.402
+  },
+  {
+   "i": 24,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by scooter；card:by scooter；中文 騎機車；第 2 輪",
+   "text": "By scooter.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 83.689,
+     "t1": 83.924
+    },
+    {
+     "w": "scooter",
+     "t0": 83.939,
+     "t1": 84.549
+    }
+   ],
+   "t0": 83.852,
+   "t1": 84.686
+  },
+  {
+   "i": 25,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by scooter；card:by scooter；中文 騎機車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 85.386,
+   "t1": 87.386
+  },
+  {
+   "i": 26,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by taxi；card:by taxi；中文 搭計程車；第 1 輪",
+   "text": "Repeat after me. By taxi.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 87.727,
+     "t1": 88.383
+    },
+    {
+     "w": "after",
+     "t0": 88.414,
+     "t1": 88.867
+    },
+    {
+     "w": "me",
+     "t0": 88.883,
+     "t1": 89.305
+    },
+    {
+     "w": "By",
+     "t0": 90.396,
+     "t1": 90.646
+    },
+    {
+     "w": "taxi",
+     "t0": 90.677,
+     "t1": 91.521
+    }
+   ],
+   "t0": 87.836,
+   "t1": 91.565
+  },
+  {
+   "i": 27,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by taxi；card:by taxi；中文 搭計程車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 92.265,
+   "t1": 94.265
+  },
+  {
+   "i": 28,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by taxi；card:by taxi；中文 搭計程車；第 2 輪",
+   "text": "By taxi.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 94.611,
+     "t1": 94.861
+    },
+    {
+     "w": "taxi",
+     "t0": 94.892,
+     "t1": 95.736
+    }
+   ],
+   "t0": 94.715,
+   "t1": 95.781
+  },
+  {
+   "i": 29,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by taxi；card:by taxi；中文 搭計程車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 96.481,
+   "t1": 98.481
+  },
+  {
+   "i": 30,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by train；card:by train；中文 搭火車；第 1 輪",
+   "text": "Repeat after me. By train.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 98.784,
+     "t1": 99.362
+    },
+    {
+     "w": "after",
+     "t0": 99.378,
+     "t1": 99.737
+    },
+    {
+     "w": "me",
+     "t0": 99.753,
+     "t1": 100.05
+    },
+    {
+     "w": "By",
+     "t0": 100.515,
+     "t1": 100.75
+    },
+    {
+     "w": "train",
+     "t0": 100.765,
+     "t1": 101.453
+    }
+   ],
+   "t0": 98.931,
+   "t1": 101.598
+  },
+  {
+   "i": 31,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by train；card:by train；中文 搭火車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 102.298,
+   "t1": 104.298
+  },
+  {
+   "i": 32,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by train；card:by train；中文 搭火車；第 2 輪",
+   "text": "By train.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 104.583,
+     "t1": 104.817
+    },
+    {
+     "w": "train",
+     "t0": 104.833,
+     "t1": 105.52
+    }
+   ],
+   "t0": 104.748,
+   "t1": 105.676
+  },
+  {
+   "i": 33,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by train；card:by train；中文 搭火車；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 106.376,
+   "t1": 108.376
+  },
+  {
+   "i": 34,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:on foot；card:on foot；中文 走路；第 1 輪",
+   "text": "Repeat after me. On foot.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 108.717,
+     "t1": 109.374
+    },
+    {
+     "w": "after",
+     "t0": 109.405,
+     "t1": 109.858
+    },
+    {
+     "w": "me",
+     "t0": 109.874,
+     "t1": 110.296
+    },
+    {
+     "w": "On",
+     "t0": 111.386,
+     "t1": 111.746
+    },
+    {
+     "w": "foot",
+     "t0": 111.777,
+     "t1": 112.417
+    }
+   ],
+   "t0": 108.826,
+   "t1": 112.483
+  },
+  {
+   "i": 35,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:on foot；card:on foot；中文 走路；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 113.183,
+   "t1": 115.183
+  },
+  {
+   "i": 36,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:on foot；card:on foot；中文 走路；第 2 輪",
+   "text": "On foot.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "On",
+     "t0": 115.535,
+     "t1": 115.895
+    },
+    {
+     "w": "foot",
+     "t0": 115.926,
+     "t1": 116.567
+    }
+   ],
+   "t0": 115.633,
+   "t1": 116.649
+  },
+  {
+   "i": 37,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:on foot；card:on foot；中文 走路；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 117.349,
+   "t1": 119.349
+  },
+  {
+   "i": 38,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by boat；card:by boat；中文 搭船；第 1 輪",
+   "text": "Repeat after me. By boat.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 119.652,
+     "t1": 120.23
+    },
+    {
+     "w": "after",
+     "t0": 120.245,
+     "t1": 120.605
+    },
+    {
+     "w": "me",
+     "t0": 120.62,
+     "t1": 120.917
+    },
+    {
+     "w": "By",
+     "t0": 121.383,
+     "t1": 121.649
+    },
+    {
+     "w": "boat",
+     "t0": 121.664,
+     "t1": 122.18
+    }
+   ],
+   "t0": 119.799,
+   "t1": 122.271
+  },
+  {
+   "i": 39,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by boat；card:by boat；中文 搭船；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 122.971,
+   "t1": 124.971
+  },
+  {
+   "i": 40,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:by boat；card:by boat；中文 搭船；第 2 輪",
+   "text": "By boat.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 125.253,
+     "t1": 125.519
+    },
+    {
+     "w": "boat",
+     "t0": 125.535,
+     "t1": 126.05
+    }
+   ],
+   "t0": 125.421,
+   "t1": 126.159
+  },
+  {
+   "i": 41,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by boat；card:by boat；中文 搭船；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 126.859,
+   "t1": 128.859
+  },
+  {
+   "i": 42,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by plane；card:by plane；中文 搭飛機；第 1 輪",
+   "text": "Repeat after me. By plane.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 129.2,
+     "t1": 129.856
+    },
+    {
+     "w": "after",
+     "t0": 129.887,
+     "t1": 130.341
+    },
+    {
+     "w": "me",
+     "t0": 130.356,
+     "t1": 130.778
+    },
+    {
+     "w": "By",
+     "t0": 131.869,
+     "t1": 132.119
+    },
+    {
+     "w": "plane",
+     "t0": 132.134,
+     "t1": 132.822
+    }
+   ],
+   "t0": 129.309,
+   "t1": 132.936
+  },
+  {
+   "i": 43,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by plane；card:by plane；中文 搭飛機；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 133.636,
+   "t1": 135.636
+  },
+  {
+   "i": 44,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride:by plane；card:by plane；中文 搭飛機；第 2 輪",
+   "text": "By plane.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 135.979,
+     "t1": 136.229
+    },
+    {
+     "w": "plane",
+     "t0": 136.244,
+     "t1": 136.932
+    }
+   ],
+   "t0": 136.086,
+   "t1": 137.058
+  },
+  {
+   "i": 45,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:by plane；card:by plane；中文 搭飛機；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 137.758,
+   "t1": 139.758
+  },
+  {
+   "i": 46,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride:school；card:school；中文 學校；第 1 輪",
+   "text": "Repeat after me. School.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 140.061,
+     "t1": 140.639
+    },
+    {
+     "w": "after",
+     "t0": 140.655,
+     "t1": 141.014
+    },
+    {
+     "w": "me",
+     "t0": 141.03,
+     "t1": 141.327
+    },
+    {
+     "w": "School",
+     "t0": 141.792,
+     "t1": 142.558
+    }
+   ],
+   "t0": 140.208,
+   "t1": 142.692
+  },
+  {
+   "i": 47,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "ride:school；card:school；中文 學校；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 143.392,
+   "t1": 145.392
+  },
+  {
+   "i": 48,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "ride:by metro；card:by metro = by MRT",
+   "text": "metro 和 MRT 都是捷運。MRT 是三個字母，一個一個唸。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "metro",
+     "t0": 145.651,
+     "t1": 146.12
+    },
+    {
+     "w": "和",
+     "t0": 146.12,
+     "t1": 146.339
+    },
+    {
+     "w": "MRT",
+     "t0": 146.339,
+     "t1": 147.01
+    },
+    {
+     "w": "都是",
+     "t0": 147.01,
+     "t1": 147.323
+    },
+    {
+     "w": "捷運",
+     "t0": 147.323,
+     "t1": 148.182
+    },
+    {
+     "w": "MRT",
+     "t0": 149.257,
+     "t1": 149.914
+    },
+    {
+     "w": "是",
+     "t0": 149.914,
+     "t1": 150.085
+    },
+    {
+     "w": "三",
+     "t0": 150.085,
+     "t1": 150.304
+    },
+    {
+     "w": "個",
+     "t0": 150.304,
+     "t1": 150.414
+    },
+    {
+     "w": "字母",
+     "t0": 150.414,
+     "t1": 151.21
+    },
+    {
+     "w": "一個",
+     "t0": 151.335,
+     "t1": 151.601
+    },
+    {
+     "w": "一個",
+     "t0": 151.601,
+     "t1": 151.804
+    },
+    {
+     "w": "唸",
+     "t0": 151.804,
+     "t1": 152.429
+    }
+   ],
+   "t0": 145.842,
+   "t1": 152.317
+  },
+  {
+   "i": 49,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "byon；騎：bike、scooter 亮",
+   "text": "By bike. By scooter. We ride!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "By",
+     "t0": 152.606,
+     "t1": 152.856
+    },
+    {
+     "w": "bike",
+     "t0": 152.871,
+     "t1": 153.449
+    },
+    {
+     "w": "By",
+     "t0": 153.915,
+     "t1": 154.149
+    },
+    {
+     "w": "scooter",
+     "t0": 154.165,
+     "t1": 154.774
+    },
+    {
+     "w": "We",
+     "t0": 155.228,
+     "t1": 155.524
+    },
+    {
+     "w": "ride",
+     "t0": 155.54,
+     "t1": 156.103
+    }
+   ],
+   "t0": 152.767,
+   "t1": 156.206
+  },
+  {
+   "i": 50,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "byon；騎／搭 兩欄",
+   "text": "腳踏車、機車是「騎」；公車、汽車、捷運、計程車、火車、船、飛機是「搭」。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "腳踏車",
+     "t0": 156.558,
+     "t1": 157.543
+    },
+    {
+     "w": "機車",
+     "t0": 157.824,
+     "t1": 158.246
+    },
+    {
+     "w": "是",
+     "t0": 158.261,
+     "t1": 158.496
+    },
+    {
+     "w": "騎",
+     "t0": 158.621,
+     "t1": 159.09
+    },
+    {
+     "w": "公車",
+     "t0": 159.48,
+     "t1": 160.121
+    },
+    {
+     "w": "汽車",
+     "t0": 160.418,
+     "t1": 161.09
+    },
+    {
+     "w": "捷運",
+     "t0": 161.386,
+     "t1": 161.902
+    },
+    {
+     "w": "計程車",
+     "t0": 162.293,
+     "t1": 163.183
+    },
+    {
+     "w": "火車",
+     "t0": 163.511,
+     "t1": 164.199
+    },
+    {
+     "w": "船",
+     "t0": 164.511,
+     "t1": 164.871
+    },
+    {
+     "w": "飛機",
+     "t0": 165.23,
+     "t1": 165.605
+    },
+    {
+     "w": "是",
+     "t0": 165.683,
+     "t1": 165.902
+    },
+    {
+     "w": "搭",
+     "t0": 166.043,
+     "t1": 166.433
+    }
+   ],
+   "t0": 156.656,
+   "t1": 166.553
+  },
+  {
+   "i": 51,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "byon；on foot 發光；by foot 打叉",
+   "text": "Walking? Say: on foot. Not by foot!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Walking",
+     "t0": 166.879,
+     "t1": 167.551
+    },
+    {
+     "w": "Say",
+     "t0": 168.657,
+     "t1": 169.204
+    },
+    {
+     "w": "on",
+     "t0": 169.392,
+     "t1": 169.61
+    },
+    {
+     "w": "foot",
+     "t0": 169.642,
+     "t1": 170.188
+    },
+    {
+     "w": "Not",
+     "t0": 171.282,
+     "t1": 171.673
+    },
+    {
+     "w": "by",
+     "t0": 171.688,
+     "t1": 171.876
+    },
+    {
+     "w": "foot",
+     "t0": 171.907,
+     "t1": 172.454
+    }
+   ],
+   "t0": 167.003,
+   "t1": 172.533
+  },
+  {
+   "i": 52,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "byon；on 圈起來",
+   "text": "走路要說 on foot，不能說 by foot。其他交通工具前面都用 by。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "走路",
+     "t0": 172.805,
+     "t1": 173.305
+    },
+    {
+     "w": "要",
+     "t0": 173.305,
+     "t1": 173.446
+    },
+    {
+     "w": "說",
+     "t0": 173.446,
+     "t1": 173.649
+    },
+    {
+     "w": "on",
+     "t0": 173.649,
+     "t1": 173.79
+    },
+    {
+     "w": "foot",
+     "t0": 173.79,
+     "t1": 174.383
+    },
+    {
+     "w": "不能",
+     "t0": 174.508,
+     "t1": 174.805
+    },
+    {
+     "w": "說",
+     "t0": 174.805,
+     "t1": 174.993
+    },
+    {
+     "w": "by",
+     "t0": 174.993,
+     "t1": 175.133
+    },
+    {
+     "w": "foot",
+     "t0": 175.133,
+     "t1": 175.743
+    },
+    {
+     "w": "其他",
+     "t0": 176.802,
+     "t1": 177.365
+    },
+    {
+     "w": "交通",
+     "t0": 177.365,
+     "t1": 177.833
+    },
+    {
+     "w": "工具",
+     "t0": 177.833,
+     "t1": 178.255
+    },
+    {
+     "w": "前面",
+     "t0": 178.255,
+     "t1": 178.74
+    },
+    {
+     "w": "都",
+     "t0": 178.74,
+     "t1": 178.865
+    },
+    {
+     "w": "用",
+     "t0": 178.865,
+     "t1": 179.068
+    },
+    {
+     "w": "by",
+     "t0": 179.068,
+     "t1": 179.537
+    }
+   ],
+   "t0": 172.983,
+   "t1": 179.534
+  },
+  {
+   "i": 53,
+   "sec": "02-words",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "byon；ride:on foot；第 1 輪",
+   "text": "Repeat after me. On foot.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 179.875,
+     "t1": 180.532
+    },
+    {
+     "w": "after",
+     "t0": 180.563,
+     "t1": 181.016
+    },
+    {
+     "w": "me",
+     "t0": 181.032,
+     "t1": 181.453
+    },
+    {
+     "w": "On",
+     "t0": 182.544,
+     "t1": 182.903
+    },
+    {
+     "w": "foot",
+     "t0": 182.935,
+     "t1": 183.575
+    }
+   ],
+   "t0": 179.984,
+   "t1": 183.641
+  },
+  {
+   "i": 54,
+   "sec": "02-words",
+   "who": "-",
+   "kind": "turn",
+   "vis": "byon；ride:on foot；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 184.341,
+   "t1": 186.341
+  },
+  {
+   "i": 55,
+   "sec": "02-words",
+   "who": "nova",
+   "kind": "say",
+   "vis": "ride 總覽",
+   "text": "Let's say them all together!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Let's",
+     "t0": 186.638,
+     "t1": 186.966
+    },
+    {
+     "w": "say",
+     "t0": 186.981,
+     "t1": 187.138
+    },
+    {
+     "w": "them",
+     "t0": 187.153,
+     "t1": 187.341
+    },
+    {
+     "w": "all",
+     "t0": 187.45,
+     "t1": 187.653
+    },
+    {
+     "w": "together",
+     "t0": 187.669,
+     "t1": 188.31
+    }
+   ],
+   "t0": 186.791,
+   "t1": 188.435
+  },
+  {
+   "i": 56,
+   "sec": "02-words",
+   "who": "relay",
+   "kind": "say",
+   "vis": "ride 總覽；接力，唸到誰亮誰",
+   "text": "By bike, by bus, by car, by metro, by MRT, by scooter, by taxi, by train, on foot, by boat, by plane!",
+   "voices": [
+    "en-US-AvaNeural",
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "By bike,",
+     "t0": 188.885,
+     "t1": 189.699,
+     "who": "nova"
+    },
+    {
+     "w": "by bus,",
+     "t0": 189.999,
+     "t1": 190.967,
+     "who": "cosmo"
+    },
+    {
+     "w": "by car,",
+     "t0": 191.267,
+     "t1": 191.989,
+     "who": "nova"
+    },
+    {
+     "w": "by metro,",
+     "t0": 192.289,
+     "t1": 193.242,
+     "who": "cosmo"
+    },
+    {
+     "w": "by MRT,",
+     "t0": 193.542,
+     "t1": 194.672,
+     "who": "nova"
+    },
+    {
+     "w": "by scooter,",
+     "t0": 194.972,
+     "t1": 195.924,
+     "who": "cosmo"
+    },
+    {
+     "w": "by taxi,",
+     "t0": 196.224,
+     "t1": 197.159,
+     "who": "nova"
+    },
+    {
+     "w": "by train,",
+     "t0": 197.459,
+     "t1": 198.464,
+     "who": "cosmo"
+    },
+    {
+     "w": "on foot,",
+     "t0": 198.764,
+     "t1": 199.497,
+     "who": "nova"
+    },
+    {
+     "w": "by boat,",
+     "t0": 199.797,
+     "t1": 200.673,
+     "who": "cosmo"
+    },
+    {
+     "w": "by plane!",
+     "t0": 200.973,
+     "t1": 201.845,
+     "who": "nova"
+    }
+   ],
+   "t0": 188.885,
+   "t1": 201.845
+  },
+  {
+   "i": 57,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:metro；示範",
+   "text": "Now, let's clap the beats!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 202.691,
+     "t1": 203.222
+    },
+    {
+     "w": "let's",
+     "t0": 203.285,
+     "t1": 203.582
+    },
+    {
+     "w": "clap",
+     "t0": 203.597,
+     "t1": 203.863
+    },
+    {
+     "w": "the",
+     "t0": 203.879,
+     "t1": 204.004
+    },
+    {
+     "w": "beats",
+     "t0": 204.019,
+     "t1": 204.644
+    }
+   ],
+   "t0": 202.845,
+   "t1": 204.765
+  },
+  {
+   "i": 58,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "clap:metro；示範",
+   "text": "一拍拍一下手。大大的那一拍要唸得比較重。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "一",
+     "t0": 205.108,
+     "t1": 205.28
+    },
+    {
+     "w": "拍拍",
+     "t0": 205.311,
+     "t1": 205.811
+    },
+    {
+     "w": "一下手",
+     "t0": 205.811,
+     "t1": 206.624
+    },
+    {
+     "w": "大",
+     "t0": 207.668,
+     "t1": 207.886
+    },
+    {
+     "w": "大的",
+     "t0": 207.902,
+     "t1": 208.246
+    },
+    {
+     "w": "那",
+     "t0": 208.261,
+     "t1": 208.496
+    },
+    {
+     "w": "一拍",
+     "t0": 208.511,
+     "t1": 208.902
+    },
+    {
+     "w": "要",
+     "t0": 208.933,
+     "t1": 209.121
+    },
+    {
+     "w": "唸",
+     "t0": 209.136,
+     "t1": 209.324
+    },
+    {
+     "w": "得",
+     "t0": 209.355,
+     "t1": 209.48
+    },
+    {
+     "w": "比較",
+     "t0": 209.558,
+     "t1": 209.933
+    },
+    {
+     "w": "重",
+     "t0": 209.996,
+     "t1": 210.293
+    }
+   ],
+   "t0": 205.215,
+   "t1": 210.487
+  },
+  {
+   "i": 59,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:metro；ride:metro；整個字",
+   "text": "metro.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "metro",
+     "t0": 210.779,
+     "t1": 211.607
+    }
+   ],
+   "t0": 210.937,
+   "t1": 211.758
+  },
+  {
+   "i": 60,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:metro；拍手 2 下",
+   "text": "ME, tro!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Meh",
+     "t0": 212.033,
+     "t1": 212.502
+    },
+    {
+     "w": "troh",
+     "t0": 212.627,
+     "t1": 213.143
+    }
+   ],
+   "t0": 212.208,
+   "t1": 213.307,
+   "claps": [
+    212.033,
+    212.627
+   ],
+   "stress": 0
+  },
+  {
+   "i": 61,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:metro；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 214.007,
+   "t1": 217.507
+  },
+  {
+   "i": 62,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:MRT；ride:MRT；整個字",
+   "text": "MRT.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "MRT",
+     "t0": 217.85,
+     "t1": 219.1
+    }
+   ],
+   "t0": 217.957,
+   "t1": 219.148
+  },
+  {
+   "i": 63,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:MRT；拍手 3 下",
+   "text": "M, R, T!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "M",
+     "t0": 219.505,
+     "t1": 220.052
+    },
+    {
+     "w": "R",
+     "t0": 221.22,
+     "t1": 221.892
+    },
+    {
+     "w": "T",
+     "t0": 223.002,
+     "t1": 223.58
+    }
+   ],
+   "t0": 219.598,
+   "t1": 223.651,
+   "claps": [
+    219.505,
+    221.22,
+    223.002
+   ],
+   "stress": 2
+  },
+  {
+   "i": 64,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:MRT；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 224.351,
+   "t1": 227.851
+  },
+  {
+   "i": 65,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:scooter；ride:scooter；整個字",
+   "text": "scooter.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "scooter",
+     "t0": 228.148,
+     "t1": 228.944
+    }
+   ],
+   "t0": 228.301,
+   "t1": 229.073
+  },
+  {
+   "i": 66,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "clap:scooter；拍手 2 下",
+   "text": "SCOO, ter!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Skoo",
+     "t0": 229.354,
+     "t1": 230.104
+    },
+    {
+     "w": "ter",
+     "t0": 230.338,
+     "t1": 230.682
+    }
+   ],
+   "t0": 229.523,
+   "t1": 230.868,
+   "claps": [
+    229.354,
+    230.338
+   ],
+   "stress": 0
+  },
+  {
+   "i": 67,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:scooter；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 231.568,
+   "t1": 235.068
+  },
+  {
+   "i": 68,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:taxi；ride:taxi；整個字",
+   "text": "taxi.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "taxi",
+     "t0": 235.412,
+     "t1": 236.287
+    }
+   ],
+   "t0": 235.518,
+   "t1": 236.341
+  },
+  {
+   "i": 69,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "clap:taxi；拍手 2 下",
+   "text": "TAX, i!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Tack",
+     "t0": 236.7,
+     "t1": 237.138
+    },
+    {
+     "w": "see",
+     "t0": 237.372,
+     "t1": 237.997
+    }
+   ],
+   "t0": 236.791,
+   "t1": 238.093,
+   "claps": [
+    236.7,
+    237.372
+   ],
+   "stress": 0
+  },
+  {
+   "i": 70,
+   "sec": "03-clap",
+   "who": "-",
+   "kind": "turn",
+   "vis": "clap:taxi；Your turn! 拍手跟唸！",
+   "sec_len": 3.5,
+   "t0": 238.793,
+   "t1": 242.293
+  },
+  {
+   "i": 71,
+   "sec": "03-clap",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "clap:MRT",
+   "text": "bike、bus、car、train 都只有一拍；MRT 是一個一個字母唸，最後一個字母最重。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "bike",
+     "t0": 242.574,
+     "t1": 243.215
+    },
+    {
+     "w": "bus",
+     "t0": 243.34,
+     "t1": 243.808
+    },
+    {
+     "w": "car",
+     "t0": 243.902,
+     "t1": 244.449
+    },
+    {
+     "w": "train",
+     "t0": 244.574,
+     "t1": 244.902
+    },
+    {
+     "w": "都",
+     "t0": 244.902,
+     "t1": 245.043
+    },
+    {
+     "w": "只有",
+     "t0": 245.043,
+     "t1": 245.324
+    },
+    {
+     "w": "一拍",
+     "t0": 245.324,
+     "t1": 245.918
+    },
+    {
+     "w": "MRT",
+     "t0": 246.324,
+     "t1": 246.824
+    },
+    {
+     "w": "是",
+     "t0": 246.824,
+     "t1": 246.996
+    },
+    {
+     "w": "一個",
+     "t0": 246.996,
+     "t1": 247.199
+    },
+    {
+     "w": "一個",
+     "t0": 247.199,
+     "t1": 247.433
+    },
+    {
+     "w": "字母",
+     "t0": 247.433,
+     "t1": 247.777
+    },
+    {
+     "w": "唸",
+     "t0": 247.777,
+     "t1": 248.402
+    },
+    {
+     "w": "最後",
+     "t0": 248.543,
+     "t1": 248.965
+    },
+    {
+     "w": "一個",
+     "t0": 248.965,
+     "t1": 249.199
+    },
+    {
+     "w": "字母",
+     "t0": 249.199,
+     "t1": 249.558
+    },
+    {
+     "w": "最",
+     "t0": 249.558,
+     "t1": 249.73
+    },
+    {
+     "w": "重",
+     "t0": 249.73,
+     "t1": 250.355
+    }
+   ],
+   "t0": 242.743,
+   "t1": 250.23
+  },
+  {
+   "i": 72,
+   "sec": "03-clap",
+   "who": "nova",
+   "kind": "say",
+   "vis": "Nova 比讚 P07",
+   "text": "Great clapping!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Great",
+     "t0": 250.523,
+     "t1": 250.913
+    },
+    {
+     "w": "clapping",
+     "t0": 250.929,
+     "t1": 251.695
+    }
+   ],
+   "t0": 250.68,
+   "t1": 251.861
+  },
+  {
+   "i": 73,
+   "sec": "04-igo",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "world（朋友＋交通工具卡）",
+   "text": "Now, our friends will tell us. Listen!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 252.75,
+     "t1": 253.187
+    },
+    {
+     "w": "our",
+     "t0": 253.453,
+     "t1": 253.672
+    },
+    {
+     "w": "friends",
+     "t0": 253.703,
+     "t1": 254.109
+    },
+    {
+     "w": "will",
+     "t0": 254.125,
+     "t1": 254.297
+    },
+    {
+     "w": "tell",
+     "t0": 254.328,
+     "t1": 254.578
+    },
+    {
+     "w": "us",
+     "t0": 254.609,
+     "t1": 254.953
+    },
+    {
+     "w": "Listen",
+     "t0": 256.059,
+     "t1": 256.793
+    }
+   ],
+   "t0": 252.861,
+   "t1": 256.9
+  },
+  {
+   "i": 74,
+   "sec": "04-igo",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "world",
+   "text": "I go to school 就是「我去上學」，後面加交通工具。聽朋友說，跟著唸。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 257.253,
+     "t1": 257.409
+    },
+    {
+     "w": "go",
+     "t0": 257.425,
+     "t1": 257.612
+    },
+    {
+     "w": "to",
+     "t0": 257.612,
+     "t1": 257.706
+    },
+    {
+     "w": "school",
+     "t0": 257.753,
+     "t1": 258.175
+    },
+    {
+     "w": "就是",
+     "t0": 258.237,
+     "t1": 258.737
+    },
+    {
+     "w": "我",
+     "t0": 259.05,
+     "t1": 259.175
+    },
+    {
+     "w": "去",
+     "t0": 259.222,
+     "t1": 259.347
+    },
+    {
+     "w": "上學",
+     "t0": 259.394,
+     "t1": 260.128
+    },
+    {
+     "w": "後面",
+     "t0": 260.472,
+     "t1": 260.862
+    },
+    {
+     "w": "加",
+     "t0": 260.941,
+     "t1": 261.144
+    },
+    {
+     "w": "交通",
+     "t0": 261.159,
+     "t1": 261.519
+    },
+    {
+     "w": "工具",
+     "t0": 261.628,
+     "t1": 262.191
+    },
+    {
+     "w": "聽",
+     "t0": 263.391,
+     "t1": 263.609
+    },
+    {
+     "w": "朋友",
+     "t0": 263.641,
+     "t1": 264.094
+    },
+    {
+     "w": "說",
+     "t0": 264.125,
+     "t1": 264.609
+    },
+    {
+     "w": "跟",
+     "t0": 264.891,
+     "t1": 265.062
+    },
+    {
+     "w": "著",
+     "t0": 265.141,
+     "t1": 265.312
+    },
+    {
+     "w": "唸",
+     "t0": 265.328,
+     "t1": 265.672
+    }
+   ],
+   "t0": 257.35,
+   "t1": 265.877
+  },
+  {
+   "i": 75,
+   "sec": "04-igo",
+   "who": "mia",
+   "kind": "say",
+   "vis": "kid:Mia；ride:by boat；card:I go to school by boat.；朋友說話",
+   "text": "I'm Mia. I go to school by boat.",
+   "voices": [
+    "en-AU-NatashaNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 266.24,
+     "t1": 266.443
+    },
+    {
+     "w": "Mia",
+     "t0": 266.49,
+     "t1": 266.818
+    },
+    {
+     "w": "I",
+     "t0": 268.175,
+     "t1": 268.206
+    },
+    {
+     "w": "go",
+     "t0": 268.362,
+     "t1": 268.581
+    },
+    {
+     "w": "to",
+     "t0": 268.675,
+     "t1": 268.784
+    },
+    {
+     "w": "school",
+     "t0": 268.784,
+     "t1": 269.237
+    },
+    {
+     "w": "by",
+     "t0": 269.237,
+     "t1": 269.393
+    },
+    {
+     "w": "boat",
+     "t0": 269.487,
+     "t1": 269.862
+    }
+   ],
+   "t0": 266.327,
+   "t1": 270.167
+  },
+  {
+   "i": 76,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Mia；card:I go to school by boat.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 270.867,
+   "t1": 273.867
+  },
+  {
+   "i": 77,
+   "sec": "04-igo",
+   "who": "raj",
+   "kind": "say",
+   "vis": "kid:Raj；ride:by train；card:I go to school by train.；朋友說話",
+   "text": "I'm Raj. I go to school by train.",
+   "voices": [
+    "en-IN-PrabhatNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 274.269,
+     "t1": 274.69
+    },
+    {
+     "w": "Raj",
+     "t0": 274.784,
+     "t1": 275.315
+    },
+    {
+     "w": "I",
+     "t0": 276.453,
+     "t1": 276.64
+    },
+    {
+     "w": "go",
+     "t0": 276.64,
+     "t1": 276.953
+    },
+    {
+     "w": "to",
+     "t0": 276.953,
+     "t1": 277.125
+    },
+    {
+     "w": "school",
+     "t0": 277.125,
+     "t1": 277.656
+    },
+    {
+     "w": "by",
+     "t0": 277.656,
+     "t1": 277.969
+    },
+    {
+     "w": "train",
+     "t0": 277.969,
+     "t1": 278.547
+    }
+   ],
+   "t0": 274.317,
+   "t1": 278.639
+  },
+  {
+   "i": 78,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Raj；card:I go to school by train.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 279.339,
+   "t1": 282.339
+  },
+  {
+   "i": 79,
+   "sec": "04-igo",
+   "who": "yuki",
+   "kind": "say",
+   "vis": "kid:Yuki；ride:by bike；card:I go to school by bike.；朋友說話",
+   "text": "I'm Yuki. I go to school by bike.",
+   "voices": [
+    "en-US-JennyNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 282.682,
+     "t1": 282.932
+    },
+    {
+     "w": "Yuki",
+     "t0": 282.948,
+     "t1": 283.62
+    },
+    {
+     "w": "I",
+     "t0": 284.71,
+     "t1": 284.882
+    },
+    {
+     "w": "go",
+     "t0": 284.898,
+     "t1": 285.054
+    },
+    {
+     "w": "to",
+     "t0": 285.07,
+     "t1": 285.179
+    },
+    {
+     "w": "school",
+     "t0": 285.195,
+     "t1": 285.554
+    },
+    {
+     "w": "by",
+     "t0": 285.57,
+     "t1": 285.742
+    },
+    {
+     "w": "bike",
+     "t0": 285.757,
+     "t1": 286.382
+    }
+   ],
+   "t0": 282.789,
+   "t1": 286.414
+  },
+  {
+   "i": 80,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Yuki；card:I go to school by bike.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 287.114,
+   "t1": 290.114
+  },
+  {
+   "i": 81,
+   "sec": "04-igo",
+   "who": "wei",
+   "kind": "say",
+   "vis": "kid:Wei；ride:by MRT；card:I go to school by MRT.；朋友說話",
+   "text": "I'm Wei. I go to school by MRT.",
+   "voices": [
+    "en-SG-WayneNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 290.444,
+     "t1": 290.787
+    },
+    {
+     "w": "Wei",
+     "t0": 290.803,
+     "t1": 291.319
+    },
+    {
+     "w": "I",
+     "t0": 292.409,
+     "t1": 292.628
+    },
+    {
+     "w": "go",
+     "t0": 292.644,
+     "t1": 292.894
+    },
+    {
+     "w": "to",
+     "t0": 292.909,
+     "t1": 293.066
+    },
+    {
+     "w": "school",
+     "t0": 293.081,
+     "t1": 293.534
+    },
+    {
+     "w": "by",
+     "t0": 293.55,
+     "t1": 293.784
+    },
+    {
+     "w": "MRT",
+     "t0": 293.8,
+     "t1": 294.769
+    }
+   ],
+   "t0": 290.564,
+   "t1": 294.83
+  },
+  {
+   "i": 82,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Wei；card:I go to school by MRT.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 295.53,
+   "t1": 298.53
+  },
+  {
+   "i": 83,
+   "sec": "04-igo",
+   "who": "sofia",
+   "kind": "say",
+   "vis": "kid:Sofia；ride:by plane；card:I go to school by plane.；朋友說話",
+   "text": "I'm Sofia. I go to school by plane.",
+   "voices": [
+    "en-IE-EmilyNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 298.836,
+     "t1": 299.195
+    },
+    {
+     "w": "Sofia",
+     "t0": 299.195,
+     "t1": 300.195
+    },
+    {
+     "w": "I",
+     "t0": 301.254,
+     "t1": 301.536
+    },
+    {
+     "w": "go",
+     "t0": 301.536,
+     "t1": 301.832
+    },
+    {
+     "w": "to",
+     "t0": 301.832,
+     "t1": 301.973
+    },
+    {
+     "w": "school",
+     "t0": 301.973,
+     "t1": 302.489
+    },
+    {
+     "w": "by",
+     "t0": 302.489,
+     "t1": 302.739
+    },
+    {
+     "w": "plane",
+     "t0": 302.739,
+     "t1": 303.504
+    }
+   ],
+   "t0": 298.98,
+   "t1": 303.506
+  },
+  {
+   "i": 84,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Sofia；card:I go to school by plane.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 304.206,
+   "t1": 307.206
+  },
+  {
+   "i": 85,
+   "sec": "04-igo",
+   "who": "kai",
+   "kind": "say",
+   "vis": "kid:Kai；ride:by scooter；card:I go to school by scooter.；朋友說話",
+   "text": "I'm Kai. I go to school by scooter.",
+   "voices": [
+    "en-HK-SamNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 307.483,
+     "t1": 307.9
+    },
+    {
+     "w": "Kai",
+     "t0": 307.935,
+     "t1": 308.594
+    },
+    {
+     "w": "I",
+     "t0": 309.812,
+     "t1": 310.038
+    },
+    {
+     "w": "go",
+     "t0": 310.055,
+     "t1": 310.211
+    },
+    {
+     "w": "to",
+     "t0": 310.246,
+     "t1": 310.367
+    },
+    {
+     "w": "school",
+     "t0": 310.385,
+     "t1": 310.888
+    },
+    {
+     "w": "by",
+     "t0": 310.923,
+     "t1": 311.114
+    },
+    {
+     "w": "scooter",
+     "t0": 311.149,
+     "t1": 311.913
+    }
+   ],
+   "t0": 307.656,
+   "t1": 311.951
+  },
+  {
+   "i": 86,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Kai；card:I go to school by scooter.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 312.651,
+   "t1": 315.651
+  },
+  {
+   "i": 87,
+   "sec": "04-igo",
+   "who": "lily",
+   "kind": "say",
+   "vis": "kid:Lily；ride:by bus；card:I go to school by bus.；朋友說話",
+   "text": "I'm Lily. I go to school by bus.",
+   "voices": [
+    "en-GB-MaisieNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 316.011,
+     "t1": 316.245
+    },
+    {
+     "w": "Lily",
+     "t0": 316.261,
+     "t1": 316.807
+    },
+    {
+     "w": "I",
+     "t0": 317.914,
+     "t1": 318.039
+    },
+    {
+     "w": "go",
+     "t0": 318.054,
+     "t1": 318.304
+    },
+    {
+     "w": "to",
+     "t0": 318.32,
+     "t1": 318.476
+    },
+    {
+     "w": "school",
+     "t0": 318.492,
+     "t1": 318.961
+    },
+    {
+     "w": "by",
+     "t0": 318.976,
+     "t1": 319.148
+    },
+    {
+     "w": "bus",
+     "t0": 319.164,
+     "t1": 319.789
+    }
+   ],
+   "t0": 316.101,
+   "t1": 319.864
+  },
+  {
+   "i": 88,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Lily；card:I go to school by bus.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 320.564,
+   "t1": 323.564
+  },
+  {
+   "i": 89,
+   "sec": "04-igo",
+   "who": "tom",
+   "kind": "say",
+   "vis": "kid:Tom；ride:by car；card:I go to school by car.；朋友說話",
+   "text": "I'm Tom. I go to school by car.",
+   "voices": [
+    "en-US-EricNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 323.915,
+     "t1": 324.181
+    },
+    {
+     "w": "Tom",
+     "t0": 324.196,
+     "t1": 324.79
+    },
+    {
+     "w": "I",
+     "t0": 325.896,
+     "t1": 326.115
+    },
+    {
+     "w": "go",
+     "t0": 326.131,
+     "t1": 326.287
+    },
+    {
+     "w": "to",
+     "t0": 326.303,
+     "t1": 326.412
+    },
+    {
+     "w": "school",
+     "t0": 326.428,
+     "t1": 326.849
+    },
+    {
+     "w": "by",
+     "t0": 326.865,
+     "t1": 327.068
+    },
+    {
+     "w": "car",
+     "t0": 327.084,
+     "t1": 327.678
+    }
+   ],
+   "t0": 324.014,
+   "t1": 327.741
+  },
+  {
+   "i": 90,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Tom；card:I go to school by car.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 328.441,
+   "t1": 331.441
+  },
+  {
+   "i": 91,
+   "sec": "04-igo",
+   "who": "jisu",
+   "kind": "say",
+   "vis": "kid:Jisu；ride:by taxi；card:I go to school by taxi.；朋友說話",
+   "text": "I'm Jisu. I go to school by taxi.",
+   "voices": [
+    "en-NZ-MollyNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 331.799,
+     "t1": 332.013
+    },
+    {
+     "w": "Jisu",
+     "t0": 332.062,
+     "t1": 332.588
+    },
+    {
+     "w": "I",
+     "t0": 333.986,
+     "t1": 334.019
+    },
+    {
+     "w": "go",
+     "t0": 334.183,
+     "t1": 334.413
+    },
+    {
+     "w": "to",
+     "t0": 334.512,
+     "t1": 334.627
+    },
+    {
+     "w": "school",
+     "t0": 334.627,
+     "t1": 335.104
+    },
+    {
+     "w": "by",
+     "t0": 335.104,
+     "t1": 335.252
+    },
+    {
+     "w": "taxi",
+     "t0": 335.351,
+     "t1": 335.943
+    }
+   ],
+   "t0": 331.891,
+   "t1": 336.242
+  },
+  {
+   "i": 92,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Jisu；card:I go to school by taxi.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 336.942,
+   "t1": 339.942
+  },
+  {
+   "i": 93,
+   "sec": "04-igo",
+   "who": "nam",
+   "kind": "say",
+   "vis": "kid:Nam；ride:on foot；card:I go to school on foot.；朋友說話",
+   "text": "I'm Nam. I go to school on foot.",
+   "voices": [
+    "en-PH-JamesNeural"
+   ],
+   "words": [
+    {
+     "w": "I'm",
+     "t0": 340.303,
+     "t1": 340.538
+    },
+    {
+     "w": "Nam",
+     "t0": 340.616,
+     "t1": 340.881
+    },
+    {
+     "w": "I",
+     "t0": 342.05,
+     "t1": 342.222
+    },
+    {
+     "w": "go",
+     "t0": 342.285,
+     "t1": 342.425
+    },
+    {
+     "w": "to",
+     "t0": 342.503,
+     "t1": 342.55
+    },
+    {
+     "w": "school",
+     "t0": 342.581,
+     "t1": 342.925
+    },
+    {
+     "w": "on",
+     "t0": 342.972,
+     "t1": 343.144
+    },
+    {
+     "w": "foot",
+     "t0": 343.175,
+     "t1": 343.519
+    }
+   ],
+   "t0": 340.392,
+   "t1": 343.588
+  },
+  {
+   "i": 94,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Nam；card:I go to school on foot.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 344.288,
+   "t1": 347.288
+  },
+  {
+   "i": 95,
+   "sec": "04-igo",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "card:I go to school ___.",
+   "text": "Now you! How do you go to school?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 347.629,
+     "t1": 348.082
+    },
+    {
+     "w": "you",
+     "t0": 348.097,
+     "t1": 348.644
+    },
+    {
+     "w": "How",
+     "t0": 349.75,
+     "t1": 349.969
+    },
+    {
+     "w": "do",
+     "t0": 350.0,
+     "t1": 350.11
+    },
+    {
+     "w": "you",
+     "t0": 350.125,
+     "t1": 350.266
+    },
+    {
+     "w": "go",
+     "t0": 350.297,
+     "t1": 350.454
+    },
+    {
+     "w": "to",
+     "t0": 350.469,
+     "t1": 350.579
+    },
+    {
+     "w": "school",
+     "t0": 350.61,
+     "t1": 351.282
+    }
+   ],
+   "t0": 347.738,
+   "t1": 351.307
+  },
+  {
+   "i": 96,
+   "sec": "04-igo",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "card:I go to school ___.；ride:on foot；ride:by scooter",
+   "text": "你怎麼上學？走路就說 on foot，坐爸媽的機車就說 by scooter。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "你",
+     "t0": 351.492,
+     "t1": 351.851
+    },
+    {
+     "w": "怎麼",
+     "t0": 351.851,
+     "t1": 352.07
+    },
+    {
+     "w": "上學",
+     "t0": 352.07,
+     "t1": 353.023
+    },
+    {
+     "w": "走路",
+     "t0": 354.082,
+     "t1": 354.66
+    },
+    {
+     "w": "就",
+     "t0": 354.66,
+     "t1": 354.785
+    },
+    {
+     "w": "說",
+     "t0": 354.785,
+     "t1": 354.973
+    },
+    {
+     "w": "on",
+     "t0": 354.973,
+     "t1": 355.098
+    },
+    {
+     "w": "foot",
+     "t0": 355.098,
+     "t1": 355.707
+    },
+    {
+     "w": "坐",
+     "t0": 355.879,
+     "t1": 356.145
+    },
+    {
+     "w": "爸",
+     "t0": 356.145,
+     "t1": 356.317
+    },
+    {
+     "w": "媽的",
+     "t0": 356.317,
+     "t1": 356.567
+    },
+    {
+     "w": "機車",
+     "t0": 356.567,
+     "t1": 357.082
+    },
+    {
+     "w": "就",
+     "t0": 357.082,
+     "t1": 357.239
+    },
+    {
+     "w": "說",
+     "t0": 357.239,
+     "t1": 357.41
+    },
+    {
+     "w": "by",
+     "t0": 357.41,
+     "t1": 357.52
+    },
+    {
+     "w": "scooter",
+     "t0": 357.52,
+     "t1": 358.301
+    }
+   ],
+   "t0": 351.757,
+   "t1": 358.234
+  },
+  {
+   "i": 97,
+   "sec": "04-igo",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "card:I go to school on foot.；ride:on foot；第 1 輪",
+   "text": "Repeat after me. I go to school on foot.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 358.575,
+     "t1": 359.231
+    },
+    {
+     "w": "after",
+     "t0": 359.263,
+     "t1": 359.716
+    },
+    {
+     "w": "me",
+     "t0": 359.731,
+     "t1": 360.153
+    },
+    {
+     "w": "I",
+     "t0": 361.244,
+     "t1": 361.447
+    },
+    {
+     "w": "go",
+     "t0": 361.463,
+     "t1": 361.619
+    },
+    {
+     "w": "to",
+     "t0": 361.634,
+     "t1": 361.744
+    },
+    {
+     "w": "school",
+     "t0": 361.759,
+     "t1": 362.244
+    },
+    {
+     "w": "on",
+     "t0": 362.275,
+     "t1": 362.431
+    },
+    {
+     "w": "foot",
+     "t0": 362.463,
+     "t1": 362.963
+    }
+   ],
+   "t0": 358.684,
+   "t1": 363.038
+  },
+  {
+   "i": 98,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "card:I go to school on foot.；ride:on foot；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 363.738,
+   "t1": 366.738
+  },
+  {
+   "i": 99,
+   "sec": "04-igo",
+   "who": "nova",
+   "kind": "say",
+   "vis": "card:I go to school by scooter.；ride:by scooter；第 1 輪",
+   "text": "Repeat after me. I go to school by scooter.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 367.041,
+     "t1": 367.619
+    },
+    {
+     "w": "after",
+     "t0": 367.634,
+     "t1": 367.994
+    },
+    {
+     "w": "me",
+     "t0": 368.009,
+     "t1": 368.306
+    },
+    {
+     "w": "I",
+     "t0": 368.772,
+     "t1": 369.069
+    },
+    {
+     "w": "go",
+     "t0": 369.084,
+     "t1": 369.256
+    },
+    {
+     "w": "to",
+     "t0": 369.272,
+     "t1": 369.397
+    },
+    {
+     "w": "school",
+     "t0": 369.412,
+     "t1": 369.928
+    },
+    {
+     "w": "by",
+     "t0": 369.944,
+     "t1": 370.116
+    },
+    {
+     "w": "scooter",
+     "t0": 370.131,
+     "t1": 370.725
+    }
+   ],
+   "t0": 367.188,
+   "t1": 370.849
+  },
+  {
+   "i": 100,
+   "sec": "04-igo",
+   "who": "-",
+   "kind": "turn",
+   "vis": "card:I go to school by scooter.；ride:by scooter；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 371.549,
+   "t1": 374.549
+  },
+  {
+   "i": 101,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "say",
+   "vis": "grammar；I go 亮",
+   "text": "Now look. I go. But he goes. She goes.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 375.38,
+     "t1": 375.77
+    },
+    {
+     "w": "look",
+     "t0": 375.786,
+     "t1": 376.255
+    },
+    {
+     "w": "I",
+     "t0": 376.72,
+     "t1": 377.017
+    },
+    {
+     "w": "go",
+     "t0": 377.033,
+     "t1": 377.501
+    },
+    {
+     "w": "But",
+     "t0": 377.955,
+     "t1": 378.205
+    },
+    {
+     "w": "he",
+     "t0": 378.22,
+     "t1": 378.408
+    },
+    {
+     "w": "goes",
+     "t0": 378.423,
+     "t1": 379.095
+    },
+    {
+     "w": "She",
+     "t0": 379.548,
+     "t1": 379.845
+    },
+    {
+     "w": "goes",
+     "t0": 379.861,
+     "t1": 380.517
+    }
+   ],
+   "t0": 375.549,
+   "t1": 380.62
+  },
+  {
+   "i": 102,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "grammar；He、She、人名 亮；go 變 goes",
+   "text": "說自己用 I go。說他、說她，或說一個人的名字，go 要變成 goes。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "說",
+     "t0": 380.971,
+     "t1": 381.283
+    },
+    {
+     "w": "自己",
+     "t0": 381.314,
+     "t1": 381.642
+    },
+    {
+     "w": "用",
+     "t0": 381.736,
+     "t1": 381.908
+    },
+    {
+     "w": "I",
+     "t0": 381.955,
+     "t1": 382.08
+    },
+    {
+     "w": "go",
+     "t0": 382.142,
+     "t1": 382.33
+    },
+    {
+     "w": "說",
+     "t0": 383.499,
+     "t1": 383.827
+    },
+    {
+     "w": "他",
+     "t0": 383.842,
+     "t1": 384.249
+    },
+    {
+     "w": "說",
+     "t0": 384.499,
+     "t1": 384.78
+    },
+    {
+     "w": "她",
+     "t0": 384.811,
+     "t1": 385.217
+    },
+    {
+     "w": "或",
+     "t0": 385.514,
+     "t1": 385.717
+    },
+    {
+     "w": "說",
+     "t0": 385.764,
+     "t1": 385.983
+    },
+    {
+     "w": "一個人",
+     "t0": 385.999,
+     "t1": 386.436
+    },
+    {
+     "w": "的",
+     "t0": 386.483,
+     "t1": 386.624
+    },
+    {
+     "w": "名字",
+     "t0": 386.624,
+     "t1": 387.311
+    },
+    {
+     "w": "go",
+     "t0": 387.686,
+     "t1": 387.78
+    },
+    {
+     "w": "要",
+     "t0": 387.827,
+     "t1": 387.999
+    },
+    {
+     "w": "變成",
+     "t0": 388.03,
+     "t1": 388.436
+    },
+    {
+     "w": "goes",
+     "t0": 388.53,
+     "t1": 388.936
+    }
+   ],
+   "t0": 381.07,
+   "t1": 389.08
+  },
+  {
+   "i": 103,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "goes；e、s 飛進來發光",
+   "text": "Go... plus E, S... goes!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Go",
+     "t0": 389.41,
+     "t1": 389.801
+    },
+    {
+     "w": "plus",
+     "t0": 390.004,
+     "t1": 390.332
+    },
+    {
+     "w": "E",
+     "t0": 390.364,
+     "t1": 390.614
+    },
+    {
+     "w": "S",
+     "t0": 390.832,
+     "t1": 391.317
+    },
+    {
+     "w": "goes",
+     "t0": 391.567,
+     "t1": 392.192
+    }
+   ],
+   "t0": 389.53,
+   "t1": 392.266
+  },
+  {
+   "i": 104,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "goes；完成",
+   "text": "go 後面加 e、s。注意聽，goes 的最後有一個 z 的聲音。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "go",
+     "t0": 392.555,
+     "t1": 392.758
+    },
+    {
+     "w": "後面",
+     "t0": 392.758,
+     "t1": 393.227
+    },
+    {
+     "w": "加",
+     "t0": 393.227,
+     "t1": 393.57
+    },
+    {
+     "w": "e",
+     "t0": 393.57,
+     "t1": 393.898
+    },
+    {
+     "w": "s",
+     "t0": 394.148,
+     "t1": 394.664
+    },
+    {
+     "w": "注意",
+     "t0": 395.723,
+     "t1": 396.177
+    },
+    {
+     "w": "聽",
+     "t0": 396.177,
+     "t1": 396.692
+    },
+    {
+     "w": "goes",
+     "t0": 396.833,
+     "t1": 397.067
+    },
+    {
+     "w": "的",
+     "t0": 397.067,
+     "t1": 397.177
+    },
+    {
+     "w": "最後",
+     "t0": 397.177,
+     "t1": 397.802
+    },
+    {
+     "w": "有",
+     "t0": 397.802,
+     "t1": 397.973
+    },
+    {
+     "w": "一個",
+     "t0": 397.973,
+     "t1": 398.192
+    },
+    {
+     "w": "z",
+     "t0": 398.192,
+     "t1": 398.348
+    },
+    {
+     "w": "的",
+     "t0": 398.348,
+     "t1": 398.427
+    },
+    {
+     "w": "聲音",
+     "t0": 398.427,
+     "t1": 399.114
+    }
+   ],
+   "t0": 392.716,
+   "t1": 399.104
+  },
+  {
+   "i": 105,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "goes；第 1 輪",
+   "text": "Repeat after me. Go. Goes.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 399.445,
+     "t1": 400.101
+    },
+    {
+     "w": "after",
+     "t0": 400.132,
+     "t1": 400.585
+    },
+    {
+     "w": "me",
+     "t0": 400.601,
+     "t1": 401.023
+    },
+    {
+     "w": "Go",
+     "t0": 402.114,
+     "t1": 402.707
+    },
+    {
+     "w": "Goes",
+     "t0": 403.801,
+     "t1": 404.567
+    }
+   ],
+   "t0": 399.554,
+   "t1": 404.617
+  },
+  {
+   "i": 106,
+   "sec": "05-goes",
+   "who": "-",
+   "kind": "turn",
+   "vis": "goes；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 405.317,
+   "t1": 407.317
+  },
+  {
+   "i": 107,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "goes；第 2 輪",
+   "text": "Go. Goes.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Go",
+     "t0": 407.657,
+     "t1": 408.25
+    },
+    {
+     "w": "Goes",
+     "t0": 409.357,
+     "t1": 410.122
+    }
+   ],
+   "t0": 407.767,
+   "t1": 410.17
+  },
+  {
+   "i": 108,
+   "sec": "05-goes",
+   "who": "-",
+   "kind": "turn",
+   "vis": "goes；Your turn! 換你唸！",
+   "sec_len": 2.0,
+   "t0": 410.87,
+   "t1": 412.87
+  },
+  {
+   "i": 109,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Lily；card:She goes to school by bus.；she",
+   "text": "This is Lily. She goes to school by bus.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "This",
+     "t0": 413.154,
+     "t1": 413.576
+    },
+    {
+     "w": "is",
+     "t0": 413.592,
+     "t1": 413.764
+    },
+    {
+     "w": "Lily",
+     "t0": 413.779,
+     "t1": 414.373
+    },
+    {
+     "w": "She",
+     "t0": 414.839,
+     "t1": 415.151
+    },
+    {
+     "w": "goes",
+     "t0": 415.167,
+     "t1": 415.464
+    },
+    {
+     "w": "to",
+     "t0": 415.479,
+     "t1": 415.573
+    },
+    {
+     "w": "school",
+     "t0": 415.589,
+     "t1": 416.026
+    },
+    {
+     "w": "by",
+     "t0": 416.042,
+     "t1": 416.214
+    },
+    {
+     "w": "bus",
+     "t0": 416.229,
+     "t1": 416.823
+    }
+   ],
+   "t0": 413.32,
+   "t1": 416.936
+  },
+  {
+   "i": 110,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "kid:Lily；she；中文 她搭公車上學。",
+   "text": "介紹女生用 She goes，她去上學。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "介紹",
+     "t0": 417.293,
+     "t1": 417.777
+    },
+    {
+     "w": "女生",
+     "t0": 417.793,
+     "t1": 418.214
+    },
+    {
+     "w": "用",
+     "t0": 418.277,
+     "t1": 418.464
+    },
+    {
+     "w": "She",
+     "t0": 418.511,
+     "t1": 418.636
+    },
+    {
+     "w": "goes",
+     "t0": 418.73,
+     "t1": 419.214
+    },
+    {
+     "w": "她",
+     "t0": 419.464,
+     "t1": 419.699
+    },
+    {
+     "w": "去",
+     "t0": 419.699,
+     "t1": 419.871
+    },
+    {
+     "w": "上學",
+     "t0": 419.918,
+     "t1": 420.652
+    }
+   ],
+   "t0": 417.386,
+   "t1": 420.84
+  },
+  {
+   "i": 111,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Raj；card:He goes to school by train.；he",
+   "text": "This is Raj. He goes to school by train.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "This",
+     "t0": 421.164,
+     "t1": 421.539
+    },
+    {
+     "w": "is",
+     "t0": 421.555,
+     "t1": 421.727
+    },
+    {
+     "w": "Raj",
+     "t0": 421.742,
+     "t1": 422.414
+    },
+    {
+     "w": "He",
+     "t0": 423.52,
+     "t1": 423.724
+    },
+    {
+     "w": "goes",
+     "t0": 423.755,
+     "t1": 424.052
+    },
+    {
+     "w": "to",
+     "t0": 424.083,
+     "t1": 424.208
+    },
+    {
+     "w": "school",
+     "t0": 424.224,
+     "t1": 424.661
+    },
+    {
+     "w": "by",
+     "t0": 424.692,
+     "t1": 424.849
+    },
+    {
+     "w": "train",
+     "t0": 424.864,
+     "t1": 425.458
+    }
+   ],
+   "t0": 421.29,
+   "t1": 425.592
+  },
+  {
+   "i": 112,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "kid:Raj；he；中文 他搭火車上學。",
+   "text": "介紹男生用 He goes，他去上學。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "介紹",
+     "t0": 425.876,
+     "t1": 426.501
+    },
+    {
+     "w": "男生",
+     "t0": 426.501,
+     "t1": 426.954
+    },
+    {
+     "w": "用",
+     "t0": 426.954,
+     "t1": 427.095
+    },
+    {
+     "w": "He",
+     "t0": 427.095,
+     "t1": 427.235
+    },
+    {
+     "w": "goes",
+     "t0": 427.235,
+     "t1": 427.782
+    },
+    {
+     "w": "他",
+     "t0": 427.907,
+     "t1": 428.126
+    },
+    {
+     "w": "去",
+     "t0": 428.126,
+     "t1": 428.251
+    },
+    {
+     "w": "上學",
+     "t0": 428.251,
+     "t1": 429.204
+    }
+   ],
+   "t0": 426.042,
+   "t1": 429.11
+  },
+  {
+   "i": 113,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Yuki；card:Yuki goes to school by bike.；人名 圈起來",
+   "text": "Yuki goes to school by bike. A name... goes!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Yuki",
+     "t0": 429.405,
+     "t1": 429.921
+    },
+    {
+     "w": "goes",
+     "t0": 429.936,
+     "t1": 430.311
+    },
+    {
+     "w": "to",
+     "t0": 430.327,
+     "t1": 430.421
+    },
+    {
+     "w": "school",
+     "t0": 430.436,
+     "t1": 430.874
+    },
+    {
+     "w": "by",
+     "t0": 430.889,
+     "t1": 431.061
+    },
+    {
+     "w": "bike",
+     "t0": 431.077,
+     "t1": 431.639
+    },
+    {
+     "w": "A",
+     "t0": 432.105,
+     "t1": 432.277
+    },
+    {
+     "w": "name",
+     "t0": 432.293,
+     "t1": 432.918
+    },
+    {
+     "w": "goes",
+     "t0": 433.089,
+     "t1": 433.73
+    }
+   ],
+   "t0": 429.56,
+   "t1": 433.83
+  },
+  {
+   "i": 114,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "kid:Yuki；人名 圈起來",
+   "text": "直接說名字也一樣，要用 goes。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "直接",
+     "t0": 434.18,
+     "t1": 434.618
+    },
+    {
+     "w": "說",
+     "t0": 434.633,
+     "t1": 434.899
+    },
+    {
+     "w": "名字",
+     "t0": 434.899,
+     "t1": 435.383
+    },
+    {
+     "w": "也",
+     "t0": 435.399,
+     "t1": 435.586
+    },
+    {
+     "w": "一樣",
+     "t0": 435.618,
+     "t1": 436.165
+    },
+    {
+     "w": "要",
+     "t0": 436.493,
+     "t1": 436.711
+    },
+    {
+     "w": "用",
+     "t0": 436.727,
+     "t1": 436.883
+    },
+    {
+     "w": "goes",
+     "t0": 436.977,
+     "t1": 437.43
+    }
+   ],
+   "t0": 434.28,
+   "t1": 437.585
+  },
+  {
+   "i": 115,
+   "sec": "05-goes",
+   "who": "nova",
+   "kind": "say",
+   "vis": "kid:Lily；card:She goes to school by bus.；she；第 1 輪",
+   "text": "Repeat after me. She goes to school by bus.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 437.888,
+     "t1": 438.466
+    },
+    {
+     "w": "after",
+     "t0": 438.482,
+     "t1": 438.841
+    },
+    {
+     "w": "me",
+     "t0": 438.857,
+     "t1": 439.154
+    },
+    {
+     "w": "She",
+     "t0": 439.619,
+     "t1": 439.932
+    },
+    {
+     "w": "goes",
+     "t0": 439.948,
+     "t1": 440.244
+    },
+    {
+     "w": "to",
+     "t0": 440.26,
+     "t1": 440.354
+    },
+    {
+     "w": "school",
+     "t0": 440.369,
+     "t1": 440.807
+    },
+    {
+     "w": "by",
+     "t0": 440.823,
+     "t1": 440.994
+    },
+    {
+     "w": "bus",
+     "t0": 441.01,
+     "t1": 441.604
+    }
+   ],
+   "t0": 438.035,
+   "t1": 441.72
+  },
+  {
+   "i": 116,
+   "sec": "05-goes",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Lily；card:She goes to school by bus.；she；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 442.42,
+   "t1": 445.42
+  },
+  {
+   "i": 117,
+   "sec": "05-goes",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "kid:Raj；card:He goes to school by train.；he；第 1 輪",
+   "text": "Repeat after me. He goes to school by train.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Repeat",
+     "t0": 445.761,
+     "t1": 446.417
+    },
+    {
+     "w": "after",
+     "t0": 446.448,
+     "t1": 446.901
+    },
+    {
+     "w": "me",
+     "t0": 446.917,
+     "t1": 447.339
+    },
+    {
+     "w": "He",
+     "t0": 448.429,
+     "t1": 448.632
+    },
+    {
+     "w": "goes",
+     "t0": 448.664,
+     "t1": 448.961
+    },
+    {
+     "w": "to",
+     "t0": 448.992,
+     "t1": 449.117
+    },
+    {
+     "w": "school",
+     "t0": 449.132,
+     "t1": 449.57
+    },
+    {
+     "w": "by",
+     "t0": 449.601,
+     "t1": 449.757
+    },
+    {
+     "w": "train",
+     "t0": 449.773,
+     "t1": 450.367
+    }
+   ],
+   "t0": 445.87,
+   "t1": 450.501
+  },
+  {
+   "i": 118,
+   "sec": "05-goes",
+   "who": "-",
+   "kind": "turn",
+   "vis": "kid:Raj；card:He goes to school by train.；he；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 451.201,
+   "t1": 454.201
+  },
+  {
+   "i": 119,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:open；桌上小鎮全景、紙箱學校、太陽升起",
+   "text": "It's morning in Story Town. Let's watch!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "It's",
+     "t0": 455.057,
+     "t1": 455.323
+    },
+    {
+     "w": "morning",
+     "t0": 455.338,
+     "t1": 455.807
+    },
+    {
+     "w": "in",
+     "t0": 455.823,
+     "t1": 455.948
+    },
+    {
+     "w": "Story",
+     "t0": 455.963,
+     "t1": 456.417
+    },
+    {
+     "w": "Town",
+     "t0": 456.432,
+     "t1": 457.01
+    },
+    {
+     "w": "Let's",
+     "t0": 457.476,
+     "t1": 457.851
+    },
+    {
+     "w": "watch",
+     "t0": 457.867,
+     "t1": 458.554
+    }
+   ],
+   "t0": 455.201,
+   "t1": 458.68
+  },
+  {
+   "i": 120,
+   "sec": "06-story",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "story:open",
+   "text": "看朋友們怎麼上學。先聽，再換你說 He goes 或 She goes。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "看",
+     "t0": 458.955,
+     "t1": 459.283
+    },
+    {
+     "w": "朋友",
+     "t0": 459.283,
+     "t1": 459.627
+    },
+    {
+     "w": "們",
+     "t0": 459.627,
+     "t1": 459.908
+    },
+    {
+     "w": "怎麼",
+     "t0": 459.908,
+     "t1": 460.158
+    },
+    {
+     "w": "上學",
+     "t0": 460.158,
+     "t1": 461.142
+    },
+    {
+     "w": "先",
+     "t0": 462.217,
+     "t1": 462.608
+    },
+    {
+     "w": "聽",
+     "t0": 462.608,
+     "t1": 463.123
+    },
+    {
+     "w": "再",
+     "t0": 463.264,
+     "t1": 463.452
+    },
+    {
+     "w": "換",
+     "t0": 463.452,
+     "t1": 463.639
+    },
+    {
+     "w": "你",
+     "t0": 463.639,
+     "t1": 463.764
+    },
+    {
+     "w": "說",
+     "t0": 463.764,
+     "t1": 464.014
+    },
+    {
+     "w": "He",
+     "t0": 464.014,
+     "t1": 464.155
+    },
+    {
+     "w": "goes",
+     "t0": 464.155,
+     "t1": 464.452
+    },
+    {
+     "w": "或",
+     "t0": 464.452,
+     "t1": 464.577
+    },
+    {
+     "w": "She",
+     "t0": 464.577,
+     "t1": 464.748
+    },
+    {
+     "w": "goes",
+     "t0": 464.748,
+     "t1": 465.405
+    }
+   ],
+   "t0": 459.13,
+   "t1": 465.399
+  },
+  {
+   "i": 121,
+   "sec": "06-story",
+   "who": "mia",
+   "kind": "say",
+   "vis": "story:Mia；Mia 立牌＋by boat 出發；字幕",
+   "text": "I go to school by boat.",
+   "voices": [
+    "en-AU-NatashaNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 465.767,
+     "t1": 465.798
+    },
+    {
+     "w": "go",
+     "t0": 465.954,
+     "t1": 466.173
+    },
+    {
+     "w": "to",
+     "t0": 466.267,
+     "t1": 466.376
+    },
+    {
+     "w": "school",
+     "t0": 466.376,
+     "t1": 466.829
+    },
+    {
+     "w": "by",
+     "t0": 466.829,
+     "t1": 466.985
+    },
+    {
+     "w": "boat",
+     "t0": 467.079,
+     "t1": 467.454
+    }
+   ],
+   "t0": 465.849,
+   "t1": 467.766
+  },
+  {
+   "i": 122,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:Mia；card:She goes to school by boat.；she",
+   "text": "She goes to school by boat.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 468.06,
+     "t1": 468.372
+    },
+    {
+     "w": "goes",
+     "t0": 468.388,
+     "t1": 468.701
+    },
+    {
+     "w": "to",
+     "t0": 468.716,
+     "t1": 468.826
+    },
+    {
+     "w": "school",
+     "t0": 468.841,
+     "t1": 469.294
+    },
+    {
+     "w": "by",
+     "t0": 469.31,
+     "t1": 469.482
+    },
+    {
+     "w": "boat",
+     "t0": 469.497,
+     "t1": 470.029
+    }
+   ],
+   "t0": 468.216,
+   "t1": 470.138
+  },
+  {
+   "i": 123,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Mia；card:She goes to school by boat.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 470.838,
+   "t1": 473.838
+  },
+  {
+   "i": 124,
+   "sec": "06-story",
+   "who": "raj",
+   "kind": "say",
+   "vis": "story:Raj；Raj 立牌＋by train 出發；字幕",
+   "text": "I go to school by train.",
+   "voices": [
+    "en-IN-PrabhatNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 474.245,
+     "t1": 474.433
+    },
+    {
+     "w": "go",
+     "t0": 474.433,
+     "t1": 474.745
+    },
+    {
+     "w": "to",
+     "t0": 474.745,
+     "t1": 474.917
+    },
+    {
+     "w": "school",
+     "t0": 474.917,
+     "t1": 475.448
+    },
+    {
+     "w": "by",
+     "t0": 475.448,
+     "t1": 475.761
+    },
+    {
+     "w": "train",
+     "t0": 475.761,
+     "t1": 476.339
+    }
+   ],
+   "t0": 474.288,
+   "t1": 476.441
+  },
+  {
+   "i": 125,
+   "sec": "06-story",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "story:Raj；card:He goes to school by train.；he",
+   "text": "He goes to school by train.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 476.74,
+     "t1": 476.943
+    },
+    {
+     "w": "goes",
+     "t0": 476.974,
+     "t1": 477.271
+    },
+    {
+     "w": "to",
+     "t0": 477.302,
+     "t1": 477.427
+    },
+    {
+     "w": "school",
+     "t0": 477.443,
+     "t1": 477.88
+    },
+    {
+     "w": "by",
+     "t0": 477.911,
+     "t1": 478.068
+    },
+    {
+     "w": "train",
+     "t0": 478.083,
+     "t1": 478.677
+    }
+   ],
+   "t0": 476.891,
+   "t1": 478.824
+  },
+  {
+   "i": 126,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Raj；card:He goes to school by train.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 479.524,
+   "t1": 482.524
+  },
+  {
+   "i": 127,
+   "sec": "06-story",
+   "who": "yuki",
+   "kind": "say",
+   "vis": "story:Yuki；Yuki 立牌＋by bike 出發；字幕",
+   "text": "I go to school by bike.",
+   "voices": [
+    "en-US-JennyNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 482.871,
+     "t1": 483.043
+    },
+    {
+     "w": "go",
+     "t0": 483.059,
+     "t1": 483.215
+    },
+    {
+     "w": "to",
+     "t0": 483.231,
+     "t1": 483.34
+    },
+    {
+     "w": "school",
+     "t0": 483.356,
+     "t1": 483.715
+    },
+    {
+     "w": "by",
+     "t0": 483.731,
+     "t1": 483.903
+    },
+    {
+     "w": "bike",
+     "t0": 483.918,
+     "t1": 484.543
+    }
+   ],
+   "t0": 482.974,
+   "t1": 484.583
+  },
+  {
+   "i": 128,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:Yuki；card:She goes to school by bike.；she",
+   "text": "She goes to school by bike.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 484.867,
+     "t1": 485.18
+    },
+    {
+     "w": "goes",
+     "t0": 485.195,
+     "t1": 485.492
+    },
+    {
+     "w": "to",
+     "t0": 485.508,
+     "t1": 485.617
+    },
+    {
+     "w": "school",
+     "t0": 485.633,
+     "t1": 486.086
+    },
+    {
+     "w": "by",
+     "t0": 486.102,
+     "t1": 486.289
+    },
+    {
+     "w": "bike",
+     "t0": 486.305,
+     "t1": 486.867
+    }
+   ],
+   "t0": 485.033,
+   "t1": 487.003
+  },
+  {
+   "i": 129,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Yuki；card:She goes to school by bike.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 487.703,
+   "t1": 490.703
+  },
+  {
+   "i": 130,
+   "sec": "06-story",
+   "who": "wei",
+   "kind": "say",
+   "vis": "story:Wei；Wei 立牌＋by MRT 出發；字幕",
+   "text": "I go to school by MRT.",
+   "voices": [
+    "en-SG-WayneNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 491.024,
+     "t1": 491.242
+    },
+    {
+     "w": "go",
+     "t0": 491.258,
+     "t1": 491.508
+    },
+    {
+     "w": "to",
+     "t0": 491.524,
+     "t1": 491.68
+    },
+    {
+     "w": "school",
+     "t0": 491.696,
+     "t1": 492.149
+    },
+    {
+     "w": "by",
+     "t0": 492.164,
+     "t1": 492.399
+    },
+    {
+     "w": "MRT",
+     "t0": 492.414,
+     "t1": 493.383
+    }
+   ],
+   "t0": 491.153,
+   "t1": 493.449
+  },
+  {
+   "i": 131,
+   "sec": "06-story",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "story:Wei；card:He goes to school by MRT.；he",
+   "text": "He goes to school by MRT.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 493.748,
+     "t1": 493.951
+    },
+    {
+     "w": "goes",
+     "t0": 493.982,
+     "t1": 494.279
+    },
+    {
+     "w": "to",
+     "t0": 494.31,
+     "t1": 494.435
+    },
+    {
+     "w": "school",
+     "t0": 494.451,
+     "t1": 494.92
+    },
+    {
+     "w": "by",
+     "t0": 494.951,
+     "t1": 495.138
+    },
+    {
+     "w": "MRT",
+     "t0": 495.154,
+     "t1": 496.045
+    }
+   ],
+   "t0": 493.899,
+   "t1": 496.164
+  },
+  {
+   "i": 132,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Wei；card:He goes to school by MRT.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 496.864,
+   "t1": 499.864
+  },
+  {
+   "i": 133,
+   "sec": "06-story",
+   "who": "sofia",
+   "kind": "say",
+   "vis": "story:Sofia；Sofia 立牌＋by plane 出發；字幕",
+   "text": "I go to school by plane.",
+   "voices": [
+    "en-IE-EmilyNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 500.166,
+     "t1": 500.448
+    },
+    {
+     "w": "go",
+     "t0": 500.448,
+     "t1": 500.745
+    },
+    {
+     "w": "to",
+     "t0": 500.745,
+     "t1": 500.885
+    },
+    {
+     "w": "school",
+     "t0": 500.885,
+     "t1": 501.385
+    },
+    {
+     "w": "by",
+     "t0": 501.385,
+     "t1": 501.651
+    },
+    {
+     "w": "plane",
+     "t0": 501.651,
+     "t1": 502.416
+    }
+   ],
+   "t0": 500.314,
+   "t1": 502.425
+  },
+  {
+   "i": 134,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:Sofia；card:She goes to school by plane.；she",
+   "text": "She goes to school by plane.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 502.712,
+     "t1": 503.025
+    },
+    {
+     "w": "goes",
+     "t0": 503.04,
+     "t1": 503.337
+    },
+    {
+     "w": "to",
+     "t0": 503.353,
+     "t1": 503.462
+    },
+    {
+     "w": "school",
+     "t0": 503.478,
+     "t1": 503.993
+    },
+    {
+     "w": "by",
+     "t0": 504.009,
+     "t1": 504.181
+    },
+    {
+     "w": "plane",
+     "t0": 504.196,
+     "t1": 504.821
+    }
+   ],
+   "t0": 502.875,
+   "t1": 504.977
+  },
+  {
+   "i": 135,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Sofia；card:She goes to school by plane.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 505.677,
+   "t1": 508.677
+  },
+  {
+   "i": 136,
+   "sec": "06-story",
+   "who": "kai",
+   "kind": "say",
+   "vis": "story:Kai；Kai 立牌＋by scooter 出發；字幕",
+   "text": "I go to school by scooter.",
+   "voices": [
+    "en-HK-SamNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 509.006,
+     "t1": 509.232
+    },
+    {
+     "w": "go",
+     "t0": 509.249,
+     "t1": 509.406
+    },
+    {
+     "w": "to",
+     "t0": 509.44,
+     "t1": 509.562
+    },
+    {
+     "w": "school",
+     "t0": 509.579,
+     "t1": 510.083
+    },
+    {
+     "w": "by",
+     "t0": 510.117,
+     "t1": 510.308
+    },
+    {
+     "w": "scooter",
+     "t0": 510.343,
+     "t1": 511.107
+    }
+   ],
+   "t0": 509.127,
+   "t1": 511.156
+  },
+  {
+   "i": 137,
+   "sec": "06-story",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "story:Kai；card:He goes to school by scooter.；he",
+   "text": "He goes to school by scooter.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 511.457,
+     "t1": 511.66
+    },
+    {
+     "w": "goes",
+     "t0": 511.691,
+     "t1": 512.004
+    },
+    {
+     "w": "to",
+     "t0": 512.035,
+     "t1": 512.16
+    },
+    {
+     "w": "school",
+     "t0": 512.176,
+     "t1": 512.629
+    },
+    {
+     "w": "by",
+     "t0": 512.66,
+     "t1": 512.832
+    },
+    {
+     "w": "scooter",
+     "t0": 512.863,
+     "t1": 513.566
+    }
+   ],
+   "t0": 511.606,
+   "t1": 513.642
+  },
+  {
+   "i": 138,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Kai；card:He goes to school by scooter.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 514.342,
+   "t1": 517.342
+  },
+  {
+   "i": 139,
+   "sec": "06-story",
+   "who": "lily",
+   "kind": "say",
+   "vis": "story:Lily；Lily 立牌＋by bus 出發；字幕",
+   "text": "I go to school by bus.",
+   "voices": [
+    "en-GB-MaisieNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 517.702,
+     "t1": 517.827
+    },
+    {
+     "w": "go",
+     "t0": 517.843,
+     "t1": 518.093
+    },
+    {
+     "w": "to",
+     "t0": 518.108,
+     "t1": 518.265
+    },
+    {
+     "w": "school",
+     "t0": 518.28,
+     "t1": 518.749
+    },
+    {
+     "w": "by",
+     "t0": 518.765,
+     "t1": 518.936
+    },
+    {
+     "w": "bus",
+     "t0": 518.952,
+     "t1": 519.577
+    }
+   ],
+   "t0": 517.792,
+   "t1": 519.668
+  },
+  {
+   "i": 140,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:Lily；card:She goes to school by bus.；she",
+   "text": "She goes to school by bus.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 519.959,
+     "t1": 520.271
+    },
+    {
+     "w": "goes",
+     "t0": 520.287,
+     "t1": 520.584
+    },
+    {
+     "w": "to",
+     "t0": 520.6,
+     "t1": 520.693
+    },
+    {
+     "w": "school",
+     "t0": 520.709,
+     "t1": 521.146
+    },
+    {
+     "w": "by",
+     "t0": 521.162,
+     "t1": 521.334
+    },
+    {
+     "w": "bus",
+     "t0": 521.35,
+     "t1": 521.943
+    }
+   ],
+   "t0": 520.118,
+   "t1": 522.069
+  },
+  {
+   "i": 141,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Lily；card:She goes to school by bus.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 522.769,
+   "t1": 525.769
+  },
+  {
+   "i": 142,
+   "sec": "06-story",
+   "who": "tom",
+   "kind": "say",
+   "vis": "story:Tom；Tom 立牌＋by car 出發；字幕",
+   "text": "I go to school by car.",
+   "voices": [
+    "en-US-EricNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 526.105,
+     "t1": 526.324
+    },
+    {
+     "w": "go",
+     "t0": 526.339,
+     "t1": 526.495
+    },
+    {
+     "w": "to",
+     "t0": 526.511,
+     "t1": 526.62
+    },
+    {
+     "w": "school",
+     "t0": 526.636,
+     "t1": 527.058
+    },
+    {
+     "w": "by",
+     "t0": 527.074,
+     "t1": 527.277
+    },
+    {
+     "w": "car",
+     "t0": 527.292,
+     "t1": 527.886
+    }
+   ],
+   "t0": 526.219,
+   "t1": 527.957
+  },
+  {
+   "i": 143,
+   "sec": "06-story",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "story:Tom；card:He goes to school by car.；he",
+   "text": "He goes to school by car.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 528.284,
+     "t1": 528.456
+    },
+    {
+     "w": "goes",
+     "t0": 528.487,
+     "t1": 528.753
+    },
+    {
+     "w": "to",
+     "t0": 528.784,
+     "t1": 528.909
+    },
+    {
+     "w": "school",
+     "t0": 528.925,
+     "t1": 529.347
+    },
+    {
+     "w": "by",
+     "t0": 529.378,
+     "t1": 529.55
+    },
+    {
+     "w": "car",
+     "t0": 529.581,
+     "t1": 530.175
+    }
+   ],
+   "t0": 528.407,
+   "t1": 530.237
+  },
+  {
+   "i": 144,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Tom；card:He goes to school by car.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 530.937,
+   "t1": 533.937
+  },
+  {
+   "i": 145,
+   "sec": "06-story",
+   "who": "jisu",
+   "kind": "say",
+   "vis": "story:Jisu；Jisu 立牌＋by taxi 出發；字幕",
+   "text": "I go to school by taxi.",
+   "voices": [
+    "en-NZ-MollyNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 534.3,
+     "t1": 534.332
+    },
+    {
+     "w": "go",
+     "t0": 534.497,
+     "t1": 534.727
+    },
+    {
+     "w": "to",
+     "t0": 534.826,
+     "t1": 534.941
+    },
+    {
+     "w": "school",
+     "t0": 534.941,
+     "t1": 535.418
+    },
+    {
+     "w": "by",
+     "t0": 535.418,
+     "t1": 535.566
+    },
+    {
+     "w": "taxi",
+     "t0": 535.665,
+     "t1": 536.257
+    }
+   ],
+   "t0": 534.387,
+   "t1": 536.565
+  },
+  {
+   "i": 146,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:Jisu；card:She goes to school by taxi.；she",
+   "text": "She goes to school by taxi.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 536.861,
+     "t1": 537.158
+    },
+    {
+     "w": "goes",
+     "t0": 537.174,
+     "t1": 537.455
+    },
+    {
+     "w": "to",
+     "t0": 537.471,
+     "t1": 537.564
+    },
+    {
+     "w": "school",
+     "t0": 537.58,
+     "t1": 538.033
+    },
+    {
+     "w": "by",
+     "t0": 538.049,
+     "t1": 538.205
+    },
+    {
+     "w": "taxi",
+     "t0": 538.221,
+     "t1": 538.955
+    }
+   ],
+   "t0": 537.015,
+   "t1": 539.101
+  },
+  {
+   "i": 147,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Jisu；card:She goes to school by taxi.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 539.801,
+   "t1": 542.801
+  },
+  {
+   "i": 148,
+   "sec": "06-story",
+   "who": "nam",
+   "kind": "say",
+   "vis": "story:Nam；Nam 立牌＋on foot 出發；字幕",
+   "text": "I go to school on foot.",
+   "voices": [
+    "en-PH-JamesNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 543.139,
+     "t1": 543.311
+    },
+    {
+     "w": "go",
+     "t0": 543.373,
+     "t1": 543.514
+    },
+    {
+     "w": "to",
+     "t0": 543.592,
+     "t1": 543.639
+    },
+    {
+     "w": "school",
+     "t0": 543.67,
+     "t1": 544.014
+    },
+    {
+     "w": "on",
+     "t0": 544.061,
+     "t1": 544.233
+    },
+    {
+     "w": "foot",
+     "t0": 544.264,
+     "t1": 544.608
+    }
+   ],
+   "t0": 543.251,
+   "t1": 544.684
+  },
+  {
+   "i": 149,
+   "sec": "06-story",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "story:Nam；card:He goes to school on foot.；he",
+   "text": "He goes to school on foot.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 544.983,
+     "t1": 545.187
+    },
+    {
+     "w": "goes",
+     "t0": 545.218,
+     "t1": 545.515
+    },
+    {
+     "w": "to",
+     "t0": 545.546,
+     "t1": 545.671
+    },
+    {
+     "w": "school",
+     "t0": 545.687,
+     "t1": 546.171
+    },
+    {
+     "w": "on",
+     "t0": 546.202,
+     "t1": 546.358
+    },
+    {
+     "w": "foot",
+     "t0": 546.39,
+     "t1": 546.858
+    }
+   ],
+   "t0": 545.134,
+   "t1": 546.952
+  },
+  {
+   "i": 150,
+   "sec": "06-story",
+   "who": "-",
+   "kind": "turn",
+   "vis": "story:Nam；card:He goes to school on foot.；Your turn! 換你唸！",
+   "sec_len": 3.0,
+   "t0": 547.652,
+   "t1": 550.652
+  },
+  {
+   "i": 151,
+   "sec": "06-story",
+   "who": "nova",
+   "kind": "say",
+   "vis": "story:end；十位朋友在紙箱學校前；鐘響",
+   "text": "Everyone is at school. Good morning!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Everyone",
+     "t0": 550.95,
+     "t1": 551.528
+    },
+    {
+     "w": "is",
+     "t0": 551.543,
+     "t1": 551.684
+    },
+    {
+     "w": "at",
+     "t0": 551.7,
+     "t1": 551.809
+    },
+    {
+     "w": "school",
+     "t0": 551.825,
+     "t1": 552.403
+    },
+    {
+     "w": "Good",
+     "t0": 552.868,
+     "t1": 553.118
+    },
+    {
+     "w": "morning",
+     "t0": 553.134,
+     "t1": 553.712
+    }
+   ],
+   "t0": 551.102,
+   "t1": 553.876
+  },
+  {
+   "i": 152,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "quiz:by boat；story 片段，交通工具先遮住",
+   "text": "Game time! How does she go to school?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Game",
+     "t0": 554.743,
+     "t1": 555.134
+    },
+    {
+     "w": "time",
+     "t0": 555.165,
+     "t1": 555.697
+    },
+    {
+     "w": "How",
+     "t0": 556.818,
+     "t1": 557.053
+    },
+    {
+     "w": "does",
+     "t0": 557.084,
+     "t1": 557.256
+    },
+    {
+     "w": "she",
+     "t0": 557.287,
+     "t1": 557.443
+    },
+    {
+     "w": "go",
+     "t0": 557.475,
+     "t1": 557.647
+    },
+    {
+     "w": "to",
+     "t0": 557.662,
+     "t1": 557.756
+    },
+    {
+     "w": "school",
+     "t0": 557.772,
+     "t1": 558.428
+    }
+   ],
+   "t0": 554.876,
+   "t1": 558.458
+  },
+  {
+   "i": 153,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "zh",
+   "vis": "quiz:by boat",
+   "text": "看動畫，說出交通工具。",
+   "voices": [
+    "zh-TW-YunJheNeural"
+   ],
+   "words": [
+    {
+     "w": "看",
+     "t0": 558.744,
+     "t1": 559.04
+    },
+    {
+     "w": "動畫",
+     "t0": 559.04,
+     "t1": 559.884
+    },
+    {
+     "w": "說出",
+     "t0": 560.009,
+     "t1": 560.587
+    },
+    {
+     "w": "交通",
+     "t0": 560.587,
+     "t1": 560.931
+    },
+    {
+     "w": "工具",
+     "t0": 560.931,
+     "t1": 561.79
+    }
+   ],
+   "t0": 558.908,
+   "t1": 561.698
+  },
+  {
+   "i": 154,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "quiz:by boat；倒數條",
+   "sec_len": 3.0,
+   "t0": 562.398,
+   "t1": 565.398
+  },
+  {
+   "i": 155,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "quiz:by boat；揭曉；card:She goes to school by boat.",
+   "text": "She goes to school by boat!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 565.694,
+     "t1": 565.991
+    },
+    {
+     "w": "goes",
+     "t0": 566.006,
+     "t1": 566.319
+    },
+    {
+     "w": "to",
+     "t0": 566.334,
+     "t1": 566.444
+    },
+    {
+     "w": "school",
+     "t0": 566.459,
+     "t1": 566.866
+    },
+    {
+     "w": "by",
+     "t0": 566.881,
+     "t1": 567.053
+    },
+    {
+     "w": "boat",
+     "t0": 567.069,
+     "t1": 567.584
+    }
+   ],
+   "t0": 565.848,
+   "t1": 567.701
+  },
+  {
+   "i": 156,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "quiz:by taxi；story 片段遮住",
+   "text": "And Jisu?",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 568.002,
+     "t1": 568.299
+    },
+    {
+     "w": "Jisu",
+     "t0": 568.315,
+     "t1": 568.909
+    }
+   ],
+   "t0": 568.151,
+   "t1": 569.042
+  },
+  {
+   "i": 157,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "quiz:by taxi；倒數條",
+   "sec_len": 3.0,
+   "t0": 569.742,
+   "t1": 572.742
+  },
+  {
+   "i": 158,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "quiz:by taxi；揭曉；card:She goes to school by taxi.",
+   "text": "She goes to school by taxi!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 573.076,
+     "t1": 573.326
+    },
+    {
+     "w": "goes",
+     "t0": 573.357,
+     "t1": 573.622
+    },
+    {
+     "w": "to",
+     "t0": 573.654,
+     "t1": 573.779
+    },
+    {
+     "w": "school",
+     "t0": 573.794,
+     "t1": 574.216
+    },
+    {
+     "w": "by",
+     "t0": 574.248,
+     "t1": 574.404
+    },
+    {
+     "w": "taxi",
+     "t0": 574.435,
+     "t1": 575.138
+    }
+   ],
+   "t0": 573.192,
+   "t1": 575.235
+  },
+  {
+   "i": 159,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "quiz:on foot；story 片段遮住",
+   "text": "And Nam?",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "And",
+     "t0": 575.574,
+     "t1": 575.855
+    },
+    {
+     "w": "Nam",
+     "t0": 575.886,
+     "t1": 576.417
+    }
+   ],
+   "t0": 575.685,
+   "t1": 576.517
+  },
+  {
+   "i": 160,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "quiz:on foot；倒數條",
+   "sec_len": 3.0,
+   "t0": 577.217,
+   "t1": 580.217
+  },
+  {
+   "i": 161,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "quiz:on foot；揭曉；card:He goes to school on foot.",
+   "text": "He goes to school on foot!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 580.448,
+     "t1": 580.682
+    },
+    {
+     "w": "goes",
+     "t0": 580.698,
+     "t1": 580.979
+    },
+    {
+     "w": "to",
+     "t0": 580.995,
+     "t1": 581.104
+    },
+    {
+     "w": "school",
+     "t0": 581.12,
+     "t1": 581.495
+    },
+    {
+     "w": "on",
+     "t0": 581.51,
+     "t1": 581.713
+    },
+    {
+     "w": "foot",
+     "t0": 581.729,
+     "t1": 582.229
+    }
+   ],
+   "t0": 580.667,
+   "t1": 582.338
+  },
+  {
+   "i": 162,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "gogoes；兩個按鈕 go／goes",
+   "text": "Now, go or goes? Listen!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Now",
+     "t0": 582.626,
+     "t1": 583.329
+    },
+    {
+     "w": "go",
+     "t0": 583.376,
+     "t1": 583.735
+    },
+    {
+     "w": "or",
+     "t0": 583.751,
+     "t1": 583.954
+    },
+    {
+     "w": "goes",
+     "t0": 583.97,
+     "t1": 584.61
+    },
+    {
+     "w": "Listen",
+     "t0": 585.076,
+     "t1": 585.81
+    }
+   ],
+   "t0": 582.788,
+   "t1": 585.955
+  },
+  {
+   "i": 163,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "gogoes",
+   "text": "聽句子，選 go 還是 goes。",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "聽句子",
+     "t0": 586.306,
+     "t1": 587.228
+    },
+    {
+     "w": "選",
+     "t0": 587.525,
+     "t1": 587.759
+    },
+    {
+     "w": "go",
+     "t0": 587.837,
+     "t1": 587.962
+    },
+    {
+     "w": "還是",
+     "t0": 588.025,
+     "t1": 588.416
+    },
+    {
+     "w": "goes",
+     "t0": 588.447,
+     "t1": 588.9
+    }
+   ],
+   "t0": 586.405,
+   "t1": 589.051
+  },
+  {
+   "i": 164,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "gogoes:I ___ to school by bike.",
+   "text": "I... blank... to school by bike.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "I",
+     "t0": 589.38,
+     "t1": 589.614
+    },
+    {
+     "w": "blank",
+     "t0": 589.911,
+     "t1": 590.396
+    },
+    {
+     "w": "to",
+     "t0": 590.614,
+     "t1": 590.739
+    },
+    {
+     "w": "school",
+     "t0": 590.755,
+     "t1": 591.177
+    },
+    {
+     "w": "by",
+     "t0": 591.208,
+     "t1": 591.364
+    },
+    {
+     "w": "bike",
+     "t0": 591.38,
+     "t1": 591.896
+    }
+   ],
+   "t0": 589.501,
+   "t1": 591.971
+  },
+  {
+   "i": 165,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "gogoes:I ___ to school by bike.；倒數條",
+   "sec_len": 3.0,
+   "t0": 592.671,
+   "t1": 595.671
+  },
+  {
+   "i": 166,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "gogoes:I go to school by bike.；揭曉 go",
+   "text": "Go! I go to school by bike.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Go",
+     "t0": 595.962,
+     "t1": 596.556
+    },
+    {
+     "w": "I",
+     "t0": 597.022,
+     "t1": 597.318
+    },
+    {
+     "w": "go",
+     "t0": 597.334,
+     "t1": 597.522
+    },
+    {
+     "w": "to",
+     "t0": 597.537,
+     "t1": 597.662
+    },
+    {
+     "w": "school",
+     "t0": 597.678,
+     "t1": 598.131
+    },
+    {
+     "w": "by",
+     "t0": 598.147,
+     "t1": 598.318
+    },
+    {
+     "w": "bike",
+     "t0": 598.334,
+     "t1": 598.897
+    }
+   ],
+   "t0": 596.121,
+   "t1": 599.015
+  },
+  {
+   "i": 167,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "gogoes:Wei ___ to school by MRT.",
+   "text": "Wei... blank... to school by MRT.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "Wei",
+     "t0": 599.344,
+     "t1": 599.735
+    },
+    {
+     "w": "blank",
+     "t0": 600.032,
+     "t1": 600.516
+    },
+    {
+     "w": "to",
+     "t0": 600.719,
+     "t1": 600.844
+    },
+    {
+     "w": "school",
+     "t0": 600.86,
+     "t1": 601.329
+    },
+    {
+     "w": "by",
+     "t0": 601.36,
+     "t1": 601.563
+    },
+    {
+     "w": "MRT",
+     "t0": 601.579,
+     "t1": 602.423
+    }
+   ],
+   "t0": 599.465,
+   "t1": 602.549
+  },
+  {
+   "i": 168,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "gogoes:Wei ___ to school by MRT.；倒數條",
+   "sec_len": 3.0,
+   "t0": 603.249,
+   "t1": 606.249
+  },
+  {
+   "i": 169,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "gogoes:Wei goes to school by MRT.；揭曉 goes",
+   "text": "Goes! Wei goes to school by MRT.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Goes",
+     "t0": 606.531,
+     "t1": 607.312
+    },
+    {
+     "w": "Wei",
+     "t0": 607.778,
+     "t1": 608.137
+    },
+    {
+     "w": "goes",
+     "t0": 608.153,
+     "t1": 608.434
+    },
+    {
+     "w": "to",
+     "t0": 608.449,
+     "t1": 608.559
+    },
+    {
+     "w": "school",
+     "t0": 608.574,
+     "t1": 609.09
+    },
+    {
+     "w": "by",
+     "t0": 609.106,
+     "t1": 609.278
+    },
+    {
+     "w": "MRT",
+     "t0": 609.293,
+     "t1": 610.09
+    }
+   ],
+   "t0": 606.699,
+   "t1": 610.24
+  },
+  {
+   "i": 170,
+   "sec": "07-quiz",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "gogoes:She ___ to school by plane.",
+   "text": "She... blank... to school by plane.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "She",
+     "t0": 610.574,
+     "t1": 610.871
+    },
+    {
+     "w": "blank",
+     "t0": 611.121,
+     "t1": 611.59
+    },
+    {
+     "w": "to",
+     "t0": 611.762,
+     "t1": 611.887
+    },
+    {
+     "w": "school",
+     "t0": 611.903,
+     "t1": 612.309
+    },
+    {
+     "w": "by",
+     "t0": 612.34,
+     "t1": 612.481
+    },
+    {
+     "w": "plane",
+     "t0": 612.496,
+     "t1": 613.028
+    }
+   ],
+   "t0": 610.69,
+   "t1": 613.175
+  },
+  {
+   "i": 171,
+   "sec": "07-quiz",
+   "who": "-",
+   "kind": "turn",
+   "vis": "gogoes:She ___ to school by plane.；倒數條",
+   "sec_len": 3.0,
+   "t0": 613.875,
+   "t1": 616.875
+  },
+  {
+   "i": 172,
+   "sec": "07-quiz",
+   "who": "nova",
+   "kind": "say",
+   "vis": "gogoes:She goes to school by plane.；揭曉 goes",
+   "text": "Goes! She goes to school by plane.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Goes",
+     "t0": 617.156,
+     "t1": 617.938
+    },
+    {
+     "w": "She",
+     "t0": 618.403,
+     "t1": 618.716
+    },
+    {
+     "w": "goes",
+     "t0": 618.731,
+     "t1": 619.028
+    },
+    {
+     "w": "to",
+     "t0": 619.044,
+     "t1": 619.153
+    },
+    {
+     "w": "school",
+     "t0": 619.169,
+     "t1": 619.685
+    },
+    {
+     "w": "by",
+     "t0": 619.7,
+     "t1": 619.872
+    },
+    {
+     "w": "plane",
+     "t0": 619.888,
+     "t1": 620.513
+    }
+   ],
+   "t0": 617.325,
+   "t1": 620.658
+  },
+  {
+   "i": 173,
+   "sec": "08-end",
+   "who": "nova",
+   "kind": "say",
+   "vis": "card:I go to school by bus.",
+   "text": "Today we learned: I go to school by bus.",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Today",
+     "t0": 621.508,
+     "t1": 621.945
+    },
+    {
+     "w": "we",
+     "t0": 621.961,
+     "t1": 622.102
+    },
+    {
+     "w": "learned",
+     "t0": 622.117,
+     "t1": 622.648
+    },
+    {
+     "w": "I",
+     "t0": 623.039,
+     "t1": 623.133
+    },
+    {
+     "w": "go",
+     "t0": 623.148,
+     "t1": 623.32
+    },
+    {
+     "w": "to",
+     "t0": 623.336,
+     "t1": 623.461
+    },
+    {
+     "w": "school",
+     "t0": 623.477,
+     "t1": 623.977
+    },
+    {
+     "w": "by",
+     "t0": 623.992,
+     "t1": 624.18
+    },
+    {
+     "w": "bus",
+     "t0": 624.195,
+     "t1": 624.836
+    }
+   ],
+   "t0": 621.658,
+   "t1": 624.945
+  },
+  {
+   "i": 174,
+   "sec": "08-end",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "card:He goes… / She goes…；he；she",
+   "text": "He goes to school by train. She goes to school by bike.",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "He",
+     "t0": 625.244,
+     "t1": 625.447
+    },
+    {
+     "w": "goes",
+     "t0": 625.478,
+     "t1": 625.775
+    },
+    {
+     "w": "to",
+     "t0": 625.806,
+     "t1": 625.931
+    },
+    {
+     "w": "school",
+     "t0": 625.947,
+     "t1": 626.384
+    },
+    {
+     "w": "by",
+     "t0": 626.415,
+     "t1": 626.572
+    },
+    {
+     "w": "train",
+     "t0": 626.587,
+     "t1": 627.181
+    },
+    {
+     "w": "She",
+     "t0": 628.287,
+     "t1": 628.537
+    },
+    {
+     "w": "goes",
+     "t0": 628.569,
+     "t1": 628.85
+    },
+    {
+     "w": "to",
+     "t0": 628.881,
+     "t1": 629.006
+    },
+    {
+     "w": "school",
+     "t0": 629.022,
+     "t1": 629.444
+    },
+    {
+     "w": "by",
+     "t0": 629.475,
+     "t1": 629.631
+    },
+    {
+     "w": "bike",
+     "t0": 629.647,
+     "t1": 630.131
+    }
+   ],
+   "t0": 625.395,
+   "t1": 630.206
+  },
+  {
+   "i": 175,
+   "sec": "08-end",
+   "who": "nova",
+   "kind": "zh",
+   "vis": "三張字卡排在一起＋by／on",
+   "text": "說自己用 I go；說他、她或名字用 goes。走路是 on foot，其他用 by！",
+   "voices": [
+    "zh-TW-HsiaoChenNeural"
+   ],
+   "words": [
+    {
+     "w": "說",
+     "t0": 630.548,
+     "t1": 630.891
+    },
+    {
+     "w": "自己",
+     "t0": 630.923,
+     "t1": 631.235
+    },
+    {
+     "w": "用",
+     "t0": 631.313,
+     "t1": 631.485
+    },
+    {
+     "w": "I",
+     "t0": 631.532,
+     "t1": 631.673
+    },
+    {
+     "w": "go",
+     "t0": 631.735,
+     "t1": 631.97
+    },
+    {
+     "w": "說",
+     "t0": 632.282,
+     "t1": 632.563
+    },
+    {
+     "w": "他",
+     "t0": 632.595,
+     "t1": 633.001
+    },
+    {
+     "w": "她",
+     "t0": 633.282,
+     "t1": 633.47
+    },
+    {
+     "w": "或",
+     "t0": 633.532,
+     "t1": 633.735
+    },
+    {
+     "w": "名字",
+     "t0": 633.735,
+     "t1": 634.157
+    },
+    {
+     "w": "用",
+     "t0": 634.173,
+     "t1": 634.36
+    },
+    {
+     "w": "goes",
+     "t0": 634.454,
+     "t1": 634.907
+    },
+    {
+     "w": "走路",
+     "t0": 635.998,
+     "t1": 636.451
+    },
+    {
+     "w": "是",
+     "t0": 636.466,
+     "t1": 636.654
+    },
+    {
+     "w": "on",
+     "t0": 636.685,
+     "t1": 636.888
+    },
+    {
+     "w": "foot",
+     "t0": 636.904,
+     "t1": 637.279
+    },
+    {
+     "w": "其他",
+     "t0": 637.607,
+     "t1": 638.091
+    },
+    {
+     "w": "用",
+     "t0": 638.107,
+     "t1": 638.263
+    },
+    {
+     "w": "by",
+     "t0": 638.357,
+     "t1": 638.685
+    }
+   ],
+   "t0": 630.656,
+   "t1": 638.85
+  },
+  {
+   "i": 176,
+   "sec": "08-end",
+   "who": "cosmo",
+   "kind": "say",
+   "vis": "ride 總覽",
+   "text": "How do you go to school? Tell your friends!",
+   "voices": [
+    "en-US-GuyNeural"
+   ],
+   "words": [
+    {
+     "w": "How",
+     "t0": 639.172,
+     "t1": 639.391
+    },
+    {
+     "w": "do",
+     "t0": 639.422,
+     "t1": 639.532
+    },
+    {
+     "w": "you",
+     "t0": 639.547,
+     "t1": 639.688
+    },
+    {
+     "w": "go",
+     "t0": 639.719,
+     "t1": 639.876
+    },
+    {
+     "w": "to",
+     "t0": 639.891,
+     "t1": 640.001
+    },
+    {
+     "w": "school",
+     "t0": 640.032,
+     "t1": 640.704
+    },
+    {
+     "w": "Tell",
+     "t0": 641.81,
+     "t1": 642.122
+    },
+    {
+     "w": "your",
+     "t0": 642.154,
+     "t1": 642.341
+    },
+    {
+     "w": "friends",
+     "t0": 642.372,
+     "t1": 643.138
+    }
+   ],
+   "t0": 639.3,
+   "t1": 643.212
+  },
+  {
+   "i": 177,
+   "sec": "08-end",
+   "who": "nova",
+   "kind": "say",
+   "vis": "兩位老師揮手 P02",
+   "text": "Bye-bye, class!",
+   "voices": [
+    "en-US-AvaNeural"
+   ],
+   "words": [
+    {
+     "w": "Bye-bye",
+     "t0": 643.497,
+     "t1": 644.153
+    },
+    {
+     "w": "class",
+     "t0": 644.185,
+     "t1": 644.856
+    }
+   ],
+   "t0": 643.662,
+   "t1": 644.977
+  }
+ ]
+}
