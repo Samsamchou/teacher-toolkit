@@ -1,5 +1,7 @@
 # 3D Planet 二水小行星・逛街版 交接（2026-10-25）
 
+> **做下一個地點（例：彰化市）先讀 `新地點小行星製作手冊.md`**；完整踩坑在 `工作流程與踩坑紀錄.md`（第四節＝v4）。Colab 3D 模型腳本：`godot-ershui-planet/tools/colab_hy3d/`。
+
 規格：`rdq/RDQ-spec-ershui-planet-stroll-20261025.md`（status: confirmed）。參考作品分析：`資料/keelung-planet-分析筆記-20261025.md`。
 
 ## 資料夾
@@ -70,3 +72,24 @@
 - 修正：首頁空拍中途點按鈕，遊戲裡天空會一直是星空 → 非 fly 鏡頭一律 set_space(0)。招牌 Label3D 改單面（背面不會出現反字）。
 - 二水 3D 闖關（`tools/2026 3D games/godot-ershui-quest`）改用這裡的 bld_*.glb（10 棟＋公園火車頭＋草原地景），刪掉 11 組舊模型；遊戲檔 26.9 MB（新建築底色貼圖 512）。
 - 10/26 已上正式站（staging 只差 quest3d、ershui-planet、兩個任務 data.js 共 6 檔）。
+
+## v4 真實二水街屋＋Listen and Guess（2026-11-08，RDQ-spec-ershui-planet-real-streets-listen-guess-20261108.md，confirmed rev 2）
+- **街屋清冊**：`資料/街屋清冊-初稿-20261108.md`（網路查證，約 80 筆）；程式版 `godot-ershui-planet/tools/shops_ershui.py`（48 家店＋8 棟新地標，用門牌在 OSM 同名道路上內插位置；連鎖用通用名、住家不放名字門牌）。光文路 82 號是五分田（遊戲顯示「飲料店」）；清心福全已收。未放進去的 5 家：自行車出租、霖園茶業、水煎包麵線、雪莉髮型、阿添切仔麵（那一段太擠）。
+- **地圖**：OSM 重新下載 `資料/osm/ershui-downtown-20261108.json`（範圍往北放大）；`build_osm_map.py` RAD 460→600；OSM 沒畫到的店面補 5 m 寬店屋（14 棟），4 條主要街道（光文路、員集路三／四段、惠民路）空著的臨街面補一般透天（231 棟）。建築 550→863。
+- **2.5D 店面**：`tools/make_storefronts.py` 畫 24 種店內圖（`assets/textures/storefronts.png`）；`world.gd` `_shopfront` 貼在店家一樓＋亭仔腳招牌＋真店名（Label3D）；店面和店名跟著方塊一起淡出（`_show_shops`）。
+- **8 棟新地標**（亞洲旅社、詹貴賓牙醫、德成百貨行、美珍鞋坊、恩生診所、二水鄉農會、安德宮、水餃店）：Codex 參考圖 `資料/generated-images/buildings-v4/` → Colab G4 **Hunyuan3D-2**（每棟約 1 分鐘；腳本在 scratchpad/hy3d：要 `transformers==4.48.3 diffusers==0.31.0 huggingface_hub<0.30`，而且要用 subprocess 另開 python 跑，不然 Jupyter kernel 的 Pillow 舊版衝突）→ `tools/shrink_glb_texture.py`（2048 PNG→512 JPEG、調亮 1.15；3.6 MB→0.6 MB）→ `assets/models/bld_<id>.glb`；原檔在 `資料/hy3d-models/`。Tripo 帳號只剩 140 點，老師選 Colab。
+- **首頁空拍**：改沿光文路 車站→亞洲旅社→牙醫→德成→鞋坊→員集路…（`_build_fly_route`）。
+- **Listen and Guess**（首頁第 7 種模式，要學號）：外框 `site/public/ershui-3d-quest-planetlisten/`（`listen-app.mjs` 題目面板：選擇／拖放（五處可挖、挖 3 格、一定挖地點、學校句沒有 the → the 當干擾字）／口說（不顯示答案句、AI 總分 80 以上才可揭曉、連 2 次未滿出「句型示範」嗶聲蓋地點、AI 連 2 次失敗改選擇題）；任務代號 ershui-3d-quest-planetlisten，missions.mjs 已加）。遊戲 `game.gd` `_listen_question`／`_host_ask`／`_poll_host`／`play_amb`；情境 `data/listen.json`；語音 `tools/make_listen_voice.py`（Ken＝Guy +18Hz，學生答句＝AnaNeural）；環境音 `tools/make_ambience.py`（KIE Suno Sounds 每層 2.5 點，分層生成再疊，重點聲 -16、背景 -36；老師選定 `資料/ambience/final/`：診所／餐廳／飲料店用 B）。測試：`PERSONAL=1 LISTEN=1 --test`；網頁 `?fakeai=1`（只在 localhost／預覽網址）。
+- **口說 AI**：老師選 B＝在 g6-english-online-learning 自建（和 hwg5-su-to-u04-story 同做法：Firebase AI Logic、gemini-3.7-flash、reCAPTCHA Enterprise App Check）。11/08 已開 API（recaptchaenterprise、firebaseappcheck、firebasevertexai、aiplatform）、建 reCAPTCHA 金鑰 6LdUgxUu…（只允許 hwg5-clock-tower.web.app／firebaseapp.com／ershui-preview）、註冊在 web app 1:738830028920:web:01690c8e…、AI Logic（服務名 firebaseml.googleapis.com）App Check **ENFORCED**。**真麥克風還沒測**（要老師 iPad）。
+- pck 52→66 MB。只上預覽 ershui-preview；正式站未動。
+- KIE 花費：環境音約 117 點（8970→8853）；Colab 約 8 單位。
+
+### v4 續（2026-11-08 下午）
+- **位置修正（老師指出）**：亞洲旅社＝光文路便利商店（OK，9 號）隔壁往車站方向第 3 間（`rel`）；詹貴賓牙醫、德成百貨行移到亞洲旅社那一側（`reldoor`：從便利商店門口沿店面線往三角仔 6.5／11.5 遊戲 m）；恩生診所＝7-11（員集路四段 8）隔壁、退到路邊不壓馬路；兩家飲料店（teatop、tea2）與水餃店：沿街位置不變、拉到路邊（`FRONT_FIX`／`snap`）。地標一律 `lm`：不吸附到旁邊大建築、底下房子拿掉。
+- **二水國小重建**（RDQ `rdq/RDQ-spec-ershui-elementary-rebuild-20261108.md`，confirmed rev 2，老師驗收「可以」）：真實大小、OSM 校界與 7 棟校舍輪廓；配置圖 `資料/school-layout-check-20261108.png`（v3）。南教學大樓＝紫紅磚主樓（拱窗、轉角塔），北教學大樓＋行政大樓＝米白 L 形；群育館＝Colab 模型 `bld_school_gym`（亮度 1.45）；跑道由程式找「離每棟校舍 ≥1.5 m、在校界內」最大的（約 109×58 m，老師：群育館不可以跟操場重疊）；司令台、球場、樹、大老樹、正門圓環。**西門＝明德橋靠校園那端**（有時鐘柱的校門是這座，Colab `bld_school_gate`，高柱直寫「二水國民小學」，GATE_PILLAR）；光文路正門＝一般門柱；不畫進校紅線。明德橋程式畫（矮牆＋不鏽鋼欄杆＋橋名牌＋紅磚廣場），因為模型的路和圳對不上真實位置。school 地點 kind="campus"、門口＝明德橋。研究 `scratchpad/school/research.md` 的重點已寫進規格卡。
+- 測試：`CAMPUS=1 --test`（4 張俯瞰＋2 張西門特寫）；`ARRIVALS=1` 測試前先設 cam_up（之前截圖歪是測試問題，不是遊戲）。
+- pck 68 MB；只上預覽 ershui-preview。Colab 今天合計約 10 單位。
+- 2026-11-08 口說題修正（RDQ `rdq/RDQ-spec-listen-speak-fix-20261108.md`）：iPad 無法評分＝Safari 錄出 MP4 直接送 Gemini 被拒 → `listen-app.mjs` `toWav16k`（按錄音時建立 AudioContext、解碼、單聲道、16 kHz PCM WAV，照故事站）。最多錄 5 次、第 5 次仍未滿 80 才改選擇題；AI 沒回應／太短沒聲音不計次，AI 連 3 次沒回應才改選擇題；畫面「第 n／5 次」。電腦測試：遊戲語音 MP3 → WAV → AI 回 95 分、逐字正確。待老師 iPad 實測。
+- 2026-11-08 題型比例（RDQ `rdq/RDQ-spec-listen-type-mix-20261108.md`）：每回合固定 4 口說＋2 拖放＋2 選擇，隨機分到 q01–q08；表存在 progress 的 cleared `types:sdcs…`（不用改 firestore.rules），換裝置繼續上次也一樣。預覽實測：一輪 4／2／2、重新登入後題型相同（測試學號 99906）。
+- 2026-11-08 晚：環境音 v2 18 秒版（`tools/make_ambience_v2.py`：重點聲音拉長，餐廳吃東西／飲料店吸飲料各 8 秒、無中文句；學校程式合成西敏寺鐘 4 句；研究 scratchpad ambience_research.md）老師「全部可以，選 A（聽完 18 秒才出題）」；錄音時遊戲靜音（mute／unmute）；公園 Ken 陷進模型修好（門口推到模型外）。
+- **2026-11-08 正式上線**（老師說「直接部署正式站」）：live 上次 11/07 14:08＝staging（C:/Users/User/AppData/Local/Temp/ershui-4sets-stage），只換 ershui-planet/（pck 69,380,000）、新增 ershui-3d-quest-planetlisten/、shared/missions.mjs（加 planetlisten 一行）後 deploy hosting（370 檔）；npm test 36/36；讀回全部 200；正式網域 AI 評分有回應。規則（firestore.rules）沒動。

@@ -574,14 +574,17 @@ func _build_places() -> void:
 		add_child(root)
 		var pos: Vector2 = P["pos2"]
 		var door: Vector2 = P["door2"]
-		root.transform = frame_at(pos, door - pos)
+		root.transform = frame_at(pos, v2(P["face"]) if P.has("face") else door - pos)
 		var h := 5.0
 		var ext := 18.0
 		var kind: String = P["kind"]
 		var style: String = P.get("style", "")
 		# 2026-10-25 v2：依網路最新照片＋老師提供的 Google 地圖照片復刻的 Tripo 模型（有就優先用）
 		var bld := "bld_" + String(P["id"])
-		if _has_model(bld):
+		if kind == "campus":
+			h = _campus(b, root, P)
+			ext = 30.0
+		elif _has_model(bld):
 			var sz: float = BLD_SIZE.get(P["id"], P.get("size", 10.0))
 			var m := fit_model(bld, sz)
 			root.add_child(m)
@@ -618,6 +621,12 @@ func _build_places() -> void:
 			h = _outer(b, root, P)
 		P["height"] = h
 		P["extent"] = ext
+		# 角色停的位置（門口）不能在模型裡：公園、Tripo／Colab 模型比門口距離大時，把門口推到模型外 1.2 m（老師 11/08：Ken 在公園一半陷進模型）
+		if kind == "waterpark" or kind == "model" or _has_model(bld):
+			var dv: Vector2 = (P["door2"] as Vector2) - pos
+			var need := ext * 0.5 + 1.2
+			if dv.length() > 0.01 and dv.length() < need:
+				P["door2"] = pos + dv.normalized() * need
 		if kind == "osm" and P.has("poly") and not _has_model(bld):
 			_add_blocker(norm_poly(P["poly"]), h, P["id"])
 		elif _has_model(bld) or kind == "model" or (kind == "outer" and style == "model"):
@@ -770,7 +779,8 @@ func _build_buildings() -> void:
 			tile_rect[key] = Rect2(poly[0], Vector2.ZERO)
 		for q in poly:
 			tile_rect[key] = (tile_rect[key] as Rect2).expand(q)
-		var bh := building(groups[key], poly, fi, B["style"], int(B.get("levels", 0)), {"street": B.get("street", true)})
+		cur_tile = key
+		var bh := building(groups[key], poly, fi, B["style"], int(B.get("levels", 0)), {"street": B.get("street", true), "shop": B.get("shop", {})})
 		_add_blocker(poly, bh, "")
 		n += 1
 	for key in groups:
@@ -780,7 +790,9 @@ func _build_buildings() -> void:
 		add_child(holder)
 		b.commit(holder, "B")
 		var tr: Rect2 = tile_rect[key]
-		tiles.append({"center": tr.get_center(), "r": tr.size.length() * 0.5 + 1.0, "rect": tr, "mesh": holder.get_node_or_null("B"), "ink": holder.get_node_or_null("BInk")})
+		tiles.append({"center": tr.get_center(), "r": tr.size.length() * 0.5 + 1.0, "rect": tr, "mesh": holder.get_node_or_null("B"), "ink": holder.get_node_or_null("BInk"),
+			"shop": _commit_shopfronts(key, holder), "labels": shop_labels.get(key, [])})
+	print("SHOPFRONTS ", shop_n)
 	print("BUILDINGS ", n, " tiles ", tiles.size())
 
 ## 把鏡頭到目標之間的街屋方塊變半透明（目標建築本身是地點，不在方塊裡）
@@ -795,6 +807,7 @@ func fade_between(cam2: Vector2, target2: Vector2, target_id := "", near := 16.0
 			(T["mesh"] as MeshInstance3D).material_override = mat_fade if fade else mat_toon
 		if T["ink"]:
 			(T["ink"] as MeshInstance3D).visible = not fade
+		_show_shops(T, not fade)
 
 func clear_fade() -> void:
 	for T in tiles:
@@ -802,6 +815,14 @@ func clear_fade() -> void:
 			(T["mesh"] as MeshInstance3D).material_override = mat_toon
 		if T["ink"]:
 			(T["ink"] as MeshInstance3D).visible = true
+		_show_shops(T, true)
+
+## 半透明的方塊：店面圖和店名一起藏起來，不然會浮在半空中
+func _show_shops(T: Dictionary, on: bool) -> void:
+	if T.get("shop") != null:
+		(T["shop"] as MeshInstance3D).visible = on
+	for l in T.get("labels", []):
+		(l as Label3D).visible = on
 
 func _seg_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
 	var ab := b - a
@@ -967,8 +988,304 @@ func building(b: Builder, poly: PackedVector2Array, fi: int, style: String, leve
 			if P.get("sign", "") != "":
 				sign_label(P["sign"], F.call(L / 2.0, 0.14), nrm, FH - 0.43, 48, Color.WHITE)
 		_:
+			var shop: Dictionary = P.get("shop", {})
+			no_sign = not shop.is_empty()
 			_facade_tile(b, F, yaw, L, bays, bw, floors, h, col, ctr, depth)
+			no_sign = false
+			if not shop.is_empty():
+				_shopfront(b, F, yaw, L, nrm, shop)
 	return h
+
+## ---------- 二水國小（2026-11-08 重建，真實大小；RDQ-spec-ershui-elementary-rebuild-20261108）----------
+## 校舍照 OSM 輪廓（北教學大樓＋行政大樓＝米白 L 形、南教學大樓＝紫紅磚主樓、群育館＝粉紅）、紅色跑道＋草地、
+## 百年校慶紀念司令台、球場、4 個校門、明德橋（溪邊巷 → 西門）、樹與大老樹。大平面用一條條細帶鋪，才會貼著星球曲面。
+func _fill(b: Builder, poly: PackedVector2Array, h: float, col: Color, step := 1.6) -> void:
+	var lo := 1e9
+	var hi := -1e9
+	for q in poly:
+		lo = minf(lo, q.y)
+		hi = maxf(hi, q.y)
+	var z := lo + step * 0.5
+	while z < hi:
+		var xs: Array = []
+		for i in poly.size():
+			var a := poly[i]
+			var c := poly[(i + 1) % poly.size()]
+			if (a.y <= z) != (c.y <= z):
+				xs.append(a.x + (c.x - a.x) * (z - a.y) / (c.y - a.y))
+		xs.sort()
+		for k in range(0, xs.size() - 1, 2):
+			b.strip(Vector2(xs[k], z), Vector2(xs[k + 1], z), step + 0.05, h, col)
+		z += step
+
+func _stadium(c: Vector2, dir: Vector2, a: float, r: float) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	var nrm := Vector2(-dir.y, dir.x)
+	var half := a - r
+	for k in 25:
+		var t := -PI / 2.0 + PI * k / 24.0
+		out.append(c + dir * (half + cos(t) * r) + nrm * sin(t) * r)
+	for k in 25:
+		var t := PI / 2.0 + PI * k / 24.0
+		out.append(c + dir * (-half + cos(t) * r) + nrm * sin(t) * r)
+	return out
+
+func _wall_windows(b: Builder, poly: PackedVector2Array, floors: int, win: Color, band: Color, arch_top := false) -> void:
+	for i in poly.size():
+		var a := poly[i]
+		var c := poly[(i + 1) % poly.size()]
+		var L := a.distance_to(c)
+		if L < 3.0:
+			continue
+		var u := (c - a) / L
+		var nrm := Vector2(u.y, -u.x)     # 外側（poly 逆時針）
+		if signed_area(poly) < 0.0:
+			nrm = -nrm
+		var yaw := atan2(nrm.x, nrm.y)
+		var n := int(L / 2.0)
+		for fl in floors:
+			b.box(a + u * (L / 2.0) + nrm * 0.05, yaw, Vector3(L, 0.14, 0.08), fl * FH + 0.02, band, false)    # 走廊／腰帶
+			for k in n:
+				var q := a + u * (L * (k + 0.5) / n) + nrm * 0.05
+				if arch_top and fl == floors - 1:
+					b.box(q, yaw, Vector3(0.9, 0.85, 0.06), fl * FH + 0.45, win, false)
+					b.cyl(q + nrm * 0.02, 0.45, 0.06, fl * FH + 1.25, win, false)        # 半圓拱窗（圓柱頂當拱）
+				else:
+					b.box(q, yaw, Vector3(1.2, 0.85, 0.06), fl * FH + 0.5, win, false)
+
+func _campus(b: Builder, root: Node3D, P: Dictionary) -> float:
+	var C: Dictionary = map.get("campus", {})
+	if C.is_empty():
+		return 5.0
+	_fill(b, norm_poly(C["outline"]), 0.035, Color("#e4dccb"), 2.0)                       # 校地鋪面
+	# 操場：紅色 PU 跑道＋草地＋白線
+	var T: Dictionary = C["track"]
+	var tc := v2(T["c"])
+	var td := v2(T["dir"]).normalized()
+	_fill(b, _stadium(tc, td, float(T["a"]), float(T["b"])), 0.06, Color("#c4513f"), 1.2)
+	_fill(b, _stadium(tc, td, float(T["a"]) - 4.0, float(T["b"]) - 4.0), 0.08, Color("#6fb45a"), 1.2)
+	for lane in [0.0, 1.3, 2.6]:
+		var ring := _stadium(tc, td, float(T["a"]) - 4.0 + lane, float(T["b"]) - 4.0 + lane)
+		for i in ring.size():
+			b.strip(ring[i], ring[(i + 1) % ring.size()], 0.08, 0.075, Color(0.97, 0.97, 0.95))
+	# 球場
+	if C.has("courts"):
+		var cp := norm_poly(C["courts"])
+		_fill(b, cp, 0.06, Color("#3f8a6c"), 1.4)
+		for i in cp.size():
+			b.strip(cp[i], cp[(i + 1) % cp.size()], 0.12, 0.075, Color(0.97, 0.97, 0.95))
+	# 校舍
+	for B in C["blds"]:
+		var poly := norm_poly(B["poly"])
+		var fl := int(B["floors"])
+		var hh := FH * fl + 0.3
+		var ctr := Vector2.ZERO
+		for q in poly:
+			ctr += q
+		ctr /= poly.size()
+		match String(B["role"]):
+			"main":    # 南教學大樓：紫紅磚主樓、頂層拱窗、一樓拱廊、轉角塔紅瓦小亭、樓梯塔馬賽克
+				b.extrude(poly, hh, 0.0, Color("#a84f5c"), Color("#8a3e4a"))
+				_wall_windows(b, poly, fl, Color("#f3efe6"), Color("#c9c2b4"), true)
+				var corner: Vector2 = poly[0]
+				b.box(corner, 0.0, Vector3(3.0, 1.6, 3.0), hh, Color("#a84f5c"))
+				b.prism(corner, 0.0, 3.6, 1.3, 3.6, hh + 1.6, Color("#c0392b"))
+				var mid: Vector2 = poly[poly.size() / 2]
+				b.box(mid, 0.0, Vector3(1.6, hh - 1.0, 1.6), 0.5, Color("#3aa0d8"))     # 樓梯塔馬賽克壁畫
+				b.box(mid, 0.0, Vector3(1.0, hh - 2.0, 1.7), 1.0, Color("#f2c14e"), false)
+			"ladmin":  # 北教學大樓＋行政大樓：米白 L 形、紅色腰帶
+				b.extrude(poly, hh, 0.0, Color("#efe6cf"), Color("#d8ceb4"))
+				_wall_windows(b, poly, fl, Color("#4a6377"), Color("#c0392b"))
+			"gym":     # 群育館：粉紅、上段白色牆板、中段深灰雨遮帶（有 Colab 模型就用模型）
+				if _has_model("bld_school_gym"):
+					var m := fit_model("bld_school_gym", maxf(_poly_span(poly), 10.0))
+					var hold := Node3D.new()
+					hold.transform = frame_at(ctr, _long_dir(poly))
+					hold.add_child(m)
+					add_child(hold)
+				else:
+					b.extrude(poly, hh + 1.0, 0.0, Color("#ef9fbe"), Color("#d98aa8"))
+					_wall_windows(b, poly, 1, Color("#ffffff"), Color("#5b5f66"))
+			"stage":   # 百年校慶紀念司令台：白方柱、紅瓦四坡頂、背牆彩繪
+				var yaw := atan2(td.x, td.y)
+				b.box(ctr, yaw, Vector3(5.0, 0.6, 3.0), 0.0, Color("#e9e4da"))
+				for sx in [-2.2, 2.2]:
+					b.box(ctr + Vector2(td.y, -td.x) * 0.0 + td * sx, yaw, Vector3(0.35, 2.0, 0.35), 0.6, Color.WHITE)
+				b.box(ctr - Vector2(-td.y, td.x) * 1.3, yaw, Vector3(5.0, 2.2, 0.2), 0.6, Color("#5fb3e6"))
+				b.box(ctr - Vector2(-td.y, td.x) * 1.2, yaw, Vector3(4.6, 0.8, 0.2), 0.7, Color("#4c9a4c"), false)
+				b.prism(ctr, yaw, 5.6, 1.1, 3.6, 2.6, Color("#c0392b"))
+			_:
+				b.extrude(poly, hh, 0.0, Color("#efe6cf"), Color("#d8ceb4"))
+				_wall_windows(b, poly, fl, Color("#4a6377"), Color("#c0392b"))
+		_add_blocker(poly, hh, "")
+	# 樹、大老樹＋白長椅
+	for t in C["trees"]:
+		_tree(b, v2(t), 1.0)
+	if C.has("bigtree"):
+		var bt := v2(C["bigtree"])
+		b.cyl(bt, 0.5, 3.0, 0.0, Color("#6b4a2f"))
+		b.blob(bt, 4.8, 3.6, Color("#4f8f3a"), 0.7)
+		b.box(bt + Vector2(2.2, 0), 0.0, Vector3(2.0, 0.45, 0.6), 0.0, Color.WHITE)
+	# 正門裡的圓環
+	if C.has("roundabout"):
+		var rc := v2(C["roundabout"])
+		b.disc(rc, 3.4, 0.09, Color("#c8c2b4"), 24)
+		b.disc(rc, 2.6, 0.12, Color("#5f9e46"), 24)
+		_tree(b, rc, 0.9)
+	# 校門
+	for G in C["gates"]:
+		var gp := v2(G["p"])
+		var to_c := (v2(C["track"]["c"]) - gp).normalized()
+		var gy := atan2(to_c.x, to_c.y)
+		var side := Vector2(to_c.y, -to_c.x)
+		# 老師 11/08：有時鐘柱、紅瓦頂高柱、金字花崗石條的校門＝明德橋進來的西門；光文路正門是一般門柱
+		var kind := String(G["kind"])
+		if kind == "west":
+			var out_d := -to_c
+			if C.has("bridge"):
+				var bm := (v2(C["bridge"][0]) + v2(C["bridge"][1])) / 2.0
+				out_d = (bm - gp).normalized()      # 校門正面朝向明德橋
+			var gside := Vector2(out_d.y, -out_d.x)
+			if _has_model("bld_school_gate"):
+				var m := fit_model("bld_school_gate", 6.0)
+				var hold := Node3D.new()
+				hold.transform = frame_at(gp, out_d)
+				hold.add_child(m)
+				add_child(hold)
+			else:
+				var oy := atan2(out_d.x, out_d.y)
+				b.box(gp - gside * 2.3, oy, Vector3(0.9, 4.2, 0.9), 0.0, Color("#9a4a32"))
+				b.prism(gp - gside * 2.3, oy, 1.3, 0.6, 1.3, 4.2, Color("#c0392b"))
+				b.box(gp + gside * 2.3, oy, Vector3(0.7, 3.0, 0.7), 0.0, Color("#9a4a32"))
+				b.prism(gp + gside * 2.3, oy, 1.0, 0.7, 1.0, 3.0, Color("#e6b422"))
+				b.box(gp, oy, Vector3(3.6, 1.5, 0.1), 0.0, Color("#b9c0c6"), false)
+			# 高柱上的灰色花崗石直條＋直寫金字（蓋住模型上的英文佔位字）
+			var pillar := gp + gside * float(GATE_PILLAR[0]) + out_d * float(GATE_PILLAR[1])
+			b.box(pillar, atan2(out_d.x, out_d.y), Vector3(0.62, 2.7, 0.06), float(GATE_PILLAR[2]), Color("#9fa4a8"), false)
+			var l := sign_label("二
+水
+國
+民
+小
+學", pillar, out_d, float(GATE_PILLAR[2]) + 2.55, 48, Color("#e8c25a"), 8)
+			l.outline_modulate = Color(0.3, 0.15, 0.1)
+			l.line_spacing = -8.0
+			l.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+		else:
+			for sx in [-1.8, 1.8]:
+				b.box(gp + side * sx, gy, Vector3(0.5, 2.0, 0.5), 0.0, Color("#d9d4c7"))
+			b.box(gp, gy, Vector3(3.2, 1.5, 0.1), 0.0, Color("#b9c0c6"), false)          # 不鏽鋼直條門
+			if kind == "main":
+				b.box(gp + side * 1.8, gy, Vector3(0.5, 0.25, 0.5), 2.0, Color("#c0392b"))
+	# 明德橋：混凝土矮牆＋不鏽鋼欄杆＋橋名牌，橋頭（西門那端）暗紅磚廣場
+	var br: Array = C["bridge"]
+	var b0 := v2(br[0])
+	var b1 := v2(br[1])
+	var bd := (b1 - b0).normalized()
+	var bn := Vector2(-bd.y, bd.x)
+	var byaw := atan2(bn.x, bn.y)
+	var blen := b0.distance_to(b1)
+	for sd in [-1.0, 1.0]:
+		var mid: Vector2 = (b0 + b1) / 2.0 + bn * sd * 1.75
+		b.box(mid, byaw, Vector3(blen, 0.55, 0.22), 0.05, Color("#d9d9d4"))
+		for k in 3:
+			b.box(mid, byaw, Vector3(blen, 0.05, 0.05), 0.65 + k * 0.17, Color("#c7ccd1"), false)
+	sign_label("明德橋", (b0 + b1) / 2.0 + bn * 1.9, bn, 0.32, 40, Color("#2b2b2b"))
+	sign_label("明德橋", (b0 + b1) / 2.0 - bn * 1.9, -bn, 0.32, 40, Color("#2b2b2b"))
+	var wg: Vector2 = v2(C["gates"][3]["p"]) if C["gates"].size() > 3 else b1
+	var plaza: Vector2 = b0 if b0.distance_to(wg) < b1.distance_to(wg) else b1
+	b.disc(plaza, 2.6, 0.07, Color("#8c3b2e"), 20)
+	return FH * 4.0
+
+## 西門模型上高柱花崗石條的位置：[往旁邊（看向校門時的右邊）m, 往前 m, 離地 m]（對照 test_gate 截圖調）
+const GATE_PILLAR := [2.1, 0.55, 0.72]
+
+func _poly_span(poly: PackedVector2Array) -> float:
+	var r := Rect2(poly[0], Vector2.ZERO)
+	for q in poly:
+		r = r.expand(q)
+	return maxf(r.size.x, r.size.y)
+
+func _long_dir(poly: PackedVector2Array) -> Vector2:
+	var best := Vector2(0, 1)
+	var bl := 0.0
+	for i in poly.size():
+		var d := poly[(i + 1) % poly.size()] - poly[i]
+		if d.length() > bl:
+			bl = d.length()
+			best = Vector2(-d.y, d.x).normalized()
+	return best
+
+## ---------- 二水店家的 2.5D 店面（老師 11/08）：一樓貼程式畫的店內圖、亭仔腳上掛招牌寫真店名 ----------
+const SHOP_KINDS := ["general", "tealeaf", "drink", "breakfast", "snack", "noodle", "buffet", "pharmacy",
+	"clinic", "hair", "scooter", "bike", "lottery", "agri", "rice", "herbal",
+	"fruit", "convenience", "clock", "telecom", "claw", "craft", "shoes", "plain"]
+const SHOP_SIGN_COL := {"general": "#c0392b", "tealeaf": "#2f6b3f", "drink": "#e67e22", "breakfast": "#f2b632", "snack": "#d35400",
+	"noodle": "#a83224", "buffet": "#7a5230", "pharmacy": "#1f8a4c", "clinic": "#2b9a8a", "hair": "#8e44ad", "scooter": "#34495e",
+	"bike": "#2874a6", "lottery": "#d4251c", "agri": "#6b8e23", "rice": "#9c7a3c", "herbal": "#6e3b1f", "fruit": "#e74c3c",
+	"convenience": "#3a7bd5", "clock": "#1c2833", "telecom": "#2e86c1", "claw": "#e84393", "craft": "#b9770e", "shoes": "#d9a21b", "plain": "#7f8c8d"}
+var no_sign := false
+var cur_tile := Vector2i.ZERO
+var shop_sts := {}        # tile → SurfaceTool
+var shop_labels := {}     # tile → [Label3D]
+var shop_mat: StandardMaterial3D
+var shop_n := 0
+
+func _shopfront(b: Builder, F: Callable, yaw: float, L: float, nrm: Vector2, shop: Dictionary) -> void:
+	if not shop_sts.has(cur_tile):
+		var st0 := SurfaceTool.new()
+		st0.begin(Mesh.PRIMITIVE_TRIANGLES)
+		shop_sts[cur_tile] = st0
+	var shop_st: SurfaceTool = shop_sts[cur_tile]
+	var k := SHOP_KINDS.find(String(shop.get("kind", "plain")))
+	if k < 0:
+		k = SHOP_KINDS.size() - 1
+	var u0 := float(k % 4) * 0.25
+	var v0 := float(k / 4) * 0.125
+	var w := minf(L * 0.86, 4.2)
+	var s0 := (L - w) / 2.0
+	var s1 := s0 + w
+	var y0 := 0.03
+	var y1 := 1.42
+	var p0: Vector2 = F.call(s0, 0.07)
+	var p1: Vector2 = F.call(s1, 0.07)
+	# 從外面看：u 方向是看的人的右手邊 → 圖的左邊在 s1
+	var q: Array[Vector3] = [bend2(p1, y0), bend2(p0, y0), bend2(p0, y1), bend2(p1, y1)]
+	var uv: Array[Vector2] = [Vector2(u0, v0 + 0.125), Vector2(u0 + 0.25, v0 + 0.125), Vector2(u0 + 0.25, v0), Vector2(u0, v0)]
+	var nn: Vector3 = (q[1] - q[0]).cross(q[3] - q[0]).normalized()
+	for t in [[0, 1, 2], [0, 2, 3]]:
+		for i in t:
+			shop_st.set_normal(nn)
+			shop_st.set_uv(uv[i])
+			shop_st.add_vertex(q[i])
+	shop_n += 1
+	var sc := Color(SHOP_SIGN_COL.get(String(shop.get("kind", "plain")), "#7f8c8d"))
+	var name := String(shop.get("name", ""))
+	var bwid := minf(L * 0.92, maxf(2.2, name.length() * 0.36 + 0.6))
+	b.box(F.call(L / 2.0, 1.14), yaw, Vector3(bwid, 0.48, 0.08), FH - 0.54, sc)
+	if name != "":
+		var l := sign_label(name, F.call(L / 2.0, 1.2), nrm, FH - 0.5, 44, Color.WHITE)
+		l.pixel_size = minf(0.006, (bwid - 0.3) / maxf(1.0, name.length() * 44.0))
+		if not shop_labels.has(cur_tile):
+			shop_labels[cur_tile] = []
+		shop_labels[cur_tile].append(l)
+
+func _commit_shopfronts(key: Vector2i, holder: Node3D) -> MeshInstance3D:
+	if not shop_sts.has(key):
+		return null
+	if shop_mat == null:
+		shop_mat = StandardMaterial3D.new()
+		shop_mat.albedo_texture = load("res://assets/textures/storefronts.png")
+		shop_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		shop_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+		shop_mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		shop_mat.albedo_color = Color(0.93, 0.93, 0.93)
+	var mi := MeshInstance3D.new()
+	mi.name = "Shopfronts"
+	mi.mesh = (shop_sts[key] as SurfaceTool).commit()
+	mi.material_override = shop_mat
+	holder.add_child(mi)
+	return mi
 
 ## C：磁磚透天的臨街面（鐵捲門、鐵窗、陽台、立招、亭仔腳、水塔、鐵皮加蓋）
 func _facade_tile(b: Builder, F: Callable, yaw: float, L: float, bays: int, bw: float, floors: int, h: float, col: Color, ctr: Vector2, depth: float) -> void:
@@ -987,6 +1304,8 @@ func _facade_tile(b: Builder, F: Callable, yaw: float, L: float, bays: int, bw: 
 		b.box(F.call(L / 2.0, 0.25), yaw, Vector3(L, 0.08, 0.45), FH + 0.02, col.darkened(0.15), false)   # 陽台
 		b.box(F.call(L / 2.0, 0.46), yaw, Vector3(L, 0.5, 0.03), FH + 0.1, grille, false)
 	var r := rng.randf()
+	if no_sign:
+		r = 1.0
 	if r < 0.4:
 		b.box(F.call(L - 0.25, 0.4), yaw, Vector3(0.32, 1.1, 0.08), FH + 0.2, Color("#ffffff"))             # 直式立招
 		b.box(F.call(L - 0.25, 0.45), yaw, Vector3(0.22, 0.9, 0.02), FH + 0.3, Color("#c8102e"), false)
@@ -1412,12 +1731,16 @@ const BLD_SIZE := {
 	"station": 30.0, "school": 30.0, "esjh": 30.0, "yuanquan": 26.0, "fuxing": 26.0, "library": 12.0, "post": 10.0,
 	"health": 11.0, "market": 12.0, "pxmart": 18.0, "seven": 9.0, "ok": 7.0, "bookstore": 7.0, "teatop": 7.5,
 	"tea2": 7.0, "inn": 9.0, "qizao": 12.0, "waterpark": 20.0, "fengbo": 20.0, "lawn": 22.0, "baobao": 20.0, "lintemple": 10.0,
+	# 2026-11-08 二水街屋（Colab Hunyuan3D-2 模型）
+	"asia_inn": 6.0, "dental": 4.2, "decheng": 4.6, "shoes": 5.0, "ensheng": 4.4, "farmers": 10.0, "ande": 10.0, "dumpling": 4.4,
 }
 ## 招牌上的正確中文（模型上的字是英文佔位，疊一塊真正的招牌字）
 const BLD_SIGN := {
 	"station": "二水車站", "school": "二水國民小學", "esjh": "二水國民中學", "yuanquan": "源泉國民小學", "fuxing": "復興國民小學",
 	"library": "二水鄉立圖書館", "post": "郵局", "health": "二水鄉衛生所", "market": "二水超市", "pxmart": "超市",
 	"bookstore": "書店", "teatop": "飲料店", "tea2": "飲料店", "seven": "便利商店", "ok": "便利商店", "inn": "二八水驛站", "lintemple": "林先生廟",
+	"asia_inn": "亞洲旅社", "dental": "詹貴賓牙醫", "decheng": "德成百貨行", "shoes": "美珍鞋坊", "ensheng": "恩生診所",
+	"farmers": "二水鄉農會", "ande": "安德宮", "dumpling": "水餃店",
 }
 
 func _place_sign(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) -> void:
@@ -1470,6 +1793,15 @@ const SIGN_PLATE := {
 	"ok": [0.33, 0.1, 0.92, "#5a7d4f", 0.25],
 	"teatop": [0.31, 0.08, 0.8, "#c0392b", 0.25],
 	"tea2": [0.365, 0.14, 0.96, "#2b4f8a", 0.3],
+	# 2026-11-08：Colab 模型上的英文佔位招牌（HOTEL、DENTAL…）用色板蓋住，寫中文
+	"asia_inn": [0.24, 0.07, 0.8, "#b23a2e", 0.25],
+	"dental": [0.36, 0.08, 0.95, "#3b8fd9", 0.25],
+	"decheng": [0.42, 0.09, 0.98, "#b03a2e", 0.3],
+	"shoes": [0.385, 0.11, 1.02, "#d9a21b", 0.25],
+	"ensheng": [0.33, 0.12, 0.98, "#2f9e44", 0.3],
+	"farmers": [0.3, 0.07, 0.95, "#2b6b3f", 0.3],
+	"ande": [0.58, 0.07, 0.3, "#7a1f14", 0.45],
+	"dumpling": [0.5, 0.1, 0.98, "#c92a2a", 0.3],
 }
 ## 招牌高度（占建築高度比例），對照參考圖英文佔位招牌的位置
 const SIGN_Y := {

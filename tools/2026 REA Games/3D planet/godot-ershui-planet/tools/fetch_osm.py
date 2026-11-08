@@ -12,7 +12,7 @@ from collections import Counter
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(os.path.dirname(HERE), "資料", "osm")
 import sys
-AREAS = {"downtown": "23.8040,120.6100,23.8175,120.6260",   # 南,西,北,東：二水車站周邊約 1.5 km × 1.6 km
+AREAS = {"downtown": "23.8040,120.6090,23.8195,120.6270",   # 南,西,北,東：二水車站周邊（11/08 放大到能涵蓋車站 600 m）
          "southeast": "23.7960,120.6380,23.8060,120.6640"}  # 二水國中、源泉國小、林先生廟、八堡圳公園
 AREA = sys.argv[1] if len(sys.argv) > 1 else "downtown"
 BBOX = AREAS[AREA]
@@ -46,7 +46,7 @@ def main() -> None:
         headers={"User-Agent": "ershui-planet-classroom-game/0.1 (teacher project)", "Accept": "application/json"},
     )
     raw = urllib.request.urlopen(req, timeout=120).read()
-    path = os.path.join(OUT, "ershui-%s-20261025.json" % AREA)
+    path = os.path.join(OUT, "ershui-%s-20261108.json" % AREA)
     open(path, "wb").write(raw)
     j = json.loads(raw)
     els = j["elements"]

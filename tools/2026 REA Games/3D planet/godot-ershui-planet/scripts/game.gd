@@ -80,6 +80,14 @@ var setup_mode_label: Label
 var setup_set_label: Label
 const PERSONAL_POINTS := 10
 const PERSONAL_URL := "../ershui-3d-quest-planet/"
+## Listen and Guess（RDQ 2026-11-08）：聽環境音猜地點；題目畫面（選擇／拖放／口說）在外框網頁，遊戲只負責情境、環境音、走路、揭曉
+const LISTEN_URL := "../ershui-3d-quest-planetlisten/"
+var listen_mode := false        # 外框 getInitial() 帶 mode:"listen"
+var listen_items: Array = []
+var amb: AudioStreamPlayer      # 環境音
+var ask_poll := false
+var ask_t := 0.0
+var listen_score := 0
 var walk_from := Vector2.ZERO
 var toast: Label
 const SAVE_PATH := "user://ershui_planet_save.json"
@@ -132,10 +140,14 @@ func _ready() -> void:
 	_load_icons()
 	_build_audio()
 	var hi := _host_initial()
+	listen_items = JSON.parse_string(FileAccess.get_file_as_string("res://data/listen.json"))["items"]
 	if hi.has("studentId"):
 		personal = true
 		personal_sid = String(hi["studentId"])
 		group_count = 1
+		if String(hi.get("mode", "")) == "listen":
+			listen_mode = true
+			mode = "listen"
 	_build_ui()
 	_show_title()
 	if test_mode:
@@ -148,6 +160,8 @@ func _host_initial() -> Dictionary:
 	if OS.get_environment("PERSONAL") != "":
 		if test_host.is_empty():
 			test_host = {"studentId": "99901", "results": {}, "cleared": []}   # 測試用（假外框）
+			if OS.get_environment("LISTEN") != "":
+				test_host["mode"] = "listen"
 		return test_host
 	if not OS.has_feature("web"):
 		return {}
@@ -187,7 +201,7 @@ func _host_run(d: Dictionary) -> Dictionary:
 	var res: Dictionary = d.get("results", {})
 	var n := 0
 	var ok := 0
-	for k in 12:
+	for k in (8 if listen_mode else 12):
 		var r = res.get("q%02d" % (k + 1))
 		if typeof(r) != TYPE_DICTIONARY:
 			break
@@ -204,6 +218,12 @@ func _go_personal() -> void:
 		JavaScriptBridge.eval("window.top.location.href = new URL('%s', location.href).href" % PERSONAL_URL, true)
 	else:
 		_toast("Personal mode opens on the website 個人模式請從網站進入")
+
+func _go_listen() -> void:
+	if OS.has_feature("web"):
+		JavaScriptBridge.eval("window.top.location.href = new URL('%s', location.href).href" % LISTEN_URL, true)
+	else:
+		_toast("Listen and Guess opens on the website 請從網站進入")
 
 func _resume_personal() -> void:
 	var run := _host_run(_host_initial())
@@ -438,6 +458,7 @@ func _place_walker(k: String, delta: float) -> void:
 			j.rotation.x = lerp_angle(j.rotation.x, swing * sgn, minf(1.0, delta * 12.0))
 
 func _process(delta: float) -> void:
+	_poll_host(delta)
 	for k in walkers:
 		_step_walker(k, delta)
 		_place_walker(k, delta)
@@ -525,8 +546,10 @@ func _arrive_dist(P: Dictionary) -> float:
 	return clampf(float(P.get("extent", 12.0)) * 0.75 + float(P.get("height", 5.0)) * 0.9, 8.0, 24.0)
 # ---------- 鏡頭 ----------
 func _build_fly_route() -> void:
-	# 首頁空拍：沿真實街道低空飛一圈（車站 → 第一味 → 超市 → 郵局 → 圖書館 → 便利商店 → 驛站 → 車站）
-	var loop := ["station", "teatop", "market", "post", "library", "seven", "inn", "station"]
+	# 首頁空拍：沿真實街道低空飛一圈。老師 11/08（RDQ ⑤）：先沿光文路 車站 → 亞洲旅社 → 牙醫 → 德成百貨 → 鞋坊（三角仔），
+	# 再走員集路 恩生診所 → 水餃店 → 郵局 → 農會 → 安德宮 → 圖書館 → 便利商店 → 驛站 → 車站
+	# 老師 11/08 下午：農會 → 安德宮（不能跳過）→ 圖書館 → 溪邊巷（經過明德橋，看得到二水國小西門）→ 右轉照原路線回車站
+	var loop := ["station", "asia_inn", "dental", "decheng", "teatop", "shoes", "ensheng", "dumpling", "post", "farmers", "ande", "library", "school", "seven", "inn", "station"]
 	for i in loop.size() - 1:
 		var seg: Array = world.route(world.places[loop[i]]["door2"], world.places[loop[i + 1]]["door2"])
 		for p in seg:
@@ -654,6 +677,8 @@ func _build_audio() -> void:
 	add_child(voice)
 	sfx_p = AudioStreamPlayer.new()
 	add_child(sfx_p)
+	amb = AudioStreamPlayer.new()
+	add_child(amb)
 	for i in 6:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
@@ -696,6 +721,18 @@ func sfx(key: String, pitch := 1.0) -> void:
 	p.pitch_scale = pitch
 	p.volume_db = VOL_DB[vol_level] + (-8.0 if key.begins_with("footstep") else 0.0)
 	p.play()
+
+## 環境音：quiet＝抵達地點時小聲播；播的時候背景音樂壓低
+func play_amb(id: String, quiet := false) -> void:
+	var path := "res://assets/audio/ambience/%s.mp3" % id
+	if not ResourceLoader.exists(path):
+		return
+	amb.stream = load(path)
+	amb.volume_db = (VOL_DB[vol_level] + (-12.0 if quiet else 4.0)) if vol_level > 0 else -80.0
+	amb.play()
+	music.volume_db = VOL_DB[vol_level] - (14.0 if quiet else 30.0)
+	await amb.finished
+	music.volume_db = VOL_DB[vol_level] - 6.0
 
 func voice_key(word: String) -> String:
 	return word.replace(" ", "_")
@@ -741,6 +778,16 @@ func _make_rounds() -> void:
 	if run_seed == 0:
 		run_seed = randi() % 900000 + 100000
 	rng.seed = run_seed
+	if mode == "listen":
+		var order: Array = listen_items.duplicate()
+		_shuffle(order)
+		for it in order:
+			var w := String(it["word"])
+			rounds.append({"target": it["place"], "who": "ken", "lead": "ken", "pattern": "listen", "word": w,
+				"lid": it["id"], "the": it["the"], "scene": it["scene"], "reason": it["reason"], "zh": it["zh"],
+				"question": "Where are you going?", "qkey": "listen_scene_%s" % it["id"],
+				"options": [w], "correct": 0, "answer": w})
+		return
 	var S: Dictionary = sets["sets"][set_idx]
 	var targets: Array = S["targets"].duplicate()
 	_shuffle(targets)
@@ -830,6 +877,8 @@ func _round(target: String, who: String, pattern: String, fixed: Array) -> Dicti
 ## 選項句子：x 是單字（或問路模式的顏色）
 func sentence(Rd: Dictionary, x: String) -> String:
 	match Rd["pattern"]:
+		"listen":
+			return "I'm going to %s%s. %s" % ["the " if Rd["the"] else "", x, Rd["reason"]]
 		"you":
 			return "I'm going to the %s." % x
 		"we":
@@ -843,6 +892,8 @@ func sentence(Rd: Dictionary, x: String) -> String:
 
 func answer_key(Rd: Dictionary, x: String) -> String:
 	match Rd["pattern"]:
+		"listen":
+			return "listen_ans_%s" % Rd["lid"]
 		"you":
 			return "a_i_%s" % voice_key(x)
 		"where":
@@ -1010,7 +1061,7 @@ func _build_title() -> void:
 	v.add_child(personal_row)
 	var nb := _btn("  New game 新的一輪  ", 34, Color("#ffd166"))
 	nb.custom_minimum_size = Vector2(340, 86)
-	nb.pressed.connect(_show_setup)
+	nb.pressed.connect(func(): _start_game() if listen_mode else _show_setup())
 	personal_row.add_child(nb)
 	continue_btn = _btn("  Continue 繼續上次  ", 30, Color("#cfe8ff"))
 	continue_btn.custom_minimum_size = Vector2(360, 64)
@@ -1037,9 +1088,12 @@ func _show_title() -> void:
 	if personal:
 		sid_label.text = "學號 Student ID：%s" % personal_sid
 		var run := _host_run(_host_initial())
-		continue_btn.visible = not run.is_empty() and int(run["answered"]) < 12
+		var total := 8 if listen_mode else 12
+		continue_btn.visible = not run.is_empty() and int(run["answered"]) < total
 		if continue_btn.visible:
-			continue_btn.text = "  Continue 繼續上次（Q%d/12）  " % (int(run["answered"]) + 1)
+			continue_btn.text = "  Continue 繼續上次（Q%d/%d）  " % [int(run["answered"]) + 1, total]
+		if listen_mode:
+			sid_label.text = "Listen and Guess 聽聲音猜地點\n學號 Student ID：%s" % personal_sid
 		return
 	var sv := _read_save()
 	continue_btn.visible = not sv.is_empty()
@@ -1123,6 +1177,10 @@ func _build_setup() -> void:
 		mb.pressed.connect(func(): _set_mode(i))
 		mg.add_child(mb)
 		setup_mode_btns.append(mb)
+	var lb := _btn("Listen and Guess 聽聲音猜地點\n要輸入學號（個人）", 19, Color("#ffe3e3"))
+	lb.custom_minimum_size = Vector2(300, 64)
+	lb.pressed.connect(_go_listen)
+	mg.add_child(lb)
 	setup_set_label = _label("4. Choose a route  選路線（每次順序都不同）", 30)
 	v.add_child(setup_set_label)
 	var sg := GridContainer.new()
@@ -1377,6 +1435,9 @@ func _refresh_chips() -> void:
 		chip_nodes[g]["bet"].text = LETTERS[bets[g]] if bets.has(g) else ""
 
 func _show_question() -> void:
+	if mode == "listen":
+		_listen_question()
+		return
 	state = St.QUESTION
 	var Rd: Dictionary = rounds[qi]
 	active = Rd["lead"]
@@ -1408,6 +1469,96 @@ func _show_question() -> void:
 	_refresh_chips()
 	sfx("question")
 	say(Rd["qkey"])
+
+func _listen_question() -> void:
+	state = St.QUESTION
+	var Rd: Dictionary = rounds[qi]
+	var my_qi := qi
+	active = "ken"
+	world.clear_fade()
+	world.hide_road_color()
+	_setup_face_cam()
+	cam_mode = "face"
+	bets.clear()
+	q_sub.text = "Q%d/%d" % [qi + 1, rounds.size()]
+	q_label.text = _scene_text(Rd)
+	q_label.add_theme_color_override("font_color", Color(0.15, 0.12, 0.2))
+	# 外框的題目面板在右邊：遊戲的情境句移到左下、一句一行、字小一點，兩邊不重疊
+	q_label.add_theme_font_size_override("font_size", 26)
+	qpanel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 14)
+	qpanel.grow_horizontal = Control.GROW_DIRECTION_END
+	qpanel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	qpanel.visible = true
+	opt_grid.visible = false
+	bet_box.visible = false
+	start_btn.visible = false
+	next_btn.visible = false
+	listen_btn.visible = false
+	walk_caption.text = ""
+	for g in chip_nodes.size():
+		chip_nodes[g]["panel"].add_theme_stylebox_override("panel", _style(GROUP_COLORS[g].lightened(0.6), Color(0.15, 0.12, 0.2), 16, 3))
+	_refresh_chips()
+	sfx("question")
+	await say(Rd["qkey"])
+	if qi != my_qi or state != St.QUESTION:
+		return
+	q_label.text = "Listen!  聽聽看，這是哪裡？"
+	await play_amb(Rd["lid"])
+	if qi != my_qi or state != St.QUESTION:
+		return
+	q_label.text = _scene_text(Rd)
+	_host_ask({"type": "ask", "id": "q%02d" % (qi + 1), "lid": Rd["lid"], "seq": qi + 1})
+
+func _scene_text(Rd: Dictionary) -> String:
+	return "%s\nWhere are you going?" % String(Rd["scene"]).replace(". ", ".\n")
+
+## 外框出題：ask → 外框顯示題目；遊戲每 0.25 秒 poll() 拿回 {type:"answer"|"replay"|"pattern"}
+func _host_ask(payload: Dictionary) -> void:
+	ask_poll = true
+	ask_t = 0.0
+	if OS.get_environment("PERSONAL") != "":
+		print("ASK ", JSON.stringify(payload))
+		return
+	if OS.has_feature("web"):
+		var arg := JSON.stringify(JSON.stringify(payload))
+		JavaScriptBridge.eval("(function(){try{var h=window.parent&&window.parent.ershuiHost;if(h&&h.ask)h.ask(%s);}catch(e){console.warn(e);}})()" % arg, true)
+
+func _poll_host(delta: float) -> void:
+	if not ask_poll:
+		return
+	ask_t += delta
+	if ask_t < 0.25:
+		return
+	ask_t = 0.0
+	var raw = ""
+	if OS.get_environment("PERSONAL") != "":
+		raw = JSON.stringify({"type": "answer", "correct": rng.randf() < 0.7, "pick": "test"})   # 假外框：自動作答
+	elif OS.has_feature("web"):
+		raw = JavaScriptBridge.eval("(function(){try{var h=window.parent&&window.parent.ershuiHost;return h&&h.poll?(h.poll()||''):'';}catch(e){return '';}})()", true)
+	if typeof(raw) != TYPE_STRING or raw == "":
+		return
+	var m = JSON.parse_string(raw)
+	if typeof(m) != TYPE_DICTIONARY:
+		return
+	var Rd: Dictionary = rounds[qi]
+	match String(m.get("type", "")):
+		"replay":
+			play_amb(Rd["lid"])
+		"pattern":
+			say("listen_pattern")
+		"mute":
+			# 學生錄音中：遊戲的音樂、環境音、語音全部靜音，免得被錄進去影響 AI 評分（老師 11/08）
+			amb.stop()
+			voice.stop()
+			AudioServer.set_bus_mute(0, true)
+		"unmute":
+			AudioServer.set_bus_mute(0, false)
+		"answer":
+			AudioServer.set_bus_mute(0, false)
+			ask_poll = false
+			amb.stop()
+			bets[0] = 0 if m.get("correct", false) else 1
+			_on_start()
 
 func _build_bet_row() -> void:
 	for c in bet_box.get_children():
@@ -1454,6 +1605,8 @@ func _repeat_voice() -> void:
 	var Rd: Dictionary = rounds[qi]
 	if state == St.REVEAL:
 		say(answer_key(Rd, Rd["answer"]))
+	elif Rd["pattern"] == "listen":
+		play_amb(Rd["lid"])
 	else:
 		say(Rd["qkey"])
 
@@ -1483,6 +1636,8 @@ func _on_start() -> void:
 	start_btn.visible = false
 	qpanel.visible = false
 	match Rd["pattern"]:
+		"listen":
+			walk_caption.text = "Ken: Let's go and see!  走過去看看！"
 		"where":
 			walk_caption.text = "Let's find the %s!" % Rd["word"]
 		"we":
@@ -1526,7 +1681,10 @@ func _on_arrive(k: String) -> void:
 		chip_nodes[g]["panel"].add_theme_stylebox_override("panel", _style(Color("#b2f2bb") if hit else Color("#e9ecef"), Color("#2b8a3e") if hit else Color("#c92a2a"), 16, 5))
 	_refresh_chips()
 	sfx("correct" if bets.values().has(Rd["correct"]) else "wrong")
-	if personal:
+	if Rd["pattern"] == "listen":
+		q_sub.text = ("猜對了！%s" if bets.get(0, -1) == 0 else "答案是 %s") % Rd["zh"]
+		play_amb(Rd["lid"], true)
+	elif personal:
 		var ok: bool = bets.get(0, -1) == Rd["correct"]
 		_host_report({"type": "item", "id": "q%02d" % (qi + 1), "q": Rd["question"], "a": sentence(Rd, Rd["answer"]),
 			"pick": sentence(Rd, Rd["options"][bets.get(0, 0)]),
@@ -1751,7 +1909,7 @@ func _show_result() -> void:
 		var nm := _label(("學號 %s" % personal_sid) if personal else "Group %d" % (g + 1), 30)
 		nm.custom_minimum_size = Vector2(200, 0)
 		h.add_child(nm)
-		h.add_child(_label(("%d / 120" % scores[g]) if personal else "%d points" % scores[g], 34))
+		h.add_child(_label(("%d / %d" % [scores[g], rounds.size() * PERSONAL_POINTS]) if personal else "%d points" % scores[g], 34))
 		rank.queue_free()
 		v.add_child(pc)
 	var row := HBoxContainer.new()
@@ -1775,6 +1933,37 @@ func _shot(name: String) -> void:
 func _wait(sec: float) -> void:
 	await get_tree().create_timer(sec).timeout
 
+## PERSONAL=1 LISTEN=1：假外框自動作答，跑完 8 題、拍出題／走路／揭曉
+func _test_listen() -> void:
+	await _wait(2.0)
+	await _shot("L00_title")
+	_start_game()
+	fast = true
+	for n in rounds.size():
+		var Rd: Dictionary = rounds[qi]
+		var guard := 0.0
+		while state == St.QUESTION and guard < 40.0:
+			await _wait(0.2)
+			guard += 0.2
+			if n == 0 and absf(guard - 1.0) < 0.01:
+				await _shot("L01_scene")
+		if n == 0:
+			await _wait(0.8)
+			await _shot("L02_walk")
+		guard = 0.0
+		while state == St.WALKING and guard < 60.0:
+			await _wait(0.2)
+			guard += 0.2
+		await _wait(0.8)
+		print("LISTEN %d %s -> %s | %s | ok=%s state=%d" % [n + 1, Rd["lid"], Rd["target"], sentence(Rd, Rd["answer"]), bets.get(0, -1) == 0, state])
+		if n < 2:
+			await _shot("L03_reveal_%d" % n)
+		await _on_listen()
+		_on_next()
+		await _wait(0.3)
+	print("LISTEN DONE score=", scores, " state=", state)
+	await _shot("L09_result")
+
 func _run_test() -> void:
 	if OS.get_environment("INTRO") != "":
 		# 首頁空拍：太空 → 俯衝 → 街道，每 1.5 秒拍一張
@@ -1783,6 +1972,39 @@ func _run_test() -> void:
 		for i in 9:
 			await _wait(1.5)
 			await _shot("intro_%d" % i)
+		get_tree().quit()
+		return
+	if OS.get_environment("CAMPUS") != "":
+		# 二水國小俯瞰：從校園中心上方、西南（明德橋那邊）、西北（光文路那邊）三個角度
+		title_ui.visible = false
+		var C: Dictionary = data["campus"]
+		var tc: Vector2 = world.v2(C["track"]["c"])
+		var up: Vector3 = world.bend2(tc).normalized()
+		var i := 0
+		for off in [[Vector2(0, 2), 120.0], [Vector2(-60, 70), 55.0], [Vector2(-75, -60), 50.0], [Vector2(70, 10), 45.0]]:
+			cam_mode = "fixed"
+			fixed_cam = [world.bend2(tc + off[0], off[1]), world.bend2(tc, 0.0), up if i > 0 else world.bend2(tc + Vector2(0, -10)).normalized()]
+			cam_pos = fixed_cam[0]
+			cam_up = fixed_cam[2]
+			await _wait(1.2)
+			await _shot("campus_%d" % i)
+			i += 1
+		# 西門特寫：站在明德橋上看校門（檢查中文校名有沒有對準高柱）
+		var gp: Vector2 = world.v2(C["gates"][3]["p"])
+		var bm: Vector2 = (world.v2(C["bridge"][0]) + world.v2(C["bridge"][1])) / 2.0
+		var od: Vector2 = (bm - gp).normalized()
+		for k in 2:
+			var cpos: Vector2 = gp + od * (9.0 if k == 0 else 5.0) + Vector2(od.y, -od.x) * (0.0 if k == 0 else 3.0)
+			cam_mode = "fixed"
+			fixed_cam = [world.bend2(cpos, 2.6), world.bend2(gp, 2.2), world.bend2(gp).normalized()]
+			cam_pos = fixed_cam[0]
+			cam_up = fixed_cam[2]
+			await _wait(1.2)
+			await _shot("gate_%d" % k)
+		get_tree().quit()
+		return
+	if listen_mode:
+		await _test_listen()
 		get_tree().quit()
 		return
 	if personal:
@@ -1914,8 +2136,9 @@ func _test_arrivals() -> void:
 		arrive_id = id
 		cam_mode = "arrive"
 		cam_pos = Vector3.ZERO
+		cam_up = world.bend2(P["door2"]).normalized()   # 測試直接跳到地點：先把鏡頭「上方」設好，截圖才不會歪
 		world.fade_between(arrive_cam_point(id), P["pos2"], id)
-		await _wait(0.6)
+		await _wait(1.0)
 		await _shot("arr_%s" % id)
 		# 押注畫面（單人題：只有 Ken）
 		walkers["yuyu"]["pos"] = Vector2(9999, 9999)

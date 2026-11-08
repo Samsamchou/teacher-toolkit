@@ -1,0 +1,41 @@
+/* Listen and Guess 題目面板：蓋在遊戲畫面右側（iPad 橫放），遊戲的情境句留在下方中間看得到 */
+.quiz {
+  /* 右上角留給遊戲的功能鈕（Map／Sound／Repeat…），面板從下面開始 */
+  position: fixed; z-index: 20; right: 12px; top: 236px; bottom: 12px;
+  width: min(41vw, 460px); overflow-y: auto;
+  background: rgba(255, 250, 240, .97); border: 5px solid #2b2033; border-radius: 26px;
+  padding: 16px 18px; box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  font-family: "Comic Relief", "Noto Sans TC", system-ui, sans-serif; color: #2b2033;
+}
+.quiz[hidden] { display: none; }
+.quiz .qhead { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 10px; }
+.quiz .qhead b { font-size: 1.7rem; }
+.quiz .qhead span { flex: 1 1 100%; color: #7b5ea7; font-weight: 700; }
+.quiz .btn.small { padding: 8px 14px; font-size: 1rem; }
+.quiz .choices { display: grid; gap: 10px; }
+.quiz .btn.opt { text-align: left; font-size: 1.25rem; background: #fff8e7; color: #2b2033; box-shadow: 0 4px 0 #c4b995; }
+.quiz .sent { font-size: 1.55rem; line-height: 2.3; margin: 8px 0; }
+.quiz .sent.hint { color: #555; }
+.quiz .sent .blank { letter-spacing: 2px; color: #999; }
+.quiz .slot { min-width: 110px; min-height: 48px; font-size: 1.3rem; border: 3px dashed #7b5ea7; border-radius: 12px;
+  background: #fff; color: #2b2033; vertical-align: middle; font-family: inherit; padding: 2px 10px; }
+.quiz .slot.filled { border-style: solid; background: #ffe8a3; }
+.quiz .pool { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.quiz .tile { font: inherit; font-size: 1.3rem; padding: 10px 16px; border-radius: 14px; border: 3px solid #2b2033;
+  background: #a5d8ff; color: #2b2033; box-shadow: 0 4px 0 #2b2033; min-height: 52px; }
+.quiz .tile.ghost { visibility: hidden; border: 0; box-shadow: none; padding: 10px 40px; }
+.quiz .row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.quiz .btn.rec.on { background: #e03131; box-shadow: 0 5px 0 #8f1d1d; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { transform: scale(1.04); } }
+.quiz .ai { border-radius: 16px; padding: 10px 14px; margin: 8px 0; }
+.quiz .ai.good { background: #d3f9d8; border: 3px solid #2b8a3e; }
+.quiz .ai.try { background: #fff4e6; border: 3px solid #e8590c; }
+.quiz .ai p { margin: 4px 0; }
+.quiz .ai .said { font-size: 1.2rem; font-weight: 700; }
+.quiz .ai .scores b { font-size: 2rem; color: #2b8a3e; margin-right: 6px; }
+.quiz .ai.try .scores b { color: #e8590c; }
+.quiz .need { color: #c92a2a; font-weight: 700; }
+.quiz .msg { color: #7b5ea7; min-height: 1.2em; }
+@media (orientation: portrait) {
+  .quiz { left: 12px; right: 12px; top: auto; width: auto; max-height: 58vh; }
+}

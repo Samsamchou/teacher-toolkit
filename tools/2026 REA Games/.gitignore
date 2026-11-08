@@ -21,3 +21,9 @@ godot-jump-island/.godot/
 
 # Jump Island 聽力音檔工作檔（WAV 不入庫，2026-11-11）
 godot-jump-island/data/**/*.wav
+
+# Google 地圖空拍截圖只當對位參考，不入庫（授權）
+3D planet/資料/aerial/*.jpg
+3D planet/資料/aerial/*.jpeg
+3D planet/資料/aerial/*.webp
+3D planet/資料/aerial/*.png

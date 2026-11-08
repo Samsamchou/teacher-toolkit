@@ -12,6 +12,9 @@ import math
 import os
 import random
 from collections import defaultdict
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import shops_ershui as SH   # 二水街屋清冊（11/08）
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OSM = os.path.join(os.path.dirname(HERE), "資料", "osm", "ershui-downtown-20261025.json")
@@ -20,7 +23,7 @@ LAT0, LON0 = 23.8113, 120.6175        # 地圖中心（車站與三角仔中間�
 MX = 111320.0 * math.cos(math.radians(LAT0))
 MZ = 110560.0
 K = 0.55                               # 真實 1 m → 遊戲 0.55 m（房子與道路一起縮）
-RAD = 460.0                            # 只取中心 430 m 內（真實）
+RAD = 600.0                            # 只取中心 600 m 內（真實；老師 11/08 RDQ 1A：車站周邊步行範圍）
 OUTER = RAD * K + 26.0                 # 市區外的地點放在這個半徑（遊戲 m）
 
 ROAD_W = {"secondary": 5.2, "secondary_link": 4.4, "tertiary": 4.6, "tertiary_link": 4.0, "unclassified": 4.2,
@@ -37,7 +40,8 @@ PLACES = [
     dict(id="qizao", zh="齊造園", word="restaurant", lat=23.8119492, lon=120.6194158, kind="osm", style="shop", color="#e3c08a", sign="RESTAURANT"),
     dict(id="seven", zh="便利商店（民族路）", word="convenience store", lat=23.8097502, lon=120.6192371, kind="model", model="seven_eleven", size=8.0,
          cover={"y": 0.86, "h": 0.32, "text": "STORE", "color": "#388c6b"}),
-    dict(id="school", zh="二水國小", word="school", lat=23.8108492, lon=120.6178161, kind="model", model="school", size=24.0, clear=26.0),
+    # 2026-11-08 重建（RDQ-spec-ershui-elementary-rebuild-20261108，真實大小）：整個校園照 OSM 輪廓＋疏散地圖；Ken 走到明德橋（西門）
+    dict(id="school", zh="二水國小", word="school", lat=23.8108492, lon=120.6178161, kind="campus", size=20.0),
     dict(id="teatop", zh="飲料店（紅招牌）", word="tea shop", lat=23.812147, lon=120.6168422, kind="model", model="teatop", size=7.0,
          cover={"y": 0.62, "h": 0.16, "text": "TEA SHOP", "color": "#d9523f"}),
     dict(id="market", zh="二水超市", word="supermarket", lat=23.8122266, lon=120.6157864, kind="model", model="market", size=9.0),
@@ -87,7 +91,7 @@ def real(lat, lon):
 
 # 地圖由幾塊「真實街區」組成：市區（原比例 K）＋東南方的源泉一帶、八堡圳公園一帶。
 # 街區內部照真實位置與比例；街區之間的距離壓縮（真實約 2.5–4 km），用聯外道路接起來。
-OSM_FILES = [os.path.join(os.path.dirname(HERE), "資料", "osm", "ershui-%s-20261025.json" % a) for a in ("downtown", "southeast")]
+OSM_FILES = [os.path.join(os.path.dirname(HERE), "資料", "osm", a) for a in ("ershui-downtown-20261108.json", "ershui-southeast-20261025.json")]
 REGIONS = [
     {"id": "town", "c": (0.0, 0.0), "rad": RAD, "anchor": (0.0, 0.0)},
     {"id": "se", "c": real(23.8014, 120.6445), "rad": 290.0, "anchor": None, "name": "源泉一帶（二水國中、源泉國小、林先生廟）"},
@@ -280,6 +284,161 @@ def main() -> None:
         blds.append({"id": w["id"], "poly_r": poly, "c_r": c, "tag": t.get("building"), "name": t.get("name", ""),
                      "levels": t.get("building:levels", ""), "amenity": t.get("amenity", "")})
 
+    # ---------- 二水街屋清冊（11/08）：8 棟新地標＋沿街店家，用門牌內插找位置 ----------
+    chains = SH.street_chains(ways, N, real)
+    print("streets", {k: len(v) for k, v in chains.items()})
+
+    def to_latlon(p):
+        return LAT0 - p[1] / MZ, p[0] / MX + LON0
+
+    LM_SIZE = {"asia_inn": 7.0, "dental": 5.5, "decheng": 6.0, "shoes": 6.5, "ensheng": 5.5, "farmers": 10.0, "ande": 10.0, "dumpling": 5.5}
+    for L in SH.LANDMARKS:
+        if "addr" in L:
+            q, nrm = SH.shifted(chains, real, L["addr"][0], L["addr"][1], L.get("shift", 0.0))
+            if L.get("side_ref"):
+                nrm = SH.force_side(chains, real, L["addr"][0], q, nrm, L["side_ref"])
+            # 建築中心＝路中線往內（半個路寬＋半棟深），整棟在路邊、不壓到馬路
+            back = {"員集路三段": 6.2, "員集路四段": 6.2}.get(L["addr"][0], 5.4) + LM_SIZE[L["id"]] / K * 0.5 + 0.5
+            pt = (q[0] + nrm[0] * back, q[1] + nrm[1] * back)
+            # 路有轉彎時，離路中線可能不夠遠 → 沿著離路最近的方向推回去，整棟不壓到馬路
+            _, q2, _ = SH._project(chains[L["addr"][0]], pt)
+            vx, vz = pt[0] - q2[0], pt[1] - q2[1]
+            vl = math.hypot(vx, vz)
+            if 0.01 < vl < back:
+                pt = (q2[0] + vx / vl * back, q2[1] + vz / vl * back)
+            la, lo = to_latlon(pt)
+        elif "along" in L:
+            # 老師 11/08：和便利商店（光文路 9）同一側，沿著路往三角仔方向數過去 N 公尺
+            st, ref, meters = L["along"]
+            pts = chains[st]
+            s_ref, _, _ = SH._project(pts, real(*ref))
+            q, dq = SH._at(pts, s_ref + meters)
+            nrm = SH.force_side(chains, real, st, q, (-dq[1], dq[0]), ref)
+            back = 5.4 + LM_SIZE[L["id"]] / K * 0.5 + 0.5
+            la, lo = to_latlon((q[0] + nrm[0] * back, q[1] + nrm[1] * back))
+        elif "snap" in L:
+            q, nrm = SH.snap_front(chains, real, L["snap"], L["lat"], L["lon"])
+            back = {"員集路三段": 6.2, "員集路四段": 6.2}.get(L["snap"], 5.4) + LM_SIZE[L["id"]] / K * 0.5 + 0.5
+            la, lo = to_latlon((q[0] + nrm[0] * back, q[1] + nrm[1] * back))
+        else:
+            la, lo = L["lat"], L["lon"]
+        PLACES.append(dict(id=L["id"], zh=L["zh"], word="", en=L["en"], lat=la, lon=lo, kind="osm", style="shop",
+                           size=LM_SIZE[L["id"]], lm=True, rel=L.get("rel"), reldoor=L.get("reldoor")))
+    for P in PLACES:
+        if P["id"] in SH.FRONT_FIX:
+            st, P["lat"], P["lon"] = SH.FRONT_FIX[P["id"]]
+            sz = P.get("size", 7.0)
+            q, nrm = SH.snap_front(chains, real, st, P["lat"], P["lon"])
+            nrm = SH.force_side(chains, real, st, q, nrm, SH.FRONT_OPPOSITE)
+            nrm = (-nrm[0], -nrm[1])   # 和長春藥局相反的那一側
+            back = {"員集路三段": 6.2, "員集路四段": 6.2}.get(st, 5.4) + sz / K * 0.5 + 0.5
+            P["lat"], P["lon"] = to_latlon((q[0] + nrm[0] * back, q[1] + nrm[1] * back))
+            P["size"] = sz
+            P["lm"] = True
+    # ---------- 二水國小校園（11/08 重建）----------
+    # 角色：OSM 校舍 id → 用途；北教學大樓＋行政大樓是同一棟 L 形（米白）；南教學大樓＝紫紅磚主樓（老師核對配置圖 v3）
+    SCHOOL_WAY = 387649066
+    SCHOOL_ROLE = {1431118349: ("ladmin", 3), 1004983035: ("main", 4), 1431118369: ("gym", 3), 1431118308: ("stage", 1),
+                   1431118423: ("small", 3), 1431118311: ("small", 1), 1431118321: ("small", 1)}
+    wmap = {w["id"]: w for w in ways}
+    camp_r = [N[n] for n in wmap[SCHOOL_WAY]["nodes"] if n in N][:-1]
+    cc = centroid(camp_r)
+
+    def off(dx, dz):   # 配置圖上量的：校園中心往東 dx、往南 dz（真實公尺）
+        return (cc[0] + dx, cc[1] + dz)
+    th = math.radians(-34.0)
+    campus = {
+        "outline": [game(q) for q in camp_r],
+        "track": None,
+        "blds": [], "gates": [], "trees": [],
+    }
+    for wid, (role, fl) in SCHOOL_ROLE.items():
+        if wid in wmap:
+            pr = [N[n] for n in wmap[wid]["nodes"] if n in N]
+            if pr[0] == pr[-1]:
+                pr = pr[:-1]
+            if area(pr) < 0:
+                pr = pr[::-1]
+            campus["blds"].append({"role": role, "floors": fl, "poly": [game(q) for q in dp_simplify(pr + [pr[0]], 0.4)[:-1]]})
+    # 操場：在校舍之間找「最大、而且離每棟校舍（含群育館、司令台）至少 1.5 m、在校界內」的跑道（老師：群育館不可以跟操場重疊）
+    def samples_r(poly):
+        out = list(poly)
+        for i in range(len(poly)):
+            a2, b3 = poly[i], poly[(i + 1) % len(poly)]
+            for t in (0.25, 0.5, 0.75):
+                out.append((a2[0] + (b3[0] - a2[0]) * t, a2[1] + (b3[1] - a2[1]) * t))
+        return out
+    bld_pts = []
+    for wid in SCHOOL_ROLE:
+        if wid in wmap:
+            bld_pts += samples_r([N[n] for n in wmap[wid]["nodes"] if n in N])
+    edge_pts = samples_r(camp_r)
+    ux, uz = math.cos(th), math.sin(th)
+
+    def gap(cx, cz, A, Bw, q):
+        u = (q[0] - cx) * ux + (q[1] - cz) * uz
+        v = -(q[0] - cx) * uz + (q[1] - cz) * ux
+        return math.hypot(max(abs(u) - (A - Bw), 0.0), v) - Bw
+    best_t = None
+    for A in [x * 0.5 for x in range(120, 60, -1)]:
+        Bw = A * 0.53
+        found = None
+        for dx in range(-30, 31, 2):
+            for dz in range(-30, 31, 2):
+                cx, cz = off(-4.6 + dx, 13.5 + dz)
+                if min(gap(cx, cz, A, Bw, q) for q in bld_pts) < 1.5:
+                    continue
+                if min(gap(cx, cz, A, Bw, q) for q in edge_pts) < 2.0:
+                    continue
+                d0 = dx * dx + dz * dz
+                if found is None or d0 < found[0]:
+                    found = (d0, cx, cz)
+        if found:
+            best_t = (A, Bw, found[1], found[2])
+            break
+    A, Bw, tcx, tcz = best_t
+    print("TRACK half-length %.1f m, half-width %.1f m" % (A, Bw))
+    campus["track"] = {"c": game((tcx, tcz)), "a": A * K, "b": Bw * K, "dir": [ux, uz]}
+    if 1302402017 in wmap:
+        campus["courts"] = [game(N[n]) for n in wmap[1302402017]["nodes"] if n in N][:-1]
+    br = [N[n] for n in wmap[1311714594]["nodes"] if n in N]
+    campus["bridge"] = [game(br[0]), game(br[-1])]
+    # 校門（配置圖 v3 的位置）：main＝光文路正門（窄門），side＝光文路側門，east＝東側門，west＝西門（明德橋）
+    for kind, dx, dz in [("main", -64.6, -58.5), ("side", 53.8, -76.2), ("east", 123.0, -8.5)]:
+        campus["gates"].append({"kind": kind, "p": game(off(dx, dz))})
+    # 西門（有時鐘柱的那座，老師 11/08）：就在明德橋靠校園那一端，再往校園裡 2.5 m
+    e0, e1 = (br[0], br[-1]) if inside(br[-1], camp_r) or math.hypot(br[-1][0] - cc[0], br[-1][1] - cc[1]) < math.hypot(br[0][0] - cc[0], br[0][1] - cc[1]) else (br[-1], br[0])
+    bl = math.hypot(e1[0] - e0[0], e1[1] - e0[1]) or 1.0
+    west_r = (e1[0] + (e1[0] - e0[0]) / bl * 2.5, e1[1] + (e1[1] - e0[1]) / bl * 2.5)
+    campus["gates"].append({"kind": "west", "p": game(west_r)})
+    campus["roundabout"] = game(off(-55.8, -7.7))
+    # 樹：沿校界內側每 14 m 一棵（避開校舍與操場），外加一棵大老樹＋白長椅
+    def in_track(q):
+        return gap(tcx, tcz, A, Bw, q) < 2.5
+    sb = [[N[n] for n in wmap[w]["nodes"] if n in N] for w in SCHOOL_ROLE if w in wmap]
+    for i in range(len(camp_r)):
+        a, b2 = camp_r[i], camp_r[(i + 1) % len(camp_r)]
+        L = math.hypot(b2[0] - a[0], b2[1] - a[1])
+        n = int(L // 14)
+        for k in range(1, n):
+            t = k / n
+            q = (a[0] + (b2[0] - a[0]) * t, a[1] + (b2[1] - a[1]) * t)
+            q = (q[0] + (cc[0] - q[0]) * 6.0 / max(1.0, math.hypot(cc[0] - q[0], cc[1] - q[1])),
+                 q[1] + (cc[1] - q[1]) * 6.0 / max(1.0, math.hypot(cc[0] - q[0], cc[1] - q[1])))
+            if in_track(q) or any(inside(q, pb) for pb in sb):
+                continue
+            campus["trees"].append(game(q))
+    campus["bigtree"] = game(off(-35.0, -30.0))
+    for P in PLACES:
+        if P["id"] == "school":
+            # 地點中心放在西門裡面一點（鏡頭看得到明德橋、西門、群育館）；門口（Ken 走到的地方）＝明德橋
+            P["lat"], P["lon"] = to_latlon(off(-52.0, 80.0))
+    removed_campus = {w for w in SCHOOL_ROLE}
+    shop_spots = []
+    for name, street, no, kind in SH.SHOPS:
+        q, nrm = SH.locate(chains, real, street, no)
+        shop_spots.append((name, kind, street, no, q, nrm))
+
     def find_building(P):
         if "osm" in P:
             for b in blds:
@@ -342,6 +501,46 @@ def main() -> None:
                         removed.add(bb["id"])
             places.append(Q)
             continue
+        if P.get("lm"):
+            # 新地標（Colab 模型）：放在算好的位置，不吸附到旁邊的大建築；底下原本的房子拿掉
+            c = real(P["lat"], P["lon"])
+            if P.get("rel"):
+                # 跟某個地點「同一排、往某方向數過去幾間」：沿那棟的臨街方向平移（遊戲公尺）
+                base = next(x for x in places if x["id"] == P["rel"][0])
+                toward = next(x for x in places if x["id"] == P["rel"][2])
+                fx, fz = base["door"][0] - base["pos"][0], base["door"][1] - base["pos"][1]
+                fl = math.hypot(fx, fz) or 1.0
+                ax, az = fz / fl, -fx / fl
+                if (toward["pos"][0] - base["pos"][0]) * ax + (toward["pos"][1] - base["pos"][1]) * az < 0:
+                    ax, az = -ax, -az
+                g = (base["pos"][0] + ax * P["rel"][1], base["pos"][1] + az * P["rel"][1])
+                c = (g[0] / K, g[1] / K)
+            if P.get("reldoor"):
+                # 從某地點的「門口（路邊）」沿店面線往某方向走 N 遊戲公尺，再往店那一側退：半個路寬＋半棟
+                base = next(x for x in places if x["id"] == P["reldoor"][0])
+                toward = next((x for x in places if x["id"] == P["reldoor"][2]), None) or next(x for x in PLACES if x["id"] == P["reldoor"][2])
+                tp = toward["pos"] if "pos" in toward else game(real(toward["lat"], toward["lon"]))
+                fx, fz = base["door"][0] - base["pos"][0], base["door"][1] - base["pos"][1]
+                fl = math.hypot(fx, fz) or 1.0
+                fx, fz = fx / fl, fz / fl
+                ax, az = fz, -fx
+                if (tp[0] - base["door"][0]) * ax + (tp[1] - base["door"][1]) * az < 0:
+                    ax, az = -ax, -az
+                bk = 2.3 + P["size"] * 0.5 + 0.4
+                g = (base["door"][0] + ax * P["reldoor"][1] - fx * bk, base["door"][1] + az * P["reldoor"][1] - fz * bk)
+                c = (g[0] / K, g[1] / K)
+            rr = P["size"] / K * 0.6
+            for bb in blds:
+                if bb["id"] not in removed and (math.hypot(bb["c_r"][0] - c[0], bb["c_r"][1] - c[1]) < rr or inside(c, bb["poly_r"])):
+                    removed.add(bb["id"])
+            pos = game(c)
+            d, door, _ = nearest_road(pos)
+            Q.pop("lm", None)
+            Q.pop("rel", None)
+            Q.pop("reldoor", None)
+            Q.update(pos=pos, door=door, door_dist=round(d, 2))
+            places.append(Q)
+            continue
         b = find_building(P)
         if b is None and "lat" not in P:
             print("SKIP（不在市區範圍）", P["id"])
@@ -366,15 +565,164 @@ def main() -> None:
                 gb = game(bb["c_r"])
                 if math.hypot(gb[0] - pos[0], gb[1] - pos[1]) < clear:
                     removed.add(bb["id"])
+        if P["kind"] == "campus":
+            for bb in blds:
+                if bb["id"] in removed_campus or inside(bb["c_r"], camp_r) or math.hypot(bb["c_r"][0] - west_r[0], bb["c_r"][1] - west_r[1]) < 9.0:
+                    removed.add(bb["id"])
+            mid = ((campus["bridge"][0][0] + campus["bridge"][1][0]) / 2, (campus["bridge"][0][1] + campus["bridge"][1][1]) / 2)
+            Q["door"] = [round(mid[0], 2), round(mid[1], 2)]
+            Q["door_dist"] = round(math.hypot(Q["pos"][0] - mid[0], Q["pos"][1] - mid[1]), 2)
         if P["kind"] in ("waterpark", "lawn"):
             for bb in blds:
                 gb = game(bb["c_r"])
                 if math.hypot(gb[0] - pos[0], gb[1] - pos[1]) < 11.0:
                     removed.add(bb["id"])
         places.append(Q)
+    # 老師 11/08：亞洲旅社和旁邊的便利商店要「面對火車站前的廣場」（不是面對警察局）→ 門口改成朝車站那一側最近的路
+    FACE_TOWARD = {"ok": "station", "asia_inn": "station"}   # 牙醫、德成百貨改照 Google 空拍放在光文路旁、正門朝光文路（shops_ershui snap）
+    byid = {q["id"]: q for q in places}
+    for pid, tid in FACE_TOWARD.items():
+        if pid not in byid or tid not in byid:
+            continue
+        Q = byid[pid]
+        pos, tgt = Q["pos"], byid[tid]["pos"]
+        tv = (tgt[0] - pos[0], tgt[1] - pos[1])
+        tl = math.hypot(*tv) or 1.0
+        probe = (pos[0] + tv[0] / tl * 6.0, pos[1] + tv[1] / tl * 6.0)   # 店的正前方（朝車站）
+        d, q, _ = nearest_road(probe)
+        Q["door"] = [q[0], q[1]]
+        Q["door_dist"] = round(math.hypot(q[0] - pos[0], q[1] - pos[1]), 2)
+        Q["face"] = [round(tv[0] / tl, 3), round(tv[1] / tl, 3)]       # 建築正面朝向（world.gd 用）
     nodes.update(extra_nodes)
     gedges += extra_edges
     segs = [(nodes[a], nodes[b]) for a, b, *_ in gedges]
+
+    # 店家 → 該側最近的臨街建築（同一棟只放一家）
+    # 店家 → 門牌那一側的建築；OSM 沒畫到的店面（二水很多街屋 OSM 沒有）就照門牌位置補一棟 5 m 寬的店面。
+    # 再沿 4 條主要街道把空著的臨街面補上一般透天（不放名字、門牌）。老師 11/08：街道兩旁都要有建築。
+    road_r = []   # 真實座標的道路線段（給「新蓋的房子不能壓到路」）
+    for ids, wd, nm in road_ways:
+        for a, b2 in zip(ids, ids[1:]):
+            road_r.append((N[a], N[b2], wd / K / 2.0 + 0.6))
+    place_r = []
+    for P in PLACES:
+        if "lat" in P and P["kind"] not in ("outer", "local"):
+            place_r.append((real(P["lat"], P["lon"]), P.get("size", 10.0) / K * 0.55 + 2.0))
+    kept = [b for b in blds if b["id"] not in removed]
+    synth = []
+
+    def rect(q, nrm, along, off, w, dpt):
+        f0 = (q[0] + nrm[0] * off - along[0] * w / 2, q[1] + nrm[1] * off - along[1] * w / 2)
+        f1 = (q[0] + nrm[0] * off + along[0] * w / 2, q[1] + nrm[1] * off + along[1] * w / 2)
+        return [f0, f1, (f1[0] + nrm[0] * dpt, f1[1] + nrm[1] * dpt), (f0[0] + nrm[0] * dpt, f0[1] + nrm[1] * dpt)]
+
+    def samples(poly):
+        pts = list(poly) + [centroid(poly)]
+        for i in range(len(poly)):
+            a, b2 = poly[i], poly[(i + 1) % len(poly)]
+            pts.append(((a[0] + b2[0]) / 2, (a[1] + b2[1]) / 2))
+        return pts
+
+    def hits_building(poly):
+        sp = samples(poly)
+        c = centroid(poly)
+        for b in kept + synth:
+            bc = b["c_r"]
+            if math.hypot(bc[0] - c[0], bc[1] - c[1]) > 40:
+                continue
+            if any(inside(x, b["poly_r"]) for x in sp) or any(inside(x, poly) for x in b["poly_r"]):
+                return b
+        return None
+
+    def free(poly):
+        if region_of(centroid(poly)) is not REGIONS[0]:
+            return False
+        if any(inside(x, camp_r) for x in samples(poly)):
+            return False
+        for x in samples(poly):
+            for a, b2, hw in road_r:
+                if seg_dist_only(x, a, b2) < hw:
+                    return False
+            for pc, pr in place_r:
+                if math.hypot(x[0] - pc[0], x[1] - pc[1]) < pr:
+                    return False
+        return hits_building(poly) is None
+
+    shop_of = {}
+    shop_log = []
+    OFF = {"員集路三段": 6.2, "員集路四段": 6.2, "光文路": 5.4, "惠民路": 5.4}
+    for name, kind, street, no, q, nrm in shop_spots:
+        along = (nrm[1], -nrm[0])
+        off = OFF.get(street, 5.4)
+        got = None
+        probe = (q[0] + nrm[0] * (off + 4.0), q[1] + nrm[1] * (off + 4.0))
+        for b in kept:
+            if b["id"] not in shop_of and inside(probe, b["poly_r"]):
+                got = b
+                break
+        if got is None:
+            for sh in (0.0, 3.0, -3.0, 6.0, -6.0, 9.0, -9.0):
+                qq = (q[0] + along[0] * sh, q[1] + along[1] * sh)
+                poly = rect(qq, nrm, along, off, 5.0, 10.0)
+                if free(poly):
+                    got = {"id": "s%d" % len(synth), "poly_r": poly, "c_r": centroid(poly), "tag": "yes", "name": name, "levels": "", "amenity": ""}
+                    synth.append(got)
+                    break
+                hb = hits_building(poly)
+                if hb is not None and hb["id"] not in shop_of and hb["id"] not in removed:
+                    got = hb
+                    break
+        if got is not None:
+            shop_of[got["id"]] = {"name": name, "kind": kind}
+            shop_log.append((name, street, no, got["id"]))
+        else:
+            shop_log.append((name, street, no, None))
+    n_shop_synth = len(synth)
+    for street in ("光文路", "員集路三段", "員集路四段", "惠民路"):
+        pts = chains.get(street)
+        if not pts:
+            continue
+        off = OFF[street]
+        acc = 0.0
+        for a, b2 in zip(pts, pts[1:]):
+            L = math.hypot(b2[0] - a[0], b2[1] - a[1])
+            if L < 0.5:
+                continue
+            along = ((b2[0] - a[0]) / L, (b2[1] - a[1]) / L)
+            t = 2.5
+            while t < L - 2.5:
+                q = (a[0] + along[0] * t, a[1] + along[1] * t)
+                for sgn in (1.0, -1.0):
+                    nrm = (-along[1] * sgn, along[0] * sgn)
+                    poly = rect(q, nrm, along, off, 5.0, 9.0 + (t * 7.0 % 3.0))
+                    if free(poly):
+                        synth.append({"id": "s%d" % len(synth), "poly_r": poly, "c_r": centroid(poly), "tag": "yes", "name": "", "levels": "", "amenity": ""})
+                t += 5.2
+    # 還沒有房子的店：找同一側、20 m 內最近、還沒放店的房子（包含剛補的透天）
+    for k, x in enumerate(shop_log):
+        if x[3] is not None:
+            continue
+        name, street, no = x[0], x[1], x[2]
+        spot = next(sp for sp in shop_spots if sp[0] == name and sp[2] == street and sp[3] == no)
+        q, nrm = spot[4], spot[5]
+        best = None
+        for bb in kept + synth:
+            if bb["id"] in shop_of:
+                continue
+            v = (bb["c_r"][0] - q[0], bb["c_r"][1] - q[1])
+            d = math.hypot(*v)
+            same = v[0] * nrm[0] + v[1] * nrm[1] > 1.0
+            score = d if same else d + 12.0     # 同一側優先；那一側真的沒房子（學校、空地）才放對面
+            if d < 24.0 and (best is None or score < best[0]):
+                best = (score, bb)
+        if best:
+            shop_of[best[1]["id"]] = {"name": name, "kind": spot[1]}
+            shop_log[k] = (name, street, no, best[1]["id"])
+    blds += synth
+    print("shops placed", sum(1 for x in shop_log if x[3]), "/", len(shop_log), "new shop houses", n_shop_synth, "new street houses", len(synth) - n_shop_synth)
+    for x in shop_log:
+        if x[3] is None:
+            print("  NO BUILDING", x[1], x[2])
 
     # 一般建築的外觀：依實景研究的比例（紅磚洋樓刻意提高）＋位置
     tri = real(*TRI)
@@ -415,8 +763,11 @@ def main() -> None:
         else:
             style = "A" if r < 0.1 else ("B" if r < 0.14 else ("D" if r < 0.38 else "C"))
         lv = b["levels"]
-        out_b.append({"poly": poly, "front": best[1], "street": street, "style": style,
-                      "levels": int(float(lv)) if lv else 0, "id": b["id"]})
+        ob = {"poly": poly, "front": best[1], "street": street, "style": style,
+              "levels": int(float(lv)) if lv else 0, "id": b["id"]}
+        if b["id"] in shop_of:
+            ob.update(shop=shop_of[b["id"]], style="C", street=True)   # 店家一律畫成臨街店面
+        out_b.append(ob)
 
     # 鐵路、水道、綠地
     rails, water, green = [], [], []
@@ -455,7 +806,7 @@ def main() -> None:
     for s in SETS:
         ids = {p["id"]: p for p in places}
         assert set(WORDS) <= {ids[t]["word"] for t in s["targets"]}, s["name"]
-    out = {"K": K, "nodes": nodes, "edges": gedges, "places": places, "buildings": out_b,
+    out = {"K": K, "nodes": nodes, "edges": gedges, "places": places, "buildings": out_b, "campus": campus,
            "rails": rails, "rail_line": rail_line, "water": water, "green": green, "words": WORDS,
            "source": "© OpenStreetMap contributors (ODbL 1.0), downloaded 2026-10-25"}
     json.dump(out, open(os.path.join(HERE, "data", "map.json"), "w", encoding="utf-8"), ensure_ascii=False)
