@@ -14,6 +14,9 @@ godot-jump-island/.godot/
 
 # 3D planet：Godot 快取、網頁匯出、OSM 原始資料、Tripo/Codex 媒體都只留 GDrive
 3D planet/godot-ershui-planet/.godot/
+3D planet/godot-ershui-freetime/.godot/
+# Mixamo 動作檔（Adobe 授權，只留 GDrive）
+*.fbx
 3D planet/web-build/
 3D planet/資料/osm/
 *.pck

@@ -1,0 +1,95 @@
+{
+ "sets": [
+  {
+   "name": "Set 1 車站散步",
+   "targets": [
+    "teatop",
+    "post",
+    "library",
+    "market",
+    "school",
+    "bookstore",
+    "health",
+    "inn",
+    "seven",
+    "waterpark",
+    "station",
+    "lawn"
+   ]
+  },
+  {
+   "name": "Set 2 越過鐵路",
+   "targets": [
+    "tea2",
+    "post",
+    "library",
+    "pxmart",
+    "fuxing",
+    "bookstore",
+    "health",
+    "qizao",
+    "ok",
+    "fengbo",
+    "station",
+    "teatop"
+   ]
+  },
+  {
+   "name": "Set 3 八堡圳之旅",
+   "targets": [
+    "teatop",
+    "post",
+    "library",
+    "market",
+    "yuanquan",
+    "bookstore",
+    "health",
+    "inn",
+    "seven",
+    "baobao",
+    "station",
+    "school"
+   ]
+  },
+  {
+   "name": "Set 4 東西南北",
+   "targets": [
+    "tea2",
+    "post",
+    "library",
+    "pxmart",
+    "esjh",
+    "bookstore",
+    "health",
+    "qizao",
+    "ok",
+    "lawn",
+    "station",
+    "waterpark"
+   ]
+  },
+  {
+   "name": "Set 5 二水全攻略",
+   "targets": [
+    "teatop",
+    "post",
+    "library",
+    "pxmart",
+    "school",
+    "bookstore",
+    "health",
+    "inn",
+    "seven",
+    "fengbo",
+    "station",
+    "esjh"
+   ]
+  }
+ ],
+ "first_options": [
+  "tea shop",
+  "post office",
+  "library",
+  "supermarket"
+ ]
+}

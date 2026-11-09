@@ -1,0 +1,193 @@
+{
+ "intro": "Let's guess Ken's free time! You are Ken now. Listen to my question and choose your answer.",
+ "scenarios": [
+  {
+   "n": 1,
+   "context": "Today is Monday. School is over. Time to go home.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I watch TV in my free time.",
+    "B. I study English in my free time.",
+    "C. I play online games in my free time."
+   ],
+   "answer": "B",
+   "activity": "study English",
+   "start_place": "二水國小東側門 (school, east gate)",
+   "end_place": "Ken's home",
+   "on_screen_zh": "Ken 放學從東側門走路回家，坐在書桌前翻英語課本準備小考。",
+   "logic_zh": "週一放學回家，明天有英文小考，先念英文最合理。",
+   "context_with_hints": "Today is Monday. School is over. Time to go home. I have an English test tomorrow."
+  },
+  {
+   "n": 2,
+   "context": "It's Monday evening. It's rainy outside.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I watch TV in my free time.",
+    "B. I ride a bike in my free time.",
+    "C. I play basketball in my free time."
+   ],
+   "answer": "A",
+   "activity": "watch TV",
+   "start_place": "Ken's home",
+   "end_place": "Ken's home",
+   "on_screen_zh": "晚上下雨，Ken 和媽媽坐在客廳沙發上看電視。",
+   "logic_zh": "同一晚仍在家，下雨不能出門、功課寫完了，和媽媽看電視放鬆。",
+   "context_with_hints": "It's Monday evening. It's rainy. My homework is done. I sit on the sofa with Mom."
+  },
+  {
+   "n": 3,
+   "context": "Today is Tuesday. It's a cool, sunny morning. Time to go to school.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I ride a bike in my free time.",
+    "B. I watch TV in my free time.",
+    "C. I go jogging in my free time."
+   ],
+   "answer": "C",
+   "activity": "go jogging",
+   "start_place": "Ken's home",
+   "end_place": "二水國小 (school)",
+   "on_screen_zh": "清晨 Ken 穿運動鞋從家門口沿街慢跑約 370 公尺到學校東側門。",
+   "logic_zh": "早上涼爽晴朗、穿上運動鞋，腳踏車壞了不能騎，就慢跑上學。",
+   "context_with_hints": "Today is Tuesday. It's cool and sunny. I get up at six and put on my sports shoes. Oh no, my bike is broken!"
+  },
+  {
+   "n": 4,
+   "context": "It's Tuesday afternoon. School is over. It's very hot.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I listen to music in my free time.",
+    "B. I study English in my free time.",
+    "C. I play basketball in my free time."
+   ],
+   "answer": "A",
+   "activity": "listen to music",
+   "start_place": "二水國小 (school)",
+   "end_place": "二水鄉立圖書館 (library)",
+   "on_screen_zh": "Ken 從學校西側走到隔壁圖書館，吹冷氣、戴上新耳機聽音樂。",
+   "logic_zh": "人已在學校，放學很熱就近去隔壁圖書館；帶著新耳機，聽音樂最自然。",
+   "context_with_hints": "It's Tuesday afternoon. School is over. It's very hot. I go to the library next to my school. I have my new earphones."
+  },
+  {
+   "n": 5,
+   "context": "It's Tuesday evening. Time to go home.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I surf the Internet in my free time.",
+    "B. I play the recorder in my free time.",
+    "C. I play basketball in my free time."
+   ],
+   "answer": "B",
+   "activity": "play the recorder",
+   "start_place": "二水鄉立圖書館 (library)",
+   "end_place": "Ken's home",
+   "on_screen_zh": "媽媽到圖書館接 Ken 回家，Ken 在房間拿出直笛練習吹奏。",
+   "logic_zh": "週二傍晚回到家，明天音樂課要考試，練直笛最合理。",
+   "context_with_hints": "Mom is here. Time to go home. I have a music test tomorrow."
+  },
+  {
+   "n": 6,
+   "context": "It's Wednesday evening. It's cloudy and cold.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I watch TV in my free time.",
+    "B. I study English in my free time.",
+    "C. I play online games in my free time."
+   ],
+   "answer": "C",
+   "activity": "play online games",
+   "start_place": "Ken's home",
+   "end_place": "Ken's home",
+   "on_screen_zh": "週三晚上 Ken 在家戴耳機，用電腦和 Tom 連線玩遊戲。",
+   "logic_zh": "放學已回家，晚上冷不出門、沒功課，朋友也在線上，一起玩線上遊戲。",
+   "context_with_hints": "It's Wednesday evening. It's cloudy and cold. No homework tonight! My friend Tom is online."
+  },
+  {
+   "n": 7,
+   "context": "Today is Thursday. It's rainy after school.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I surf the Internet in my free time.",
+    "B. I play online games in my free time.",
+    "C. I go camping in my free time."
+   ],
+   "answer": "A",
+   "activity": "surf the Internet",
+   "start_place": "Ken's home",
+   "end_place": "Ken's home",
+   "on_screen_zh": "下雨天 Ken 在家用電腦上網，搜尋二水的照片做報告。",
+   "logic_zh": "下雨待在家，報告需要二水的圖片，上網找資料最合理。",
+   "context_with_hints": "Today is Thursday. It's rainy after school. I have a report about Ershui. I need some pictures."
+  },
+  {
+   "n": 8,
+   "context": "Today is Saturday. It's sunny and windy.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I go jogging in my free time.",
+    "B. I ride a bike in my free time.",
+    "C. I play baseball in my free time."
+   ],
+   "answer": "B",
+   "activity": "ride a bike",
+   "start_place": "Ken's home",
+   "end_place": "二水國小 (school)",
+   "on_screen_zh": "週六 Ken 牽出修好的腳踏車，迎著風從家沿街騎到二水國小找朋友。",
+   "logic_zh": "週二壞掉的腳踏車爸爸修好了，週末晴天有風，騎車去學校找朋友。",
+   "context_with_hints": "Today is Saturday. It's sunny and windy. Dad fixes my bike for me. My friends wait for me at school."
+  },
+  {
+   "n": 9,
+   "context": "It's Saturday afternoon. It's sunny.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I play baseball in my free time.",
+    "B. I go camping in my free time.",
+    "C. I play basketball in my free time."
+   ],
+   "answer": "C",
+   "activity": "play basketball",
+   "start_place": "二水國小 (school)",
+   "end_place": "水心之初大草原 (grass park)",
+   "on_screen_zh": "Ken 和朋友從學校騎車經過 Ken 家，往東南到水心之初大草原，在籃球架下投籃。",
+   "logic_zh": "下午晴天適合戶外運動，草原在家的東南方順路可到；大顆橘色球就是籃球。",
+   "context_with_hints": "It's Saturday afternoon. It's sunny. My friends and I go to the big park. We have a big orange ball."
+  },
+  {
+   "n": 10,
+   "context": "It's Saturday evening. The sky is clear.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I go camping in my free time.",
+    "B. I play basketball in my free time.",
+    "C. I watch TV in my free time."
+   ],
+   "answer": "A",
+   "activity": "go camping",
+   "start_place": "水心之初大草原 (grass park)",
+   "end_place": "水心之初大草原 (grass park)",
+   "on_screen_zh": "傍晚爸媽來到草原，一家人搭帳篷、點營燈，在草原露營看星星。",
+   "logic_zh": "週末晚上天氣晴朗，全家留在草原不回家過夜，就是露營。",
+   "context_with_hints": "It's Saturday evening. The sky is clear. Dad and Mom come to the park. We stay here tonight."
+  },
+  {
+   "n": 11,
+   "context": "Today is Sunday. It's a sunny morning.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "A. I play basketball in my free time.",
+    "B. I play baseball in my free time.",
+    "C. I go jogging in my free time."
+   ],
+   "answer": "B",
+   "activity": "play baseball",
+   "start_place": "水心之初大草原 (grass park)",
+   "end_place": "水心之初大草原 (grass park)",
+   "on_screen_zh": "露營隔天早上，爸爸在大草原投球，Ken 戴手套、拿新球棒擊球。",
+   "logic_zh": "露營後人還在草原，晴天早上場地寬闊，爸爸帶來球棒和手套，打棒球最合理。",
+   "context_with_hints": "Today is Sunday. It's a sunny morning. Dad has a new bat and a glove for me."
+  }
+ ],
+ "note": "老師 11/09：情境選 B（只留星期、天氣、時間，不放明顯提示字）；context_with_hints 是原本有提示的版本"
+}

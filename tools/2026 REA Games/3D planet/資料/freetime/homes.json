@@ -1,0 +1,9 @@
+{
+ "note": "老師 2026-11-09 核對「家的位置可以」；index＝godot-ershui-planet data/map.json buildings 的編號（重建地圖後要重新對應）",
+ "homes": {
+  "shuiling": {"building": 290, "gate": "west", "commute": "on foot", "route_m": 114, "street": "溪邊巷"},
+  "ken":      {"building": 105, "gate": "east", "commute": "by bike", "route_m": 368, "street": "學校東南方住宅區"},
+  "zunbo":    {"building": 185, "gate": "main", "commute": "by scooter", "route_m": 408, "street": "員集路四段"}
+ },
+ "map": "資料/freetime/homes-routes-v1.png"
+}

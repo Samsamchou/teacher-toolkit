@@ -42,6 +42,7 @@
   先讀 `工作流程與踩坑紀錄.md`、`godot-jump-island/HANDOFF.md`；第三方 YouTube 影片與逐字稿不入庫。
   `3D planet/` 是仿「基隆小行星」的二水小行星逛街版（Godot＋OSM 真實街道＋22 棟 Tripo 復刻建築、6 種句型模式），
   先讀 `3D planet/HANDOFF.md` 與 `3D planet/工作流程與踩坑紀錄.md`；正式站 hwg5-clock-tower.web.app/ershui-planet/（10/25 上線，含個人模式＋教師後台）。
+  `3D planet/godot-ershui-freetime/` 是 HWG7 U03 Free Time 版（製作中，先讀 `3D planet/資料/freetime/進度-*.md` 與 rdq 規格卡）。
 - `tools/2026 AI VIDEOS SENSE BAR/`：照「山獅霸」工作流（shanshiba-workflow 兩個 repo）在 Google Colab G4
   做 AI 短片；上游 repo clone 在裡面但不入庫，各片設定存 `films/<片名>/`。先讀 `HANDOFF.md`；
   範本片〈被狗吃掉的作業〉2026-10-23 驗收。影片與圖片音檔不入庫。
