@@ -50,7 +50,12 @@ def write_ascii(path, text):
 
 def ensure_session(state):
     write_ascii(WORK / "_ping.py", "import os\nt='/content/.token'\nif not os.path.exists(t): open(t,'w').write(str(os.getpid()))\nprint('TOKEN', open(t).read(), os.path.exists('/content/blender/blender'))\n")
-    code, out = colab("exec", "-s", SESSION, "-f", "work/_ping.py", timeout=120)
+    try:
+        code, out = colab("exec", "-s", SESSION, "-f", "work/_ping.py", timeout=120)
+    except subprocess.TimeoutExpired:   # 11/09：機器還在但 kernel 卡住 → 重開 kernel 再試（檔案都還在）
+        print("Colab kernel 沒回應，重開 kernel …", flush=True)
+        colab("restart-kernel", "-s", SESSION, timeout=180)
+        code, out = colab("exec", "-s", SESSION, "-f", "work/_ping.py", timeout=180)
     if "TOKEN" not in out:
         print("開新的 Colab G4 …", flush=True)
         colab("new", "-s", SESSION, "--gpu", "G4", timeout=600)
@@ -80,6 +85,38 @@ def frames_for(sid, spec):
     return spec
 
 
+def run_one(q, sid, spec, samples, scale):
+    OD = "/content/out" if q == "final" else "/content/tout"
+    stamp = datetime.datetime.now().strftime("%m%d-%H%M%S")
+    fr = frames_for(sid, spec)
+    mode = f"range {OD}/{sid} 0 end 2" if fr == "all" else (f"check {OD}/{sid} 4" if fr == "chk" else f"sheet {OD}/{sid} {fr}")
+    lines = ["import subprocess, os",
+             "B = '/content/blender/blender -b --factory-startup --python /content/src/scenes8.py -- /content/props /content/fonts'",
+             f"os.system('rm -rf {OD} && mkdir -p {OD}')",
+             f"r = subprocess.run(B + ' {sid} {mode} CYCLES {samples} {scale}', shell=True, capture_output=True, text=True)",
+             "ls = [l for l in (r.stdout + r.stderr).splitlines() if l.startswith('FRAME') or 'Error' in l or 'Traceback' in l or 'line ' in l]",
+             f"print('JOB {sid}', len([l for l in ls if l.startswith('FRAME')]), 'frames', ' | '.join(l for l in ls if not l.startswith('FRAME'))[-900:], flush=True)",
+             f"os.system('cd /content && rm -f out.zip && zip -q -r out.zip {OD[9:]}')"]
+    write_ascii(WORK / "_job.py", "\n".join(lines) + "\n")
+    t1 = time.time()
+    code, out = colab("exec", "-s", SESSION, "-f", "work/_job.py", "--timeout", "2700", timeout=2900)
+    job = [l for l in out.splitlines() if l.startswith("JOB")]
+    if not job: raise RuntimeError(out[-300:])
+    print(job[0], f"({time.time() - t1:.0f}s)", flush=True)
+    dst = ROOT / "qa" / "colab" / stamp; dst.mkdir(parents=True, exist_ok=True)
+    colab("download", "-s", SESSION, "/content/out.zip", str(dst / "out.zip"), timeout=1800)
+    with zipfile.ZipFile(dst / "out.zip") as z: z.extractall(dst)
+    (dst / "out.zip").unlink()
+    for d in sorted((dst / OD[9:]).iterdir()):
+        if not d.is_dir(): continue
+        if q == "final":
+            tgt = ROOT / "renders" / d.name; tgt.mkdir(parents=True, exist_ok=True)
+            for p in d.glob("*.png"): shutil.copy(p, tgt / p.name)
+            print(f"  下載 {d.name}：{len(list(tgt.glob('*.png')))} 張", flush=True)
+        else:
+            subprocess.run([sys.executable, str(SHEET), str(d), str(dst / f"{d.name}.jpg"), "5"])
+
+
 def main():
     q, jobs = sys.argv[1], [j.split() for j in sys.argv[2:]]
     samples, scale = Q[q]
@@ -92,38 +129,27 @@ def main():
     files += [(p, f"/content/src/{p.name}") for p in [ROOT / "src" / "engine.py", ROOT / "src" / "scenes8.py", ROOT / "src" / "timing.json"]
               + ([ROOT / "src" / "yaw.json"] if (ROOT / "src" / "yaw.json").exists() else [])]
     sync(state, files); STATE.write_text(json.dumps(state, indent=1))
-    stamp = datetime.datetime.now().strftime("%m%d-%H%M%S")
-    OD = "/content/out" if q == "final" else "/content/tout"
-    lines = ["import subprocess, os",
-             "B = '/content/blender/blender -b --factory-startup --python /content/src/scenes8.py -- /content/props /content/fonts'",
-             f"os.system('mkdir -p /content/out' if {q!r} == 'final' else 'rm -rf /content/tout && mkdir -p /content/tout')"]
-    for sid, spec in jobs:
-        fr = frames_for(sid, spec)
-        mode = f"range {OD}/{sid} 0 end 2" if fr == "all" else (f"check {OD}/{sid} 4" if fr == "chk" else f"sheet {OD}/{sid} {fr}")
-        lines += [f"r = subprocess.run(B + ' {sid} {mode} CYCLES {samples} {scale}', shell=True, capture_output=True, text=True)",
-                  "ls = [l for l in (r.stdout + r.stderr).splitlines() if l.startswith('FRAME') or 'Error' in l or 'Traceback' in l or 'line ' in l]",
-                  f"print('JOB {sid}', len([l for l in ls if l.startswith('FRAME')]), 'frames', ' | '.join(l for l in ls if not l.startswith('FRAME'))[-900:], flush=True)"]
-    lines.append(f"os.system('cd /content && rm -f out.zip && zip -q -r out.zip {OD[9:]}')")
-    write_ascii(WORK / "_job.py", "\n".join(lines) + "\n")
     t0 = time.time()
-    code, out = colab("exec", "-s", SESSION, "-f", "work/_job.py", "--timeout", "14400", timeout=14500)
-    print("\n".join(l for l in out.splitlines() if l.startswith("JOB") or "Error" in l), flush=True)
-    dst = ROOT / "qa" / "colab" / stamp; dst.mkdir(parents=True, exist_ok=True)
-    colab("download", "-s", SESSION, "/content/out.zip", str(dst / "out.zip"), timeout=1800)
-    with zipfile.ZipFile(dst / "out.zip") as z: z.extractall(dst)
-    (dst / "out.zip").unlink()
-    for d in sorted((dst / OD[9:]).iterdir()):
-        if not d.is_dir(): continue
-        if q == "final":
-            tgt = ROOT / "renders" / d.name; tgt.mkdir(parents=True, exist_ok=True)
-            for p in d.glob("*.png"): shutil.copy(p, tgt / p.name)
+    # 11/09：一段一段跑、跑完就下載（11/08 一次跑 12 段，3 小時中途斷線全沒）；final 已下載完整的段落自動跳過
+    for sid, spec in jobs:
+        if q == "final" and spec == "all":
+            need = int(TM.get(sid, {"dur": 0})["dur"] * 24) // 2 + 1
+            have = len(list((ROOT / "renders" / sid).glob("f*.png"))) if (ROOT / "renders" / sid).exists() else 0
+            if have >= need - 1:
+                print(f"{sid} 已有 {have} 張，跳過", flush=True); continue
+        for attempt in range(2):
+            try:
+                run_one(q, sid, spec, samples, scale); break
+            except Exception as e:
+                print(f"{sid} 失敗（{type(e).__name__}: {str(e)[:200]}），重開 Colab 再試", flush=True)
+                state = ensure_session({}); sync(state, files); STATE.write_text(json.dumps(state, indent=1))
         else:
-            subprocess.run([sys.executable, str(SHEET), str(d), str(dst / f"{d.name}.jpg"), "5"])
+            start_idle_timer(); raise SystemExit(f"{sid} 兩次都失敗，停止（{IDLE_MIN} 分鐘後自動關 Colab）")
     b1 = balance(); used = (b0 - b1) if (b0 is not None and b1 is not None) else 0.0
     with open(LOG, "a", encoding="utf-8") as fh:
         fh.write(f"{today} {used:.2f} {q} {' / '.join(' '.join(j) for j in jobs)} ({time.time() - t0:.0f}s)\n")
     start_idle_timer()
-    print(f"完成：{dst}　這批約 {used:.2f} 單位；{IDLE_MIN} 分鐘沒新工作就自動關 Colab", flush=True)
+    print(f"完成　這批約 {used:.2f} 單位；{IDLE_MIN} 分鐘沒新工作就自動關 Colab", flush=True)
 
 
 if __name__ == "__main__":

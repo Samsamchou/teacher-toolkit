@@ -55,6 +55,11 @@
   桌上微縮正式渲染 `colab_run8.py final "OPEN all" … "END all"`（22:03 開始）**中途斷線**：Colab 工作階段消失、`colab exec` 卡住，
   沒有下載任何圖（`tabletop/renders/` 不存在）；11/09 00:50 手動結束本機指令，Colab 已確認關閉。
   **下一步**：重跑正式渲染（約 1.5 小時；建議分 2–3 批跑，每批下載後再跑下一批，避免一次斷線全沒）→ 合成試片 B（情境段約 454.7–555 秒）→ 老師看 A、B → 全片。
+- 2026-11-09 早：`colab_run8.py` 改成一段一段跑、跑完就下載（已完成段落自動跳過）。OPEN、Mia 15 秒/格，太慢；老師「這段跑完就先停」。
+  根因：bike、bus 各 194 萬面，Decimate 每格重算＋每格重建場景 → `src/predecimate.py` 預先簡化（原檔 `props-orig/`）＋`use_persistent_data` → **1.6 秒/格**，畫面逐像素幾乎相同。
+  踩坑已記到 skill `3d-teacher-lesson-video/references/pitfalls.md` 最後一節與記憶 `colab-tabletop-render-efficiency`。
+- 2026-11-09 下午：老師看試片 B 回饋「不能倒車、不能站在車上」→ 修正規格 `rdq/RDQ-spec-video8-tabletop-logic-fix-20261109.md`，桌上微縮重渲。
+  老師「通過，渲染全片」→ 全片 v1 `renders/video8-v1.mp4`（19,634 格、10:54；預覽 `video8-v1-720p-small.mp4` 已傳），等老師說「定案」。
 
 ## 驗收
 

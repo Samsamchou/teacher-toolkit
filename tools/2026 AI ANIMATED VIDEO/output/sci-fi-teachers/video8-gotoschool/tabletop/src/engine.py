@@ -470,6 +470,7 @@ def setup_render(engine, samples, scale):
     sc.render.engine = engine; sc.render.resolution_percentage = int(scale)
     if engine == "CYCLES":
         sc.cycles.samples = int(samples); sc.cycles.use_denoising = True; sc.cycles.device = "GPU"
+        sc.render.use_persistent_data = True   # 2026-11-09：一格一格渲染時保留場景，不每格重建
         pr = bpy.context.preferences.addons["cycles"].preferences
         for kind in ("OPTIX", "CUDA"):
             try: pr.compute_device_type = kind; pr.get_devices(); break

@@ -31,6 +31,20 @@ for name, p, ctry, ride, zh in KIDS:
         'whole body from head to shoes visible, shoes flat on the ground line. Same stylized 3D animated-film rendering. '
         'Plain pure white background, no shadow, no other objects, no text, no letters, no flags.')
 
+# 2026-11-09 老師：人不會站在腳踏車／機車上前進 → Yuki、Kai 另做「側面坐姿騎乘」立牌（只有人，不畫車；3D 車由 Tripo 模型提供）
+RIDE = {'yuki': ('bike', 'riding a bicycle: sitting on the seat, both hands forward holding the handlebars, '
+                 'one foot down and one foot up as if pushing the pedals, knees bent'),
+        'kai': ('scooter', 'riding a motor scooter: sitting upright on the long seat, both arms forward holding the handlebars, '
+                'both feet resting flat together on the floorboard in front of him, knees bent')}
+for nm, (veh, pose) in RIDE.items():
+    REFS[f'ride-{nm}'] = ([OUT / f'stand-{nm}.png', OUT / f'veh-{veh}.png'],
+        'Use your built-in image generation tool to create one image: a full-body character illustration of the SAME child as in the first attached image '
+        '(same face, same hair, same clothes, same school backpack), seen exactly from the SIDE (profile view), facing to the RIGHT, '
+        f'in a {pose}. The second attached image only shows the vehicle for pose and size reference: DO NOT draw the vehicle; '
+        'draw ONLY the child in this seated riding pose, floating on a plain pure white background (as if the vehicle were invisible). '
+        'Whole body from head to shoes visible. Same stylized 3D animated-film rendering. No shadow, no other objects, no text, no letters.')
+
+
 def gen(k):
     out = OUT / f'{k}.png'
     if out.exists(): return k, 'skip'

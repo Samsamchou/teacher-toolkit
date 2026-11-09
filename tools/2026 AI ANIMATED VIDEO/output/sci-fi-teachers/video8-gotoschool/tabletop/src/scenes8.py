@@ -85,30 +85,50 @@ def tree(loc, h, seed):
     E.paper_tree((loc[0], loc[1], GZ), h, seed=seed) if hasattr(E, "paper_tree") else None
 
 
-def standee(name):
+FADES = {}   # 立牌 root 名稱 → 透明度節點（3B：走到車門旁淡出／淡入）
+# 2026-11-09 老師：人不會站在腳踏車／機車上 → 騎乘時換成「側面坐姿」立牌 ride-<名字>.png（臉朝右＝鏡頭看到的前進方向）
+# RIDE_SEAT[kind]＝(往車頭方向的位移, 腳底離地高度, 立牌高度)，單位公尺；看測試格再微調
+RIDE_SEAT = {"bike": (-0.004, 0.004, 0.064), "scooter": (-0.006, 0.010, 0.062)}
+
+
+def standee(name, img_name=None, h=KID_H, base=True):
     """紙片立牌：去背全身圖（正面）＋白色卡紙（背面、略大＝白邊）＋木頭底座。root 在腳底，正面朝 -Y。"""
-    img = bpy.data.images.load(f"{PROPS}/stand-{name.lower()}.png"); asp = img.size[0] / img.size[1]
-    root = E.empty("kid_" + name)
+    img = bpy.data.images.load(f"{PROPS}/{img_name or 'stand-' + name.lower()}.png"); asp = img.size[0] / img.size[1]
+    root = E.empty(("ride_" if img_name else "kid_") + name); FADES[root.name] = []
     for back in (False, True):
-        bpy.ops.mesh.primitive_plane_add(size=1); o = bpy.context.object; o.name = f"{name}_{'back' if back else 'front'}"
+        bpy.ops.mesh.primitive_plane_add(size=1); o = bpy.context.object; o.name = f"{root.name}_{'back' if back else 'front'}"
         o.rotation_euler = (math.radians(90), 0, 0)
         s = 1.05 if back else 1.0
-        o.scale = (KID_H * asp * s, KID_H * s, 1); o.location = (0, 0.0012 if back else 0, KID_H / 2 + 0.004)
+        o.scale = (h * asp * s, h * s, 1); o.location = (0, 0.0012 if back else 0, h / 2 + (0.004 if base else 0))
         m = bpy.data.materials.new(o.name); m.use_nodes = True; nt = m.node_tree; b = nt.nodes["Principled BSDF"]
         t = nt.nodes.new("ShaderNodeTexImage"); t.image = img
         if back:
             b.inputs["Base Color"].default_value = (0.95, 0.93, 0.88, 1); b.inputs["Roughness"].default_value = 0.9
         else:
             nt.links.new(t.outputs["Color"], b.inputs["Base Color"]); b.inputs["Roughness"].default_value = 0.55
-        nt.links.new(t.outputs["Alpha"], b.inputs["Alpha"])
+        mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.inputs[1].default_value = 1.0
+        nt.links.new(t.outputs["Alpha"], mul.inputs[0]); nt.links.new(mul.outputs[0], b.inputs["Alpha"])
+        FADES[root.name].append(mul)
         o.data.materials.append(m); o.parent = root
-    base = E.box((0, 0.0006, 0.002), (0.022, 0.012, 0.004), E.wood(), name + "_base", bevel=0.001); base.parent = root
+    if base:
+        bs = E.box((0, 0.0006, 0.002), (0.022, 0.012, 0.004), E.wood(), root.name + "_base", bevel=0.001); bs.parent = root
     return root
+
+
+def key_fade(root, t, a):
+    """立牌透明度 a（0～1）；底座是共用木頭材質，不能淡出 → a<0.5 就把底座縮到看不見。"""
+    for n in FADES[root.name]:
+        n.inputs[1].default_value = a; n.inputs[1].keyframe_insert("default_value", frame=f(t))
+    for c in root.children:
+        if c.name.endswith("_base"):
+            c.scale = (0.022, 0.012, 0.004) if a >= 0.5 else (1e-5,) * 3; c.keyframe_insert("scale", frame=f(t))
 
 
 def vehicle(kind):
     root = E.place(f"{PROPS}/{kind}.glb", SIZE[kind], (0, 0, 0), 0.0, axis="long")
-    for o in root.children_recursive:   # 腳踏車模型 190 萬面 → 簡化
+    # 2026-11-09：bike／bus 原檔 194 萬面，每格重算 Decimate 要 15 秒/格 → 已用 predecimate.py 預先簡化（原檔在 props-orig/），1.6 秒/格。
+    # 這段只留作保險：以後新的 Tripo 模型若超過 15 萬面，請先跑 predecimate.py。
+    for o in root.children_recursive:
         if o.type == "MESH" and len(o.data.polygons) > 150000:
             d = o.modifiers.new("dec", "DECIMATE"); d.ratio = 120000 / len(o.data.polygons)
     holder = E.empty("hold_" + kind); root.parent = holder
@@ -209,35 +229,56 @@ else:
             if kind == "boat": z += 0.002 * math.sin(t * 6)
             return Vector((q.x, q.y, z))
         start_k = Vector(k.location)
-        ride_off = {"bike": Vector((0, 0, 0.025)), "scooter": Vector((0, 0, 0.03)), "boat": Vector((0, 0, 0.035))}
+        end_k = vpos(t_arr) + p * 0.075
+        rider = standee(cur, f"ride-{cur.lower()}", h=RIDE_SEAT[kind][2], base=False) if kind in RIDE_SEAT else None
+        door_w = SIZE.get(kind, 0.1) * 0.28 + 0.012          # 車門在鏡頭這一側（+p）
+        t_in0, t_in1 = tb, tb + 0.3                           # 走到車門
+        t_f0, t_f1 = tb + 0.15, t_go + 0.12                   # 車門旁淡出
+        t_o0, t_o1 = t_arr + 0.2, t_arr + 0.5                 # 到學校：車門旁淡入
         for fr in E.frames():
             t = fr / E.FPS
-            wig = math.radians(7) * math.sin(t * 2 * math.pi * 2.2) if (T["friend"][0] <= t <= T["friend"][1] or t > t_arr + 0.3) else 0.0
+            wig = math.radians(7) * math.sin(t * 2 * math.pi * 2.2) if (T["friend"][0] <= t <= T["friend"][1] or t > t_arr + 0.6) else 0.0
             if v: key(v, t, loc=vpos(t), rot_z=heading)
+            vp = vpos(t)
             if kind == "foot":
                 s = ease((t - t_go) / (t_arr - t_go)); r = lerp(R0, R1, s); q = u * r
                 hop = 0.008 * abs(math.sin(t * math.pi * 3.2)) if t_go < t < t_arr else 0.0
                 key(k, t, loc=(q.x, q.y, GZ + hop), rot_z=face + wig, scale=1.0)
-            elif t < tb:
-                key(k, t, loc=start_k, rot_z=face + wig, scale=1.0)
-            elif kind in RIDE_ON:
-                vp = vpos(t); off = ride_off[kind]
-                if t < t_go:
+            elif kind == "boat":   # 站在甲板上（合理，不改）
+                off = u * 0.045 + Vector((0, 0, 0.016))   # 船尾甲板（不要站在船艙屋頂上）；u＝船尾方向
+                if t < tb: q = start_k
+                elif t < t_go:
                     s = (t - tb) / (t_go - tb); q = start_k.lerp(vp + off, s); q.z += 0.03 * math.sin(math.pi * s)
                 else: q = vp + off
-                key(k, t, loc=q, rot_z=face, scale=1.0)
-            else:   # 跳進去：縮小消失；到學校後跳出來
-                vp = vpos(t)
-                if t < t_go:
-                    s = (t - tb) / (t_go - tb); q = start_k.lerp(vp + Vector((0, 0, 0.02)), s); q.z += 0.03 * math.sin(math.pi * s)
-                    key(k, t, loc=q, rot_z=face, scale=max(0.001, 1 - s))
-                elif t < t_arr + 0.2:
-                    key(k, t, loc=vp, rot_z=face, scale=0.001)
+                key(k, t, loc=q, rot_z=face + (wig if t < tb else 0), scale=1.0)
+            elif rider is not None:   # 腳踏車、機車：跳上車那一下換成坐姿立牌；到學校跳下來換回站姿
+                fwd, z0, _ = RIDE_SEAT[kind]
+                bounce = 0.0012 * abs(math.sin(t * math.pi * 3.0)) if t_go < t < t_arr else 0.0
+                seat = vp - u * fwd + p * 0.004 + Vector((0, 0, z0 + bounce))
+                riding = t_go <= t < t_arr + 0.2
+                side = vp - u * fwd + p * 0.022; side.z = GZ          # 車子旁邊（站在地上，不要站到座椅上）
+                if t < tb: q = start_k
+                elif t < t_go:
+                    s = ease((t - tb) / (t_go - tb)); q = start_k.lerp(side, s); q.z = GZ + 0.004 * abs(math.sin(math.pi * 3 * s))
+                elif riding: q = seat
                 else:
-                    s = min(1.0, (t - t_arr - 0.2) / 0.35); end = vpos(t_arr) + p * 0.075
-                    q = (vp + Vector((0, 0, 0.02))).lerp(end, s); q.z += 0.03 * math.sin(math.pi * s); q.z = max(q.z, GZ)
-                    key(k, t, loc=q, rot_z=face + (wig if s >= 1 else 0), scale=max(0.001, s))
-        for o in (k,) + ((v,) if v else ()): E.constant(o)
+                    s = ease((t - t_arr - 0.2) / 0.35); q = side.lerp(end_k, s); q.z = GZ + 0.004 * abs(math.sin(math.pi * 2 * s))
+                key(k, t, loc=q, rot_z=face + (wig if not riding and (t < tb or t > t_arr + 0.6) else 0), scale=0.001 if riding else 1.0)
+                key(rider, t, loc=seat, rot_z=face, scale=1.0 if riding else 0.001)
+            else:   # 3B：走到車門旁淡出；到學校在車門旁淡入，再走出來
+                door = vp + p * door_w
+                if t < t_in0: q, a = start_k, 1.0
+                elif t < t_arr:
+                    s = ease((t - t_in0) / (t_in1 - t_in0)); q = start_k.lerp(door, s)
+                    q.z = GZ + (0.004 * abs(math.sin(math.pi * 4 * s)) if s < 1 else 0)
+                    a = 1 - ease((t - t_f0) / (t_f1 - t_f0))
+                else:
+                    a = ease((t - t_o0) / (t_o1 - t_o0))
+                    s = ease((t - t_o1) / 0.35); q = door.lerp(end_k, s); q.z = GZ + 0.004 * abs(math.sin(math.pi * 2 * s))
+                key(k, t, loc=q, rot_z=face + (wig if a >= 1 and (t < tb or t > t_arr + 0.6) else 0), scale=1.0)
+                key_fade(k, t, a)
+        for o in (k,) + ((v,) if v else ()) + ((rider,) if rider else ()) + tuple(c for c in k.children if c.name.endswith("_base")):
+            E.constant(o)
 
         def cam_path(t):
             vp = vpos(t) if v else Vector(k.location)
