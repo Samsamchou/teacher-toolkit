@@ -22,5 +22,17 @@
   - `wordbank_A4.pdf`：詞語庫參考單，直式 A4。
 - 樣稿：`variant_A/B/C.png`（老師選 B）。`border_coloring.png` 是 A 版的 Codex 著色邊框，備用。
 
-## 待辦
-- 上線方式等老師決定。音檔、圖片在 `.gitignore` 裡，放 GitHub Pages 要另外開例外。
+## 上線（2026-11-09）
+- 正式網址：https://talktofriends-6b58d.web.app/festivals/write-a-thankful-card/ ，是 talktofriends 網站 festivals 裡的第二個活動（規格卡 `../rdq/RDQ-spec-thankful-card-talktofriends-20261109.md`）。
+- 網站原始碼：`tools/monster-in-my-mind-site`。這次改了：
+  - `app/ClassActivities.tsx`：加 🦃 活動卡片。
+  - `app/activity.css`：加 `.activity-tiles`。
+  - `firebase.json`：音檔、音效、圖片快取 7 天；沒有副檔名的頁面網址設為 no-cache。
+- GitHub Pages 方案已取消，`_config.yml` 沒有加。
+- 改完網頁後的更新步驟：
+  1. 在本資料夾執行 `powershell -ExecutionPolicy Bypass -File publish_to_talktofriends.ps1`，把網頁複製到網站的 `public/festivals/write-a-thankful-card/`，並加上 `<base>`。
+  2. 用 robocopy 把網站資料夾複製到 C 槽暫存區 `%TEMP%\ttf-build\site`（不含 node_modules）。
+  3. 在暫存區執行 `npm ci`、`npm run build`。
+  4. 部署：`firebase deploy --only hosting --project talktofriends-6b58d --account u9431818@gmail.com`。
+- 不要部署 functions、rules：Monster 有許多改動還沒 commit。
+- 11/09 部署前的比對：本機原始碼 build 出的 `index-Bh8Higpi.js` 和線上版完全相同。之後要部署，也請先做同樣的比對。
