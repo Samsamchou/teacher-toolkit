@@ -1,6 +1,6 @@
 # RDQ 規格卡：感恩節課堂版 v3 修改
 
-- status: confirmed
+- status: confirmed（v3 成品 2026-11-08 老師驗收通過）
 - 日期：2026-11-07
 - 模式：Lite（影片）
 

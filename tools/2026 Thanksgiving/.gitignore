@@ -24,3 +24,7 @@ thankful-35/renders/
 thankful-35/qa/
 thankful-35/audio/*.mp3
 thankful-35/sfx/
+# thankful-listen 網頁要放 GitHub Pages：自己產生的配音、音效、Pippy 圖例外入庫（老師 11/09 同意）；字型改用 Google Fonts
+!thankful-listen/audio/*.mp3
+!thankful-listen/sfx/*.wav
+!thankful-listen/img/*.png

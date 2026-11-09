@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I'm Thankful For… 感恩例句聆聽</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comic+Relief&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#fff4dc; --ink:#4a2a12; --orange:#e8833a; --deep:#c8541f; --gold:#f6c344; --green:#5f9a3a; --card:#fffdf7; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html,body { margin:0; background:var(--bg); color:var(--ink); font-family:'Comic Relief','Microsoft JhengHei','PingFang TC',sans-serif; }
+  button { font:inherit; cursor:pointer; border:0; }
+  header { display:flex; align-items:center; gap:12px; padding:10px 16px; background:var(--deep); color:#fff; flex-wrap:wrap; }
+  header h1 { margin:0; font-size:24px; font-weight:normal; flex:1; min-width:220px; }
+  header h1 small { font-size:15px; opacity:.85; margin-left:6px; }
+  #dots { display:flex; gap:6px; flex-wrap:wrap; }
+  .dot { width:46px; height:46px; border-radius:50%; background:#f3c9a4; color:var(--deep); font-size:20px; display:flex; align-items:center; justify-content:center; position:relative; }
+  .dot.on { background:#fff; outline:4px solid var(--gold); }
+  .dot.done::after { content:'✓'; position:absolute; right:-4px; top:-6px; background:var(--green); color:#fff; width:20px; height:20px; border-radius:50%; font-size:13px; display:flex; align-items:center; justify-content:center; }
+  .dot.locked { opacity:.45; }
+  .dot.card { background:var(--gold); color:var(--ink); width:auto; padding:0 12px; border-radius:23px; font-size:16px; }
+  main { display:grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap:14px; padding:14px 16px 90px; max-width:1500px; margin:0 auto; }
+  @media (max-width: 900px), (orientation: portrait) { main { grid-template-columns: 1fr; } }
+  #stageBox { position:sticky; top:10px; align-self:start; }
+  #stage { width:100%; aspect-ratio:16/9; display:block; border-radius:16px; background:#000; box-shadow:0 4px 0 #e0b98a; }
+  #pageTitle { display:flex; align-items:center; gap:10px; margin:10px 2px 0; font-size:22px; }
+  #pageTitle .tg { background:var(--orange); color:#fff; border-radius:20px; padding:4px 14px; }
+  #progress { margin-left:auto; font-size:18px; }
+  #list { display:flex; flex-direction:column; gap:10px; }
+  .row { display:grid; grid-template-columns: 132px 1fr; gap:10px; background:var(--card); border-radius:16px; padding:8px; border:3px solid transparent; box-shadow:0 3px 0 #f0c890; }
+  .row.on { border-color:var(--orange); }
+  .row.heard { background:#f3fbe9; }
+  .thumb { width:132px; aspect-ratio:16/9; border-radius:10px; background:#eee; display:block; cursor:pointer; }
+  .en { font-size:19px; line-height:1.3; }
+  .en .bc { color:#2f7fb8; }
+  .zh { font-size:15px; color:#8a6a4a; margin-top:2px; }
+  .btns { display:flex; gap:6px; margin-top:6px; align-items:center; flex-wrap:wrap; }
+  .btns button { background:#ffe6c4; color:var(--ink); border-radius:12px; padding:6px 12px; font-size:16px; min-height:40px; }
+  .btns button.play { background:var(--orange); color:#fff; }
+  .btns .star { background:none; font-size:28px; padding:0 6px; color:#d8c4a8; }
+  .btns .star.on { color:#f5b400; }
+  .btns .ok { margin-left:auto; color:var(--green); font-size:16px; visibility:hidden; }
+  .row.heard .ok { visibility:visible; }
+  footer { position:fixed; left:0; right:0; bottom:0; display:flex; gap:10px; align-items:center; justify-content:center; padding:10px; background:rgba(255,244,220,.95); border-top:2px solid #f0c890; }
+  footer button { border-radius:16px; padding:12px 22px; font-size:20px; min-width:150px; }
+  #prev { background:#ffe6c4; color:var(--ink); }
+  #next { background:var(--green); color:#fff; }
+  #next:disabled, #prev:disabled { background:#ddd; color:#999; }
+  #all { background:#fff; color:var(--deep); border:3px solid var(--orange); }
+  #lockMsg { font-size:15px; color:#a0522d; }
+  #toCard { background:var(--deep); color:#fff; font-size:24px; display:none; animation:pulse 1.4s infinite; }
+  @keyframes pulse { 50% { transform:scale(1.06); } }
+  /* 卡片頁 */
+  #cardPage { display:none; max-width:1100px; margin:0 auto; padding:16px 16px 100px; }
+  #cardPage h2 { font-size:28px; font-weight:normal; color:var(--deep); margin:8px 0; }
+  .box { background:var(--card); border-radius:16px; padding:14px 18px; margin:12px 0; box-shadow:0 3px 0 #f0c890; }
+  .box h3 { margin:0 0 8px; font-weight:normal; font-size:21px; }
+  .frame li { font-size:20px; line-height:1.7; }
+  .opt { display:grid; grid-template-columns: 1fr 1fr; gap:6px 18px; font-size:18px; }
+  @media (max-width: 700px) { .opt { grid-template-columns:1fr; } }
+  .opt div small { color:#8a6a4a; display:block; font-size:14px; }
+  .mine { display:flex; flex-direction:column; gap:8px; }
+  .mine .row { grid-template-columns: 110px 1fr; }
+  .mine .thumb { width:110px; }
+  .pippy { width:110px; float:right; margin:-10px 0 0 10px; }
+  .empty { color:#a08060; font-size:17px; }
+  #reset { position:fixed; right:8px; top:74px; background:none; color:#d6b48e; font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>I'm Thankful For… <small>感恩例句聆聽</small></h1>
+  <div id="dots"></div>
+</header>
+
+<main id="listen">
+  <div id="stageBox">
+    <canvas id="stage" width="1600" height="900"></canvas>
+    <div id="pageTitle"><span class="tg" id="tg"></span><span id="tgzh"></span><span id="progress"></span></div>
+  </div>
+  <div id="list"></div>
+</main>
+
+<section id="cardPage">
+  <img class="pippy" src="img/pippy.png" alt="Pippy">
+  <h2>✏️ 寫我的感恩節卡片</h2>
+  <div class="box"><h3>⭐ 我標記的句子（抄到卡片上）</h3><div class="mine" id="mine"></div></div>
+  <div class="box frame"><h3>📝 卡片要寫的 5 句（加上 To 和 From）</h3>
+    <ol>
+      <li>I'm <u>　你的名字　</u>.</li>
+      <li>一句感恩節小知識（下面 6 選 1）</li>
+      <li>I'm thankful for <u>　對象　</u> because <u>　原因　</u>.</li>
+      <li>I'm thankful for <u>　對象　</u> because <u>　原因　</u>.</li>
+      <li>一句結尾句（下面 6 選 1）</li>
+    </ol></div>
+  <div class="box"><h3>💡 感恩節小知識（第 2 句，選 1 句）</h3><div class="opt" id="facts"></div></div>
+  <div class="box"><h3>🎉 結尾句（第 5 句，選 1 句）</h3><div class="opt" id="ends"></div></div>
+</section>
+
+<footer>
+  <button id="prev">◀ 上一頁</button>
+  <button id="all">▶ 聽這一頁全部</button>
+  <span id="lockMsg"></span>
+  <button id="next">下一頁 ▶</button>
+  <button id="toCard">去寫卡片 ✏️</button>
+</footer>
+<button id="reset">重新開始</button>
+
+<script src="engine.js"></script>
+<script src="data.js"></script>
+<script src="scenes_mom.js"></script>
+<script src="scenes_grandma.js"></script>
+<script src="scenes_teacher.js"></script>
+<script src="scenes_friends.js"></script>
+<script src="scenes_dog.js"></script>
+<script src="scenes_school.js"></script>
+<script src="scenes_family.js"></script>
+<script>
+const canvas = document.getElementById('stage'), ctx = canvas.getContext('2d');
+const S = window.SENTENCES.filter(s => SCENES[s.key]);
+const GROUPS = [...new Set(S.map(s => s.group))];
+const LEAD = 0.6, SLOW = 0.7;
+const FACTS = [
+  ['People have turkey on Thanksgiving Day.', '人們在感恩節吃火雞。'],
+  ['The Pilgrims came to America on the Mayflower.', '清教徒搭五月花號來到美洲。'],
+  ['The Pilgrims had a harvest celebration in 1621.', '清教徒在 1621 年舉辦豐收慶祝。'],
+  ['Families have a big feast together.', '家人一起享用豐盛大餐。'],
+  ['People eat pumpkin pie for dessert.', '人們吃南瓜派當甜點。'],
+  ['On Thanksgiving, people say what they are thankful for.', '感恩節時，人們說出自己感謝的事。']];
+const ENDS = [
+  ['Happy Thanksgiving!', '感恩節快樂！'], ['I like pumpkin pie.', '我喜歡南瓜派。'],
+  ["Let's say \"thank you\" every day.", '讓我們每天都說謝謝。'], ['I will make a thank-you card for my mom.', '我要做一張感謝卡給媽媽。'],
+  ['Have a happy Thanksgiving with your family!', '祝你和家人感恩節快樂！'], ['Thank you for listening!', '謝謝大家聆聽！']];
+
+// ---------- 進度（只存在這台裝置） ----------
+const KEY = 'thankful-listen-v1';
+let st = { heard: [], stars: [], page: 0 };
+try { st = Object.assign(st, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} };
+const heard = k => st.heard.includes(k);
+const pageDone = p => S.filter(s => s.group === GROUPS[p]).every(s => heard(s.key));
+const allDone = () => GROUPS.every((g, p) => pageDone(p));
+const unlocked = p => p === 0 || allDone() || pageDone(p - 1) && unlocked(p - 1);
+
+// ---------- 畫面（沿用 thankful-35 播放器） ----------
+function timing(s) {
+  const w = s.words, last = w[w.length - 1];
+  const bec = (w.find(x => x.w.toLowerCase() === 'because') || last).t;
+  const tgt = (w.find(x => x.w.toLowerCase() === s.target.split(' ').pop()) || w[3]).t;
+  const tB = LEAD + bec;
+  return { tB, tTarget: LEAD + tgt, end: tB + SCENES[s.key].dur };
+}
+function zoom() { ctx.translate(800, 650); ctx.scale(1.3, 1.3); ctx.translate(-800, -790); }
+function drawIntro(s, T, tm) {
+  BG.sky(ctx, T, '#ffcf8a', '#fff4dc'); FX.rays(ctx, T, 800, 520, 1100, 'rgba(255,255,255,.18)', 18);
+  BG.bunting(ctx, T); BG.leaves(ctx, T, 16, 5);
+  ctx.fillStyle = '#9ccc65'; ctx.beginPath(); ctx.ellipse(800, 830, 1150, 200, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.save(); zoom();
+  const beat = 1 + .08 * Math.max(0, E.wave(T, 1.4));
+  drawPerson(ctx, 'kid', 480, 800, 1.1, { t: T, armL: 10, armR: 20 + 25 * Math.max(0, E.wave(T, 1.3)), mouth: T > LEAD && T < tm.tB ? 'talk' : 'smile', eyes: 'open' });
+  heart(ctx, 480, 490, 66 * beat, '#ff5d8f', '#fff');
+  const k = E.pop(T, tm.tTarget - .25, .5);
+  if (k > 0) {
+    glow(ctx, 1100, 560, 380 * k, 'rgba(255,255,255,.9)'); FX.sparkles(ctx, T, 1100, 560, 280 * k, 12, 2);
+    ctx.save(); ctx.translate(1100, 800); ctx.scale(k, k); ctx.translate(-1100, -800);
+    TARGETS[s.group].draw(ctx, 1100, 800, 1.1, T, 1); ctx.restore();
+    const kk = E.seg(T, tm.tTarget, tm.tTarget + .5);
+    for (let i = 0; i < 6; i++) { const p = ((T * .8 + i / 6) % 1) * kk; heart(ctx, E.lerp(520, 1000, p), 470 - Math.sin(p * Math.PI) * 120, 26, '#ff7aa8'); }
+  }
+  ctx.restore();
+  if (k > 0) {
+    const nk = E.pop(T, tm.tTarget, .4);
+    ctx.save(); ctx.translate(1380, 96); ctx.scale(nk, nk);
+    rr(ctx, -190, -48, 380, 96, 48); ctx.fillStyle = TARGETS[s.group].color; ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 6; ctx.stroke();
+    ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '52px "Comic Relief"'; ctx.fillText(s.target, 0, -12);
+    ctx.font = '26px "Microsoft JhengHei"'; ctx.fillText(s.zh_target || '', 0, 32); ctx.restore();
+  }
+}
+function drawCaption(s, T) {
+  const words = s.words, y = 745;
+  ctx.save();
+  const g = ctx.createLinearGradient(0, 665, 0, H); g.addColorStop(0, 'rgba(30,18,8,0)'); g.addColorStop(.25, 'rgba(30,18,8,.72)'); g.addColorStop(1, 'rgba(30,18,8,.85)');
+  ctx.fillStyle = g; ctx.fillRect(0, 655, W, H - 655);
+  let fs = 58; ctx.font = `${fs}px "Comic Relief"`; const fullW = ctx.measureText(s.text).width;
+  if (fullW > 1520) { fs = Math.floor(58 * 1520 / fullW); ctx.font = `${fs}px "Comic Relief"`; }
+  ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+  const tokens = s.text.split(' '), widths = tokens.map(tk => ctx.measureText(tk + ' ').width);
+  let x = (W - widths.reduce((a, b) => a + b, 0)) / 2;
+  const becIdx = tokens.findIndex(tk => tk.toLowerCase() === 'because');
+  tokens.forEach((tk, i) => {
+    const w = words[i], said = w && T >= LEAD + w.t, now = w && T >= LEAD + w.t && T < LEAD + w.t + w.d;
+    let col = '#ffffff'; if (said) col = i > becIdx ? '#7fe3ff' : '#ffd54f';
+    ctx.lineWidth = 10; ctx.strokeStyle = 'rgba(0,0,0,.6)'; ctx.lineJoin = 'round';
+    const lift = now ? -6 : 0; ctx.strokeText(tk, x, y + lift); ctx.fillStyle = col; ctx.fillText(tk, x, y + lift); x += widths[i];
+  });
+  ctx.font = '36px "Microsoft JhengHei"'; ctx.textAlign = 'center'; ctx.fillStyle = '#fff1d6';
+  ctx.strokeStyle = 'rgba(0,0,0,.55)'; ctx.lineWidth = 6; ctx.strokeText(s.zh, W / 2, 808); ctx.fillText(s.zh, W / 2, 808);
+  ctx.restore();
+}
+function renderAt(s, T, caption = true) {
+  const tm = timing(s), sc = SCENES[s.key];
+  ctx.save(); ctx.clearRect(0, 0, W, H);
+  if (T < tm.tB + .5) drawIntro(s, T, tm);
+  if (T >= tm.tB) {
+    const u = T - tm.tB, k = E.easeInOut(E.seg(u, 0, .5));
+    ctx.save(); if (k < 1) { ctx.beginPath(); ctx.arc(1150, 560, k * 1900, 0, Math.PI * 2); ctx.clip(); }
+    zoom(); sc.draw(ctx, u, T); ctx.restore();
+  }
+  if (caption) drawCaption(s, T);
+  ctx.restore();
+}
+// 每句的小插圖：畫原因場景中段的一格，再縮到小 canvas
+const thumbCache = {};
+function thumbOf(s) {
+  if (thumbCache[s.key]) return thumbCache[s.key];
+  const tm = timing(s); renderAt(s, tm.tB + SCENES[s.key].dur * .55, false);
+  const c = document.createElement('canvas'); c.width = 320; c.height = 180; c.getContext('2d').drawImage(canvas, 0, 0, 320, 180);
+  return thumbCache[s.key] = c.toDataURL('image/jpeg', .85);
+}
+
+// ---------- 播放 ----------
+const sfxCache = {};
+function sfx(name, rate) { const a = (sfxCache[name] ||= new Audio(`sfx/${name}.wav`)).cloneNode(); a.volume = .45; a.playbackRate = rate; a.play().catch(() => {}); }
+let cur = null, rate = 1, t0 = 0, playing = false, voice = null, fired = new Set(), voicePlayed = false, queue = [], restT = null;
+function play(s, slow = false) {
+  cur = s; rate = slow ? SLOW : 1; t0 = performance.now(); playing = true; fired = new Set(); voicePlayed = false;
+  if (voice) voice.pause();
+  voice = new Audio(s.audio); voice.preservesPitch = true; voice.playbackRate = rate;
+  renderList();
+}
+function stop() { playing = false; queue = []; if (voice) voice.pause(); }
+function tick() {
+  if (cur) {
+    const tm = timing(cur);
+    const T = playing ? (performance.now() - t0) / 1000 * rate : (restT ?? tm.tTarget + .6);
+    if (playing) {
+      if (!voicePlayed && T >= LEAD) { voice.currentTime = 0; voice.play().catch(() => {}); voicePlayed = true; }
+      SCENES[cur.key].sfx.forEach(([u, n], j) => { if (!fired.has(j) && T >= tm.tB + u) { fired.add(j); sfx(n, rate); } });
+      if (T >= tm.end) {
+        playing = false; restT = tm.end - .01;
+        if (!heard(cur.key)) { st.heard.push(cur.key); save(); }
+        const nxt = queue.shift();
+        if (nxt) play(nxt); else renderAll();
+      }
+    }
+    renderAt(cur, playing ? T : restT ?? T);
+  }
+  requestAnimationFrame(tick);
+}
+
+// ---------- 頁面 ----------
+const $ = id => document.getElementById(id);
+function pageSents() { return S.filter(s => s.group === GROUPS[st.page]); }
+function renderDots() {
+  const d = $('dots'); d.innerHTML = '';
+  GROUPS.forEach((g, p) => {
+    const b = document.createElement('button'); b.className = 'dot'; b.textContent = p + 1;
+    if (p === st.page && !showingCard) b.classList.add('on');
+    if (pageDone(p)) b.classList.add('done');
+    if (!unlocked(p)) { b.classList.add('locked'); b.textContent = '🔒'; }
+    b.title = S.find(s => s.group === g).target;
+    b.onclick = () => { if (unlocked(p)) goPage(p); };
+    d.appendChild(b);
+  });
+  if (allDone()) { const b = document.createElement('button'); b.className = 'dot card' + (showingCard ? ' on' : ''); b.textContent = '✏️ 卡片'; b.onclick = showCard; d.appendChild(b); }
+}
+function renderList() {
+  const L = $('list'); L.innerHTML = '';
+  pageSents().forEach(s => {
+    const r = document.createElement('div'); r.className = 'row' + (heard(s.key) ? ' heard' : '') + (cur === s ? ' on' : '');
+    const [a, b] = s.text.split(/ because /);
+    r.innerHTML = `<img class="thumb" alt=""><div><div class="en">${s.n}. ${a} <span class="bc">because ${b}</span></div><div class="zh">${s.zh}</div>
+      <div class="btns"><button class="play">🔊 聽</button><button class="slow">🐢 慢速</button><button class="star${st.stars.includes(s.key) ? ' on' : ''}" aria-label="標記">★</button><span class="ok">✓ 聽過了</span></div></div>`;
+    r.querySelector('.thumb').src = thumbOf(s);
+    r.querySelector('.thumb').onclick = () => { queue = []; play(s); };
+    r.querySelector('.play').onclick = () => { queue = []; play(s); };
+    r.querySelector('.slow').onclick = () => { queue = []; play(s, true); };
+    r.querySelector('.star').onclick = e => { const i = st.stars.indexOf(s.key); i < 0 ? st.stars.push(s.key) : st.stars.splice(i, 1); save(); e.target.classList.toggle('on'); };
+    L.appendChild(r);
+  });
+  const s0 = pageSents()[0], n = pageSents().filter(s => heard(s.key)).length;
+  $('tg').textContent = s0.target; $('tgzh').textContent = s0.zh_target; $('progress').textContent = `${'✓'.repeat(n)}${'○'.repeat(5 - n)}  ${n} / 5`;
+}
+function renderFooter() {
+  const done = pageDone(st.page), last = st.page === GROUPS.length - 1;
+  $('prev').disabled = st.page === 0 && !showingCard;
+  $('next').style.display = showingCard || last ? 'none' : '';
+  $('next').disabled = !done;
+  $('all').style.display = showingCard ? 'none' : '';
+  $('lockMsg').textContent = showingCard ? '' : done ? '' : '這一頁 5 句都聽完，才能翻下一頁';
+  $('toCard').style.display = allDone() && !showingCard ? 'inline-block' : 'none';
+}
+function renderAll() { renderDots(); if (!showingCard) renderList(); renderFooter(); }
+let showingCard = false;
+function goPage(p) {
+  stop(); showingCard = false; st.page = p; save();
+  $('listen').style.display = ''; $('cardPage').style.display = 'none';
+  cur = pageSents()[0]; restT = null; renderAll(); window.scrollTo(0, 0);
+}
+function showCard() {
+  stop(); showingCard = true; $('listen').style.display = 'none'; $('cardPage').style.display = 'block';
+  const M = $('mine'); M.innerHTML = '';
+  const mine = S.filter(s => st.stars.includes(s.key));
+  if (!mine.length) M.innerHTML = '<div class="empty">還沒有標記句子。回到前面的頁面，按 ★ 標記你想寫的句子。</div>';
+  mine.forEach(s => {
+    const r = document.createElement('div'); r.className = 'row';
+    r.innerHTML = `<img class="thumb" alt=""><div><div class="en">${s.text}</div><div class="zh">${s.zh}</div>
+      <div class="btns"><button class="play">🔊 聽</button><button class="slow">🐢 慢速</button></div></div>`;
+    r.querySelector('.thumb').src = thumbOf(s);
+    r.querySelector('.play').onclick = () => { const a = new Audio(s.audio); a.play(); };
+    r.querySelector('.slow').onclick = () => { const a = new Audio(s.audio); a.preservesPitch = true; a.playbackRate = SLOW; a.play(); };
+    M.appendChild(r);
+  });
+  renderDots(); renderFooter(); window.scrollTo(0, 0);
+}
+$('facts').innerHTML = FACTS.map(([e, z]) => `<div>${e}<small>${z}</small></div>`).join('');
+$('ends').innerHTML = ENDS.map(([e, z]) => `<div>${e}<small>${z}</small></div>`).join('');
+$('prev').onclick = () => showingCard ? goPage(GROUPS.length - 1) : goPage(st.page - 1);
+$('next').onclick = () => { if (pageDone(st.page)) goPage(st.page + 1); };
+$('all').onclick = () => { const L = pageSents(); queue = L.slice(1); play(L[0]); };
+$('toCard').onclick = showCard;
+$('reset').onclick = () => { if (confirm('要清除這台裝置的聆聽進度和星號，重新開始嗎？')) { st = { heard: [], stars: [], page: 0 }; save(); goPage(0); } };
+document.fonts.load('58px "Comic Relief"').then(() => { if (!unlocked(st.page)) st.page = 0; goPage(st.page); requestAnimationFrame(tick); });
+</script>
+</body>
+</html>
