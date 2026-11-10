@@ -1,0 +1,8 @@
+{
+ "note": "三戶家（老師 11/09 核可位置）。building＝data/map.json buildings 的編號；重建地圖後要重新對應。model 沒有檔案時就照一般街屋蓋。",
+ "homes": [
+  {"id": "ken_home", "who": "ken", "building": 105, "model": "bld_ken_home", "size": 7.6, "en": "Ken's Home", "zh": "Ken 的家"},
+  {"id": "shuiling_home", "who": "shuiling", "building": 290, "model": "bld_shuiling_home", "size": 7.0, "en": "Shuiling's Home", "zh": "水鈴的家"},
+  {"id": "zunbo_home", "who": "zunbo", "building": 185, "model": "bld_zunbo_home", "size": 7.0, "en": "Zun-Bo's Home", "zh": "圳寶的家"}
+ ]
+}

@@ -1,0 +1,79 @@
+{
+ "jogging": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): the sun rising over a flat horizon line. Icon 2 (middle): a heart with a heartbeat (ECG) pulse line through it. Icon 3 (right): a stopwatch. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as jogging.png in the current directory. Reply with the saved file path only.",
+  "sha256": "790e8b108e467b98d2ba01a0adbc30b3ea76fbe2249d31f0b6cbb9d01ed3e302",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\jogging.png",
+  "generated": "2026-11-10 07:37:06",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "music": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): an audio cable with a 3.5 mm headphone jack plug. Icon 2 (middle): a loudspeaker volume symbol with three sound-wave arcs. Icon 3 (right): a vinyl record disc. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as music.png in the current directory. Reply with the saved file path only.",
+  "sha256": "c98b4cc85d33867313b9605014e20a99fa0c926228b39eb44633e88b1c9ce6c0",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\music.png",
+  "generated": "2026-11-10 07:37:54",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "baseball": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a sports shoe with cleats (studs) on the sole, side view. Icon 2 (middle): a batting helmet with one ear flap, side view. Icon 3 (right): a baseball diamond field outline: a square turned 45 degrees with small square bases at the four corners and a pitcher's mound dot. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as baseball.png in the current directory. Reply with the saved file path only.",
+  "sha256": "824f27946a32177b2321a482b57159dcc49327694ee45afdf41dbfece18cbae6",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\baseball.png",
+  "generated": "2026-11-10 07:38:50",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "basketball": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a referee whistle. Icon 2 (middle): a digital shot clock scoreboard showing the number 24. Icon 3 (right): a half basketball court floor plan seen from above: rectangle with the key (free-throw lane) and the three-point arc. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as basketball.png in the current directory. Reply with the saved file path only.",
+  "sha256": "57ec47f8de1f98eb4707ef7a1310c11600da1043652e2ceff0dda1e869627a92",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\basketball.png",
+  "generated": "2026-11-10 07:40:24",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "bike": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): sports sunglasses (wraparound). Icon 2 (middle): a short piece of bicycle chain links. Icon 3 (right): a handlebar grip with a brake lever. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as bike.png in the current directory. Reply with the saved file path only.",
+  "sha256": "7b8ce4cacd79801ca7b7a25e678dfb5df2589da0d3c2e01c1711107a3f9b5d4f",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\bike.png",
+  "generated": "2026-11-10 07:41:18",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "english": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a desk lamp. Icon 2 (middle): an open notebook with a pencil lying on it (no writing). Icon 3 (right): a speech bubble with the word Hello!. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as english.png in the current directory. Reply with the saved file path only.",
+  "sha256": "3660ea8fca75f5434f9f2a0c57af2cf059f223cd1a5f45e6c992b25cb75cb6b5",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\english.png",
+  "generated": "2026-11-10 07:42:07",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "internet": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a big ocean wave curling over. Icon 2 (middle): a magnifying glass. Icon 3 (right): a Wi-Fi signal symbol (three arcs and a dot). Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as internet.png in the current directory. Reply with the saved file path only.",
+  "sha256": "bd964942daae7e7cb84d1ea02fa725ca3b70103328e2a5cea26eb721c3671526",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\internet.png",
+  "generated": "2026-11-10 07:42:58",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "tv": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a two-seat sofa. Icon 2 (middle): a bucket of popcorn. Icon 3 (right): a TV remote control with buttons. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as tv.png in the current directory. Reply with the saved file path only.",
+  "sha256": "de1888e9649156cfecda11bbddff36bad963dfb56355de3fe8057beac1492651",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\tv.png",
+  "generated": "2026-11-10 07:43:55",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "camping": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a crescent moon with three small stars. Icon 2 (middle): a marshmallow on a long roasting stick. Icon 3 (right): a campfire with crossed logs and flames. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as camping.png in the current directory. Reply with the saved file path only.",
+  "sha256": "f70aaea2f71024a3de421566518b63b6ab66af7d4bab551c4993ab9dd755e812",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\camping.png",
+  "generated": "2026-11-10 07:44:46",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "games": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a pixel-art heart (8-bit style, square pixels). Icon 2 (middle): a trophy cup. Icon 3 (right): a gaming headset with a microphone boom. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as games.png in the current directory. Reply with the saved file path only.",
+  "sha256": "a3af74f8c3da0cca83be0834a927cfb499dbe808f826b71b5408c5ed3bf88511",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\games.png",
+  "generated": "2026-11-10 07:45:38",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "recorder": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a treble clef. Icon 2 (middle): a music stand holding sheet music. Icon 3 (right): a fingering chart: a vertical column of eight circles, the top five filled black and the bottom three hollow. Three separate pictogram icons in one row, evenly spaced in three equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. No text or letters anywhere unless an icon description asks for them. Wide landscape image, 3:2. Save the PNG as recorder.png in the current directory. Reply with the saved file path only.",
+  "sha256": "10b2730eb0c7305a6a85374d99cbb964e1a3caa761506594875009d47175f54b",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_icons\\recorder.png",
+  "generated": "2026-11-10 07:46:28",
+  "tool": "codex exec (built-in image generation)"
+ }
+}

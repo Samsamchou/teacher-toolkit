@@ -30,3 +30,14 @@ godot-jump-island/data/**/*.wav
 3D planet/資料/aerial/*.jpeg
 3D planet/資料/aerial/*.webp
 3D planet/資料/aerial/*.png
+
+# Free Time 小行星（2026-11-10）：網頁匯出、測試截圖、影片、烤好的 Mixamo 動作只留 GDrive
+3D planet/web-build-freetime/
+3D planet/godot-ershui-freetime/test_*/
+3D planet/godot-ershui-freetime/test_*.png
+3D planet/godot-ershui-freetime/assets/anims/baked/
+*.mp4
+*.ogv
+*.wav
+*.res
+3D planet/資料/freetime/clues-review-v2.html

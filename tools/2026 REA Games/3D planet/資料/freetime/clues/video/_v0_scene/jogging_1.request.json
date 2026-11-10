@@ -1,0 +1,9 @@
+{
+ "prompt": "Stylised 3D cartoon animation exactly like the opening frame. Action: The boy jogs steadily along the path toward the camera's right, arms swinging, feet landing rhythmically, breathing through his nose, hair bouncing a little. The camera tracks smoothly beside him. Keep the boy's face, hair, goggles and navy-and-orange outfit exactly as in the opening frame, same 3D cartoon style for the whole clip. He does not talk: mouth closed or just smiling, no lip movement like speaking. No captions, no subtitles, no readable text, no new characters.",
+ "resolution": "720p",
+ "aspect_ratio": "16:9",
+ "duration": 6,
+ "web_search": false,
+ "generate_audio": false,
+ "first_frame_url": "https://tempfile.redpandaai.co/kieai/12208804/freetime-clues/jogging_first.jpg"
+}

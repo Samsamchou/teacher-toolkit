@@ -1,0 +1,272 @@
+{
+ "note": "Ken A 路線 11 題（老師 11/09 核可情境 B 版；來源 資料/freetime/ken-A-scenarios-draft-20261109.json）",
+ "intro": "Let's guess Ken's free time! You are Ken now. Listen to my question and choose your answer.",
+ "phrases": {
+  "jogging": "go jogging",
+  "music": "listen to music",
+  "baseball": "play baseball",
+  "basketball": "play basketball",
+  "bike": "ride a bike",
+  "english": "study English",
+  "internet": "surf the Internet",
+  "tv": "watch TV",
+  "camping": "go camping",
+  "games": "play online games",
+  "recorder": "play the recorder"
+ },
+ "items": [
+  {
+   "n": 1,
+   "id": "q01",
+   "act": "english",
+   "context": "Today is Monday. School is over. Time to go home.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I watch TV in my free time.",
+    "I study English in my free time.",
+    "I play online games in my free time."
+   ],
+   "opt_acts": [
+    "tv",
+    "english",
+    "games"
+   ],
+   "answer": 1,
+   "from": "school_east",
+   "to": "ken_home",
+   "travel": "walk",
+   "perform": "indoor:study_english",
+   "zh": "Ken 放學從東側門走路回家，坐在書桌前翻英語課本準備小考。"
+  },
+  {
+   "n": 2,
+   "id": "q02",
+   "act": "tv",
+   "context": "It's Monday evening. It's rainy outside.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I watch TV in my free time.",
+    "I ride a bike in my free time.",
+    "I play basketball in my free time."
+   ],
+   "opt_acts": [
+    "tv",
+    "bike",
+    "basketball"
+   ],
+   "answer": 0,
+   "from": "ken_home",
+   "to": "ken_home",
+   "travel": "none",
+   "perform": "indoor:watch_tv",
+   "zh": "晚上下雨，Ken 和媽媽坐在客廳沙發上看電視。"
+  },
+  {
+   "n": 3,
+   "id": "q03",
+   "act": "jogging",
+   "context": "Today is Tuesday. It's a cool, sunny morning. Time to go to school.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I ride a bike in my free time.",
+    "I watch TV in my free time.",
+    "I go jogging in my free time."
+   ],
+   "opt_acts": [
+    "bike",
+    "tv",
+    "jogging"
+   ],
+   "answer": 2,
+   "from": "ken_home",
+   "to": "school_east",
+   "travel": "jog",
+   "perform": "out:jogging",
+   "zh": "清晨 Ken 穿運動鞋從家門口沿街慢跑約 370 公尺到學校東側門。"
+  },
+  {
+   "n": 4,
+   "id": "q04",
+   "act": "music",
+   "context": "It's Tuesday afternoon. School is over. It's very hot.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I listen to music in my free time.",
+    "I study English in my free time.",
+    "I play basketball in my free time."
+   ],
+   "opt_acts": [
+    "music",
+    "english",
+    "basketball"
+   ],
+   "answer": 0,
+   "from": "school",
+   "to": "library",
+   "travel": "walk",
+   "perform": "out:music",
+   "zh": "Ken 從學校西側走到隔壁圖書館，吹冷氣、戴上新耳機聽音樂。"
+  },
+  {
+   "n": 5,
+   "id": "q05",
+   "act": "recorder",
+   "context": "It's Tuesday evening. Time to go home.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I surf the Internet in my free time.",
+    "I play the recorder in my free time.",
+    "I play basketball in my free time."
+   ],
+   "opt_acts": [
+    "internet",
+    "recorder",
+    "basketball"
+   ],
+   "answer": 1,
+   "from": "library",
+   "to": "ken_home",
+   "travel": "walk",
+   "perform": "indoor:recorder",
+   "zh": "媽媽到圖書館接 Ken 回家，Ken 在房間拿出直笛練習吹奏。"
+  },
+  {
+   "n": 6,
+   "id": "q06",
+   "act": "games",
+   "context": "It's Wednesday evening. It's cloudy and cold.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I watch TV in my free time.",
+    "I study English in my free time.",
+    "I play online games in my free time."
+   ],
+   "opt_acts": [
+    "tv",
+    "english",
+    "games"
+   ],
+   "answer": 2,
+   "from": "ken_home",
+   "to": "ken_home",
+   "travel": "none",
+   "perform": "indoor:online_games",
+   "zh": "週三晚上 Ken 在家戴耳機，用電腦和 Tom 連線玩遊戲。"
+  },
+  {
+   "n": 7,
+   "id": "q07",
+   "act": "internet",
+   "context": "Today is Thursday. It's rainy after school.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I surf the Internet in my free time.",
+    "I play online games in my free time.",
+    "I go camping in my free time."
+   ],
+   "opt_acts": [
+    "internet",
+    "games",
+    "camping"
+   ],
+   "answer": 0,
+   "from": "ken_home",
+   "to": "ken_home",
+   "travel": "none",
+   "perform": "indoor:surf_internet",
+   "zh": "下雨天 Ken 在家用電腦上網，搜尋二水的照片做報告。"
+  },
+  {
+   "n": 8,
+   "id": "q08",
+   "act": "bike",
+   "context": "Today is Saturday. It's sunny and windy.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I go jogging in my free time.",
+    "I ride a bike in my free time.",
+    "I play baseball in my free time."
+   ],
+   "opt_acts": [
+    "jogging",
+    "bike",
+    "baseball"
+   ],
+   "answer": 1,
+   "from": "ken_home",
+   "to": "school_east",
+   "travel": "bike",
+   "perform": "out:bike",
+   "zh": "週六 Ken 牽出修好的腳踏車，迎著風從家沿街騎到二水國小找朋友。"
+  },
+  {
+   "n": 9,
+   "id": "q09",
+   "act": "basketball",
+   "context": "It's Saturday afternoon. It's sunny.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I play baseball in my free time.",
+    "I go camping in my free time.",
+    "I play basketball in my free time."
+   ],
+   "opt_acts": [
+    "baseball",
+    "camping",
+    "basketball"
+   ],
+   "answer": 2,
+   "from": "school_east",
+   "to": "lawn",
+   "travel": "bike",
+   "perform": "out:basketball",
+   "zh": "Ken 和朋友從學校騎車經過 Ken 家，往東南到水心之初大草原，在籃球架下投籃。"
+  },
+  {
+   "n": 10,
+   "id": "q10",
+   "act": "camping",
+   "context": "It's Saturday evening. The sky is clear.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I go camping in my free time.",
+    "I play basketball in my free time.",
+    "I watch TV in my free time."
+   ],
+   "opt_acts": [
+    "camping",
+    "basketball",
+    "tv"
+   ],
+   "answer": 0,
+   "from": "lawn",
+   "to": "lawn",
+   "travel": "none",
+   "perform": "out:camping",
+   "zh": "傍晚爸媽來到草原，一家人搭帳篷、點營燈，在草原露營看星星。"
+  },
+  {
+   "n": 11,
+   "id": "q11",
+   "act": "baseball",
+   "context": "Today is Sunday. It's a sunny morning.",
+   "question": "What do you do in your free time?",
+   "options": [
+    "I play basketball in my free time.",
+    "I play baseball in my free time.",
+    "I go jogging in my free time."
+   ],
+   "opt_acts": [
+    "basketball",
+    "baseball",
+    "jogging"
+   ],
+   "answer": 1,
+   "from": "lawn",
+   "to": "lawn",
+   "travel": "none",
+   "perform": "out:baseball",
+   "zh": "露營隔天早上，爸爸在大草原投球，Ken 戴手套、拿新球棒擊球。"
+  }
+ ]
+}

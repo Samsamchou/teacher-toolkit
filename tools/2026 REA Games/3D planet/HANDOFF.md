@@ -93,3 +93,16 @@
 - 2026-11-08 題型比例（RDQ `rdq/RDQ-spec-listen-type-mix-20261108.md`）：每回合固定 4 口說＋2 拖放＋2 選擇，隨機分到 q01–q08；表存在 progress 的 cleared `types:sdcs…`（不用改 firestore.rules），換裝置繼續上次也一樣。預覽實測：一輪 4／2／2、重新登入後題型相同（測試學號 99906）。
 - 2026-11-08 晚：環境音 v2 18 秒版（`tools/make_ambience_v2.py`：重點聲音拉長，餐廳吃東西／飲料店吸飲料各 8 秒、無中文句；學校程式合成西敏寺鐘 4 句；研究 scratchpad ambience_research.md）老師「全部可以，選 A（聽完 18 秒才出題）」；錄音時遊戲靜音（mute／unmute）；公園 Ken 陷進模型修好（門口推到模型外）。
 - **2026-11-08 正式上線**（老師說「直接部署正式站」）：live 上次 11/07 14:08＝staging（C:/Users/User/AppData/Local/Temp/ershui-4sets-stage），只換 ershui-planet/（pck 69,380,000）、新增 ershui-3d-quest-planetlisten/、shared/missions.mjs（加 planetlisten 一行）後 deploy hosting（370 檔）；npm test 36/36；讀回全部 200；正式網域 AI 評分有回應。規則（firestore.rules）沒動。
+
+## Free Time 版兩種玩法（2026-11-10，Ken A 路線 11 題；`godot-ershui-freetime/`）
+規格：`rdq/RDQ-spec-freetime-planet-hwg7u03-20261109.md`（rev 1–3）。**尚未部署**（老師自己上預覽頻道）。
+- **猜地點題組已移除**（game.gd 重寫；`data/sets.json`、`data/listen.json` 刪除；舊語音 a_/q_/listen_ 用匯出排除）。保留街道、學校、空拍、聲音、存檔、外框。
+- 題目資料：`data/freetime_ken_a.json`（11 題情境、選項、答案、from/to、移動方式 walk/jog/bike、演出 indoor:/out:）。
+- **每題一步一步解鎖（老師 11/10）**：① 按 ▶ Play 聽情境（不自動播，iPad 聲音從按鍵那一下開始；聽完一次才解鎖，可重聽）→ ② 線索（只有兩人一組；按 ▶ Clue 才播；音效／影片播完、3 張圖都出來、動畫播完才解鎖作答，可 Again）→ ③ 作答 → ④ Ken 演出。鎖住的區塊變灰＋「Listen first」提示。
+- **A 全班分組猜猜看**（首頁左鍵，不登入）：4–8 組（預設 6）＋圖示；押注規則＝每組先 10 分，每題選 A/B/C 並押 1/2/3 分，答對＋押分、答錯－押分（最低 0，不能押超過手上分數）。揭曉：Ken 從出發地走／跑／騎到地點做活動；室內進門才載入 Ken 的家（姿勢＝home_check 驗收版）。11 題後排名＋Ken 雙手高舉（Mixamo Cheering）＋彩帶。存檔 `user://ershui_freetime_save.json`。不出現線索。
+- **B 兩人一組線索挑戰**：外框 `escape room HWG5-U01-U02/site/public/ershui-3d-quest-freetime/`（兩人學號連打 10 碼，例 6010160126；兩人各寫一份 questAttempts＋questProgress；選擇 3／拖放 3／口說 5，口說沿用 Listen and Guess：錄音靜音、最多 5 次、16 kHz WAV、≥80 分；兩人輪流說）。missions.mjs 已加一行（本機）。遊戲 iframe `../ershui-freetime/`。線索每題一種（音效 3、3 icons 3、無聲影片 3、程式動畫 2，seed 洗牌）。
+- 室內姿勢：`scripts/pose_bake.gd`（繼承 home_check.gd，不改它）把 6 個驗收姿勢＋道具烤成 `data/interior/`；Mixamo 動作烤成 `assets/anims/baked/ken_*.res`（遊戲與網頁不需要 FBX）。重烤：`Godot --path . res://scenes/pose_bake.tscn`。play online games＝surf 姿勢＋戴耳機。
+- 程式動畫線索：`scripts/clue_anim.gd`（11 個無字黑白小動畫，6 秒一輪）。線索素材：`tools/make_freetime_assets.py`（edge-tts 語音 ft_*.mp3＋icons 縮 256＋音效＋影片轉 Theora .ogv，Godot 不能播 MP4）。
+- 測試：`--test`（A 整回合）、`PAIR=1 --test`（B 假外框）、`CLUEANIM=1 --test`（11 張動畫）、`ONLYQ=n` 只跑第 n 題；截圖在 `test_shots/`；印 `LOCKCHECK` 驗證鎖。檢查表：`python -I tools/modes_sheet.py` → `資料/freetime/modes-check-v1.png`。網頁自動測試：外框網址加 `?fakeai=1&cloud=off&autotest=1`（只在 localhost）。
+- **11/10 晚驗收（第 3 個 agent）**：自動測試加了真正的斷言（`_check`，結尾印 `TEST SUMMARY`，有失敗就 exit 1）：A 整回合 72/72、B 整回合 78/78（每題：聽完前選項／押注／線索鎖住、Start 要全部組押完、線索播完才開作答、分數照押注規則、室內在家裡演、Next 要先聽答案句、最後排名＋Cheering）。跟拍鏡頭一片黑已修（見踩坑）。home_check 24 張逐像素相同。網頁版 Playwright 測試腳本在當次 scratchpad（未入庫），外框 `?fakeai=1&cloud=off&autotest=1`。真的口說 AI 0 次（App Check 只允許正式／預覽網域，本機只能假 AI）。
+- 網頁匯出：`web-build-freetime/`（export_presets 改了路徑，**不會再蓋到二水小行星的 web-build/**），並複製到 `site/public/ershui-freetime/`。

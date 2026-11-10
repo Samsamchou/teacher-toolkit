@@ -19,5 +19,47 @@
   "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home\\ken_home_C.png",
   "generated": "2026-11-09 22:23:32",
   "tool": "codex exec (built-in image generation)"
+ },
+ "shuiling_home_A": {
+  "prompt": "Use your built-in image generation tool to create this image: A cosy two-storey Taiwanese family house beside a small creek lane in a rural town in central Taiwan: white plastered walls, sky-blue wooden window frames and a sky-blue front door, a pitched roof of blue-grey tiles, a tiny front garden behind a low solid white wall with blue flower pots and a big ceramic water jar with water plants, a small upper balcony with a solid parapet and hanging plants. It is a private family home, not a shop: no shop sign, no name plate, no house number, no text at all on the building. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but faithful real proportions and colors of a small-town street in central Taiwan. Solid closed shapes (no see-through railings). Any sign text must be simple English placeholder letters only (no Chinese characters, no brand logos). Square image. Save the PNG as shuiling_home_A.png in the current directory. Reply with the saved file path only.",
+  "sha256": "6e6bf8e391e56e9500aff222c8c8cc9a9aa012e966d64acdd5601952c9a2b883",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home2\\shuiling_home_A.png",
+  "generated": "2026-11-10 08:48:54",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "shuiling_home_B": {
+  "prompt": "Use your built-in image generation tool to create this image: A single-storey traditional Taiwanese courtyard-style cottage (small sanheyuan wing house) in a rural town in central Taiwan: white walls with a red-brick lower band, a curved roof of grey-blue clay tiles, a pale-blue wooden double door, round window, a little front yard with a stone water basin, green plants and a pair of small rain boots by the door. It is a private family home, not a shop: no shop sign, no name plate, no house number, no text at all on the building. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but faithful real proportions and colors of a small-town street in central Taiwan. Solid closed shapes (no see-through railings). Any sign text must be simple English placeholder letters only (no Chinese characters, no brand logos). Square image. Save the PNG as shuiling_home_B.png in the current directory. Reply with the saved file path only.",
+  "sha256": "c24eae0be60d1c361431e1b9209b07023583154f13b2d9b963fd787772fed7ce",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home2\\shuiling_home_B.png",
+  "generated": "2026-11-10 08:49:53",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "shuiling_home_C": {
+  "prompt": "Use your built-in image generation tool to create this image: A two-storey mint-green Taiwanese townhouse family home in a rural town in central Taiwan: mint-green small wall tiles, white window frames, a turquoise front door with a small awning, a flat roof with a blue water tower tank on top, a narrow porch with potted plants and an umbrella stand, upper windows with solid white flower boxes. It is a private family home, not a shop: no shop sign, no name plate, no house number, no text at all on the building. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but faithful real proportions and colors of a small-town street in central Taiwan. Solid closed shapes (no see-through railings). Any sign text must be simple English placeholder letters only (no Chinese characters, no brand logos). Square image. Save the PNG as shuiling_home_C.png in the current directory. Reply with the saved file path only.",
+  "sha256": "04b8a0b892f953354c85855803c6c66115fa27ed713bf3c4f5bfc4afdd8ffaf5",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home2\\shuiling_home_C.png",
+  "generated": "2026-11-10 08:51:01",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "zunbo_home_A": {
+  "prompt": "Use your built-in image generation tool to create this image: A classic three-storey Taiwanese townhouse (tou-tian-cuo) family home on a main road in a rural town in central Taiwan: light-green and cream small wall tiles, a ground-floor arcade (covered walkway) with two square columns where one mint-green motor scooter is parked, a silver metal roll-up door half open beside a glass door, aluminium windows above, a small balcony with a solid tiled parapet and laundry pole. It is a private family home, not a shop: no shop sign, no name plate, no house number, no text at all on the building. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but faithful real proportions and colors of a small-town street in central Taiwan. Solid closed shapes (no see-through railings). Any sign text must be simple English placeholder letters only (no Chinese characters, no brand logos). Square image. Save the PNG as zunbo_home_A.png in the current directory. Reply with the saved file path only.",
+  "sha256": "dbc5c0291ccf877f2799bafcb0d6baf7bac7069f96c43262d45126daaacac86e",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home2\\zunbo_home_A.png",
+  "generated": "2026-11-10 08:52:42",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "zunbo_home_B": {
+  "prompt": "Use your built-in image generation tool to create this image: A newer two-storey modern Taiwanese family house on a main road in a rural town in central Taiwan: light-grey walls with teal accent panels, a teal front door, large windows with dark frames, a small carport with a slim orange roof sheltering one mint-green motor scooter, a flat roof with solar water heater panels, two potted plants by the door. It is a private family home, not a shop: no shop sign, no name plate, no house number, no text at all on the building. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but faithful real proportions and colors of a small-town street in central Taiwan. Solid closed shapes (no see-through railings). Any sign text must be simple English placeholder letters only (no Chinese characters, no brand logos). Square image. Save the PNG as zunbo_home_B.png in the current directory. Reply with the saved file path only.",
+  "sha256": "607e5fc601b156f5d66b0cd5954337f7929a1339062e01727131a308c01978e5",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home2\\zunbo_home_B.png",
+  "generated": "2026-11-10 08:54:06",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "zunbo_home_C": {
+  "prompt": "Use your built-in image generation tool to create this image: An older two-storey Taiwanese shophouse-style family home on a main road in a rural town in central Taiwan: cream walls, an orange metal roll-up door on the ground floor with one mint-green motor scooter parked in front under a striped canvas awning, wooden-framed windows upstairs with a solid balcony parapet, a pitched roof of red clay tiles, a small mailbox without any text. It is a private family home, not a shop: no shop sign, no name plate, no house number, no text at all on the building. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes but faithful real proportions and colors of a small-town street in central Taiwan. Solid closed shapes (no see-through railings). Any sign text must be simple English placeholder letters only (no Chinese characters, no brand logos). Square image. Save the PNG as zunbo_home_C.png in the current directory. Reply with the saved file path only.",
+  "sha256": "05839a10dd301cb6c01d0dbfac96faff5564d3950935c7a721f558327ee668bf",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\00f516a5-fecc-4b83-bc5b-cb4607636ba8\\scratchpad\\codexwork_home2\\zunbo_home_C.png",
+  "generated": "2026-11-10 08:55:26",
+  "tool": "codex exec (built-in image generation)"
  }
 }

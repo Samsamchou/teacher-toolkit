@@ -1,0 +1,16 @@
+{
+ "note": "老師 2026-11-10 選定；bike 用老師提供的 Pixabay 鏈條音效（前 8 秒）",
+ "choice": {
+  "jogging": "A",
+  "music": "B",
+  "baseball": "B",
+  "basketball": "A",
+  "bike": "teacher",
+  "english": "A",
+  "internet": "A",
+  "tv": "A",
+  "camping": "A",
+  "games": "A",
+  "recorder": "A"
+ }
+}

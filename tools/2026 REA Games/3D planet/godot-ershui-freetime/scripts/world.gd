@@ -71,6 +71,7 @@ func build(data: Dictionary, f_reg: Font, f_bold: Font) -> void:
 	for k in data["nodes"]:
 		nodes[k] = v2(data["nodes"][k])
 	edges = data["edges"]
+	_inject_homes(data)
 	for P in data["places"]:
 		var d: Dictionary = P.duplicate(true)
 		d["pos2"] = v2(P["pos"])
@@ -92,6 +93,33 @@ func build(data: Dictionary, f_reg: Font, f_bold: Font) -> void:
 	_build_countryside()
 	_build_clouds()
 	_build_road_groups()
+
+## Free Time 版：Ken／水鈴／圳寶的家（data/homes.json）。有模型的家把那棟街屋換成地點（模型＋門口＋標籤），沒有模型就維持一般街屋。
+var home_skip := {}   # 被換掉的 buildings 編號
+func _inject_homes(data: Dictionary) -> void:
+	if not FileAccess.file_exists("res://data/homes.json"):
+		return
+	var H = JSON.parse_string(FileAccess.get_file_as_string("res://data/homes.json"))
+	if H == null:
+		return
+	for h in H["homes"]:
+		var bi := int(h["building"])
+		if bi < 0 or bi >= data["buildings"].size() or not _has_model(String(h["model"])):
+			continue
+		var B: Dictionary = data["buildings"][bi]
+		var poly: Array = B["poly"]
+		var m := poly.size()
+		var c := Vector2.ZERO
+		for q in poly:
+			c += v2(q)
+		c /= m
+		var f := int(B["front"])
+		var mid := (v2(poly[f]) + v2(poly[(f + 1) % m])) * 0.5
+		var out := (mid - c).normalized()
+		var door := mid + out * 1.4
+		data["places"].append({"id": h["id"], "zh": h["zh"], "word": "", "en": h["en"], "kind": "home", "model": h["model"],
+			"size": float(h["size"]), "pos": [c.x, c.y], "door": [door.x, door.y], "face": [out.x, out.y], "home_of": h["who"]})
+		home_skip[bi] = true
 
 func _materials() -> void:
 	mat_toon = StandardMaterial3D.new()
@@ -759,7 +787,11 @@ func _build_buildings() -> void:
 	var groups := {}
 	var tile_rect := {}
 	var n := 0
+	var bidx := -1
 	for B in map["buildings"]:
+		bidx += 1
+		if home_skip.has(bidx):
+			continue   # 已換成家的模型
 		var poly := norm_poly(B["poly"])
 		if poly.size() < 3:
 			continue

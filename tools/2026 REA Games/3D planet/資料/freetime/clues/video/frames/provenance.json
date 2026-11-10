@@ -1,0 +1,14 @@
+{
+ "jogging": {
+  "prompt": "Use your built-in image generation tool to create this image. The attached image ken_ref.png is the character reference. Scene: the same boy as in the attached reference image: about 12 years old, short spiky black hair, orange-tinted goggles pushed up on his forehead, navy-blue zip jacket with bright orange sleeves and orange trim, navy trousers, white-and-orange sneakers, black fingerless gloves. He is jogging along a tree-lined path beside green rice fields in the early morning, mid-stride, arms bent, side-front view. Bright, cheerful stylised 3D cartoon animation look (like a friendly kids' animated film), soft daylight, clean simple shapes, small rural town in central Taiwan. Wide 16:9 frame, the boy fully visible and large in frame, his face clearly visible. No text, no letters, no logos, no speech bubbles, no other people. Landscape 16:9 image. Save the PNG as jogging.png in the current directory. Reply with the saved file path only.",
+  "sha256": "0204552a3f4b0531311505309247cb954cf3fefdb0a992f40adfb571996ec5c3",
+  "generated": "2026-11-10 08:13:41",
+  "tool": "codex exec (built-in image generation) with ken_ref.png"
+ },
+ "stage": {
+  "prompt": "Use your built-in image generation tool to create this image. The attached image ken_ref.png is the character reference. Scene: the same boy as in the attached reference image (same face, short spiky black hair, orange-tinted goggles pushed up on his forehead), but now wearing a Taiwanese elementary school student uniform: white short-sleeved polo shirt with a navy-blue collar, navy-blue shorts, white socks and white sneakers; no gloves, no jacket, nothing in his hands. He stands alone in the centre of a low wooden stage platform at the front of a bright, cheerful elementary school English classroom, facing the camera (the audience), standing straight and relaxed with both arms down at his sides, friendly smile, full body visible from head to shoes with empty space around him on both sides and above. Behind him a clean blank green chalkboard, colourful paper bunting above it, a potted plant at one side. The stage is completely empty: no props, no furniture, no desk, no chair, no objects on the floor. Bright, cheerful stylised 3D cartoon animation look (like a friendly kids' animated film), soft daylight. Wide 16:9 frame, eye-level camera. No text, no letters, no numbers, no writing on the chalkboard or anywhere, no logos, no other people. Landscape 16:9 image. Save the PNG as stage.png in the current directory. Reply with the saved file path only.",
+  "sha256": "f854a59d6ed350879f47f1cd74b94f456b45b73baef91309e0f1c9f1f59a9d27",
+  "generated": "2026-11-10 08:23:23",
+  "tool": "codex exec (built-in image generation) with ken_ref.png"
+ }
+}

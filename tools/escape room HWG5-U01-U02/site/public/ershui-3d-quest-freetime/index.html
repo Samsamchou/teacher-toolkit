@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f2a5a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>二水小行星 Free Time 兩人一組</title>
+  <link rel="stylesheet" href="../shared/quest3d.css">
+  <link rel="stylesheet" href="freetime.css">
+</head>
+<body>
+  <main id="app"><p class="loading">Loading…</p></main>
+  <div id="quiz" class="quiz" hidden></div>
+  <!-- 二水小行星 Free Time 兩人一組線索挑戰：雙學號外框＋題目面板（選擇／拖放／口說）；遊戲在 ../ershui-freetime/ -->
+  <script type="module">
+    import { BANK } from "./data.js";
+    import { start } from "./freetime-app.mjs";
+    start(BANK);
+  </script>
+</body>
+</html>
