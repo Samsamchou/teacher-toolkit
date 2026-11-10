@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Free Time Guess</title>
+<style>
+  @font-face { font-family: 'Comic Relief'; src: url('fonts/ComicRelief-Bold.ttf'); font-weight: 700; }
+  @font-face { font-family: 'Comic Relief'; src: url('fonts/ComicRelief-Regular.ttf'); font-weight: 400; }
+  html, body { margin: 0; background: #140f3a; overflow: hidden; }
+  canvas { display: block; width: 1920px; height: 1080px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script src="core.js"></script>
+<script src="seg_baseball.js"></script>
+<script src="seg_camping.js"></script>
+<script src="seg_jogging.js"></script>
+<script src="seg_tv.js"></script>
+<script src="seg_bike.js"></script>
+<script src="seg_music.js"></script>
+<script src="seg_basketball.js"></script>
+<script src="seg_internet.js"></script>
+<script src="seg_games.js"></script>
+<script src="seg_study.js"></script>
+<script src="seg_recorder.js"></script>
+<script>
+  // 用法：player.html?seg=baseball&t=3.8 ；錄影時由 Playwright 呼叫 window.renderAt(t)
+  const P = new URLSearchParams(location.search);
+  const seg = SEGMENTS[P.get('seg') || 'baseball'];
+  window.SEG = seg;
+  window.renderAt = (t) => FT.frame(seg, t);
+  document.fonts.load("700 80px 'Comic Relief'").then(() => document.fonts.load("400 40px 'Comic Relief'")).then(() => {
+    window.renderAt(parseFloat(P.get('t') || '3.8'));
+    window.READY = true;
+  });
+</script>
+</body>
+</html>

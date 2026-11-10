@@ -1,0 +1,8 @@
+# 影音與抽格圖不入庫，只留程式與說明
+renders/
+qa/
+_frames_*/
+*.mp4
+*.wav
+*.png
+*.jpg
