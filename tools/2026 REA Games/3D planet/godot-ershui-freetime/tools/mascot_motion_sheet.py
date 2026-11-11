@@ -58,11 +58,11 @@ def rows_for(who):
 
 
 # 每格可放 9 行數字（v2 多了 HUD 一行）
-def sheet9(title, rows, out, sub=""):
+def sheet9(title, rows, out, sub="", strip=None):
     LH = 20 * 10 + 34
     RH = ms.TH + LH + 16
     W = 200 + 4 * (ms.TW + 12)
-    H = 110 + RH * len(rows)
+    H = 110 + RH * len(rows) + (int((W - 40) // 8 * 0.75) + 160 if strip else 0)
     im = ms.Image.new("RGB", (W, H), "white")
     d = ms.ImageDraw.Draw(im)
     d.text((20, 18), title, fill="#111", font=ms.font(34, True))
@@ -76,6 +76,20 @@ def sheet9(title, rows, out, sub=""):
         for k, (path, label, lines) in enumerate(cells):
             ms.cell(d, im, 200 + k * (ms.TW + 12), y, path, label, lines)
         y += RH
+    if strip:
+        # v6：揮棒 8 格（平均分布）＋每格量測
+        d.line([0, y - 6, W, y - 6], fill="#ddd", width=2)
+        d.text((14, y + 10), "Baseball swing, 8 evenly spaced frames", fill="#7b5ea7", font=ms.font(22, True))
+        tw = (W - 40) // 8
+        th = int(tw * 0.75)
+        for k, (path, lines) in enumerate(strip):
+            x = 20 + k * tw
+            if os.path.exists(path):
+                t = ms.Image.open(path).convert("RGB")
+                t = t.crop((t.width // 8, 0, t.width * 7 // 8, t.height * 3 // 4)).resize((tw - 8, th))
+                im.paste(t, (x, y + 44))
+            for li, (txt, ok) in enumerate(lines):
+                d.text((x, y + 50 + th + li * 20), txt, fill=("#1a7f37" if ok else "#c62828") if ok is not None else "#555", font=ms.font(15))
     os.makedirs(os.path.dirname(out), exist_ok=True)
     im.save(out)
     print("saved", out, im.size)
@@ -85,11 +99,23 @@ def main():
     who = sys.argv[1] if len(sys.argv) > 1 else "shuiling"
     draft = "--draft" in sys.argv
     nice = {"shuiling": "Shuiling", "zunbo": "Zun-Bo"}[who]
-    ver = "v3" if "--v3" in sys.argv else ("v2" if "--v2" in sys.argv else "v1")
+    ver = "v6" if "--v6" in sys.argv else "v5" if "--v5" in sys.argv else "v4" if "--v4" in sys.argv else ("v3" if "--v3" in sys.argv else ("v2" if "--v2" in sys.argv else "v1"))
     out = os.path.join(SRC, who, "sheet_draft.png") if draft else os.path.join(ms.OUT, "motion-check-%s-%s.png" % (who, ver))
+    strip = None
+    if "--v6" in sys.argv:
+        mt = json.load(open(os.path.join(SRC, who, "metrics_outdoor.json"), encoding="utf-8"))
+        strip = []
+        for k, r in enumerate(mt.get("baseball_swing", [])):
+            hs = [v for v in (r.get("hand_right_cm"), r.get("hand_left_cm")) if v is not None and v != -1.0]
+            lines = [("t %+.2f s" % r["rel"], None)]
+            if hs:
+                lines.append(("hand-bat %.1f..%.1f cm" % (min(hs), max(hs)), 0 <= min(hs) and max(hs) <= 2))
+            lines.append(("body in bat %d" % r["body_in_bat"], r["body_in_bat"] == 0))
+            lines.append(("bat in head %d" % r["head"], r["head"] == 0))
+            strip.append((os.path.join(SRC, who, "baseball_swing_%d.png" % k), lines))
     sheet9("Motion logic check - %s x 11 activities (prepare / contact / mid / end)" % nice, rows_for(who), out,
-             ("v3: pelvis rocks with the crank; whole-cycle (24 steps) and whole-swing worst cases in the first frame. " if "--v3" in sys.argv else ("v2: procedural run, procedural two-hand bat path, Zun-Bo sits by the fire, feet measured to the footrest. " if "--v2" in sys.argv else "")) + "Mascot-size props. Contacts measured on the posed mesh (cm). Green = within limit, red = outside, grey = info. "
-             "Limits: hand-ball <=2, wheel-road +-1, foot-pedal <=2, ball-bat <=3 at contact.")
+             ("v6: swing = 3 key poses + smooth curve (Zun-Bo one-handed tee-ball, 36 cm bat, teacher-approved); checked every 1/120 s; bottom row = 8 evenly spaced swing frames. " if "--v6" in sys.argv else "") + ("v5: compact swing in front of the body (Zun-Bo: one hand, 36 cm bat); bat table and whole-swing check both at the game step 1/120 s; forearms counted. " if "--v5" in sys.argv else "") + ("v4: bat table at 1/60 s, bat pulled toward the shoulder when the arm is straight; whole swing checked every 1/60 s (first baseball frame). " if "--v4" in sys.argv else "") + ("v3: pelvis rocks with the crank; whole-cycle (24 steps) and whole-swing worst cases in the first frame. " if "--v3" in sys.argv else ("v2: procedural run, procedural two-hand bat path, Zun-Bo sits by the fire, feet measured to the footrest. " if "--v2" in sys.argv else "")) + "Mascot-size props. Contacts measured on the posed mesh (cm). Green = within limit, red = outside, grey = info. "
+             "Limits: hand-ball <=2, wheel-road +-1, foot-pedal <=2, ball-bat <=3 at contact.", strip)
 
 
 if __name__ == "__main__":

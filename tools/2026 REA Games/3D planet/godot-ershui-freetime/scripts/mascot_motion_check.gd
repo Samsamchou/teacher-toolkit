@@ -37,7 +37,13 @@ func _ready() -> void:
 		await _probe_m()
 	else:
 		await _outdoor()
-	var f := FileAccess.open("%s/metrics_%s.json" % [out_dir, mode], FileAccess.WRITE)
+	var mpath := "%s/metrics_%s.json" % [out_dir, mode]
+	if OS.get_environment("ONLY") != "" and FileAccess.file_exists(mpath):   # v4：只跑一個活動 → 併進原本的 metrics（其他活動保留）
+		var old = JSON.parse_string(FileAccess.get_file_as_string(mpath))
+		if old is Dictionary:
+			(old as Dictionary).merge(metrics, true)
+			metrics = old
+	var f := FileAccess.open(mpath, FileAccess.WRITE)
 	f.store_string(JSON.stringify(metrics, " "))
 	f.close()
 	print("MOTION CHECK DONE ", who, " ", mode)
@@ -236,12 +242,91 @@ func _o_basketball() -> void:
 func _o_baseball() -> void:
 	_set_base(am.ground_offset("ft/baseball_hit"))
 	var xf := Transform3D(Basis(Vector3(1, 0, 0), -PI / 2), Vector3(0.0, 0.07, 0.03))
+	if OS.get_environment("PBPROBE") != "":
+		for tt in [0.5, 1.2, 1.45, 1.8]:
+			am.pose_at("ft/baseball_hit", tt)
+			var C: Array = am._chest()
+			var O: Vector3 = C[0]
+			var w: float = C[4]
+			var row := "PBPROBE t=%.2f w=%.3f O=%s f=%s" % [tt, w, O, C[1]]
+			for sd in ["right", "left"]:
+				var S := am.fpos(sd + "arm")
+				row += " %s la=%.3f hand=%.3f" % [sd, S.distance_to(am.fpos(sd + "forearm")) + am.fpos(sd + "forearm").distance_to(am.fpos(sd + "hand")), am.fpos(sd + "hand").distance_to(am.fpos(sd + "handmiddle1"))]
+			print(row)
+			var bp := am.mesh_pts(["hips", "spine", "neck", "head"])
+			var yy := -2.0
+			while yy <= 0.61:
+				var fr := -9.0
+				var sdm := 0.0
+				for q in bp:
+					var d: Vector3 = q - O
+					if absf(d.dot(C[3]) - yy * w) < 0.1 * w:
+						fr = maxf(fr, d.dot(C[1]))
+						sdm = maxf(sdm, absf(d.dot(C[2])))
+				print("PBPROBE   y=%.1fw (%.1f cm) front %.1f cm side %.1f cm" % [yy, yy * w * 100.0, fr * 100.0, sdm * 100.0])
+				yy += 0.2
+		return
 	am.left_on_bat = false
 	am.pbat = OS.get_environment("NOPBAT") == ""
 	am.pb_reach = 0.98   # v2：程式球棒路徑＋兩手 IK
+	# v5：每個吉祥物自己的緊湊揮棒（棒子在身體正前方、不往右後拉弓）
+	am.pb_local = OS.get_environment("PBOLD") == ""
+	if am.pb_local:
+		if who == "zunbo":   # 單手（右手）＋36 cm 短棒：兩肩 44 cm、手臂 26 cm、胸口凸 17 cm → 兩手在身體前面碰不到一起
+			am.pb_keys = am.PB_KEYS_ZUNBO
+			am.pb_hands = ["right"]
+			am.bat_len = 0.36
+			am.bat_hand_off = 0.045
+			am.bat_handle = 0.11
+			am.bat_taper = 0.09
+			am.pb_stretch = 0.90
+		else:
+			am.pb_keys = am.PB_KEYS_SHUILING
+			am.pb_stretch = 0.93
+		if OS.get_environment("PBV5") == "":   # v6：3 個關鍵姿勢＋平滑曲線（老師 11/11 核可圳寶單手 36 cm 球棒）
+			am.pb6_rel = PB6_REL[who]
+			am.pb6_bend = 0.93 if who == "zunbo" else 0.96   # 水鈴手臂 21 cm、兩手要在胸口前會合：0.93 搆不到
+	am.pb_open_stretched = float(OS.get_environment("PBOPEN")) if OS.get_environment("PBOPEN") != "" else float(PB_OPEN.get(who, 0.0))
+	am.pb_curl = float(OS.get_environment("PBCURL")) if OS.get_environment("PBCURL") != "" else float(PB_CURL.get(who, 1.0))
 	am.start_baseball(xf)
 	var tc: float = am.bb["t_c"]
 	var L: float = am.bb["len"]
+	if OS.get_environment("PBDIAG2") != "":
+		for tt in [0.0, 0.45, 1.0, 1.6]:
+			am.pose_at(am.bb["an"], tt)
+			var X := am.bat_frame_xf()
+			var D := X.basis.y.normalized()
+			for sd in ["right", "left"]:
+				var Gp := X * Vector3(0, am._grip_s(sd), 0)
+				var C: Array = am._chest()
+				var rv: Vector3 = (C[0] as Vector3) - Gp
+				rv = (rv - D * rv.dot(D)).normalized()
+				var pts := am.mesh_pts([sd + "hand"])
+				var cen := Vector3.ZERO
+				for q in pts:
+					cen += q
+				cen /= maxf(pts.size(), 1)
+				var best := 9.0
+				var bq := Vector3.ZERO
+				var nin := 0
+				for q in pts:
+					var v := q - Gp
+					var ax := v.dot(D)
+					var rad := (v - D * ax).length() - am.bat_r0
+					if absf(ax) < 0.04 and rad < best:
+						best = rad
+						bq = v - D * ax
+					if absf(ax) < 0.04 and rad < 0.0:
+						nin += 1
+				var cv := cen - Gp
+				print("PBDIAG2 t=%.2f %s ex %.1f gap %.2f closest-rad %.2f dirdot %.2f in %d | centroid axial %.1f radial %.1f dot %.2f | wrist-grip %.1f arm-reach %.1f/%.1f" % [tt, sd, am._pb_extra(tt, sd) * 100.0, am._hand_bat_gap(sd, X) * 100.0, best * 100.0, bq.normalized().dot(rv), nin, cv.dot(D) * 100.0, (cv - D * cv.dot(D)).length() * 100.0, (cv - D * cv.dot(D)).normalized().dot(rv), am.fpos(sd + "hand").distance_to(Gp) * 100.0, am.fpos(sd + "arm").distance_to(am.fpos(sd + "hand")) * 100.0, (am.fpos(sd + "arm").distance_to(am.fpos(sd + "forearm")) + am.fpos(sd + "forearm").distance_to(am.fpos(sd + "hand"))) * 100.0])
+		return
+	if OS.get_environment("PBDIAG") != "":
+		for tt in [0.0333, 0.05, 0.0667, 0.05, 0.6833, 0.6667, 0.6833, 0.2333, 0.2333]:
+			am.pose_at(am.bb["an"], tt)
+			var X := am.bat_frame_xf()
+			print("PBDIAG t=%.4f gapR %.2f gapL %.2f exR %.2f exL %.2f hits %s" % [tt, am._hand_bat_gap("right", X) * 100.0, am._hand_bat_gap("left", X) * 100.0, am._pb_extra(tt, "right") * 100.0, am._pb_extra(tt, "left") * 100.0, am.bat_body_hits()])
+		return
 	if OS.get_environment("BATDBG") != "":
 		am._corr_off = OS.get_environment("BATDBG") == "raw"
 		for tt in [0.3, 0.57, 0.9, 1.13, 1.3, 1.47, 1.7, 2.0]:
@@ -258,6 +343,7 @@ func _o_baseball() -> void:
 		return
 	var wants := [tc - 0.1, tc, tc + 0.22, -1.0]   # [mascot] 來球 0.1 秒前（球還在 1 m 內，看得到）
 	await _bat_sweep()
+	await _swing_strip()
 	var names := ["prepare: pitched ball flies in", "contact: ball on bat face", "mid: ball flies off, swing follows through", "end: bat dropped, runs to base"]
 	var k := 0
 	var dt := 1.0 / 120.0
@@ -840,6 +926,14 @@ func _probe_m() -> void:
 
 # ───────── [mascot] 追加 ─────────
 ## 圳寶：Mixamo jogging 重定向後腿縮成一團、腳趾骨跑到地面下 6 cm（腿長只有 0.16 m）→ 用模型內建的 walk 快走當慢跑
+## v6 關鍵姿勢（相對鍵值：[相對接觸秒數, (身體表面再往前 m, 上＝肩寬倍數, 右＝半肩寬倍數), 棒頭方向(前, 上, 右)]）
+## 預備 → 接觸（胸口前、棒子水平朝前）→ 短跟進。搜尋只動這 3 個姿勢
+const PB6_REL := {
+	"shuiling": [[-0.40, Vector3(0.03, -0.8, 0.6), Vector3(0.1, 0.3, 0.95)], [0.0, Vector3(0.035, -0.8, 0.0), Vector3(1.0, 0.0, -0.05)], [0.35, Vector3(0.03, -0.8, -0.6), Vector3(0.15, 0.2, -0.95)]],
+	"zunbo": [[-0.40, Vector3(0.06, -0.2, 1.15), Vector3(0.25, 0.05, 1.0)], [0.0, Vector3(0.06, -0.2, 1.0), Vector3(1.0, 0.0, -0.05)], [0.35, Vector3(0.06, -0.2, 0.85), Vector3(0.45, 0.05, -0.9)]],
+}
+const PB_OPEN := {"shuiling": 0.0, "zunbo": 0.0}   # v4：手臂伸直時手指少彎
+const PB_CURL := {"shuiling": 1.0, "zunbo": 0.75}   # v4：握棒手指彎的倍率
 const JOG_ANIM := {"zunbo": "proc", "shuiling": "proc"}   # v2：兩個都用程式跑步（見 mascot_motion.apply_run）   # 試過圳寶用內建 walk：步速 -0.04 m/s（原地／方向不對）→ 不可用，維持 ft/jogging（見 findings）
 const MASCOT_JOG := 1.0    # 吉祥物慢跑速度（m/s）：動作原地步速 0.69 → 播放 1.45 倍
 const MASCOT_WALK := 0.8
@@ -1009,21 +1103,49 @@ func _bat_sweep() -> void:
 	var hand_lo := 9.0
 	var td: float = am.bb["t_drop"]
 	var t := 0.0
+	var hi_t := 0.0
+	var lo_t := 0.0
+	var nfr := 0
+	var arm_max := 0.0   # 肩到手腕 ÷ 手臂長（1.0＝完全伸直）
+	var sweep_dt := 1.0 / 120.0   # v5：＝遊戲的步長、也＝球棒表的格子（v3 1/30、v4 1/60）
+	var dbg := OS.get_environment("SWEEPDBG") != ""
 	while t < td:
 		am.pose_at(am.bb["an"], t)
 		var m := am.measure_baseball()
-		for sd in ["left", "right"]:
+		nfr += 1
+		for sd in am.pb_hands:
 			var hg := float(m.get("hand_%s_bat_gap_cm" % sd, 0.0))
-			hand_hi = maxf(hand_hi, hg)
-			hand_lo = minf(hand_lo, hg)
+			if hg > hand_hi:
+				hand_hi = hg
+				hi_t = t
+			if hg < hand_lo:
+				hand_lo = hg
+				lo_t = t
+		var fr_st := 0.0
+		for sd in am.pb_hands:
+			var Sa: Vector3 = am.fpos(sd + "arm")
+			var la: float = Sa.distance_to(am.fpos(sd + "forearm")) + am.fpos(sd + "forearm").distance_to(am.fpos(sd + "hand"))
+			fr_st = maxf(fr_st, Sa.distance_to(am.fpos(sd + "hand")) / la)
+		arm_max = maxf(arm_max, fr_st)
+		if dbg and int(m.get("body_in_bat", 0)) > 0:
+			var X := am.bat_frame_xf()
+			var parts := ""
+			for gname in ["hips", "spine", "leftupleg", "rightupleg", "leftarm", "rightarm", "leftforearm", "rightforearm"]:
+				var hh: Array = am._bat_hits2(X, am.mesh_pts([gname]), am.head_star(), 0.0)
+				if int(hh[0]) > 0:
+					parts += "%s:%d " % [gname, int(hh[0])]
+			print("SWEEPHIT t=%.3f %s" % [t, parts])
+		if dbg:
+			print("SWEEP st=%.3f t=%.3f exR %.1f exL %.1f R %.2f L %.2f body %d head %d" % [fr_st, t, am._pb_extra(t, "right") * 100.0, am._pb_extra(t, "left") * 100.0, float(m.get("hand_right_bat_gap_cm", 0.0)), float(m.get("hand_left_bat_gap_cm", 0.0)), int(m.get("body_in_bat", 0)), int(m.get("bat_in_head_pts", 0))])
 		if int(m.get("body_in_bat", 0)) + 10 * int(m.get("bat_in_head_pts", 0)) > worst:
 			worst = int(m["body_in_bat"]) + 10 * int(m.get("bat_in_head_pts", 0))
 			wt = t
-		t += 1.0 / 30.0
-	metrics["baseball_sweep"] = {"max_body_in_bat": worst, "at_t": wt, "hand_bat_max_cm": hand_hi, "hand_bat_min_cm": hand_lo, "corr": am.bb.get("corr_report", {})}
-	bb_cycle = "whole swing: body-in-bat max %d, hand-bat %.1f..%.1f" % [worst, hand_lo, hand_hi]
-	bb_cycle_ok = worst == 0 and hand_hi <= 2.0 and hand_lo >= -1.0
-	print("MASCOT bat sweep: max body verts in bat %d at t=%.2f" % [worst, wt])
+		t += sweep_dt
+	metrics["baseball_sweep"] = {"jitter": am.pb_jit, "arm_stretch_max": arm_max, "hands": am.pb_hands, "bat_len_cm": am.bat_len * 100.0, "step_s": sweep_dt, "frames": nfr, "max_body_in_bat": worst, "at_t": wt, "hand_bat_max_cm": hand_hi, "max_at_t": hi_t, "hand_bat_min_cm": hand_lo, "min_at_t": lo_t, "corr": am.bb.get("corr_report", {})}
+	bb_cycle = "whole swing (1/120 s, %d fr%s): body+forearm-in-bat max %d, hand-bat %.1f..%.1f" % [nfr, "" if am.pb_hands.size() == 2 else ", one-hand", worst, hand_lo, hand_hi]
+	bb_cycle_ok = worst == 0 and hand_hi <= 2.0 and hand_lo >= 0.0
+	print("MASCOT arm stretch max %.3f (shoulder-wrist / arm length)" % arm_max)
+	print("MASCOT bat sweep (1/120 s, %d frames): max body verts in bat %d at t=%.3f, hand-bat %.2f (t=%.3f) .. %.2f (t=%.3f) cm" % [nfr, worst, wt, hand_lo, lo_t, hand_hi, hi_t])
 	am.restart_baseball()
 
 var desk_cam := Vector3.INF
@@ -1205,3 +1327,28 @@ func _surface_below(q: Vector3) -> float:
 			if bx.position.y < q.y and bx.end.y <= q.y + 0.03 and bx.end.y > top:
 				top = bx.end.y
 	return top
+
+## v6：8 格平均分布的揮棒畫面（預備前 → 跟進後），固定鏡頭，給老師看動作是不是順
+func _swing_strip() -> void:
+	var tc: float = am.pb_tc
+	var cc: Vector3 = am.bb["center"]
+	var nn: Vector3 = am.bb["nrm"]
+	nn = Vector3(nn.x, 0, nn.z).normalized()
+	var sd := nn.cross(Vector3.UP).normalized()
+	if sd.dot(Vector3(0, 0, 1)) < 0.0:
+		sd = -sd
+	var hip := am.fpos("hips")
+	var rows := []
+	for k in 8:
+		var t := am._pb_snap(tc - 0.40 + k * (0.75 / 7.0))
+		am.pose_at(am.bb["an"], t)
+		var bone_w := sk.global_transform * sk.get_bone_global_pose(am.bi(am._hand_key()))
+		am.bat.transform = bone_w.affine_inverse() * (frame.global_transform * am.bat_frame_xf())
+		am.bb_ball.visible = false
+		await get_tree().process_frame
+		_look_at(hip + sd * 1.9 + nn * 0.9 + Vector3(0, 0.45, 0), hip + nn * 0.2 + Vector3(0, 0.05, 0), 42)
+		await _save("baseball_swing_%d" % k)
+		var m := am.measure_baseball()
+		rows.append({"t": t, "rel": t - tc, "hand_right_cm": m.get("hand_right_bat_gap_cm", -1.0), "hand_left_cm": m.get("hand_left_bat_gap_cm", -1.0), "body_in_bat": m.get("body_in_bat", -1), "head": m.get("bat_in_head_pts", -1)})
+	metrics["baseball_swing"] = rows
+	am.restart_baseball()

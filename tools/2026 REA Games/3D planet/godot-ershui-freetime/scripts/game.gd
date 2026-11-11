@@ -28,11 +28,57 @@ const SAVE_PATH := "user://ershui_freetime_save.json"
 const CLUE_KINDS := ["sfx", "icons", "video", "anim"]
 const CLUE_NAME := {"sfx": "Listen! 聽聲音", "icons": "3 pictures 看 3 張圖", "video": "Watch! 看影片", "anim": "Watch! 看動畫"}
 ## 真的速度（m/s）：動作播放速度＝速度 ÷ 動作原地踩地速度 → 腳不滑（老師 11/10：所有動作合現實）
-## 路太長：走 SKIP_AFTER 秒後淡出，跳到剩 SKIP_END 秒的地方（畫面寫 A few minutes later…）
+## 路太長：走 WALK_CAP 秒（真實時間）後淡出，跳到剩 WALK_TAIL 秒的地方（畫面寫 A few minutes later…）
 const TRAVEL_SPEED := {"walk": 1.4, "jog": 2.0, "bike": 4.5}
-const SKIP_AFTER := 5.0
-const SKIP_END := 4.5
+## [perf] 11/11：舊的 SKIP_AFTER 5.0／SKIP_END 4.5（遊戲時間）改成 WALK_CAP／WALK_TAIL／WALK_HARD（真實時間），見下面 [perf] 區
 const INDOOR_OUTLINE := 0.15   # 室內近距離鏡頭描邊（戶外遠景維持 0.3）；手再乘 0.25
+## [routes] 四條路線（規格 rdq/RDQ-spec-freetime-routes-BCD-20261111.md）：選完玩法再選路線；兩種玩法都能選。
+const ROUTES := [
+	{"id": "ken_a", "who": "ken", "label": "Ken A", "zh": "Ken A 路線", "sub": "I ___ in my free time.", "col": "#ffd166"},
+	{"id": "ken_b", "who": "ken", "label": "Ken B", "zh": "Ken B 路線", "sub": "I ___ in my free time.", "col": "#ffc078"},
+	{"id": "shuiling", "who": "shuiling", "label": "Shuiling", "zh": "水鈴路線", "sub": "She ___ in her free time.", "col": "#a5d8ff"},
+	{"id": "zunbo", "who": "zunbo", "label": "Zun-Bo", "zh": "圳寶路線", "sub": "He ___ in his free time.", "col": "#b2f2bb"},
+]
+const CHARS := {
+	"ken": {"model": "ken_openhand", "h": 1.3, "home": "ken_home", "name": "Ken", "mascot": false},
+	"shuiling": {"model": "shuiling_softhand", "h": 1.2, "home": "shuiling_home", "name": "Shuiling", "mascot": true},
+	"zunbo": {"model": "zunbo_openhand", "h": 1.15, "home": "zunbo_home", "name": "Zun-Bo", "mascot": true},
+}
+## 吉祥物揮棒 v6 的關鍵姿勢（抄自 mascot_motion_check.gd PB6_REL，老師 11/11 定案）
+const MASCOT_PB6 := {
+	"shuiling": [[-0.40, Vector3(0.03, -0.8, 0.6), Vector3(0.1, 0.3, 0.95)], [0.0, Vector3(0.035, -0.8, 0.0), Vector3(1.0, 0.0, -0.05)], [0.35, Vector3(0.03, -0.8, -0.6), Vector3(0.15, 0.2, -0.95)]],
+	"zunbo": [[-0.40, Vector3(0.06, -0.2, 1.15), Vector3(0.25, 0.05, 1.0)], [0.0, Vector3(0.06, -0.2, 1.0), Vector3(1.0, 0.0, -0.05)], [0.35, Vector3(0.06, -0.2, 0.85), Vector3(0.45, 0.05, -0.9)]],
+}
+const BB_STEP := 1.0 / 120.0
+var bb_acc := 0.0
+var frame_lift := 0.0           # 角色座標架離星球表面多高（吉祥物打棒球時＝路面高度，其他時候 0）
+var bb_hold := false            # 檢查圖：停在球碰到球棒那一格
+const SCOOTER_SPEED := 5.0
+const MASCOT_BIKE_SPEED := 2.4   # 童車輪子小（r 0.12）：2.4 m/s ≈ 每秒踩 1.4 圈
+
+var route_id := "ken_a"
+var routes_data := {}
+var who := ""
+var chars := {}                 # who → W（每個角色自己的模型、動作、ActMotion、室內）
+var mascot := false
+var home_id := "ken_home"
+var mm                          # 和 am 同一個物件（不指定型別：吉祥物專用函式 run_setup／apply_run／sit_ground）
+var speeds := {}                # 這個角色的移動速度（m/s）
+var proc_gait := ""             # 吉祥物程式走路／跑步中："walk"／"jog"
+var run_clock := 0.0
+var gait_off := 0.0
+var model_locked := false       # 模型位置由姿勢函式決定（圳寶坐地露營）
+var camp_pose: Array = []
+var scooter                     # scripts/scooter_rig.gd（圳寶媽媽騎機車；目前是替代模型）
+var scooter_holder: Node3D
+var scooter_place := ""
+var skirt_rep := {}
+var interior_def := {}
+var route_ui: Control
+var route_next := "groups"
+var title_sub: Label
+var go_btn: Button
+var sheet_freeze := false
 
 var world: Node3D
 var cam: Camera3D
@@ -66,8 +112,42 @@ var roam := false                  # 演出時繼續慢跑／騎車（沿路來�
 var roam_cam2 := Vector2.INF
 var roam_side := 1.0
 var roam_t := 0.0
+var roam_high := false
+var roam_back := Vector2.ZERO
 var hud_col: VBoxContainer
 var bb_cut := false
+
+# ---------- [perf] iPad 揭曉卡頓（規格 rdq/RDQ-spec-freetime-ipad-perf-20261111.md） ----------
+## 走路上限用「真實時間」（Time.get_ticks_msec）：幀數低的時候遊戲時間會變慢，不能只看 travel_t
+const WALK_CAP := 2.5      # 每段路最多先走 2.5 秒（看得出往哪走）→ 淡出 → 跳到快到的地方
+const WALK_TAIL := 1.2     # 跳過之後還剩幾秒的路（看得到走到門口／活動地點）
+const WALK_HARD := 7.0     # 很慢的裝置：出發後超過 7 秒（真實時間）還沒到 → 直接跳到終點
+const RUN_CAP := 3.0       # 演出中的移動（跑壘）最多 3 秒（真實時間）
+var BASE_RUN_OLD := false
+const BASE_RUN_K := 1.5    # 跑壘＝慢跑動作 ×1.5 倍播放、同比例的速度（跑步，不是走路）
+var walk_ms0 := 0
+var walk_skipped := false
+var walk_hard_done := false
+var pt := {}               # 這一題的真實時間點（ms）：answer、arrive、act、heard、seg_end
+var pt_printed := false
+var act_seg := {}          # 棒球分段（真實時間 ms）：swing、run、base
+var last_bb_phase := ""
+var debug_on := false
+var debug_lbl: Label
+var dbg_t := 0.0
+var low_q := false         # 低畫質（iPad／iPhone 一律；其他裝置前 3 秒平均 < 24 fps）
+var q_decided := false
+var q_frames := 0
+var q_ms0 := 0
+var far_cull := false
+var perf_acc := {}         # 各段每格花多少 µs（測試／debug 印）
+var perf_n := 0
+var slow_ms := 0           # 測試：每格多等幾 ms（模擬很慢的裝置）
+var last_frame_us := 0
+var old_walk := false
+var perf_test := false     # 測試 FPS15=1：×1 正常速度＋每秒 15 格（模擬 iPad），量每題「答對 → 演完」
+var save_path := SAVE_PATH # 測試 OUTTAG=xxx：每個同時跑的測試各用自己的存檔和截圖資料夾
+var shots_dir := "res://test_shots"      # 測試：OLDWALK=1 重現舊的走路跳過＋每格 delta 上限 8/60 秒
 
 # 遊戲狀態
 enum St { TITLE, SETUP, QUESTION, CLUE, ANSWER, WALKING, REVEAL, RESULT }
@@ -185,9 +265,10 @@ func _ready() -> void:
 	font = reg
 	font_bold = bold
 	data = JSON.parse_string(FileAccess.get_file_as_string("res://data/map.json"))
-	ft = JSON.parse_string(FileAccess.get_file_as_string("res://data/freetime_ken_a.json"))
+	for Rt in ROUTES:
+		routes_data[Rt["id"]] = JSON.parse_string(FileAccess.get_file_as_string("res://data/freetime_%s.json" % Rt["id"]))
+	ft = routes_data["ken_a"]
 	items = ft["items"]
-	poses = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/poses.json"))
 	world = World.new()
 	world.name = "World"
 	add_child(world)
@@ -200,7 +281,10 @@ func _ready() -> void:
 	cam.near = 0.05
 	cam.far = 2500
 	add_child(cam)
-	_build_ken()
+	act_root = Node3D.new()
+	act_root.name = "ActProps"
+	add_child(act_root)
+	_use_char("ken")
 	_build_fly_route()
 	_load_icons()
 	_build_audio()
@@ -210,14 +294,34 @@ func _ready() -> void:
 		pair_ids = hi.get("pair", [hi["studentId"]])
 		group_count = 1
 	_build_ui()
+	if pair:   # 接續上次：外框記著這一輪的路線
+		var run0 := _host_run(hi)
+		if run0.has("route") and routes_data.has(String(run0["route"])) and int(run0.get("answered", 0)) > 0:
+			_set_route(String(run0["route"]))
+	if OS.get_environment("ROUTE") != "" and routes_data.has(OS.get_environment("ROUTE")):
+		_set_route(OS.get_environment("ROUTE"))   # 測試用：ROUTE=ken_b|shuiling|zunbo
 	if OS.has_feature("web"):
 		# 網頁自動測試（只在 localhost／127.0.0.1，外框網址加 ?autotest=1）：自動按 開始／作答／聽句子／Next，讓 Playwright 在外框作答
 		var at = JavaScriptBridge.eval("(function(){try{var t=window.top;var ok=(t.location.hostname==='localhost'||t.location.hostname==='127.0.0.1')&&t.location.search.indexOf('autotest')>=0;return ok?'yes':'no';}catch(e){return 'no';}})()", true)
 		web_autotest = typeof(at) == TYPE_STRING and String(at) == "yes"
 		print("web autotest=", web_autotest)
+	_init_quality()
+	if test_mode and OS.get_environment("OLDWALK") != "":
+		old_walk = true
+		Engine.max_physics_steps_per_frame = 8
+		BASE_RUN_OLD = true
+	if test_mode and OS.get_environment("SLOWMS") != "":
+		slow_ms = int(OS.get_environment("SLOWMS"))
+	if test_mode and OS.get_environment("OUTTAG") != "":
+		save_path = "user://ershui_freetime_save_%s.json" % OS.get_environment("OUTTAG")
+		shots_dir = "res://test_shots/%s" % OS.get_environment("OUTTAG")
+	if test_mode and OS.get_environment("FPS15") != "":
+		perf_test = true
+		Engine.max_fps = 0 if OS.get_environment("FPS15") == "nocap" else 15   # FPS15=nocap：一樣 ×1 計時，但不限幀數（正常電腦）
+		print("FPS15 test mode: Engine.max_fps = %d, Fast ×1 everywhere" % Engine.max_fps)
 	_show_title()
 	if web_autotest and pair:
-		fast = true
+		fast = not perf_test   # [perf] FPS15 測試一律 ×1
 		get_tree().create_timer(4.0).timeout.connect(func(): if state == St.TITLE: _start_game())
 	if test_mode:
 		_run_test()
@@ -243,7 +347,7 @@ func _host_send(fn: String, payload: Dictionary) -> void:
 		print("HOST ", fn, " ", JSON.stringify(payload))
 		if fn == "report" and payload["type"] == "start":
 			test_host["results"] = {}
-			test_host["cleared"] = ["mode:pair", "set:0", "seed:%d" % payload["seed"]]
+			test_host["cleared"] = ["mode:pair", "set:0", "seed:%d" % payload["seed"], "route:%s" % payload.get("route", "ken_a")]
 		return
 	if not OS.has_feature("web"):
 		return
@@ -285,6 +389,8 @@ func _resume_pair() -> void:
 	if run.is_empty():
 		_start_game()
 		return
+	if routes_data.has(String(run.get("route", "ken_a"))):
+		_set_route(String(run.get("route", "ken_a")))
 	run_seed = int(run["seed"])
 	_make_clue_order()
 	qi = mini(int(run["answered"]), items.size())
@@ -301,7 +407,7 @@ func _host_ask() -> void:
 	ask_poll = true
 	ask_t = 0.0
 	var It: Dictionary = items[qi]
-	_host_send("ask", {"type": "ask", "id": It["id"], "n": qi + 1, "activity": It["act"]})
+	_host_send("ask", {"type": "ask", "id": It["id"], "n": qi + 1, "activity": It["act"], "route": route_id})
 
 func _poll_host(delta: float) -> void:
 	if not ask_poll:
@@ -327,7 +433,7 @@ func _poll_host(delta: float) -> void:
 		"replay":
 			_replay_scene_and_clue()
 		"pattern":
-			say("ft_pattern")
+			say(_vk("pattern"))
 		"mute":
 			# 學生錄音中：遊戲的音樂、語音、音效全部靜音，免得被錄進去影響 AI 評分
 			voice.stop()
@@ -352,42 +458,201 @@ var lock_hint: Label
 var clue_start_btn: Button
 var web_autotest := false
 
-# ---------- Ken ----------
-func _build_ken() -> void:
+# ---------- 角色（Ken／水鈴／圳寶） ----------
+## 語音檔名：Ken A 用原本的 ft_*；Ken B 的答案句和句型示範和 Ken A 一樣（I … in my free time.）；水鈴、圳寶各有一套
+func _vk(kind: String, arg := "") -> String:
+	var pre := "ft_" if route_id == "ken_a" else "ft_%s_" % route_id
+	match kind:
+		"intro":
+			return pre + "intro"
+		"scene":
+			return pre + "scene_" + arg
+		"ans":
+			return ("ft_ans_" if who == "ken" else pre + "ans_") + arg
+		"pattern":
+			return "ft_pattern" if who == "ken" else pre + "pattern"
+	return ""
+
+func _route_info() -> Dictionary:
+	for Rt in ROUTES:
+		if Rt["id"] == route_id:
+			return Rt
+	return ROUTES[0]
+
+func _char_name() -> String:
+	return String(CHARS[who]["name"])
+
+func _set_route(rid: String) -> void:
+	route_id = rid
+	ft = routes_data[rid]
+	items = ft["items"]
+	_use_char(String(_route_info()["who"]))
+	if q_ask:
+		q_ask.text = ft.get("question", "What do you do in your free time?")
+	if title_sub:
+		title_sub.text = "%s  %s" % [ft.get("question", "What do you do in your free time?"), _route_info()["sub"]]
+	if go_btn:
+		go_btn.text = "  Go! 出發（%s・%d 題）  " % [_route_info()["label"], items.size()]
+	print("ROUTE ", rid, " who=", who)
+
+func _use_char(w: String) -> void:
+	if who == w and not W.is_empty():
+		return
+	if not W.is_empty():
+		_exit_home()
+		_clear_act()
+		_set_bike(false)
+		_remove_parked()
+		_scooter_clear()
+		(W["node"] as Node3D).visible = false
+	who = w
+	mascot = bool(CHARS[w]["mascot"])
+	home_id = String(CHARS[w]["home"])
+	if not chars.has(w):
+		W = {}
+		chars[w] = _build_char(w)
+	W = chars[w]
+	am = W["am"]
+	mm = am
+	poses = W["poses"]
+	anim_ground = W["anim_ground"]
+	anim_rate_fix = W["anim_rate_fix"]
+	speeds = W["speeds"]
+	interior = W.get("interior")
+	interior_ken = W.get("interior_ken")
+	interior_sk = W.get("interior_sk")
+	interior_def = W.get("interior_def", {})
+	proc_gait = ""
+	model_locked = false
+	cur_anim = ""
+	cur_want = ""
+	(W["node"] as Node3D).visible = true
+	_place_ken(0.0)
+	_ken_anim("idle")
+	(W["anim"] as AnimationPlayer).advance(0.0)
+	if not mascot:
+		am.gait_setup()
+
+func _build_char(w: String) -> Dictionary:
+	var C: Dictionary = CHARS[w]
 	var node := Node3D.new()
-	node.name = "Ken"
+	node.name = String(C["name"])
 	add_child(node)
-	var km: Node3D = world.fit_model("ken_openhand", KEN_H, true, 0.3)   # 描邊太粗會認不出 Ken
+	var km: Node3D = world.fit_model(C["model"], float(C["h"]), true, 0.3)   # 描邊太粗會認不出角色
 	km.position.y = FOOT
 	node.add_child(km)
 	var anim := _find(km, "AnimationPlayer") as AnimationPlayer
 	var sk := _find(km, "Skeleton3D") as Skeleton3D
-	# Mixamo 動作（pose_bake.gd 烤好的，重定向到 Ken）
+	if anim == null:
+		anim = AnimationPlayer.new()
+		km.add_child(anim)
+	# Mixamo 動作（Ken：pose_bake.gd；水鈴、圳寶：mascot_bake.gd 烤好的，重定向到各自的骨架）
 	var lib := AnimationLibrary.new()
 	for nm in ["jogging", "dribble", "baseball_hit", "kneeling_idle", "plant_a_plant", "driving", "cheering", "sitting_idle"]:
-		var p := "res://assets/anims/baked/ken_%s.res" % nm
+		var p := "res://assets/anims/baked/%s_%s.res" % [w, nm]
 		if ResourceLoader.exists(p):
 			lib.add_animation(nm, load(p))
-	if anim:
-		anim.add_animation_library("ft", lib)
-		anim.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL   # 每格先更新動作、再算道具（同一格）
-	var start := _spot("school_east")
-	W = {"node": node, "model": km, "anim": anim, "sk": sk, "pos": start, "fwd": Vector2(0, 1), "path": [], "travel": "walk", "name": "Ken"}
-	act_root = Node3D.new()
-	act_root.name = "ActProps"
-	add_child(act_root)
-	if FileAccess.file_exists("res://data/interior/anim_ground.json"):
-		anim_ground = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/anim_ground.json"))
-	if FileAccess.file_exists("res://data/interior/anim_rate.json"):
-		anim_rate_fix = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/anim_rate.json"))
-	am = ActMotion.new()
-	am.setup(sk, km, node, act_root, anim, world.outline_shader, _ground_local)
-	am.bike_parent = node
-	am.GRIP_DIRS = 1
+	anim.add_animation_library("ft", lib)
+	anim.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL   # 每格先更新動作、再算道具（同一格）
+	var d := {"node": node, "model": km, "anim": anim, "sk": sk, "pos": _spot("school_east"), "fwd": Vector2(0, 1), "path": [], "travel": "walk", "name": C["name"],
+		"anim_ground": {}, "anim_rate_fix": {}, "speeds": TRAVEL_SPEED.duplicate(), "outdoor": {}}
+	var a: ActMotion
+	if bool(C["mascot"]):
+		# 吉祥物沒有 idle：用烤好的站姿（mascot_motion_check _make_idle）
+		var lib0: AnimationLibrary
+		if anim.has_animation_library(""):
+			lib0 = anim.get_animation_library("")
+		else:
+			lib0 = AnimationLibrary.new()
+			anim.add_animation_library("", lib0)
+		if not lib0.has_animation("idle"):
+			lib0.add_animation("idle", load("res://assets/anims/baked/%s_idle.res" % w))
+		Pose.thin_hand_outline(km, 0.15 if String(C["model"]).ends_with("softhand") else 0.25)
+		d["outdoor"] = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/%s_outdoor.json" % w))
+		d["anim_ground"] = d["outdoor"]["anim_ground"]
+		d["poses"] = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/%s_poses.json" % w))
+		d["speeds"] = {"walk": 0.6, "jog": 1.0, "bike": MASCOT_BIKE_SPEED, "scooter": SCOOTER_SPEED}
+		a = (load("res://scripts/mascot_motion.gd") as GDScript).new()   # 水鈴、圳寶的戶外動作（[mascot] agent 維護，這裡只呼叫）
+	else:
+		d["poses"] = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/poses.json"))
+		if FileAccess.file_exists("res://data/interior/anim_ground.json"):
+			d["anim_ground"] = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/anim_ground.json"))
+		if FileAccess.file_exists("res://data/interior/anim_rate.json"):
+			d["anim_rate_fix"] = JSON.parse_string(FileAccess.get_file_as_string("res://data/interior/anim_rate.json"))
+		a = ActMotion.new()
+	a.setup(sk, km, node, act_root, anim, world.outline_shader, _ground_local)
+	a.bike_parent = node
+	a.GRIP_DIRS = 1
+	if bool(C["mascot"]):
+		a.sole_frac = 1.0
+		if OS.get_environment("BIKEBAKE") == "":
+			a.bike_bake_path = "res://data/interior/%s_bike.json" % w
+	a.prewarm.call_deferred()   # [perf] 每格量腳底用的頂點快取：載入時就建好（不要在答對後走路的第一格才建）
+	d["am"] = a
+	return d
+
+## 吉祥物走路／慢跑：mascot_motion 的程式步態（腳底踩住不滑、靴底用網格貼地）。走路＝步幅小、抬腳低、週期長的同一套步態。
+func _mascot_gait(kind: String) -> void:
 	_place_ken(0.0)
-	_ken_anim("idle")
-	anim.advance(0.0)
-	am.gait_setup()
+	var m: Node3D = W["model"]
+	var gh := _ground_h(W["pos"])
+	am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, gh + float(anim_ground.get("idle", 0.0)), 0))
+	m.transform = am.model_base
+	if kind == "walk":
+		mm.run_setup(0.66, 0.62, 0.2, 0.08)
+	else:
+		mm.run_setup()
+	gait_off = am.model_base.origin.y - gh
+	speeds[kind] = float(mm.run_speed())
+	proc_gait = kind
+	run_clock = 0.0
+	cur_anim = "proc_" + kind
+	cur_want = "idle"
+
+# ---------- 圳寶：媽媽騎機車載（替代模型，見 scripts/scooter_rig.gd） ----------
+func _scooter_get():
+	if scooter == null:
+		scooter = (load("res://scripts/scooter_rig.gd") as GDScript).new()
+		scooter.setup(chars["zunbo"]["am"], world)
+		scooter_holder = Node3D.new()
+		scooter_holder.name = "ScooterHolder"
+		add_child(scooter_holder)
+	return scooter
+
+## 出題時：媽媽騎車停在圳寶左邊等他
+func _scooter_wait(place: String, lx := 1.3, lz := -0.2) -> void:
+	var sc = _scooter_get()
+	scooter_holder.transform = world.frame_at(W["pos"], W["fwd"], 0.0)
+	sc.park(scooter_holder, Transform3D(Basis.IDENTITY, Vector3(lx, _ground_local(Vector2(lx, lz)), lz)), sc.helmet != null)
+	scooter_place = place
+
+func _scooter_mount() -> void:
+	var sc = _scooter_get()
+	proc_gait = ""
+	_place_ken(0.0)
+	sc.mount(W["node"])
+	cur_anim = "scooter"
+	if test_mode and not perf_test:   # [perf] measure() 量安全帽、媽媽、圳寶的網格：電腦要 15 秒 → 只在一般測試量（舊：每次上車都量，iPad 卡很久）
+		print("SCOOTER mount ", JSON.stringify(sc.measure()))
+
+## 到了（戶外）：圳寶下車，媽媽和機車停在旁邊，安全帽放在後座
+func _scooter_park(place: String, lx: float, lz: float) -> void:
+	if scooter == null or not scooter.is_riding():
+		return
+	_scooter_wait(place, lx, lz)
+	am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(W["pos"]) + float(anim_ground.get("idle", 0.0)), 0))
+	(W["model"] as Node3D).transform = am.model_base
+
+func _scooter_clear() -> void:
+	if scooter:
+		var was: bool = scooter.is_riding()
+		scooter.hide()
+		if was and not W.is_empty() and who == "zunbo":
+			(W["model"] as Node3D).transform = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(W["pos"]) + float(anim_ground.get("idle", 0.0)), 0))
+	scooter_place = ""
+
+func _riding_scooter() -> bool:
+	return scooter != null and scooter.is_riding()
 
 func _find(n: Node, cls: String) -> Node:
 	if n.is_class(cls):
@@ -404,6 +669,7 @@ func _ken_anim(nm: String, blend := 0.25) -> void:
 	var a: AnimationPlayer = W["anim"]
 	if a == null:
 		return
+	proc_gait = ""
 	var want := ""
 	if nm.begins_with("ft/"):
 		want = nm
@@ -419,14 +685,14 @@ func _ken_anim(nm: String, blend := 0.25) -> void:
 		an.loop_mode = Animation.LOOP_LINEAR
 	# 走路／慢跑：播放倍率＝地面速度 ÷ 動作原地踩地速度（腳底不滑）
 	anim_rate = 1.0
-	if nm == "walk" or nm == "ft/jogging":
+	if not mascot and (nm == "walk" or nm == "ft/jogging"):
 		var v: float = TRAVEL_SPEED["walk" if nm == "walk" else "jog"]
 		anim_rate = v / maxf(am.stride_speed_cached(want), 0.2) * float(anim_rate_fix.get(want, 1.0))
 	a.speed_scale = 1.0
 	cur_want = want
-	if a.current_animation == want:
+	if a.current_animation == want and a.is_playing():
 		return
-	a.play(want, blend)
+	a.play(want, 0.0 if mascot else blend)   # 吉祥物的姿勢常被程式步態／坐姿改掉 → 直接換，不混合
 
 ## 動作貼地：模型往上（或下）移多少，腳／膝蓋剛好碰到這裡的路面
 func _model_y() -> float:
@@ -434,11 +700,89 @@ func _model_y() -> float:
 
 ## 路面高度（world.gd 蓋路的高度）：柏油 0.1 m、標線 0.115～0.12、路口 0.105、人行道 0.05～0.06、門口小廣場 0.07、其他 0
 var node_w := {}
+## [perf] 格子索引（6 m 一格）：每個點只查會影響它的路段／路口／門口（舊：每次查全部路段，
+## 走路貼地每格要查幾百個腳底頂點 → 電腦每格 600 ms）。範圍取得比影響範圍大，結果和逐一查完全一樣。
+const GH_CELL := 6.0
+var gh_grid := {}
+func _gh_add(r: Rect2, kind: int, idx) -> void:
+	for gx in range(floori(r.position.x / GH_CELL), floori(r.end.x / GH_CELL) + 1):
+		for gy in range(floori(r.position.y / GH_CELL), floori(r.end.y / GH_CELL) + 1):
+			var k := Vector2i(gx, gy)
+			if not gh_grid.has(k):
+				gh_grid[k] = [[], [], []]
+			(gh_grid[k][kind] as Array).append(idx)
+
+func _gh_build() -> void:
+	for e in world.edges:
+		node_w[e[0]] = maxf(node_w.get(e[0], 0.0), float(e[2]))
+		node_w[e[1]] = maxf(node_w.get(e[1], 0.0), float(e[2]))
+	for i in world.edges.size():
+		var e: Array = world.edges[i]
+		var a: Vector2 = world.nodes[e[0]]
+		var b: Vector2 = world.nodes[e[1]]
+		_gh_add(Rect2(a, Vector2.ZERO).expand(b).grow(float(e[2]) * 0.5 + World.WALK_W + 0.2), 0, i)
+	for k in node_w:
+		var c: Vector2 = world.nodes[k]
+		_gh_add(Rect2(c, Vector2.ZERO).grow(float(node_w[k]) * 0.5 + World.WALK_W + 0.2), 1, k)
+	for i in world.place_list.size():
+		var P: Dictionary = world.place_list[i]
+		if P.has("pos2") and P.has("door2"):
+			var a2: Vector2 = (P["pos2"] as Vector2).lerp(P["door2"], 0.5)
+			_gh_add(Rect2(a2, Vector2.ZERO).expand(P["door2"]).grow(1.3), 2, i)
+
 func _ground_h(p: Vector2) -> float:
-	if node_w.is_empty():
-		for e in world.edges:
-			node_w[e[0]] = maxf(node_w.get(e[0], 0.0), float(e[2]))
-			node_w[e[1]] = maxf(node_w.get(e[1], 0.0), float(e[2]))
+	if gh_grid.is_empty():
+		_gh_build()
+	var h := 0.0
+	var cell = gh_grid.get(Vector2i(floori(p.x / GH_CELL), floori(p.y / GH_CELL)))
+	if cell != null:
+		for i: int in cell[0]:
+			var e: Array = world.edges[i]
+			var a: Vector2 = world.nodes[e[0]]
+			var b: Vector2 = world.nodes[e[1]]
+			var ab := b - a
+			var L2 := ab.length_squared()
+			if L2 < 0.0025:
+				continue
+			var wd: float = e[2]
+			var t := clampf((p - a).dot(ab) / L2, 0.0, 1.0)
+			var d := p.distance_to(a + ab * t)
+			if d > wd * 0.5 + World.WALK_W:
+				continue
+			if d > wd * 0.5:
+				h = maxf(h, 0.05)
+				continue
+			h = maxf(h, 0.1)
+			if wd >= 4.2:
+				var L := sqrt(L2)
+				var sa := t * L
+				if d < 0.07 and sa >= 2.5 and sa <= L - 2.5 and fmod(sa - 2.5, 2.8) <= 1.2:
+					h = maxf(h, 0.12)
+				if absf(d - (wd * 0.5 - 0.12)) < 0.05:
+					h = maxf(h, 0.115)
+		for k in cell[1]:
+			var c: Vector2 = world.nodes[k]
+			var dd := p.distance_to(c)
+			var wm: float = node_w[k]
+			if dd <= wm * 0.5 + 0.1:
+				h = maxf(h, 0.105)
+			elif dd <= wm * 0.5 + World.WALK_W:
+				h = maxf(h, 0.06)
+		for i: int in cell[2]:
+			var P: Dictionary = world.place_list[i]
+			var a2: Vector2 = (P["pos2"] as Vector2).lerp(P["door2"], 0.5)
+			var b2: Vector2 = P["door2"]
+			var ab2 := b2 - a2
+			if ab2.length_squared() > 0.01:
+				var t2 := clampf((p - a2).dot(ab2) / ab2.length_squared(), 0.0, 1.0)
+				if p.distance_to(a2 + ab2 * t2) <= 1.1:
+					h = maxf(h, 0.07)
+	if h == 0.0 and _in_green(p):
+		h = 0.03   # 公園綠地（world._build_green_and_water 的草皮在 0.03）
+	return h
+
+## 舊版（逐一查全部路段）：只給測試比對用
+func _ground_h_slow(p: Vector2) -> float:
 	var h := 0.0
 	for e in world.edges:
 		var a: Vector2 = world.nodes[e[0]]
@@ -480,18 +824,77 @@ func _ground_h(p: Vector2) -> float:
 				var t2 := clampf((p - a2).dot(ab2) / ab2.length_squared(), 0.0, 1.0)
 				if p.distance_to(a2 + ab2 * t2) <= 1.1:
 					h = maxf(h, 0.07)
+	if h == 0.0 and _in_green(p):
+		h = 0.03
 	return h
+
+## [routes] 公園綠地（data/map.json 的 green，kind=park）：露營要在草地上，不能在馬路上（老師 11/11）
+var green_polys: Array = []
+var green_ready := false
+func _in_green(p: Vector2) -> bool:
+	if not green_ready:
+		green_ready = true
+		for g in data.get("green", []):
+			if String(g.get("kind", "")) == "farmland":
+				continue
+			var poly: PackedVector2Array = world.norm_poly(g["poly"])
+			if poly.size() >= 3:
+				var r := Rect2(poly[0], Vector2.ZERO)
+				for q in poly:
+					r = r.expand(q)
+				green_polys.append([r, poly])
+	for G in green_polys:
+		if (G[0] as Rect2).has_point(p) and Geometry2D.is_point_in_polygon(p, G[1]):
+			return true
+	return false
+
+## 這個平面點上面有沒有地點模型（從 4 m 高往下到地面的直線穿過模型的包圍盒）
+func _under_model(q: Vector2) -> bool:
+	return _occ3(world.bend2(q, 4.0), world.bend2(q, 0.02)) > 0
+
+## 露營用的草地候選點：地點附近 45 m 內的公園綠地，每 2 m 一格；人、營火、帳篷四個角都在草地上、不在路上、不在模型裡。離門口站點近的排前面
+func _grass_spots(place_id: String) -> Array:
+	var base := _spot(place_id)
+	var ppos: Vector2 = world.places[place_id]["pos2"] if world.places[place_id].has("pos2") else base
+	var out := []
+	_in_green(base)
+	for G in green_polys:
+		var r: Rect2 = G[0]
+		if r.grow(5.0).has_point(ppos) or r.get_center().distance_to(ppos) < 45.0:
+			var x := r.position.x
+			while x <= r.end.x:
+				var y := r.position.y
+				while y <= r.end.y:
+					var q := Vector2(x, y)
+					if q.distance_to(ppos) < 45.0 and Geometry2D.is_point_in_polygon(q, G[1]):
+						out.append(q)
+					y += 2.0
+				x += 2.0
+	out.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.distance_to(base) < b.distance_to(base))
+	return out
+
+func _camp_fits(p: Vector2, f: Vector2) -> bool:
+	var left := Vector2(f.y, -f.x)
+	var tc := p - left * 1.6 - f * 1.2   # 帳篷中心（ActMotion.build_camp：角色座標 x=-1.6、z=-1.2）
+	for q: Vector2 in [p, p + f * 0.9, p + f * 0.45, tc, tc + f * 1.1, tc - f * 1.1, tc + left * 1.0, tc - left * 1.0, p - f * 0.5]:
+		if _ground_h(q) != 0.03 or _under_model(q):
+			return false
+	for k in 8:   # 周圍 3 m 內不要有地點模型（不要緊貼著公園的大模型）、也不要有馬路
+		var o := Vector2(3.0, 0).rotated(k * PI / 4.0)
+		if _under_model(p + o) or _under_model(tc + o) or _ground_h(p + o) > 0.04:
+			return false
+	return true
 
 ## ActMotion 用：Ken 座標（+X 左、+Z 前）→ 路面高度
 func _ground_local(v: Vector2) -> float:
 	var f: Vector2 = W["fwd"]
 	var p: Vector2 = W["pos"]
-	return _ground_h(p + f * v.y + Vector2(f.y, -f.x) * v.x)
+	return _ground_h(p + f * v.y + Vector2(f.y, -f.x) * v.x) - frame_lift
 
 func _place_ken(_delta: float) -> void:
 	var node: Node3D = W["node"]
-	node.transform = world.frame_at(W["pos"], W["fwd"], 0.0)
-	if not am.riding and act_kind != "baseball":   # 騎車、打棒球時模型位置由 ActMotion 管
+	node.transform = world.frame_at(W["pos"], W["fwd"], frame_lift)
+	if not am.riding and act_kind != "baseball" and proc_gait == "" and not model_locked and not _riding_scooter():   # 騎車、打棒球、程式步態、坐機車時模型位置由 ActMotion 管
 		var m: Node3D = W["model"]
 		m.position = Vector3(0, _model_y(), 0)
 
@@ -500,7 +903,7 @@ func _spot(id: String) -> Vector2:
 	if spot_cache.has(id):
 		return spot_cache[id]
 	var p: Vector2
-	if id == "ken_home":
+	if id.ends_with("_home"):
 		p = world.places[id]["door2"]
 	else:
 		var src: Vector2
@@ -520,14 +923,55 @@ func _spot(id: String) -> Vector2:
 var spot_cache := {}
 
 func _process(delta: float) -> void:
+	if test_mode:   # 測試時每 30 秒印一次現在在哪一步（卡住的時候看得出卡在哪）
+		_beat_t += delta
+		if _beat_t >= 30.0:
+			_beat_t = 0.0
+			print("HEARTBEAT route=%s q%d state=%d cam=%s in_home=%s fade=%.2f can_draw=%s" % [route_id, qi + 1, state, cam_mode, in_home, fade_rect.color.a if fade_rect else -1.0, DisplayServer.window_can_draw()])
+	if test_mode or debug_on:   # [perf] 整格（含畫面）花太久：印出來（第一次載入模型、編譯著色器、建室內…）
+		var fnow := Time.get_ticks_usec()
+		if last_frame_us > 0 and fnow - last_frame_us > 400000 and state != St.TITLE:
+			print("LONGFRAME q%d %.0f ms state=%d cam=%s in_home=%s anim=%s" % [qi + 1, (fnow - last_frame_us) / 1000.0, state, cam_mode, in_home, cur_anim])
+		last_frame_us = fnow
+	if slow_ms > 0:
+		OS.delay_msec(slow_ms)
+	_quality_probe()
+	if debug_on:
+		_update_debug(delta)
+	if sheet_freeze:   # 檢查圖：量測和截圖要同一格
+		_update_camera(0.0)
+		return
+	var prof := test_mode or debug_on
+	var u0 := Time.get_ticks_usec() if prof else 0
 	_poll_host(delta)
 	_step_ken(delta)
+	var u1 := Time.get_ticks_usec() if prof else 0
 	_place_ken(delta)
 	_advance_anim(delta)
+	var u2 := Time.get_ticks_usec() if prof else 0
 	_update_act(delta)
+	var u3 := Time.get_ticks_usec() if prof else 0
 	_update_camera(delta)
+	var u4 := Time.get_ticks_usec() if prof else 0
 	if in_home:
 		_animate_screens(delta)
+	if test_mode and perf_n % 15 == 7 and (state == St.WALKING or roam) and not in_home and not _riding_scooter() and not am.riding:
+		# [perf] 檢查：只量靴底那一層頂點的最低點，和整隻腳的最低點一樣（差多少 mm）
+		for sd in ["left", "right"]:
+			var lo_a := 9.0
+			for q in am.mesh_pts([sd + "foot", sd + "toe"]):
+				lo_a = minf(lo_a, q.y)
+			var lo_s := 9.0
+			for q in am.sole_pts(sd):
+				lo_s = minf(lo_s, q.y)
+			perf_acc["sole_err_mm"] = maxf(float(perf_acc.get("sole_err_mm", 0.0)), (lo_s - lo_a) * 1000.0)
+	if prof and u4 - u0 > 80000:
+		print("SLOWFRAME q%d state=%d cam=%s anim=%s act=%s step=%.0f anim=%.0f act=%.0f cam=%.0f ms" % [qi + 1, state, cam_mode, cur_anim, act_kind, (u1 - u0) / 1000.0, (u2 - u1) / 1000.0, (u3 - u2) / 1000.0, (u4 - u3) / 1000.0])
+	if prof:
+		perf_n += 1
+		for kv in [["step", u1 - u0], ["anim", u2 - u1], ["act", u3 - u2], ["cam", u4 - u3]]:
+			perf_acc[kv[0]] = int(perf_acc.get(kv[0], 0)) + int(kv[1])
+			perf_acc[kv[0] + "_max"] = maxi(int(perf_acc.get(kv[0] + "_max", 0)), int(kv[1]))
 
 func _moving_mul() -> float:
 	return 3.0 if fast else 1.0
@@ -535,22 +979,31 @@ func _moving_mul() -> float:
 ## 每格先更新動作（手動模式），再修腳（擺動的腳不擦地）；騎車時腿由腳踏車 IK 決定
 func _advance_anim(delta: float) -> void:
 	var a: AnimationPlayer = W["anim"]
-	if a == null or am.riding or act_kind == "baseball":
+	if a == null or am.riding or act_kind == "baseball" or _riding_scooter():
+		return
+	if proc_gait != "":   # 吉祥物程式步態：身體高度跟著路面，兩腳 IK 到路面
+		if not (W["path"] as Array).is_empty() and not skipping:
+			run_clock += delta * _moving_mul()
+		am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(W["pos"]) + gait_off, 0))
+		mm.apply_run(run_clock)
+		return
+	if model_locked:
 		return
 	var moving: bool = not (W["path"] as Array).is_empty() and not skipping
 	var mul := _moving_mul() if moving else 1.0
 	a.advance(delta * anim_rate * mul)
 	if moving and (cur_anim == "walk" or cur_anim == "ft/jogging"):
-		var v: float = TRAVEL_SPEED.get(W["travel"], 1.4)
+		var v: float = speeds.get(W["travel"], 1.4)
 		am.gait_fix(delta, v * delta * mul, 0.012, 0.35, false, true)   # 擺動的腳不擦地＋著地的腳不陷地
 
 func _step_ken(delta: float) -> void:
 	var path: Array = W["path"]
 	if path.is_empty() or skipping:
 		return
-	var v: float = TRAVEL_SPEED.get(W["travel"], 1.4)
+	var v: float = speeds.get(W["travel"], 1.4)
 	var mul := _moving_mul()
 	var move := v * delta * mul
+	var want_move := move
 	var pos: Vector2 = W["pos"]
 	while move > 0.0 and not path.is_empty():
 		var tgt: Vector2 = path[0]
@@ -568,17 +1021,36 @@ func _step_ken(delta: float) -> void:
 	travel_t += delta * mul
 	if W["travel"] == "bike":
 		am.update_bike(delta * mul, v)
+	elif W["travel"] == "scooter":
+		_place_ken(0.0)
+		scooter.update(want_move - move)   # 輪子照「真的前進的距離」轉
 	else:
 		step_timer -= delta * mul * anim_rate
 		if step_timer <= 0.0:
 			step_timer = 0.55 if W["travel"] == "walk" else 0.4
 			sfx("footstep_1" if randi() % 2 == 0 else "footstep_2", randf_range(0.92, 1.08))
-	if state == St.WALKING and travel_t > SKIP_AFTER and not path.is_empty():
+	# [perf] 路太長：用「真實時間」判斷（iPad 幀數低時遊戲時間變慢，舊的 travel_t > 5 秒在 iPad 上要等很久）
+	# 先走 WALK_CAP 秒 → 淡出跳到只剩 WALK_TAIL 秒的路；很慢的裝置出發後 WALK_HARD 秒還沒到 → 直接跳到門口／活動地點
+	if old_walk and state == St.WALKING and travel_t > 5.0 and not path.is_empty():   # 測試 OLDWALK=1：重現 11/11 以前的做法（遊戲時間 5 秒、剩 4.5 秒）
+		var rest0 := pos.distance_to(path[0])
+		for i in range(path.size() - 1):
+			rest0 += (path[i] as Vector2).distance_to(path[i + 1])
+		if rest0 > v * 4.5 + 3.0:
+			_skip_ahead(rest0 - v * 4.5)
+			return
+	if not old_walk and state == St.WALKING and not path.is_empty():
+		var real := (Time.get_ticks_msec() - walk_ms0) / 1000.0
 		var rest := pos.distance_to(path[0])
 		for i in range(path.size() - 1):
 			rest += (path[i] as Vector2).distance_to(path[i + 1])
-		if rest > v * SKIP_END + 3.0:
-			_skip_ahead(rest - v * SKIP_END)
+		if not walk_skipped and real > WALK_CAP and rest > v * WALK_TAIL + 1.0:
+			walk_skipped = true
+			_skip_ahead(rest - v * WALK_TAIL)
+			return
+		if not walk_hard_done and real > WALK_HARD and rest > 0.4:
+			walk_hard_done = true
+			print("WALK_HARD q%d still %.1f m to go after %.1f s (real time) → jump to the end" % [qi + 1, rest, real])
+			_skip_ahead(rest - 0.3)
 			return
 	if path.is_empty():
 		if roam:
@@ -589,6 +1061,7 @@ func _step_ken(delta: float) -> void:
 ## 路太長：淡出 → 沿路往前跳 dist 公尺 → 淡入（中間的路不演，但 Ken 還是照路走、方向對）
 func _skip_ahead(dist: float) -> void:
 	skipping = true
+	print("WALK_SKIP q%d at %.1f s (real) jump %.1f m" % [qi + 1, (Time.get_ticks_msec() - walk_ms0) / 1000.0, dist])
 	var keep := walk_caption.text
 	await _fade(true, 0.3)
 	var path: Array = W["path"]
@@ -610,7 +1083,8 @@ func _skip_ahead(dist: float) -> void:
 	follow_cam2 = Vector2.INF
 	follow_pick = []
 	cam_pos = Vector3.ZERO
-	am.gait_setup()
+	if not mascot:
+		am.gait_setup()
 	walk_caption.text = "A few minutes later…"
 	await _fade(false, 0.3)
 	skipping = false
@@ -625,6 +1099,9 @@ var roam_to_b := true
 func _start_roam(travel: String) -> void:
 	roam = true
 	W["travel"] = travel
+	if act_plan.has("f") and act_plan.has("side"):   # _plan_act 選好的來回方向和鏡頭那一側
+		W["fwd"] = act_plan["f"]
+		roam_side = float(act_plan["side"])
 	roam_a = W["pos"]
 	var f: Vector2 = W["fwd"]
 	var pr: Dictionary = world.project(roam_a + f * 18.0)
@@ -637,10 +1114,13 @@ func _start_roam(travel: String) -> void:
 	if travel == "bike":
 		am.unpark_bike()
 		am.set_bike(true)
+	elif mascot:
+		_mascot_gait("jog")
 	else:
 		_ken_anim("ft/jogging")
 		am.gait_setup()
 	roam_cam2 = Vector2.INF
+	roam_back = Vector2.ZERO
 	cam_mode = "roam"
 
 func _roam_next() -> void:
@@ -669,6 +1149,7 @@ func _mat(col: String) -> StandardMaterial3D:
 
 func _set_bike(on: bool) -> void:
 	if on:
+		proc_gait = ""
 		_remove_parked()
 		am.unpark_bike()
 		am.model_base = Transform3D.IDENTITY
@@ -718,10 +1199,14 @@ func _clear_act() -> void:
 	if am.bat_ba:
 		am.bat_ba.queue_free()
 		am.bat_ba = null
-	am.bb = {}
+	if not mascot:
+		am.bb = {}   # 吉祥物的揮棒表（程式球棒路徑）建一次要好幾秒 → 留著重用
 	act_kind = ""
 	roam = false
 	bb_cut = false
+	model_locked = false
+	camp_pose = []
+	frame_lift = 0.0
 	if hp_attach:
 		hp_attach.queue_free()
 		hp_attach = null
@@ -792,13 +1277,62 @@ func _start_act(kind: String) -> void:
 			am.build_hoop(2.8)
 			am.start_dribble()
 		"camping":
-			_ken_anim("ft/kneeling_idle", 0.0)
-			am.build_camp()
+			if who == "zunbo":   # 圳寶腿太短跪不下去 → 屁股坐地（mascot_motion.sit_ground，屁股、靴底用網格貼地）
+				_ken_anim("idle", 0.0)
+				am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, _model_y(), 0))
+				(W["model"] as Node3D).transform = am.model_base
+				am.build_camp()
+				(W["anim"] as AnimationPlayer).stop()
+				var sr: Dictionary = mm.sit_ground()
+				camp_pose = am.save_pose()
+				model_locked = true
+				print("ZUNBO camp sit ", sr)
+			else:
+				_ken_anim("ft/kneeling_idle", 0.0)
+				am.build_camp()
 		"baseball":
+			if mascot:   # 和 mascot_motion_check _o_baseball 同設定（v6，老師 11/11 定案：3 個關鍵姿勢＋平滑曲線；圳寶單手 36 cm 短棒）
+				mm.left_on_bat = false
+				mm.pbat = true
+				mm.pb_reach = 0.98
+				mm.pb_local = true
+				if who == "zunbo":
+					mm.pb_keys = mm.PB_KEYS_ZUNBO
+					mm.pb_hands = ["right"]
+					mm.bat_len = 0.36
+					mm.bat_hand_off = 0.045
+					mm.bat_handle = 0.11
+					mm.bat_taper = 0.09
+					mm.pb_stretch = 0.90
+				else:
+					mm.pb_keys = mm.PB_KEYS_SHUILING
+					mm.pb_stretch = 0.93
+				mm.pb6_rel = MASCOT_PB6[who]
+				mm.pb6_bend = 0.93 if who == "zunbo" else 0.96
+				mm.pb_open_stretched = 0.0
+				mm.pb_curl = 0.75 if who == "zunbo" else 1.0
+				bb_acc = 0.0
+				# 揮棒表格現算要 3–4 分鐘 → 讀烤好的（mascot_bake.gd PART=baseball）；烤的時候地面在 y=0，所以這一段把角色的座標架抬到路面高度
+				var bpath := "res://data/interior/%s_baseball.json" % who
+				if (mm.bb as Dictionary).is_empty() and FileAccess.file_exists(bpath):
+					var bj = JSON.parse_string(FileAccess.get_file_as_string(bpath))
+					var bv = str_to_var(String(bj["vars"])) if bj is Dictionary else null
+					if bv is Dictionary:
+						for k in bv:
+							if k != "model_base_y":
+								mm.set(k, bv[k])
+						print("BASEBALL table loaded for %s: %d rows, t_c %.3f" % [who, (mm.pb_tab as Array).size(), float(mm.bb["t_c"])])
+				frame_lift = _ground_h(p)
+				_place_ken(0.0)
+				act_root.transform = world.frame_at(p, f, frame_lift)
 			_ken_anim("ft/baseball_hit", 0.0)
-			am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(p) + float(anim_ground.get("ft/baseball_hit", 0.0)), 0))
+			am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(p) - frame_lift + float(anim_ground.get("ft/baseball_hit", 0.0)), 0))
 			(W["model"] as Node3D).transform = am.model_base
 			am.start_baseball(Transform3D(Basis(Vector3(1, 0, 0), -PI / 2), Vector3(0.0, 0.07, 0.03)))
+			# [perf] 老師 11/11：跑壘看起來像在走（舊 run_v 1.3 m/s＝走路速度，慢跑動作被放慢播）→ 用跑步的速度；
+			# 動作播放倍率＝速度 ÷ 動作原地踩地速度（act_motion.update_baseball）→ 腳不滑
+			am.run_v = 1.3 if BASE_RUN_OLD else maxf(1.3, float(am.stride_speed_cached(am.run_anim)) * BASE_RUN_K)   # 吉祥物腿短：原本 1.3 m/s 已經是慢跑動作 ×1.9 → 不要變慢
+			print("BASE RUN %s stride %.2f m/s → run_v %.2f m/s (anim ×%.2f), %.1f m" % [who, am.stride_speed_cached(am.run_anim), am.run_v, BASE_RUN_K, am.run_dist])
 
 func _note3d() -> Node3D:
 	var n := Node3D.new()
@@ -817,7 +1351,7 @@ func _attach_bone(sk: Skeleton3D, bone: String, node: Node3D, xf: Transform3D) -
 	return ba
 
 func _put_headphones_outdoor() -> void:
-	var H: Dictionary = poses["stand_headphones"]
+	var H: Dictionary = W["outdoor"]["stand_headphones"] if mascot else poses["stand_headphones"]
 	var hpn: Node3D = (load(H["scene"]) as PackedScene).instantiate()
 	hp_attach = _attach_bone(W["sk"], H["bone"], hpn, _xf(H["xf"]))
 
@@ -842,11 +1376,40 @@ func _update_act(delta: float) -> void:
 		"basketball":
 			am.update_dribble()   # 球＝動作時間的函數：推球時貼手心、放手後落地反彈、回到手心
 		"camping":
+			if model_locked and not camp_pose.is_empty():
+				am.load_pose(camp_pose)
+				am.music_sway(act_t * 0.3, 2.0)
 			am.update_camp(act_t)
 		"baseball":
 			if bb_cut:
 				return
-			if am.update_baseball(delta):   # 來球 → 揮棒碰到 → 球飛出 → 丟棒 → 跑到壘包；一輪完淡出重來
+			var bb_done := false
+			var btc: float = am.bb["t_c"]
+			if mascot:   # 吉祥物的球棒表格不內插：時間永遠是 1/120 秒的整數倍（每一格都是量過的那一格）
+				# [perf] 舊：一格最多算 12 小步（每小步都重算整個姿勢）→ iPad 幀數低時又慢又卡。
+				# 新：這一格要走幾小步就一次走完（姿勢只算一次；表格用 _pb_snap 對齊格子，結果一樣）
+				bb_acc += delta
+				var n := floori(bb_acc / BB_STEP + 1e-6)
+				if bb_hold and am.bb_t >= btc - 0.0005 and am.bb_t < btc + 0.3:
+					sheet_freeze = true
+					bb_hold = false
+					n = 0
+				elif bb_hold and am.bb_t < btc - 0.0005:
+					n = mini(n, maxi(1, ceili((btc - 0.0005 - am.bb_t) / BB_STEP - 1e-6)))   # 檢查圖：剛好停在接觸那一格
+				if n > 0:
+					bb_acc -= n * BB_STEP
+					bb_done = am.update_baseball(n * BB_STEP)
+			else:
+				var bd := delta
+				var stop := bb_hold and am.bb_t < btc and am.bb_t + bd >= btc
+				if stop:
+					bd = btc - am.bb_t
+				bb_done = am.update_baseball(bd)
+				if stop:
+					sheet_freeze = true
+					bb_hold = false
+			_track_bb()
+			if bb_done:   # 來球 → 揮棒碰到 → 球飛出 → 丟棒 → 跑到壘包；一輪完淡出重來
 				bb_cut = true
 				await _fade(true, 0.3)
 				if act_kind == "baseball":
@@ -862,10 +1425,10 @@ func _build_interior() -> void:
 	if interior != null:
 		return
 	var hb := Home.new()
-	interior = hb.build_ken_home()
+	interior = hb.call("build_%s_home" % who)
 	interior.position = Vector3.ZERO
 	add_child(interior)
-	# 燈和背景跟 home_check.gd 一樣
+	# 燈和背景跟 home_check.gd／mascot_home_check.gd 一樣
 	var sun := DirectionalLight3D.new()
 	interior.add_child(sun)
 	sun.look_at_from_position(Vector3(1, 6, 7), Vector3(0.5, 0, 1.5), Vector3.UP)
@@ -879,23 +1442,42 @@ func _build_interior() -> void:
 		o.light_energy = 0.9
 		o.light_color = Color(1.0, 0.9, 0.75)
 		interior.add_child(o)
-	interior_env = Environment.new()
-	interior_env.background_mode = Environment.BG_COLOR
-	interior_env.background_color = Color(0.93, 0.96, 0.99)
-	interior_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	interior_env.ambient_light_color = Color(1.0, 0.95, 0.88)
-	interior_env.ambient_light_energy = 0.75
-	interior_ken = world.fit_model(poses["model"], KEN_H, true, INDOOR_OUTLINE)   # 室內近景描邊細一點（老師 11/10）
+	if interior_env == null:
+		interior_env = Environment.new()
+		interior_env.background_mode = Environment.BG_COLOR
+		interior_env.background_color = Color(0.93, 0.96, 0.99)
+		interior_env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+		interior_env.ambient_light_color = Color(1.0, 0.95, 0.88)
+		interior_env.ambient_light_energy = 0.75
+	interior_ken = world.fit_model(poses["model"], float(CHARS[who]["h"]), true, INDOOR_OUTLINE)   # 室內近景描邊細一點（老師 11/10）
 	interior.add_child(interior_ken)
 	var ap := _find(interior_ken, "AnimationPlayer") as AnimationPlayer
 	if ap:
 		ap.stop()
 		ap.active = false
 	interior_sk = _find(interior_ken, "Skeleton3D") as Skeleton3D
-	if Pose.right_is_fist(interior_sk):
-		Pose.hide_hand_gadget(interior_ken)
-	Pose.thin_hand_outline(interior_ken, 0.25)
+	interior_def = {}
+	if mascot:
+		Pose.thin_hand_outline(interior_ken, 0.15 if String(poses["model"]).ends_with("softhand") else 0.25)
+		if who == "shuiling":   # 裙子遮罩要在原始姿勢量（坐下時 Pose.settle_skirt 用）
+			interior_sk.reset_bone_poses()
+			interior_ken.global_transform = Transform3D.IDENTITY
+			Pose.skirt_info(interior_ken)
+		# 每個姿勢會動到的家具（椅子位置、藏起來的道具）：記下原本的樣子，換姿勢前先還原
+		for shot in poses["poses"]:
+			for path in poses["poses"][shot].get("nodes", {}):
+				var n := interior.get_node_or_null(path) as Node3D
+				if n and not interior_def.has(path):
+					interior_def[path] = [n.visible, n.transform]
+	else:
+		if Pose.right_is_fist(interior_sk):
+			Pose.hide_hand_gadget(interior_ken)
+		Pose.thin_hand_outline(interior_ken, 0.25)
 	interior.visible = false
+	W["interior"] = interior
+	W["interior_ken"] = interior_ken
+	W["interior_sk"] = interior_sk
+	W["interior_def"] = interior_def
 
 func _enter_home(shot: String) -> void:
 	_build_interior()
@@ -904,9 +1486,23 @@ func _enter_home(shot: String) -> void:
 	for p in interior_props:
 		p.queue_free()
 	interior_props.clear()
-	for n in ["headphones/HeadphonesProp", "book/Pencil", "Study/RecorderProp"]:
-		(interior.get_node(n) as Node3D).visible = not (n in D["hide"])
-	(interior.get_node("Study/DeskChair") as Node3D).position.z = float(D["chair_z"])
+	if not skirt_rep.is_empty():
+		Pose.unsettle_skirt(skirt_rep)
+		skirt_rep = {}
+	if mascot:
+		for path in interior_def:
+			var n0 := interior.get_node(path) as Node3D
+			n0.visible = interior_def[path][0]
+			n0.transform = interior_def[path][1]
+		for path in D.get("nodes", {}):
+			var n1 := interior.get_node_or_null(path) as Node3D
+			if n1:
+				n1.visible = bool(D["nodes"][path]["visible"])
+				n1.transform = _xf(D["nodes"][path]["xf"])
+	else:
+		for n in ["headphones/HeadphonesProp", "book/Pencil", "Study/RecorderProp"]:
+			(interior.get_node(n) as Node3D).visible = not (n in D["hide"])
+		(interior.get_node("Study/DeskChair") as Node3D).position.z = float(D["chair_z"])
 	var bones: Array = D["bones"]
 	for i in bones.size():
 		var b: Array = bones[i]
@@ -917,12 +1513,23 @@ func _enter_home(shot: String) -> void:
 	for pr in D["props"]:
 		var node: Node3D = (load(pr["scene"]) as PackedScene).instantiate()
 		interior_props.append(_attach_bone(interior_sk, pr["bone"], node, _xf(pr["xf"])))
+	if mascot and not (D.get("skirt", []) as Array).is_empty():   # 水鈴坐下：裙子攤在椅面上（和檢查圖同一個 Pose.settle_skirt）
+		var boxes := []
+		for bx in D["skirt"]:
+			boxes.append([AABB(Vector3(bx[0], bx[1], bx[2]), Vector3(bx[3], bx[4], bx[5])), Vector3(bx[6], bx[7], bx[8])])
+		interior_sk.force_update_all_bone_transforms()
+		skirt_rep = Pose.settle_skirt(interior_ken, boxes, float(D.get("skirt_gap", 0.003)), 0.02)
 	interior_cam = _xf(D["cam"])
 	interior_fov = float(D["fov"])
+	if mascot:
+		_pc_content(shot)
+		_show_pc_inset(shot)
 	# 換到室內：藏星球、換背景
 	world.visible = false
 	(W["node"] as Node3D).visible = false
 	act_root.visible = false
+	if scooter_holder:
+		scooter_holder.visible = false
 	if world_env:
 		world_env_saved = world_env.environment
 		world_env.environment = interior_env
@@ -931,14 +1538,210 @@ func _enter_home(shot: String) -> void:
 	screen_t = 0.0
 	cam_mode = "interior"
 
+## [routes] 水鈴、圳寶家的電腦螢幕內容：上網＝瀏覽器頁面（白底、藍色網址列、圖片、幾行字）；線上遊戲＝遊戲畫面（深色背景、草地、角色、分數條）
+## → 兩題的畫面一看就不一樣（老師 11/11）
+func _pc_content(shot: String) -> void:
+	var pc := interior.find_child("PCScreen", true, false) as MeshInstance3D
+	if pc == null or not (pc.mesh is QuadMesh):
+		return
+	var old := pc.get_node_or_null("Content")
+	if old:
+		pc.remove_child(old)
+		old.queue_free()
+	if not (shot in ["surf_internet", "online_games"]):
+		return
+	var sz: Vector2 = (pc.mesh as QuadMesh).size
+	var c := Node3D.new()
+	c.name = "Content"
+	pc.add_child(c)
+	var rows := _pc_rows(shot)
+	for r in rows:
+		var mi := MeshInstance3D.new()
+		var q := QuadMesh.new()
+		q.size = Vector2(float(r[2]) * sz.x, float(r[3]) * sz.y)
+		mi.mesh = q
+		var m := StandardMaterial3D.new()
+		m.albedo_color = Color(String(r[4]))
+		m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mi.material_override = m
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		mi.position = Vector3(float(r[0]) * sz.x, float(r[1]) * sz.y, 0.0008 * float(r[5]))
+		c.add_child(mi)
+	# 字：瀏覽器的網址列寫 www.…；遊戲畫面寫 SCORE
+	var l := Label3D.new()
+	l.font = font_bold
+	l.font_size = 48
+	l.outline_size = 0
+	l.pixel_size = 0.085 * sz.y / 48.0
+	l.shaded = false
+	l.double_sided = false
+	if shot == "surf_internet":
+		l.text = "www.ershui.tw"
+		l.modulate = Color("#1c3d6e")
+		l.position = Vector3(-0.1 * sz.x, 0.42 * sz.y, 0.004)
+	else:
+		l.text = "SCORE 350"
+		l.modulate = Color("#ffffff")
+		l.position = Vector3(0.0, 0.27 * sz.y, 0.004)
+	c.add_child(l)
+
+## 螢幕上的色塊：[中心 x, 中心 y（-0.5～0.5，y 往上）, 寬, 高, 顏色, 第幾層]
+func _pc_rows(shot: String) -> Array:
+	if shot == "surf_internet":   # 瀏覽器：白底、藍色網址列（白色輸入框）、左邊一張圖、右邊幾行字、下面一顆綠色按鈕
+		return [[0.0, 0.0, 1.0, 1.0, "#ffffff", 1], [0.0, 0.42, 1.0, 0.16, "#4dabf7", 2], [-0.1, 0.42, 0.62, 0.08, "#ffffff", 3], [-0.25, 0.02, 0.4, 0.5, "#ffd43b", 2],
+			[0.22, 0.2, 0.42, 0.06, "#868e96", 2], [0.22, 0.08, 0.42, 0.06, "#adb5bd", 2], [0.22, -0.04, 0.42, 0.06, "#adb5bd", 2], [0.18, -0.16, 0.34, 0.06, "#adb5bd", 2], [-0.25, -0.38, 0.4, 0.09, "#69db7c", 2]]
+	# 遊戲：深藍背景、草地、紅色主角、紫色敵人、金幣、血條和分數條
+	return [[0.0, 0.0, 1.0, 1.0, "#1c2541", 1], [0.0, -0.38, 1.0, 0.24, "#2f9e44", 2], [-0.25, -0.16, 0.12, 0.2, "#ff6b6b", 3], [0.2, -0.18, 0.14, 0.16, "#845ef7", 3],
+		[0.05, 0.12, 0.08, 0.1, "#ffd43b", 3], [-0.3, 0.4, 0.3, 0.07, "#51cf66", 3], [0.3, 0.4, 0.25, 0.07, "#fcc419", 3], [0.38, 0.05, 0.06, 0.08, "#ffd43b", 3]]
+
+## 螢幕特寫（畫面左上角的小框）：水鈴、圳寶頭很大、電腦很小，3D 畫面裡螢幕只有一點點大 → 把螢幕內容放大顯示，
+## 學生一眼分得出「上網」（瀏覽器、www）和「玩線上遊戲」（遊戲畫面、SCORE）。內容和 3D 螢幕上畫的是同一份（_pc_rows）。
+var pc_inset: PanelContainer
+func _show_pc_inset(shot: String) -> void:
+	if pc_inset == null:
+		pc_inset = PanelContainer.new()
+		pc_inset.add_theme_stylebox_override("panel", _style(Color(1, 1, 1, 0.97), Color(0.15, 0.12, 0.2), 16, 4))
+		pc_inset.position = Vector2(14, 92)
+		pc_inset.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		ui.add_child(pc_inset)
+		ui.move_child(pc_inset, 0)
+		var v := VBoxContainer.new()
+		v.add_theme_constant_override("separation", 4)
+		pc_inset.add_child(v)
+		var t := _label("On the screen 螢幕特寫", 18, Color("#7b5ea7"))
+		t.name = "Title"
+		v.add_child(t)
+		var cv := Control.new()
+		cv.name = "Canvas"
+		cv.custom_minimum_size = Vector2(272, 153)
+		cv.clip_contents = true
+		v.add_child(cv)
+	var canvas: Control = pc_inset.find_child("Canvas", true, false)
+	for ch in canvas.get_children():
+		canvas.remove_child(ch)
+		ch.queue_free()
+	if not (shot in ["surf_internet", "online_games"]):
+		pc_inset.visible = false
+		return
+	var Wd := 272.0
+	var Ht := 153.0
+	var rows := _pc_rows(shot)
+	rows.sort_custom(func(a, b): return int(a[5]) < int(b[5]))
+	for r in rows:
+		var cr := ColorRect.new()
+		cr.color = Color(String(r[4]))
+		cr.size = Vector2(float(r[2]) * Wd, float(r[3]) * Ht)
+		cr.position = Vector2((float(r[0]) + 0.5) * Wd, (0.5 - float(r[1])) * Ht) - cr.size * 0.5
+		cr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		canvas.add_child(cr)
+	var l := _label("www.ershui.tw" if shot == "surf_internet" else "SCORE 350", 15, Color("#1c3d6e") if shot == "surf_internet" else Color.WHITE)
+	l.position = Vector2(0.11 * Wd, 0.015 * Ht) if shot == "surf_internet" else Vector2(0.34 * Wd, 0.14 * Ht)
+	canvas.add_child(l)
+	pc_inset.visible = true
+
+## [routes] 室內演出的鏡頭檢查（吉祥物頭很大）：道具／螢幕不能被自己的頭擋住、臉要看得到（看電視那題不用臉）
+func _indoor_visible() -> Dictionary:
+	var pts := PackedVector3Array()
+	for it in Pose._hp_skinned(interior_sk, "", ["head"]):
+		pts.append_array(it[1])
+	var hc := Vector3.ZERO
+	for q in pts:
+		hc += q
+	hc /= maxf(pts.size(), 1)
+	var ds := []
+	for q in pts:
+		ds.append(q.distance_to(hc))
+	ds.sort()
+	var hr: float = ds[int(ds.size() * 0.8)] if ds.size() > 0 else 0.2
+	var S := interior_sk.global_transform
+	var hd: Vector3 = S * interior_sk.get_bone_global_pose(interior_sk.find_bone(_bone_name_in(interior_sk, "head"))).origin
+	var top: Vector3 = S * interior_sk.get_bone_global_pose(interior_sk.find_bone(_bone_name_in(interior_sk, "headtopend"))).origin
+	var lu: Vector3 = S * interior_sk.get_bone_global_pose(interior_sk.find_bone(_bone_name_in(interior_sk, "leftupleg"))).origin
+	var ru: Vector3 = S * interior_sk.get_bone_global_pose(interior_sk.find_bone(_bone_name_in(interior_sk, "rightupleg"))).origin
+	var upv := (top - hd).normalized()
+	var lv := lu - ru
+	lv = (lv - upv * lv.dot(upv)).normalized()
+	var face := lv.cross(upv).normalized()
+	var fp := hc + face * hr * 0.8
+	var cp := cam.global_position
+	var vs := get_viewport().get_visible_rect().size
+	var col := hud_col.get_global_rect().grow(8)
+	var pan := qpanel.get_global_rect().grow(8) if qpanel.visible else Rect2()
+	var ok := true
+	var note := ""
+	var kp := _key_points()
+	kp.erase("ken_head")
+	for k in kp:
+		var q: Vector3 = kp[k]
+		var d := cp.distance_to(q)
+		var ab := q - cp
+		var t := clampf((hc - cp).dot(ab) / maxf(ab.length_squared(), 1e-9), 0.0, 1.0)
+		if hc.distance_to(cp + ab * t) < hr * 0.92 and cp.distance_to(hc) < d:
+			ok = false
+			note += "%s behind own head; " % k
+	if interior_shot in ["surf_internet", "online_games"]:
+		# 用電腦：螢幕要看得清楚（正面朝鏡頭、在畫面上夠大、四個角不被頭擋住）；螢幕朝著角色，所以這兩題從角色側後方拍，不要求正臉
+		var pc := interior.find_child("PCScreen", true, false) as MeshInstance3D
+		var szq: Vector2 = (pc.mesh as QuadMesh).size
+		var sn := pc.global_transform.basis.z.normalized()
+		if sn.dot(hc - pc.global_position) < 0.0:
+			sn = -sn
+		var sd := (cp - pc.global_position).normalized().dot(sn)
+		var pl := cam.unproject_position(pc.global_transform * Vector3(-szq.x * 0.5, 0, 0))
+		var prr := cam.unproject_position(pc.global_transform * Vector3(szq.x * 0.5, 0, 0))
+		var wpx := pl.distance_to(prr)
+		# 3D 螢幕：正面要朝鏡頭這一側（看得到畫面在亮）；內容由左上角的「螢幕特寫」放大顯示，所以這裡不要求螢幕很大
+		if sd < 0.3 or pc_inset == null or not pc_inset.visible:
+			ok = false
+			note += "screen not visible (facing %.2f, %.0f px wide, close-up inset %s); " % [sd, wpx, "on" if pc_inset and pc_inset.visible else "off"]
+		else:
+			var ir := pc_inset.get_global_rect()
+			for kk in ["head", "lefthand", "righthand"]:   # 特寫框不能蓋到頭和手
+				var bq: Vector3 = S * interior_sk.get_bone_global_pose(interior_sk.find_bone(_bone_name_in(interior_sk, kk))).origin
+				if ir.has_point(cam.unproject_position(bq)):
+					ok = false
+					note += "close-up inset covers %s; " % kk
+			if ir.has_point(cam.unproject_position(pc.global_position)):
+				ok = false
+				note += "close-up inset covers the 3D screen; "
+		for cx in [-0.5, 0.5]:
+			for cy in [-0.5, 0.5]:
+				var q2: Vector3 = pc.global_transform * Vector3(szq.x * cx, szq.y * cy, 0)
+				var ab2 := q2 - cp
+				var t2 := clampf((hc - cp).dot(ab2) / maxf(ab2.length_squared(), 1e-9), 0.0, 1.0)
+				var sp2 := cam.unproject_position(q2)
+				if (hc.distance_to(cp + ab2 * t2) < hr * 0.92 and cp.distance_to(hc) < cp.distance_to(q2)) or col.has_point(sp2) or pan.has_point(sp2) or sp2.x < 0 or sp2.y < 0 or sp2.x > vs.x or sp2.y > vs.y:
+					ok = false
+					note += "screen corner hidden; "
+		var hsp := cam.unproject_position(hc)
+		if cam.is_position_behind(hc) or hsp.x < 0 or hsp.y < 0 or hsp.x > vs.x or hsp.y > vs.y:
+			ok = false
+			note += "character not on screen; "
+	elif interior_shot != "watch_tv":
+		var fd := (cp - fp).normalized().dot(face)
+		var sp := cam.unproject_position(fp)
+		var hid := cam.is_position_behind(fp) or col.has_point(sp) or pan.has_point(sp) or sp.x < 0 or sp.y < 0 or sp.x > vs.x or sp.y > vs.y
+		var fmin := -0.4 if interior_shot in ["surf_internet", "online_games"] else 0.0   # 用電腦：螢幕朝著角色，要同時看到螢幕只能拍側臉
+		if fd < fmin or hid:
+			ok = false
+			note += "face not visible (dot %.2f, screen %s); " % [fd, sp]
+	return {"ok": ok, "note": note}
+
 func _exit_home() -> void:
 	if not in_home:
 		return
 	in_home = false
+	if pc_inset:
+		pc_inset.visible = false
+	if not skirt_rep.is_empty():
+		Pose.unsettle_skirt(skirt_rep)
+		skirt_rep = {}
 	interior.visible = false
 	world.visible = true
 	(W["node"] as Node3D).visible = true
 	act_root.visible = true
+	if scooter_holder:
+		scooter_holder.visible = true
 	if world_env and world_env_saved:
 		world_env.environment = world_env_saved
 	cam.fov = 50
@@ -991,6 +1794,280 @@ func _fly_point(t: float) -> Vector2:
 		s -= sg[2]
 	return fly_route[0]
 
+## [routes] 地點的大模型（水公園、八堡圳公園…）不在 world.blockers 裡：鏡頭或視線進到模型範圍就算被擋（大草原是平的，不算）
+func _in_model(c: Vector2, margin := 0.6) -> bool:
+	for P in world.place_list:
+		if String(P.get("id", "")) == "lawn" or not P.has("pos") or String(P.get("id", "")).ends_with("_home"):
+			continue
+		var rad: float = float(P.get("extent", P.get("size", 8.0))) * 0.5 + margin
+		if String(P.get("kind", "")) == "waterpark":
+			rad = float(P.get("extent", 18.0)) * 0.75 + 1.0   # 水公園是 18×14 的長方形，裡面有火車頭、戰鬥機、遊樂器材：用到角落的距離
+		if c.distance_to(world.v2(P["pos"])) < rad:
+			return true
+	return false
+
+## 視線被擋的程度（0＝完全沒擋）：街屋擋住的取樣數＋進到地點模型範圍的取樣數
+## 街屋擋住可以變半透明（world.fade_between），地點的大模型（火車頭、戰鬥機…）不行 → 模型擋住算得重很多
+func _view_block_score(c: Vector2, ch: float, p: Vector2) -> int:
+	var n: int = world._blocked_count(c, ch, p, 1.0, "-none-")
+	for i in 7:
+		if _in_model(c.lerp(p, i / 8.0)):
+			n += 40 if i == 0 else 8
+	return n
+
+func _view_blocked(c: Vector2, ch: float, p: Vector2) -> bool:
+	if world._blocked_count(c, ch, p, 1.0, "-none-") > 0:
+		return true
+	for i in 6:
+		if _in_model(c.lerp(p, i / 8.0)):
+			return true
+	return false
+
+# ---------- [routes] 戶外演出：鏡頭和角色之間不能有東西（老師 11/11：畫面要看得出在做什麼） ----------
+## 擋住視線的東西＝①地點的模型（火車頭、戰鬥機、遊樂器材、圳的模型…：world.fit_model 放進來的每個網格，用它自己座標裡的包圍盒）②街屋（world.blockers）
+var occ_models: Array = []
+var occ_ready := false
+var act_plan := {}
+var plan_cache := {}
+
+func _collect_occ(n: Node, inside: bool) -> void:
+	var ins := inside or (n is Node3D and n.has_meta("height") and n.has_meta("width"))
+	if ins and n is MeshInstance3D:
+		occ_models.append(n)
+	for c in n.get_children():
+		_collect_occ(c, ins)
+
+static func _seg_aabb(a: Vector3, b: Vector3, bx: AABB) -> bool:
+	var d := b - a
+	var t0 := 0.0
+	var t1 := 1.0
+	for i in 3:
+		if absf(d[i]) < 1e-9:
+			if a[i] < bx.position[i] or a[i] > bx.end[i]:
+				return false
+		else:
+			var u0: float = (bx.position[i] - a[i]) / d[i]
+			var u1: float = (bx.end[i] - a[i]) / d[i]
+			if u0 > u1:
+				var tmp := u0
+				u0 = u1
+				u1 = tmp
+			t0 = maxf(t0, u0)
+			t1 = minf(t1, u1)
+			if t0 > t1:
+				return false
+	return true
+
+## 3D 線段 A→B 穿過幾個地點模型的包圍盒
+func _occ3(A: Vector3, B: Vector3) -> int:
+	if not occ_ready:
+		occ_ready = true
+		_collect_occ(world, false)
+		print("OCCLUDERS place-model meshes: ", occ_models.size())
+	var n := 0
+	var mid := (A + B) * 0.5
+	var L := A.distance_to(B)
+	for mi: MeshInstance3D in occ_models:
+		if not is_instance_valid(mi) or not mi.is_visible_in_tree():
+			continue
+		var bx := mi.get_aabb()
+		var gs := mi.global_transform.basis.get_scale()
+		var rad := (bx.size * gs).length() * 0.5
+		if (mi.global_transform * bx.get_center()).distance_to(mid) > rad + L * 0.5 + 0.5:
+			continue
+		var inv := mi.global_transform.affine_inverse()
+		if _seg_aabb(inv * A, inv * B, bx.grow(-minf(bx.size.x, minf(bx.size.y, bx.size.z)) * 0.04)):
+			n += 1
+	return n
+
+## 地圖平面版：鏡頭在 c2、高 ch；目標在 t2、高 th。回傳擋住的東西數（地點模型＋街屋）
+func _occ_map(c2: Vector2, ch: float, t2: Vector2, th: float) -> int:
+	var n := _occ3(world.bend2(c2, ch), world.bend2(t2, th))
+	if world._blocked_count(c2, ch, t2, th, "-none-") > 0:
+		n += 1
+	return n
+
+## 寬鏡頭（籃球、棒球、露營）：回傳 face_cam＝[鏡頭平面位置, 鏡頭高, 方向, 看哪裡, 看的高度]
+func _wide_cam(kind: String, p: Vector2, f: Vector2) -> Array:
+	var right := Vector2(-f.y, f.x)
+	match kind:
+		"basketball":   # 角色右後方：角色在左、籃框在中間偏右上
+			var kb := 0.9 if mascot else 1.0   # 吉祥物比較矮：鏡頭近 10%（角色至少佔畫面高 20%）
+			var lb: Vector2 = p + f * 1.2 + right * 0.3
+			return [lb + (p + right * 4.6 - f * 1.6 - lb) * kb, 0.6 + 1.0 * kb, right, lb, 0.6]
+		"baseball":     # 角色前方偏右：看得到臉、球棒、飛來的球和右邊的壘包
+			var ks := 0.78 if mascot else 0.97   # 吉祥物：鏡頭近 22%（[perf] 原 0.82：丟棒那一格 19%，×1 抽樣才抓到）（揮棒蹲低、跑向壘包離鏡頭變遠時也 ≥ 20%）；Ken 近 3%（[perf] ×1 每 0.5 秒檢查時跑壘中 19.x%，以前 ×3 抽樣沒抽到）
+			var ls: Vector2 = p + right * 1.3
+			return [ls + (p + f * 5.2 + right * 0.9 - ls) * ks, 0.5 + 1.5 * ks, right, ls, 0.5]
+		_:              # 露營：角色前方偏左，角色跪／坐著看營火，後面是帳篷。吉祥物比較小 → 鏡頭近一點（角色至少佔畫面高 20%）
+			if mascot:   # 側前方：營火在左、角色在中間、帳篷在右後（上下不疊在一起 → 整頂帳篷、營火、角色都放得進安全區）
+				return [p + f * 1.8 - right * 3.6, 1.5, -right, p - f * 0.3 + right * 0.45, 0.45]
+			return [p + f * 3.6 - right * 1.8, 1.75, -right, p + f * 0.4 + right * 0.6, 0.1]   # Ken：距離 4.0 m（跪著的 Ken 佔畫面高 ≥ 20%）；看的點放低，營火不會被兩行情境句的面板蓋住
+
+## 這個位置、這個活動的各種鏡頭擺法：每種回傳擋住的東西數（0＝乾淨）
+func _cam_plans(kind: String, p: Vector2, rd: Vector2) -> Array:
+	var out := []
+	match kind:
+		"jogging", "bike":
+			for f: Vector2 in [rd, -rd]:
+				var prb: Dictionary = world.project(p + f * 18.0)
+				var b: Vector2 = prb["q"] if prb.has("q") else p + f * 18.0
+				if b.distance_to(p) < 8.0:
+					continue
+				var axis := (b - p).normalized()
+				var perp := Vector2(-axis.y, axis.x)
+				for sd in [1.0, -1.0]:
+					var sc := 0
+					for t in [0.0, 0.25, 0.5, 0.75, 1.0]:
+						var q: Vector2 = p.lerp(b, t)
+						var c2: Vector2 = q + perp * sd * 3.8
+						sc += _occ_map(c2, 1.35, q, 1.0) + _occ_map(c2, 1.35, q, 0.15)
+					out.append({"f": f, "side": sd, "score": sc})
+		"music":   # 站著聽音樂：鏡頭在角色正前方 3.2 m（角色面向鏡頭）
+			for k in 8:
+				var dm: Vector2 = rd.rotated(k * PI / 4.0)
+				var cm: Vector2 = p + dm * 3.2 + Vector2(-dm.y, dm.x) * 0.6
+				out.append({"f": dm, "cam": cm, "score": _occ_map(cm, 1.7, p, 1.0) + _occ_map(cm, 1.7, p, 0.15) + _occ_map(cm, 1.7, p, 1.5)})
+		"basketball", "camping", "baseball":
+			for k in 8:
+				var f: Vector2 = rd.rotated(k * PI / 4.0)
+				var left := Vector2(f.y, -f.x)
+				var fc := _wide_cam(kind, p, f)
+				var tg := [[p, 1.0], [p, 0.15]]
+				if kind == "basketball":
+					tg.append_array([[p + f * 2.6, 2.15], [p + f * 2.9, 2.75], [p + f * 0.4, 0.5]])
+				elif kind == "camping":
+					tg.append_array([[p + f * 0.9, 0.3], [p - left * 1.6 - f * 1.2, 0.9], [p - left * 1.6 - f * 1.2, 0.2]])
+				else:
+					tg.append_array([[p - left * 1.3, 0.3], [p + f * 1.0, 0.6]])
+				var sc := 0
+				for t2 in tg:
+					sc += _occ_map(fc[0], float(fc[1]), t2[0], float(t2[1]))
+				out.append({"f": f, "score": sc})
+	return out
+
+## 這一題的戶外演出要在哪裡做、面向哪：先試地點門口那個站點；鏡頭被擋 → 沿著旁邊的街道每 6 m 試一個點（最多 37 m），
+## 取第一個「鏡頭到角色／道具之間 0 個東西」的；都不行就取擋最少的。只算一次（同一個角色、地點、活動）。
+func _plan_act(It: Dictionary) -> Dictionary:
+	var kind: String = String(It["perform"]).substr(4)
+	if not (kind in ["jogging", "bike", "basketball", "camping", "baseball", "music"]):
+		return {}
+	var key := "%s|%s|%s" % [who, It["to"], kind]
+	if plan_cache.has(key):
+		return plan_cache[key]
+	var base := _spot(It["to"])
+	var cands: Array = [base]
+	var anchors: Array = []
+	if It["from"] != It["to"]:
+		anchors.append(_spot(It["from"]))
+	anchors.append(_spot("school"))
+	anchors.append(world.places["station"]["door2"])
+	for an: Vector2 in anchors:
+		var rt: Array = world.route(base, an)
+		var prev := base
+		var acc := 0.0
+		var next_d := 7.0
+		for q: Vector2 in rt:
+			var seg := prev.distance_to(q)
+			while acc + seg >= next_d and next_d <= 37.0:
+				cands.append(prev.lerp(q, (next_d - acc) / maxf(seg, 0.001)))
+				next_d += 6.0
+			acc += seg
+			prev = q
+			if acc > 40.0:
+				break
+	var best := {"pos": base, "score": 99999}
+	if kind == "camping":   # 露營：先找公園草地上的空位（不在路上、不在模型裡、鏡頭不被擋）
+		var ppos: Vector2 = world.places[It["to"]]["pos2"] if world.places[It["to"]].has("pos2") else base
+		var tried := 0
+		for p: Vector2 in _grass_spots(It["to"]):
+			var away := (p - ppos).normalized() if p.distance_to(ppos) > 0.5 else Vector2(0, 1)
+			for k in 8:
+				var f: Vector2 = away.rotated(k * PI / 4.0)   # 先試「背對公園模型」：鏡頭在角色前面，公園在背景
+				if not _camp_fits(p, f):
+					continue
+				tried += 1
+				var fc := _wide_cam(kind, p, f)
+				var left := Vector2(f.y, -f.x)
+				var sc := 0
+				for t2 in [[p, 1.0], [p, 0.15], [p + f * 0.9, 0.3], [p - left * 1.6 - f * 1.2, 0.9], [p - left * 1.6 - f * 1.2, 0.2], [p - left * 2.4 - f * 1.2, 0.3], [p - left * 0.8 - f * 1.2, 0.3]]:
+					sc += _occ_map(fc[0], float(fc[1]), t2[0], float(t2[1]))
+				if sc < int(best["score"]):
+					best = {"pos": p, "f": f, "score": sc, "grass": true}
+				if sc == 0:
+					break
+			if int(best["score"]) == 0 or tried > 400:
+				break
+		if best.has("grass"):
+			plan_cache[key] = best
+			print("ACTPLAN camping at %s: on the park grass %.1f m from the door spot, occluders %d (%d layouts tried)" % [It["to"], (best["pos"] as Vector2).distance_to(base), int(best["score"]), tried])
+			return best
+		print("ACTPLAN camping at %s: no park grass near this place in the map data -> keeps the door-side spot" % It["to"])
+	for p: Vector2 in cands:
+		var pr: Dictionary = world.project(p)
+		var rd := Vector2(0, 1)
+		if pr.has("edge"):
+			var e: Array = world.edges[int(pr["edge"])]
+			rd = ((world.nodes[e[1]] as Vector2) - (world.nodes[e[0]] as Vector2)).normalized()
+		for pl: Dictionary in _cam_plans(kind, p, rd):
+			if int(pl["score"]) < int(best["score"]):
+				best = pl
+				best["pos"] = p
+		if int(best["score"]) == 0:
+			break
+	plan_cache[key] = best
+	print("ACTPLAN %s at %s: %.1f m from the door spot, occluders %d (of %d candidate spots)" % [kind, It["to"], (best["pos"] as Vector2).distance_to(base), int(best["score"]), cands.size()])
+	return best
+
+## 測試用：現在這個畫面，鏡頭到角色（頭、兩手、兩腳）和重點道具之間有幾個東西；角色在畫面上有多高
+func _outdoor_visible() -> Dictionary:
+	var sk: Skeleton3D = W["sk"]
+	var S := sk.global_transform
+	var bp := func(key: String) -> Vector3:
+		var bn := _bone_name(key)
+		return S * sk.get_bone_global_pose(sk.find_bone(bn)).origin if bn != "" else (W["node"] as Node3D).global_position
+	var tg := {"head": bp.call("head"), "left hand": bp.call("lefthand"), "right hand": bp.call("righthand"), "left foot": bp.call("leftfoot"), "right foot": bp.call("rightfoot")}
+	var kp := _key_points()
+	for k in kp:
+		if not String(k).begins_with("ken_"):
+			tg[k] = kp[k]
+	var cp := cam.global_position
+	var occ := 0
+	var note := ""
+	for k in tg:
+		var q: Vector3 = tg[k]
+		var n := _occ3(cp, q + (cp - q).normalized() * 0.05)
+		if n > 0:
+			occ += n
+			note += "%s behind %d model(s); " % [k, n]
+	var c2 := Vector2.INF
+	var ch := 1.35
+	if cam_mode == "roam":
+		c2 = roam_cam2
+		ch = 3.0 if roam_high else 1.35
+	elif not face_cam.is_empty():
+		c2 = face_cam[0]
+		ch = float(face_cam[1])
+	if c2 != Vector2.INF and world._blocked_count(c2, ch, W["pos"], 1.0, "-none-") > 0:
+		occ += 1
+		note += "a street house between camera and character; "
+	var vs := get_viewport().get_visible_rect().size
+	var y0 := 1e9
+	var y1 := -1e9
+	# 角色在畫面上的高度：用整個網格的頂點投影（吉祥物頭很大，頭頂骨頭在頭的中間，用骨頭量會少很多）
+	var FT: Transform3D = (W["node"] as Node3D).global_transform
+	var ysv := []
+	for q in am.mesh_pts(["hips", "spine", "neck", "head", "left", "right"]):
+		ysv.append(cam.unproject_position(FT * (q as Vector3)).y)
+	ysv.sort()
+	if ysv.size() > 10:   # 去掉最外面 2%（零星的頂點）
+		y0 = ysv[int(ysv.size() * 0.02)]
+		y1 = ysv[int(ysv.size() * 0.98)]
+	var ratio := (y1 - y0) / vs.y
+	if cam_mode == "roam" and roam_high:
+		note += "fallback high camera; "
+	return {"ok": occ == 0 and ratio >= 0.2, "occluders": occ, "height_ratio": ratio, "note": "%sheight %.0f%% of screen" % [note, ratio * 100.0]}
+
 ## 角色面向鏡頭：繞一圈找不被擋的方向，中間的房子半透明
 func _setup_face_cam(dist := 4.6, ch := 1.9, turn := true) -> void:
 	var p: Vector2 = W["pos"]
@@ -1000,14 +2077,14 @@ func _setup_face_cam(dist := 4.6, ch := 1.9, turn := true) -> void:
 	face_cam = world.face_view(p, pref.normalized(), dist, ch)
 	# Ken 站在路上時：鏡頭也放在同一條路上（順著路往前／往後看），不會跑進建築模型裡（模型不在 blockers 清單）
 	var pr: Dictionary = world.project(p)
-	if pr.has("edge") and float(pr["d"]) < 2.5 and p.distance_to(world.places["ken_home"]["door2"]) > 3.0:
+	if pr.has("edge") and float(pr["d"]) < 2.5 and p.distance_to(world.places[home_id]["door2"]) > 3.0:
 		var e: Array = world.edges[int(pr["edge"])]
 		var rd: Vector2 = ((world.nodes[e[1]] as Vector2) - (world.nodes[e[0]] as Vector2)).normalized()
 		var best := []
 		var best_s := 1e9
 		for dir: Vector2 in [rd, -rd]:
 			var c2: Vector2 = p + dir * dist + Vector2(-dir.y, dir.x) * 0.6
-			var sc: float = world._blocked_count(c2, ch, p, 1.1, "") * 10.0 + (0.0 if dir.dot(pref) > 0.0 else 1.0)
+			var sc: float = world._blocked_count(c2, ch, p, 1.1, "") * 10.0 + (0.0 if dir.dot(pref) > 0.0 else 1.0) + (50.0 if _view_blocked(c2, ch, p) else 0.0)
 			if sc < best_s:
 				best_s = sc
 				best = [c2, ch, dir]
@@ -1075,7 +2152,7 @@ func _update_camera(delta: float) -> void:
 			# 鏡頭在 Ken 背後：先試 6.5 m／高 4.2 m，被房子（含 Ken 家的模型，模型不會變半透明）擋住就拉近、拉高。
 			# 平滑在「地圖平面」上做，才能檢查鏡頭真正的位置；轉彎時鏡頭掃進房子裡 → 直接跳到目標位置
 			follow_t -= delta
-			var hp: Dictionary = world.places.get("ken_home", {})
+			var hp: Dictionary = world.places.get(home_id, {})
 			if follow_t <= 0.0 or follow_pick.is_empty():
 				follow_t = 0.2
 				var cands := [[6.5, 4.2], [5.0, 6.0], [3.5, 8.5], [2.5, 12.0]]
@@ -1128,15 +2205,26 @@ func _update_camera(delta: float) -> void:
 			roam_t -= delta
 			if roam_t <= 0.0 or roam_cam2 == Vector2.INF:
 				roam_t = 0.5
-				for sd in [roam_side, -roam_side]:
-					if world._blocked_count(p + perp * sd * 3.8, 1.35, p, 1.0, "-none-") == 0:
-						roam_side = sd
-						break
+				# 兩側各算「被擋的程度」：選擋比較少的那一側（街屋擋住會變半透明）；兩側都被地點模型擋住才改用後上方
+				var s_keep := _view_block_score(p + perp * roam_side * 3.8, 1.35, p)
+				var s_flip := _view_block_score(p - perp * roam_side * 3.8, 1.35, p)
+				if s_flip + 4 < s_keep:
+					roam_side = -roam_side
+					s_keep = s_flip
+				roam_high = s_keep >= 30
+				if not roam_high:
+					world.fade_between(p + perp * roam_side * 3.8, p, "", 6.0)
+				else:   # [perf] 後上方用哪一頭：跟著 0.5 秒一次算（舊：每一格算兩次 _view_block_score）
+					roam_back = -axis if _view_block_score(p - axis * 4.5, 3.0, p) <= _view_block_score(p + axis * 4.5, 3.0, p) else axis
 			var tgt := p + perp * roam_side * 3.8 + (mid - p).normalized() * 0.0
+			if roam_high:   # 兩邊都被擋（一邊房子、一邊公園模型）：鏡頭放在這條路上、角色後面（離地點模型遠的那一頭）上方
+				if roam_back == Vector2.ZERO:
+					roam_back = -axis if _view_block_score(p - axis * 4.5, 3.0, p) <= _view_block_score(p + axis * 4.5, 3.0, p) else axis
+				tgt = p + roam_back * 4.5 + perp * 0.6
 			if roam_cam2 == Vector2.INF or roam_cam2.distance_to(p) < 2.8:
 				roam_cam2 = tgt
-			roam_cam2 = roam_cam2.lerp(tgt, 1.0 - exp(-delta * 3.0))
-			want_pos = world.bend2(roam_cam2, 1.35)
+			roam_cam2 = roam_cam2.lerp(tgt, 1.0 - exp(-delta * 6.0))   # 跟緊一點：騎車 4.5 m/s 時鏡頭落後太多，角色會變小（< 畫面高 20%）
+			want_pos = world.bend2(roam_cam2, 3.0 if roam_high else 1.35)
 			want_look = world.bend2(p, 0.6)
 			want_up = world.bend2(p).normalized()
 			k = 1.0
@@ -1209,7 +2297,7 @@ func sfx(key: String, pitch := 1.0) -> void:
 	p.play()
 
 func _sentence(act: String) -> String:
-	return "I %s in my free time." % ft["phrases"][act]
+	return "%s %s in %s free time." % [ft.get("subject", "I"), (ft.get("phrases3", ft["phrases"]) as Dictionary)[act], ft.get("possessive", "my")]
 
 # ---------- UI 共用 ----------
 func _paint(b: Button, col: Color) -> void:
@@ -1289,6 +2377,7 @@ func _build_ui() -> void:
 	ui = CanvasLayer.new()
 	add_child(ui)
 	_build_title()
+	_build_route_ui()
 	_build_setup()
 	_build_hud()
 	_build_clue_card()
@@ -1313,8 +2402,9 @@ func _build_title() -> void:
 	title_ui.add_child(v)
 	var t := _outlined(_label("Ershui Planet · Free Time", 80, Color("#fff4c2")), 24)
 	v.add_child(t)
-	v.add_child(_outlined(_label("二水小行星・Ken 的休閒時間", 42, Color.WHITE), 18))
-	v.add_child(_outlined(_label("What do you do in your free time?  I ___ in my free time.", 28, Color.WHITE)))
+	v.add_child(_outlined(_label("二水小行星・休閒時間（Ken／水鈴／圳寶）", 42, Color.WHITE), 18))
+	title_sub = _outlined(_label("What do you do in your free time?  I ___ in my free time.", 28, Color.WHITE))
+	v.add_child(title_sub)
 	var gap := Control.new()
 	gap.custom_minimum_size = Vector2(0, 26)
 	v.add_child(gap)
@@ -1324,7 +2414,7 @@ func _build_title() -> void:
 	v.add_child(group_btns_row)
 	var b := _btn("全班分組猜猜看\nClass Groups · 投影押注", 30, Color("#ffd166"))
 	b.custom_minimum_size = Vector2(400, 110)
-	b.pressed.connect(_show_setup)
+	b.pressed.connect(func(): _show_routes("groups"))
 	group_btns_row.add_child(b)
 	var pb := _btn("兩人一組線索挑戰\nPair Clue Challenge · iPad 學號", 30, Color("#a5d8ff"))
 	pb.custom_minimum_size = Vector2(400, 110)
@@ -1338,13 +2428,65 @@ func _build_title() -> void:
 	v.add_child(pair_row)
 	var nb := _btn("  New game 新的一輪  ", 34, Color("#ffd166"))
 	nb.custom_minimum_size = Vector2(340, 86)
-	nb.pressed.connect(_start_game)
+	nb.pressed.connect(func(): _show_routes("pair"))
 	pair_row.add_child(nb)
 	continue_btn = _btn("  Continue 繼續上次  ", 30, Color("#cfe8ff"))
 	continue_btn.custom_minimum_size = Vector2(360, 64)
 	continue_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	continue_btn.pressed.connect(func(): _resume_pair() if pair else load_progress())
 	v.add_child(continue_btn)
+
+## 路線選擇（選完玩法之後）：Ken A／Ken B／水鈴／圳寶。分組 → 接著設定組別；兩人一組 → 直接開始
+func _build_route_ui() -> void:
+	route_ui = Control.new()
+	route_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
+	ui.add_child(route_ui)
+	var dim := ColorRect.new()
+	dim.color = Color(0.1, 0.1, 0.2, 0.45)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	route_ui.add_child(dim)
+	var v := VBoxContainer.new()
+	v.set_anchors_preset(Control.PRESET_FULL_RECT)
+	v.alignment = BoxContainer.ALIGNMENT_CENTER
+	v.add_theme_constant_override("separation", 22)
+	route_ui.add_child(v)
+	v.add_child(_outlined(_label("Choose a route  選一條路線", 56, Color("#fff4c2")), 20))
+	var sub := _outlined(_label("", 28, Color.WHITE))
+	sub.name = "Sub"
+	v.add_child(sub)
+	var h := HBoxContainer.new()
+	h.name = "Routes"
+	h.alignment = BoxContainer.ALIGNMENT_CENTER
+	h.add_theme_constant_override("separation", 14)
+	v.add_child(h)
+	for Rt in ROUTES:
+		var rid: String = Rt["id"]
+		var b := _btn("%s\n%s\n%s" % [Rt["label"], Rt["zh"], Rt["sub"]], 21, Color(Rt["col"]))   # 四顆要並排放進 1280 寬
+		b.name = "Route_" + rid
+		b.custom_minimum_size = Vector2(292, 160)
+		b.pressed.connect(func(): _pick_route(rid))
+		h.add_child(b)
+	var back := _btn("  ← Back 回上一頁  ", 24)
+	back.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	back.pressed.connect(_show_title)
+	v.add_child(back)
+	route_ui.visible = false
+
+func _show_routes(next: String) -> void:
+	route_next = next
+	_hide_all()
+	title_ui.visible = false
+	route_ui.visible = true
+	(route_ui.find_child("Sub", true, false) as Label).text = "全班分組猜猜看 Class Groups" if next == "groups" else "兩人一組線索挑戰 Pair Clue Challenge"
+	for Rt in ROUTES:
+		_paint(route_ui.find_child("Route_" + String(Rt["id"]), true, false) as Button, Color(Rt["col"]))
+
+func _pick_route(rid: String) -> void:
+	_set_route(rid)
+	if route_next == "pair":
+		_start_game()
+	else:
+		_show_setup()
 
 func _input(ev: InputEvent) -> void:
 	if cam_mode == "fly" and intro_t < INTRO_END and ((ev is InputEventMouseButton and ev.pressed) or (ev is InputEventScreenTouch and ev.pressed)):
@@ -1356,6 +2498,9 @@ func _show_title() -> void:
 	_exit_home()
 	_clear_act()
 	_set_bike(false)
+	_remove_parked()
+	_scooter_clear()
+	_ken_anim("idle")
 	_hide_clue()
 	cam_mode = "fly"
 	intro_t = 0.0
@@ -1375,10 +2520,10 @@ func _show_title() -> void:
 	var sv := _read_save()
 	continue_btn.visible = not sv.is_empty()
 	if not sv.is_empty():
-		continue_btn.text = "  Continue 繼續上次（Q%d/%d）  " % [int(sv["qi"]) + 1, items.size()]
+		continue_btn.text = "  Continue 繼續上次（%s Q%d/%d）  " % [String(sv.get("route", "ken_a")).capitalize(), int(sv["qi"]) + 1, items.size()]
 
 func _hide_all() -> void:
-	for c in [title_ui, setup_ui, hud, result_ui]:
+	for c in [title_ui, setup_ui, hud, result_ui, route_ui]:
 		if c:
 			c.visible = false
 	if confetti:
@@ -1440,6 +2585,7 @@ func _build_setup() -> void:
 	rule.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	v.add_child(rule)
 	var go := _btn("  Go! 出發（Ken A・11 題）  ", 30, Color("#ffd166"))
+	go_btn = go
 	go.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	go.custom_minimum_size = Vector2(360, 72)
 	go.pressed.connect(_start_game)
@@ -1537,6 +2683,8 @@ func _build_hud() -> void:
 	qpanel = PanelContainer.new()
 	qpanel.add_theme_stylebox_override("panel", _style(Color(1, 0.98, 0.93, 0.96), Color(0.15, 0.12, 0.2), 26, 5))
 	hud.add_child(qpanel)
+	qpanel.minimum_size_changed.connect(_layout_panel)   # [ipad] 內容一變就重新量、重新縮放
+	get_viewport().size_changed.connect(_layout_panel)
 	var hb := HBoxContainer.new()
 	hb.add_theme_constant_override("separation", 18)
 	qpanel.add_child(hb)
@@ -1547,7 +2695,7 @@ func _build_hud() -> void:
 	qh.add_theme_constant_override("separation", 12)
 	lv.add_child(qh)
 	q_sub = _label("Q1/11", 24, Color("#7b5ea7"))
-	qh.add_child(q_sub)
+	qh.add_child(q_sub)   # [ipad] 有押注列時 _layout_panel_now 會把它移到最上面一行（_place_q_sub）
 	play_btn = _btn("▶ Play
 聽情境", 24, Color("#ffd166"))
 	play_btn.custom_minimum_size = Vector2(104, 70)
@@ -1607,19 +2755,69 @@ func _build_hud() -> void:
 	hud.add_child(walk_caption)
 
 ## 面板位置：分組＝下方置中全寬；兩人一組＝左下（右邊留給外框的題目面板）
+## [ipad] 11/11：面板一定整塊在畫面裡（左右 ≥ 12 px）、不蓋到右上的按鈕欄。
+## stretch＝canvas_items＋expand：比 16:9 窄的螢幕（iPad 4:3～1.44）可見寬度永遠是 1280，只有高度變高；
+## 所以面板比 1280 寬時，任何視窗大小都會被切掉（原本 1384 寬，左右各被切 52 px）。
+## 做法：用面板「最小尺寸」算位置；放不下就等比例縮小（不小於 0.8），兩種擺法取比較大的縮放：
+##   ① 全寬（分組置中／兩人一組靠左），面板頂要在按鈕欄下面；② 放在按鈕欄左邊（高度可以比按鈕欄高）。
+## 面板內容一變（解鎖、換題、揭曉）或視窗大小一變就重排（minimum_size_changed／size_changed）。
+const PANEL_MARGIN := 12.0
+const PANEL_MIN_SCALE := 0.8
+var _panel_layout_queued := false
+var panel_fit_scale := 1.0
+
 func _layout_panel() -> void:
+	if _panel_layout_queued:
+		return
+	_panel_layout_queued = true
 	call_deferred("_layout_panel_now")
 
 func _layout_panel_now() -> void:
-	qpanel.size = Vector2.ZERO
-	if pair:
-		qpanel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_MINSIZE, 14)
-		qpanel.grow_horizontal = Control.GROW_DIRECTION_END
-	else:
-		qpanel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 12)
-		qpanel.grow_horizontal = Control.GROW_DIRECTION_BOTH
-	qpanel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_panel_layout_queued = false
+	if qpanel == null:
+		return
 	q_scene.custom_minimum_size = Vector2(460 if pair else 360, 0)
+	_place_q_sub(bet_box.visible)
+	var vs := get_viewport().get_visible_rect().size
+	var ms := qpanel.get_combined_minimum_size()
+	var M := PANEL_MARGIN
+	var col := hud_col.get_global_rect() if hud_col and hud_col.is_visible_in_tree() else Rect2(vs.x, 0, 0, 0)
+	var col_left := col.position.x - 8.0
+	var col_bottom := col.end.y + 8.0
+	# ① 全寬：寬度 vs.x − 24；面板右邊若伸到按鈕欄下方，頂端要低於按鈕欄
+	var s_full := minf(1.0, (vs.x - 2.0 * M) / ms.x)
+	var x_full := M if pair else (vs.x - ms.x * s_full) * 0.5
+	if x_full + ms.x * s_full > col_left:
+		s_full = minf(s_full, (vs.y - M - col_bottom) / ms.y)
+		x_full = M if pair else (vs.x - ms.x * s_full) * 0.5
+	s_full = minf(s_full, (vs.y - 2.0 * M) / ms.y)
+	# ② 按鈕欄左邊：寬度 col_left − 12
+	var s_side := minf(1.0, minf((col_left - M) / ms.x, (vs.y - 2.0 * M) / ms.y))
+	var s := s_full
+	var x := x_full
+	if s_side > s_full + 0.001:
+		s = s_side
+		x = M if pair else M + (col_left - M - ms.x * s) * 0.5
+	if s < PANEL_MIN_SCALE:
+		push_warning("qpanel needs scale %.2f (< %.2f) to fit %s" % [s, PANEL_MIN_SCALE, vs])
+	panel_fit_scale = s
+	qpanel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	qpanel.pivot_offset = Vector2.ZERO
+	qpanel.scale = Vector2(s, s)
+	qpanel.size = ms
+	qpanel.position = Vector2(roundf(x), roundf(vs.y - M - ms.y * s))
+
+## [ipad] 路線＋題號：有押注列（分組作答中）時放在左欄最上面一行，面板才不會比 1280 寬（原本並排時 1384）；
+## 沒有押注列（揭曉、兩人一組）時放回 Play 左邊，面板矮一行、不擋到演出（圳寶 q11 營火）。
+func _place_q_sub(top_row: bool) -> void:
+	var qh := play_btn.get_parent()
+	var lv := qh.get_parent()
+	var want: Node = lv if top_row else qh
+	if q_sub.get_parent() == want:
+		return
+	q_sub.get_parent().remove_child(q_sub)
+	want.add_child(q_sub)
+	want.move_child(q_sub, 0)
 
 func _start_game() -> void:
 	if pair:
@@ -1629,7 +2827,7 @@ func _start_game() -> void:
 		scores.append(0 if pair else START_POINTS)
 	run_seed = randi() % 900000 + 100000
 	_make_clue_order()
-	_host_send("report", {"type": "start", "seed": run_seed})
+	_host_send("report", {"type": "start", "seed": run_seed, "route": route_id})
 	qi = 0
 	_enter_play()
 	_show_question(true)
@@ -1703,17 +2901,21 @@ func _show_question(first := false) -> void:
 	var my_qi := qi
 	W["path"] = []
 	W["pos"] = _spot(It["from"])
-	if It["from"] == "ken_home":
-		W["fwd"] = world.v2(world.places["ken_home"]["face"])
+	if It["from"] == home_id:
+		W["fwd"] = world.v2(world.places[home_id]["face"])
 	_ken_anim("idle")
 	world.clear_fade()
 	_setup_face_cam(4.4, 1.8)
+	if It["travel"] == "scooter":
+		_scooter_wait(It["from"])          # 媽媽騎機車在旁邊等
+	else:
+		_scooter_clear()                   # 下一題開始：媽媽已經騎車走了（機車、安全帽不留到下一題；老師 11/11：棒球場上不能有安全帽）
 	cam_mode = "face"
 	cam_pos = Vector3.ZERO
 	bets.clear()
 	wagers.clear()
 	last_delta.clear()
-	q_sub.text = "Q%d/%d" % [qi + 1, items.size()]
+	q_sub.text = "%s  Q%d/%d" % [_route_info()["label"], qi + 1, items.size()]
 	q_scene.text = It["context"]
 	q_ask.text = It["question"]
 	answer_lbl.visible = false
@@ -1765,10 +2967,10 @@ func _on_play_scene() -> void:
 	play_btn.disabled = true
 	play_btn.text = "♪ …"
 	if first_q and not scene_heard:
-		await say("ft_intro")   # 第一題：先念開場引導語（say 裡 voice.play() 在按鈕這一下就開始）
+		await say(_vk("intro"))   # 第一題：先念開場引導語（say 裡 voice.play() 在按鈕這一下就開始）
 		if qi != my_qi:
 			return
-	await say("ft_scene_%s" % It["id"])
+	await say(_vk("scene", It["id"]))
 	if qi != my_qi:
 		return
 	scene_playing = false
@@ -1860,14 +3062,14 @@ func _speak_option(i: int) -> void:
 	if not scene_heard:
 		return
 	var It: Dictionary = items[qi]
-	say("ft_ans_%s" % It["opt_acts"][i])
+	say(_vk("ans", It["opt_acts"][i]))
 
 func _repeat_voice() -> void:
 	if state == St.TITLE or state == St.SETUP or state == St.RESULT:
 		return
 	var It: Dictionary = items[qi]
 	if state == St.REVEAL:
-		say("ft_ans_%s" % It["act"])
+		say(_vk("ans", It["act"]))
 	else:
 		_on_play_scene()
 
@@ -2062,23 +3264,46 @@ func _on_start() -> void:
 	elif state != St.QUESTION or bets.size() < group_count:
 		return
 	state = St.WALKING
+	var now0 := Time.get_ticks_msec()
+	pt = {"answer": now0, "walk0": now0}
+	pt_printed = false
+	act_seg = {}
+	last_bb_phase = ""
+	walk_ms0 = now0
+	walk_skipped = false
+	walk_hard_done = false
 	_hide_clue()
 	world.clear_fade()
 	var It: Dictionary = items[qi]
 	var travel: String = It["travel"]
 	W["travel"] = "walk" if travel == "none" else travel
 	var dest := _spot(It["to"])
+	act_plan = {}
+	if String(It["perform"]).begins_with("out:"):
+		act_plan = _plan_act(It)   # 戶外演出：鏡頭不被擋的位置（可能在地點旁邊的街上）
+		if act_plan.has("pos"):
+			dest = act_plan["pos"]
 	var path: Array = []
-	if It["from"] != It["to"]:
+	if It["from"] != It["to"] or dest.distance_to(W["pos"]) > 1.0:
 		path = world.route(W["pos"], dest)
-	if It["to"] == "ken_home":
+		if travel != "scooter" and travel != "bike" and (path.is_empty() or (path[-1] as Vector2).distance_to(dest) > 0.3):
+			path.append(dest)   # 走路：最後一段從路邊走到草地上；機車、腳踏車停在路邊（下面 _on_arrive 再走過去）
+		if (travel == "scooter" or travel == "bike") and bool(act_plan.get("grass", false)):
+			while path.size() > 1 and _ground_h(path[-1]) < 0.045:   # 機車、腳踏車不騎上草地：路線停在最後一個在路上的點
+				path.pop_back()
+	if It["to"] == home_id:
 		# 走到門口前（離門約 1 m，不穿過牆或門），面向門，之後淡出＝進門
 		path.append(dest)
-		path.append(dest - world.v2(world.places["ken_home"]["face"]) * 0.35)
+		if travel != "scooter":
+			path.append(dest - world.v2(world.places[home_id]["face"]) * 0.35)
 	if path.is_empty():
 		path.append((W["pos"] as Vector2) + (W["fwd"] as Vector2) * 0.6)
 	W["path"] = path
 	travel_t = 0.0
+	var plen := (W["pos"] as Vector2).distance_to(path[0])
+	for i in range(path.size() - 1):
+		plen += (path[i] as Vector2).distance_to(path[i + 1])
+	print("WALK_START q%d %s %.1f m at %.1f m/s (%.1f s without skipping)" % [qi + 1, W["travel"], plen, float(speeds.get(W["travel"], 1.4)), plen / maxf(float(speeds.get(W["travel"], 1.4)), 0.1)])
 	if W["travel"] != "bike":
 		_remove_parked()
 	# 出發前先轉向第一個路點：跟拍鏡頭一開始就在 Ken 背後的路上，不會卡進家裡／街屋模型（畫面一片黑）
@@ -2087,32 +3312,56 @@ func _on_start() -> void:
 		W["fwd"] = first_d.normalized()
 	match W["travel"]:
 		"jog":
-			_ken_anim("ft/jogging")
+			if mascot:
+				_mascot_gait("jog")
+			else:
+				_ken_anim("ft/jogging")
 		"bike":
 			_set_bike(true)
+			if test_mode and mascot and (OS.get_environment("BIKEBAKE") != "" or OS.get_environment("BIKECHECK") != ""):   # [perf] 烤好的腳踏車和現量的一樣嗎：印同一組量測（BIKEBAKE=1 現量並存檔）
+				if OS.get_environment("BIKEBAKE") != "":
+					mm.save_bike_bake("res://data/interior/%s_bike.json" % who)
+				var keep_th: float = am.crank_th
+				var bl := []
+				for k in 4:
+					am.crank_th = k * TAU / 4.0
+					am.update_bike(0.0, 0.0)
+					var mb: Dictionary = am.measure_bike(true)
+					bl.append("k%d seat %.2f pedalL %.2f pedalR %.2f" % [k, float(mb.get("seat_gap_cm", -1)), float(mb.get("foot_left_pedal_gap_cm", -1)), float(mb.get("foot_right_pedal_gap_cm", -1))])
+				am.crank_th = keep_th
+				am.update_bike(0.0, 0.0)
+				print("BIKE_CHECK %s %s: %s" % [who, "baked" if OS.get_environment("BIKEBAKE") == "" else "measured", " | ".join(bl)])
+		"scooter":
+			_scooter_mount()
 		_:
-			_ken_anim("walk")
-	am.gait_setup()
+			if mascot:
+				_mascot_gait("walk")
+			else:
+				_ken_anim("walk")
+	if not mascot:
+		am.gait_setup()
 	sfx("unlock")
 	cam_mode = "follow"
 	follow_pick = []
 	follow_cam2 = Vector2.INF
 	cam_pos = Vector3.ZERO   # 直接切到 Ken 背後（不要從正面慢慢掃過去，會穿過房子）
 	qpanel.visible = false
-	walk_caption.text = "Ken, what do you do in your free time…?"
+	walk_caption.text = ("%s, what do you do in your free time…?" % _char_name()) if who == "ken" else ("%s…" % String(ft["question"]).trim_suffix("?"))
 
 func _on_arrive() -> void:
 	if state != St.WALKING:
 		return
 	state = St.REVEAL
+	pt["arrive"] = Time.get_ticks_msec()
 	var It: Dictionary = items[qi]
 	walk_caption.text = ""
 	sfx("arrive")
 	var perf: String = It["perform"]
 	if perf.begins_with("indoor:"):
-		_ken_anim("idle")
-		if It["to"] == "ken_home":
-			W["fwd"] = -world.v2(world.places["ken_home"]["face"])   # 面向家門
+		if not _riding_scooter():
+			_ken_anim("idle")
+		if It["to"] == home_id and not _riding_scooter():
+			W["fwd"] = -world.v2(world.places[home_id]["face"])   # 面向家門
 			# 鏡頭在 Ken 背後斜上方：看得到 Ken 停在門前（不是穿過門）
 			var pp: Vector2 = W["pos"]
 			var fw: Vector2 = W["fwd"]
@@ -2125,6 +3374,8 @@ func _on_arrive() -> void:
 			await _shot("A%02d_%s_3b_door" % [qi + 1, It["act"]] if not pair else "B%02d_%s_3b_door" % [qi + 1, It["act"]])
 		await _fade(true)
 		_set_bike(false)
+		_scooter_clear()
+		_ken_anim("idle")
 		_enter_home(perf.substr(7))
 		await _fade(false)
 	else:
@@ -2133,23 +3384,40 @@ func _on_arrive() -> void:
 			if am.riding:
 				_park_bike()   # 騎車來的：下車，車停在旁邊（不是憑空消失）
 			_ken_anim("idle", 0.0)
+		var was_scooter := _riding_scooter()
+		if act_plan.has("pos") and (act_plan["pos"] as Vector2).distance_to(W["pos"]) > 1.2:
+			# 車停在路邊，人到草地上：機車／腳踏車留在停的地方，畫面淡出、角色到露營的位置
+			if was_scooter:
+				_scooter_park(It["to"], -1.2, 0.0)
+				was_scooter = false
+				_ken_anim("idle", 0.0)
+			await _fade(true, 0.25)
+			_scooter_clear()   # 媽媽把機車騎去停好（畫面淡出的時候）；草地上不留機車和安全帽
+			W["pos"] = act_plan["pos"]
+			_place_ken(0.0)
+			cam_pos = Vector3.ZERO
+			_fade(false, 0.25)
 		var wide := kind in ["basketball", "camping", "baseball"]
 		_setup_face_cam(6.0 if wide else 3.2, 2.1 if wide else 1.7)
 		var p: Vector2 = W["pos"]
+		if act_plan.has("cam"):   # 聽音樂：_plan_act 選好的「鏡頭到角色之間沒有東西」的方向，角色面向鏡頭
+			W["fwd"] = act_plan["f"]
+			face_cam = [act_plan["cam"], 1.7, act_plan["f"]]
+			world.clear_fade()
 		# 演出鏡頭：重要的東西（Ken、籃框、球、帳篷、營火、壘包）都在畫面左邊或中間——右邊有按鈕、下面有題目面板（老師 11/10）
 		# face_cam = [鏡頭平面位置, 鏡頭高, 方向, 看哪裡, 看的高度]
 		if kind == "basketball" or kind == "baseball" or kind == "camping":
-			var f: Vector2 = -(face_cam[2] as Vector2)
-			W["fwd"] = f
-			var right := Vector2(-f.y, f.x)
-			match kind:
-				"basketball":   # Ken 右後方：Ken 在左、籃框在中間偏右上
-					face_cam = [p + right * 4.6 - f * 1.6, 1.6, right, p + f * 1.2 + right * 0.3, 0.6]
-				"baseball":     # Ken 前方偏右：看得到臉、球棒、飛來的球和右邊的壘包
-					face_cam = [p + f * 5.2 + right * 0.9, 2.0, right, p + right * 1.3, 0.5]
-				"camping":      # Ken 前方偏左：Ken 跪著看營火，後面是帳篷
-					face_cam = [p + f * 3.4 - right * 1.7, 1.55, -right, p + f * 0.4 + right * 0.6, 0.45]
+			# 面向哪：_plan_act 已經選好「鏡頭到角色、道具之間沒有東西」的方向
+			var fwd0: Vector2 = act_plan["f"] if act_plan.has("f") else -(face_cam[2] as Vector2)
+			W["fwd"] = fwd0
+			face_cam = _wide_cam(kind, p, fwd0)
+			print("ACTCAM %s plan score %s cam %s" % [kind, act_plan.get("score", "-"), face_cam[0]])
 			world.fade_between(face_cam[0], p, "", 0.0)
+		if was_scooter:   # 坐機車來的：下車，媽媽和機車停在旁邊（鏡頭的另一側、後面），安全帽放後座
+			var ff: Vector2 = W["fwd"]
+			var cl: float = ((face_cam[0] as Vector2) - p).dot(Vector2(ff.y, -ff.x))
+			_scooter_park(It["to"], -2.4 if cl > 0.0 else 2.4, -2.6)
+			_ken_anim("idle", 0.0)
 		_start_act(kind)
 		if not roam:
 			cam_mode = "act"
@@ -2158,6 +3426,9 @@ func _on_arrive() -> void:
 
 func _reveal_panel() -> void:
 	var It: Dictionary = items[qi]
+	pt["act"] = Time.get_ticks_msec()
+	if act_kind != "baseball":
+		pt["seg_end"] = pt["act"]   # 只有棒球有「打到球 → 跑到壘包」這一段要等
 	qpanel.visible = true
 	opt_box.visible = false
 	bet_box.visible = false
@@ -2188,7 +3459,7 @@ func _reveal_panel() -> void:
 			if hit:
 				_pop_points(g, w)
 			chip_nodes[g]["panel"].add_theme_stylebox_override("panel", _style(Color("#b2f2bb") if hit else Color("#e9ecef"), Color("#2b8a3e") if hit else Color("#c92a2a"), 16, 5))
-		q_sub.text = "Q%d/%d" % [qi + 1, items.size()]
+		q_sub.text = "%s  Q%d/%d" % [_route_info()["label"], qi + 1, items.size()]
 	_refresh_chips()
 	_layout_panel()
 	sfx("correct" if any_hit else "wrong")
@@ -2209,7 +3480,10 @@ func _on_listen() -> void:
 	if state != St.REVEAL:
 		return
 	listen_btn.disabled = true
-	await say("ft_ans_%s" % items[qi]["act"])
+	await say(_vk("ans", items[qi]["act"]))
+	if not pt.has("heard"):
+		pt["heard"] = Time.get_ticks_msec()
+		_reveal_report()
 	listened = true
 	listen_btn.disabled = false
 	next_btn.disabled = false
@@ -2276,8 +3550,8 @@ func save_progress(silent := false) -> void:
 		return
 	var next_q := qi + 1 if state == St.REVEAL else qi
 	var d := {"version": 2, "saved_at": Time.get_datetime_string_from_system(), "group_count": group_count,
-		"group_icons": group_icons, "scores": scores, "qi": next_q}
-	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+		"group_icons": group_icons, "scores": scores, "qi": next_q, "route": route_id}
+	var f := FileAccess.open(save_path, FileAccess.WRITE)
 	if f == null:
 		if not silent:
 			_toast("Save failed 儲存失敗")
@@ -2288,21 +3562,23 @@ func save_progress(silent := false) -> void:
 		_toast("Saved ✓ 已保留（Q%d/%d）" % [mini(next_q + 1, items.size()), items.size()])
 
 func _read_save() -> Dictionary:
-	if not FileAccess.file_exists(SAVE_PATH):
+	if not FileAccess.file_exists(save_path):
 		return {}
-	var d = JSON.parse_string(FileAccess.get_file_as_string(SAVE_PATH))
+	var d = JSON.parse_string(FileAccess.get_file_as_string(save_path))
 	if typeof(d) != TYPE_DICTIONARY or int(d.get("version", 0)) != 2:
 		return {}
 	return d
 
 func _delete_save() -> void:
-	if FileAccess.file_exists(SAVE_PATH):
-		DirAccess.remove_absolute(SAVE_PATH)
+	if FileAccess.file_exists(save_path):
+		DirAccess.remove_absolute(save_path)
 
 func load_progress() -> void:
 	var d := _read_save()
 	if d.is_empty():
 		return
+	if routes_data.has(String(d.get("route", "ken_a"))):
+		_set_route(String(d.get("route", "ken_a")))
 	group_count = int(d["group_count"])
 	group_icons = []
 	for x in d["group_icons"]:
@@ -2367,6 +3643,8 @@ func _show_result() -> void:
 	# Ken 在最後一題的地方雙手高舉慶祝（老師核可的 Mixamo Cheering）
 	W["path"] = []
 	W["pos"] = _spot(items[-1]["to"])
+	_remove_parked()
+	_scooter_clear()
 	_ken_anim("ft/cheering")
 	_setup_face_cam(4.0, 1.6)
 	var p: Vector2 = W["pos"]
@@ -2382,7 +3660,7 @@ func _show_result() -> void:
 	panel.add_child(v)
 	var t := _label("Great job! 太棒了！", 46)
 	v.add_child(t)
-	v.add_child(_label("Ken's free time ・ %d questions" % items.size(), 22, Color("#7b5ea7")))
+	v.add_child(_label("%s's free time ・ Route %s ・ %d questions" % [_char_name(), _route_info()["label"], items.size()], 22, Color("#7b5ea7")))
 	var order := range(scores.size())
 	order.sort_custom(func(a, b): return scores[a] > scores[b])
 	var top: int = scores[order[0]]
@@ -2418,6 +3696,18 @@ func _show_result() -> void:
 		setup.pressed.connect(_show_setup)
 		row.add_child(setup)
 	_burst_confetti()
+	_fit_result_panel.call_deferred()
+
+## [ipad] 結果表：8 組時面板高 724 > 1280×720 畫面，下面的按鈕被切掉 → 太高就等比例縮小（左上角為準）
+func _fit_result_panel() -> void:
+	await get_tree().process_frame   # 舊的那一輪結果列 queue_free 之後才量
+	var panel: PanelContainer = result_ui.get_node("Panel")
+	panel.size = Vector2.ZERO
+	var ms := panel.get_combined_minimum_size()
+	var vs := get_viewport().get_visible_rect().size
+	var s := minf(1.0, minf((vs.y - 48.0) / ms.y, (vs.x - 48.0) / ms.x))
+	panel.pivot_offset = Vector2.ZERO
+	panel.scale = Vector2(s, s)
 
 func _burst_confetti() -> void:
 	confetti.visible = true
@@ -2437,15 +3727,180 @@ func _burst_confetti() -> void:
 		tw.tween_property(r, "position:y", vs.y + 40, dur).from(-30.0)
 		tw.parallel().tween_property(r, "rotation", r.rotation + TAU * 2, dur)
 
+# ---------- [perf] 計時、效能小框（?debug=1）、自動低畫質 ----------
+func _sec(a: String, b: String) -> float:
+	if not pt.has(a) or not pt.has(b):
+		return -1.0
+	return (int(pt[b]) - int(pt[a])) / 1000.0
+
+## 答對 → 演完＝「活動畫面出來＋答案句播完」（棒球再加「打到球、跑到壘包」）都到的時間（真實時間）
+func _reveal_report() -> void:
+	if pt_printed or not pt.has("heard") or not pt.has("seg_end") or not pt.has("answer"):
+		return
+	pt_printed = true
+	var end_ms := maxi(int(pt["heard"]), int(pt["seg_end"]))
+	var total := (end_ms - int(pt["answer"])) / 1000.0
+	pt["total"] = total
+	print("REVEAL_TIME q%d total=%.1fs walk=%.1fs arrive_to_act=%.1fs act_to_heard=%.1fs act_seg=%.1fs act=%s fps=%d low=%s %s" % [qi + 1, total,
+		_sec("walk0", "arrive"), _sec("arrive", "act"), _sec("act", "heard"), _sec("act", "seg_end"), items[qi]["act"],
+		Engine.get_frames_per_second(), low_q, "FAIL>25s" if total > 25.0 else "ok"])
+	if perf_n > 0:
+		var s := "PERF q%d frames=%d" % [qi + 1, perf_n]
+		for k in ["step", "anim", "act", "cam"]:
+			s += " %s=%.2fms(max %.1f)" % [k, float(perf_acc.get(k, 0)) / perf_n / 1000.0, float(perf_acc.get(k + "_max", 0)) / 1000.0]
+		if perf_acc.has("sole_err_mm"):
+			s += " sole_vs_full_foot_lowest=%.2fmm" % float(perf_acc["sole_err_mm"])
+		print(s)
+	perf_acc = {}
+	perf_n = 0
+
+## 棒球分段（真實時間）：揮棒（含來球）→ 跑壘 → 到壘包；跑壘超過 RUN_CAP 秒直接到壘包
+func _track_bb() -> void:
+	var ph: String = am.bb_phase
+	var now := Time.get_ticks_msec()
+	if ph != last_bb_phase:
+		act_seg[ph] = now
+		last_bb_phase = ph
+		if ph == "base" and not pt.has("seg_end") and pt.has("act"):
+			pt["seg_end"] = now
+			var rs: int = int(act_seg.get("run", now))
+			pt["run_s"] = (now - rs) / 1000.0
+			print("ACT_SEG q%d baseball %s swing=%.2fs run=%.2fs run_v=%.2fm/s run_dist=%.2fm stride=%.2fm/s %s" % [qi + 1, who,
+				(rs - int(pt["act"])) / 1000.0, (now - rs) / 1000.0, float(am.run_v), float(am.run_dist), float(am.stride_speed_cached(am.run_anim)),
+				"FAIL run>%.0fs" % (RUN_CAP + 0.5) if (now - rs) / 1000.0 > RUN_CAP + 0.5 else "ok"])
+			_reveal_report()
+	elif ph == "run" and now - int(act_seg.get("run", now)) > int(RUN_CAP * 1000.0):
+		am.finish_run()
+		print("RUN_CAP q%d base run took > %.1f s (real time) → snapped to the base" % [qi + 1, RUN_CAP])
+
+func _init_quality() -> void:
+	var force := OS.get_environment("QUALITY")
+	var ios := false
+	debug_on = OS.get_environment("DEBUG") != ""
+	if OS.has_feature("web"):
+		var raw = JavaScriptBridge.eval("(function(){try{var s=location.search;try{if(window.top&&window.top!==window)s+='&'+window.top.location.search.substring(1);}catch(e){}var q=new URLSearchParams(s);var u=navigator.userAgent||'';var mt=navigator.maxTouchPoints||0;var ios=/iPad|iPhone|iPod/.test(u)||((navigator.platform==='MacIntel'||/Macintosh/.test(u))&&mt>1);return JSON.stringify({debug:q.get('debug')||'',quality:q.get('quality')||'',ios:ios,ua:u.substring(0,80),mt:mt});}catch(e){return '{}';}})()", true)
+		var d = JSON.parse_string(String(raw)) if typeof(raw) == TYPE_STRING else null
+		if d is Dictionary:
+			debug_on = debug_on or String(d.get("debug", "")) == "1"
+			if force == "":
+				force = String(d.get("quality", ""))
+			ios = bool(d.get("ios", false))
+			print("QUALITY probe ios=%s touch=%s ua=%s" % [ios, d.get("mt", 0), d.get("ua", "")])
+	if force == "low" or force == "high":
+		_set_low_quality(force == "low", "forced ?quality=" + force)
+		q_decided = true
+	elif ios:
+		_set_low_quality(true, "iPad/iPhone")
+		q_decided = true
+	elif test_mode:
+		q_decided = true   # 電腦自動測試：維持原畫質（要測低畫質用 QUALITY=low）
+	if debug_on:
+		_build_debug()
+
+## 其他裝置：3D 畫面開始後量 3 秒平均 fps，< 24 就降畫質（只降一次，不再升回去）
+func _quality_probe() -> void:
+	var want := low_q and cam_mode != "fly" and cam_mode != "map"
+	if want != far_cull:
+		far_cull = want
+		world.set_far_cull(want)
+	if q_decided:
+		return
+	var now := Time.get_ticks_msec()
+	if q_ms0 == 0:
+		if Engine.get_process_frames() > 30:
+			q_ms0 = now
+			q_frames = 0
+		return
+	q_frames += 1
+	if now - q_ms0 >= 3000:
+		q_decided = true
+		var fps := q_frames * 1000.0 / float(now - q_ms0)
+		print("QUALITY probe avg fps %.1f over 3 s" % fps)
+		if fps < 24.0:
+			_set_low_quality(true, "avg %.1f fps < 24" % fps)
+
+func _set_low_quality(on: bool, why: String) -> void:
+	low_q = on
+	var vp := get_viewport()
+	vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	vp.scaling_3d_scale = 0.7 if on else 1.0
+	vp.msaa_3d = Viewport.MSAA_DISABLED if on else Viewport.MSAA_2X
+	vp.mesh_lod_threshold = 4.0 if on else 1.0
+	world.set_low_quality(on)
+	print("QUALITY %s (%s) render_scale=%.2f msaa=%d" % ["LOW" if on else "high", why, vp.scaling_3d_scale, vp.msaa_3d])
+
+func _build_debug() -> void:
+	debug_lbl = Label.new()
+	debug_lbl.name = "PerfDebug"
+	debug_lbl.add_theme_font_size_override("font_size", 13)
+	debug_lbl.add_theme_color_override("font_color", Color.WHITE)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0, 0, 0, 0.6)
+	sb.set_corner_radius_all(6)
+	sb.content_margin_left = 6
+	sb.content_margin_right = 6
+	sb.content_margin_top = 3
+	sb.content_margin_bottom = 3
+	debug_lbl.add_theme_stylebox_override("normal", sb)
+	debug_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ui.add_child(debug_lbl)
+
+## 小框放在右上按鈕欄下面、題目面板上面（右側本來就不放重要的東西）
+func _update_debug(delta: float) -> void:
+	if debug_lbl == null:
+		return
+	dbg_t -= delta
+	if dbg_t > 0.0:
+		return
+	dbg_t = 0.5
+	var fps := Engine.get_frames_per_second()
+	var t := "%d fps  %.0f ms\n%s  scale %.2f" % [fps, 1000.0 / maxf(fps, 1.0), "LOW" if low_q else "high", get_viewport().scaling_3d_scale]
+	if not pt.is_empty():
+		t += "\nQ%d answer→walk %.1f\nwalk %.1f  act %.1f" % [qi + 1, _sec("answer", "walk0"), _sec("walk0", "arrive"), _sec("arrive", "act")]
+		if pt.has("total"):
+			t += "\ntotal %.1f s" % float(pt["total"])
+		elif pt.has("answer"):
+			t += "\n… %.1f s" % ((Time.get_ticks_msec() - int(pt["answer"])) / 1000.0)
+	debug_lbl.text = t
+	debug_lbl.size = Vector2.ZERO
+	var vs := get_viewport().get_visible_rect().size
+	var col := hud_col.get_global_rect() if hud_col and hud_col.is_visible_in_tree() else Rect2(vs.x - 16, 8, 0, 0)
+	var ms := debug_lbl.get_combined_minimum_size()
+	var x := vs.x - ms.x - 12.0
+	var y := col.end.y + 8.0
+	if qpanel and qpanel.is_visible_in_tree():
+		y = minf(y, qpanel.get_global_rect().position.y - ms.y - 6.0)
+	debug_lbl.position = Vector2(x, maxf(y, 8.0))
+
 # ---------- 自動測試（--test） ----------
 ## MODEA=1（預設）：分組 6 組整回合 11 題、每一步截圖 test_ft_A*.png
 ## PAIR=1：假外框兩人一組整回合、四種線索、自動作答，截圖 test_ft_B*.png
 ## INTRO=1：首頁空拍
+## 等畫面真的畫出一格再截圖。視窗被縮到最小／藏起來時引擎不畫圖（frame_post_draw 不會來）→ 最多等 6 秒就繼續，
+## 並印 SHOT WARN（11/11 15:07 Ken B 兩人一組整回合就是卡在這裡 25 分鐘：遊戲本身還在跑，只是測試在等一格永遠不會畫的畫面）。
+var _drawn := false
+func _on_frame_drawn() -> void:
+	_drawn = true
+
+func _wait_drawn(what: String) -> bool:
+	_drawn = false
+	if not RenderingServer.frame_post_draw.is_connected(_on_frame_drawn):
+		RenderingServer.frame_post_draw.connect(_on_frame_drawn)
+	var t0 := Time.get_ticks_msec()
+	while not _drawn and Time.get_ticks_msec() - t0 < 6000:
+		await get_tree().process_frame
+	if not _drawn:
+		print("SHOT WARN no frame was drawn for 6 s (game window minimized or hidden?) at %s — window mode %d, can_draw %s" % [what, DisplayServer.window_get_mode(), DisplayServer.window_can_draw()])
+		test_draw_stalls += 1
+	return _drawn
+
+var test_draw_stalls := 0
+var _beat_t := 0.0
 func _shot(name: String) -> void:
-	await RenderingServer.frame_post_draw
+	await _wait_drawn(name)
 	var img := get_viewport().get_texture().get_image()
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://test_shots"))
-	img.save_png("res://test_shots/%s.png" % name)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(shots_dir))
+	img.save_png("%s/%s.png" % [shots_dir, name])
 	print("SHOT ", name)
 
 var test_fail: Array = []
@@ -2466,7 +3921,7 @@ func _key_points() -> Dictionary:
 			"watch_tv":
 				var tv := interior.find_child("TVScreen", true, false) as Node3D
 				out["tv_center"] = tv.global_position
-				for sx in [-0.5, 0.5]:
+				for sx in ([] if mascot else [-0.5, 0.5]):
 					for sy in [-0.29, 0.29]:
 						out["tv_corner_%d_%d" % [int(sx * 2), int(sy * 4)]] = tv.global_transform * Vector3(sx * 1.06, sy, 0)
 			"surf_internet", "online_games":
@@ -2487,7 +3942,7 @@ func _key_points() -> Dictionary:
 			out["backboard_top"] = act_root.global_transform * Vector3(0, 2.75, 2.9)
 		"camping":
 			out["fire"] = (act_root.get_node("Fire") as Node3D).global_position
-			out["tent"] = act_root.global_transform * Vector3(-1.6, 1.0, -1.2)
+			out["tent"] = act_root.global_transform * Vector3(-1.6, 0.6, -1.2)   # 帳篷中間（尖頂可以稍微出畫面）
 		"baseball":
 			out["base"] = am.base_node.global_position
 			out["bat"] = am.bat.global_position
@@ -2523,6 +3978,21 @@ func _hud_safe() -> bool:
 	print(line)
 	return ok
 
+## [perf] FPS15 測試：等答案句播完、REVEAL_TIME 印出來（棒球還要等跑到壘包），檢查「答對 → 演完」≤ 25 秒
+func _finish_listen() -> void:
+	if not perf_test:
+		await _on_listen()
+		return
+	var g := 0.0
+	while (not listened or not pt_printed) and g < 45.0:
+		await _wait(0.1)
+		g += 0.1
+	var tot: float = float(pt.get("total", 999.0))
+	_check(pt_printed and tot <= 25.0, "%s q%d REVEAL_TIME answer -> act done %.1f s <= 25 s (15 fps, x1)" % ["B" if pair else "A", qi + 1, tot])
+	if act_kind == "baseball":
+		var rs: float = float(pt.get("run_s", 99.0))
+		_check(rs <= RUN_CAP + 0.5, "%s q%d ACT_SEG baseball run to base %.2f s <= %.1f s (real time)" % ["B" if pair else "A", qi + 1, rs, RUN_CAP + 0.5])
+
 func _wait(sec: float) -> void:
 	await get_tree().create_timer(sec).timeout
 
@@ -2542,6 +4012,27 @@ func _run_test() -> void:
 		return
 	vol_level = 0
 	_apply_volume()
+	if OS.get_environment("ROUTESHOT") != "":   # 路線選擇畫面截圖（分組、兩人一組各一張）
+		await _wait(2.5)
+		intro_t = INTRO_END
+		await _wait(1.2)
+		_show_routes("groups")
+		await _wait(0.6)
+		await _shot("route_select_groups")
+		_show_routes("pair")
+		await _wait(0.6)
+		await _shot("route_select_pair")
+		_check(route_ui.visible and (route_ui.find_child("Routes", true, false) as Node).get_child_count() == 4, "route select shows 4 routes")
+		_pick_route("shuiling")
+		_check(route_id == "shuiling" and who == "shuiling" and items[0]["options"][1].begins_with("She goes"), "picking Shuiling loads her route (She ...)")
+		print("TEST SUMMARY checks=%d failed=%d %s" % [test_checks, test_fail.size(), test_fail])
+		get_tree().quit(1 if test_fail.size() > 0 else 0)
+		return
+	if OS.get_environment("PANELFIT") != "":   # [ipad] 各種視窗大小：面板／畫面都在可見範圍內（--resolution WxH）
+		await _test_panel_fit()
+		print("TEST SUMMARY checks=%d failed=%d %s" % [test_checks, test_fail.size(), test_fail])
+		get_tree().quit(1 if test_fail.size() > 0 else 0)
+		return
 	if OS.get_environment("CLUEANIM") != "":
 		# 11 個程式動畫線索各拍一張（動畫 3 秒處）
 		title_ui.visible = false
@@ -2570,12 +4061,265 @@ func _run_test() -> void:
 		get_tree().quit()
 		return
 	var only := int(OS.get_environment("ONLYQ")) if OS.get_environment("ONLYQ") != "" else 0
+	if OS.get_environment("MINTEST") != "":   # 實驗：視窗縮到最小時，遊戲邏輯照跑、只有截圖等不到畫面（印 SHOT WARN）
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MINIMIZED)
+		print("MINTEST window minimized, can_draw=", DisplayServer.window_can_draw())
+	if OS.get_environment("GHCHECK") != "" or perf_test:   # [perf] 路面高度格子索引＝逐一查（隨機 4000 點＋每個地點附近）
+		var bad := 0
+		var r2 := RandomNumberGenerator.new()
+		r2.seed = 7
+		var cs: Array = []
+		for P in world.place_list:
+			if P.has("door2"):
+				cs.append(P["door2"])
+		for i in 4000:
+			var c0: Vector2 = cs[i % cs.size()]
+			var q := c0 + Vector2(r2.randf_range(-30, 30), r2.randf_range(-30, 30))
+			if absf(_ground_h(q) - _ground_h_slow(q)) > 1e-6:
+				bad += 1
+		_check(bad == 0, "ground height grid index == full scan at 4000 points (%d differ)" % bad)
 	if pair:
 		await _test_pair(only)
 	else:
 		await _test_groups(only)
+	if test_draw_stalls > 0:
+		print("TEST NOTE: %d screenshot(s) were taken while the window was not drawing (minimized/hidden) — those pictures are stale" % test_draw_stalls)
 	print("TEST SUMMARY checks=%d failed=%d %s" % [test_checks, test_fail.size(), test_fail])
 	get_tree().quit(1 if test_fail.size() > 0 else 0)
+
+# ---------- [routes] 檢查圖用：每題演出的關鍵畫面 1 格＋那一格的接觸量測（SHEET=1 --test） ----------
+var sheet_metrics := {}
+func _num_only(m: Dictionary) -> Dictionary:
+	var o := {}
+	for k in m:
+		if typeof(m[k]) in [TYPE_FLOAT, TYPE_INT, TYPE_BOOL, TYPE_STRING]:
+			o[k] = m[k]
+	return o
+
+func _sheet_save(key: String, m: Dictionary) -> void:
+	var dir := "res://test_route_sheet/%s" % route_id
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
+	FileAccess.open("res://test_route_sheet/.gdignore", FileAccess.WRITE).close()
+	for i in 3:
+		await get_tree().process_frame
+	await _wait_drawn("sheet " + key)
+	get_viewport().get_texture().get_image().save_png("%s/%s.png" % [dir, key])
+	sheet_metrics[key] = _num_only(m)
+	var path := "%s/metrics.json" % dir
+	var all := {}
+	if FileAccess.file_exists(path):
+		var old = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if old is Dictionary:
+			all = old
+	all.merge(sheet_metrics, true)
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify(all, " "))
+	f.close()
+	print("SHEET %s %s %s" % [route_id, key, JSON.stringify(sheet_metrics[key])])
+
+func _feet_low_cm() -> float:
+	var low := 9.0
+	for q in am.mesh_pts(["leftfoot", "lefttoe", "rightfoot", "righttoe"]):
+		low = minf(low, q.y - am.g(q))
+	return low * 100.0
+
+func _sheet_frame(It: Dictionary) -> void:
+	var key := "q%02d" % (qi + 1)
+	var m := {}
+	var a: AnimationPlayer = W["anim"]
+	var keep_fast := fast
+	fast = false
+	if in_home:
+		sheet_freeze = true
+		if mascot:
+			m = (poses["poses"][interior_shot].get("metrics", {}) as Dictionary).duplicate()
+			m["source"] = "baked from mascot_motion_check contact frame"
+		else:
+			var low := 9.0
+			for it in Pose._hp_skinned(interior_sk, "", ["leftfoot", "lefttoe", "rightfoot", "righttoe"]):
+				for q: Vector3 in (it[1] as PackedVector3Array):
+					low = minf(low, q.y)
+			m = {"feet_lowest_y_cm": low * 100.0, "source": "approved home_check pose (pose_bake)"}
+		m["skirt_settled"] = not skirt_rep.is_empty()
+	else:
+		match act_kind:
+			"basketball":
+				var g0 := 0.0
+				while g0 < 5.0 and bool(am.dribble_ball_at(a.current_animation_position)[1]):
+					await get_tree().process_frame
+					g0 += 0.016
+				while g0 < 10.0 and not bool(am.dribble_ball_at(a.current_animation_position)[1]):   # 球回到手心那一格
+					await get_tree().process_frame
+					g0 += 0.016
+				sheet_freeze = true
+				m = am.measure_dribble()
+			"baseball":
+				var tc: float = am.bb["t_c"]
+				var g1 := 0.0
+				while g1 < 25.0 and (am.bb_t > tc - 0.3 or bb_cut):   # 等下一輪開始
+					await get_tree().process_frame
+					g1 += 0.016
+				bb_hold = true   # _update_act 走到接觸那一格就停（sheet_freeze）
+				while g1 < 50.0 and not sheet_freeze:
+					await get_tree().process_frame
+					g1 += 0.016
+				bb_hold = false
+				sheet_freeze = true
+				m = am.measure_baseball()
+				m["bb_t"] = am.bb_t
+				m["t_contact"] = tc
+			"camping":
+				sheet_freeze = true
+				m = am.measure_ground_body((act_root.get_node("Fire") as Node3D).position)
+			"music":
+				sheet_freeze = true
+				m = am.measure_ground_body()
+				if mascot:
+					m["ear_pad_gap_cm"] = W["outdoor"]["stand_headphones"].get("ear_pad_gap_cm", -1.0)
+					m["ear_pad_in_head"] = W["outdoor"]["stand_headphones"].get("ear_pad_in_head", -1)
+			"bike":
+				sheet_freeze = true
+				m = am.measure_bike(true)
+			"jogging":
+				sheet_freeze = true
+				m = {"feet_lowest_cm": _feet_low_cm(), "ground_speed_mps": float(speeds.get("jog", 0.0)), "procedural_gait": proc_gait != ""}
+	m["act"] = It["act"]
+	m["hud_safe"] = _hud_safe()
+	await _sheet_save(key, m)
+	if OS.get_environment("TOPVIEW") != "" and not in_home:   # 除錯：正上方往下看這一題在哪裡演（草地／馬路）
+		var tp: Vector2 = W["pos"]
+		var keep_cm := cam_mode
+		fixed_cam = [world.bend2(tp, 26.0), world.bend2(tp, 0.0), (world.bend2(tp + Vector2(0, -6), 0.0) - world.bend2(tp, 0.0)).normalized()]
+		cam_mode = "fixed"
+		hud.visible = false
+		for i in 3:
+			await get_tree().process_frame
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png("res://test_route_sheet/%s/%s_top.png" % [route_id, key])
+		hud.visible = true
+		cam_mode = keep_cm
+		cam_pos = Vector3.ZERO
+	sheet_freeze = false
+	fast = keep_fast
+
+## 圳寶坐機車：移動中那一格量輪子貼地、輪子轉角×半徑＝前進距離、屁股到坐墊、安全帽穿模
+func _scooter_check(It: Dictionary) -> void:
+	if not _riding_scooter():
+		_check(false, "A q%d scooter trip: Zun-Bo is on the scooter" % (qi + 1))
+		return
+	sheet_freeze = true
+	var m: Dictionary = scooter.measure()
+	var ok: bool = absf(float(m["wheel_front_road_gap_cm"])) < 0.3 and absf(float(m["wheel_rear_road_gap_cm"])) < 0.3 and float(m["wheel_slip_cm"]) < 0.5 \
+		and int(m["helmet_penetration_pts"]) == 0 and float(m["helmet_min_gap_mm"]) > 0.0 and int(m["helmet_head_pts_covered"]) > 50 \
+		and absf(float(m["seat_bottom_gap_cm"])) < 1.0 and float(m["distance_m"]) > 1.0
+	_check(ok, "A q%d scooter: wheels on road, roll=distance, seated, helmet 0 penetration %s" % [qi + 1, JSON.stringify(_num_only(m))])
+	if OS.get_environment("SHEET") != "":
+		# 近一點的側面鏡頭（看得到輪子、坐姿、安全帽）
+		var p: Vector2 = W["pos"]
+		var f: Vector2 = W["fwd"]
+		var keep_mode := cam_mode
+		for sd in [1.0, -1.0]:
+			var c2: Vector2 = p + Vector2(-f.y, f.x) * 3.4 * sd + f * 1.6
+			if world._blocked_count(c2, 1.5, p, 1.0, "-none-") == 0 or sd < 0.0:
+				fixed_cam = [world.bend2(c2, 1.5), world.bend2(p, 0.85), world.bend2(p).normalized()]
+				break
+		cam_mode = "fixed"
+		m["act"] = "scooter"
+		await _sheet_save("scooter_q%02d" % (qi + 1), m)
+		cam_mode = keep_mode
+		cam_pos = Vector3.ZERO
+	sheet_freeze = false
+
+# ---------- [ipad] 面板塞得進畫面嗎（PANELFIT=1 --test --resolution WxH） ----------
+## 每種組數 4–8（PANELGROUPS=4,5 可只測幾種）× 11 題的題目面板＋揭曉面板：整塊在可見範圍內、左右 ≥ 12 px、不碰右上按鈕欄；
+## 再看首頁、路線選擇、分組設定、結果畫面的按鈕／字有沒有跑出畫面。截圖 test_panelfit/<WxH>_*.png
+func _rect_in_view(r: Rect2, margin: float) -> bool:
+	var vs := get_viewport().get_visible_rect()
+	return r.position.x >= vs.position.x + margin - 0.5 and r.end.x <= vs.end.x - margin + 0.5 and r.position.y >= vs.position.y - 0.5 and r.end.y <= vs.end.y + 0.5
+
+func _screen_fits(root: Control, what: String) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var bad := []
+	var stack: Array = [root]
+	while not stack.is_empty():
+		var n = stack.pop_back()
+		if n is Control and not (n as Control).is_visible_in_tree():
+			continue
+		if (n is Button or n is Label or n is PanelContainer) and n != confetti:
+			if not _rect_in_view((n as Control).get_global_rect(), 0.0):
+				bad.append("%s%s" % [n.name, (n as Control).get_global_rect()])
+		stack.append_array(n.get_children())
+	print("PANELFIT screen %s view=%s outside=%s" % [what, get_viewport().get_visible_rect().size, bad])
+	_check(bad.is_empty(), "panelfit %s: every button/label inside the screen" % what)
+
+func _panel_fit_once(tag: String) -> bool:
+	for i in 3:
+		await get_tree().process_frame
+	var r := qpanel.get_global_rect()
+	var col := hud_col.get_global_rect()
+	var ok := _rect_in_view(r, 12.0) and not r.intersects(col)
+	print("PANELFIT %s view=%s panel=%s scale=%.2f col=%s %s" % [tag, get_viewport().get_visible_rect().size, r, qpanel.scale.x, col, "ok" if ok else "OUT"])
+	return ok
+
+func _test_panel_fit() -> void:
+	var res := "%dx%d" % [DisplayServer.window_get_size().x, DisplayServer.window_get_size().y]
+	var dir := "res://test_panelfit"
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
+	FileAccess.open(dir + "/.gdignore", FileAccess.WRITE).close()
+	var snap := func(nm: String):
+		await _wait_drawn(nm)
+		get_viewport().get_texture().get_image().save_png("%s/%s_%s.png" % [dir, res, nm])
+		print("SHOT ", nm)
+	await _wait(2.5)
+	intro_t = INTRO_END
+	await _wait(0.8)
+	await _screen_fits(title_ui, "title")
+	await snap.call("title")
+	if pair:
+		_show_routes("pair")
+		await _screen_fits(route_ui, "route_select")
+		_start_game()
+	else:
+		_show_routes("groups")
+		await _screen_fits(route_ui, "route_select")
+		await snap.call("route")
+		_show_setup()
+		_set_group_count(8)
+		await _screen_fits(setup_ui, "setup_8")
+	fast = not perf_test   # [perf] FPS15 測試一律 ×1
+	var counts := [1] if pair else [4, 5, 6, 7, 8]
+	if OS.get_environment("PANELGROUPS") != "" and not pair:
+		counts = Array(OS.get_environment("PANELGROUPS").split(",")).map(func(x): return int(x))
+	for n in counts:
+		if not pair:
+			_set_group_count(n)
+			_start_game()
+		var worst := ""
+		for q in items.size():
+			qi = q
+			_show_question(q == 0)
+			if not await _panel_fit_once("%s g%d q%d question" % [res, n, q + 1]):
+				worst += " q%d" % (q + 1)
+			if q == 0:
+				await snap.call("g%d_q1_question" % n)
+			if not pair:
+				for g in group_count:
+					bets[g] = 0
+				_paint_bet(0)
+			_reveal_panel()
+			_layout_panel()
+			if not await _panel_fit_once("%s g%d q%d reveal" % [res, n, q + 1]):
+				worst += " q%d-reveal" % (q + 1)
+		_check(worst == "", "panelfit %s groups=%d: panel inside screen (≥12 px) and clear of the right buttons%s" % [res, n, worst])
+	scores.clear()
+	for g in (1 if pair else 8):
+		scores.append(10 + g)
+	group_count = scores.size()
+	_show_result()
+	await _wait(0.5)
+	await _screen_fits(result_ui, "result")
+	await snap.call("result")
 
 func _test_groups(only: int) -> void:
 	await _wait(2.5)
@@ -2590,7 +4334,7 @@ func _test_groups(only: int) -> void:
 	if only > 0:
 		qi = only - 1
 		_show_question()
-	fast = true
+	fast = not perf_test   # [perf] FPS15 測試一律 ×1
 	var n0 := qi
 	for n in range(n0, items.size() if only == 0 else only):
 		var It: Dictionary = items[qi]
@@ -2620,25 +4364,41 @@ func _test_groups(only: int) -> void:
 		await _wait(2.2 if It["travel"] != "none" else 0.1)
 		if It["travel"] != "none":
 			await _shot(tag + "_3moving")
+			if It["travel"] == "scooter" and not perf_test:   # FPS15 計時測試不量（量一次 15 秒，會算進揭曉時間）；一般整回合測試照量
+				await _scooter_check(It)
 			var pth: Array = W["path"]
 			if not pth.is_empty():
 				var dirv: Vector2 = ((pth[0] as Vector2) - (W["pos"] as Vector2))
 				var ang := rad_to_deg(absf((W["fwd"] as Vector2).angle_to(dirv))) if dirv.length() > 0.3 else 0.0
 				_check(ang < 35.0, "A q%d Ken faces where he walks (%.0f°)" % [qi + 1, ang])
-		fast = true
-		await _wait_state(St.WALKING)
+		fast = not perf_test   # [perf] FPS15 測試一律 ×1
+		await _wait_state(St.WALKING, 300.0)   # 電腦忙的時候（視窗被擋住、幀數很低）走路會花比較久
 		var gw := 0.0
 		while not next_btn.visible and gw < 8.0:   # 進門有淡出／淡入，等演出面板出來
-			await _wait(0.2)
+			await _wait(0.05 if perf_test else 0.2)
 			gw += 0.2
+		if perf_test:
+			_on_listen()   # [perf] 演出出來就按「聽句子」（不等截圖、檢查）
 		await _wait(1.6)
 		await _shot(tag + "_4act")
 		_check(_hud_safe(), "A q%d key objects not under HUD buttons / bottom panel" % (qi + 1))
+		if in_home and mascot:
+			var iv := _indoor_visible()
+			_check(iv["ok"], "A q%d indoor: face + key prop visible, not hidden by own head %s" % [qi + 1, iv["note"]])
+		if not in_home:
+			var ov := _outdoor_visible()
+			_check(ov["ok"], "A q%d outdoor: nothing between camera and character/props, character >= 20%% of screen height (%s)" % [qi + 1, ov["note"]])
+		if OS.get_environment("SHEET") != "":
+			await _sheet_frame(It)
 		if roam or act_kind == "baseball":   # 一直在動的演出：多看幾秒（含迴轉、跑壘）
 			var all_ok := true
 			for i in 16:
 				await _wait(0.5)
 				all_ok = _hud_safe() and all_ok
+				var ov2 := _outdoor_visible()
+				if not ov2["ok"]:
+					all_ok = false
+					print("OUTVIS fail during moving act: ", ov2["note"], " phase=", am.bb_phase if act_kind == "baseball" else "-", " t=", am.bb_t if act_kind == "baseball" else 0.0)
 			_check(all_ok, "A q%d moving act stays clear of HUD for 8 s" % (qi + 1))
 		if OS.get_environment("BATAXIS") != "":
 			var a: AnimationPlayer = W["anim"]
@@ -2659,10 +4419,11 @@ func _test_groups(only: int) -> void:
 		_check(ok_score and state == St.REVEAL, "A q%d scores updated by betting rule" % (qi + 1))
 		if String(It["perform"]).begins_with("indoor:"):
 			_check(in_home and cam_mode == "interior", "A q%d indoor activity shown inside Ken's home" % (qi + 1))
-		_on_next()   # 還沒聽答案句：Next 要被擋
-		_check(state == St.REVEAL and next_btn.disabled, "A q%d next blocked until answer sentence heard" % (qi + 1))
+		if not perf_test:   # FPS15 測試演出一出來就聽了答案句（這個鎖在一般整回合測試檢查）
+			_on_next()   # 還沒聽答案句：Next 要被擋
+			_check(state == St.REVEAL and next_btn.disabled, "A q%d next blocked until answer sentence heard" % (qi + 1))
 		print("ROUND %d %s from=%s to=%s perform=%s scores=%s state=%d" % [qi + 1, It["act"], It["from"], It["to"], It["perform"], scores, state])
-		await _on_listen()
+		await _finish_listen()
 		await _on_next()
 		await _wait(0.4)
 	if only == 0:
@@ -2683,7 +4444,7 @@ func _test_pair(only: int) -> void:
 	if only > 0:
 		qi = only - 1
 		_show_question()
-	fast = true
+	fast = not perf_test   # [perf] FPS15 測試一律 ×1
 	var seen := {}
 	var n0 := qi
 	for n in range(n0, items.size() if only == 0 else only):
@@ -2731,17 +4492,25 @@ func _test_pair(only: int) -> void:
 			await _shot(tag + "_3asked")
 		while state == St.ANSWER:
 			await _wait(0.2)
-		await _wait_state(St.WALKING)
+		await _wait_state(St.WALKING, 300.0)   # 電腦忙的時候（視窗被擋住、幀數很低）走路會花比較久
 		var gw := 0.0
 		while not next_btn.visible and gw < 8.0:   # 進門有淡出／淡入，等演出面板出來
-			await _wait(0.2)
+			await _wait(0.05 if perf_test else 0.2)
 			gw += 0.2
+		if perf_test:
+			_on_listen()   # [perf] 演出出來就按「聽句子」（不等截圖、檢查）
 		await _wait(1.6)
 		await _shot(tag + "_4act")
 		_check(state == St.REVEAL, "B q%d Ken acted out the answer" % (qi + 1))
 		_check(_hud_safe(), "B q%d key objects not under HUD buttons / bottom panel" % (qi + 1))
+		if in_home and mascot:
+			var ivb := _indoor_visible()
+			_check(ivb["ok"], "B q%d indoor: face + key prop visible, not hidden by own head %s" % [qi + 1, ivb["note"]])
+		if not in_home:
+			var ovb := _outdoor_visible()
+			_check(ovb["ok"], "B q%d outdoor: nothing between camera and character/props, character >= 20%% of screen height (%s)" % [qi + 1, ovb["note"]])
 		print("PAIR %d %s clue=%s correct=%s score=%s" % [qi + 1, It["act"], kind, pair_correct, scores])
-		await _on_listen()
+		await _finish_listen()
 		await _on_next()
 		await _wait(0.3)
 	if only == 0:

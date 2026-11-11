@@ -64,6 +64,92 @@ func mesh_pts(keys: Array) -> PackedVector3Array:
 			out.append(inv * q)
 	return out
 
+## [perf] 每一格要量「腳底最低點」的地方（走路／跑步貼地、騎車踩踏板）只用靴底那一層頂點：
+## 綁定姿勢（腳是平的）裡腳＋腳趾頂點最低的 35%（高度方向）＝鞋底和鞋底邊緣；最低點一定在這裡面。
+## 舊：每次呼叫 mesh_pts 都把整隻腳（幾千個頂點 × 4 個權重）在 GDScript 裡蒙皮一次，而且先算全身 60 多根骨頭的矩陣
+##     → 電腦每格約 20 ms，iPad（網頁 GDScript 慢好幾倍）就一格一格。
+const SOLE_FRAC := 0.35
+var sole_frac := SOLE_FRAC   # 吉祥物大靴子：1.0（整隻腳都量；腳尖往下時最低點可能不在靴底那層，差到 3 mm）
+var _sole := {}
+func sole_pts(sd: String) -> PackedVector3Array:
+	if not _sole.has(sd):
+		_sole[sd] = _sole_build(sd)
+	var inv := frame.global_transform.affine_inverse()
+	var out := PackedVector3Array()
+	var sgx := sk.global_transform
+	for e: Dictionary in _sole[sd]:
+		var mi: MeshInstance3D = e["mi"]
+		var skin := mi.skin
+		var bm := {}
+		for b: int in (e["binds"] as PackedInt32Array):
+			var bix := skin.get_bind_bone(b)
+			if bix < 0:
+				bix = sk.find_bone(skin.get_bind_name(b))
+			bm[b] = inv * sgx * sk.get_bone_global_pose(bix) * skin.get_bind_pose(b)
+		var Pv: PackedVector3Array = e["pos"]
+		var Bv: PackedInt32Array = e["bones"]
+		var Wv: PackedFloat32Array = e["wts"]
+		var nb: int = e["nb"]
+		var base := out.size()
+		out.resize(base + Pv.size())
+		for j in Pv.size():
+			var p := Vector3.ZERO
+			for k in nb:
+				var wt := Wv[j * nb + k]
+				if wt > 0.0:
+					p += ((bm[Bv[j * nb + k]] as Transform3D) * Pv[j]) * wt
+			out[base + j] = p
+	return out
+
+func _sole_build(sd: String) -> Array:
+	var keys := [sd + "foot", sd + "toe"]
+	Pose._hp_skinned(sk, "", keys)   # 先讓 procedural_pose 建好這組頂點（同一份快取）
+	var res := []
+	for mi: MeshInstance3D in Pose._skinned_meshes(sk):
+		var key := "%d_%d_%s" % [mi.get_instance_id(), mi.mesh.get_rid().get_id(), ",".join(keys)]
+		if not Pose._hp_cache.has(key):
+			continue
+		var c: Dictionary = Pose._hp_cache[key]
+		var Pv: PackedVector3Array = c["pos"]
+		if Pv.is_empty():
+			continue
+		var lo := INF
+		var hi := -INF
+		for q in Pv:
+			lo = minf(lo, q.y)
+			hi = maxf(hi, q.y)
+		var cut := lo + (hi - lo) * sole_frac
+		var nb: int = c["nb"]
+		var B: PackedInt32Array = c["bones"]
+		var W: PackedFloat32Array = c["wts"]
+		var sp := PackedVector3Array()
+		var sb := PackedInt32Array()
+		var sw := PackedFloat32Array()
+		var sbind := PackedInt32Array()
+		var used := {}
+		for j in Pv.size():
+			if Pv[j].y > cut:
+				continue
+			sp.append(Pv[j])
+			for k in nb:
+				sb.append(B[j * nb + k])
+				sw.append(W[j * nb + k])
+				used[B[j * nb + k]] = true   # 權重 0 的骨頭也要有矩陣（索引會查到）
+		for b in used:
+			sbind.append(int(b))
+		var e := {"mi": mi, "pos": sp, "bones": sb, "wts": sw, "nb": nb, "binds": sbind}   # Packed 陣列是值：先填好再放進字典
+		print("SOLE %s %s: %d of %d foot+toe vertices (bottom %.0f%%), %d bones" % [sd, mi.name, sp.size(), Pv.size(), sole_frac * 100.0, sbind.size()])
+		res.append(e)
+	return res
+
+## 載入角色時先把每格會用到的頂點快取建好（不要在揭曉走路的第一格才建：電腦 1.7 秒、iPad 更久）
+func prewarm() -> void:
+	for sd in ["left", "right"]:
+		mesh_pts([sd + "foot"])
+		mesh_pts([sd + "toe"])
+		mesh_pts([sd + "foot", sd + "toe"])
+		sole_pts(sd)
+
 func mat(col: String, emit := 0.0) -> StandardMaterial3D:
 	var m := StandardMaterial3D.new()
 	m.albedo_color = Color(col)
@@ -1012,6 +1098,19 @@ func update_baseball(delta: float) -> bool:
 		bat.transform = Transform3D(Basis(a.basis.get_rotation_quaternion().slerp(b.basis.get_rotation_quaternion(), e)), a.origin.lerp(b.origin, e))
 	return bb_phase == "base" and bb_t > L + 4.5
 
+## [perf] 跑壘時間上限（遊戲用真實時間判斷）：直接放到壘包上，換成站姿
+func finish_run() -> void:
+	if bb_phase != "run":
+		return
+	var bp := base_node.position
+	var hj := fpos("hips")
+	var d := Vector2(bp.x - hj.x, bp.z - hj.z).dot(Vector2(run_dir.x, run_dir.z)) - 0.05
+	if d > 0.0:
+		model.transform.origin += run_dir * d
+	bb_phase = "base"
+	anim.play("idle" if anim.has_animation("idle") else run_anim, 0.2)
+	anim.advance(0.0)
+
 var _ss_cache := {}
 func stride_speed_cached(an: String) -> float:
 	if not _ss_cache.has(an):
@@ -1217,7 +1316,7 @@ func gait_fix(dt: float, move := 0.0, clear := 0.012, min_speed := 0.35, mesh_he
 		var h := minf(F.y - float(G["a"]), T.y - float(G["b"])) - g(F)
 		if mesh_height:
 			h = 9.0
-			for q in mesh_pts([sd + "foot", sd + "toe"]):
+			for q in sole_pts(sd):
 				h = minf(h, q.y - g(q))
 		var prev: Vector3 = G["prev"]
 		G["prev"] = T
@@ -1231,7 +1330,7 @@ func gait_fix(dt: float, move := 0.0, clear := 0.012, min_speed := 0.35, mesh_he
 		for it in 2:
 			for sd in ["left", "right"]:
 				var low := 9.0
-				for q in mesh_pts([sd + "foot", sd + "toe"]):
+				for q in sole_pts(sd):
 					low = minf(low, q.y - g(q))
 				if low < 0.0005:
 					lift_foot(sd, 0.0015 - low)

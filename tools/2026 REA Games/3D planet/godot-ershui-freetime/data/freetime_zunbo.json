@@ -1,0 +1,293 @@
+{
+ "note": "圳寶 路線 11 題（2026-11-11 定稿：露營改日改地點、干擾選項重檢、答案位置打亂；來源 資料/freetime/routes-BCD-scenarios-final-20261111.md）",
+ "route": "zunbo",
+ "who": "zunbo",
+ "name": "Zun-Bo",
+ "subject": "He",
+ "possessive": "his",
+ "intro": "Let's guess Zun-Bo's free time! Listen to my question and choose the answer.",
+ "question": "What does he do in his free time?",
+ "pattern": "He ___ in his free time.",
+ "phrases": {
+  "jogging": "go jogging",
+  "music": "listen to music",
+  "baseball": "play baseball",
+  "basketball": "play basketball",
+  "bike": "ride a bike",
+  "english": "study English",
+  "internet": "surf the Internet",
+  "tv": "watch TV",
+  "camping": "go camping",
+  "games": "play online games",
+  "recorder": "play the recorder"
+ },
+ "phrases3": {
+  "jogging": "goes jogging",
+  "music": "listens to music",
+  "baseball": "plays baseball",
+  "basketball": "plays basketball",
+  "bike": "rides a bike",
+  "english": "studies English",
+  "internet": "surfs the Internet",
+  "tv": "watches TV",
+  "camping": "goes camping",
+  "games": "plays online games",
+  "recorder": "plays the recorder"
+ },
+ "answer_order": "ACBBACABCCA",
+ "items": [
+  {
+   "n": 1,
+   "id": "q01",
+   "act": "jogging",
+   "context": "Today is Monday. It's an early, sunny morning.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He goes jogging in his free time.",
+    "He watches TV in his free time.",
+    "He plays online games in his free time."
+   ],
+   "opt_acts": [
+    "jogging",
+    "tv",
+    "games"
+   ],
+   "answer": 0,
+   "from": "zunbo_home",
+   "to": "waterpark",
+   "travel": "jog",
+   "perform": "out:jogging",
+   "zh": "星期一清晨，圳寶從家裡慢跑到旁邊的二八水水公園。"
+  },
+  {
+   "n": 2,
+   "id": "q02",
+   "act": "internet",
+   "context": "It's Monday afternoon. It's rainy after school.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He rides a bike in his free time.",
+    "He goes jogging in his free time.",
+    "He surfs the Internet in his free time."
+   ],
+   "opt_acts": [
+    "bike",
+    "jogging",
+    "internet"
+   ],
+   "answer": 2,
+   "from": "school",
+   "to": "zunbo_home",
+   "travel": "scooter",
+   "perform": "indoor:surf_internet",
+   "zh": "下雨天放學，媽媽騎機車載圳寶回家，圳寶用電腦上網。"
+  },
+  {
+   "n": 3,
+   "id": "q03",
+   "act": "recorder",
+   "context": "It's Monday evening. It's dark and cold.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He plays baseball in his free time.",
+    "He plays the recorder in his free time.",
+    "He plays basketball in his free time."
+   ],
+   "opt_acts": [
+    "baseball",
+    "recorder",
+    "basketball"
+   ],
+   "answer": 1,
+   "from": "zunbo_home",
+   "to": "zunbo_home",
+   "travel": "none",
+   "perform": "indoor:recorder",
+   "zh": "晚上又黑又冷，圳寶在房間吹直笛。"
+  },
+  {
+   "n": 4,
+   "id": "q04",
+   "act": "music",
+   "context": "It's Tuesday afternoon. School is over. It's very hot.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He goes jogging in his free time.",
+    "He listens to music in his free time.",
+    "He plays basketball in his free time."
+   ],
+   "opt_acts": [
+    "jogging",
+    "music",
+    "basketball"
+   ],
+   "answer": 1,
+   "from": "school",
+   "to": "library",
+   "travel": "walk",
+   "perform": "out:music",
+   "zh": "放學後太熱了，圳寶走到隔壁圖書館，戴耳機聽音樂。"
+  },
+  {
+   "n": 5,
+   "id": "q05",
+   "act": "tv",
+   "context": "It's Tuesday evening. It's rainy outside.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He watches TV in his free time.",
+    "He goes camping in his free time.",
+    "He rides a bike in his free time."
+   ],
+   "opt_acts": [
+    "tv",
+    "camping",
+    "bike"
+   ],
+   "answer": 0,
+   "from": "library",
+   "to": "zunbo_home",
+   "travel": "scooter",
+   "perform": "indoor:watch_tv",
+   "zh": "下雨的晚上，媽媽騎機車到圖書館接圳寶回家，圳寶坐在沙發上看電視。"
+  },
+  {
+   "n": 6,
+   "id": "q06",
+   "act": "bike",
+   "context": "It's Wednesday afternoon. It's sunny and windy.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He studies English in his free time.",
+    "He plays online games in his free time.",
+    "He rides a bike in his free time."
+   ],
+   "opt_acts": [
+    "english",
+    "games",
+    "bike"
+   ],
+   "answer": 2,
+   "from": "zunbo_home",
+   "to": "waterpark",
+   "travel": "bike",
+   "perform": "out:bike",
+   "zh": "星期三下午，圳寶迎著風騎腳踏車到二八水水公園。"
+  },
+  {
+   "n": 7,
+   "id": "q07",
+   "act": "english",
+   "context": "It's Wednesday evening. It's cloudy and cold.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He studies English in his free time.",
+    "He goes camping in his free time.",
+    "He plays baseball in his free time."
+   ],
+   "opt_acts": [
+    "english",
+    "camping",
+    "baseball"
+   ],
+   "answer": 0,
+   "from": "waterpark",
+   "to": "zunbo_home",
+   "travel": "walk",
+   "perform": "indoor:study_english",
+   "zh": "晚上又陰又冷，圳寶走回家，坐在書桌前讀英文。"
+  },
+  {
+   "n": 8,
+   "id": "q08",
+   "act": "games",
+   "context": "It's Thursday evening. It's cold and rainy.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He goes jogging in his free time.",
+    "He plays online games in his free time.",
+    "He plays basketball in his free time."
+   ],
+   "opt_acts": [
+    "jogging",
+    "games",
+    "basketball"
+   ],
+   "answer": 1,
+   "from": "zunbo_home",
+   "to": "zunbo_home",
+   "travel": "none",
+   "perform": "indoor:online_games",
+   "zh": "又冷又下雨的晚上，圳寶在家玩線上遊戲。"
+  },
+  {
+   "n": 9,
+   "id": "q09",
+   "act": "basketball",
+   "context": "Today is Saturday. It's a sunny morning.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He watches TV in his free time.",
+    "He plays the recorder in his free time.",
+    "He plays basketball in his free time."
+   ],
+   "opt_acts": [
+    "tv",
+    "recorder",
+    "basketball"
+   ],
+   "answer": 2,
+   "from": "zunbo_home",
+   "to": "lawn",
+   "travel": "scooter",
+   "perform": "out:basketball",
+   "zh": "星期六早上，媽媽騎機車載圳寶到水心之初大草原，圳寶在籃球架下投籃。"
+  },
+  {
+   "n": 10,
+   "id": "q10",
+   "act": "baseball",
+   "context": "It's Saturday afternoon. It's cool and sunny.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He surfs the Internet in his free time.",
+    "He listens to music in his free time.",
+    "He plays baseball in his free time."
+   ],
+   "opt_acts": [
+    "internet",
+    "music",
+    "baseball"
+   ],
+   "answer": 2,
+   "from": "lawn",
+   "to": "lawn",
+   "travel": "none",
+   "perform": "out:baseball",
+   "zh": "下午涼爽晴朗，圳寶在大草原和爸爸打棒球。"
+  },
+  {
+   "n": 11,
+   "id": "q11",
+   "act": "camping",
+   "context": "It's Saturday evening. It's cool. The sky is clear.",
+   "question": "What does he do in his free time?",
+   "options": [
+    "He goes camping in his free time.",
+    "He plays basketball in his free time.",
+    "He plays baseball in his free time."
+   ],
+   "opt_acts": [
+    "camping",
+    "basketball",
+    "baseball"
+   ],
+   "answer": 0,
+   "from": "lawn",
+   "to": "waterpark",
+   "travel": "scooter",
+   "perform": "out:camping",
+   "zh": "星期六晚上天空很清，媽媽騎機車載圳寶到二八水水公園，一家人搭帳篷露營。"
+  }
+ ]
+}

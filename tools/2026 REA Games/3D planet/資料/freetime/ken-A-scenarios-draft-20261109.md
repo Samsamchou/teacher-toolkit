@@ -1,3 +1,6 @@
+> **已被取代 SUPERSEDED（2026-11-11）**：老師 11/11 同意修改 Ken A（干擾選項重檢、答案位置打亂成 B A C A C B A B C A B、第 1 題加 It's rainy.）。
+> 現行版本：`routes-BCD-scenarios-final-20261111.md` 的「Ken A 修改後」一節；遊戲資料 `godot-ershui-freetime/data/freetime_ken_a.json`。下面是 11/09 的舊版，只留作紀錄。
+
 # Ken A 路線：11 個情境（老師 11/09 選 B：只留星期、天氣、時間）
 
 開場引導語：Let's guess Ken's free time! You are Ken now. Listen to my question and choose your answer.

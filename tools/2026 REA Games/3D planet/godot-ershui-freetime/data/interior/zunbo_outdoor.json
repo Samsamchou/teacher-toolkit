@@ -1,0 +1,44 @@
+{
+ "anim_ground": {
+  "ft/baseball_hit": 0.170066356658936,
+  "ft/cheering": 0.148937001824379,
+  "ft/dribble": 0.165087938308716,
+  "ft/driving": 0.15750940144062,
+  "ft/jogging": 0.141076356172562,
+  "ft/kneeling_idle": 0.1386738717556,
+  "ft/sitting_idle": 0.15393853187561,
+  "idle": 0.135619595646858
+ },
+ "anims": [
+  "ft/baseball_hit",
+  "ft/cheering",
+  "ft/dribble",
+  "ft/driving",
+  "ft/jogging",
+  "ft/kneeling_idle",
+  "ft/sitting_idle",
+  "idle"
+ ],
+ "height": 1.15,
+ "model": "zunbo_openhand",
+ "stand_headphones": {
+  "bone": "mixamorig_Head",
+  "ear_pad_gap_cm": 0.299998337030605,
+  "ear_pad_in_head": 0,
+  "scene": "res://data/interior/zunbo_stand_headphones.tscn",
+  "xf": [
+   -0.0000000338756294127052,
+   0.00000000780552689150227,
+   -0.85884827375412,
+   -0.0000000596046447753906,
+   0.858848214149475,
+   0.0000000202999892451317,
+   0.85884827375412,
+   0.000000178813934326172,
+   -0.0000000149745034150328,
+   -0.0198742002248764,
+   0.153941631317139,
+   0.0278217699378729
+  ]
+ }
+}

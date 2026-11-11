@@ -600,6 +600,7 @@ func _build_places() -> void:
 		var root := Node3D.new()
 		root.name = P["id"]
 		add_child(root)
+		root.set_meta("place_model", true)   # [perf] 低畫質：遠的地點模型不畫（set_far_cull）
 		var pos: Vector2 = P["pos2"]
 		var door: Vector2 = P["door2"]
 		root.transform = frame_at(pos, v2(P["face"]) if P.has("face") else door - pos)
@@ -835,19 +836,52 @@ func fade_between(cam2: Vector2, target2: Vector2, target_id := "", near := 16.0
 		# 鏡頭站在方塊範圍內（街屋或別的地點建築）也要變半透明，不然畫面一片黑
 		var inside: bool = T.has("rect") and (T["rect"] as Rect2).grow(1.5).has_point(cam2)
 		var fade: bool = (d < float(T["r"]) or c.distance_to(cam2) < near or inside) and T.get("id", "") != target_id
-		if T["mesh"]:
-			(T["mesh"] as MeshInstance3D).material_override = mat_fade if fade else mat_toon
-		if T["ink"]:
-			(T["ink"] as MeshInstance3D).visible = not fade
-		_show_shops(T, not fade)
+		_set_tile_fade(T, fade)
 
 func clear_fade() -> void:
 	for T in tiles:
+		_set_tile_fade(T, false)
+
+## [perf] 只有狀態改變才換材質／顯示（舊：每 0.2 秒把 320 塊全部重設一次）
+func _set_tile_fade(T: Dictionary, fade: bool) -> void:
+	if T.get("faded", null) == fade:
+		return
+	T["faded"] = fade
+	if T["mesh"]:
+		(T["mesh"] as MeshInstance3D).material_override = mat_fade if fade else mat_toon
+	if T["ink"]:
+		(T["ink"] as MeshInstance3D).visible = not fade
+	_show_shops(T, not fade)
+
+## [perf] 低畫質（iPad／慢的裝置）：遠的街屋、描邊、店面、店名不畫（星球 R=280 m，鏡頭高 4 m 時地平線約 47 m）
+## 只在地面鏡頭時開（首頁空拍、地圖要看整個星球 → 關掉）
+const FAR_TILE := 120.0
+const FAR_INK := 55.0
+const FAR_SHOP := 60.0
+const FAR_LABEL := 45.0
+const FAR_MODEL := 170.0
+var low_quality := false
+func set_low_quality(on: bool) -> void:
+	low_quality = on
+func set_far_cull(on: bool) -> void:
+	for T in tiles:
 		if T["mesh"]:
-			(T["mesh"] as MeshInstance3D).material_override = mat_toon
+			(T["mesh"] as GeometryInstance3D).visibility_range_end = FAR_TILE if on else 0.0
 		if T["ink"]:
-			(T["ink"] as MeshInstance3D).visible = true
-		_show_shops(T, true)
+			(T["ink"] as GeometryInstance3D).visibility_range_end = FAR_INK if on else 0.0
+		if T.get("shop") != null:
+			(T["shop"] as GeometryInstance3D).visibility_range_end = FAR_SHOP if on else 0.0
+		for l in T.get("labels", []):
+			(l as GeometryInstance3D).visibility_range_end = FAR_LABEL if on else 0.0
+	for c in get_children():   # 地點的大模型（fit_model 放進來的，有 height 中繼資料）
+		if c is Node3D and c.has_meta("place_model"):
+			_far_model(c, FAR_MODEL if on else 0.0)
+
+func _far_model(n: Node, d: float) -> void:
+	if n is GeometryInstance3D:
+		(n as GeometryInstance3D).visibility_range_end = d
+	for c in n.get_children():
+		_far_model(c, d)
 
 ## 半透明的方塊：店面圖和店名一起藏起來，不然會浮在半空中
 func _show_shops(T: Dictionary, on: bool) -> void:
@@ -1692,19 +1726,55 @@ func _add_blocker(poly: PackedVector2Array, h: float, id: String) -> void:
 		r = r.expand(q)
 	blockers.append({"poly": poly, "h": h, "rect": r.grow(0.2), "id": id})
 
+## [perf] 方塊格子索引：每個取樣點只查同一格裡的房子（舊：每點查全部 856 棟；結果完全一樣）
+const BGRID := 8.0
+var _bg := {}
+var _bg_n := -1
+var _bg_poly: Array = []
+var _bg_rect: Array = []
+var _bg_h := PackedFloat32Array()
+var _bg_id: Array = []
+func _bgrid_build() -> void:
+	_bg.clear()
+	_bg_poly.clear()
+	_bg_rect.clear()
+	_bg_id.clear()
+	_bg_h = PackedFloat32Array()
+	for i in blockers.size():
+		var B: Dictionary = blockers[i]
+		var r: Rect2 = B["rect"]
+		_bg_poly.append(B["poly"])
+		_bg_rect.append(r)
+		_bg_h.append(float(B["h"]))
+		_bg_id.append(String(B["id"]))
+		for gx in range(floori(r.position.x / BGRID), floori(r.end.x / BGRID) + 1):
+			for gy in range(floori(r.position.y / BGRID), floori(r.end.y / BGRID) + 1):
+				var k := Vector2i(gx, gy)
+				if not _bg.has(k):
+					_bg[k] = PackedInt32Array()
+				var a: PackedInt32Array = _bg[k]
+				a.append(i)
+				_bg[k] = a
+	_bg_n = blockers.size()
+
 ## 從平面點 cam2（高 ch）看向 tgt2（高 th）：有幾個取樣點被別的房子擋住
 func _blocked_count(cam2: Vector2, ch: float, tgt2: Vector2, th: float, self_id: String) -> int:
+	if _bg_n != blockers.size():
+		_bgrid_build()
 	var n := 0
 	for i in range(0, 16):
 		var u := float(i) / 16.0
 		var p := cam2.lerp(tgt2, u)
 		var sh := lerpf(ch, th, u)
-		for B in blockers:
-			# 視線要高過屋頂一點；鏡頭正下方 3 m 內有屋頂也算擋住（屋頂會佔滿畫面下半部）
-			var margin := 3.0 if i == 0 else 0.8
-			if B["id"] == self_id or float(B["h"]) < sh - margin:
+		var cell = _bg.get(Vector2i(floori(p.x / BGRID), floori(p.y / BGRID)))
+		if cell == null:
+			continue
+		# 視線要高過屋頂一點；鏡頭正下方 3 m 內有屋頂也算擋住（屋頂會佔滿畫面下半部）
+		var margin := 3.0 if i == 0 else 0.8
+		for j: int in (cell as PackedInt32Array):
+			if _bg_id[j] == self_id or _bg_h[j] < sh - margin:
 				continue
-			if (B["rect"] as Rect2).has_point(p) and Geometry2D.is_point_in_polygon(p, B["poly"]):
+			if (_bg_rect[j] as Rect2).has_point(p) and Geometry2D.is_point_in_polygon(p, _bg_poly[j]):
 				n += 1 if i > 0 else 30   # 鏡頭自己在房子裡面：最差
 				break
 	return n

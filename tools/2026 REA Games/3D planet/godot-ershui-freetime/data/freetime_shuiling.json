@@ -1,0 +1,293 @@
+{
+ "note": "水鈴 路線 11 題（2026-11-11 定稿：露營改日改地點、干擾選項重檢、答案位置打亂；來源 資料/freetime/routes-BCD-scenarios-final-20261111.md）",
+ "route": "shuiling",
+ "who": "shuiling",
+ "name": "Shuiling",
+ "subject": "She",
+ "possessive": "her",
+ "intro": "Let's guess Shuiling's free time! Listen to my question and choose the answer.",
+ "question": "What does she do in her free time?",
+ "pattern": "She ___ in her free time.",
+ "phrases": {
+  "jogging": "go jogging",
+  "music": "listen to music",
+  "baseball": "play baseball",
+  "basketball": "play basketball",
+  "bike": "ride a bike",
+  "english": "study English",
+  "internet": "surf the Internet",
+  "tv": "watch TV",
+  "camping": "go camping",
+  "games": "play online games",
+  "recorder": "play the recorder"
+ },
+ "phrases3": {
+  "jogging": "goes jogging",
+  "music": "listens to music",
+  "baseball": "plays baseball",
+  "basketball": "plays basketball",
+  "bike": "rides a bike",
+  "english": "studies English",
+  "internet": "surfs the Internet",
+  "tv": "watches TV",
+  "camping": "goes camping",
+  "games": "plays online games",
+  "recorder": "plays the recorder"
+ },
+ "answer_order": "BCACABACBAC",
+ "items": [
+  {
+   "n": 1,
+   "id": "q01",
+   "act": "jogging",
+   "context": "Today is Monday. School is over. It's cool and sunny.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She watches TV in her free time.",
+    "She goes jogging in her free time.",
+    "She surfs the Internet in her free time."
+   ],
+   "opt_acts": [
+    "tv",
+    "jogging",
+    "internet"
+   ],
+   "answer": 1,
+   "from": "school",
+   "to": "waterpark",
+   "travel": "jog",
+   "perform": "out:jogging",
+   "zh": "放學後天氣涼爽，水鈴沿街慢跑到二八水水公園。"
+  },
+  {
+   "n": 2,
+   "id": "q02",
+   "act": "recorder",
+   "context": "It's Monday evening. It's cold and windy.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She plays baseball in her free time.",
+    "She goes camping in her free time.",
+    "She plays the recorder in her free time."
+   ],
+   "opt_acts": [
+    "baseball",
+    "camping",
+    "recorder"
+   ],
+   "answer": 2,
+   "from": "shuiling_home",
+   "to": "shuiling_home",
+   "travel": "none",
+   "perform": "indoor:recorder",
+   "zh": "晚上又冷又有風，水鈴在房間吹直笛。"
+  },
+  {
+   "n": 3,
+   "id": "q03",
+   "act": "english",
+   "context": "Today is Tuesday. It's rainy after school.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She studies English in her free time.",
+    "She rides a bike in her free time.",
+    "She plays basketball in her free time."
+   ],
+   "opt_acts": [
+    "english",
+    "bike",
+    "basketball"
+   ],
+   "answer": 0,
+   "from": "school",
+   "to": "shuiling_home",
+   "travel": "walk",
+   "perform": "indoor:study_english",
+   "zh": "下雨天放學，水鈴走路回家，在書桌前讀英文。"
+  },
+  {
+   "n": 4,
+   "id": "q04",
+   "act": "tv",
+   "context": "It's Tuesday evening. It's still rainy outside.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She goes jogging in her free time.",
+    "She plays baseball in her free time.",
+    "She watches TV in her free time."
+   ],
+   "opt_acts": [
+    "jogging",
+    "baseball",
+    "tv"
+   ],
+   "answer": 2,
+   "from": "shuiling_home",
+   "to": "shuiling_home",
+   "travel": "none",
+   "perform": "indoor:watch_tv",
+   "zh": "晚上還在下雨，水鈴坐在沙發上看電視。"
+  },
+  {
+   "n": 5,
+   "id": "q05",
+   "act": "music",
+   "context": "It's Wednesday afternoon. School is over. It's very hot.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She listens to music in her free time.",
+    "She plays basketball in her free time.",
+    "She goes jogging in her free time."
+   ],
+   "opt_acts": [
+    "music",
+    "basketball",
+    "jogging"
+   ],
+   "answer": 0,
+   "from": "school",
+   "to": "library",
+   "travel": "walk",
+   "perform": "out:music",
+   "zh": "放學後太熱了，水鈴走到隔壁圖書館，戴耳機聽音樂。"
+  },
+  {
+   "n": 6,
+   "id": "q06",
+   "act": "internet",
+   "context": "It's Wednesday evening. It's cloudy and cold.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She goes camping in her free time.",
+    "She surfs the Internet in her free time.",
+    "She plays basketball in her free time."
+   ],
+   "opt_acts": [
+    "camping",
+    "internet",
+    "basketball"
+   ],
+   "answer": 1,
+   "from": "library",
+   "to": "shuiling_home",
+   "travel": "walk",
+   "perform": "indoor:surf_internet",
+   "zh": "晚上又陰又冷，水鈴從圖書館走回家，用電腦上網。"
+  },
+  {
+   "n": 7,
+   "id": "q07",
+   "act": "games",
+   "context": "It's Thursday evening. It's rainy and windy.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She plays online games in her free time.",
+    "She rides a bike in her free time.",
+    "She goes jogging in her free time."
+   ],
+   "opt_acts": [
+    "games",
+    "bike",
+    "jogging"
+   ],
+   "answer": 0,
+   "from": "shuiling_home",
+   "to": "shuiling_home",
+   "travel": "none",
+   "perform": "indoor:online_games",
+   "zh": "風雨交加的晚上，水鈴在家玩線上遊戲。"
+  },
+  {
+   "n": 8,
+   "id": "q08",
+   "act": "basketball",
+   "context": "Today is Friday. School is over. It's sunny.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She plays the recorder in her free time.",
+    "She plays online games in her free time.",
+    "She plays basketball in her free time."
+   ],
+   "opt_acts": [
+    "recorder",
+    "games",
+    "basketball"
+   ],
+   "answer": 2,
+   "from": "school",
+   "to": "school",
+   "travel": "none",
+   "perform": "out:basketball",
+   "zh": "星期五放學天氣晴朗，水鈴留在學校旁投籃。"
+  },
+  {
+   "n": 9,
+   "id": "q09",
+   "act": "bike",
+   "context": "Today is Saturday. It's a sunny, windy morning.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She listens to music in her free time.",
+    "She rides a bike in her free time.",
+    "She studies English in her free time."
+   ],
+   "opt_acts": [
+    "music",
+    "bike",
+    "english"
+   ],
+   "answer": 1,
+   "from": "shuiling_home",
+   "to": "lawn",
+   "travel": "bike",
+   "perform": "out:bike",
+   "zh": "星期六早上，水鈴迎著風騎腳踏車到水心之初大草原。"
+  },
+  {
+   "n": 10,
+   "id": "q10",
+   "act": "baseball",
+   "context": "It's Saturday afternoon. It's warm and sunny.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She plays baseball in her free time.",
+    "She watches TV in her free time.",
+    "She surfs the Internet in her free time."
+   ],
+   "opt_acts": [
+    "baseball",
+    "tv",
+    "internet"
+   ],
+   "answer": 0,
+   "from": "lawn",
+   "to": "lawn",
+   "travel": "none",
+   "perform": "out:baseball",
+   "zh": "下午又暖又晴，水鈴在大草原和朋友打棒球。"
+  },
+  {
+   "n": 11,
+   "id": "q11",
+   "act": "camping",
+   "context": "It's Sunday evening. It's cool. The sky is clear.",
+   "question": "What does she do in her free time?",
+   "options": [
+    "She plays basketball in her free time.",
+    "She plays baseball in her free time.",
+    "She goes camping in her free time."
+   ],
+   "opt_acts": [
+    "basketball",
+    "baseball",
+    "camping"
+   ],
+   "answer": 2,
+   "from": "shuiling_home",
+   "to": "baobao",
+   "travel": "walk",
+   "perform": "out:camping",
+   "zh": "星期天傍晚天空很清，水鈴和家人走到八堡圳公園搭帳篷露營。"
+  }
+ ]
+}

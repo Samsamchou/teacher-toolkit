@@ -1,0 +1,44 @@
+{
+ "anim_ground": {
+  "ft/baseball_hit": 0.03715880215168,
+  "ft/cheering": 0.0165349524468184,
+  "ft/dribble": 0.0300369150936604,
+  "ft/driving": 0.0224881172180176,
+  "ft/jogging": 0.0163329336792231,
+  "ft/kneeling_idle": 0.0142444334924221,
+  "ft/sitting_idle": 0.0325280427932739,
+  "idle": 0.0119304023683071
+ },
+ "anims": [
+  "ft/baseball_hit",
+  "ft/cheering",
+  "ft/dribble",
+  "ft/driving",
+  "ft/jogging",
+  "ft/kneeling_idle",
+  "ft/sitting_idle",
+  "idle"
+ ],
+ "height": 1.2,
+ "model": "shuiling_softhand",
+ "stand_headphones": {
+  "bone": "mixamorig_Head",
+  "ear_pad_gap_cm": 0.379941465112665,
+  "ear_pad_in_head": 0,
+  "scene": "res://data/interior/shuiling_stand_headphones.tscn",
+  "xf": [
+   -0.0948493406176567,
+   -0.0000000177856112060226,
+   -0.853642880916595,
+   -0.0000000468448355661621,
+   0.817210137844086,
+   -0.0000000118215481847983,
+   0.812211871147156,
+   0.0000000452528432504096,
+   -0.0902458876371384,
+   -0.0295222550630569,
+   0.0829871296882629,
+   0.00421259924769402
+  ]
+ }
+}

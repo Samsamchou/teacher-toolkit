@@ -15,6 +15,8 @@ var bar_scale := 0.8
 func pose_at(an: String, t: float, replay := false) -> void:
 	if replay or anim.current_animation != an or not anim.is_playing():
 		anim.play(an, 0.0)
+	if _pb_active(an, t):
+		t = _pb_snap(t)   # v5：身體動作也對齊到球棒表的格子
 	anim.seek(t, true)
 	anim.advance(0.0)
 	if flatten_feet and (an == "ft/jogging" or an == "walk"):
@@ -31,6 +33,8 @@ func pose_at(an: String, t: float, replay := false) -> void:
 # ═════════ 腳踏車（吉祥物尺寸）═════════
 func build_bike(drive_anim := "ft/driving", drive_t := 1.2, lean_deg := 20.0, r_grip := 0.012, r_min := 0.08, p_grip_half := 0.03, grip_step := 1) -> void:
 	if bike:
+		return
+	if bike_bake_path != "" and FileAccess.file_exists(bike_bake_path) and _load_bike_bake():
 		return
 	var keep_model := model.transform
 	var gy := g(Vector3.ZERO)
@@ -385,7 +389,16 @@ func build_baseball(an := "ft/baseball_hit") -> void:
 	var prev := Vector3.INF
 	var tt := 1.0
 	var sw := _bat_sweet()
-	while tt < minf(1.9, L):
+	var t_end := minf(1.9, L)
+	if pbat and not pb6_keys.is_empty():   # v6：接觸＝接觸關鍵姿勢那一格（棒面朝前、往前揮），不是最快那一格
+		tt = _pb_snap(pb_tc)
+		t_end = tt + 0.5 * dt
+		pose_at(an, tt - dt)
+		prev = bat_frame_xf() * Vector3(0, sw, 0)
+	elif pbat and not pb_tab.is_empty():   # v5：程式球棒 → 只在「接觸」關鍵姿勢前後找最快的那一格
+		tt = _pb_snap(pb_tc - 0.10)
+		t_end = pb_tc + 0.08
+	while tt < t_end:
 		pose_at(an, tt)
 		var x := bat_frame_xf()
 		var s := x * Vector3(0, sw, 0)
@@ -453,7 +466,10 @@ func update_baseball(delta: float) -> bool:
 	if bat.get_parent() == bat_ba:
 		bat.transform = bat_xf * _corr_now()   # 手腕修正（球棒不穿過頭）
 		if pbat and _pb_active(String(bb["an"]), bb_t):
-			bat.global_transform = frame.global_transform * _pb_xf(bb_t)
+			# v5：不用 global_transform（BoneAttachment 要到下一個畫面才更新 → 球棒畫在「上一次更新時手的位置」；
+			# 檢查場景連續更新很多步才畫一張，球棒整支畫歪）。改用現在的骨頭姿勢直接算區域座標
+			var bone_w := sk.global_transform * sk.get_bone_global_pose(bi(_hand_key()))
+			bat.transform = bone_w.affine_inverse() * (frame.global_transform * _pb_xf(bb_t))
 	if not had and not bb_drop.is_empty():
 		var a: Transform3D = bb_drop["xf0"]
 		var axh := Vector3(a.basis.y.x, 0, a.basis.y.z).normalized()
@@ -488,6 +504,9 @@ func measure_baseball() -> Dictionary:
 		out["ball_bat_gap_cm"] = (c.distance_to(q) - bat_radius(s * bat_len - bat_knob) - BALL_R) * 100.0
 		out["ball_visible"] = bb_ball.visible
 		for sd in ["left", "right"]:
+			if pbat and not pb_hands.has(sd):
+				out["hand_%s_free" % sd] = true   # v5：這隻手沒握棒（單手揮棒）
+				continue
 			var m := 9.0
 			var inside := 0
 			for p in mesh_pts([sd + "hand"]):
@@ -561,7 +580,7 @@ func gait_fix(dt: float, move := 0.0, clear := 0.012, min_speed := 0.12, mesh_he
 			continue
 		# [mascot] 腳底高度用網格最低點（骨頭到腳底的固定差在腳尖往下時會高估 → 腳刷地沒被抬）
 		var h := 9.0
-		for p in mesh_pts([sd + "foot", sd + "toe"]):
+		for p in sole_pts(sd):   # [perf] 只量靴底那一層頂點（act_motion.sole_pts）
 			h = minf(h, p.y - g(p))
 		if h >= clear:
 			continue
@@ -678,7 +697,7 @@ func _bat_hits2(X: Transform3D, pts: PackedVector3Array, S: Dictionary, margin :
 		y += 0.02
 	return [n, hn]
 
-const BODY_NO_HEAD := ["hips", "spine", "leftupleg", "rightupleg", "leftarm", "rightarm"]
+const BODY_NO_HEAD := ["hips", "spine", "leftupleg", "rightupleg", "leftarm", "rightarm", "leftforearm", "rightforearm"]   # v5：前臂也算
 ## 現在這一格（給量測用）
 func bat_body_hits() -> Array:
 	return _bat_hits2(bat_frame_xf(), mesh_pts(BODY_NO_HEAD), head_star(), 0.0)
@@ -778,10 +797,16 @@ func start_baseball(xf_hand: Transform3D) -> void:
 	if bb.is_empty() and pbat:
 		build_baseball()
 		pb_tc = float(bb["t_c"])
-		build_pbat()
+		if pb6_keys.is_empty() and pb6_rel.is_empty():
+			build_pbat()
+		else:
+			build_pbat6()   # v6：3 個關鍵姿勢＋平滑曲線
 		var rep0: Dictionary = bb["corr_report"]
-		build_baseball()   # 接觸那一格＝程式球棒路徑上甜蜜點最快的那一格
+		var td0: float = bb["t_drop"]
+		build_baseball()   # 接觸那一格＝程式球棒路徑上甜蜜點最快的那一格（v6：接觸關鍵姿勢那一格）
 		bb["corr_report"] = rep0
+		if not pb6_keys.is_empty():
+			bb["t_drop"] = td0   # v6：丟棒時間用第一次量的（球棒表只建到那裡）
 	if bb.is_empty():
 		build_baseball()
 		fit_bat_to_hands()
@@ -995,6 +1020,43 @@ func _left_hand_to_bat() -> void:
 	Pose._rot_chain(sk, world, hbi, orig * (world[hbi] as Basis).inverse())
 	Pose.apply_world(sk, world, true)
 
+# ═════════ [perf] 腳踏車量測結果烤成檔案（data/interior/<who>_bike.json）═════════
+## 上車第一次要量：手洞握把、坐墊、腳底踩點、骨盆表（24 格 × 31 種下沉 × 量網格）→ 電腦 4–6 秒、iPad 更久，
+## 而且剛好發生在答對後出發的那一格。烤好的檔案＝同一個角色、同一個地方第一次上車量到的全部結果（測試 BIKEBAKE=1 產生）。
+var bike_bake_path := ""
+func save_bike_bake(path: String) -> void:
+	var seats := []
+	var ch := bike_rig.get_children()
+	for i in ch.size():
+		if ch[i] is MeshInstance3D and (ch[i] as MeshInstance3D).mesh is BoxMesh:
+			seats.append([i, (ch[i] as Node3D).position.y])
+	var v := {"B": B, "base_pose": bike_base_pose, "pelvis_tab": pelvis_tab, "pelvis_roll": pelvis_roll, "seat_boxes": seats}
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	f.store_string(JSON.stringify({"note": "mascot_motion.save_bike_bake（[perf] 11/11）：第一次上車量好的腳踏車幾何＋骨盆表；遊戲上車時直接讀，不重量。", "vars": var_to_str(v)}, " "))
+	f.close()
+	print("BIKE baked → ", path)
+
+func _load_bike_bake() -> bool:
+	var j = JSON.parse_string(FileAccess.get_file_as_string(bike_bake_path))
+	if not (j is Dictionary) or not j.has("vars"):
+		return false
+	var v = str_to_var(String(j["vars"]))
+	if not (v is Dictionary):
+		return false
+	B = v["B"]
+	bike_base_pose = v["base_pose"]
+	pelvis_tab = v["pelvis_tab"]
+	pelvis_roll = float(v["pelvis_roll"])
+	_build_bike_mesh()
+	var ch := bike_rig.get_children()
+	for sb in v["seat_boxes"]:
+		if int(sb[0]) < ch.size():
+			(ch[int(sb[0])] as Node3D).position.y = float(sb[1])
+	_sole_fixed = true
+	crank_th = 0.0
+	print("MASCOT BIKE loaded baked ", bike_bake_path)
+	return true
+
 # ═════════ 腳踏車：腳底踩點用網格校正 ═════════
 ## build_bike 的腳底踩點只看「腳趾骨附近 ±3.75 cm」的頂點；圳寶的靴子很大（腳趾骨在靴底下面），
 ## 骨頭說踩到了（pin 0 mm）但網格量靴底離踏板 3.7 cm。→ 上車後轉一圈量網格，把踩點往下補（兩次）。
@@ -1121,7 +1183,7 @@ func apply_run(t: float) -> void:
 		# 用網格校正：支撐期靴底最低點＝地面；擺動期最低點 ≥ 抬腳高度的一半
 		for it in 4:
 			var low := 9.0
-			for q in mesh_pts([sd + "foot", sd + "toe"]):
+			for q in sole_pts(sd):   # [perf] 靴底那一層頂點
 				low = minf(low, q.y - g(q))
 			var want := 0.001 if u < 0.5 else maxf(y * 0.5, 0.01)
 			if u >= 0.5 and low >= want:
@@ -1160,10 +1222,33 @@ func _leg_to(sd: String, ank_f: Vector3, foot_B: Basis, pole_f: Vector3) -> void
 ## 手掌對著握把、手指彎起來。手到握把的距離每一格用網格量、存表（遊戲時不用再量）。
 var pbat := false
 var pb_reach := 0.98   # 握把離肩膀最遠＝手臂長的幾成（水鈴 0.90：0.98 時揮棒中有幾格手差 2.4 cm 搆不到）
-var pb_tab := []      # 每 CORR_DT：[origin(frame), D(frame), extra_r, extra_l]
+var pb_tab := []      # 每 PB_DT：[origin(frame), D(frame), extra_r, extra_l]
+## v4：表格 1/30 → 1/60 秒（1/30 的表在兩格中間：手穿進握把 0.5 cm、棒軸進頭 1–2 點）
+const PB_DT := 1.0 / 120.0   # v5：＝遊戲更新步長；查表不內插，時間對齊到格子（_pb_snap）→ 畫面上每一格都是量過的那一格
+## v4：手掌離棒軸的修正量限制在 −3～+6 cm（手指彎起來包住握把，最近的頂點是指尖不是手掌，正常範圍約 −2～+6）。v3 沒限制：手臂伸直搆不到時，retune 一直把它往負的推（−31 cm＝手的目標在棒子另一邊），
+## 相鄰兩格一格 −31、一格 +6 → 中間內插的那一格手會穿進握把。搆不到改由 _pb_close 把球棒往肩膀拉近（縮小揮棒半徑）。
+const PB_EX_MIN := -0.03
+const PB_EX_MAX := 0.06
+func _pb_snap(t: float) -> float:
+	return roundf(t / PB_DT) * PB_DT
+
+func _pb_row(t: float) -> int:
+	return clampi(int(roundf(t / PB_DT)), 0, pb_tab.size() - 1)
+
+## v5：每個角色自己的揮棒設定
+var pb_keys: Array = PB_KEYS      # 關鍵姿勢表（格式同 PB_KEYS）
+var pb_jit := {}
+var pb_local := false             # true＝鍵值的「前」用握把那個高度（±6 cm）的身體表面、「右」用肩寬的一半（緊湊揮棒：棒子貼近胸口）
+var pb_hands: Array = ["right", "left"]   # 握棒的手；圳寶＝只有右手（兩肩相距 44 cm、手臂 26 cm、胸口比肩線凸 17 cm → 兩手在身體前面碰不到一起）
+
+func _pb_set_extra(i: int, j: int, v: float) -> void:
+	pb_tab[i][j] = clampf(v, PB_EX_MIN, PB_EX_MAX)
 var pb_tc := 1.45
 var palm_off := {}    # 手骨 → 手掌網格中心（手骨世界基底座標）
 var _pb_building := false
+var pb_stretch := 0.95   # v4：肩到手腕超過手臂長的這個比例＝伸直（搆不到）
+var pb_curl := 1.0
+var pb_open_stretched := 0.0   # v4：手臂伸直時手指少彎的比例（0＝不變；圳寶用）   # v4：手指彎的倍率（圳寶的大手彎 70/85/60° 時手洞比握把細 → 指尖從另一邊穿進握把）
 const PB_KEYS := [   # [相對 t_c 的秒數, Hc（x＝身體前面那層表面再往前幾公尺、y＝上（肩寬倍數）、z＝右（身體半寬的倍數，負＝左）), D（棒頭方向：f 前、u 上、r 右）]
 	# 吉祥物版：棒子一直在頭的高度以下、身體前面／側面（大頭、大背包：往肩後扛一定穿過去）——小朋友的平揮
 	[-9.0, Vector3(0.04, -0.35, 0.6), Vector3(0.2, 0.15, 1.0)],     # 預備：右腰前，棒子平平朝右
@@ -1186,12 +1271,12 @@ func _chest() -> Array:
 	return [O, f, -l, u, L.distance_to(R)]
 
 func _pb_key(rel: float) -> Array:
-	var a: Array = PB_KEYS[0]
-	var b: Array = PB_KEYS[-1]
-	for i in PB_KEYS.size() - 1:
-		if rel >= float(PB_KEYS[i][0]) and rel <= float(PB_KEYS[i + 1][0]):
-			a = PB_KEYS[i]
-			b = PB_KEYS[i + 1]
+	var a: Array = pb_keys[0]
+	var b: Array = pb_keys[-1]
+	for i in pb_keys.size() - 1:
+		if rel >= float(pb_keys[i][0]) and rel <= float(pb_keys[i + 1][0]):
+			a = pb_keys[i]
+			b = pb_keys[i + 1]
 			break
 	var k := clampf((rel - float(a[0])) / maxf(float(b[0]) - float(a[0]), 1e-4), 0.0, 1.0)
 	k = k * k * (3.0 - 2.0 * k)
@@ -1217,16 +1302,18 @@ func _pb_raw(t: float) -> Transform3D:
 	var bp := mesh_pts(["hips", "spine", "neck", "head"])
 	for k in range(0, bp.size(), 5):
 		var d: Vector3 = bp[k] - O
-		if absf(d.dot(u)) < 1.2 * w:
+		if (absf(d.dot(u) - hl.y * w) < 0.06) if pb_local else (absf(d.dot(u)) < 1.2 * w):
 			front = maxf(front, d.dot(f))
 			side = maxf(side, absf(d.dot(r)))
+	if pb_local:
+		side = w * 0.5
 	var Hc := O + f * (front + hl.x) + u * (hl.y * w) + r * (hl.z * side)
 	var D := (f * dl.x + u * dl.y + r * dl.z).normalized()
 	# 兩手搆得到：握把兩點離各自的肩膀 ≤ 0.92×手臂長，不然整支往胸口拉近
 	for it in 12:
 		var worst := 0.0
 		var pull := Vector3.ZERO
-		for sd in ["right", "left"]:
+		for sd in pb_hands:
 			var s := _grip_s(sd) - _grip_mid()
 			var G := Hc + D * s
 			var S := fpos(sd + "arm")
@@ -1249,18 +1336,16 @@ func _grip_s(sd: String) -> float:   # 握把上的位置（棒子原點往棒�
 	return bat_hand_off if sd == "right" else bat_hand_off - 0.048
 
 func _grip_mid() -> float:
+	if pb_hands.size() == 1:
+		return _grip_s(pb_hands[0])
 	return (_grip_s("right") + _grip_s("left")) * 0.5
 
 func _pb_xf(t: float) -> Transform3D:
 	if pb_tab.is_empty():
-		return _pb_raw(t)
-	var f := clampf(t / CORR_DT, 0.0, pb_tab.size() - 1.001)
-	var i := int(f)
-	var a: Array = pb_tab[i]
-	var b: Array = pb_tab[i + 1]
-	var k := f - i
-	var D: Vector3 = (a[1] as Vector3).slerp(b[1] as Vector3, k).normalized()
-	var o: Vector3 = (a[0] as Vector3).lerp(b[0] as Vector3, k)
+		return _pb6_xf(t) if not pb6_keys.is_empty() else _pb_raw(t)
+	var a: Array = pb_tab[_pb_row(t)]
+	var D: Vector3 = (a[1] as Vector3).normalized()
+	var o: Vector3 = a[0]
 	var f0 := Vector3(0, 0, 1)
 	var x := D.cross(f0)
 	if x.length() < 0.1:
@@ -1271,10 +1356,7 @@ func _pb_xf(t: float) -> Transform3D:
 func _pb_extra(t: float, sd: String) -> float:
 	if pb_tab.is_empty():
 		return 0.012
-	var f := clampf(t / CORR_DT, 0.0, pb_tab.size() - 1.001)
-	var i := int(f)
-	var j := 2 if sd == "right" else 3
-	return lerpf(float(pb_tab[i][j]), float(pb_tab[i + 1][j]), f - i)
+	return float(pb_tab[_pb_row(t)][2 if sd == "right" else 3])
 
 func _pb_active(an: String, t: float) -> bool:
 	return pbat and not bb.is_empty() and an == String(bb["an"]) and t < float(bb.get("t_drop", 9.0)) + 0.05
@@ -1304,6 +1386,8 @@ func _hand_on_bat(sd: String, X: Transform3D, extra: float) -> void:
 	var Gp := X * Vector3(0, _grip_s(sd), 0)
 	var C := _chest()
 	var rv: Vector3 = (C[0] as Vector3) - Gp
+	if pb_hands.size() == 1:
+		rv = fpos(sd + "arm") - Gp   # 單手：手掌在「自己肩膀」那一側
 	rv -= D * rv.dot(D)
 	if rv.length() < 1e-4:
 		rv = -(C[1] as Vector3)
@@ -1312,7 +1396,6 @@ func _hand_on_bat(sd: String, X: Transform3D, extra: float) -> void:
 	var world := Pose.pose_world(sk)
 	var hbi := bi(sd + "hand")
 	Pose.aim_hand(sk, world, sd, (tw.basis * (D.cross(rdir) * sg)).normalized(), (tw.basis * -rdir).normalized())
-	Pose.curl_fingers(sk, world, sd, [70.0, 85.0, 60.0], 30.0)
 	var Bh: Basis = world[hbi]
 	var palm_w := tw * (Gp + rdir * (bat_r0 + extra))
 	var bone_w: Vector3 = palm_w - Bh * (palm_off[sd] as Vector3)
@@ -1322,11 +1405,33 @@ func _hand_on_bat(sd: String, X: Transform3D, extra: float) -> void:
 	Pose.ik_arm(sk, world, sd, bone_w, E - (S + Hh) * 0.5 + tw.basis * Vector3(0, -0.05, 0))
 	Pose._rot_chain(sk, world, hbi, Bh * (world[hbi] as Basis).inverse())
 	Pose.apply_world(sk, world, true)
+	# v4：手指最後才彎；手臂伸直（搆不到）時手指少彎一點——圳寶的長手指在搆不到時會從握把另一邊插進去
+	var Sa := fpos(sd + "arm")
+	var la := Sa.distance_to(fpos(sd + "forearm")) + fpos(sd + "forearm").distance_to(fpos(sd + "hand"))
+	var ratio := Sa.distance_to(fpos(sd + "hand")) / la
+	var c := pb_curl * (1.0 - pb_open_stretched * clampf((ratio - 0.93) / 0.05, 0.0, 1.0))
+	world = Pose.pose_world(sk)
+	Pose.curl_fingers(sk, world, sd, [70.0 * c, 85.0 * c, 60.0 * c], 30.0 * c)
+	Pose.apply_world(sk, world, true)
 
 func _hands_on_bat(t: float) -> void:
 	var X := _pb_xf(t)
-	for sd in ["right", "left"]:
+	for sd in pb_hands:
 		_hand_on_bat(sd, X, _pb_extra(t, sd))
+	for sd in ["left", "right"]:
+		if not pb_hands.has(sd):
+			_free_arm(sd)
+
+## v5：沒握棒的那隻手：放在身體旁邊偏前下方（平衡用），手肘彎著；位置跟著胸口轉
+func _free_arm(sd: String) -> void:
+	var C := _chest()
+	var sg := 1.0 if sd == "right" else -1.0
+	var w: float = C[4]
+	var tgt: Vector3 = (C[0] as Vector3) + (C[2] as Vector3) * sg * (w * 0.5 + 0.07) - (C[3] as Vector3) * 0.19 + (C[1] as Vector3) * 0.07
+	var tw := frame.global_transform
+	var world := Pose.pose_world(sk)
+	Pose.ik_arm(sk, world, sd, tw * tgt, tw.basis * ((C[2] as Vector3) * sg - (C[1] as Vector3) * 0.5 - (C[3] as Vector3) * 0.3))
+	Pose.apply_world(sk, world, true)
 
 ## 手到握把（網格，扣掉握把半徑）
 func _hand_bat_gap(sd: String, X: Transform3D) -> float:
@@ -1346,7 +1451,7 @@ func build_pbat() -> void:
 	_palm_setup()
 	var an: String = bb["an"]
 	var td: float = bb["t_drop"]
-	var n := int(ceil(td / CORR_DT)) + 2
+	var n := int(ceil(td / PB_DT)) + 2
 	pb_tab.clear()
 	var prev := Vector3.ZERO
 	var worst0 := 0
@@ -1354,7 +1459,7 @@ func build_pbat() -> void:
 	var gaps := {"right": 0.0, "left": 0.0}
 	var maxturn := 0.0
 	for i in n:
-		var t := i * CORR_DT
+		var t := i * PB_DT
 		pose_at(an, t)
 		var X := _pb_raw(t)
 		var all := mesh_pts(BODY_NO_HEAD + ["leftleg", "rightleg"])
@@ -1402,7 +1507,7 @@ func build_pbat() -> void:
 		var D := Vector3.ZERO
 		var o := Vector3.ZERO
 		var c := 0
-		for j in range(maxi(0, i - 2), mini(n, i + 3)):
+		for j in range(maxi(0, i - 8), mini(n, i + 9)):   # ±8 格（1/120 秒）＝v3 的 ±2 格（1/30 秒）
 			D += pb_tab[j][1]
 			o += pb_tab[j][0]
 			c += 1
@@ -1415,9 +1520,17 @@ func build_pbat() -> void:
 		_pb_refine(an, n)
 	_pb_retune(an, n)
 	_pb_close(an, n)
+	_pb_refine(an, n)   # v4：close 之後手臂位置又變了 → 再檢查一次碰身體
+	_pb_retune(an, n)
+	for rnd in 2:
+		_pb_fix_hits(an, n)
+	for rnd in 6:
+		_pb_smooth(an, n)
+	_pb_grid_tune(an, n)
+	_pb_jitter(n)
 	var wt := 0.0
 	for i in n:
-		var t := i * CORR_DT
+		var t := i * PB_DT
 		pose_at(an, t)
 		_hands_on_bat(t)
 		var X := _pb_xf(t)
@@ -1426,7 +1539,7 @@ func build_pbat() -> void:
 		if sc > worst1:
 			worst1 = sc
 			wt = t
-		for sd in ["right", "left"]:
+		for sd in pb_hands:
 			gaps[sd] = maxf(float(gaps[sd]), absf(_hand_bat_gap(sd, X)))
 	_pb_building = false
 	model.transform = keep_model
@@ -1441,22 +1554,22 @@ func _pb_hits_now(t: float) -> Array:
 ## 手到握把：每一格用網格量，調手掌離棒軸的距離（目標 2 mm），三次
 func _pb_retune(an: String, n: int) -> void:
 	for i in n:
-		var t := i * CORR_DT
+		var t := i * PB_DT
 		for it in 6:
 			pose_at(an, t)
 			var X := _pb_xf(t)
 			_hands_on_bat(t)
 			var done_ := true
-			for sd in ["right", "left"]:
+			for sd in pb_hands:
 				var gq := _hand_bat_gap(sd, X)
 				if absf(gq - 0.002) > 0.002:
 					done_ = false
 			if done_:
 				break
-			for sd in ["right", "left"]:
+			for sd in pb_hands:
 				var gp_ := _hand_bat_gap(sd, X)
 				var j := 2 if sd == "right" else 3
-				pb_tab[i][j] = float(pb_tab[i][j]) - (gp_ - 0.002)
+				_pb_set_extra(i, j, float(pb_tab[i][j]) - (gp_ - 0.002))
 
 func _pb_refine(an: String, n: int) -> void:
 	# 手握上去之後（手臂位置變了）再檢查一次：還碰到的格子，試「整支往前推 2–8 cm」或「繞兩手中點轉 5–40°」，
@@ -1464,7 +1577,7 @@ func _pb_refine(an: String, n: int) -> void:
 	var fixed := 0
 	_pb_building = false
 	for i in n:
-		var t := i * CORR_DT
+		var t := i * PB_DT
 		pose_at(an, t)
 		var h1: Array = _pb_hits_now(t)
 		if int(h1[0]) + 10 * int(h1[1]) == 0:
@@ -1606,7 +1719,7 @@ func update_bike(delta: float, speed: float) -> void:
 		for it in 3:
 			var low := 9.0
 			var inv := rigx.affine_inverse()
-			for p in mesh_pts([sd + "foot", sd + "toe"]):
+			for p in sole_pts(sd):   # [perf] 靴底那一層頂點（量踏板接觸）
 				var q := inv * p - pc
 				if absf(q.x) < 0.0375 and absf(q.z) < 0.0325:
 					low = minf(low, q.y - 0.012)
@@ -1711,43 +1824,494 @@ func bottom_gap() -> float:
 	return low
 
 ## v3：手還搆不到握把（> 1.2 cm，手臂已伸直）的格子 → 把球棒往那隻手移過去（另一隻手跟著 IK），再調手掌距離
+## v4：搆不到的那隻手 → 整支球棒往「那隻手的肩膀」拉近（縮小揮棒半徑，手臂不用再伸直），
+## 拉近之後棒子碰到身體／頭就退回上一步；每一步之後手掌距離再調一次（限制在 −0.5～+3 cm）。
 func _pb_close(an: String, n: int) -> void:
 	var moved := 0
+	var blocked := 0
 	for i in n:
-		var t := i * CORR_DT
-		for it in 4:
-			pose_at(an, t)
+		var t := i * PB_DT
+		var did := false
+		for it in 14:
+			_pb_tune_row(an, i, t, 3)
+			_pose_hands(an, t)
 			var X := _pb_xf(t)
-			_hands_on_bat(t)
 			var worst := 0.0
-			var shift := Vector3.ZERO
-			var a := X * Vector3(0, -bat_knob, 0)
-			var ab := X * Vector3(0, _bat_top(), 0) - a
-			for sd in ["right", "left"]:
-				var m := 9.0
-				var rad := Vector3.ZERO
-				for p in mesh_pts([sd + "hand"]):
-					var ss := clampf((p - a).dot(ab) / ab.length_squared(), 0.0, 1.0)
-					var q := a + ab * ss
-					var d := p.distance_to(q) - bat_radius(ss * bat_len - bat_knob)
-					if d < m:
-						m = d
-						rad = (p - q).normalized()
-				if m > worst:
-					worst = m
-					shift = rad * (m - 0.002)
-			if worst <= 0.012:
+			var wsd := ""
+			for sd in pb_hands:
+				var g2 := _hand_bat_gap(sd, X)
+				# 手臂已經伸直（肩到手腕 ≥ 0.95×手臂長）：不管量到的距離（圳寶的長手指會從另一邊插進握把，量到負的），一樣算搆不到
+				var Sa := fpos(sd + "arm")
+				var la := Sa.distance_to(fpos(sd + "forearm")) + fpos(sd + "forearm").distance_to(fpos(sd + "hand"))
+				var over := Sa.distance_to(fpos(sd + "hand")) - pb_stretch * la
+				var need := maxf(g2 - 0.004, over + 0.004 if over > 0.0 else 0.0)
+				if need > worst:
+					worst = need
+					wsd = sd
+			if worst <= 0.006:
 				break
-			pb_tab[i][0] = (pb_tab[i][0] as Vector3) + shift * 0.8
-			if it == 0:
-				moved += 1
-		for it in 3:
-			pose_at(an, t)
-			var X2 := _pb_xf(t)
-			_hands_on_bat(t)
-			for sd in ["right", "left"]:
-				var g2 := _hand_bat_gap(sd, X2)
-				if g2 < 0.0 or g2 > 0.004:
-					var j := 2 if sd == "right" else 3
-					pb_tab[i][j] = float(pb_tab[i][j]) - (g2 - 0.002)
-	print("MASCOT pbat close: %d frames moved toward the hand" % moved)
+			var G := X * Vector3(0, _grip_s(wsd), 0)
+			var S := fpos(wsd + "arm")
+			var C := _chest()
+			var keep: Array = (pb_tab[i] as Array).duplicate()
+			# 候選方向：往那隻手的肩膀、往兩肩中點、往肩膀再偏上；步長全步／半步。第一個不碰身體的就用
+			var ok := false
+			for dirv: Vector3 in [(S - G).normalized(), ((C[0] as Vector3) - G).normalized(), ((S - G).normalized() + (C[3] as Vector3) * 0.5).normalized()]:
+				for k in [1.0, 0.5, 0.25]:
+					pb_tab[i] = keep.duplicate()
+					pb_tab[i][0] = (keep[0] as Vector3) + dirv * worst * k
+					_pose_hands(an, t)
+					var hh: Array = _pb_hits_now(t)
+					if int(hh[0]) + 10 * int(hh[1]) == 0:
+						ok = true
+						break
+				if ok:
+					break
+			if not ok:
+				pb_tab[i] = keep
+				blocked += 1
+				break
+			did = true
+		if did:
+			moved += 1
+		_pb_tune_row(an, i, t, 4)
+	print("MASCOT pbat close v4: %d frames pulled toward the shoulder, %d stopped by body" % [moved, blocked])
+
+## 一格：手掌離棒軸的距離調到 0–4 mm（最多 k 次）
+func _pb_tune_row(an: String, i: int, t: float, k: int) -> void:
+	for it in k:
+		_pose_hands(an, t)
+		var X2 := _pb_xf(t)
+		var ok := true
+		for sd in pb_hands:
+			var g2 := _hand_bat_gap(sd, X2)
+			if g2 < 0.0 or g2 > 0.004:
+				ok = false
+				var j := 2 if sd == "right" else 3
+				_pb_set_extra(i, j, float(pb_tab[i][j]) - (g2 - 0.002))
+		if ok:
+			return
+
+## 擺第 t 秒的身體＋兩手握棒（建表中 pose_at 不會自己握）
+func _pose_hands(an: String, t: float) -> void:
+	pose_at(an, t)
+	if _pb_building:
+		_hands_on_bat(t)
+
+## v4：最後還碰身體的格子（多半是單獨一格：手 IK 之後上臂／手腕邊緣碰到棒）→ 候選：前後兩格的平均、
+## 沿胸口前／上／下／左／右平移 1–6 cm、繞兩手中點轉 5–45°；每個候選都真的握上去、調手掌距離，再量
+## （碰身體＝0 而且兩手 0–2 cm 才收；選離原本最近的）
+func _pb_fix_hits(an: String, n: int) -> void:
+	var fixed := 0
+	var left := 0
+	for i in n:
+		var t := i * PB_DT
+		_pose_hands(an, t)
+		var h0: Array = _pb_hits_now(t)
+		if int(h0[0]) + 10 * int(h0[1]) == 0:
+			continue
+		var keep: Array = (pb_tab[i] as Array).duplicate()
+		var C := _chest()
+		var X0 := _pb_xf(t)
+		var piv := X0 * Vector3(0, _grip_mid(), 0)
+		var cands := []
+		if i > 0 and i < n - 1:
+			var o: Vector3 = ((pb_tab[i - 1][0] as Vector3) + (pb_tab[i + 1][0] as Vector3)) * 0.5
+			var D: Vector3 = ((pb_tab[i - 1][1] as Vector3) + (pb_tab[i + 1][1] as Vector3)).normalized()
+			cands.append([o, D])
+		for d in [0.01, 0.02, 0.04, 0.06]:
+			for ax in [C[1], C[3], -(C[3] as Vector3), C[2], -(C[2] as Vector3), -(C[1] as Vector3)]:
+				cands.append([X0.origin + (ax as Vector3) * d, X0.basis.y.normalized()])
+		for th in range(5, 50, 5):
+			for ph in range(0, 360, 30):
+				var rax := (X0.basis.x * cos(deg_to_rad(ph)) + X0.basis.z * sin(deg_to_rad(ph))).normalized()
+				var R := Basis(rax, deg_to_rad(th))
+				var X2 := Transform3D(R * X0.basis, piv + R * (X0.origin - piv))
+				cands.append([X2.origin, X2.basis.y.normalized()])
+		var best_row := []
+		var best_bad := 1e9
+		for c in cands:
+			pb_tab[i] = [c[0], c[1], keep[2], keep[3]]
+			_pb_tune_row(an, i, t, 4)
+			_pose_hands(an, t)
+			var hh: Array = _pb_hits_now(t)
+			if int(hh[0]) + 10 * int(hh[1]) > 0:
+				continue
+			var X := _pb_xf(t)
+			var bad := 0.0   # 手到握把超出 0–2 cm 的量
+			for sd in pb_hands:
+				var g2 := _hand_bat_gap(sd, X)
+				bad += maxf(-g2, 0.0) + maxf(g2 - 0.02, 0.0)
+			if bad < best_bad:
+				best_bad = bad
+				best_row = (pb_tab[i] as Array).duplicate()
+			if bad <= 0.0:
+				break
+		if not best_row.is_empty():
+			pb_tab[i] = best_row
+			fixed += 1
+		else:
+			pb_tab[i] = keep
+			left += 1
+	print("MASCOT pbat fix-hits v4: %d frames fixed, %d still touching" % [fixed, left])
+
+## v5 緊湊揮棒（pb_local＝true）：Hc＝(握把高度那層身體表面再往前幾公尺, 上（肩寬倍數）, 右（肩寬一半的倍數）)
+## 沒有往右後拉弓；棒子一直在身體正前方、頭的下面；接觸＝肚子／胸口前水平朝前；跟進很短
+const PB_KEYS_SHUILING := [
+	[-9.0, Vector3(0.03, -0.8, 0.6), Vector3(0.1, 0.3, 0.95)],      # 預備：胸口右前，棒子朝右微微朝上
+	[-0.40, Vector3(0.03, -0.8, 0.6), Vector3(0.1, 0.3, 0.95)],
+	[-0.16, Vector3(0.03, -0.8, 0.7), Vector3(-0.12, 0.3, 0.95)],   # 蓄力：棒頭稍微往後帶（手不往後）
+	[0.0, Vector3(0.035, -0.8, 0.0), Vector3(1.0, 0.0, -0.05)],     # 接觸：胸口正前、棒子水平朝前
+	[0.22, Vector3(0.03, -0.8, -0.6), Vector3(0.15, 0.2, -0.95)],   # 跟進：平揮到左前就停
+	[9.0, Vector3(0.03, -0.9, -0.6), Vector3(0.2, -0.1, -0.95)],
+]
+const PB_KEYS_ZUNBO := [   # 單手（右手）：手一直在右肩前面，靠手肘／手腕把棒子從右前掃到左前；棒頭不往後（往後會碰右手臂）
+	[-9.0, Vector3(0.06, -0.2, 1.15), Vector3(0.25, 0.05, 1.0)],     # 預備：右胸前，棒子平平朝右前
+	[-0.40, Vector3(0.06, -0.2, 1.15), Vector3(0.25, 0.05, 1.0)],
+	[-0.16, Vector3(0.06, -0.2, 1.2), Vector3(0.12, 0.08, 1.0)],     # 蓄力：棒頭稍微往右帶
+	[0.0, Vector3(0.06, -0.2, 1.0), Vector3(1.0, 0.0, -0.05)],       # 接觸：右胸前、棒子水平朝前
+	[0.22, Vector3(0.06, -0.2, 0.85), Vector3(0.45, 0.05, -0.9)],    # 跟進：平揮到身體前面朝左前就停
+	[9.0, Vector3(0.06, -0.25, 0.85), Vector3(0.4, -0.1, -0.9)],
+]
+
+## v5：最後的時間平滑。前面每一格各自修（拉近、轉開），相鄰兩格可能差幾公分 → 球棒抖。
+## 每一格試「前後各 3 格的平均」：握上去、調手掌距離後，還是不碰身體、手 0–1.2 cm、手臂沒變更直，才換；不行就留原樣。
+func _pb_row_ok(an: String, i: int, t: float) -> Array:
+	_pb_tune_row(an, i, t, 4)
+	_pose_hands(an, t)
+	var hh: Array = _pb_hits_now(t)
+	var bad := float(int(hh[0]) + 10 * int(hh[1]))
+	var X := _pb_xf(t)
+	var st := 0.0
+	for sd in pb_hands:
+		var g2 := _hand_bat_gap(sd, X)
+		bad += maxf(-g2, 0.0) * 100.0 + maxf(g2 - 0.012, 0.0) * 100.0
+		var Sa := fpos(sd + "arm")
+		var la := Sa.distance_to(fpos(sd + "forearm")) + fpos(sd + "forearm").distance_to(fpos(sd + "hand"))
+		st = maxf(st, Sa.distance_to(fpos(sd + "hand")) / la)
+	return [bad, st]
+
+func _pb_smooth(an: String, n: int) -> void:
+	var done := 0
+	var kept := 0
+	for i in range(1, n - 1):
+		var t := i * PB_DT
+		var o := Vector3.ZERO
+		var D := Vector3.ZERO
+		var c := 0
+		for j in range(maxi(0, i - 3), mini(n, i + 4)):
+			o += pb_tab[j][0]
+			D += pb_tab[j][1]
+			c += 1
+		o /= c
+		D = D.normalized()
+		if o.distance_to(pb_tab[i][0]) < 0.0005 and D.angle_to(pb_tab[i][1]) < deg_to_rad(0.2):
+			continue
+		var r0: Array = _pb_row_ok(an, i, t)
+		var keep2: Array = (pb_tab[i] as Array).duplicate()
+		pb_tab[i] = [o, D, keep2[2], keep2[3]]
+		var r1: Array = _pb_row_ok(an, i, t)
+		if float(r1[0]) <= maxf(float(r0[0]), 0.0) and float(r1[1]) <= maxf(float(r0[1]), pb_stretch):
+			done += 1
+		else:
+			pb_tab[i] = keep2
+			kept += 1
+	print("MASCOT pbat smooth v5: %d frames smoothed, %d kept as-is" % [done, kept])
+
+## 相鄰兩格（1/120 秒）球棒甜蜜點最多移動多少、握把最多移動多少（看有沒有抖）
+func _pb_jitter(n: int) -> void:
+	var ms := 0.0
+	var mg := 0.0
+	var ts := 0.0
+	var tg := 0.0
+	for i in range(1, n):
+		var a := _pb_xf((i - 1) * PB_DT)
+		var b := _pb_xf(i * PB_DT)
+		var ds := (a * Vector3(0, _bat_sweet(), 0)).distance_to(b * Vector3(0, _bat_sweet(), 0))
+		var dg := (a * Vector3(0, _grip_mid(), 0)).distance_to(b * Vector3(0, _grip_mid(), 0))
+		if ds > ms:
+			ms = ds
+			ts = i * PB_DT
+		if dg > mg:
+			mg = dg
+			tg = i * PB_DT
+	pb_jit = {"sweet_step_max_cm": ms * 100.0, "sweet_at_t": ts, "grip_step_max_cm": mg * 100.0, "grip_at_t": tg}
+	print("MASCOT pbat step per 1/120 s: sweet spot max %.2f cm (t=%.3f), grip max %.2f cm (t=%.3f)" % [ms * 100.0, ts, mg * 100.0, tg])
+
+## v5：手掌距離的最後一次調整改用格點搜尋。「量到的距離 − 目標」一步一步修（_pb_tune_row）假設距離越大手離棒越遠，
+## 但圳寶的大手不是：太近＝手掌陷進握把，太遠＝彎起來的指尖從外面戳進握把，中間才是握把在手洞裡。
+## 一步一步修會從「陷進去」一路推到上限 +6 cm（指尖戳進去 0.55 cm）停住。→ 每 3 mm 試一次，選「不陷進去而且最貼」的。
+func _pb_grid_tune(an: String, n: int) -> void:
+	var fixed := 0
+	var bad := 0
+	for i in n:
+		var t := i * PB_DT
+		_pose_hands(an, t)
+		var X := _pb_xf(t)
+		for sd in pb_hands:
+			var g0 := _hand_bat_gap(sd, X)
+			if g0 >= 0.0 and g0 <= 0.004:
+				continue
+			var j := 2 if sd == "right" else 3
+			var best_e := float(pb_tab[i][j])
+			var best_sc := 1e9
+			var e := PB_EX_MIN
+			while e <= PB_EX_MAX + 1e-6:
+				pb_tab[i][j] = e
+				_pose_hands(an, t)
+				var gq := _hand_bat_gap(sd, X)
+				var sc := (gq - 0.0005) if gq >= 0.0005 else (1.0 - gq)
+				if sc < best_sc:
+					best_sc = sc
+					best_e = e
+				e += 0.003
+			pb_tab[i][j] = best_e
+			if best_sc < 0.02:
+				fixed += 1
+			else:
+				bad += 1
+	print("MASCOT pbat grid tune v5: %d hand-frames re-seated, %d with no clean seat" % [fixed, bad])
+
+# ═════════ v6 棒球：3 個關鍵姿勢＋平滑曲線（不逐格修）═════════
+## 關鍵姿勢＝[相對接觸的秒數, 握把中點（胸口座標：前 f、上 u、右 r，公尺，以兩肩中點為原點）, 棒頭方向（同座標）]
+## 三個：預備、接觸、跟進。中間用 Hermite 曲線：預備、跟進速度 0，接觸時速度＝（跟進−預備）÷時間 → 揮到球的時候最快、不停頓。
+## 檢查整條曲線（搜尋用 1/30 秒、驗證用 1/120 秒）；碰到身體／頭、手搆不到、手臂伸直 → 只調關鍵姿勢，不調單格。
+## 手掌離棒軸的距離（extra）每格選，但優先跟上一格一樣（手不抖）。
+var pb6_keys := []          # 角色設定（檢查場景／遊戲給，用 _pb6_from_rel 從相對鍵值換算）
+var pb6_bend := 0.93        # 手臂最直＝肩到手腕 ÷ 手臂長 ≤ 這個
+var pb6_report := {}
+var _pb6_star := {}
+
+func _pb6_eval(rel: float) -> Array:
+	var K := pb6_keys
+	var a: float = K[0][0]
+	var b: float = K[2][0]
+	if rel <= a:
+		return [K[0][1], K[0][2]]
+	if rel >= b:
+		return [K[2][1], K[2][2]]
+	var m: Array = [((K[2][1] as Vector3) - (K[0][1] as Vector3)) / (b - a), ((K[2][2] as Vector3) - (K[0][2] as Vector3)) / (b - a)]
+	var i0 := 0 if rel < 0.0 else 1
+	var t0: float = K[i0][0]
+	var t1: float = K[i0 + 1][0]
+	var dt := t1 - t0
+	var x := (rel - t0) / dt
+	var h00 := 2 * x * x * x - 3 * x * x + 1
+	var h10 := x * x * x - 2 * x * x + x
+	var h01 := -2 * x * x * x + 3 * x * x
+	var h11 := x * x * x - x * x
+	var out := []
+	for c in 2:
+		var p0: Vector3 = K[i0][1 + c]
+		var p1: Vector3 = K[i0 + 1][1 + c]
+		var m0: Vector3 = Vector3.ZERO if i0 == 0 else m[c]
+		var m1: Vector3 = m[c] if i0 == 0 else Vector3.ZERO
+		out.append(p0 * h00 + m0 * (h10 * dt) + p1 * h01 + m1 * (h11 * dt))
+	return out
+
+## 球棒的座標框：原點＝兩肩中點；方向＝「預備那一格的胸口方向」和「現在胸口方向」各一半（pb6_follow）。
+## 全跟胸口：Mixamo 揮棒時上半身扭得很快，棒子跟著甩 → 一格跳 6.6 cm；全不跟：身體轉進棒子裡。
+var pb6_follow := 1.0   # 試過 0.5：Mixamo 揮棒上半身轉超過 180°，四元數內插在 t≈2.02 翻面 → 球棒一格跳 60–85 cm。改回全跟胸口
+var _pb6_B0 := Basis.IDENTITY
+func _pb6_frame_basis() -> Array:
+	var C := _chest()
+	var Bc := Basis(-(C[2] as Vector3), C[3], C[1]).orthonormalized()   # 左、上、前（右手系；用「右」會是左手系，四元數錯）
+	var B := Basis(_pb6_B0.get_rotation_quaternion().slerp(Bc.get_rotation_quaternion(), pb6_follow))
+	return [C[0], B]
+
+func _pb6_xf(t: float) -> Transform3D:
+	var FB := _pb6_frame_basis()
+	var O: Vector3 = FB[0]
+	var Bb: Basis = FB[1]
+	if pb6_follow >= 1.0:
+		var C := _chest()
+		Bb = Basis(-(C[2] as Vector3), C[3], C[1]).orthonormalized()
+	var e := _pb6_eval(t - pb_tc)
+	var hl: Vector3 = e[0]
+	var dl: Vector3 = e[1]
+	var Hc := O + Bb * Vector3(-hl.z, hl.y, hl.x)
+	var D := (Bb * Vector3(-dl.z, dl.y, dl.x)).normalized()
+	var x := D.cross(Vector3(0, 0, 1))
+	if x.length() < 0.1:
+		x = D.cross(Vector3.UP)
+	x = x.normalized()
+	return Transform3D(Basis(x, D, x.cross(D).normalized()), Hc - D * _grip_mid())
+
+## 一格：[碰身體分數（頂點＋10×頭內點）, 手搆不到（> 1.5 cm）的量, 手臂超過 pb6_bend 的量, 最近的手距離, 手臂最直]
+func _pb6_frame(an: String, t: float) -> Array:
+	_pose_hands(an, t)
+	var X := _pb_xf(t)
+	var key := int(roundf(t * 120.0))
+	if not _pb6_star.has(key):
+		_pb6_star[key] = head_star()
+	var hh: Array = _bat_hits2(X, mesh_pts(BODY_NO_HEAD + ["leftleg", "rightleg"]), _pb6_star[key], 0.002)
+	var reach := 0.0
+	var st := 0.0
+	var gmin := 9.0
+	for sd in pb_hands:
+		var g2 := _hand_bat_gap(sd, X)
+		gmin = minf(gmin, g2)
+		reach = maxf(reach, g2 - 0.015)
+		var Sa := fpos(sd + "arm")
+		var la := Sa.distance_to(fpos(sd + "forearm")) + fpos(sd + "forearm").distance_to(fpos(sd + "hand"))
+		st = maxf(st, Sa.distance_to(fpos(sd + "hand")) / la)
+	return [int(hh[0]) + 10 * int(hh[1]), reach, maxf(st - pb6_bend, 0.0), gmin, st]
+
+func _pb6_cost(an: String, step: float) -> Array:
+	var td: float = bb["t_drop"]
+	var tot := 0.0
+	var per := [0.0, 0.0, 0.0]   # 每個關鍵姿勢附近的毛病（搜尋先調毛病最多的）
+	var t := 0.0
+	var worst := {"hits": 0, "reach_cm": 0.0, "stretch": 0.0}
+	while t < td:
+		var fr := _pb6_frame(an, t)
+		var c := float(fr[0]) + float(fr[1]) * 100.0 + float(fr[2]) * 100.0
+		tot += c
+		var rel := t - pb_tc
+		var k := 0 if rel < float(pb6_keys[0][0]) * 0.5 else (1 if rel < float(pb6_keys[2][0]) * 0.5 else 2)
+		per[k] += c
+		worst["hits"] = maxi(int(worst["hits"]), int(fr[0]))
+		worst["reach_cm"] = maxf(float(worst["reach_cm"]), float(fr[1]) * 100.0)
+		worst["stretch"] = maxf(float(worst["stretch"]), float(fr[4]))
+		t += step
+	return [tot, per, worst]
+
+## 相對身體表面的鍵值（v5 格式：前＝那個高度身體表面再往前幾公尺、上＝肩寬倍數、右＝半肩寬倍數）→ 絕對胸口座標
+func pb6_from_rel(keys_rel: Array) -> void:
+	var an: String = bb["an"]
+	var keep_model := model.transform
+	model.transform = model_base
+	pb6_keys = []
+	for kr in keys_rel:
+		var rel: float = kr[0]
+		pose_at(an, clampf(pb_tc + rel, 0.0, float(bb["len"])))
+		var C := _chest()
+		var O: Vector3 = C[0]
+		var w: float = C[4]
+		var hl: Vector3 = kr[1]
+		var front := 0.0
+		for q in mesh_pts(["hips", "spine", "neck", "head"]):
+			var d: Vector3 = q - O
+			if absf(d.dot(C[3]) - hl.y * w) < 0.06:
+				front = maxf(front, d.dot(C[1]))
+		var P: Vector3 = O + (C[1] as Vector3) * (front + hl.x) + (C[3] as Vector3) * (hl.y * w) + (C[2] as Vector3) * (hl.z * w * 0.5)
+		var dl: Vector3 = kr[2]
+		var Dw: Vector3 = ((C[1] as Vector3) * dl.x + (C[3] as Vector3) * dl.y + (C[2] as Vector3) * dl.z).normalized()
+		var Bb: Basis = Basis(-(C[2] as Vector3), C[3], C[1]).orthonormalized() if pb6_follow >= 1.0 else _pb6_frame_basis()[1]
+		var pl := Bb.inverse() * (P - O)
+		var dlo := Bb.inverse() * Dw
+		pb6_keys.append([rel, Vector3(pl.z, pl.y, -pl.x), Vector3(dlo.z, dlo.y, -dlo.x).normalized()])
+	model.transform = keep_model
+
+var pb6_rel := []   # 給 build_pbat6 的相對鍵值（pb6_keys 空的時候用它換算）
+
+func build_pbat6() -> void:
+	var keep_model := model.transform
+	model.transform = model_base
+	_pb_building = true
+	_palm_setup()
+	pose_at(String(bb["an"]), clampf(pb_tc + float(pb6_rel[0][0]) if not pb6_rel.is_empty() else pb_tc - 0.3, 0.0, 9.0))
+	var C0 := _chest()
+	_pb6_B0 = Basis(-(C0[2] as Vector3), C0[3], C0[1]).orthonormalized()
+	if not pb6_rel.is_empty():
+		pb6_from_rel(pb6_rel)
+		model.transform = model_base
+	var an: String = bb["an"]
+	pb_tab.clear()
+	_pb6_star.clear()
+	var step := 1.0 / 30.0
+	var res := _pb6_cost(an, step)
+	print("MASCOT pbat6 start cost %.2f worst %s" % [float(res[0]), res[2]])
+	var dpos := 0.03
+	var dang := 12.0
+	var evals := 0
+	var init := pb6_keys.duplicate(true)   # 搜尋範圍：位置 ±7 cm、棒頭方向 ±35°（不然會找到「接觸時棒子朝左」這種不是揮棒的姿勢）
+	var rounds := int(OS.get_environment("PB6ROUNDS")) if OS.get_environment("PB6ROUNDS") != "" else 6
+	for rnd in rounds:
+		if float(res[0]) <= 0.0:
+			break
+		var improved := false
+		var order := [0, 1, 2]
+		var per: Array = res[1]
+		order.sort_custom(func(x, y): return float(per[x]) > float(per[y]))
+		for k in order:
+			var base: Array = (pb6_keys[k] as Array).duplicate()
+			var cands := []
+			for ax in [Vector3(1, 0, 0), Vector3(0, 1, 0), Vector3(0, 0, 1)]:
+				cands.append([(base[1] as Vector3) + ax * dpos, base[2]])
+				cands.append([(base[1] as Vector3) - ax * dpos, base[2]])
+			for ax in [Vector3(0, 1, 0), Vector3(0, 0, 1), Vector3(1, 0, 0)]:
+				for sg in [1.0, -1.0]:
+					cands.append([base[1], (base[2] as Vector3).rotated(ax, deg_to_rad(dang * sg))])
+			for cnd in cands:
+				if (cnd[0] as Vector3).distance_to(init[k][1]) > 0.07 or (cnd[1] as Vector3).angle_to(init[k][2]) > deg_to_rad(35.0):
+					continue
+				pb6_keys[k] = [base[0], cnd[0], cnd[1]]
+				var r2 := _pb6_cost(an, step)
+				evals += 1
+				if float(r2[0]) < float(res[0]) - 1e-4:
+					res = r2
+					base = (pb6_keys[k] as Array).duplicate()
+					improved = true
+			pb6_keys[k] = base
+			if float(res[0]) <= 0.0:
+				break
+		print("MASCOT pbat6 round %d: cost %.2f worst %s (step %.1f cm / %.0f deg)" % [rnd, float(res[0]), res[2], dpos * 100.0, dang])
+		if not improved:
+			dpos *= 0.5
+			dang *= 0.5
+	# 手掌距離：每格（1/120）選 extra（兩手 0–2 cm、靠近 0.3 cm、優先跟上一格一樣）
+	var td: float = bb["t_drop"]
+	var n := int(ceil((td + 0.1) / PB_DT)) + 2
+	var prev := {"right": 0.012, "left": 0.012}
+	var bad := 0
+	for i in n:
+		var X := _pb6_xf_at(an, i * PB_DT)
+		pb_tab.append([X.origin, X.basis.y.normalized(), 0.012, 0.012])
+	var star := {}
+	var hit_frames := 0
+	for i in n:
+		var t := i * PB_DT
+		for sd in pb_hands:
+			var j := 2 if sd == "right" else 3
+			var cl := []
+			var e := PB_EX_MIN
+			while e <= PB_EX_MAX + 1e-6:
+				pb_tab[i][j] = e
+				_pose_hands(an, t)
+				var gq := _hand_bat_gap(sd, _pb_xf(t))
+				var sc := absf(gq - 0.003) + 0.3 * absf(e - float(prev[sd]))
+				if gq < 0.0 or gq > 0.02:
+					sc += 10.0 + absf(gq)
+				cl.append([sc, e])
+				e += 0.003
+			cl.sort_custom(func(x, y): return float(x[0]) < float(y[0]))
+			var pick: float = cl[0][1]
+			var pick_sc: float = cl[0][0]
+			# 前 6 個候選：手臂不伸直、棒子不碰身體（含前臂）才收
+			for c in cl.slice(0, 6):
+				pb_tab[i][j] = c[1]
+				var fr := _pb6_frame(an, t)
+				if int(fr[0]) == 0 and float(fr[4]) <= pb6_bend + 0.02:
+					pick = c[1]
+					pick_sc = c[0]
+					break
+			pb_tab[i][j] = pick
+			prev[sd] = pick
+			if pick_sc >= 10.0:
+				bad += 1
+		if int(_pb6_frame(an, t)[0]) > 0:
+			hit_frames += 1
+	print("MASCOT pbat6 palm: %d frames still touching after palm choice" % hit_frames)
+	_pb_building = false
+	_pb_jitter(n)
+	model.transform = keep_model
+	pb6_report = {"curve_checks": evals, "search_cost": res[0], "worst_1_30": res[2], "palm_frames_no_seat": bad}
+	bb["corr_report"] = pb6_report
+	print("MASCOT pbat6 done: %d curve checks, cost %.2f, worst %s, palm frames with no 0-2 cm seat %d" % [evals, float(res[0]), res[2], bad])
+	for k in 3:
+		print("MASCOT pbat6 key %d: t%+.2f grip(f,u,r)=%s dir=%s" % [k, float(pb6_keys[k][0]), pb6_keys[k][1], pb6_keys[k][2]])
+
+func _pb6_xf_at(an: String, t: float) -> Transform3D:
+	pose_at(an, t)
+	return _pb6_xf(t)

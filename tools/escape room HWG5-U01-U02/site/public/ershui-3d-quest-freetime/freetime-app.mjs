@@ -56,15 +56,22 @@ const speakAvg = s => {
   return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null;
 };
 const N = () => BANK.items.length;
+// 這一輪的路線（ken_a／ken_b／shuiling／zunbo）：遊戲開始時 report({type:"start", route}) → 存在 cleared 的 "route:<id>"
+const routeIdOf = s => {
+  const row = (s?.cleared || []).find(c => String(c).startsWith("route:"));
+  const id = row ? String(row).slice(6) : "";
+  return BANK.routes?.[id] ? id : (BANK.defaultRoute || "ken_a");
+};
+const R = (s = state) => BANK.routes[routeIdOf(s)];
 function summaryOf(s) {
   const n = answered(s);
   const avg = speakAvg(s);
   return {
     total: N(), finished: n, firstTry: correct(s), correct: correct(s), attempts: n, hintsUsed: 0,
     battlesDone: 0, score: scoreOf(s), maxScore: BANK.maxScore, mode: "pair", route: 0,
-    modeLabel: "Free Time Pair Challenge", routeLabel: avg == null ? "—" : `口說平均 ${avg}`,
+    modeLabel: `Free Time Pair Challenge · ${R(s).label}`, routeLabel: avg == null ? "—" : `口說平均 ${avg}`,
     current: s.completedAt ? n : Math.min(n + 1, N()),
-    note: `Free Time 兩人一組（${s.pair[0]}＋${s.pair[1]}）・${avg == null ? "無口說題" : `口說平均 ${avg}`}・${s.completedAt ? "完成" : `第 ${Math.min(n + 1, N())}/${N()} 題`}`,
+    note: `Free Time 兩人一組（${s.pair[0]}＋${s.pair[1]}）・路線 ${R(s).label}・${avg == null ? "無口說題" : `口說平均 ${avg}`}・${s.completedAt ? "完成" : `第 ${Math.min(n + 1, N())}/${N()} 題`}`,
   };
 }
 // 每個學號各一份；欄位和 Listen and Guess 的 cloudRecord 一樣（教師後台 kind "planet" 讀 summary.note、items）
@@ -130,7 +137,8 @@ window.ershuiHost = {
     try { m = JSON.parse(json); } catch { return; }
     if (m.type === "start" && Number.isInteger(m.seed)) {
       if (Object.keys(state.results).length || state.completedAt) state = newAttempt(state.pair);
-      state.cleared = ["mode:pair", "set:0", `seed:${m.seed}`, pairTag(state.pair), "types:" + shuffle([...MIX]).map(t => CODE[t]).join("")];
+      const route = BANK.routes?.[m.route] ? m.route : (BANK.defaultRoute || "ken_a");
+      state.cleared = ["mode:pair", "set:0", `seed:${m.seed}`, `route:${route}`, pairTag(state.pair), "types:" + shuffle([...MIX]).map(t => CODE[t]).join("")];
       state.results = {};
       state.completedAt = null;
       persist();
@@ -151,8 +159,8 @@ window.ershuiHost = {
 const tell = m => outbox.push(m);
 
 // ------------------------------------------------------------------ question panel
-const scenarioOf = id => BANK.scenarios.find(s => s.id === id);
-const sentenceOf = act => BANK.activities[act].sentence;
+const scenarioOf = id => R().scenarios.find(s => s.id === id);
+const sentenceOf = act => R().activities[act].sentence;
 // 每回合 11 題固定 5 口說＋3 拖放＋3 選擇，隨機分配到 q01–q11；存在 cleared 的 "types:sdc…"，換台 iPad 也一樣。
 const MIX = ["speak", "speak", "speak", "speak", "speak", "drag", "drag", "drag", "choice", "choice", "choice"];
 const CODE = { speak: "s", drag: "d", choice: "c" };
@@ -194,11 +202,11 @@ function openQuiz(id) {
   else drawSpeak();
 }
 function closeQuiz() { quiz.hidden = true; quiz.innerHTML = ""; Q = null; }
-const head = sub => `<div class="qhead"><b>What do you do in your free time?</b><span>${esc(sub)}</span>
+const head = sub => `<div class="qhead"><b>${esc(R().question)}</b><span>${esc(sub)}</span>
   <button class="btn ghost small" data-act="replay">🔊 再聽一次 Listen again</button></div>`;
 
 function finish(ok, pick, extra = {}) {
-  state.results[Q.id] = { type: Q.type, attempts: Q.tries || 1, finalCorrect: ok, act: Q.act,
+  state.results[Q.id] = { type: Q.type, attempts: Q.tries || 1, finalCorrect: ok, act: Q.act, route: routeIdOf(state),
     q: clip(Q.sc.context), a: sentenceOf(Q.act), pick: clip(pick), ...extra };
   persist();
   tell({ type: "answer", correct: ok, pick });
@@ -207,16 +215,16 @@ function finish(ok, pick, extra = {}) {
 
 // 選擇題：情境的 3 個選項（固定順序）
 function drawChoice(msg = "") {
-  quiz.innerHTML = `${head("看線索，選出 Ken 會做什麼 Choose Ken's answer")}${msg ? `<p class="msg">${esc(msg)}</p>` : ""}
+  quiz.innerHTML = `${head(`看線索，選出 ${R().name} 會做什麼 Choose the answer`)}${msg ? `<p class="msg">${esc(msg)}</p>` : ""}
     <div class="choices">${Q.sc.options.map((o, i) => `<button class="btn opt" data-pick="${i}">${"ABC"[i]}　${esc(o)}</button>`).join("")}</div>`;
 }
 
-// 拖放題：I [ ][ ]… in my free time. 每個答案字一格；字卡＝答案字＋3 個其他活動的字
+// 拖放題：I [ ][ ]… in my free time.（水鈴：She … in her free time.／圳寶：He … in his free time.）每個答案字一格；字卡＝答案字＋3 個其他活動的字
 function dragModel() {
-  const answers = BANK.activities[Q.act].phrase.split(" ");
+  const answers = R().activities[Q.act].phrase.split(" ");
   const low = new Set(answers.map(w => w.toLowerCase()));
   const pool = [];
-  for (const [k, a] of Object.entries(BANK.activities)) {
+  for (const [k, a] of Object.entries(R().activities)) {
     if (k === Q.act) continue;
     for (const w of a.phrase.split(" ")) {
       const l = w.toLowerCase();
@@ -236,8 +244,8 @@ function drawDrag(init = false) {
   }).join(" ");
   const pool = D.tiles.map(t => used.has(t.id) ? `<span class="tile ghost"></span>` : `<button class="tile" data-tile="${t.id}">${esc(t.text)}</button>`).join("");
   const full = D.placed.every(Boolean);
-  quiz.innerHTML = `${head("點字卡放進空格，拼出 Ken 的答案 Tap the words")}
-    <p class="sent"><span class="w">I</span> ${slots} <span class="w">in my free time.</span></p><div class="pool">${pool}</div>
+  quiz.innerHTML = `${head(`點字卡放進空格，拼出 ${R().name} 的答案 Tap the words`)}
+    <p class="sent"><span class="w">${esc(R().subject)}</span> ${slots} <span class="w">in ${esc(R().possessive)} free time.</span></p><div class="pool">${pool}</div>
     <div class="row"><button class="btn ghost" data-act="clear">Clear 清除</button>
     <button class="btn primary" data-act="check" ${full ? "" : "disabled"}>Go! ✓</button></div>`;
 }
@@ -246,9 +254,9 @@ function drawDrag(init = false) {
 let rec = null;
 function drawSpeak(msg = "", result = null) {
   const pass = result && result.total_score >= BANK.passSpeak;
-  quiz.innerHTML = `${head("用英文說出 Ken 會做什麼（自己猜！）Say your guess")}
+  quiz.innerHTML = `${head(`用英文說出 ${R().name} 會做什麼（自己猜！）Say your guess`)}
     <p class="turn">🎙 輪到 ${esc(Q.by)} 說 / ${esc(Q.by)}'s turn</p>
-    <p class="sent hint">I <span class="blank">______</span> in my free time.</p>
+    <p class="sent hint">${esc(R().subject)} <span class="blank">______</span> in ${esc(R().possessive)} free time.</p>
     <p class="msg">第 ${Math.min(Q.tries + (pass ? 0 : 1), MAX_TRIES)}／${MAX_TRIES} 次${Q.best ? `・最高 ${Q.best} 分` : ""}</p>
     ${result ? `<div class="ai ${pass ? "good" : "try"}">
       <p class="said">你說：「${esc(result.transcript || "（聽不清楚）")}」</p>
@@ -353,8 +361,8 @@ async function startRec() {
       return;
     }
     try {
-      const phrases = Object.values(BANK.activities).map(a => a.phrase);
-      const res = await scoreGuess({ base64Audio: b64(wav.buf), mimeType: "audio/wav", phrases });
+      const phrases = Object.values(R().activities).map(a => a.phrase);
+      const res = await scoreGuess({ base64Audio: b64(wav.buf), mimeType: "audio/wav", phrases, pattern: R().pattern, example: R().example, who: R().name });
       if (Q !== q) return;
       Q.aiErrors = 0;
       Q.tries++;
@@ -388,7 +396,9 @@ async function startRec() {
   const mine = rec;
   setTimeout(() => mine.state === "recording" && mine.stop(), 8000);
 }
-// 從逐字稿猜學生說的是哪個活動（籃球／棒球先比，再比其他）
+// 從逐字稿猜學生說的是哪個活動（籃球／棒球先比，再比其他）。
+// 用關鍵字比對，所以第三人稱句子也算對：She goes jogging…（jog）、He watches TV…（tv）、She studies English…（english）、
+// He plays…、She listens to music…、He rides a bike…、She surfs the Internet…
 const KEYWORDS = [
   ["basketball", ["basketball", "basket ball"]], ["baseball", ["baseball", "base ball"]],
   ["recorder", ["recorder"]], ["games", ["online game", "games", "game"]], ["internet", ["internet", "surf"]],
@@ -422,7 +432,7 @@ quiz.addEventListener("click", e => {
       const said = D.placed.map(id => D.tiles.find(t => t.id === id).text);
       const ok = said.every((w, i) => w.toLowerCase() === D.answers[i].toLowerCase());
       Q.tries = 1;
-      finish(ok, `I ${said.join(" ")} in my free time.`);
+      finish(ok, `${R().subject} ${said.join(" ")} in ${R().possessive} free time.`);
       return;
     }
   }
@@ -442,8 +452,8 @@ function renderStart(message = "") {
   closeQuiz();
   app.innerHTML = `<main class="screen"><section class="panel">
     <h1>Free Time 兩人一組線索挑戰</h1>
-    <p class="en">Pair Clue Challenge · Guess Ken's free time!</p>
-    <p>每題：聽情境 → 看線索 → 作答（選擇 3、拖放 3、口說 5）→ Ken 演出答案<br>口說題兩人輪流錄音。What do you do in your free time? — I ___ in my free time.</p>
+    <p class="en">Pair Clue Challenge · Guess their free time!</p>
+    <p>登入後選路線：Ken A／Ken B／水鈴 Shuiling／圳寶 Zun-Bo<br>每題：聽情境 → 看線索 → 作答（選擇 3、拖放 3、口說 5）→ 角色演出答案<br>口說題兩人輪流錄音。I ___ in my free time.／She ___ in her free time.／He ___ in his free time.</p>
     <form id="startForm">
       <label for="sid">兩人學號連在一起 Both student IDs</label>
       <input id="sid" type="text" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="6010160126" required>
@@ -486,6 +496,7 @@ function renderResult() {
       <h1>Great teamwork!</h1>
       <p class="en">兩人一組挑戰完成！</p>
       <p class="big-id pair">${esc(state.pair[0])} ＋ ${esc(state.pair[1])}</p>
+      <p class="en">Route 路線：${esc(R().label)}</p>
       <p class="score">${sm.score}<small> / ${BANK.maxScore}</small></p>
       <div class="stats">
         <div><b>${sm.correct}/${N()}</b><span>答對</span></div>

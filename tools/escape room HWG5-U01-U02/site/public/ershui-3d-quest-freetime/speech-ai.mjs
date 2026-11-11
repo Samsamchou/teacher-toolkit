@@ -12,13 +12,13 @@ const FAKE = new URLSearchParams(location.search).has("fakeai") && ["127.0.0.1",
 
 export const available = () => FAKE || !!SPEECH_AI;
 
-function prompt(phrases) {
+function prompt(phrases, pattern = "I ______ in my free time.", example = "I watch TV in my free time.", who = "Ken") {
   return `你是一位嚴格且專業的台灣國小英語發音教練。
-學生在玩「猜猜 Ken 的休閒活動」，要用英文說出自己猜的活動，句型是 "I ___ in my free time."（例如 "I watch TV in my free time."）。
+學生在玩「猜猜 ${who} 的休閒活動」，要用英文說出自己猜的活動，句型是 "${pattern}"（例如 "${example}"）。
 可能的活動：${phrases.join(", ")}。學生可能猜錯活動，這不是發音問題。
 請先逐字寫出學生實際念出的英文（transcript），再以「學生說出的這句話」當目標評分：
 - 不要因為猜的活動和答案不同而扣分；
-- 句型少一個字（例如漏掉 I、in、my、free、time）或字尾沒有收音（例如 games 的 s、jogging 的 g、English 的 sh）要明確扣分；
+- 句型少一個字（例如漏掉主詞、in、my／her／his、free、time）或字尾沒有收音（例如 games 的 s、jogging 的 g、English 的 sh、第三人稱動詞 goes／plays／watches 的 s）要明確扣分；
 - 沒有說英文或聽不清楚時，transcript 寫空字串、各項給低分。
 回饋使用 50 字以內、溫柔而具體的繁體中文，只指出一項最需要改善之處。`;
 }
@@ -48,14 +48,14 @@ async function getModel() {
 
 const score = v => { const n = Math.round(Number(v)); if (!Number.isFinite(n) || n < 0 || n > 100) throw new Error("bad score"); return n; };
 
-export async function scoreGuess({ base64Audio, mimeType, phrases }) {
+export async function scoreGuess({ base64Audio, mimeType, phrases, pattern, example, who }) {
   if (FAKE) {
     await new Promise(r => setTimeout(r, 900));
     const t = 70 + Math.floor(Math.random() * 26);
-    return { transcript: `I ${phrases[Math.floor(Math.random() * phrases.length)]} in my free time.`, accuracy: t, fluency: t, completeness: t, total_score: t, feedback: "（測試）time 的 m 要閉嘴念出來。" };
+    return { transcript: String(pattern || "I ______ in my free time.").replace("______", phrases[Math.floor(Math.random() * phrases.length)]), accuracy: t, fluency: t, completeness: t, total_score: t, feedback: "（測試）time 的 m 要閉嘴念出來。" };
   }
   const m = await getModel();
-  const res = await m.generateContent([{ text: prompt(phrases) }, { inlineData: { mimeType, data: base64Audio } }]);
+  const res = await m.generateContent([{ text: prompt(phrases, pattern, example, who) }, { inlineData: { mimeType, data: base64Audio } }]);
   const raw = res.response.text().trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
   const j = JSON.parse(raw.match(/\{[\s\S]*\}/)?.[0] || raw);
   return { transcript: String(j.transcript || "").trim(), feedback: String(j.feedback || "").trim(),

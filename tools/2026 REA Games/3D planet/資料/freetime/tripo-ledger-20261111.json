@@ -1,0 +1,31 @@
+{
+ "date": "2026-11-11",
+ "balance_before": 700,
+ "items": [
+  {
+   "item": "zunbo_mom (design A; HD, Ultra Mesh, 30000 faces, 4K PBR, Private)",
+   "points": 55,
+   "balance_after": 645,
+   "task_url": "https://studio.tripo3d.ai/workspace/generate/e54688fd-909f-45a5-ba17-7da947d69b13"
+  },
+  {
+   "item": "scooter_A (HD, Ultra Mesh, 30000 faces, 4K PBR, Private, no rig)",
+   "points": 55,
+   "balance_after": 590,
+   "task_url": "https://studio.tripo3d.ai/workspace/generate/17a0a333-7791-4b88-a38c-c0f84e369d90"
+  },
+  {
+   "item": "zunbo_mom Auto Rig (Humanoid, Mixamo skeleton; applied to same asset)",
+   "points": 20,
+   "balance_after": 570,
+   "task_url": "https://studio.tripo3d.ai/workspace/rigging/e54688fd-909f-45a5-ba17-7da947d69b13"
+  }
+ ],
+ "total_points": 130,
+ "balance_after": 570,
+ "exports": {
+  "zunbo_mom_rigged.glb": "GLB, 2k textures, with skeleton, 2,895,320 bytes",
+  "scooter_A.glb": "GLB, 2k textures, 2,791,672 bytes"
+ },
+ "note": "Balance was 700 (not 140 as of 11/07) — top-up happened between sessions."
+}
