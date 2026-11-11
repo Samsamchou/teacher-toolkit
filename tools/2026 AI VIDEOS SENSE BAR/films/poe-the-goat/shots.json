@@ -1,0 +1,88 @@
+{
+ "title": "Poe the Goat — o_e / oa / ow phonics story",
+ "style": "Bright children's picture-book illustration with a hand-painted gouache and crayon texture: bold friendly shapes, rich saturated blues, sunny yellows and fresh greens, soft visible brush texture, cheerful storybook finish. 16:9 landscape film frame. The character keeps his mouth gently closed. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles. Any paper note is folded or shows only blank paper.",
+ "chars": {
+  "poe": "Poe (a small, friendly young goat with cream-white fur, tan ears and a tan patch over one eye, two short curved light-gray horns, a little white chin beard, big round dark eyes, a pink nose, wearing an orange life vest, standing and sitting upright like a storybook animal, hooves used like hands)"
+ },
+ "char_refs": {
+  "poe": []
+ },
+ "char_notes": {
+  "poe": "Original character: do NOT copy the textbook goat (a brown goat with long curling horns). Poe is cream-white with short horns. Keep the orange life vest in every shot."
+ },
+ "props": {
+  "boat": "a small wooden rowboat painted sunny yellow inside and out with a dark-blue stripe along the bottom, two yellow oars",
+  "rose": "one big bright red rose with green leaves",
+  "note": "a small folded white paper note tied to the rose stem with a purple ribbon, no visible writing",
+  "coat": "a warm red winter coat with big buttons",
+  "robe": "a long, soft, sky-blue robe with a belt, worn over the coat like a warm cloak",
+  "home": "a small cozy cottage with a red roof and warm yellow lit windows on the lake shore"
+ },
+ "masters": {
+  "lake_sunny": "A wide blue lake on a sunny day: small white houses with red roofs on green hills along both shores, layered green trees, soft blue mountains in the distance, light blue sky with a few white clouds, gentle painted waves. A short wooden dock on the near left shore. No people, no animals, no boats.",
+  "lake_snow": "The same blue lake but the weather has turned: gray-white sky, light snow falling, wind making bigger waves, the hills and red roofs dusted with white snow. On the far right shore a small cozy cottage with a red roof and warm yellow lit windows. No people, no animals, no boats."
+ },
+ "shots": [
+  {
+   "id": "S01",
+   "gen": "seedance",
+   "scene": "lake_sunny",
+   "refs": [
+    "poe"
+   ],
+   "dur": 5,
+   "narr": "Poe the Goat has a rose.",
+   "frame": "Medium shot of Poe standing on the wooden dock by the sunny blue lake, holding one big red rose in both hooves in front of his chest, smiling, mouth closed. The empty yellow rowboat is tied beside the dock. Houses and hills behind.",
+   "action": "Poe lifts the rose to his nose, sniffs it happily with closed eyes, then opens his eyes and smiles at the camera. Gentle breeze, small waves, the boat bobs softly. Nobody speaks."
+  },
+  {
+   "id": "S02",
+   "gen": "seedance",
+   "scene": "lake_sunny",
+   "refs": [
+    "poe"
+   ],
+   "dur": 5,
+   "narr": "Poe the Goat has a rose and a note.",
+   "frame": "Close-medium shot of Poe on the dock holding the red rose in one hoof and a small folded white paper note in the other, a purple ribbon hanging from the rose stem. Smiling, mouth closed. Lake behind him.",
+   "action": "Poe ties the folded note to the rose stem with the purple ribbon, then holds the rose and note up proudly and nods. Nobody speaks."
+  },
+  {
+   "id": "S03",
+   "gen": "seedance",
+   "scene": "lake_sunny",
+   "refs": [
+    "poe"
+   ],
+   "dur": 6,
+   "pilot": true,
+   "narr": "Poe the Goat rows a boat with the rose and the note.",
+   "frame": "Side three-quarter shot of Poe sitting in the yellow rowboat in the middle of the sunny blue lake, holding the two yellow oars. The red rose with the folded note and purple ribbon stands in a small jar at the front of the boat. Houses and hills on the shores.",
+   "action": "Poe rows the boat forward with smooth even strokes of both oars; the boat glides across the lake leaving small ripples; the rose sways a little. Camera tracks alongside slowly. Nobody speaks."
+  },
+  {
+   "id": "S04",
+   "gen": "seedance",
+   "scene": "lake_snow",
+   "refs": [
+    "poe"
+   ],
+   "dur": 6,
+   "narr": "The wind blows. Snow falls on the boat and the goat.",
+   "frame": "Medium-wide shot of Poe in the yellow rowboat on the lake, holding the two YELLOW oars (same as before), the sky turning gray-white, big soft fluffy snowflakes slowly drifting down (clearly snow, not rain), bigger waves. Poe looks up at the sky surprised, mouth closed. The red rose with the folded note and purple ribbon stands in an OPEN glass jar with no lid at the front of the boat.",
+   "action": "A strong wind blows: Poe's ears and chin beard flap, the waves rise and rock the boat. Snow starts to fall thickly and settles on the boat, on Poe's horns and on his vest; Poe shivers and hugs himself. Nobody speaks."
+  },
+  {
+   "id": "S05",
+   "gen": "seedance",
+   "scene": "lake_snow",
+   "refs": [
+    "poe"
+   ],
+   "dur": 8,
+   "narr": "Poe puts on a coat and a robe and rows home with the rose and the note.",
+   "frame": "Medium shot of Poe sitting in the yellow rowboat in light snow (big soft fluffy snowflakes, not rain), pulling on a warm red coat with big buttons over his orange life vest; a folded sky-blue robe lies on the seat beside him. The two YELLOW oars rest in the oarlocks on both sides of the boat, ready to row. The red rose with the folded note in the OPEN glass jar with no lid at the front of the boat. Far right shore: a small cottage with a red roof and warm lit windows.",
+   "action": "Poe finishes putting on the red coat, then wraps the long sky-blue robe around his shoulders and ties the belt, smiles warmly, picks up the oars and rows toward the little cottage with glowing windows on the shore; snow keeps falling softly. Nobody speaks."
+  }
+ ]
+}

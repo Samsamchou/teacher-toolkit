@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "design_text": "Once upon a time, a little goat lived by a big blue lake. Every morning he looked at the water and smiled.",
+ "takes": 3,
+ "tempo": 0.8,
+ "narr_voices": [
+  "narA",
+  "narB",
+  "narC"
+ ],
+ "voices": {
+  "narA": "A warm, gentle young adult woman storyteller with a soft, smooth, calm voice, clear American English, like reading a picture book to young children",
+  "narB": "A bright, cheerful young American woman English teacher with a clear, crisp voice and very careful pronunciation of every vowel, friendly and lively",
+  "narC": "A friendly, warm American man storyteller in his thirties with a gentle medium voice, relaxed, kind and very clear"
+ },
+ "pace": "slow, clear and careful pronunciation for children learning phonics, every word pronounced fully",
+ "tone": {},
+ "words": {
+  "W_rose": "Rose.",
+  "W_note": "Note.",
+  "W_robe": "Robe.",
+  "W_home": "Home.",
+  "W_goat": "Goat.",
+  "W_boat": "Boat.",
+  "W_coat": "Coat.",
+  "W_rows": "Rows.",
+  "W_blows": "Blows.",
+  "W_snow": "Snow."
+ }
+}

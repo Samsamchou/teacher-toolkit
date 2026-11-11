@@ -1,0 +1,32 @@
+{
+ "version": 1,
+ "design_text": "Once upon a time, a little goat lived by a big blue lake. Every morning he looked at the water and smiled.",
+ "takes": 3,
+ "tempo": 0.8,
+ "narr_voices": [
+  "narC"
+ ],
+ "voices": {
+  "narC": "A friendly, warm American man storyteller in his thirties with a gentle medium voice, relaxed, kind and very clear"
+ },
+ "pace": "slow, clear and careful pronunciation for children learning phonics, every word pronounced fully",
+ "tone": {},
+ "split": [
+  "S03_narr_narC"
+ ],
+ "split_gap": 0.35,
+ "words": {
+  "W_boy": "Boy.",
+  "W_soybeans": "Soybeans.",
+  "W_toy": "Toy.",
+  "W_oyster": "Oyster.",
+  "W_joy": "Joy.",
+  "W_coins": "Coins.",
+  "W_noise": "Noise.",
+  "W_oink": "Oink.",
+  "W_points": "Points.",
+  "W_joins": "Joins.",
+  "W_coin": "Coin.",
+  "W_point": "Point."
+ }
+}

@@ -1,0 +1,164 @@
+{
+ "S01_narr_narC": {
+  "who": "narC",
+  "text": "The boy has some soybeans and coins.",
+  "take": 2,
+  "heard": "The boy has some soybeans and coins.",
+  "match": 1.0,
+  "secs": 2.45,
+  "f0": 135.4
+ },
+ "S02_narr_narC": {
+  "who": "narC",
+  "text": "He puts them in his toy.",
+  "take": 2,
+  "heard": "He puts them in his toy.",
+  "match": 1.0,
+  "secs": 1.51,
+  "f0": 152.3
+ },
+ "S03_narr_narC": {
+  "who": "narC",
+  "text": "Oh, no! It makes a big noise!",
+  "take": 1,
+  "heard": "Oh no! It makes a big noise!",
+  "match": 1.0,
+  "secs": 2.81,
+  "f0": 218.1
+ },
+ "S04_narr_narC": {
+  "who": "narC",
+  "text": "\"Oink! Oink!\" says the toy pig.",
+  "take": 0,
+  "heard": "Oink, oink, says the toy pig.",
+  "match": 1.0,
+  "secs": 2.41,
+  "f0": 151.1
+ },
+ "S05_narr_narC": {
+  "who": "narC",
+  "text": "Mom points at the toy and joins the fun.",
+  "take": 2,
+  "heard": "Mom points at the toy and joins the fun.",
+  "match": 1.0,
+  "secs": 2.72,
+  "f0": 201.5
+ },
+ "S06_narr_narC": {
+  "who": "narC",
+  "text": "Out comes a toy oyster, and the boy jumps for joy!",
+  "take": 1,
+  "heard": "Out comes a toy oyster, and the boy jumps for joy.",
+  "match": 1.0,
+  "secs": 3.65,
+  "f0": 150.6
+ },
+ "W_boy_narC": {
+  "who": "narC",
+  "text": "Boy.",
+  "take": 1,
+  "heard": "Boy!",
+  "match": 1.0,
+  "secs": 0.72,
+  "f0": 285.1
+ },
+ "W_soybeans_narC": {
+  "who": "narC",
+  "text": "Soybeans.",
+  "take": 0,
+  "heard": "Soybeans.",
+  "match": 1.0,
+  "secs": 1.02,
+  "f0": 126.7
+ },
+ "W_toy_narC": {
+  "who": "narC",
+  "text": "Toy.",
+  "take": 0,
+  "heard": "Toy",
+  "match": 1.0,
+  "secs": 0.51,
+  "f0": 221.1
+ },
+ "W_oyster_narC": {
+  "who": "narC",
+  "text": "Oyster.",
+  "take": 0,
+  "heard": "Oyster",
+  "match": 1.0,
+  "secs": 0.77,
+  "f0": 175.2
+ },
+ "W_joy_narC": {
+  "who": "narC",
+  "text": "Joy.",
+  "take": 1,
+  "heard": "Joy.",
+  "match": 1.0,
+  "secs": 0.5,
+  "f0": 279.6
+ },
+ "W_coins_narC": {
+  "who": "narC",
+  "text": "Coins.",
+  "take": 2,
+  "heard": "Coins",
+  "match": 1.0,
+  "secs": 0.75,
+  "f0": 165.4
+ },
+ "W_noise_narC": {
+  "who": "narC",
+  "text": "Noise.",
+  "take": 2,
+  "heard": "Noise.",
+  "match": 1.0,
+  "secs": 0.93,
+  "f0": 234.0
+ },
+ "W_oink_narC": {
+  "who": "narC",
+  "text": "Oink.",
+  "take": 0,
+  "heard": "Oink!",
+  "match": 1.0,
+  "secs": 0.49,
+  "f0": 185.5
+ },
+ "W_points_narC": {
+  "who": "narC",
+  "text": "Points.",
+  "take": 0,
+  "heard": "Points.",
+  "match": 1.0,
+  "secs": 0.61,
+  "f0": 189.9
+ },
+ "W_joins_narC": {
+  "who": "narC",
+  "text": "Joins.",
+  "take": 0,
+  "heard": "Joins.",
+  "match": 1.0,
+  "secs": 0.77,
+  "f0": 205.1
+ },
+ "W_coin_narC": {
+  "who": "narC",
+  "text": "Coin.",
+  "take": 0,
+  "heard": "COIN",
+  "match": 1.0,
+  "secs": 0.52,
+  "f0": 201.6
+ },
+ "W_point_narC": {
+  "who": "narC",
+  "text": "Point.",
+  "take": 0,
+  "heard": "Point!",
+  "match": 1.0,
+  "secs": 0.54,
+  "f0": 189.4
+ }
+}

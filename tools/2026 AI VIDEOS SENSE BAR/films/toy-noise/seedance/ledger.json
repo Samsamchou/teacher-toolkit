@@ -1,0 +1,90 @@
+[
+ {
+  "shot": "S03",
+  "mode": "first",
+  "take": 1,
+  "taskId": "c51e3981d4cdc9711e6970ef3c186e63",
+  "state": "success",
+  "credits": 26.6,
+  "secs": 123,
+  "fail": "",
+  "file": "seedance/S03/first_1.mp4"
+ },
+ {
+  "shot": "S04",
+  "mode": "first",
+  "take": 1,
+  "taskId": "a1f9eb9b0c73199182a33cb818e8c75b",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 107,
+  "fail": "",
+  "file": "seedance/S04/first_1.mp4"
+ },
+ {
+  "shot": "S01",
+  "mode": "first",
+  "take": 1,
+  "taskId": "2c0484cbadeb194aa38e9bc6672a8124",
+  "state": "success",
+  "credits": 49.2,
+  "secs": 122,
+  "fail": "",
+  "file": "seedance/S01/first_1.mp4"
+ },
+ {
+  "shot": "S03",
+  "mode": "first",
+  "take": 2,
+  "taskId": "377d7e50aba05134f70800021a271ffa",
+  "state": "success",
+  "credits": 57.4,
+  "secs": 122,
+  "fail": "",
+  "file": "seedance/S03/first_2.mp4"
+ },
+ {
+  "shot": "S02",
+  "mode": "first",
+  "take": 1,
+  "taskId": "0a580754899ff5f73b282201441449f1",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 138,
+  "fail": "",
+  "file": "seedance/S02/first_1.mp4"
+ },
+ {
+  "shot": "S05",
+  "mode": "first",
+  "take": 1,
+  "taskId": "244dd507a99d01257615a43335ce7e82",
+  "state": "success",
+  "credits": 57.4,
+  "secs": 138,
+  "fail": "",
+  "file": "seedance/S05/first_1.mp4"
+ },
+ {
+  "shot": "S06",
+  "mode": "first",
+  "take": 1,
+  "taskId": "e8b8770c616db9fc5112fd4c5d80edf3",
+  "state": "success",
+  "credits": 57.4,
+  "secs": 138,
+  "fail": "",
+  "file": "seedance/S06/first_1.mp4"
+ },
+ {
+  "shot": "S03",
+  "mode": "first",
+  "take": 3,
+  "taskId": "78f6a0d504d51a46a3668a5016c07662",
+  "state": "success",
+  "credits": 57.4,
+  "secs": 153,
+  "fail": "",
+  "file": "seedance/S03/first_3.mp4"
+ }
+]

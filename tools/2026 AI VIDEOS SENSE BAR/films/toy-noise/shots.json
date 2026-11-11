@@ -1,0 +1,110 @@
+{
+ "title": "The Noisy Toy Pig — oy / oi phonics story",
+ "style": "Bright children's picture-book illustration with a hand-painted gouache and crayon texture: bold friendly shapes, warm cheerful colors, soft visible brush texture, cozy storybook finish. 16:9 landscape film frame. Characters keep their mouths gently closed. The image contains no writing of any kind: no letters, no numbers, no words, no logos, no watermark, no speech bubbles, no symbols on the coins.",
+ "chars": {
+  "boy": "the boy (a cheerful 8-year-old boy with short straight black hair, round face, rosy cheeks, big dark eyes, wearing a green-and-white striped T-shirt, navy shorts and white socks)",
+  "mom": "Mom (the boy's mother, a kind young woman in her thirties with shoulder-length dark brown hair in a low ponytail, warm brown eyes, wearing a mustard-yellow cardigan over a white top and light blue jeans)",
+  "pig": "the toy pig (a shiny pink ceramic piggy bank about the size of a football, round body, small curly tail, big snout, little pointed ears, a coin slot on its back and a round plug on its belly)"
+ },
+ "char_refs": {
+  "boy": [],
+  "mom": [],
+  "pig": []
+ },
+ "char_notes": {
+  "boy": "Original character: do NOT copy the textbook boy (brown hair, red T-shirt). Keep the green-and-white striped T-shirt in every shot.",
+  "mom": "Original character: do NOT copy the textbook mother (long red hair, purple top).",
+  "pig": "A toy, not a real animal. The coins are plain gold and silver discs with no marks."
+ },
+ "props": {
+  "soybeans": "a small blue bowl full of dry round pale-yellow soybeans (not green edamame)",
+  "coins": "a small pile of plain shiny gold and silver coins with no marks",
+  "oyster": "a small toy oyster: a gray-blue clam-like shell opening to show a white pearl"
+ },
+ "masters": {
+  "room": "A cozy, bright living room in a family home: a soft wooden floor with a round light-green rug, a blue sofa against a pale mint wall, a small red side table with a lamp, a low bookshelf with colorful books whose spines have no writing, a toy box with toys, a big window with daylight on the left. No people, no animals."
+ },
+ "shots": [
+  {
+   "id": "S01",
+   "gen": "seedance",
+   "scene": "room",
+   "refs": [
+    "boy",
+    "pig"
+   ],
+   "dur": 6,
+   "narr": "The boy has some soybeans and coins.",
+   "frame": "Medium shot of the boy sitting cross-legged on the round rug, smiling, holding a small blue bowl full of dry pale-yellow soybeans in one hand; in front of him on the rug a small pile of plain gold and silver coins and the pink piggy bank. Mouth closed.",
+   "action": "The boy looks into the bowl of soybeans, then picks up a few coins with his other hand and shows them happily to the camera. Nobody speaks."
+  },
+  {
+   "id": "S02",
+   "gen": "seedance",
+   "scene": "room",
+   "refs": [
+    "boy",
+    "pig"
+   ],
+   "dur": 5,
+   "narr": "He puts them in his toy.",
+   "frame": "Close-medium shot of the boy kneeling on the rug, holding the pink piggy bank steady with one hand and about to drop a coin into the slot on its back with the other hand; the bowl of soybeans next to him. Mouth closed.",
+   "action": "The boy drops coins into the slot on the pig's back one by one, then tips the bowl and pours the yellow soybeans into the slot. Nobody speaks."
+  },
+  {
+   "id": "S03",
+   "gen": "seedance",
+   "scene": "room",
+   "refs": [
+    "boy",
+    "mom",
+    "pig"
+   ],
+   "dur": 7,
+   "pilot": true,
+   "narr": "Oh, no! It makes a big noise!",
+   "frame": "Wide shot with the camera at a medium distance: the boy sits cross-legged on the round rug in the left half of the frame, holding the pink piggy bank up with both hands, ready to shake it; Mom stands in the right half of the frame, about one third from the right edge, her whole body fully inside the frame from head to shoes with space around her, looking at the boy, surprised. Both mouths closed. Nothing important in the bottom quarter of the frame.",
+   "action": "The boy shakes the piggy bank hard up and down; it rattles loudly with jiggling motion lines; Mom winces and covers her ears with both hands, staying in the same place, fully visible; the boy's eyes open wide in surprise. Nobody speaks."
+  },
+  {
+   "id": "S04",
+   "gen": "seedance",
+   "scene": "room",
+   "refs": [
+    "pig"
+   ],
+   "dur": 5,
+   "narr": "\"Oink! Oink!\" says the toy pig.",
+   "frame": "Close-up of the pink piggy bank standing alone on the round green rug, facing the camera, with a cute happy face, snout in the middle of the frame, the sofa and bookshelf softly in the background. ONLY the toy pig is in the frame: no people, no hands, no knees, no legs, no body parts at the edges.",
+   "action": "The toy pig comes to life a little: it wiggles its snout, hops twice on the rug and wags its curly tail, like a cartoon toy saying oink. Nobody else moves much."
+  },
+  {
+   "id": "S05",
+   "gen": "seedance",
+   "scene": "room",
+   "refs": [
+    "boy",
+    "mom",
+    "pig"
+   ],
+   "dur": 7,
+   "narr": "Mom points at the toy and joins the fun.",
+   "frame": "Medium-wide shot: Mom standing near the rug, smiling now, pointing with her right index finger at the pink piggy bank on the rug; the boy sits next to the pig looking up at her. Both mouths closed.",
+   "action": "Mom points at the toy pig and laughs, then sits down on the rug next to the boy and picks up the pig with him; they both smile. Nobody speaks."
+  },
+  {
+   "id": "S06",
+   "gen": "seedance",
+   "scene": "room",
+   "refs": [
+    "boy",
+    "mom",
+    "pig"
+   ],
+   "dur": 7,
+   "narr": "Out comes a toy oyster, and the boy jumps for joy!",
+   "frame": "Medium shot: Mom and the boy sitting on the rug holding the pink piggy bank between them; the round plug on the pig's belly is open and a small gray-blue toy oyster shell is just popping out of it, with a few yellow soybeans. Both mouths closed, happy surprised faces.",
+   "action": "The toy oyster pops out of the pig's belly and opens to show a white pearl; the boy jumps up from the rug with both arms in the air, jumping for joy; Mom claps and laughs. Nobody speaks."
+  }
+ ]
+}
