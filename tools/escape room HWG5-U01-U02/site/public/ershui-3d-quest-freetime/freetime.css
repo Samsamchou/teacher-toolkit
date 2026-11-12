@@ -43,5 +43,14 @@
   background: #7b5ea7; color: #fff; font-weight: 700; font-size: 1.15rem; }
 .quiz .sent .w { white-space: nowrap; }
 .quiz .slot { min-width: 90px; }
+/* [1112] 口說：並排「你說的句子／正確句子」，錯字紅色；三個選項提示 */
+.quiz .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.quiz .cmp > div { background: #fff; border: 2px solid #d0c4b0; border-radius: 12px; padding: 6px 10px; }
+.quiz .cmp span { display: block; font-size: .9rem; color: #7b5ea7; font-weight: 700; }
+.quiz .cmp p { margin: 4px 0; font-size: 1.15rem; line-height: 1.5; }
+.quiz .cmp b.bad { color: #e03131; text-decoration: line-through; text-decoration-thickness: 2px; }
+.quiz .cmp b.fix { color: #e03131; text-decoration: underline; text-decoration-thickness: 2px; }
+.quiz .hintbox { background: #fff9db; border: 3px dashed #f08c00; border-radius: 14px; padding: 8px 12px; margin: 8px 0; font-size: 1.15rem; }
+.quiz .hintbox b { color: #c2255c; white-space: nowrap; }
 .pairview { min-height: 1.4em; font-size: 1.3rem; font-weight: 700; color: #2b8a3e; margin: 6px 0 0; }
 .result .big-id.pair { font-size: clamp(1.8rem, 5vw, 2.8rem); white-space: nowrap; }

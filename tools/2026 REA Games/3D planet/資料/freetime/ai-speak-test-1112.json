@@ -1,0 +1,113 @@
+{
+ "note": "[1112] 4 句 edge-tts（en-US-AnaNeural，0.9 倍）當假麥克風，在預覽 ershui-preview 走真的錄音→16k WAV→Gemini 評分；圳寶 Q09（答案 basketball）；共 4 次 AI",
+ "results": [
+  {
+   "wav": "r1.wav",
+   "judge": {
+    "tries": 1,
+    "pass": true,
+    "act": "basketball",
+    "actOk": true,
+    "grammarOk": true,
+    "errors": [],
+    "scoreOk": true,
+    "why": "",
+    "hint": false,
+    "transcript": "He plays basketball in his free time.",
+    "total": 95,
+    "ai": {
+     "activity_said": "plays basketball",
+     "grammar_ok": true,
+     "grammar_errors": []
+    }
+   },
+   "warn": []
+  },
+  {
+   "wav": "r2.wav",
+   "judge": {
+    "tries": 1,
+    "pass": false,
+    "act": "baseball",
+    "actOk": false,
+    "grammarOk": true,
+    "errors": [],
+    "scoreOk": true,
+    "why": "活動不對（說成 baseball）",
+    "hint": false,
+    "transcript": "He plays baseball in his free time.",
+    "total": 94,
+    "ai": {
+     "activity_said": "plays baseball",
+     "grammar_ok": true,
+     "grammar_errors": []
+    }
+   },
+   "warn": []
+  },
+  {
+   "wav": "r3.wav",
+   "judge": {
+    "tries": 1,
+    "pass": false,
+    "act": "basketball",
+    "actOk": true,
+    "grammarOk": false,
+    "errors": [
+     {
+      "said": "play",
+      "correct": "plays"
+     }
+    ],
+    "scoreOk": true,
+    "why": "文法：play→plays",
+    "hint": false,
+    "transcript": "He play basketball in his free time.",
+    "total": 88,
+    "ai": {
+     "activity_said": "play basketball",
+     "grammar_ok": false,
+     "grammar_errors": [
+      {
+       "said": "play",
+       "correct": "plays"
+      }
+     ]
+    }
+   },
+   "warn": []
+  },
+  {
+   "wav": "r4.wav",
+   "judge": {
+    "tries": 1,
+    "pass": false,
+    "act": "basketball",
+    "actOk": true,
+    "grammarOk": false,
+    "errors": [
+     {
+      "said": "my",
+      "correct": "his"
+     }
+    ],
+    "scoreOk": true,
+    "why": "文法：my→his",
+    "hint": false,
+    "transcript": "He plays basketball in my free time.",
+    "total": 88,
+    "ai": {
+     "activity_said": "plays basketball",
+     "grammar_ok": false,
+     "grammar_errors": [
+      {
+       "said": "my",
+       "correct": "his"
+      }
+     ]
+    }
+   },
+   "warn": []
+  }
+ ]
+}

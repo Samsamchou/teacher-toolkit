@@ -434,6 +434,9 @@ func _poll_host(delta: float) -> void:
 			_replay_scene_and_clue()
 		"pattern":
 			say(_vk("pattern"))
+		"clue":   # [1112] 口說說錯活動：外框「再看一次線索」
+			if state == St.ANSWER and clue_done:
+				_play_clue(items[qi]["act"], clue_order[qi])
 		"mute":
 			# 學生錄音中：遊戲的音樂、語音、音效全部靜音，免得被錄進去影響 AI 評分
 			voice.stop()
@@ -620,26 +623,157 @@ func _scooter_get():
 	return scooter
 
 ## 出題時：媽媽騎車停在圳寶左邊等他
-func _scooter_wait(place: String, lx := 1.3, lz := -0.2) -> void:
+## [1112] 老師 11/12 iPad：圳寶 Q2 媽媽的機車停在明德附近的圳溝（藍色水道）上 —— 舊做法＝角色左邊 1.3 m 固定位置，不管那裡是不是馬路。
+## 新做法：從想要的位置（角色座標 lx 左、lz 前）往外找最近的「整台車（兩輪＋車身寬）都在柏油上」的點，車頭順著那條路；
+## 不擋在鏡頭和角色中間、不壓到角色和演出道具。avoid＝[[平面點, 半徑], …]
+func _scooter_wait(place: String, lx := 1.3, lz := -0.2, phase := "wait", avoid: Array = []) -> void:
 	var sc = _scooter_get()
-	scooter_holder.transform = world.frame_at(W["pos"], W["fwd"], 0.0)
-	sc.park(scooter_holder, Transform3D(Basis.IDENTITY, Vector3(lx, _ground_local(Vector2(lx, lz)), lz)), sc.helmet != null)
+	var p: Vector2 = W["pos"]
+	var f: Vector2 = W["fwd"]
+	var pref := p + f * lz + Vector2(f.y, -f.x) * lx
+	var cam2: Vector2 = face_cam[0] if not face_cam.is_empty() and (phase == "wait" or cam_mode in ["face", "act"]) else Vector2.INF
+	var sp := _scooter_road_spot(pref, f, [[p, 0.85]] + avoid, cam2, p)
+	var c: Vector2 = sp.get("pos", pref)
+	var d: Vector2 = sp.get("dir", f)
+	scooter_holder.transform = world.frame_at(c, d, 0.0)
+	sc.park(scooter_holder, Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(c), 0)), sc.helmet != null)
 	scooter_place = place
+	scooter_spot = {"pos": c, "dir": d}
+	_scooter_log(phase, c, d)
+
+## [1112] 機車停車點檢查用：車子在地上的範圍（前後輪外緣 × 左右 0.32 m，7×3 個點）
+const SC_HALF_W := 0.32
+var scooter_spot := {}       # 現在等著的機車：{pos, dir}（上車時圳寶走到這裡）
+var scooter_log: Array = []  # 測試／檢查圖：[{q, phase, pos, dir, ok, bad, min_h, water}]
+func _scooter_foot(c: Vector2, d: Vector2) -> Array:
+	var sc = _scooter_get()
+	var wz: Array = sc.R["wheel_z"]
+	var r: float = sc.R["wheel_r"]
+	var z0: float = minf(float(wz[0]), float(wz[1])) - r
+	var z1: float = maxf(float(wz[0]), float(wz[1])) + r
+	var left := Vector2(d.y, -d.x)
+	var pts := []
+	for i in 7:
+		var z := lerpf(z0, z1, i / 6.0)
+		for x in [-SC_HALF_W, 0.0, SC_HALF_W]:
+			pts.append(c + d * z + left * x)
+	return pts
+
+## 圳溝（map.json water：中線＋寬，含水泥渠岸 0.4 m）
+func _in_water(p: Vector2) -> bool:
+	for wv in data.get("water", []):
+		var pts: Array = wv["pts"]
+		var hw := float(wv["w"]) * 0.5 + 0.4
+		for i in range(pts.size() - 1):
+			if world._seg_dist(p, world.v2(pts[i]), world.v2(pts[i + 1])) <= hw:
+				return true
+	return false
+
+## 整台車都在柏油上（路面高度 ≥ 0.1：柏油、標線、路口；人行道 0.05、門口 0.07、草地 0.03、圳溝 0 都不算）
+func _scooter_road_eval(c: Vector2, d: Vector2) -> Dictionary:
+	var bad := 0
+	var mh := 1.0
+	var wat := 0
+	for q: Vector2 in _scooter_foot(c, d):
+		var h := _ground_h(q)
+		mh = minf(mh, h)
+		if h < 0.099:
+			bad += 1
+		if _in_water(q):
+			wat += 1
+	return {"ok": bad == 0, "bad": bad, "min_h": mh, "water": wat}
+
+## 這個點所在那條路的方向（最近的、點在柏油寬度內的路段）
+func _road_dir_at(q: Vector2) -> Vector2:
+	if gh_grid.is_empty():
+		_gh_build()
+	var cell = gh_grid.get(Vector2i(floori(q.x / GH_CELL), floori(q.y / GH_CELL)))
+	var best := Vector2.ZERO
+	var bd := 1e9
+	if cell != null:
+		for i: int in cell[0]:
+			var e: Array = world.edges[i]
+			var a: Vector2 = world.nodes[e[0]]
+			var b: Vector2 = world.nodes[e[1]]
+			if a.distance_squared_to(b) < 0.01:
+				continue
+			var dd: float = world._seg_dist(q, a, b) - float(e[2]) * 0.5
+			if dd < bd:
+				bd = dd
+				best = (b - a).normalized()
+	return best
+
+func _scooter_road_spot(pref: Vector2, pref_dir: Vector2, avoid: Array, cam2 := Vector2.INF, tgt2 := Vector2.INF, rmax := 8.0) -> Dictionary:
+	var cands := []
+	var n := int(rmax / 0.25)
+	for ix in range(-n, n + 1):
+		for iy in range(-n, n + 1):
+			var off := Vector2(ix, iy) * 0.25
+			if off.length() <= rmax:
+				cands.append(off)
+	cands.sort_custom(func(a: Vector2, b: Vector2) -> bool: return a.length_squared() < b.length_squared())
+	for pass_i in 2:   # 第 1 輪：車子底下連圳溝的範圍都不要碰到（柏油蓋在圳溝上的地方也不要）；找不到才放寬
+		var r := _scooter_road_spot_pass(cands, pref, pref_dir, avoid, cam2, tgt2, pass_i == 0)
+		if not r.is_empty():
+			return r
+	push_warning("scooter: no road spot within %.0f m of %s" % [rmax, pref])
+	return {}
+
+func _scooter_road_spot_pass(cands: Array, pref: Vector2, pref_dir: Vector2, avoid: Array, cam2: Vector2, tgt2: Vector2, no_water: bool) -> Dictionary:
+	for off: Vector2 in cands:
+		var q: Vector2 = pref + off
+		if _ground_h(q) < 0.099:
+			continue
+		var rd := _road_dir_at(q)
+		if rd == Vector2.ZERO:
+			continue
+		var dirs: Array = [rd, -rd] if rd.dot(pref_dir) >= 0.0 else [-rd, rd]
+		for d: Vector2 in dirs:
+			var ok := true
+			var pts := _scooter_foot(q, d)
+			for pt: Vector2 in pts:
+				for A in avoid:
+					if pt.distance_to(A[0]) < float(A[1]):
+						ok = false
+						break
+				if ok and cam2 != Vector2.INF and world._seg_dist(pt, tgt2, cam2) < 0.6:
+					ok = false   # 不擋在鏡頭和角色中間
+				if not ok:
+					break
+			if ok:
+				var ev := _scooter_road_eval(q, d)
+				if ev["ok"] and (not no_water or int(ev["water"]) == 0):
+					return {"pos": q, "dir": d, "moved": off.length()}
+	return {}
+
+func _scooter_log(phase: String, c: Vector2, d: Vector2) -> void:
+	var ev := _scooter_road_eval(c, d)
+	ev["q"] = qi + 1
+	ev["phase"] = phase
+	ev["pos"] = c
+	ev["dir"] = d
+	ev["route"] = route_id
+	scooter_log.append(ev)
+	if test_mode:
+		print("SCOOTER_PARK q%d %s pos=(%.2f,%.2f) dir=(%.2f,%.2f) on_road=%s off_road_pts=%d min_h=%.3f water_pts=%d" % [qi + 1, phase, c.x, c.y, d.x, d.y, ev["ok"], ev["bad"], ev["min_h"], ev["water"]])
 
 func _scooter_mount() -> void:
 	var sc = _scooter_get()
 	proc_gait = ""
 	_place_ken(0.0)
 	sc.mount(W["node"])
+	_scooter_log("mount", W["pos"], W["fwd"])
 	cur_anim = "scooter"
 	if test_mode and not perf_test:   # [perf] measure() 量安全帽、媽媽、圳寶的網格：電腦要 15 秒 → 只在一般測試量（舊：每次上車都量，iPad 卡很久）
 		print("SCOOTER mount ", JSON.stringify(sc.measure()))
+		walk_ms0 = Time.get_ticks_msec()   # [1112] 量測要 15–30 秒（同時跑好幾個測試時更久）：不要算進走路的真實時間上限（不然一出發就 WALK_HARD 跳到終點）
 
 ## 到了（戶外）：圳寶下車，媽媽和機車停在旁邊，安全帽放在後座
-func _scooter_park(place: String, lx: float, lz: float) -> void:
+func _scooter_park(place: String, lx: float, lz: float, avoid: Array = []) -> void:
 	if scooter == null or not scooter.is_riding():
 		return
-	_scooter_wait(place, lx, lz)
+	_scooter_log("arrive", W["pos"], W["fwd"])   # 騎到的地方（停車前）
+	_scooter_wait(place, lx, lz, "park", avoid)
 	am.model_base = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(W["pos"]) + float(anim_ground.get("idle", 0.0)), 0))
 	(W["model"] as Node3D).transform = am.model_base
 
@@ -650,6 +784,7 @@ func _scooter_clear() -> void:
 		if was and not W.is_empty() and who == "zunbo":
 			(W["model"] as Node3D).transform = Transform3D(Basis.IDENTITY, Vector3(0, _ground_h(W["pos"]) + float(anim_ground.get("idle", 0.0)), 0))
 	scooter_place = ""
+	scooter_spot = {}
 
 func _riding_scooter() -> bool:
 	return scooter != null and scooter.is_riding()
@@ -2093,6 +2228,421 @@ func _setup_face_cam(dist := 4.6, ch := 1.9, turn := true) -> void:
 		W["fwd"] = face_cam[2]
 	world.fade_between(face_cam[0], p, "", 0.0)
 
+# ---------- [1112] 作答畫面：吉祥物整個身體在「沒有框、面板」的地方 ----------
+## 老師 11/12 iPad：圳寶 Q10（兩人一組）左邊的線索框（鎖住時半透明）蓋住圳寶左半身。
+## 做法：問題／線索／作答這段（St.QUESTION、CLUE、ANSWER），算出畫面上所有會出現的框（分數牌、右上按鈕欄、題目面板、
+## 線索框、兩人一組外框的題目面板）的聯集 → 找最大的空白長方形 → 鏡頭位置不動（不會換到被房子擋的地方），
+## 只轉方向（＋必要時把視角拉寬）讓吉祥物待機姿勢的包圍盒整個落在空白區中間。同一題的框聯集只會變大 → 鏡頭不會跳來跳去。
+## 只做水鈴、圳寶（Ken 不用，規格 11/12）。
+var answer_frame := {}       # {pos, look, up, fov, zone, box}
+var ans_union := {}          # 這一題出現過的框（名稱 → Rect2，可見範圍座標）
+var body_box := {}           # who → AABB（模型座標：待機姿勢整個網格＋3 cm）
+
+func _body_box() -> AABB:
+	if body_box.has(who):
+		return body_box[who]
+	var path := "res://data/interior/%s_idle_box.json" % who
+	var bx := AABB()
+	if FileAccess.file_exists(path) and OS.get_environment("BOXBAKE") == "":
+		var d = JSON.parse_string(FileAccess.get_file_as_string(path))
+		var a := Vector3(d["min"][0], d["min"][1], d["min"][2])
+		var b := Vector3(d["max"][0], d["max"][1], d["max"][2])
+		bx = AABB(a, b - a)
+	else:
+		bx = _measure_body_box()
+	body_box[who] = bx
+	return bx
+
+## 現在姿勢的整個網格（蒙皮後所有頂點），模型座標的包圍盒＋3 cm（BOXBAKE=1 時量好存檔，遊戲直接讀）
+func _measure_body_box() -> AABB:
+	var m: Node3D = W["model"]
+	var inv := m.transform.affine_inverse()
+	var bx := AABB()
+	var first := true
+	for q: Vector3 in am.mesh_pts([""]):
+		var v := inv * q
+		if first:
+			bx = AABB(v, Vector3.ZERO)
+			first = false
+		else:
+			bx = bx.expand(v)
+	return bx.grow(0.03)
+
+## 鏡頭到身體（頭頂、腰、腳）之間穿過幾個地點模型（含家的模型；模型不會變半透明）
+func _body_occ(cam3: Vector3, corners: Array) -> int:
+	var lo := Vector3.ZERO
+	var hi := Vector3.ZERO
+	for i in 8:
+		if i & 2 == 0:   # AABB.get_endpoint：第 2 位元＝y
+			lo += corners[i] / 4.0
+		else:
+			hi += corners[i] / 4.0
+	var n := 0
+	for q: Vector3 in [lo, (lo + hi) * 0.5, hi]:
+		n += _occ3_exact(cam3, q + (cam3 - q).normalized() * 0.3)
+	return n
+
+## _occ3 用包圍盒（大模型像水公園整個園區一個網格，包圍盒會把站在門口的角色包進去 → 永遠算擋住）。
+## 包圍盒有碰到的模型，再用它真正的三角形量一次（第一次用到才建碰撞形狀：create_trimesh_collision，放在第 20 層，只給這個檢查用）
+const OCC_LAYER := 1 << 19
+var occ_trimesh := {}
+var occ_static: Array = []   # 街屋（Tile_*/B）、地點建築（Places）：也用三角形量（街屋的方塊清單和畫出來的網格不完全一樣）
+func _occ3_exact(A: Vector3, B: Vector3) -> int:
+	if not occ_ready:
+		_occ3(A, B)
+	if occ_static.is_empty():
+		for c in world.get_children():
+			if c is MeshInstance3D and String(c.name) == "Places":
+				occ_static.append(c)
+			elif String(c.name).begins_with("Tile_") and c.get_node_or_null("B") is MeshInstance3D:
+				occ_static.append(c.get_node("B"))
+	var n := 0
+	var mid := (A + B) * 0.5
+	var L := A.distance_to(B)
+	var space := get_world_3d().direct_space_state
+	for mi: MeshInstance3D in occ_models + occ_static:
+		if not is_instance_valid(mi) or not mi.is_visible_in_tree():
+			continue
+		var bx := mi.get_aabb()
+		var gs := mi.global_transform.basis.get_scale()
+		if (mi.global_transform * bx.get_center()).distance_to(mid) > (bx.size * gs).length() * 0.5 + L * 0.5 + 0.5:
+			continue
+		var inv := mi.global_transform.affine_inverse()
+		if not _seg_aabb(inv * A, inv * B, bx):
+			continue
+		var id := mi.get_instance_id()
+		if not occ_trimesh.has(id):
+			var before := mi.get_child_count()
+			mi.create_trimesh_collision()
+			var sb: StaticBody3D = null
+			for i in range(before, mi.get_child_count()):
+				if mi.get_child(i) is StaticBody3D:
+					sb = mi.get_child(i)
+			if sb:
+				sb.collision_layer = OCC_LAYER
+				sb.collision_mask = 0
+			occ_trimesh[id] = sb
+		var sb2: StaticBody3D = occ_trimesh[id]
+		if sb2 == null:
+			n += 1
+			continue
+		var qp := PhysicsRayQueryParameters3D.create(A, B, OCC_LAYER)
+		qp.hit_back_faces = true
+		var hit := space.intersect_ray(qp)
+		if not hit.is_empty() and hit["collider"] == sb2:
+			n += 1
+		elif not hit.is_empty():
+			# 先打到別的模型：從那裡往後再查一次這個模型
+			var qp2 := PhysicsRayQueryParameters3D.create(A, B, OCC_LAYER, [hit["rid"]])
+			qp2.hit_back_faces = true
+			var h2 := space.intersect_ray(qp2)
+			if not h2.is_empty() and h2["collider"] == sb2:
+				n += 1
+	return n
+
+func _body_corners() -> Array:
+	var bx := _body_box()
+	var X: Transform3D = (W["node"] as Node3D).global_transform * (W["model"] as Node3D).transform
+	var out := []
+	for i in 8:
+		out.append(X * bx.get_endpoint(i))
+	return out
+
+## 鏡頭在 pos、看 fwd 方向、上方 up、焦距 f（像素）時，這些點在畫面上的範圍（和 Camera3D 一樣：垂直視角、畫面中心）
+func _proj_box(pts: Array, pos: Vector3, fwd: Vector3, up: Vector3, f: float, vs: Vector2) -> Rect2:
+	var right := fwd.cross(up).normalized()
+	var cu := right.cross(fwd).normalized()
+	var x0 := 1e9
+	var y0 := 1e9
+	var x1 := -1e9
+	var y1 := -1e9
+	for c: Vector3 in pts:
+		var d := c - pos
+		var z := maxf(d.dot(fwd), 0.01)
+		var sx := vs.x * 0.5 + f * d.dot(right) / z
+		var sy := vs.y * 0.5 - f * d.dot(cu) / z
+		x0 = minf(x0, sx)
+		x1 = maxf(x1, sx)
+		y0 = minf(y0, sy)
+		y1 = maxf(y1, sy)
+	return Rect2(x0, y0, x1 - x0, y1 - y0)
+
+## 兩人一組：外框（網頁）的題目面板在遊戲畫面上的位置。照 freetime.css 的 .quiz：
+##   橫放 right 12px、top 296px、bottom 12px、width min(41vw, 460px)；直放 left/right 12px、bottom 12px、高 58vh。
+## 網頁上：讀外框的視窗大小＋iframe 位置（題目面板開著時再和它真正的位置取聯集）；電腦測試：視窗大小＝CSS px。
+## ★ 改 freetime.css 的 .quiz 位置時，這裡要一起改。
+func _frame_quiz_rect() -> Rect2:
+	var vs := get_viewport().get_visible_rect().size
+	var iw := float(DisplayServer.window_get_size().x)
+	var ih := float(DisplayServer.window_get_size().y)
+	var pw := iw
+	var ph := ih
+	var fx := 0.0
+	var fy := 0.0
+	var real := Rect2()
+	if OS.has_feature("web"):
+		var raw = JavaScriptBridge.eval("(function(){try{var w=window.parent||window;var f=window.frameElement?window.frameElement.getBoundingClientRect():{left:0,top:0};var q=w.document.getElementById('quiz');var r=(q&&!q.hidden)?q.getBoundingClientRect():null;return JSON.stringify({iw:window.innerWidth,ih:window.innerHeight,pw:w.innerWidth,ph:w.innerHeight,fx:f.left,fy:f.top,q:r?[r.left,r.top,r.width,r.height]:null});}catch(e){return '';}})()", true)
+		var d = JSON.parse_string(raw) if typeof(raw) == TYPE_STRING and raw != "" else null
+		if typeof(d) == TYPE_DICTIONARY:
+			iw = float(d["iw"])
+			ih = float(d["ih"])
+			pw = float(d["pw"])
+			ph = float(d["ph"])
+			fx = float(d["fx"])
+			fy = float(d["fy"])
+			if typeof(d.get("q")) == TYPE_ARRAY:
+				var qa: Array = d["q"]
+				real = Rect2(float(qa[0]) - fx, float(qa[1]) - fy, float(qa[2]), float(qa[3]))
+	if iw < 10.0:
+		return Rect2()
+	var r: Rect2
+	if ph > pw:
+		var h := 0.58 * ph
+		r = Rect2(12.0, ph - 12.0 - h, pw - 24.0, h)
+	else:
+		var w := minf(0.41 * pw, 460.0)
+		r = Rect2(pw - 12.0 - w, 296.0, w, ph - 12.0 - 296.0)
+	r.position -= Vector2(fx, fy)
+	if real.size != Vector2.ZERO:
+		r = r.merge(real)
+	var k := vs.x / iw   # CSS px → 遊戲畫面座標（stretch expand：兩個方向同一個比例）
+	return Rect2(r.position * k, r.size * k)
+
+## 現在畫面上的框（可見範圍座標）；with_quiz＝兩人一組外框的題目面板也算
+func _ui_rects(with_quiz: bool) -> Dictionary:
+	var out := {}
+	if hud and hud.is_visible_in_tree():
+		if chips_box.get_child_count() > 0:
+			var cr := chips_box.get_global_rect()
+			if not pair:   # 分組：押注後每個分數牌會多一個「A×1」（約 41 px）→ 先把位置留起來，鏡頭才不會押注後又轉
+				var empty := 0
+				for cn in chip_nodes:
+					if String((cn["bet"] as Label).text) == "":
+						empty += 1
+				cr.size.x += empty * 42.0
+			out["score chips"] = cr
+		if hud_col.is_visible_in_tree():
+			out["buttons"] = hud_col.get_global_rect()
+		if qpanel.is_visible_in_tree():
+			out["panel"] = qpanel.get_global_rect()
+	if clue_card and clue_card.visible:
+		out["clue"] = Rect2(clue_card.global_position, clue_card.size.max(clue_card.get_combined_minimum_size()))
+	if pair and with_quiz:
+		var qr := _frame_quiz_rect()
+		if qr.size != Vector2.ZERO:
+			out["frame quiz"] = qr
+	if debug_on and debug_lbl and debug_lbl.visible:
+		out["debug"] = debug_lbl.get_global_rect()
+	return out
+
+## 空白長方形（離框和畫面邊 ≥ margin）裡選一個放身體：
+##   s＝身體要縮小到原本（視角 50°）的幾倍才放得下（最多 1＝不放大）；s 小於 s_min（視角要超過 80°）的不要；
+##   分數＝s（越大越好）－ 和原本位置 c0 的距離（鏡頭少轉一點、不要跑到角落）
+func _free_rects(rects: Array, vs: Vector2, body: Vector2, s_min: float, c0: Vector2, margin := 12.0) -> Array:
+	var G := []
+	var xs := [margin, vs.x - margin]
+	var ys := [margin, vs.y - margin]
+	for r: Rect2 in rects:
+		var g := r.grow(margin)
+		G.append(g)
+		xs.append(clampf(g.position.x, margin, vs.x - margin))
+		xs.append(clampf(g.end.x, margin, vs.x - margin))
+		ys.append(clampf(g.position.y, margin, vs.y - margin))
+		ys.append(clampf(g.end.y, margin, vs.y - margin))
+	xs.sort()
+	ys.sort()
+	var cands := []
+	for i in xs.size():
+		for j in range(i + 1, xs.size()):
+			var x0: float = xs[i]
+			var x1: float = xs[j]
+			if x1 - x0 < 30.0:
+				continue
+			for k in ys.size():
+				for l in range(k + 1, ys.size()):
+					var y0: float = ys[k]
+					var y1: float = ys[l]
+					if y1 - y0 < 60.0:
+						continue
+					var R := Rect2(x0, y0, x1 - x0, y1 - y0)
+					var free := true
+					for g: Rect2 in G:
+						if g.intersects(R):
+							free = false
+							break
+					if not free:
+						continue
+					var sfit := minf(1.0, minf((R.size.y - 12.0) / body.y, (R.size.x - 12.0) / body.x))
+					if sfit < s_min:
+						continue
+					cands.append([sfit * 1000.0 - R.get_center().distance_to(c0) * 0.3, R])
+	cands.sort_custom(func(a: Array, b: Array) -> bool: return a[0] > b[0])
+	var out := []
+	for cnd in cands:
+		var R: Rect2 = cnd[1]
+		var dup := false
+		for o: Rect2 in out:
+			if o.encloses(R) or R.encloses(o):
+				dup = true
+				break
+		if not dup:
+			out.append(R)
+		if out.size() >= 12:
+			break
+	return out
+
+## 鏡頭位置不動：轉方向＋（必要時）拉寬視角，讓身體包圍盒在 inner 中間、高度不超過 inner
+func _aim_into(corners: Array, pos: Vector3, fwd0: Vector3, up: Vector3, inner: Rect2, f50: float, f_min: float, vs: Vector2) -> Dictionary:
+	var fwd := fwd0
+	var f := f50
+	for it in 40:
+		var b := _proj_box(corners, pos, fwd, up, f, vs)
+		f = clampf(f * minf(inner.size.y * 0.94 / maxf(b.size.y, 1.0), inner.size.x * 0.94 / maxf(b.size.x, 1.0)), f_min, f50)   # 只拉寬視角（身體變小）、不放大
+		b = _proj_box(corners, pos, fwd, up, f, vs)
+		var dv := b.get_center() - inner.get_center()
+		if dv.length() < 0.3:
+			break
+		var right := fwd.cross(up).normalized()
+		var cu := right.cross(fwd).normalized()
+		fwd = fwd.rotated(cu, -clampf(atan(dv.x / f), -0.15, 0.15)).normalized()   # 一次最多轉 8.6°（不會轉過頭、角色跑到鏡頭後面）
+		right = fwd.cross(up).normalized()
+		fwd = fwd.rotated(right, -clampf(atan(dv.y / f), -0.15, 0.15)).normalized()
+	return {"fwd": fwd, "f": f, "box": _proj_box(corners, pos, fwd, up, f, vs)}
+
+func _frame_answer() -> void:
+	if not mascot or W.is_empty() or in_home or face_cam.is_empty() or cam_mode != "face" or not (state in [St.QUESTION, St.CLUE, St.ANSWER]):
+		return
+	var vs := get_viewport().get_visible_rect().size
+	var rr := _ui_rects(true)
+	var grew := answer_frame.is_empty()
+	for k in rr:
+		var r0: Rect2 = rr[k]
+		if not ans_union.has(k):
+			ans_union[k] = r0
+			grew = true
+		elif not (ans_union[k] as Rect2).encloses(r0):
+			ans_union[k] = (ans_union[k] as Rect2).merge(r0)
+			grew = true
+	if not grew and answer_frame.get("vs", Vector2.ZERO) == vs:
+		return
+	var first := answer_frame.is_empty()
+	var res := _frame_try(vs)
+	if (res.is_empty() or not res["clear"]) and first:
+		# 站的地方看不到全身（例如水公園門口：園區模型的牆擋在角色前面）→ 角色往路中間／順著路挪一點再找（只在這一題第一次構圖時挪）
+		var p0: Vector2 = W["pos"]
+		var f0: Vector2 = W["fwd"]
+		var fc0 := face_cam
+		var pr: Dictionary = world.project(p0)
+		var q0: Vector2 = pr.get("q", p0)
+		var rd := _road_dir_at(q0)
+		var tries := [q0]
+		if rd != Vector2.ZERO:
+			for dd in [1.5, -1.5, 3.0, -3.0, 4.5, -4.5]:
+				tries.append(q0 + rd * dd)
+		var fid: String = items[qi]["from"]
+		if world.places.has(fid) and world.places[fid].has("pos") and not fid.ends_with("_home"):
+			var away: Vector2 = (p0 - world.v2(world.places[fid]["pos"])).normalized()   # 離開地點模型（往外走到路上）
+			for dd in [2.0, 4.0, 6.0, 8.0, 10.0]:
+				var t2: Vector2 = p0 + away * dd
+				if _ground_h(t2) >= 0.05:
+					tries.append(t2)
+		var got := false
+		for t: Vector2 in tries:
+			if t.distance_to(p0) < 0.2:
+				continue
+			W["pos"] = t
+			_setup_face_cam(4.4, 1.8)
+			_place_ken(0.0)
+			var r2 := _frame_try(vs)
+			if not r2.is_empty() and r2["clear"]:
+				res = r2
+				got = true
+				print("ANSWER_FRAME q%d moved %s from %s to %s (%.1f m) so the whole body is visible" % [qi + 1, who, p0, t, p0.distance_to(t)])
+				if items[qi]["travel"] == "scooter":
+					_scooter_wait(items[qi]["from"])   # 機車重新找停車點（離角色新位置）
+				break
+		if not got:
+			W["pos"] = p0
+			W["fwd"] = f0
+			face_cam = fc0
+			_place_ken(0.0)
+	if not res.is_empty() and (res["cam"][0] as Vector2) != (face_cam[0] as Vector2):
+		# 換了鏡頭：角色轉向新的鏡頭（像出題時一樣面對鏡頭），再用新鏡頭構圖一次
+		var nc: Vector2 = res["cam"][0]
+		var pp: Vector2 = W["pos"]
+		face_cam = [nc, float(res["cam"][1]), (nc - pp).normalized()]
+		W["fwd"] = face_cam[2]
+		var r3 := _frame_try(vs)
+		if not r3.is_empty() and r3["clear"]:
+			res = r3
+		if items[qi]["travel"] == "scooter" and who == "zunbo":
+			_scooter_wait(items[qi]["from"])   # 機車重新找停車點：不要擋在新鏡頭和角色中間
+	if res.is_empty():
+		push_warning("answer frame: no free area on screen fits %s" % who)
+		if test_mode:
+			print("ANSWER_FRAME q%d NO ZONE rects=%s" % [qi + 1, ans_union])
+		return
+	var p: Vector2 = W["pos"]
+	var cam_used: Array = res["cam"]
+	world.fade_between(cam_used[0], p, "", 0.0)
+	var f: float = res["f"]
+	var fov := rad_to_deg(2.0 * atan(vs.y * 0.5 / f))
+	answer_frame = {"cam2": cam_used[0], "ch": cam_used[1], "pos": res["pos"], "look": (res["pos"] as Vector3) + (res["fwd"] as Vector3) * 4.0, "up": world.bend2(p).normalized(), "fov": fov, "zone": res["zone"], "box": res["box"], "vs": vs}
+	if first:
+		cam_pos = Vector3.ZERO   # 第一次：直接切到這個構圖（之後框變大才慢慢轉）
+		cam.fov = fov
+	if test_mode:
+		print("ANSWER_FRAME q%d state=%d zone=%s box=%s fov=%.1f cam_back=%.1fx clear=%s rects=%s" % [qi + 1, state, res["zone"], res["box"], fov, (cam_used[0] as Vector2).distance_to(p) / maxf((face_cam[0] as Vector2).distance_to(p), 0.01), res["clear"], ans_union.keys()])
+
+## 角色現在的位置：找鏡頭（原本的 face_cam 優先；放不下或看不到全身才退後／繞圈）＋空白區＋轉向。
+## 回傳 {} 或 {pos, fwd, f, box, zone, cam, clear}；clear＝鏡頭到身體之間沒有地點模型
+func _frame_try(vs: Vector2) -> Dictionary:
+	_place_ken(0.0)   # 角色節點先搬到這一題的位置（_process 還沒跑到；不然量到上一題的位置）
+	var corners := _body_corners()
+	var p: Vector2 = W["pos"]
+	var up: Vector3 = world.bend2(p).normalized()
+	var ctr := Vector3.ZERO
+	for c: Vector3 in corners:
+		ctr += c
+	ctr /= corners.size()
+	var f50 := vs.y * 0.5 / tan(deg_to_rad(25.0))
+	var f_min := vs.y * 0.5 / tan(deg_to_rad(40.0))   # 視角最寬 80°
+	# 鏡頭位置：先用原本的；空白區太小放不下（例如分組 Q1 開場白讓題目面板很高）或看不到全身，才往後、往上退或繞著角色換方向
+	var c2: Vector2 = face_cam[0]
+	var ch: float = face_cam[1]
+	var cams := []
+	# 原本的鏡頭也要檢查：家門口的出題鏡頭（world.face_view 用 self_id "" 會略過所有街屋）可能在對面街屋裡面 → 畫面一片黑、看不到角色（老師 11/12 前就有）
+	var orig_clear: bool = world._blocked_count(c2, ch, p, 1.0, "-none-") == 0 and _body_occ(world.bend2(c2, ch), corners) == 0
+	if orig_clear:
+		cams.append([c2, ch, true])
+	var dir0: Vector2 = (c2 - p).normalized() if c2.distance_to(p) > 0.1 else Vector2(0, 1)
+	var d0: float = maxf(c2.distance_to(p), 2.0)
+	for kk in [1.0, 1.3, 1.6, 2.0, 2.5]:
+		var got := 0
+		for deg in [0, 25, -25, 50, -50, 80, -80, 110, -110, 145, -145, 180]:
+			for hk in [1.0, 1.6, 2.4]:
+				if got >= 2 or (kk == 1.0 and deg == 0 and hk == 1.0):
+					continue
+				var c2b: Vector2 = p + dir0.rotated(deg_to_rad(deg)) * d0 * kk
+				var chb: float = ch * (1.0 + (kk - 1.0) * 0.6) * hk
+				# 中間的街屋會變半透明（fade_between），可以；鏡頭不能在房子裡；鏡頭到頭頂／腰／腳的視線不能穿過地點模型的三角形
+				# （模型不會變透明；鏡頭在模型裡面時，射線會打到模型的背面，也算擋住）
+				if world._blocked_count(c2b, chb, p, 1.0, "-none-") == 0 and _body_occ(world.bend2(c2b, chb), corners) == 0:
+					cams.append([c2b, chb, true])
+					got += 1
+	if not orig_clear:
+		cams.append([c2, ch, false])   # 都不行才用原本的（測試會 FAIL）
+	for cc in cams:
+		var pos: Vector3 = world.bend2(cc[0], float(cc[1]))
+		var fwd: Vector3 = (ctr - pos).normalized()
+		var b0 := _proj_box(corners, pos, fwd, up, f50, vs)
+		# 候選空白區（分數高的先試）：真的轉過去、量包圍盒有整個在區內才用（畫面邊緣透視會把盒子拉寬）
+		for z: Rect2 in _free_rects(ans_union.values(), vs, b0.size * 1.08, f_min / f50, vs * 0.5):
+			var tr := _aim_into(corners, pos, fwd, up, z.grow(-6.0), f50, f_min, vs)
+			if z.grow(-2.0).encloses(tr["box"]):
+				return {"pos": pos, "fwd": tr["fwd"], "f": tr["f"], "box": tr["box"], "zone": z, "cam": cc, "clear": cc[2]}
+	return {}
+
 func _update_camera(delta: float) -> void:
 	var want_pos := cam_pos
 	var want_look := cam_look
@@ -2188,7 +2738,11 @@ func _update_camera(delta: float) -> void:
 			var fd: Vector2 = face_cam[2]
 			var fh: float = face_cam[1]
 			want_pos = world.bend2(face_cam[0], fh)
-			if cam_mode == "face":
+			if cam_mode == "face" and not answer_frame.is_empty():
+				want_pos = answer_frame["pos"]
+				want_look = answer_frame["look"]
+				cam.fov = lerpf(cam.fov, float(answer_frame["fov"]), k)
+			elif cam_mode == "face":
 				want_look = world.bend2(p - fd * 0.6, -0.3 - (fh - 1.9) * 0.55)
 			else:
 				var lp: Vector2 = face_cam[3] if face_cam.size() > 3 else p
@@ -2237,6 +2791,8 @@ func _update_camera(delta: float) -> void:
 			want_up = north
 	if cam_mode != "fly":
 		world.set_space(0.0)
+	if cam_mode != "interior" and (cam_mode != "face" or answer_frame.is_empty()) and cam.fov != 50.0:
+		cam.fov = 50.0
 	if cam_pos == Vector3.ZERO:
 		cam_pos = want_pos
 		cam_look = want_look
@@ -2806,6 +3362,7 @@ func _layout_panel_now() -> void:
 	qpanel.scale = Vector2(s, s)
 	qpanel.size = ms
 	qpanel.position = Vector2(roundf(x), roundf(vs.y - M - ms.y * s))
+	_frame_answer.call_deferred()   # [1112] 框變了：吉祥物要在空白的地方
 
 ## [ipad] 路線＋題號：有押注列（分組作答中）時放在左欄最上面一行，面板才不會比 1280 寬（原本並排時 1384）；
 ## 沒有押注列（揭曉、兩人一組）時放回 Play 左邊，面板矮一行、不擋到演出（圳寶 q11 營火）。
@@ -2889,6 +3446,7 @@ func _refresh_chips() -> void:
 		if last_delta.has(g):
 			t = ("+%d" if last_delta[g] >= 0 else "%d") % last_delta[g]
 		chip_nodes[g]["bet"].text = t
+	_frame_answer.call_deferred()   # [1112] 分數牌押注後變寬：吉祥物要在空白的地方
 
 ## 每題開始：Ken 站在這題的出發地點；第一題先念開場引導語
 func _show_question(first := false) -> void:
@@ -2906,6 +3464,8 @@ func _show_question(first := false) -> void:
 	_ken_anim("idle")
 	world.clear_fade()
 	_setup_face_cam(4.4, 1.8)
+	answer_frame = {}
+	ans_union = {}
 	if It["travel"] == "scooter":
 		_scooter_wait(It["from"])          # 媽媽騎機車在旁邊等
 	else:
@@ -3139,6 +3699,7 @@ func _show_clue_locked() -> void:
 	clue_btn.visible = true
 	clue_btn.disabled = true
 	clue_btn.text = "Answer 作答（先看線索）"
+	_layout_panel()
 
 func _unlock_clue() -> void:
 	state = St.CLUE
@@ -3250,6 +3811,7 @@ func _clue_to_answer() -> void:
 	clue_btn.visible = false
 	q_ask.text = "%s  ▶ 作答 Answer →" % items[qi]["question"]
 	_host_ask()
+	_layout_panel()
 
 func _replay_scene_and_clue() -> void:
 	# 外框的「再聽一次」：重播情境（線索用卡片上的 Again 重播）
@@ -3264,6 +3826,7 @@ func _on_start() -> void:
 	elif state != St.QUESTION or bets.size() < group_count:
 		return
 	state = St.WALKING
+	answer_frame = {}
 	var now0 := Time.get_ticks_msec()
 	pt = {"answer": now0, "walk0": now0}
 	pt_printed = false
@@ -3277,6 +3840,11 @@ func _on_start() -> void:
 	var It: Dictionary = items[qi]
 	var travel: String = It["travel"]
 	W["travel"] = "walk" if travel == "none" else travel
+	if travel == "scooter" and not scooter_spot.is_empty():
+		# [1112] 上車：圳寶走到媽媽停在路上的機車那裡（鏡頭下面直接切到背後，看不到瞬移）
+		W["pos"] = scooter_spot["pos"]
+		W["fwd"] = scooter_spot["dir"]
+		_place_ken(0.0)
 	var dest := _spot(It["to"])
 	act_plan = {}
 	if String(It["perform"]).begins_with("out:"):
@@ -3288,10 +3856,16 @@ func _on_start() -> void:
 		path = world.route(W["pos"], dest)
 		if travel != "scooter" and travel != "bike" and (path.is_empty() or (path[-1] as Vector2).distance_to(dest) > 0.3):
 			path.append(dest)   # 走路：最後一段從路邊走到草地上；機車、腳踏車停在路邊（下面 _on_arrive 再走過去）
-		if (travel == "scooter" or travel == "bike") and bool(act_plan.get("grass", false)):
-			while path.size() > 1 and _ground_h(path[-1]) < 0.045:   # 機車、腳踏車不騎上草地：路線停在最後一個在路上的點
+		if travel == "bike" and bool(act_plan.get("grass", false)):
+			while path.size() > 1 and _ground_h(path[-1]) < 0.045:   # 腳踏車不騎上草地：路線停在最後一個在路上的點
 				path.pop_back()
-	if It["to"] == home_id:
+		if travel == "scooter":
+			# [1112] 機車只停在柏油上：路線最後幾點（門口、草地、球場）不騎上去 —— 停在最後一個「整台車都在柏油上」的路點
+			while path.size() > 2 and not _scooter_road_eval(path[-1], ((path[-1] as Vector2) - (path[-2] as Vector2)).normalized())["ok"]:
+				path.pop_back()
+	if It["to"] == home_id and travel == "scooter":
+		pass   # 機車停在家門前的路上（不騎到門口），淡出＝進門
+	elif It["to"] == home_id:
 		# 走到門口前（離門約 1 m，不穿過牆或門），面向門，之後淡出＝進門
 		path.append(dest)
 		if travel != "scooter":
@@ -3372,6 +3946,8 @@ func _on_arrive() -> void:
 		if test_mode:
 			await _wait(0.4)
 			await _shot("A%02d_%s_3b_door" % [qi + 1, It["act"]] if not pair else "B%02d_%s_3b_door" % [qi + 1, It["act"]])
+		if _riding_scooter():
+			_scooter_log("arrive", W["pos"], W["fwd"])   # [1112] 停在家門前的路上
 		await _fade(true)
 		_set_bike(false)
 		_scooter_clear()
@@ -3416,7 +3992,7 @@ func _on_arrive() -> void:
 		if was_scooter:   # 坐機車來的：下車，媽媽和機車停在旁邊（鏡頭的另一側、後面），安全帽放後座
 			var ff: Vector2 = W["fwd"]
 			var cl: float = ((face_cam[0] as Vector2) - p).dot(Vector2(ff.y, -ff.x))
-			_scooter_park(It["to"], -2.4 if cl > 0.0 else 2.4, -2.6)
+			_scooter_park(It["to"], -2.4 if cl > 0.0 else 2.4, -2.6, [[p + ff * 2.7, 1.8], [p + ff * 1.2, 1.0]])   # 不壓到籃框、球、營火
 			_ken_anim("idle", 0.0)
 		_start_act(kind)
 		if not roam:
@@ -3978,6 +4554,228 @@ func _hud_safe() -> bool:
 	print(line)
 	return ok
 
+# ---------- [1112] 作答畫面遮擋檢查：吉祥物網格（全部頂點、不去掉任何點）投影的長方形 vs 每個看得到的框，重疊面積要 = 0 ----------
+## 頭頂、手、腳都在網格裡；兩人一組外框的題目面板只在作答（St.ANSWER）時算（那時才出現）
+func _wait_cam(limit := 3.0) -> void:
+	var g := 0.0
+	var last := cam.global_transform
+	var lf := cam.fov
+	await _wait(0.25)
+	while g < limit:
+		await _wait(0.15)
+		g += 0.15
+		var moved: float = cam.global_transform.origin.distance_to(last.origin) + (cam.global_transform.basis.z - last.basis.z).length() + absf(cam.fov - lf) * 0.01
+		last = cam.global_transform
+		lf = cam.fov
+		if moved < 0.0015:
+			break
+
+var az_rows: Array = []
+func _answer_zone(phase: String) -> Dictionary:
+	var vs := get_viewport().get_visible_rect().size
+	var FT: Transform3D = (W["node"] as Node3D).global_transform
+	var x0 := 1e9
+	var y0 := 1e9
+	var x1 := -1e9
+	var y1 := -1e9
+	var behind := 0
+	for q: Vector3 in am.mesh_pts([""]):
+		var w := FT * q
+		if cam.is_position_behind(w):
+			behind += 1
+			continue
+		var sp := cam.unproject_position(w)
+		x0 = minf(x0, sp.x)
+		x1 = maxf(x1, sp.x)
+		y0 = minf(y0, sp.y)
+		y1 = maxf(y1, sp.y)
+	var box := Rect2(x0, y0, x1 - x0, y1 - y0) if x1 >= x0 else Rect2()
+	var rects := _ui_rects(state == St.ANSWER)
+	var ov := 0.0
+	var note := ""
+	var rj := {}
+	for k in rects:
+		var r: Rect2 = rects[k]
+		rj[k] = [r.position.x, r.position.y, r.size.x, r.size.y]
+		var it := box.intersection(r)
+		if it.has_area():
+			ov += it.get_area()
+			note += "%s %dx%d; " % [k, it.size.x, it.size.y]
+	var on_screen := x0 >= 0.0 and y0 >= 0.0 and x1 <= vs.x and y1 <= vs.y
+	var hr := box.size.y / vs.y
+	var occ := _body_occ(cam.global_position, _body_corners())
+	if occ > 0:
+		note += "behind %d place model(s) (mesh ray); " % occ
+	if not answer_frame.is_empty():   # 街屋：鏡頭不能在街屋裡、鏡頭和角色中間不能有街屋
+		var hb: int = world._blocked_count(answer_frame["cam2"], float(answer_frame["ch"]), W["pos"], 1.0, "-none-")
+		if hb > 0:
+			note += "street house between camera and body (%d); " % hb
+			occ += hb
+	else:
+		note += "no answer frame; "
+		occ += 1
+	var ok := ov == 0.0 and on_screen and behind == 0 and hr >= 0.09 and occ == 0
+	var row := {"route": route_id, "mode": "B" if pair else "A", "q": qi + 1, "act": items[qi]["act"], "phase": phase, "ok": ok,
+		"overlap": ov, "box": [box.position.x, box.position.y, box.size.x, box.size.y], "rects": rj, "vs": [vs.x, vs.y], "height_pct": hr * 100.0,
+		"fov": cam.fov, "note": note}
+	print("ANSWERZONE %s q%d %s %s overlap=%d px2 height=%.0f%% box=%s %s" % [row["mode"], qi + 1, phase, "ok" if ok else "FAIL", ov, hr * 100.0, box, note])
+	if OS.get_environment("AZDEBUG") != "":
+		var nd: Node3D = W["node"]
+		print("AZDEBUG node_visible=%s model_visible=%s node_pos=%s cam=%s in_home=%s interior_vis=%s" % [nd.is_visible_in_tree(), (W["model"] as Node3D).is_visible_in_tree(), nd.global_position, cam.global_position, in_home, interior.visible if interior else "-"])
+		var cc := _body_corners()
+		var mid3: Vector3 = (cc[0] + cc[7]) * 0.5
+		var names := []
+		for mi: MeshInstance3D in occ_models:
+			if is_instance_valid(mi) and mi.is_visible_in_tree() and _seg_aabb(mi.global_transform.affine_inverse() * cam.global_position, mi.global_transform.affine_inverse() * mid3, mi.get_aabb()):
+				names.append(String(mi.get_path()).right(60))
+		print("AZDEBUG occ3=%d exact=%d aabb_hits=%s occ_models=%d" % [_occ3(cam.global_position, mid3), _occ3_exact(cam.global_position, mid3), names, occ_models.size()])
+		var hits := []
+		for mi in world.find_children("*", "MeshInstance3D", true, false):
+			var m3 := mi as MeshInstance3D
+			if m3.is_visible_in_tree() and m3.mesh and _seg_aabb(m3.global_transform.affine_inverse() * cam.global_position, m3.global_transform.affine_inverse() * mid3, m3.get_aabb()):
+				hits.append("%s(%d tris)" % [String(m3.get_path()).right(50), m3.mesh.get_faces().size() / 3])
+		print("AZDEBUG all-mesh aabb hits: ", hits.slice(0, 12), " cam2=", answer_frame.get("cam2"), " p=", W["pos"])
+		var keep := hud.visible
+		hud.visible = false
+		clue_card.visible = false
+		await _shot("AZDBG_q%02d_%s" % [qi + 1, phase])
+		hud.visible = keep
+		clue_card.visible = pair
+	return row
+
+func _az_check(phase: String, shot := false) -> void:
+	if not mascot:
+		return
+	await _wait_cam()
+	var row: Dictionary = await _answer_zone(phase)
+	_check(row["ok"], "%s q%d answer zone (%s): %s body not under any frame/panel, overlap %d px2, on screen, height %.0f%% %s" % [row["mode"], qi + 1, phase, who, row["overlap"], row["height_pct"], row["note"]])
+	if shot:
+		var nm := "AZ_%s_%s_q%02d_%s" % [route_id, row["mode"], qi + 1, phase]
+		await _shot(nm)
+		row["shot"] = nm
+	az_rows.append(row)
+
+func _az_save() -> void:
+	if az_rows.is_empty():
+		return
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(shots_dir))
+	var f := FileAccess.open("%s/answerzone_%s_%s.json" % [shots_dir, route_id, "B" if pair else "A"], FileAccess.WRITE)
+	f.store_string(JSON.stringify(az_rows, " "))
+	f.close()
+
+## [1112] 機車停車點：這一題記下來的每個點（等人、上車、騎到、停好）整台車都在柏油上
+func _scooter_q_check(tag: String) -> void:
+	if who != "zunbo" or items[qi]["travel"] != "scooter":
+		return
+	var phases := []
+	for ev in scooter_log:
+		if int(ev["q"]) == qi + 1:
+			phases.append(ev["phase"])
+			_check(ev["ok"], "%s q%d scooter %s on road: off-road points %d/21, min ground h %.3f m (asphalt >= 0.1), water %d" % [tag, qi + 1, ev["phase"], ev["bad"], ev["min_h"], ev["water"]])
+	_check("wait" in phases and "mount" in phases and "arrive" in phases, "%s q%d scooter wait/mount/arrive all checked %s" % [tag, qi + 1, phases])
+	if true:   # 檢查圖用：每題一行 JSON（shots_dir/scooter_park_A|B.jsonl）
+		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(shots_dir))
+		var fp := "%s/scooter_park_%s.jsonl" % [shots_dir, "B" if pair else "A"]
+		var f := FileAccess.open(fp, FileAccess.READ_WRITE if FileAccess.file_exists(fp) else FileAccess.WRITE)
+		if f:
+			f.seek_end()
+			var rows := []
+			for ev in scooter_log:
+				if int(ev["q"]) == qi + 1:
+					rows.append({"q": ev["q"], "phase": ev["phase"], "ok": ev["ok"], "bad": ev["bad"], "min_h": ev["min_h"], "water": ev["water"], "pos": [ev["pos"].x, ev["pos"].y], "dir": [ev["dir"].x, ev["dir"].y],
+						"foot": _scooter_foot(ev["pos"], ev["dir"]).map(func(v: Vector2) -> Array: return [snappedf(v.x, 0.01), snappedf(v.y, 0.01)])})
+			f.store_line(JSON.stringify(rows))
+			f.close()
+
+## 檢查圖：機車上方往下看（車在中間、車頭朝上），印車子四個角在畫面上的位置
+func _scooter_top_shot(name: String) -> void:
+	if scooter_spot.is_empty():
+		return
+	var c: Vector2 = scooter_spot["pos"]
+	var d: Vector2 = scooter_spot["dir"]
+	var keep := cam_mode
+	var keep_fov := cam.fov
+	var keep_af := answer_frame
+	answer_frame = {}
+	fixed_cam = [world.bend2(c - d * 0.01, 9.0), world.bend2(c, 0.0), world.bend2(c + d, 0.0) - world.bend2(c, 0.0)]
+	cam_mode = "fixed"
+	cam_pos = Vector3.ZERO
+	var keep_hud := hud.visible
+	var keep_clue := clue_card.visible
+	hud.visible = false
+	clue_card.visible = false
+	await _wait(0.4)
+	var corners := []
+	for pt: Vector2 in _scooter_foot(c, d):
+		var sp := cam.unproject_position(world.bend2(pt, _ground_h(pt)))
+		corners.append([sp.x, sp.y])
+	print("SCOOTER_TOP %s foot=%s" % [name, JSON.stringify(corners)])
+	await _shot(name)
+	hud.visible = keep_hud
+	clue_card.visible = keep_clue
+	var f := FileAccess.open("%s/%s.json" % [shots_dir, name], FileAccess.WRITE)
+	f.store_string(JSON.stringify({"foot": corners, "eval": _scooter_road_eval(c, d)}))
+	f.close()
+	cam_mode = keep
+	cam.fov = keep_fov
+	answer_frame = keep_af
+	cam_pos = Vector3.ZERO
+
+## [1112] 快速檢查（ANSWERZONE=1 --test，ROUTE=shuiling|zunbo，PAIR=1 可選）：11 題只跑「出題 → 解鎖 → 線索 → 作答」畫面，不演出
+func _test_answer_zone() -> void:
+	await _wait(2.5)
+	intro_t = INTRO_END
+	await _wait(1.0)
+	if not pair:
+		_show_setup()
+		_set_group_count(6)
+	_start_game()
+	if OS.get_environment("BOXBAKE") != "" and mascot:
+		# 待機動作一個循環內取 10 個時間點的網格包圍盒聯集，存 data/interior/<who>_idle_box.json
+		var a: AnimationPlayer = W["anim"]
+		var bx := AABB()
+		for k in 10:
+			await _wait(0.3)
+			var b1 := _measure_body_box()
+			bx = b1 if k == 0 else bx.merge(b1)
+		var fo := FileAccess.open("res://data/interior/%s_idle_box.json" % who, FileAccess.WRITE)
+		fo.store_string(JSON.stringify({"note": "[1112] %s 待機姿勢整個網格的包圍盒（模型座標，+3 cm）；BOXBAKE=1 ANSWERZONE=1 --test 產生" % who, "min": [bx.position.x, bx.position.y, bx.position.z], "max": [bx.end.x, bx.end.y, bx.end.z]}))
+		fo.close()
+		print("BOXBAKE %s %s (anim %s)" % [who, bx, a.current_animation])
+		body_box.erase(who)
+	for n in items.size():
+		if n > 0:
+			qi = n
+			_show_question()
+		var It: Dictionary = items[qi]
+		await _wait(0.8)
+		await _az_check("locked", false)
+		if It["travel"] == "scooter" and who == "zunbo":
+			for ev in scooter_log:
+				if int(ev["q"]) == qi + 1 and ev["phase"] == "wait":
+					_check(ev["ok"], "%s q%d scooter wait on road (off-road %d/21, water %d)" % ["B" if pair else "A", qi + 1, ev["bad"], ev["water"]])
+			if OS.get_environment("SHEET") != "":
+				await _scooter_top_shot("SC_%s_q%02d_wait" % ["B" if pair else "A", qi + 1])
+				await _wait_cam()
+		scene_heard = true
+		_set_locked(false)
+		if pair:
+			_unlock_clue()
+			await _az_check("clue", false)
+			clue_done = true
+			test_answer_wait = 1e9
+			_clue_to_answer()
+			await _az_check("answer", true)
+			ask_poll = false
+			test_answer_wait = 0.0
+		else:
+			for g in group_count:
+				_bet(g, rng.randi() % 3)
+				_wager(g, WAGERS[rng.randi() % 3])
+			_layout_panel()
+			await _az_check("bets", true)
+	_az_save()
+
 ## [perf] FPS15 測試：等答案句播完、REVEAL_TIME 印出來（棒球還要等跑到壘包），檢查「答對 → 演完」≤ 25 秒
 func _finish_listen() -> void:
 	if not perf_test:
@@ -4078,10 +4876,13 @@ func _run_test() -> void:
 			if absf(_ground_h(q) - _ground_h_slow(q)) > 1e-6:
 				bad += 1
 		_check(bad == 0, "ground height grid index == full scan at 4000 points (%d differ)" % bad)
-	if pair:
+	if OS.get_environment("ANSWERZONE") != "":
+		await _test_answer_zone()
+	elif pair:
 		await _test_pair(only)
 	else:
 		await _test_groups(only)
+	_az_save()
 	if test_draw_stalls > 0:
 		print("TEST NOTE: %d screenshot(s) were taken while the window was not drawing (minimized/hidden) — those pictures are stale" % test_draw_stalls)
 	print("TEST SUMMARY checks=%d failed=%d %s" % [test_checks, test_fail.size(), test_fail])
@@ -4340,6 +5141,7 @@ func _test_groups(only: int) -> void:
 		var It: Dictionary = items[qi]
 		await _wait(1.2)
 		var tag := "A%02d_%s" % [qi + 1, It["act"]]
+		await _az_check("locked")
 		await _shot(tag + "_1scenario_locked")
 		_bet(0, 0)   # 還沒聽情境：押注要被擋下來
 		_on_start()   # 還沒押注：Start 要被擋
@@ -4356,6 +5158,7 @@ func _test_groups(only: int) -> void:
 			_bet(g, rng.randi() % 3)
 			_wager(g, WAGERS[rng.randi() % 3])
 		await _wait(0.3)
+		await _az_check("bets")
 		await _shot(tag + "_2bets")
 		_check(not start_btn.disabled, "A q%d start enabled after all groups bet" % (qi + 1))
 		var before: Array = scores.duplicate()
@@ -4422,6 +5225,7 @@ func _test_groups(only: int) -> void:
 		if not perf_test:   # FPS15 測試演出一出來就聽了答案句（這個鎖在一般整回合測試檢查）
 			_on_next()   # 還沒聽答案句：Next 要被擋
 			_check(state == St.REVEAL and next_btn.disabled, "A q%d next blocked until answer sentence heard" % (qi + 1))
+		_scooter_q_check("A")
 		print("ROUND %d %s from=%s to=%s perform=%s scores=%s state=%d" % [qi + 1, It["act"], It["from"], It["to"], It["perform"], scores, state])
 		await _finish_listen()
 		await _on_next()
@@ -4452,6 +5256,7 @@ func _test_pair(only: int) -> void:
 		var kind: String = clue_order[qi]
 		var tag := "B%02d_%s" % [qi + 1, It["act"]]
 		await _wait(0.8)
+		await _az_check("locked")
 		if n == n0:
 			await _shot(tag + "_1scenario_locked")
 		_start_clue()
@@ -4460,6 +5265,7 @@ func _test_pair(only: int) -> void:
 		await _on_play_scene()
 		await _wait(0.3)
 		_check(state == St.CLUE and not clue_start_btn.disabled and clue_btn.disabled, "B q%d clue unlocked after scenario audio ended" % (qi + 1))
+		await _az_check("clue")
 		if n == n0:
 			await _shot(tag + "_1b_clue_unlocked")
 		_clue_to_answer()   # 線索還沒看：要被擋
@@ -4482,11 +5288,13 @@ func _test_pair(only: int) -> void:
 			await _wait(0.2)
 			g2 += 0.2
 		_check(clue_done and not clue_btn.disabled, "B q%d answer unlocked after clue fully given" % (qi + 1))
-		test_answer_wait = 1.0
+		test_answer_wait = 6.0 if mascot else 1.0   # [1112] 吉祥物：先等鏡頭轉好、量作答畫面
 		if n == n0:
 			await _shot(tag + "_2d_answer_unlocked")
 		_clue_to_answer()
 		_check(state == St.ANSWER and ask_poll, "B q%d question sent to frame" % (qi + 1))
+		await _az_check("answer")
+		test_answer_wait = minf(test_answer_wait, 0.5)
 		await _wait(0.3)
 		if n == n0:
 			await _shot(tag + "_3asked")
@@ -4509,6 +5317,7 @@ func _test_pair(only: int) -> void:
 		if not in_home:
 			var ovb := _outdoor_visible()
 			_check(ovb["ok"], "B q%d outdoor: nothing between camera and character/props, character >= 20%% of screen height (%s)" % [qi + 1, ovb["note"]])
+		_scooter_q_check("B")
 		print("PAIR %d %s clue=%s correct=%s score=%s" % [qi + 1, It["act"], kind, pair_correct, scores])
 		await _finish_listen()
 		await _on_next()

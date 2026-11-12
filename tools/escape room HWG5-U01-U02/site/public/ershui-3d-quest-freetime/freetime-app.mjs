@@ -184,8 +184,11 @@ function speakerOf(id) {
   for (let i = 0; i <= idx; i++) if (code[i] === "s") k++;
   return state.pair[(Math.max(k, 1) - 1) % 2];
 }
+// 本機測試（localhost＋?fakeai=1）：?forcetype=speak|drag|choice 讓每題都是同一種題型
+const LOCAL_TEST = ["127.0.0.1", "localhost"].includes(location.hostname) && new URLSearchParams(location.search).has("fakeai");
+const FORCE_TYPE = LOCAL_TEST ? new URLSearchParams(location.search).get("forcetype") : null;
 function pickType(id) {
-  const t = typeTable()[id] || "choice";
+  const t = (FORCE_TYPE && ["speak", "drag", "choice"].includes(FORCE_TYPE)) ? FORCE_TYPE : (typeTable()[id] || "choice");
   return t === "speak" && !aiAvailable() ? "choice" : t;   // AI 不能用時，口說題臨時改選擇題
 }
 let Q = null;   // 目前這一題 {id, sc, act, type, ...}
@@ -251,28 +254,107 @@ function drawDrag(init = false) {
 }
 
 // 口說題：不顯示答案句，只給句型；兩人輪流
+// [1112] 老師 11/12：通過＝①說的活動（關鍵字）＝這題答案 ②文法對（He/She＋plays…、I＋play…；I→my、He→his、She→her）③總分 ≥ 80。
+//   文法：AI 回報（grammar_errors）＋程式自己檢查逐字稿（不只信 AI）；文法錯＝不通過、算一次、並排顯示「你說的句子／正確句子」錯字紅色。
+//   活動不對：「不是這個活動，再看一次線索」（可以重播線索）；第 3 次起還說錯活動 → 顯示這題三個選項的活動當提示。
+//   第 5 次還沒過：不再改選擇題 → 直接去揭曉，這題記答錯（finalCorrect false，note 寫原因）。
 let rec = null;
-function drawSpeak(msg = "", result = null) {
-  const pass = result && result.total_score >= BANK.passSpeak;
+const HINT_FROM = 3;
+const VERB3 = { play: "plays", go: "goes", watch: "watches", listen: "listens", study: "studies", surf: "surfs", ride: "rides" };
+const VERB1 = Object.fromEntries(Object.entries(VERB3).map(([b, s]) => [s, b]));
+const SUBJECTS = ["i", "he", "she", "you", "we", "they", "it"];
+const POSSESSIVES = ["my", "his", "her", "your", "our", "their", "its"];
+const tokens = t => String(t || "").replace(/[“”"]/g, "").replace(/[.,!?;:]+/g, " ").split(/\s+/).filter(Boolean);
+// 回傳 { errors:[{said, correct}], said:[{t, bad}], fixed:[{t, fix}] }；fixed 是只改文法（不改活動、不洩漏答案）的句子
+function grammarCheck(transcript, route = R(), aiErrors = []) {
+  const subj = route.subject, poss = route.possessive, third = subj.toLowerCase() !== "i";
+  const w = tokens(transcript);
+  const said = w.map(t => ({ t, bad: false }));
+  const fixed = w.map(t => ({ t, fix: false }));
+  const errors = [];
+  const low = w.map(t => t.toLowerCase());
+  if (low.length && SUBJECTS.includes(low[0]) && low[0] !== subj.toLowerCase()) {
+    errors.push({ said: w[0], correct: subj }); said[0].bad = true; fixed[0] = { t: subj, fix: true };
+  }
+  const vi = low.findIndex(x => VERB3[x] || VERB1[x]);
+  if (vi >= 0) {
+    const want = third ? (VERB3[low[vi]] || low[vi]) : (VERB1[low[vi]] || low[vi]);
+    if (want !== low[vi]) { errors.push({ said: w[vi], correct: want }); said[vi].bad = true; fixed[vi] = { t: want, fix: true }; }
+  }
+  const fi = low.lastIndexOf("free");
+  let insertAt = -1;
+  if (fi > 0) {
+    const p = low[fi - 1];
+    if (POSSESSIVES.includes(p)) {
+      if (p !== poss) { errors.push({ said: w[fi - 1], correct: poss }); said[fi - 1].bad = true; fixed[fi - 1] = { t: poss, fix: true }; }
+    } else if (p === "in") {
+      errors.push({ said: "in free time", correct: `in ${poss} free time` }); insertAt = fi;
+    }
+  }
+  // AI 說的文法錯：說錯的字真的在逐字稿裡、而且不是在改活動（例如把 baseball 改成 basketball；活動另外判）才算
+  for (const e of aiErrors || []) {
+    const s = String(e?.said || "").trim(), c = String(e?.correct || "").trim();
+    if (!s || !c || s.toLowerCase() === c.toLowerCase() || guessedAct(` ${s} `) !== guessedAct(` ${c} `)) continue;
+    const sw = tokens(s).map(x => x.toLowerCase()), cw = tokens(c);
+    let at = -1;
+    for (let i = 0; i + sw.length <= low.length; i++) if (sw.every((x, k) => low[i + k] === x)) { at = i; break; }
+    if (at < 0 || said.slice(at, at + sw.length).some(x => x.bad)) continue;   // 逐字稿裡沒有，或程式已經抓到
+    errors.push({ said: s, correct: c, by: "ai" });
+    for (let k = 0; k < sw.length; k++) said[at + k].bad = true;
+    fixed.splice(at, sw.length, ...cw.map(t => ({ t, fix: true })));
+  }
+  if (insertAt >= 0) {   // 插入所有格（位置以 fixed 裡的 free 為準）
+    const fj = fixed.map(x => x.t.toLowerCase()).lastIndexOf("free");
+    fixed.splice(fj >= 0 ? fj : fixed.length, 0, { t: poss, fix: true });
+    said[insertAt - 1].bad = true;
+  }
+  if (fixed.length) fixed[0] = { ...fixed[0], t: fixed[0].t[0].toUpperCase() + fixed[0].t.slice(1) };
+  return { ok: errors.length === 0, errors, said, fixed };
+}
+// 一次錄音的判定
+function judgeSpeak(res) {
+  const act = guessedAct(res.transcript);
+  const g = grammarCheck(res.transcript, R(), Array.isArray(res.grammar_errors) ? res.grammar_errors : []);
+  const actOk = act === Q.act;
+  const scoreOk = res.total_score >= BANK.passSpeak;
+  const why = [];
+  if (!actOk) why.push(act ? `活動不對（說成 ${act}）` : "沒有聽到活動");
+  if (!g.ok) why.push("文法：" + g.errors.map(e => `${e.said}→${e.correct}`).join("、"));
+  if (!scoreOk) why.push(`分數 ${res.total_score} < ${BANK.passSpeak}`);
+  return { act, actOk, g, scoreOk, pass: actOk && g.ok && scoreOk, why: why.join("；") };
+}
+const optionPhrases = () => Q.sc.options.map(o => Object.values(R().activities).find(a => a.sentence === o)?.phrase || o.replace(/^(I|He|She)\s+/, "").replace(/\s+in (my|his|her) free time\.?$/, ""));
+const tokHtml = (arr, cls) => arr.map(x => (x.bad || x.fix) ? `<b class="${cls}">${esc(x.t)}</b>` : esc(x.t)).join(" ");
+function drawSpeak(msg = "", result = null, J = null) {
+  const pass = !!(J && J.pass);
+  const out = !pass && J && Q.tries >= MAX_TRIES;   // 第 5 次還沒過：直接去揭曉（記答錯）
   quiz.innerHTML = `${head(`用英文說出 ${R().name} 會做什麼（自己猜！）Say your guess`)}
     <p class="turn">🎙 輪到 ${esc(Q.by)} 說 / ${esc(Q.by)}'s turn</p>
     <p class="sent hint">${esc(R().subject)} <span class="blank">______</span> in ${esc(R().possessive)} free time.</p>
-    <p class="msg">第 ${Math.min(Q.tries + (pass ? 0 : 1), MAX_TRIES)}／${MAX_TRIES} 次${Q.best ? `・最高 ${Q.best} 分` : ""}</p>
+    <p class="msg">第 ${Math.min(Q.tries + (pass || out ? 0 : 1), MAX_TRIES)}／${MAX_TRIES} 次${Q.best ? `・最高 ${Q.best} 分` : ""}</p>
     ${result ? `<div class="ai ${pass ? "good" : "try"}">
       <p class="said">你說：「${esc(result.transcript || "（聽不清楚）")}」</p>
       <p class="scores"><b>${result.total_score}</b> 總分　發音 ${result.accuracy}・流暢 ${result.fluency}・完整 ${result.completeness}</p>
-      <p>${esc(result.feedback)}</p>
-      ${pass ? "" : `<p class="need">要 ${BANK.passSpeak} 分以上才能去揭曉，再錄一次！</p>`}</div>` : ""}
+      ${J && !J.g.ok ? `<div class="cmp"><div><span>你說的句子 You said</span><p>${tokHtml(J.g.said, "bad")}</p></div>
+        <div><span>正確句子 Correct</span><p>${tokHtml(J.g.fixed, "fix")}.</p></div></div>
+        <p class="need">文法要改：${J.g.errors.map(e => `${esc(e.said)} → ${esc(e.correct)}`).join("、")}</p>` : ""}
+      ${J && !J.actOk ? `<p class="need">${J.act ? "不是這個活動，再看一次線索！Not this one — watch the clue again." : "沒有聽到活動，再看一次線索、說完整句子！"}</p>` : ""}
+      ${J && J.actOk && J.g.ok && !J.scoreOk ? `<p class="need">要 ${BANK.passSpeak} 分以上才能去揭曉，再錄一次！</p>` : ""}
+      <p>${esc(result.feedback)}</p></div>` : ""}
+    ${Q.hint && !pass ? `<div class="hintbox">提示 Hint：${optionPhrases().map(p => `<b>${esc(p)}</b>`).join("　・　")}</div>` : ""}
+    ${out ? `<p class="need">錄了 ${MAX_TRIES} 次還沒過，這題記答錯。去看答案！</p>` : ""}
     <p class="msg">${esc(msg)}</p>
     <div class="row">
       ${pass ? `<button class="btn primary" data-act="reveal">Go! 去揭曉 ▶</button>`
+        : out ? `<button class="btn primary" data-act="release">去揭曉 See the answer ▶</button>`
         : `<button class="btn primary rec" data-act="rec">${Q.tries ? "🎙 再錄一次 Record again" : "🎙 錄音 Record"}</button>
+           ${J && !J.actOk ? `<button class="btn ghost" data-act="clue">🔁 再看線索 Clue again</button>` : ""}
            ${Q.fails >= 2 ? `<button class="btn ghost" data-act="pattern">🔈 聽句型示範</button>` : ""}`}
     </div>`;
   if (result) quiz.querySelector(".row")?.scrollIntoView({ block: "nearest" });   // 面板較矮時讓按鈕看得到
 }
 // ---- 錄音 → 16 kHz WAV（iPad Safari 錄出 MP4，Gemini 不收；在裝置上解碼、混單聲道再送）
-const MAX_TRIES = 5;          // 第 5 次仍未滿 80 分才改選擇題
+const MAX_TRIES = 5;          // [1112] 第 5 次仍沒通過 → 直接去揭曉、記答錯（不再改選擇題）
 const MAX_AI_ERRORS = 3;      // AI／網路沒回應不算次數；3 次才改選擇題
 let actx = null;
 function audioCtx() {
@@ -319,6 +401,7 @@ function b64(buf) {
   return btoa(bin);
 }
 window.__freetimeToWav = toWav16k;   // 電腦測試用
+window.__freetimeGrammar = (t, sub = "He", pos = "his") => grammarCheck(t, { subject: sub, possessive: pos });   // 電腦測試用
 
 function stopRec() {   // 換題時丟掉還在錄的音
   if (!rec) return;
@@ -362,22 +445,22 @@ async function startRec() {
     }
     try {
       const phrases = Object.values(R().activities).map(a => a.phrase);
-      const res = await scoreGuess({ base64Audio: b64(wav.buf), mimeType: "audio/wav", phrases, pattern: R().pattern, example: R().example, who: R().name });
+      const res = await scoreGuess({ base64Audio: b64(wav.buf), mimeType: "audio/wav", phrases, pattern: R().pattern, example: R().example, who: R().name,
+        subject: R().subject, possessive: R().possessive, fake: { sentence: sentenceOf(Q.act) } });
       if (Q !== q) return;
       Q.aiErrors = 0;
       Q.tries++;
       Q.best = Math.max(Q.best || 0, res.total_score);
       Q.last = res;
-      if (res.total_score < BANK.passSpeak) {
+      const J = judgeSpeak(res);
+      Q.lastJ = J;
+      if (!J.pass) {
         Q.fails++;
-        if (Q.tries >= MAX_TRIES) {   // 第 5 次仍未滿 80 分 → 改成選擇題
-          Q.type = "choice";
-          Q.note = `口說 ${MAX_TRIES} 次最高 ${Q.best} 分，改選擇題`;
-          drawChoice(`錄了 ${MAX_TRIES} 次還沒到 ${BANK.passSpeak} 分，改用選的。最高分：${Q.best}`);
-          return;
-        }
+        if (!J.actOk && Q.tries >= HINT_FROM) Q.hint = true;   // 第 3 次起還說錯活動：給三個選項的活動
+        Q.why = J.why;
       }
-      drawSpeak("", res);
+      window.__freetimeLastJudge = { tries: Q.tries, pass: J.pass, act: J.act, actOk: J.actOk, grammarOk: J.g.ok, errors: J.g.errors, scoreOk: J.scoreOk, why: J.why, hint: !!Q.hint, transcript: res.transcript, total: res.total_score, ai: { activity_said: res.activity_said, grammar_ok: res.grammar_ok, grammar_errors: res.grammar_errors } };
+      drawSpeak("", res, J);
     } catch (err) {
       console.warn("speech AI failed", err);
       if (Q !== q) return;
@@ -438,10 +521,15 @@ quiz.addEventListener("click", e => {
   }
   if (Q.type === "speak") {
     if (act === "rec") { startRec(); return; }
-    if (act === "reveal" && Q.last) {
-      const g = guessedAct(Q.last.transcript);
-      finish(g === Q.act, `${Q.by} 說：${Q.last.transcript}（AI ${Q.last.total_score}，錄 ${Q.tries} 次）`,
+    if (act === "clue") { tell({ type: "clue" }); return; }   // 遊戲重播這題的線索
+    if (act === "reveal" && Q.last && Q.lastJ?.pass) {
+      finish(true, `${Q.by} 說：${Q.last.transcript}（AI ${Q.last.total_score}，錄 ${Q.tries} 次）`,
         { ai: Q.last.total_score, said: clip(Q.last.transcript), by: Q.by });
+      return;
+    }
+    if (act === "release" && Q.last && Q.tries >= MAX_TRIES) {   // 5 次沒過：去揭曉、記答錯
+      finish(false, `${Q.by} 說：${Q.last.transcript}（${MAX_TRIES} 次未通過：${Q.why || ""}）`,
+        { ai: Q.best, said: clip(Q.last.transcript), by: Q.by, note: clip(`口說 ${MAX_TRIES} 次未通過：${Q.why || ""}`, 120) });
     }
   }
 });
