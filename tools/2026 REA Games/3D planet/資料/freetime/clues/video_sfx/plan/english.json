@@ -1,0 +1,19 @@
+{
+ "act": "english",
+ "events": [
+  {
+   "layer": "page",
+   "start": 2.0,
+   "len": 0.7,
+   "db": 0,
+   "label": "翻頁"
+  },
+  {
+   "layer": "pencil",
+   "start": 2.8,
+   "len": 1.3,
+   "db": -3,
+   "label": "在手掌上寫字 沙沙"
+  }
+ ]
+}

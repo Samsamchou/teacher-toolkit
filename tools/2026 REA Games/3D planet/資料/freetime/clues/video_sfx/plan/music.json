@@ -1,0 +1,12 @@
+{
+ "act": "music",
+ "events": [
+  {
+   "layer": "beat",
+   "start": 1.0,
+   "len": 4.9,
+   "db": -8,
+   "label": "耳機漏音的節奏（無歌詞）"
+  }
+ ]
+}

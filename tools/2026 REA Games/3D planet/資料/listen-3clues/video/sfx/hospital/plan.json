@@ -1,0 +1,26 @@
+{
+ "place": "hospital",
+ "events": [
+  {
+   "layer": "amb:hospital/cough2",
+   "start": 0.25,
+   "len": 1.6,
+   "db": 0,
+   "label": "咳嗽"
+  },
+  {
+   "layer": "amb:hospital/thermo",
+   "start": 2.3,
+   "len": 1.2,
+   "db": -2,
+   "label": "耳溫槍嗶"
+  },
+  {
+   "layer": "amb:hospital/trolley",
+   "start": 5.4,
+   "len": 1.8,
+   "db": -5,
+   "label": "護士推車（打針）"
+  }
+ ]
+}

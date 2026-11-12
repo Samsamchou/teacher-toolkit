@@ -1,0 +1,19 @@
+{
+ "act": "recorder",
+ "events": [
+  {
+   "layer": "tune",
+   "start": 0.6,
+   "len": 3.0,
+   "db": -3,
+   "label": "吹直笛"
+  },
+  {
+   "layer": "tune",
+   "start": 4.6,
+   "len": 1.35,
+   "db": -1,
+   "label": "吸一大口氣再吹"
+  }
+ ]
+}

@@ -94,6 +94,29 @@
 - 2026-11-08 晚：環境音 v2 18 秒版（`tools/make_ambience_v2.py`：重點聲音拉長，餐廳吃東西／飲料店吸飲料各 8 秒、無中文句；學校程式合成西敏寺鐘 4 句；研究 scratchpad ambience_research.md）老師「全部可以，選 A（聽完 18 秒才出題）」；錄音時遊戲靜音（mute／unmute）；公園 Ken 陷進模型修好（門口推到模型外）。
 - **2026-11-08 正式上線**（老師說「直接部署正式站」）：live 上次 11/07 14:08＝staging（C:/Users/User/AppData/Local/Temp/ershui-4sets-stage），只換 ershui-planet/（pck 69,380,000）、新增 ershui-3d-quest-planetlisten/、shared/missions.mjs（加 planetlisten 一行）後 deploy hosting（370 檔）；npm test 36/36；讀回全部 200；正式網域 AI 評分有回應。規則（firestore.rules）沒動。
 
+## Listen and Guess 三種線索版（2026-11-12，第一階段，**未部署、未 commit**）
+規格 `rdq/RDQ-spec-listen-guess-3clues-20261112.md`；進度與待老師決定事項 `資料/listen-3clues/進度-20261112.md`；踩坑第六節。
+- 10 個地點（加火車站、書店）、每回合 10 題（5 口說＋3 拖放＋2 選擇）、每題一種線索（4 環境音／3 兩個圖示／3 默劇影片），遊戲用 seed 排、start 時存進外框 cleared `types:`／`clues:`。
+- 圖示／影片放外框 `ershui-3d-quest-planetlisten/clues/`（不進 pck）；口說規則照 Free Time 11/12。
+- **外框 clues/video/ 只有 post.mp4 是真的試拍，其他 9 支是 4 秒色塊暫代檔**；火車站、書店環境音遊戲裡先放 A 版暫代（老師還沒選）。
+- 測試：`PERSONAL=1 LISTEN=1 --test`（有 CHECK／TEST SUMMARY）；網頁 scratchpad `web_listen_test.py`（外框 `?fakeai=1&cloud=off&forcetype=&forceclue=`，只在 localhost）。
+
+## 二水鐵道博物館 museum（**虛構地點**，2026-11-12，**未部署、未 commit**）
+規格 `rdq/RDQ-spec-ershui-planet-railway-museum-20261112.md`；進度與待老師決定 `資料/museum/進度-20261112.md`；踩坑第七節。
+- **二水沒有這間博物館**（給老師／學生說明時要講是虛構的）。位置：車站西北、車站旁那條路與鐵道之間的空地（遊戲座標約 -12.9, -132.8），正門朝路；沒拿掉任何房子。
+- 外觀：紅磚扇形車庫（Codex 參考圖 `資料/museum/ref_museum_a.png` → Colab Hunyuan3D-2 → `assets/models/bld_museum.glb`，原檔 `資料/hy3d-models/museum_a.glb`；b 版沒用）＋門前蒸汽火車頭（公園的 steam_locomotive）＋屋頂 MUSEUM 看板＋路邊立牌「二水鐵道博物館 / Railway Museum」（`world.gd _museum_extras`）。
+- 分組／個人：`WORDS` 加 museum；5 套路線的第 12 站（原本重複單字的第二個公園／飲料店／學校）換成博物館，仍 12 題、滿分 120。**注意**：正式站上「玩到一半、存了 set＋seed」的個人模式學生，換版後同一個 seed 會排出不同題目（從下一題接著玩，分數不受影響）。
+- Listen and Guess：第 11 個地點（It's Sunday. It's cloudy today. / I want to see old trains.），每回合從 11 個抽 10 個（seed 固定）；外框 data.js、口說規則 museum／railway museum。線索：環境音（A/B 待選，遊戲先放 A）、兩個圖示、默劇＋音效 `clues/video/museum.mp4`。
+- 測試：分組 27/27（mix、where）、個人 18/18、Listen `FORCE_PLACE=museum` 52/52、網頁 82/82。export_presets 不再排除 steam_locomotive.glb（博物館要用）；匯出 pck 72,189,716。
+
+### 11/12 晚老師回饋（一起上預覽）
+- 博物館環境音選 B；字型重建（預覽版原本缺 142 字，例：水餃店→水店；`build_cjk_font.py --check` 檢查缺字）；水餃店看板蓋住拼錯的 DUMPINGG、寫 DUMPLING。
+- 日日新商店用 Google 地圖座標釘在惠民路、便利商店那一側（`shops_ershui.PIN`）。
+- 學校抵達站位改明德橋頭廣場（原本站在圳水上）；所有地點站位自動檢查 `ARRIVE_GROUND`（測試會跑，農會也修了）。
+- Listen 默劇影片看的時候放大到約 320 px 高（看完縮回）。
+- 檢查圖都在 `資料/museum/`：ririxin-location-v1、arrival-ground-check-v1、video-size-v1、dumpling-*。
+- **11/12 23:00 已上預覽 ershui-preview**（pck 72,211,620；live 沒動，仍 20:43:49）。測試：Listen 53/53、分組 28/28、個人 19/19、網頁 82/82。等老師 iPad 試，再和 Listen and Guess 一起上正式站。未 commit。
+
 ## Free Time 版兩種玩法（2026-11-10，Ken A 路線 11 題；`godot-ershui-freetime/`）
 規格：`rdq/RDQ-spec-freetime-planet-hwg7u03-20261109.md`（rev 1–3）。**尚未部署**（老師自己上預覽頻道）。
 - **猜地點題組已移除**（game.gd 重寫；`data/sets.json`、`data/listen.json` 刪除；舊語音 a_/q_/listen_ 用匯出排除）。保留街道、學校、空拍、聲音、存檔、外框。

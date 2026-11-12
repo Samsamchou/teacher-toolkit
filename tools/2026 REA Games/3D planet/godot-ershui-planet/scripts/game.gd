@@ -88,6 +88,17 @@ var amb: AudioStreamPlayer      # 環境音
 var ask_poll := false
 var ask_t := 0.0
 var listen_score := 0
+## 三種線索版（RDQ-spec-listen-guess-3clues-20261112）：10 個地點、每回合 10 題（11/12 晚加博物館＝11 個地點，每回合抽 10 個）；題型 5 口說＋3 拖放＋2 選擇（s/d/c），
+## 每題只出一種線索：環境音 a（遊戲播）／兩個圖示 i／默劇影片 v（外框顯示，圖示和影片放在遊戲檔外，用到才下載）。
+## 兩張表都由 seed 洗牌、在 start 時交給外框存進 cleared（"types:…"、"clues:…"），換裝置「繼續上次」也一樣。
+const LISTEN_N := 10
+const LISTEN_TYPES := ["s", "s", "s", "s", "s", "d", "d", "d", "c", "c"]
+const LISTEN_CLUES := ["a", "a", "a", "a", "i", "i", "i", "v", "v", "v"]
+const CLUE_KIND := {"a": "amb", "i": "icons", "v": "video"}
+var listen_plan := {}           # {"types": "sdc…", "clues": "aiv…"}
+var plan_override := {}         # 繼續上次：外框存的表（以外框為準）
+var test_asks: Array = []       # 測試：每題 ask 的內容
+var test_amb_on_ask := 0        # 測試：出題前播了幾次環境音
 var walk_from := Vector2.ZERO
 var toast: Label
 const SAVE_PATH := "user://ershui_planet_save.json"
@@ -181,6 +192,9 @@ func _host_report(payload: Dictionary) -> void:
 			"start":
 				test_host["results"] = {}
 				test_host["cleared"] = ["mode:%s" % payload["mode"], "set:%d" % payload["set"], "seed:%d" % payload["seed"]]
+				if payload.has("types"):
+					test_host["cleared"].append("types:%s" % payload["types"])
+					test_host["cleared"].append("clues:%s" % payload["clues"])
 			"item":
 				test_host["results"][payload["id"]] = payload["result"]
 	if not OS.has_feature("web"):
@@ -198,10 +212,13 @@ func _host_run(d: Dictionary) -> Dictionary:
 			run[s.substr(0, i)] = s.substr(i + 1)
 	if not run.has("mode") or not run.has("seed") or not run.has("set"):
 		return {}
+	# 三種線索版之前（8 題）的紀錄沒有 clues 表：不能接著玩，重新開始
+	if listen_mode and String(run.get("clues", "")).length() != LISTEN_N:
+		return {}
 	var res: Dictionary = d.get("results", {})
 	var n := 0
 	var ok := 0
-	for k in (8 if listen_mode else 12):
+	for k in (LISTEN_N if listen_mode else 12):
 		var r = res.get("q%02d" % (k + 1))
 		if typeof(r) != TYPE_DICTIONARY:
 			break
@@ -234,6 +251,9 @@ func _resume_personal() -> void:
 	set_idx = clampi(int(run["set"]), 0, sets["sets"].size() - 1)
 	run_seed = int(run["seed"])
 	group_count = 1
+	plan_override = {}
+	if listen_mode:
+		plan_override = {"types": String(run.get("types", "")), "clues": String(run.get("clues", ""))}
 	_make_rounds()
 	qi = mini(int(run["answered"]), rounds.size())
 	scores = [int(run["correct"]) * PERSONAL_POINTS]
@@ -781,12 +801,39 @@ func _make_rounds() -> void:
 	if mode == "listen":
 		var order: Array = listen_items.duplicate()
 		_shuffle(order)
+		# Ken 從火車站出發：第 1 題不能是火車站（走 0 步），換到第 2 題
+		if order.size() > 1 and String(order[0]["place"]) == "station":
+			var tmp = order[0]
+			order[0] = order[1]
+			order[1] = tmp
+		# 2026-11-12 加博物館後有 11 個地點：每回合只取洗牌後的前 10 個（同一個 seed 一定取到同樣 10 個，繼續上次不變）
+		# 測試用 FORCE_PLACE=museum：沒抽到就換掉第 10 個（只有電腦測試會設這個環境變數）
+		var force := OS.get_environment("FORCE_PLACE")
+		if force != "" and order.size() > LISTEN_N and not order.slice(0, LISTEN_N).any(func(x): return String(x["id"]) == force):
+			for k in order.size():
+				if String(order[k]["id"]) == force:
+					order[LISTEN_N - 1] = order[k]
+					break
+		order = order.slice(0, LISTEN_N)
+		var types: Array = LISTEN_TYPES.duplicate()
+		_shuffle(types)
+		var clues: Array = LISTEN_CLUES.duplicate()
+		_shuffle(clues)
+		listen_plan = {"types": "".join(PackedStringArray(types)), "clues": "".join(PackedStringArray(clues))}
+		# 繼續上次：外框存的表為準（長度要對）
+		for k in ["types", "clues"]:
+			if String(plan_override.get(k, "")).length() == order.size():
+				listen_plan[k] = String(plan_override[k])
+		plan_override = {}
+		var i := 0
 		for it in order:
 			var w := String(it["word"])
 			rounds.append({"target": it["place"], "who": "ken", "lead": "ken", "pattern": "listen", "word": w,
 				"lid": it["id"], "the": it["the"], "scene": it["scene"], "reason": it["reason"], "zh": it["zh"],
 				"question": "Where are you going?", "qkey": "listen_scene_%s" % it["id"],
+				"qtype": String(listen_plan["types"])[i], "clue": CLUE_KIND.get(String(listen_plan["clues"])[i], "amb"),
 				"options": [w], "correct": 0, "answer": w})
+			i += 1
 		return
 	var S: Dictionary = sets["sets"][set_idx]
 	var targets: Array = S["targets"].duplicate()
@@ -1088,7 +1135,7 @@ func _show_title() -> void:
 	if personal:
 		sid_label.text = "學號 Student ID：%s" % personal_sid
 		var run := _host_run(_host_initial())
-		var total := 8 if listen_mode else 12
+		var total := LISTEN_N if listen_mode else 12
 		continue_btn.visible = not run.is_empty() and int(run["answered"]) < total
 		if continue_btn.visible:
 			continue_btn.text = "  Continue 繼續上次（Q%d/%d）  " % [int(run["answered"]) + 1, total]
@@ -1392,7 +1439,11 @@ func _start_game() -> void:
 	arrive_id = ""
 	cam_pos = Vector3.ZERO   # 鏡頭直接跳到角色前面（不從首頁空拍慢慢飄過來）
 	_make_rounds()
-	_host_report({"type": "start", "mode": mode, "set": set_idx, "seed": run_seed})
+	var sp := {"type": "start", "mode": mode, "set": set_idx, "seed": run_seed}
+	if mode == "listen":
+		sp["types"] = listen_plan["types"]
+		sp["clues"] = listen_plan["clues"]
+	_host_report(sp)
 	qi = 0
 	var start: Vector2 = world.places["station"]["door2"]
 	walkers["ken"]["pos"] = start + Vector2(-0.9, 0.0)
@@ -1470,10 +1521,13 @@ func _show_question() -> void:
 	sfx("question")
 	say(Rd["qkey"])
 
+var listen_token := 0           # 每次出題 +1：回首頁→繼續上次時，上一次還在等語音／環境音的出題流程要作廢（不然會出兩次題）
 func _listen_question() -> void:
 	state = St.QUESTION
 	var Rd: Dictionary = rounds[qi]
 	var my_qi := qi
+	listen_token += 1
+	var my_tok := listen_token
 	active = "ken"
 	world.clear_fade()
 	world.hide_road_color()
@@ -1500,14 +1554,22 @@ func _listen_question() -> void:
 	_refresh_chips()
 	sfx("question")
 	await say(Rd["qkey"])
-	if qi != my_qi or state != St.QUESTION:
+	if qi != my_qi or state != St.QUESTION or my_tok != listen_token:
 		return
-	q_label.text = "Listen!  聽聽看，這是哪裡？"
-	await play_amb(Rd["lid"])
-	if qi != my_qi or state != St.QUESTION:
-		return
-	q_label.text = _scene_text(Rd)
-	_host_ask({"type": "ask", "id": "q%02d" % (qi + 1), "lid": Rd["lid"], "seq": qi + 1})
+	var clue := String(Rd.get("clue", "amb"))
+	if clue == "amb":
+		# 環境音線索：遊戲播完 18 秒才出題（老師 11/08 選 A）
+		q_label.text = "Listen!  聽聽看，這是哪裡？"
+		test_amb_on_ask += 1
+		await play_amb(Rd["lid"])
+		if qi != my_qi or state != St.QUESTION or my_tok != listen_token:
+			return
+		q_label.text = _scene_text(Rd)
+	else:
+		# 圖示／默劇影片線索：外框面板先播線索（用到才下載），播完才開放作答；遊戲這時不播環境音
+		q_label.text = "%s
+%s" % [_scene_text(Rd), "Look!  看線索，猜猜去哪裡？"]
+	_host_ask({"type": "ask", "id": "q%02d" % (qi + 1), "lid": Rd["lid"], "seq": qi + 1, "clue": clue, "qtype": Rd.get("qtype", "")})
 
 func _scene_text(Rd: Dictionary) -> String:
 	return "%s\nWhere are you going?" % String(Rd["scene"]).replace(". ", ".\n")
@@ -1518,6 +1580,7 @@ func _host_ask(payload: Dictionary) -> void:
 	ask_t = 0.0
 	if OS.get_environment("PERSONAL") != "":
 		print("ASK ", JSON.stringify(payload))
+		test_asks.append(payload)
 		return
 	if OS.has_feature("web"):
 		var arg := JSON.stringify(JSON.stringify(payload))
@@ -1532,7 +1595,10 @@ func _poll_host(delta: float) -> void:
 	ask_t = 0.0
 	var raw = ""
 	if OS.get_environment("PERSONAL") != "":
-		raw = JSON.stringify({"type": "answer", "correct": rng.randf() < 0.7, "pick": "test"})   # 假外框：自動作答
+		var ok := rng.randf() < 0.7
+		raw = JSON.stringify({"type": "answer", "correct": ok, "pick": "test"})   # 假外框：自動作答
+		# 假外框也照外框的規則存作答結果，測試「繼續上次」
+		test_host["results"]["q%02d" % (qi + 1)] = {"finalCorrect": ok, "type": String(rounds[qi].get("qtype", ""))}
 	elif OS.has_feature("web"):
 		raw = JavaScriptBridge.eval("(function(){try{var h=window.parent&&window.parent.ershuiHost;return h&&h.poll?(h.poll()||''):'';}catch(e){return '';}})()", true)
 	if typeof(raw) != TYPE_STRING or raw == "":
@@ -1542,7 +1608,8 @@ func _poll_host(delta: float) -> void:
 		return
 	var Rd: Dictionary = rounds[qi]
 	match String(m.get("type", "")):
-		"replay":
+		"replay", "amb":
+			# replay：環境音線索再聽一次；amb：圖示／影片載入失敗時外框改請遊戲播環境音
 			play_amb(Rd["lid"])
 		"pattern":
 			say("listen_pattern")
@@ -1606,7 +1673,11 @@ func _repeat_voice() -> void:
 	if state == St.REVEAL:
 		say(answer_key(Rd, Rd["answer"]))
 	elif Rd["pattern"] == "listen":
-		play_amb(Rd["lid"])
+		# 環境音線索才重播環境音；圖示／影片線索重播情境句（不多給一種線索）
+		if String(Rd.get("clue", "amb")) == "amb":
+			play_amb(Rd["lid"])
+		else:
+			say(Rd["qkey"])
 	else:
 		say(Rd["qkey"])
 
@@ -1655,7 +1726,7 @@ func _on_arrive(k: String) -> void:
 	var P: Dictionary = world.places[Rd["target"]]
 	var W: Dictionary = walkers[k]
 	sfx("arrive")
-	W["fwd"] = ((P["pos2"] as Vector2) - (P["door2"] as Vector2)).normalized()
+	W["fwd"] = ((P["look2"] as Vector2) - (P["door2"] as Vector2)).normalized()
 	for f in walkers:
 		if walkers[f].get("follow", "") != "":
 			walkers[f]["fwd"] = W["fwd"]
@@ -1748,6 +1819,14 @@ func _toggle_fast() -> void:
 		_walker_anim(k, walkers[k]["path"].size() > 0)
 
 func _go_home() -> void:
+	if listen_mode:
+		# 出題中回首頁：作廢還在跑的出題流程、停環境音、請外框收起題目面板
+		listen_token += 1
+		ask_poll = false
+		amb.stop()
+		AudioServer.set_bus_mute(0, false)
+		if OS.has_feature("web") and OS.get_environment("PERSONAL") == "":
+			JavaScriptBridge.eval("(function(){try{var h=window.parent&&window.parent.ershuiHost;if(h&&h.cancel)h.cancel();}catch(e){}})()", true)
 	for k in walkers:
 		walkers[k]["path"] = []
 		_walker_anim(k, false)
@@ -1933,20 +2012,125 @@ func _shot(name: String) -> void:
 func _wait(sec: float) -> void:
 	await get_tree().create_timer(sec).timeout
 
-## PERSONAL=1 LISTEN=1：假外框自動作答，跑完 8 題、拍出題／走路／揭曉
+## PERSONAL=1 LISTEN=1：假外框自動作答，跑完 10 題（三種線索版）；第 6 題前回首頁→繼續上次（同一份題目、題型、線索）
+var test_fail := 0
+var test_pass := 0
+func _check(name: String, ok: bool, info := "") -> void:
+	if ok:
+		test_pass += 1
+	else:
+		test_fail += 1
+	print("CHECK %s %s %s" % ["PASS" if ok else "FAIL", name, info])
+
+## 每個地點的抵達站位（和吉祥物站位）要在地面上：不能在圳水上、不能在房子裡（老師 11/12：Ken 到學校站在河流上）
+## 印 ARRIVE_GROUND 每個地點一行；有任何 FAIL 就算測試失敗
+func _seg_dist(p: Vector2, a: Vector2, b: Vector2) -> float:
+	return p.distance_to(Geometry2D.get_closest_point_to_segment(p, a, b))
+
+func _ground_problem(p: Vector2) -> String:
+	for wv in data.get("water", []):
+		var pts: Array = wv["pts"]
+		for i in range(pts.size() - 1):
+			if _seg_dist(p, world.v2(pts[i]), world.v2(pts[i + 1])) < float(wv["w"]) / 2.0 + 0.4 + 0.15:
+				return "water"
+	for B in data["buildings"]:
+		var poly := PackedVector2Array()
+		for q in B["poly"]:
+			poly.append(world.v2(q))
+		if Geometry2D.is_point_in_polygon(p, poly):
+			return "building %s" % str(B.get("id", ""))
+	for id in world.places:
+		var P: Dictionary = world.places[id]
+		if P.has("foot") and Geometry2D.is_point_in_polygon(p, P["foot"]):
+			return "place %s" % id
+	var C: Dictionary = data.get("campus", {})
+	for cb in C.get("blds", []):
+		var cp := PackedVector2Array()
+		for q in (cb["poly"] if typeof(cb) == TYPE_DICTIONARY else cb):
+			cp.append(world.v2(q))
+		if cp.size() >= 3 and Geometry2D.is_point_in_polygon(p, cp):
+			return "campus building"
+	return ""
+
+func _ground_check() -> void:
+	var bad := []
+	for id in world.places:
+		var P: Dictionary = world.places[id]
+		var door: Vector2 = P["door2"]
+		var fwd: Vector2 = ((P["look2"] as Vector2) - door).normalized()
+		var side := Vector2(fwd.y, -fwd.x)
+		var spots := {"ken": door, "follow+": door + side * 0.85, "follow-": door - side * 0.85,
+			"yuyu": door + Vector2(0.85, 0.5), "zunbo": door + Vector2(-0.85, 0.5)}
+		var probs := []
+		for k in spots:
+			var why := _ground_problem(spots[k])
+			if why != "":
+				probs.append("%s:%s" % [k, why])
+		print("ARRIVE_GROUND %s %s door=(%.1f, %.1f) %s %s" % [id, "OK" if probs.is_empty() else "FAIL", door.x, door.y, ",".join(PackedStringArray(probs)), String(P.get("door_fix", ""))])
+		if not probs.is_empty():
+			bad.append(id)
+			print("  foot=", P.get("foot", []), " pos=", P["pos2"], " door(data)=", P["door"])
+	_check("arrival spots on ground (no water, no building)", bad.is_empty(), str(bad))
+
+func _plan_sig() -> String:
+	var a := []
+	for r in rounds:
+		a.append("%s:%s:%s" % [r["lid"], r.get("qtype", ""), r.get("clue", "")])
+	return ",".join(PackedStringArray(a))
+
 func _test_listen() -> void:
 	await _wait(2.0)
+	_ground_check()
 	await _shot("L00_title")
 	_start_game()
 	fast = true
+	var sig := _plan_sig()
+	_check("10 rounds", rounds.size() == LISTEN_N, str(rounds.size()))
+	var lids := {}
+	for r in rounds:
+		lids[r["lid"]] = true
+	_check("10 different places", lids.size() == LISTEN_N, str(lids.keys()))
+	_check("10 of %d listen places" % listen_items.size(), listen_items.size() == 11 and lids.keys().all(func(k): return listen_items.any(func(x): return String(x["id"]) == k)))
+	if OS.get_environment("FORCE_PLACE") != "":
+		_check("forced place included: %s" % OS.get_environment("FORCE_PLACE"), lids.has(OS.get_environment("FORCE_PLACE")), str(lids.keys()))
+	_check("first is not station", String(rounds[0]["target"]) != "station", String(rounds[0]["target"]))
+	var tc := {"s": 0, "d": 0, "c": 0}
+	var cc := {"amb": 0, "icons": 0, "video": 0}
+	for r in rounds:
+		tc[r["qtype"]] += 1
+		cc[r["clue"]] += 1
+	_check("types 5/3/2", tc["s"] == 5 and tc["d"] == 3 and tc["c"] == 2, str(tc))
+	_check("clues 4/3/3 (all three kinds)", cc["amb"] == 4 and cc["icons"] == 3 and cc["video"] == 3, str(cc))
+	var cl: Array = test_host.get("cleared", [])
+	_check("start stored types+clues in cleared", ("types:%s" % listen_plan["types"]) in cl and ("clues:%s" % listen_plan["clues"]) in cl, str(cl))
 	for n in rounds.size():
+		if n == 5:
+			_go_home()
+			await _wait(0.8)
+			await _shot("L05_title_continue")
+			_check("continue visible", continue_btn.visible, continue_btn.text)
+			# 換裝置：遊戲記憶清掉，只留外框存的 seed／types／clues／results
+			listen_plan = {}
+			rounds.clear()
+			run_seed = 0
+			_resume_personal()
+			_check("resume qi=5", qi == 5, str(qi))
+			_check("resume same plan", _plan_sig() == sig, _plan_sig())
+			await _wait(0.5)
 		var Rd: Dictionary = rounds[qi]
+		var asks_before := test_asks.size()
+		var amb_before := test_amb_on_ask
 		var guard := 0.0
 		while state == St.QUESTION and guard < 40.0:
 			await _wait(0.2)
 			guard += 0.2
 			if n == 0 and absf(guard - 1.0) < 0.01:
 				await _shot("L01_scene")
+		var ask: Dictionary = test_asks[test_asks.size() - 1] if test_asks.size() > asks_before else {}
+		_check("Q%d ask has clue %s" % [n + 1, Rd["clue"]], String(ask.get("clue", "")) == Rd["clue"] and String(ask.get("lid", "")) == Rd["lid"], JSON.stringify(ask))
+		_check("Q%d ambience only for amb clue" % (n + 1), (test_amb_on_ask - amb_before) == (1 if Rd["clue"] == "amb" else 0))
+		var same := test_asks.filter(func(x): return String(x.get("id", "")) == "q%02d" % (n + 1))
+		_check("Q%d asked once" % (n + 1), same.size() == 1, str(same.size()))
 		if n == 0:
 			await _wait(0.8)
 			await _shot("L02_walk")
@@ -1955,14 +2139,17 @@ func _test_listen() -> void:
 			await _wait(0.2)
 			guard += 0.2
 		await _wait(0.8)
-		print("LISTEN %d %s -> %s | %s | ok=%s state=%d" % [n + 1, Rd["lid"], Rd["target"], sentence(Rd, Rd["answer"]), bets.get(0, -1) == 0, state])
-		if n < 2:
-			await _shot("L03_reveal_%d" % n)
+		_check("Q%d arrived" % (n + 1), state == St.REVEAL, str(state))
+		print("LISTEN %d %s -> %s | %s | clue=%s type=%s ok=%s" % [n + 1, Rd["lid"], Rd["target"], sentence(Rd, Rd["answer"]), Rd["clue"], Rd["qtype"], bets.get(0, -1) == 0])
+		if n < 2 or Rd["lid"] in ["station", "bookstore", "museum"]:
+			await _shot("L03_reveal_%s" % Rd["lid"])
 		await _on_listen()
 		_on_next()
 		await _wait(0.3)
+	_check("result shown", state == St.RESULT, str(state))
 	print("LISTEN DONE score=", scores, " state=", state)
 	await _shot("L09_result")
+	print("TEST SUMMARY pass=%d fail=%d" % [test_pass, test_fail])
 
 func _run_test() -> void:
 	if OS.get_environment("INTRO") != "":
@@ -2005,11 +2192,11 @@ func _run_test() -> void:
 		return
 	if listen_mode:
 		await _test_listen()
-		get_tree().quit()
+		get_tree().quit(1 if test_fail > 0 else 0)
 		return
 	if personal:
 		await _test_personal()
-		get_tree().quit()
+		get_tree().quit(1 if test_fail > 0 else 0)
 		return
 	await _wait(2.5)
 	await _shot("01_title")
@@ -2026,6 +2213,11 @@ func _run_test() -> void:
 	if OS.get_environment("ARRIVALS") != "":
 		await _test_arrivals()
 		get_tree().quit()
+		return
+	_ground_check()
+	if OS.get_environment("GROUND") != "":
+		print("TEST SUMMARY pass=%d fail=%d" % [test_pass, test_fail])
+		get_tree().quit(1 if test_fail > 0 else 0)
 		return
 	_start_game()
 	fast = true
@@ -2046,12 +2238,22 @@ func _run_test() -> void:
 		if n == 1:
 			await _wait(1.0)
 			await _shot("05_walking_%s" % mode)
+		if rounds[qi]["target"] == "museum":
+			# 博物館檢查圖：走路途中拍兩張
+			await _wait(1.2)
+			await _shot("05_walking_museum_a_%s" % mode)
+			await _wait(1.6)
+			await _shot("05_walking_museum_b_%s" % mode)
 		var guard := 0.0
 		while state == St.WALKING and guard < 60.0:
 			await _wait(0.2)
 			guard += 0.2
 		var Rd: Dictionary = rounds[qi]
 		print("ROUND %d %s -> %s | %s | %s | state=%d" % [n + 1, Rd["who"], Rd["target"], Rd["question"], sentence(Rd, Rd["answer"]), state])
+		_check("R%d arrived %s" % [n + 1, Rd["target"]], state == St.REVEAL, str(state))
+		_check("R%d answer in options" % (n + 1), int(Rd["correct"]) >= 0 and Rd["options"].size() == 4, str(Rd["options"]))
+		if Rd["target"] == "museum":
+			await _shot("06_reveal_museum_%s" % mode)
 		await _wait(1.2)
 		if n < 2:
 			await _shot("06_reveal_%s_%02d" % [mode, n + 1])
@@ -2060,12 +2262,20 @@ func _run_test() -> void:
 		await _wait(0.4)
 	await _wait(1.0)
 	await _shot("07_result_%s" % mode)
+	_check("12 rounds", total == 12, str(total))
+	_check("museum round played", museum_seen(), "")
+	_check("result shown", state == St.RESULT, str(state))
 	print("TEST DONE mode=%s scores=%s" % [mode, scores])
-	get_tree().quit()
+	print("TEST SUMMARY pass=%d fail=%d" % [test_pass, test_fail])
+	get_tree().quit(1 if test_fail > 0 else 0)
+
+func museum_seen() -> bool:
+	return rounds.any(func(r): return String(r["target"]) == "museum")
 
 ## 個人模式（PERSONAL=1 假外框）：答 5 題 → 回首頁 → 繼續上次（要排出同一份題目、從第 6 題接著）→ 答完
 func _test_personal() -> void:
 	await _wait(2.5)
+	_ground_check()
 	intro_t = INTRO_END
 	await _wait(1.0)
 	await _shot("p01_title")
@@ -2092,6 +2302,8 @@ func _test_personal() -> void:
 			for r in rounds:
 				sig2.append("%s>%s>%d" % [r["who"], r["target"], int(r["correct"])])
 			print("RESUME qi=", qi, " scores=", scores, " same_rounds=", sig == sig2)
+			_check("resume qi=5", qi == 5, str(qi))
+			_check("resume same rounds", sig == sig2)
 			await _wait(0.8)
 			await _shot("p06_resumed")
 		await _wait(0.6)
@@ -2104,14 +2316,23 @@ func _test_personal() -> void:
 		while state == St.WALKING and guard < 60.0:
 			await _wait(0.2)
 			guard += 0.2
+		_check("P%d arrived %s" % [n + 1, rounds[qi]["target"]], state == St.REVEAL, str(state))
 		if n == 0:
 			await _wait(1.0)
 			await _shot("p04_reveal")
+		if rounds[qi]["target"] == "museum":
+			await _shot("p04_reveal_museum")
 		await _on_listen()
 		_on_next()
 	await _wait(1.0)
 	await _shot("p07_result")
+	_check("12 rounds", rounds.size() == 12, str(rounds.size()))
+	_check("museum round played", museum_seen(), "")
+	_check("result shown", state == St.RESULT, str(state))
+	var rep_n: int = test_host.get("results", {}).size()
+	_check("12 results reported", rep_n == 12, str(rep_n))
 	print("PERSONAL DONE mode=%s scores=%s" % [mode, scores])
+	print("TEST SUMMARY pass=%d fail=%d" % [test_pass, test_fail])
 
 ## 每個會去的地點：Ken 站在門口、用抵達鏡頭拍一張（檢查表）
 func _test_arrivals() -> void:
@@ -2130,7 +2351,7 @@ func _test_arrivals() -> void:
 		active = "ken"
 		var W: Dictionary = walkers["ken"]
 		W["pos"] = P["door2"]
-		W["fwd"] = ((P["pos2"] as Vector2) - (P["door2"] as Vector2)).normalized()
+		W["fwd"] = ((P["look2"] as Vector2) - (P["door2"] as Vector2)).normalized()
 		walkers["yuyu"]["pos"] = (P["door2"] as Vector2) + Vector2(1.0, 0.6)
 		walkers["zunbo"]["pos"] = (P["door2"] as Vector2) + Vector2(-1.0, 0.6)
 		arrive_id = id
@@ -2167,4 +2388,26 @@ func _test_arrivals() -> void:
 			cam_mode = "fixed"
 			await _wait(0.4)
 			await _shot("sign_%s" % id)
+	# 店家正面特寫（SHOP=店名，例：SHOP=日日新商店）：從臨街那一面往外 7 m、高 2.5 m 看店面
+	if OS.get_environment("SHOP") != "":
+		for B in data["buildings"]:
+			if not B.has("shop") or String(B["shop"]["name"]) != OS.get_environment("SHOP"):
+				continue
+			var poly: Array = B["poly"]
+			var fi := int(B["front"])
+			var a: Vector2 = world.v2(poly[fi])
+			var c: Vector2 = world.v2(poly[(fi + 1) % poly.size()])
+			var mid := (a + c) / 2.0
+			var cen := Vector2.ZERO
+			for q in poly:
+				cen += world.v2(q)
+			cen /= poly.size()
+			var n := (mid - cen).normalized()
+			for k in 2:
+				var cp := mid + n * (7.0 if k == 0 else 20.0)
+				world.clear_fade()
+				fixed_cam = [world.bend2(cp, 2.5 if k == 0 else 16.0), world.bend2(mid, 2.0 if k == 0 else 0.0), world.bend2(mid).normalized()]
+				cam_mode = "fixed"
+				await _wait(0.6)
+				await _shot("shop_%d" % k)
 	print("ARRIVALS ", ids.size())

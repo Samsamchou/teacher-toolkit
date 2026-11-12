@@ -3,11 +3,13 @@
 - 旁白（題目、He's/She's going…）：en-US-JennyNeural
 - Ken 回答（I'm going…）：en-US-GuyNeural，音調調高一點，聽起來像大男孩
 輸出：assets/audio/voice/*.mp3；清單寫在 assets/audio/voice/voice-list.json
-用法：python -I tools/make_voice.py
+用法：python -I tools/make_voice.py            全部重念
+      python -I tools/make_voice.py --missing  只念還沒有的（2026-11-12 加 museum 時用；舊的不重念，免得聲音變了）
 """
 import asyncio
 import json
 import os
+import sys
 
 import edge_tts
 
@@ -45,8 +47,10 @@ async def main() -> None:
     listing = []
     for key, text, (voice, pitch) in lines():
         path = os.path.join(OUT, key + ".mp3")
-        await edge_tts.Communicate(text, voice, rate=RATE, pitch=pitch).save(path)
         listing.append({"key": key, "text": text, "voice": voice, "rate": RATE, "pitch": pitch})
+        if "--missing" in sys.argv and os.path.exists(path):
+            continue
+        await edge_tts.Communicate(text, voice, rate=RATE, pitch=pitch).save(path)
         print(key, os.path.getsize(path))
     json.dump(listing, open(os.path.join(OUT, "voice-list.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 

@@ -1,0 +1,40 @@
+{
+ "place": "bookstore",
+ "events": [
+  {
+   "layer": "flip",
+   "start": 0.2,
+   "len": 1.3,
+   "db": 0,
+   "label": "翻書"
+  },
+  {
+   "layer": "pen",
+   "start": 1.45,
+   "len": 1.4,
+   "db": 0,
+   "label": "原子筆試寫"
+  },
+  {
+   "layer": "supermarket/scan",
+   "start": 5.9,
+   "len": 0.2,
+   "db": 1,
+   "label": "結帳嗶（書）"
+  },
+  {
+   "layer": "supermarket/scan",
+   "start": 6.35,
+   "len": 0.2,
+   "db": 1,
+   "label": "結帳嗶（筆）"
+  },
+  {
+   "layer": "register",
+   "start": 6.9,
+   "len": 1.1,
+   "db": -3,
+   "label": "收銀機"
+  }
+ ]
+}

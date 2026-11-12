@@ -1,0 +1,40 @@
+{
+ "place": "library",
+ "events": [
+  {
+   "layer": "shh",
+   "start": 0.3,
+   "len": 1.5,
+   "db": -2,
+   "label": "噓——"
+  },
+  {
+   "layer": "steps",
+   "start": 0.6,
+   "len": 1.3,
+   "db": -6,
+   "label": "踮腳輕輕走"
+  },
+  {
+   "layer": "pages",
+   "start": 1.9,
+   "len": 2.0,
+   "db": -2,
+   "label": "翻書頁"
+  },
+  {
+   "layer": "bookdown",
+   "start": 4.4,
+   "len": 1.0,
+   "db": 2,
+   "label": "還書：書放上櫃台"
+  },
+  {
+   "layer": "stamp",
+   "start": 6.75,
+   "len": 0.8,
+   "db": 4,
+   "label": "蓋章 咚"
+  }
+ ]
+}

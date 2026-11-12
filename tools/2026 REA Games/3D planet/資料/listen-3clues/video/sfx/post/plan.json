@@ -1,0 +1,26 @@
+{
+ "place": "post",
+ "events": [
+  {
+   "layer": "fold",
+   "start": 0.5,
+   "len": 1.6,
+   "db": -2,
+   "label": "折信、裝信封"
+  },
+  {
+   "layer": "amb:post/stamp",
+   "start": 3.0,
+   "len": 0.6,
+   "db": 0,
+   "label": "按郵票 咚"
+  },
+  {
+   "layer": "amb:post/mailbox",
+   "start": 4.9,
+   "len": 1.6,
+   "db": 0,
+   "label": "信投進郵筒"
+  }
+ ]
+}

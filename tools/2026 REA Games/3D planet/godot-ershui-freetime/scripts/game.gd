@@ -228,6 +228,8 @@ var confetti: Control
 var music: AudioStreamPlayer
 var voice: AudioStreamPlayer
 var clue_audio: AudioStreamPlayer
+var clue_vsfx: AudioStreamPlayer   # [1112sfx] 默劇影片的關鍵音效（影片本身無聲；跟著影片位置播）
+var vsfx_log := []                   # [1112sfx] 測試用：每次開始／校正的紀錄
 var sfx_pool: Array = []
 var sfx_i := 0
 var sfx_cache := {}
@@ -438,12 +440,7 @@ func _poll_host(delta: float) -> void:
 			if state == St.ANSWER and clue_done:
 				_play_clue(items[qi]["act"], clue_order[qi])
 		"mute":
-			# 學生錄音中：遊戲的音樂、語音、音效全部靜音，免得被錄進去影響 AI 評分
-			voice.stop()
-			clue_audio.stop()
-			if clue_video:
-				clue_video.paused = true
-			AudioServer.set_bus_mute(0, true)
+			_host_mute()
 		"unmute":
 			AudioServer.set_bus_mute(0, false)
 		"answer":
@@ -452,6 +449,16 @@ func _poll_host(delta: float) -> void:
 			pair_correct = bool(m.get("correct", false))
 			_on_start()
 var test_answer_wait := 0.0
+
+func _host_mute() -> void:
+	# 學生錄音中：遊戲的音樂、語音、音效（含默劇影片的音效）全部靜音，免得被錄進去影響 AI 評分
+	voice.stop()
+	clue_audio.stop()
+	if clue_vsfx:
+		clue_vsfx.stop()
+	if clue_video:
+		clue_video.paused = true
+	AudioServer.set_bus_mute(0, true)
 ## 老師 11/10：每題一步一步解鎖 —— ① 自己按 Play 聽完情境 → ② 線索（兩人一組）→ ③ 作答 → ④ Ken 演出
 var scene_heard := false
 var scene_playing := false
@@ -2810,6 +2817,8 @@ func _build_audio() -> void:
 	add_child(voice)
 	clue_audio = AudioStreamPlayer.new()
 	add_child(clue_audio)
+	clue_vsfx = AudioStreamPlayer.new()
+	add_child(clue_vsfx)
 	for i in 6:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
@@ -2826,6 +2835,8 @@ func _apply_volume() -> void:
 	music.volume_db = VOL_DB[vol_level] - 6.0
 	voice.volume_db = 0.0 if vol_level > 0 else -80.0
 	clue_audio.volume_db = (VOL_DB[vol_level] + 6.0) if vol_level > 0 else -80.0
+	if clue_vsfx:
+		clue_vsfx.volume_db = (VOL_DB[vol_level] + 4.0) if vol_level > 0 else -80.0   # [1112sfx] 比「聽聲音」線索小聲（檔案 -20 LUFS、再 -2 dB）
 	if vol_btn:
 		vol_btn.text = VOL_NAME[vol_level]
 
@@ -3399,6 +3410,10 @@ func _make_clue_order() -> void:
 		clue_order[i] = clue_order[j]
 		clue_order[j] = tmp
 	var force := OS.get_environment("CLUES")   # 測試用：CLUES=icons,video,anim,sfx 指定前幾題
+	if force == "" and web_autotest and OS.has_feature("web"):   # [1112sfx] 網頁測試（只限 localhost＋autotest）：?clues=video,... 同上
+		var qc = JavaScriptBridge.eval("(function(){try{return new URLSearchParams(window.top.location.search).get('clues')||'';}catch(e){return '';}})()", true)
+		if typeof(qc) == TYPE_STRING:
+			force = String(qc)
 	if force != "":
 		var fs := force.split(",")
 		for i in fs.size():
@@ -3670,6 +3685,8 @@ func _hide_clue() -> void:
 		clue_video.stop()
 	if clue_audio:
 		clue_audio.stop()
+	if clue_vsfx:
+		clue_vsfx.stop()
 
 ## ② 線索：情境沒聽完 → 卡片變灰鎖著；聽完 → 按 ▶ Clue 才播（聲音、影片從按下去那一下開始）
 func _clue_placeholder(text: String) -> void:
@@ -3725,6 +3742,8 @@ func _play_clue(act: String, kind: String) -> void:
 	for c in clue_body.get_children():
 		c.queue_free()
 	clue_video = null
+	if clue_vsfx:
+		clue_vsfx.stop()
 	var my_qi := qi
 	var sz := clue_body.custom_minimum_size
 	match kind:
@@ -3785,10 +3804,7 @@ func _play_clue(act: String, kind: String) -> void:
 			clue_body.add_child(vp)
 			clue_video = vp
 			vp.play()
-			var tt := 0.0
-			while is_instance_valid(vp) and vp.is_playing() and tt < 9.0:
-				await get_tree().create_timer(0.2).timeout
-				tt += 0.2
+			await _video_sfx_sync(vp, act)
 		"anim":
 			var ca := ClueAnim.new()
 			ca.act = act
@@ -3803,6 +3819,73 @@ func _play_clue(act: String, kind: String) -> void:
 	print("UNLOCK answer q%d (clue %s done)" % [qi + 1, kind])
 	if web_autotest and state == St.CLUE:
 		_clue_to_answer()
+
+## [1112sfx] 默劇影片的音效：影片第一格出來才開始播（不是按下去那一下），之後每格用真實時間估聲音的位置，
+## 和影片的 stream_position 差 > 0.15 秒就 seek（iPad 15 fps 或影片卡一下也不會越差越多）。
+## 影片暫停（錄音中 mute）、被換掉、離開畫面 → 聲音停；整段最多 9 秒（真實時間）。
+func _video_sfx_sync(vp: VideoStreamPlayer, act: String) -> void:
+	var path := "res://assets/clues/video_sfx/%s.ogg" % act
+	var has_sfx := ResourceLoader.exists(path)   # 沒有音效檔（music：老師 11/12 維持無聲默劇）→ 只等影片播完，不播任何聲音
+	if has_sfx:
+		clue_vsfx.stream = load(path)
+	var t0 := Time.get_ticks_msec()
+	var started := false
+	var a_pos0 := 0.0
+	var a_us0 := 0
+	var fixes := 0
+	var over := 0
+	var max_drift := 0.0
+	while is_instance_valid(vp) and vp.is_playing() and Time.get_ticks_msec() - t0 < 9000:
+		await get_tree().process_frame
+		if not has_sfx or not is_instance_valid(vp):
+			continue
+		if vp.paused or not vp.is_visible_in_tree() or clue_video != vp:
+			if started:
+				clue_vsfx.stop()
+				started = false
+			continue
+		var vpos := vp.stream_position
+		if vpos <= 0.0 or vp.get_video_texture() == null:
+			continue   # 第一格還沒出來
+		if not started:
+			clue_vsfx.play(vpos)
+			a_pos0 = vpos
+			a_us0 = Time.get_ticks_usec()
+			started = true
+			vsfx_log.append({"act": act, "ev": "start", "vpos": snappedf(vpos, 0.001), "ms": Time.get_ticks_msec() - t0})
+			print("VSFX start %s at video %.3f s (%d ms after play) playing=%s vol=%.1f dB bus_mute=%s" % [act, vpos, Time.get_ticks_msec() - t0, clue_vsfx.playing, clue_vsfx.volume_db, AudioServer.is_bus_mute(0)])
+			continue
+		if test_mode and OS.get_environment("VSFXMUTE") != "" and vpos > 1.0 and not vsfx_log.any(func(e): return e.get("ev") == "mute"):
+			# 測試：錄音中（外框送 mute）→ 影片暫停、音效停、整個聲音匯流排靜音；之後 unmute＋繼續播 → 音效從影片位置接著播
+			_host_mute()
+			vsfx_log.append({"act": act, "ev": "mute", "vpos": snappedf(vpos, 0.001)})
+			await get_tree().process_frame
+			await get_tree().process_frame
+			_check(not clue_vsfx.playing and AudioServer.is_bus_mute(0) and vp.paused, "vsfx mute: video paused + sfx stopped + bus muted (%s)" % act)
+			AudioServer.set_bus_mute(0, false)
+			vp.paused = false
+			started = false   # 下一格從影片位置重新開始播
+			continue
+		var apos := a_pos0 + float(Time.get_ticks_usec() - a_us0) / 1000000.0
+		# 卡了一格時：這一格影片還沒補上 delta（process_frame 在影片 _process 前），下一格才補 → 連續 2 格都差 > 0.15 秒才算真的不同步
+		over = over + 1 if absf(apos - vpos) > 0.15 else 0
+		if over == 0:
+			max_drift = maxf(max_drift, absf(apos - vpos))   # 不算卡住那一格的假差距
+		if over >= 2 and vpos < clue_vsfx.stream.get_length() - 0.1:
+			over = 0
+			clue_vsfx.play(vpos)   # 影片慢了（或快了）：聲音跟回影片
+			a_pos0 = vpos
+			a_us0 = Time.get_ticks_usec()
+			fixes += 1
+			vsfx_log.append({"act": act, "ev": "seek", "vpos": snappedf(vpos, 0.001), "drift": snappedf(apos - vpos, 0.001)})
+			print("VSFX resync %s drift %.3f s at video %.3f s" % [act, apos - vpos, vpos])
+	if has_sfx and is_instance_valid(vp) and clue_video == vp:
+		print("VSFX end %s video_pos=%.3f fixes=%d max_drift=%.3f s real=%d ms" % [act, vp.stream_position, fixes, max_drift, Time.get_ticks_msec() - t0])
+		if test_mode:
+			_check(vsfx_log.any(func(e): return e.get("act") == act and e.get("ev") == "start"), "vsfx started with the first video frame (%s)" % act)
+			_check(fixes <= 3, "vsfx stays in sync with the video, resyncs=%d (%s)" % [fixes, act])
+	elif test_mode and not has_sfx:
+		print("VSFX none %s (silent mime, teacher 11/12)" % act)
 
 func _clue_to_answer() -> void:
 	if state != St.CLUE or not clue_done:

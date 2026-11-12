@@ -1,0 +1,12 @@
+{
+ "act": "baseball",
+ "events": [
+  {
+   "layer": "crack",
+   "start": 2.2,
+   "len": 1.2,
+   "db": 4,
+   "label": "揮棒擊中 咔！"
+  }
+ ]
+}

@@ -420,6 +420,41 @@
   "pitch": "+0Hz"
  },
  {
+  "key": "a_i_museum",
+  "text": "I'm going to the museum.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "a_he_museum",
+  "text": "He's going to the museum.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_she_museum",
+  "text": "She's going to the museum.",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
+  "key": "a_we_museum",
+  "text": "We're going to the museum.",
+  "voice": "en-US-GuyNeural",
+  "rate": "-20%",
+  "pitch": "+18Hz"
+ },
+ {
+  "key": "q_where_museum",
+  "text": "Where's the museum?",
+  "voice": "en-US-JennyNeural",
+  "rate": "-20%",
+  "pitch": "+0Hz"
+ },
+ {
   "key": "a_road_red",
   "text": "It's on Red Road.",
   "voice": "en-US-JennyNeural",

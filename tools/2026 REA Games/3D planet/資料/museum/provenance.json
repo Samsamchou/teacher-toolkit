@@ -1,0 +1,19 @@
+{
+ "ref_a": {
+  "prompt": "Use your built-in image generation tool to create this image: A small railway museum built in the style of an old Taiwanese red-brick railway roundhouse (fan-shaped locomotive shed): a low one-storey red-brick building whose front is a gentle curve of four tall arched engine-bay doors with dark green wooden doors and white stone trim, a shallow grey sloping roof, a row of small clerestory windows along the roof, and big bold white capital letters 'MUSEUM' standing on top of the roof ridge, easy to read. Clean neat brick walls, solid and closed. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes. Solid closed shapes (no see-through railings, no open arches you can see through). Any text must be simple English letters only (no Chinese characters, no logos). Square image. Save the PNG as museum_a.png in the current directory. Reply with the saved file path only.",
+  "sha256": "7fe218b6cd460577ce4ca0ae0bf6cf9ff09f8a3d2a17823b24e640b834242ffa",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_museum\\ref_a\\museum_a.png"
+ },
+ "ref_b": {
+  "prompt": "Use your built-in image generation tool to create this image: A compact fan-shaped red-brick railway roundhouse turned into a museum, like the Changhua roundhouse in Taiwan but smaller: the front facade is a wide shallow arc with three large round-arched doorways (closed with dark green doors), red brick walls with cream-coloured stone bands, a grey corrugated roof sloping back, a short railway track leading to the middle door, and a long flat white signboard on the roof edge with large dark-red capital letters 'MUSEUM'. Solid and closed, simple shapes. Single building, 3/4 front view from the street side, plain light-grey background, no people, no cars, no street, no trees in front of it. Toy-like stylized 3D model look with clean simple shapes. Solid closed shapes (no see-through railings, no open arches you can see through). Any text must be simple English letters only (no Chinese characters, no logos). Square image. Save the PNG as museum_b.png in the current directory. Reply with the saved file path only.",
+  "sha256": "92ac94d46230c9a8347fe6cc4f945fa173197cad41175eb934873ee67857b917",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_museum\\ref_b\\museum_b.png"
+ },
+ "icons": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): two short shiny posts standing apart with a thick velvet rope hanging between them in a curve (a museum display barrier). Icon 2 (right): a small old steam locomotive standing on a low display platform under a hanging spotlight, seen from the side. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as museum.png in the current directory. Reply with the saved file path only.",
+  "sha256": "dcdd032d0ea52a79239b800e764d1d62d8adf1f39ff258214b63584d51dc425f",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_museum\\museum\\museum.png",
+  "generated": "2026-11-12 20:42:50",
+  "tool": "codex exec (built-in image generation)"
+ }
+}

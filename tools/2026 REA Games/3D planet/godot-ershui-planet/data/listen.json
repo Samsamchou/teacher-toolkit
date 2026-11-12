@@ -1,5 +1,5 @@
 {
- "note": "Listen and Guess（RDQ-spec-ershui-planet-real-streets-listen-guess-20261108，老師 11/08 核對）。place＝遊戲地點 id；word＝英文字磚；the＝答句有沒有 the。",
+ "note": "Listen and Guess（RDQ-spec-ershui-planet-real-streets-listen-guess-20261108，老師 11/08 核對；11/12 三種線索版加火車站、書店，共 10 個；11/12 晚加虛構的二水鐵道博物館 museum，共 11 個、每回合抽 10 個）。place＝遊戲地點 id；word＝英文字磚；the＝答句有沒有 the。",
  "items": [
   {"id": "post", "place": "post", "word": "post office", "the": true, "zh": "郵局",
    "scene": "It's Monday. It's cloudy today.", "reason": "I want to send a letter."},
@@ -16,6 +16,12 @@
   {"id": "restaurant", "place": "dumpling", "word": "restaurant", "the": true, "zh": "餐廳",
    "scene": "It's Friday. It's hot today.", "reason": "I want to eat some dumplings."},
   {"id": "tea", "place": "teatop", "word": "tea shop", "the": true, "zh": "飲料店",
-   "scene": "It's Saturday. It's hot today.", "reason": "I want to drink bubble tea."}
+   "scene": "It's Saturday. It's hot today.", "reason": "I want to drink bubble tea."},
+  {"id": "station", "place": "station", "word": "train station", "the": true, "zh": "火車站",
+   "scene": "It's Monday. It's rainy today.", "reason": "I want to take a train."},
+  {"id": "bookstore", "place": "bookstore", "word": "bookstore", "the": true, "zh": "書店",
+   "scene": "It's Thursday. It's sunny today.", "reason": "I want to buy a comic book."},
+  {"id": "museum", "place": "museum", "word": "museum", "the": true, "zh": "博物館",
+   "scene": "It's Sunday. It's cloudy today.", "reason": "I want to see old trains."}
  ]
 }

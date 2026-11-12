@@ -39,3 +39,38 @@
 @media (orientation: portrait) {
   .quiz { left: 12px; right: 12px; top: auto; width: auto; max-height: 58vh; }
 }
+/* [1112] 三種線索版：面板上方的線索區（兩個圖示／默劇影片；環境音由遊戲播）＋看完線索才能作答 */
+.quiz .clue { margin: 4px 0 8px; text-align: center; }
+.quiz .clue .icons { display: flex; justify-content: center; gap: 14px; }
+.quiz .clue .icons img { width: min(15vw, 140px); height: min(15vw, 140px); background: #fff; border: 3px solid #2b2033; border-radius: 16px;
+  padding: 6px; opacity: 0; transform: scale(.6); transition: opacity .4s, transform .4s; }
+.quiz .clue .icons img.on { opacity: 1; transform: none; }
+.quiz .clue video { width: 100%; max-height: 190px; border-radius: 14px; border: 3px solid #2b2033; background: #000; }
+.quiz .clue .tag { font-weight: 700; color: #7b5ea7; margin: 2px 0 4px; }
+.quiz .clue .sound { font-size: 1.2rem; font-weight: 700; color: #2b2033; background: #e7f5ff; border-radius: 12px; padding: 6px 10px; }
+.quiz .locked { opacity: .35; pointer-events: none; filter: grayscale(.6); }
+.quiz .lockmsg { color: #c92a2a; font-weight: 700; text-align: center; margin: 4px 0; }
+/* [1112] 口說：並排「你說的句子／正確句子」，錯字紅色；三個選項提示（照 Free Time） */
+.quiz .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.quiz .cmp > div { background: #fff; border: 2px solid #d0c4b0; border-radius: 12px; padding: 6px 10px; }
+.quiz .cmp span { display: block; font-size: .9rem; color: #7b5ea7; font-weight: 700; }
+.quiz .cmp p { margin: 4px 0; font-size: 1.15rem; line-height: 1.5; }
+.quiz .cmp b.bad { color: #e03131; text-decoration: line-through; text-decoration-thickness: 2px; }
+.quiz .cmp b.fix { color: #e03131; text-decoration: underline; text-decoration-thickness: 2px; }
+.quiz .hintbox { background: #fff9db; border: 3px dashed #f08c00; border-radius: 14px; padding: 8px 12px; margin: 8px 0; font-size: 1.15rem; }
+.quiz .hintbox b { color: #c2255c; white-space: nowrap; }
+.quiz .sent .w { white-space: nowrap; }
+/* [1112] 默劇影片有音效：按 ▶ 才播放 */
+.quiz .clue .vwrap { position: relative; }
+.quiz .clue .vplay { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); opacity: .92; font-size: 1.3rem; padding: 12px 22px; }
+.quiz .clue .vplay[hidden] { display: none; }
+/* [1112 晚] 老師 iPad：「影片大小再放大一些會比較好觀賞」→ 看影片／圖示線索時面板變寬、影片約 1.7 倍（iPad 約 320 px 高）；
+   看完（cluedone）影片縮回原本大小，作答區不用捲；按 Again 再放大。Ken 在影片裡的大小不變（只是整支影片放大）。 */
+@media (orientation: landscape) {
+  .quiz.bigclue { width: min(60vw, 640px); }
+  .quiz.bigclue .clue video { width: auto; max-width: 100%; height: min(330px, 42vh); max-height: none; aspect-ratio: 836 / 480; transition: height .35s; }
+  .quiz.bigclue .clue .icons img { width: min(19vw, 220px); height: min(19vw, 220px); transition: opacity .4s, transform .4s, width .35s, height .35s; }
+  .quiz.bigclue.cluedone .clue video { height: min(200px, 26vh); }
+  .quiz.bigclue.cluedone .clue .icons img { width: min(15vw, 140px); height: min(15vw, 140px); }
+}
+

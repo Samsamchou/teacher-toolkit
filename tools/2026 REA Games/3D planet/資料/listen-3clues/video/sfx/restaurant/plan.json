@@ -1,0 +1,26 @@
+{
+ "place": "restaurant",
+ "events": [
+  {
+   "layer": "amb:restaurant/wok2",
+   "start": 0.2,
+   "len": 1.7,
+   "db": -4,
+   "label": "大火快炒"
+  },
+  {
+   "layer": "amb:restaurant/chew",
+   "start": 2.2,
+   "len": 3.6,
+   "db": 0,
+   "label": "吃東西聲"
+  },
+  {
+   "layer": "amb:restaurant/orderbell",
+   "start": 7.2,
+   "len": 0.8,
+   "db": -2,
+   "label": "叫人叮"
+  }
+ ]
+}

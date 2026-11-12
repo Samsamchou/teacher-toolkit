@@ -1,0 +1,24 @@
+{
+ "act": "camping",
+ "events": [
+  {
+   "layer": "hammer",
+   "start": 0.5,
+   "len": 1.27,
+   "db": 2,
+   "label": "敲營釘（3 下）",
+   "hits": [
+    0.5,
+    1.02,
+    1.5
+   ]
+  },
+  {
+   "layer": "fire",
+   "start": 3.0,
+   "len": 2.9,
+   "db": -5,
+   "label": "營火劈啪"
+  }
+ ]
+}

@@ -1,2 +1,4 @@
 老師 2026-11-08 選定：郵局 A（蓋郵戳加大）、超市 A、學校 A、圖書館 A、公園 A（第一次聽沒有意見）；診所 B、餐廳 B、飲料店 B（重做後選）。
 老師 2026-11-08 晚：v2 18 秒版（重點聲音拉長）全部採用 A 版；題目聽完 18 秒才出現。
+老師 2026-11-12（Listen and Guess 三種線索版）：新地點火車站 A、書店 A（v2/station_A.mp3、v2/bookstore_A.mp3 → final/station.mp3、final/bookstore.mp3；tools/make_ambience_new2.py）。
+museum（二水鐵道博物館，虛構）：B（老師 2026-11-12 晚「環境音B」；來源 v2/museum_B.mp3）

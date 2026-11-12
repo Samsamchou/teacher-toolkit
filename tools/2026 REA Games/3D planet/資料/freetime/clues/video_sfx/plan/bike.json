@@ -1,0 +1,19 @@
+{
+ "act": "bike",
+ "events": [
+  {
+   "layer": "pedal",
+   "start": 0.45,
+   "len": 1.9,
+   "db": -4,
+   "label": "踩踏板 鏈條聲"
+  },
+  {
+   "layer": "bell",
+   "start": 2.4,
+   "len": 1.6,
+   "db": -1,
+   "label": "拇指按車鈴 鈴鈴"
+  }
+ ]
+}

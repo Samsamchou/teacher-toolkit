@@ -1,6 +1,7 @@
 // 二水小行星逛街版（個人模式）— 學號外框與教師後台用的題目表。
 // 每一輪 12 題，題目內容由遊戲依「人物模式＋路線＋亂數種子」排出，作答紀錄裡會附上題目與答案句。
 // 由 3D planet/godot-ershui-planet 產生；改路線名稱請改 data/sets.json 再重產。
+// 2026-11-12：每條路線第 12 站改成「二水鐵道博物館 museum」——這是虛構地點（二水沒有這間博物館），放在車站旁（RDQ-spec-ershui-planet-railway-museum-20261112）。
 export const BANK = {
  "mission": "ershui-3d-quest-planet",
  "unit": "二水小行星逛街版",

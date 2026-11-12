@@ -1,0 +1,19 @@
+{
+ "act": "tv",
+ "events": [
+  {
+   "layer": "remote",
+   "start": 0.9,
+   "len": 2.8,
+   "db": -3,
+   "label": "按遙控器換台 喀＋雜訊"
+  },
+  {
+   "layer": "cartoon",
+   "start": 4.2,
+   "len": 1.7,
+   "db": -4,
+   "label": "卡通音效（無人聲）"
+  }
+ ]
+}

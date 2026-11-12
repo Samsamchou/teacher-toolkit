@@ -1,0 +1,27 @@
+{
+ "act": "basketball",
+ "events": [
+  {
+   "layer": "bounce",
+   "start": 0.7,
+   "len": 1.82,
+   "db": 0,
+   "label": "運球 咚（6 下）",
+   "hits": [
+    0.7,
+    1.02,
+    1.34,
+    1.66,
+    1.98,
+    2.3
+   ]
+  },
+  {
+   "layer": "swish",
+   "start": 3.9,
+   "len": 0.8,
+   "db": -1,
+   "label": "投進 刷網"
+  }
+ ]
+}

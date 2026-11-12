@@ -1,0 +1,26 @@
+{
+ "place": "school",
+ "events": [
+  {
+   "layer": "amb:school/bell",
+   "start": 0.2,
+   "len": 2.4,
+   "db": -3,
+   "label": "學校鐘聲"
+  },
+  {
+   "layer": "amb:school/whistle",
+   "start": 2.75,
+   "len": 1.0,
+   "db": -4,
+   "label": "哨子（立正）"
+  },
+  {
+   "layer": "amb:school/cheer",
+   "start": 5.0,
+   "len": 2.0,
+   "db": -8,
+   "label": "小朋友歡呼（舉手）"
+  }
+ ]
+}

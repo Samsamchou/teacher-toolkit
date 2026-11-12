@@ -75,6 +75,7 @@ func build(data: Dictionary, f_reg: Font, f_bold: Font) -> void:
 		var d: Dictionary = P.duplicate(true)
 		d["pos2"] = v2(P["pos"])
 		d["door2"] = v2(P["door"])
+		d["look2"] = v2(P["look"]) if P.has("look") else d["pos2"]   # 抵達時面向哪裡（學校＝西門；其他＝地點中心）
 		places[d["id"]] = d
 		place_list.append(d)
 	if data.get("rail_line") != null:
@@ -591,6 +592,8 @@ func _build_places() -> void:
 			h = m.get_meta("height")
 			ext = maxf(m.get_meta("width"), m.get_meta("depth"))
 			_place_sign(root, P, m.get_meta("width"), h, m.get_meta("depth"))
+			if P["id"] == "museum":
+				_museum_extras(root, P, m.get_meta("width"), h, m.get_meta("depth"))
 		elif kind == "model" or (kind == "outer" and style == "model"):
 			var m := fit_model(P["model"], P["size"])
 			root.add_child(m)
@@ -622,26 +625,84 @@ func _build_places() -> void:
 		P["height"] = h
 		P["extent"] = ext
 		# 角色停的位置（門口）不能在模型裡：公園、Tripo／Colab 模型比門口距離大時，把門口推到模型外 1.2 m（老師 11/08：Ken 在公園一半陷進模型）
-		if kind == "waterpark" or kind == "model" or _has_model(bld):
+		# 11/12：學校（campus）不推：bld_school.glb 存在但學校是程式蓋的校園，推 16 m 會推過明德橋到對岸
+		if kind != "campus" and (kind == "waterpark" or kind == "model" or _has_model(bld)):
 			var dv: Vector2 = (P["door2"] as Vector2) - pos
 			var need := ext * 0.5 + 1.2
 			if dv.length() > 0.01 and dv.length() < need:
 				P["door2"] = pos + dv.normalized() * need
+		# 地點自己的地面範圍（抵達站位檢查用；模型照實際寬深、跟著朝向轉）
+		if kind == "osm" and P.has("poly") and not _has_model(bld):
+			P["foot"] = norm_poly(P["poly"])
+		elif root.get_child_count() > 0 and root.get_child(0).has_meta("width"):
+			var mm: Node3D = root.get_child(0)
+			var ff: Vector2 = v2(P["face"]) if P.has("face") else (door - pos)
+			ff = ff.normalized() if ff.length() > 0.001 else Vector2(0, 1)
+			var ss := Vector2(ff.y, -ff.x)
+			var hw: float = mm.get_meta("width") * 0.5
+			var hd: float = mm.get_meta("depth") * 0.5
+			P["foot"] = PackedVector2Array([pos + ss * hw + ff * hd, pos - ss * hw + ff * hd, pos - ss * hw - ff * hd, pos + ss * hw - ff * hd])
+		# 11/12：照模型最大邊推出去，在窄路上可能推到「對面的房子裡」（二水鄉農會推進春苳紅茶）→ 改用模型實際朝向的深度＋1.2 m
+		# 模型本身壓到窄路、前面沒地方站時（二水鄉農會）：沿著路往兩旁找最近一個「自己模型外、別的房子外」的站位
+		if P.has("foot") and _in_map_building(P["door2"]):
+			var dn0 := (door - pos).normalized()
+			var sd0 := Vector2(dn0.y, -dn0.x)
+			for t in [0.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0, 4.0, -4.0, 5.0, -5.0, 6.0, -6.0, 7.0, -7.0, 8.0, -8.0]:
+				var ok := true
+				for u in [0.0, 0.85, -0.85]:
+					var c: Vector2 = door + sd0 * (float(t) + float(u))
+					if _in_map_building(c) or Geometry2D.is_point_in_polygon(c, P["foot"]):
+						ok = false
+				for o in [Vector2(0.85, 0.5), Vector2(-0.85, 0.5)]:
+					var c2: Vector2 = door + sd0 * float(t) + o
+					if _in_map_building(c2) or Geometry2D.is_point_in_polygon(c2, P["foot"]):
+						ok = false
+				if ok:
+					P["door2"] = door + sd0 * float(t)
+					P["door_fix"] = "moved along road %.0f m (was in a building)" % t
+					break
+		# 老師 11/12：站位不能在房子裡、水上 → 門口和兩側吉祥物站位都要在自己的建築外面（往路那邊推，最多 4 m）
+		if P.has("foot") and kind != "campus":
+			var dv2: Vector2 = (P["door2"] as Vector2) - pos
+			if dv2.length() > 0.01:
+				var dn := dv2.normalized()
+				var look: Vector2 = P["look2"]
+				for k in 20:
+					var dd: Vector2 = P["door2"]
+					var lf := (look - dd).normalized()
+					var sd := Vector2(lf.y, -lf.x)
+					var inside := false
+					for sp in [dd, dd + sd * 0.85, dd - sd * 0.85, dd + Vector2(0.85, 0.5), dd + Vector2(-0.85, 0.5)]:
+						if Geometry2D.is_point_in_polygon(sp, P["foot"]):
+							inside = true
+					if not inside:
+						break
+					P["door2"] = dd + dn * 0.2
+					P["door_fix"] = "pushed out of own building"
 		if kind == "osm" and P.has("poly") and not _has_model(bld):
 			_add_blocker(norm_poly(P["poly"]), h, P["id"])
-		elif _has_model(bld) or kind == "model" or (kind == "outer" and style == "model"):
-			var hx := ext * 0.5
+		elif kind != "campus" and (_has_model(bld) or kind == "model" or (kind == "outer" and style == "model")):
+			var hx := ext * 0.5   # 學校不加這個 30 m 大方塊（校舍各自有擋住判斷；不然站在明德橋頭會整個被當成「被擋」）
 			_add_blocker(PackedVector2Array([pos + Vector2(-hx, -hx), pos + Vector2(hx, -hx), pos + Vector2(hx, hx), pos + Vector2(-hx, hx)]), h, P["id"])
 		P["root"] = root
 		var word: String = P.get("word", "")
 		var lab := label3d("%s\n%s" % [word if word != "" else P.get("en", ""), P["zh"]], 56)
-		lab.position = Vector3(0, h + 1.6, 0)
+		lab.position = Vector3(0, h + (3.0 if P["id"] == "museum" else 1.6), 0)   # 博物館屋頂 MUSEUM 看板往前凸，名牌再高一點才不重疊
 		lab.modulate = Color(1, 0.97, 0.78) if word != "" else Color(0.85, 0.92, 1.0)
 		root.add_child(lab)
 		P["label"] = lab
 		# 門口小廣場（從建築到路邊）
 		b.strip(pos.lerp(door, 0.5), door, 2.2, 0.07, Color(0.9, 0.86, 0.78))
 	b.commit(self, "Places")
+
+func _in_map_building(p: Vector2) -> bool:
+	for B in map.get("buildings", []):
+		var poly := PackedVector2Array()
+		for q in B["poly"]:
+			poly.append(v2(q))
+		if Geometry2D.is_point_in_polygon(p, poly):
+			return true
+	return false
 
 func _front_edge(poly: PackedVector2Array, door: Vector2) -> int:
 	var best := 1e9
@@ -1152,6 +1213,10 @@ func _campus(b: Builder, root: Node3D, P: Dictionary) -> float:
 				hold.transform = frame_at(gp, out_d)
 				hold.add_child(m)
 				add_child(hold)
+				# 11/12：Ken 改站在橋頭廣場（離校門約 1.4 m），押注鏡頭要知道校門會擋 → 加一個擋住判斷用的方塊
+				var gw: float = m.get_meta("width") * 0.5
+				var gd: float = maxf(0.6, m.get_meta("depth") * 0.5)
+				_add_blocker(PackedVector2Array([gp + gside * gw + out_d * gd, gp - gside * gw + out_d * gd, gp - gside * gw - out_d * gd, gp + gside * gw - out_d * gd]), m.get_meta("height"), "school_gate")
 			else:
 				var oy := atan2(out_d.x, out_d.y)
 				b.box(gp - gside * 2.3, oy, Vector3(0.9, 4.2, 0.9), 0.0, Color("#9a4a32"))
@@ -1726,6 +1791,92 @@ func arrive_view(id: String, d: float, ch: float, tgt_h: float) -> Array:
 		print("VIEW ", id, " score=", best_score, " cam=", best, " near=", near)
 	return best
 
+## 二水鐵道博物館（2026-11-12，虛構地點，RDQ-spec-ershui-planet-railway-museum-20261112）：
+## 門前一台蒸汽火車頭（沿用公園火車頭模型）＋路邊立牌「二水鐵道博物館 / Railway Museum」＋屋頂 MUSEUM 字（模型上的字看不清楚時補）
+const MUSEUM_ROOF_TEXT := true
+func _museum_extras(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) -> void:
+	# 火車頭：正門左前方、和正面平行，停在一小段鐵軌上（不擋 Ken 走到門口的路線：門口在正中間）
+	var loco := fit_model("steam_locomotive", 5.8)
+	loco.rotation.y = deg_to_rad(90)
+	loco.position = Vector3(-wd * 0.24, 0.18, dp / 2.0 + 1.5)
+	root.add_child(loco)
+	var rail_mat := StandardMaterial3D.new()
+	rail_mat.albedo_color = Color("#6b6f76")
+	var tie_mat := StandardMaterial3D.new()
+	tie_mat.albedo_color = Color("#7a5a3a")
+	for k in 9:
+		var tie := MeshInstance3D.new()
+		var tb := BoxMesh.new()
+		tb.size = Vector3(0.28, 0.1, 2.0)
+		tie.mesh = tb
+		tie.material_override = tie_mat
+		tie.position = loco.position + Vector3(-3.4 + k * 0.85, -0.12, 0)
+		root.add_child(tie)
+	for sz in [-0.55, 0.55]:
+		var rl := MeshInstance3D.new()
+		var rb := BoxMesh.new()
+		rb.size = Vector3(7.4, 0.1, 0.1)
+		rl.mesh = rb
+		rl.material_override = rail_mat
+		rl.position = loco.position + Vector3(0, -0.02, sz)
+		root.add_child(rl)
+	# 路邊立牌：兩根柱子＋米白看板，上面中文、下面英文
+	var post_mat := StandardMaterial3D.new()
+	post_mat.albedo_color = Color("#5a3b2a")
+	var board_mat := StandardMaterial3D.new()
+	board_mat.albedo_color = Color("#f4ead2")
+	var sp := Vector3(wd * 0.3, 0.0, dp / 2.0 + 2.2)
+	for sx in [-1.5, 1.5]:
+		var pm := MeshInstance3D.new()
+		var pb := BoxMesh.new()
+		pb.size = Vector3(0.16, 2.0, 0.16)
+		pm.mesh = pb
+		pm.material_override = post_mat
+		pm.position = sp + Vector3(sx, 1.0, 0)
+		root.add_child(pm)
+	var bd := MeshInstance3D.new()
+	var bb := BoxMesh.new()
+	bb.size = Vector3(3.6, 1.15, 0.14)
+	bd.mesh = bb
+	bd.material_override = board_mat
+	bd.position = sp + Vector3(0, 1.55, 0)
+	root.add_child(bd)
+	for t in [["二水鐵道博物館", 1.78, 0.0042], ["Railway Museum", 1.3, 0.0040]]:
+		var l := Label3D.new()
+		l.text = t[0]
+		l.font = font_bold
+		l.font_size = 72
+		l.pixel_size = t[2]
+		l.modulate = Color("#8a2a1c")
+		l.double_sided = false
+		l.position = sp + Vector3(0, t[1], 0.09)
+		root.add_child(l)
+	if MUSEUM_ROOF_TEXT:
+		# 屋頂 MUSEUM：Hunyuan3D 做出來的立體字糊掉 → 深紅看板蓋住，上面寫白字
+		var rp := MeshInstance3D.new()
+		var rpb := BoxMesh.new()
+		rpb.size = Vector3(wd * 0.66, h * 0.22, 0.25)
+		rp.mesh = rpb
+		var rpm := StandardMaterial3D.new()
+		rpm.albedo_color = Color("#7a2a1c")
+		rpm.roughness = 0.9
+		rp.material_override = rpm
+		rp.position = Vector3(0, h * MUSEUM_ROOF_Y, dp * MUSEUM_ROOF_Z)
+		root.add_child(rp)
+		var rt := Label3D.new()
+		rt.text = "MUSEUM"
+		rt.font = font_bold
+		rt.font_size = 96
+		rt.pixel_size = wd * 0.52 / (96.0 * 4.2)
+		rt.modulate = Color.WHITE
+		rt.outline_size = 16
+		rt.outline_modulate = Color("#5a1f14")
+		rt.double_sided = false
+		rt.position = Vector3(0, h * MUSEUM_ROOF_Y, dp * MUSEUM_ROOF_Z + 0.14)
+		root.add_child(rt)
+const MUSEUM_ROOF_Y := 0.9
+const MUSEUM_ROOF_Z := 0.26
+
 ## 復刻模型的大小（遊戲公尺＝真實 × 0.55，取最長邊）
 const BLD_SIZE := {
 	"station": 30.0, "school": 30.0, "esjh": 30.0, "yuanquan": 26.0, "fuxing": 26.0, "library": 12.0, "post": 10.0,
@@ -1733,6 +1884,7 @@ const BLD_SIZE := {
 	"tea2": 7.0, "inn": 9.0, "qizao": 12.0, "waterpark": 20.0, "fengbo": 20.0, "lawn": 22.0, "baobao": 20.0, "lintemple": 10.0,
 	# 2026-11-08 二水街屋（Colab Hunyuan3D-2 模型）
 	"asia_inn": 6.0, "dental": 4.2, "decheng": 4.6, "shoes": 5.0, "ensheng": 4.4, "farmers": 10.0, "ande": 10.0, "dumpling": 4.4,
+	"museum": 16.0,   # 2026-11-12 虛構二水鐵道博物館（扇形車庫）
 }
 ## 招牌上的正確中文（模型上的字是英文佔位，疊一塊真正的招牌字）
 const BLD_SIGN := {
@@ -1784,6 +1936,21 @@ func _place_sign(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) ->
 				root.add_child(sp)
 		l.position = Vector3(0, h * float(c[0]), dp / 2.0 + float(c[4]) + 0.14)
 		l.pixel_size = minf(l.pixel_size, h * float(c[1]) * 0.75 / 64.0)
+		if SIGN_SUB.has(P["id"]):
+			# 看板上下兩行：上＝中文、下＝英文（Comic Relief Bold 白字）
+			l.pixel_size = minf(l.pixel_size, h * float(c[1]) * 0.42 / 64.0)
+			l.position.y = h * (float(c[0]) + float(c[1]) * 0.22)
+			var en := Label3D.new()
+			en.text = SIGN_SUB[P["id"]]
+			en.font = font_bold
+			en.font_size = 64
+			en.pixel_size = minf(wd * 0.62 / (64.0 * 0.62 * en.text.length()), h * float(c[1]) * 0.34 / 64.0)
+			en.modulate = Color.WHITE
+			en.outline_size = 10
+			en.outline_modulate = Color(0.35, 0.05, 0.05)
+			en.double_sided = false
+			en.position = Vector3(0, h * (float(c[0]) - float(c[1]) * 0.24), dp / 2.0 + float(c[4]) + 0.14)
+			root.add_child(en)
 	root.add_child(l)
 
 ## 蓋品牌招牌的看板：[中心高度比例, 高度比例, 寬度比例, 顏色, 往前凸出 m]（對照 資料/generated-images/buildings 參考圖）
@@ -1801,8 +1968,10 @@ const SIGN_PLATE := {
 	"ensheng": [0.33, 0.12, 0.98, "#2f9e44", 0.3],
 	"farmers": [0.3, 0.07, 0.95, "#2b6b3f", 0.3],
 	"ande": [0.58, 0.07, 0.3, "#7a1f14", 0.45],
-	"dumpling": [0.5, 0.1, 0.98, "#c92a2a", 0.3],
+	"dumpling": [0.465, 0.19, 0.98, "#c92a2a", 0.3],   # 11/12：加高往下蓋住模型上拼錯的「DUMPINGG」，下半寫 DUMPLING（SIGN_SUB）
 }
+## 看板第二行英文（模型貼圖上的英文字拼錯時，看板加高蓋住再寫正確的）
+const SIGN_SUB := {"dumpling": "DUMPLING"}
 ## 招牌高度（占建築高度比例），對照參考圖英文佔位招牌的位置
 const SIGN_Y := {
 	"station": 0.78, "school": 0.55, "esjh": 0.6, "yuanquan": 0.45, "fuxing": 0.82, "library": 0.6, "post": 0.42,

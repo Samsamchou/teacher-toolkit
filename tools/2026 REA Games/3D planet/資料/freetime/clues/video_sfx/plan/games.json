@@ -1,0 +1,19 @@
+{
+ "act": "games",
+ "events": [
+  {
+   "layer": "buttons",
+   "start": 0.45,
+   "len": 3.3,
+   "db": -6,
+   "label": "狂按手把按鍵"
+  },
+  {
+   "layer": "win",
+   "start": 4.0,
+   "len": 1.8,
+   "db": -3,
+   "label": "過關音樂"
+  }
+ ]
+}

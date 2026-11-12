@@ -7,9 +7,11 @@
 - 句型示範（口說題連續 2 次未滿 80 分才出現；地點用嗶聲蓋掉，不洩漏答案）
   listen_pattern.mp3     I'm going to the … 嗶
 另外把 資料/ambience/final/<id>.mp3 複製成 assets/audio/ambience/<id>.mp3。
-用法：python -I tools/make_listen_voice.py
+用法：python -I tools/make_listen_voice.py          只做還沒有的語音（11/12 起；舊的不重念，免得聲音變了）
+      python -I tools/make_listen_voice.py --all    全部重做
+11/12 三種線索版：新地點（火車站、書店）老師還沒選定環境音時，先用 資料/ambience/v2/<id>_A.mp3 暫代（印出 placeholder）。
 """
-import asyncio, json, os, shutil, subprocess
+import asyncio, json, os, shutil, subprocess, sys
 
 import edge_tts
 
@@ -35,17 +37,28 @@ async def main():
         jobs.append((f"listen_scene_{it['id']}", f"{it['scene']} Where are you going?", KEN))
         jobs.append((f"listen_ans_{it['id']}", answer(it), KID))
     jobs.append(("_pattern_words", "I'm going to the", KID))
+    redo = "--all" in sys.argv
     for key, text, (voice, pitch) in jobs:
+        if not redo and key != "_pattern_words" and os.path.exists(os.path.join(OUT, key + ".mp3")):
+            continue
+        if not redo and key == "_pattern_words" and os.path.exists(os.path.join(OUT, "listen_pattern.mp3")):
+            continue
         await edge_tts.Communicate(text, voice, rate=RATE, pitch=pitch).save(os.path.join(OUT, key + ".mp3"))
         print(key, text)
     # 句型示範：I'm going to the ＋ 0.15 秒空白 ＋ 0.6 秒嗶
     src = os.path.join(OUT, "_pattern_words.mp3")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-f", "lavfi", "-i", "sine=frequency=880:duration=0.6",
+    if os.path.exists(src):
+      subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", src, "-f", "lavfi", "-i", "sine=frequency=880:duration=0.6",
                     "-filter_complex", "[1]volume=0.25,adelay=150|150[b];[0][b]concat=n=2:v=0:a=1",
                     "-ar", "24000", "-ac", "1", os.path.join(OUT, "listen_pattern.mp3")], check=True)
-    os.remove(src)
+      os.remove(src)
     for it in ITEMS:
-        shutil.copy(os.path.join(AMB_SRC, it["id"] + ".mp3"), os.path.join(AMB_OUT, it["id"] + ".mp3"))
+        src = os.path.join(AMB_SRC, it["id"] + ".mp3")
+        if not os.path.exists(src):
+            src = os.path.join(os.path.dirname(AMB_SRC), "v2", it["id"] + "_A.mp3")
+            print("placeholder ambience (A, teacher has not chosen yet):", it["id"])
+        if os.path.exists(src):
+            shutil.copy(src, os.path.join(AMB_OUT, it["id"] + ".mp3"))
     print("ambience copied", len(ITEMS))
 
 

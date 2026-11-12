@@ -1,0 +1,40 @@
+{
+ "place": "supermarket",
+ "events": [
+  {
+   "layer": "cart",
+   "start": 0.15,
+   "len": 1.6,
+   "db": -2,
+   "label": "推車輪子"
+  },
+  {
+   "layer": "scan",
+   "start": 2.5,
+   "len": 0.2,
+   "db": 1,
+   "label": "掃描嗶（第 1 件）"
+  },
+  {
+   "layer": "scan",
+   "start": 4.5,
+   "len": 0.2,
+   "db": 1,
+   "label": "掃描嗶（第 2 件）"
+  },
+  {
+   "layer": "scan",
+   "start": 6.0,
+   "len": 0.2,
+   "db": 1,
+   "label": "掃描嗶（第 3 件）"
+  },
+  {
+   "layer": "register",
+   "start": 6.8,
+   "len": 1.2,
+   "db": -3,
+   "label": "收銀機叮"
+  }
+ ]
+}

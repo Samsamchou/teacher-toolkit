@@ -72,17 +72,23 @@ PLACES = [
     dict(id="yuanquan", zh="源泉國小", word="school", lat=23.8006135, lon=120.6429045, kind="local", style="school_area"),
     dict(id="lintemple", zh="林先生廟", word="", en="temple", lat=23.799267, lon=120.645229, kind="local", style="temple_small"),
     dict(id="baobao", zh="八堡圳公園", word="park", lat=23.802064, lon=120.6601012, kind="local", style="park"),
+    # 2026-11-12 虛構地點（RDQ-spec-ershui-planet-railway-museum-20261112）：二水沒有這間博物館。放在車站西北、車站旁那條路與鐵道之間的空地
+    # （公園綠地的東北角），正門朝路；紅磚扇形車庫造型（Colab Hunyuan3D-2 bld_museum）＋門前蒸汽火車頭（world.gd）。
+    # 遊戲座標約 (-12.9, -132.8)；不吸附、不拿掉任何房子（附近 15 m 內沒有建築），所以其他房子的隨機外觀不變。
+    dict(id="museum", zh="二水鐵道博物館", word="museum", en="Railway Museum", lat=23.8134839, lon=120.6172697, kind="model",
+         model="bld_museum", size=16.0, lm=True, fictional=True),
 ]
 
 SETS = [
-    {"name": "Set 1 車站散步", "targets": ["teatop", "post", "library", "market", "school", "bookstore", "health", "inn", "seven", "waterpark", "station", "lawn"]},
-    {"name": "Set 2 越過鐵路", "targets": ["tea2", "post", "library", "pxmart", "fuxing", "bookstore", "health", "qizao", "ok", "fengbo", "station", "teatop"]},
-    {"name": "Set 3 八堡圳之旅", "targets": ["teatop", "post", "library", "market", "yuanquan", "bookstore", "health", "inn", "seven", "baobao", "station", "school"]},
-    {"name": "Set 4 東西南北", "targets": ["tea2", "post", "library", "pxmart", "esjh", "bookstore", "health", "qizao", "ok", "lawn", "station", "waterpark"]},
-    {"name": "Set 5 二水全攻略", "targets": ["teatop", "post", "library", "pxmart", "school", "bookstore", "health", "inn", "seven", "fengbo", "station", "esjh"]},
+    {"name": "Set 1 車站散步", "targets": ["teatop", "post", "library", "market", "school", "bookstore", "health", "inn", "seven", "waterpark", "station", "museum"]},
+    {"name": "Set 2 越過鐵路", "targets": ["tea2", "post", "library", "pxmart", "fuxing", "bookstore", "health", "qizao", "ok", "fengbo", "station", "museum"]},
+    {"name": "Set 3 八堡圳之旅", "targets": ["teatop", "post", "library", "market", "yuanquan", "bookstore", "health", "inn", "seven", "baobao", "station", "museum"]},
+    {"name": "Set 4 東西南北", "targets": ["tea2", "post", "library", "pxmart", "esjh", "bookstore", "health", "qizao", "ok", "lawn", "station", "museum"]},
+    {"name": "Set 5 二水全攻略", "targets": ["teatop", "post", "library", "pxmart", "school", "bookstore", "health", "inn", "seven", "fengbo", "station", "museum"]},
 ]
+# 2026-11-12：加 museum（虛構的二水鐵道博物館）。每套第 12 站（原本重複單字的地點）換成博物館，仍是 12 題。
 WORDS = ["park", "post office", "supermarket", "library", "school", "train station",
-         "tea shop", "bookstore", "hospital", "restaurant", "convenience store"]
+         "tea shop", "bookstore", "hospital", "restaurant", "convenience store", "museum"]
 
 
 def real(lat, lon):
@@ -436,6 +442,8 @@ def main() -> None:
     removed_campus = {w for w in SCHOOL_ROLE}
     shop_spots = []
     for name, street, no, kind in SH.SHOPS:
+        if name in SH.PIN:
+            continue   # 用座標釘的店最後才放（見下方 PIN）
         q, nrm = SH.locate(chains, real, street, no)
         shop_spots.append((name, kind, street, no, q, nrm))
 
@@ -569,8 +577,13 @@ def main() -> None:
             for bb in blds:
                 if bb["id"] in removed_campus or inside(bb["c_r"], camp_r) or math.hypot(bb["c_r"][0] - west_r[0], bb["c_r"][1] - west_r[1]) < 9.0:
                     removed.add(bb["id"])
-            mid = ((campus["bridge"][0][0] + campus["bridge"][1][0]) / 2, (campus["bridge"][0][1] + campus["bridge"][1][1]) / 2)
+            # 老師 11/12 iPad：Ken 到學校「站在河流上面」（門口原本是明德橋正中間＝圳水上）
+            # → 改站在橋頭靠校門那端的紅磚廣場（離圳岸約 2 m），面向西門（look）
+            wg = campus["gates"][3]["p"] if len(campus["gates"]) > 3 else campus["bridge"][1]
+            b0, b1 = campus["bridge"][0], campus["bridge"][1]
+            mid = b0 if math.hypot(b0[0] - wg[0], b0[1] - wg[1]) < math.hypot(b1[0] - wg[0], b1[1] - wg[1]) else b1
             Q["door"] = [round(mid[0], 2), round(mid[1], 2)]
+            Q["look"] = [round(wg[0], 2), round(wg[1], 2)]
             Q["door_dist"] = round(math.hypot(Q["pos"][0] - mid[0], Q["pos"][1] - mid[1]), 2)
         if P["kind"] in ("waterpark", "lawn"):
             for bb in blds:
@@ -718,6 +731,48 @@ def main() -> None:
         if best:
             shop_of[best[1]["id"]] = {"name": name, "kind": spot[1]}
             shop_log[k] = (name, street, no, best[1]["id"])
+    # 用 Google 地圖座標釘的店（shops_ershui.PIN）：投影到那條路、換到參考點（便利商店）那一側，
+    # 補一棟 5 m 寬店屋；不壓路、不碰任何房子、不進地點範圍。放在所有補的房子最後面，別的房子的外觀亂數不會錯位。
+    for name, (street, la, lo, ref) in SH.PIN.items():
+        kind = next(k for n, st, no, k in SH.SHOPS if n == name)
+        q, nrm = SH.snap_front(chains, real, street, la, lo)
+        nrm = SH.force_side(chains, real, street, q, nrm, ref)
+        along = (nrm[1], -nrm[0])
+        pin_r = real(la, lo)
+        best = None
+
+        def pin_ok(poly):
+            for x in samples(poly):
+                for a, b2, hw in road_r:
+                    if seg_dist_only(x, a, b2) < hw:
+                        return False
+                for P in places:
+                    if P["id"] in ("station",) or "size" not in P:
+                        continue
+                    pc = (P["pos"][0] / K, P["pos"][1] / K)
+                    if math.hypot(x[0] - pc[0], x[1] - pc[1]) < P["size"] / K * 0.62 + 0.5:   # 模型會轉向，用比半邊大一點的圓
+                        return False
+            return hits_building(poly) is None
+
+        for dpt in (9.0, 8.0, 7.0, 6.0, 5.0):
+            for sh in (0.0, 1.5, -1.5, 3.0, -3.0, 4.5, -4.5, 6.0, -6.0):
+                qq = (q[0] + along[0] * sh, q[1] + along[1] * sh)
+                poly = rect(qq, nrm, along, OFF.get(street, 5.4), 5.0, dpt)
+                if pin_ok(poly):
+                    d0 = math.hypot(centroid(poly)[0] - pin_r[0], centroid(poly)[1] - pin_r[1])
+                    if best is None or d0 < best[0]:
+                        best = (d0, poly)
+            if best:
+                break
+        if best:
+            got = {"id": "s%d" % len(synth), "poly_r": best[1], "c_r": centroid(best[1]), "tag": "yes", "name": name, "levels": "", "amenity": ""}
+            synth.append(got)
+            shop_of[got["id"]] = {"name": name, "kind": kind}
+            shop_log.append((name, street, "PIN", got["id"]))
+            print("PIN", name, "game", game(got["c_r"]), "dist to Google point (real m) %.1f" % best[0])
+        else:
+            shop_log.append((name, street, "PIN", None))
+            print("PIN FAILED", name)
     blds += synth
     print("shops placed", sum(1 for x in shop_log if x[3]), "/", len(shop_log), "new shop houses", n_shop_synth, "new street houses", len(synth) - n_shop_synth)
     for x in shop_log:

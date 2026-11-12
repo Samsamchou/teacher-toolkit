@@ -1,0 +1,106 @@
+{
+ "note": "[1112] Listen and Guess 真 AI 口說測試，預覽 ershui-preview（2026-11-12 19:53 部署），測試學號 99907，cloud=off。edge-tts en-US-AnaNeural 0.9 倍（前 0.5 秒空白）當麥克風，走外框 MediaRecorder→16k WAV→Gemini。答案 school（r1–r4）、bookstore（r5）。",
+ "result": "r1 正確句：AI 回 95 分、逐字正確、判定通過（符合規則）。r2–r5：App Check 換 token 被拒（403 appCheck/initial-throttle，之後 Gemini 401），沒有送到 AI，所以沒有結果；第 2 次改成同一個瀏覽器連測也一樣 403，就停了（不嘗試繞過 reCAPTCHA 機器人偵測）。實際用到 AI 1 次。",
+ "sentences": {
+  "r1": "I'm going to school.",
+  "r2": "I'm going to the park.",
+  "r3": "I'm going to the school.",
+  "r4": "He are going to school.",
+  "r5": "I'm going to the bookstore."
+ },
+ "run1_new_browser_each": [
+  {
+   "wav": "r1.wav",
+   "answer": "school",
+   "expect": "pass",
+   "verdict_ok": true,
+   "judge": {
+    "tries": 1,
+    "pass": true,
+    "lid": "school",
+    "placeOk": true,
+    "grammarOk": true,
+    "errors": [],
+    "fixed": "I'm going to school",
+    "scoreOk": true,
+    "why": "",
+    "hint": false,
+    "transcript": "I'm going to school.",
+    "total": 95
+   },
+   "warn": []
+  },
+  {
+   "wav": "r2.wav",
+   "answer": "school",
+   "expect": "place",
+   "verdict_ok": null,
+   "judge": null,
+   "warn": [
+    "Failed to load resource: the server responded with a status of 403 ()",
+    "[2026-11-12T11:58:01.377Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:01.379Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:01.380Z]  @firebase/vertexai: Unable to obtain a valid App Check token: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "Failed to load resource: the server responded with a status of 401 ()"
+   ]
+  },
+  {
+   "wav": "r3.wav",
+   "answer": "school",
+   "expect": "grammar",
+   "verdict_ok": null,
+   "judge": null,
+   "warn": [
+    "Failed to load resource: the server responded with a status of 403 ()",
+    "[2026-11-12T11:58:11.928Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:11.929Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:11.930Z]  @firebase/vertexai: Unable to obtain a valid App Check token: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "Failed to load resource: the server responded with a status of 401 ()"
+   ]
+  },
+  {
+   "wav": "r4.wav",
+   "answer": "school",
+   "expect": "grammar",
+   "verdict_ok": null,
+   "judge": null,
+   "warn": [
+    "Failed to load resource: the server responded with a status of 403 ()",
+    "[2026-11-12T11:58:24.087Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:24.087Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:24.087Z]  @firebase/vertexai: Unable to obtain a valid App Check token: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "Failed to load resource: the server responded with a status of 401 ()"
+   ]
+  },
+  {
+   "wav": "r5.wav",
+   "answer": "bookstore",
+   "expect": "pass",
+   "verdict_ok": null,
+   "judge": null,
+   "warn": [
+    "Failed to load resource: the server responded with a status of 403 ()",
+    "[2026-11-12T11:58:35.486Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:35.486Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:58:35.486Z]  @firebase/vertexai: Unable to obtain a valid App Check token: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "Failed to load resource: the server responded with a status of 401 ()"
+   ]
+  }
+ ],
+ "run2_same_browser": [
+  {
+   "wav": "r2.wav",
+   "answer": "school",
+   "expect": "place",
+   "verdict_ok": null,
+   "judge": null,
+   "warn": [
+    "Failed to load resource: the server responded with a status of 403 ()",
+    "[2026-11-12T11:59:38.675Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:59:38.676Z]  @firebase/app-check: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "[2026-11-12T11:59:38.676Z]  @firebase/vertexai: Unable to obtain a valid App Check token: AppCheck: 403 error. Attempts allowed again after 01d:00m:00s (appCheck/initial-throttle).",
+    "Failed to load resource: the server responded with a status of 401 ()"
+   ]
+  }
+ ]
+}

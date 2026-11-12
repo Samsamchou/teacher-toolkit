@@ -1,0 +1,33 @@
+{
+ "place": "tea",
+ "events": [
+  {
+   "layer": "cicadas",
+   "start": 0.1,
+   "len": 1.9,
+   "db": -6,
+   "label": "夏天蟬叫（好熱）"
+  },
+  {
+   "layer": "amb:tea/shaker",
+   "start": 2.0,
+   "len": 1.4,
+   "db": -2,
+   "label": "搖杯"
+  },
+  {
+   "layer": "amb:tea/sip",
+   "start": 3.5,
+   "len": 3.6,
+   "db": 0,
+   "label": "吸飲料吸珍珠"
+  },
+  {
+   "layer": "amb:tea/ice",
+   "start": 7.2,
+   "len": 0.8,
+   "db": -4,
+   "label": "冰塊"
+  }
+ ]
+}

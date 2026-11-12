@@ -1,0 +1,26 @@
+{
+ "place": "park",
+ "events": [
+  {
+   "layer": "kite",
+   "start": 0.25,
+   "len": 2.6,
+   "db": -2,
+   "label": "風箏在風裡拍動"
+  },
+  {
+   "layer": "amb:park/birds",
+   "start": 2.8,
+   "len": 2.8,
+   "db": 0,
+   "label": "鳥叫"
+  },
+  {
+   "layer": "amb:park/kids",
+   "start": 5.8,
+   "len": 2.2,
+   "db": -8,
+   "label": "遠處小孩笑聲"
+  }
+ ]
+}

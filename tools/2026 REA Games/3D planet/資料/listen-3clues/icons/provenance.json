@@ -1,0 +1,72 @@
+{
+ "post": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a cardboard parcel box tied with string. Icon 2 (right): a postage stamp with a wavy perforated edge showing a simple flower picture. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as post.png in the current directory. Reply with the saved file path only.",
+  "sha256": "9b29d0b81c7355156cbbc62281158f543716ec79b899a5dee6d8b2d6cd73c62d",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\post\\post.png",
+  "generated": "2026-11-12 15:06:14",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "supermarket": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a shopping basket with a handle holding a few fruits and a milk bottle. Icon 2 (right): a shopping cart. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as supermarket.png in the current directory. Reply with the saved file path only.",
+  "sha256": "e28bf9849287649113da7bebf0e97aa1e1279ed99bab6414027ef314cab88c42",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\supermarket\\supermarket.png",
+  "generated": "2026-11-12 15:06:23",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "school": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a school backpack with two shoulder straps. Icon 2 (right): a school building with a flag on a tall flagpole beside it and a round clock on the front wall. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as school.png in the current directory. Reply with the saved file path only.",
+  "sha256": "b8a942c1e76bd43b9acf682d3f6db2186f00fe1448aa05974c6a43bc3d7b6066",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\school\\school.png",
+  "generated": "2026-11-12 15:07:24",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "library": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a pair of reading glasses. Icon 2 (right): a tall bookshelf full of books standing in rows. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as library.png in the current directory. Reply with the saved file path only.",
+  "sha256": "1db7f49a40cd8e107ffe4ec218b96e1bf3c42c7b3ea26fbc34f168f030a93ebf",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\library\\library.png",
+  "generated": "2026-11-12 15:07:14",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "hospital": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a medicine bottle with a few pills beside it. Icon 2 (right): a doctor's stethoscope. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as hospital.png in the current directory. Reply with the saved file path only.",
+  "sha256": "3bf26f54abc698a05df17ee86bd8d26d7bd9b097d4552d037f95c29aa8fdf28a",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\hospital\\hospital.png",
+  "generated": "2026-11-12 15:07:09",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "park": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a kite with a long wavy tail. Icon 2 (right): a playground swing set with two swings. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as park.png in the current directory. Reply with the saved file path only.",
+  "sha256": "176d323307117160c7682c894d1c02d4f47e94e89698d84f3877378cb7620798",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\park\\park.png",
+  "generated": "2026-11-12 15:08:07",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "restaurant": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a pair of chopsticks resting on a small bowl. Icon 2 (right): a plate of dumplings with steam rising. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as restaurant.png in the current directory. Reply with the saved file path only.",
+  "sha256": "7be32d8fc6018703e98d2e3788e26d798df24c473a543f5300eb2be004cc4b86",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\restaurant\\restaurant.png",
+  "generated": "2026-11-12 15:08:05",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "tea": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): three ice cubes. Icon 2 (right): a takeaway bubble tea cup with a sealed lid, a thick straw and round pearls at the bottom. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as tea.png in the current directory. Reply with the saved file path only.",
+  "sha256": "09f3afbb34920a6190d92850c6bd9b9d318cbbe288e5f6f006452bc5ff3e51bb",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\tea\\tea.png",
+  "generated": "2026-11-12 15:08:18",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "station": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a railway level-crossing warning sign: a big X-shaped crossbuck on a post with two round lights (no letters). Icon 2 (right): the front of a passenger train coming toward the viewer on rails. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as station.png in the current directory. Reply with the saved file path only.",
+  "sha256": "7426bfdbda0f730dc49cbd162b138454cc46dbd22c11208497b6db10634c1abf",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\station\\station.png",
+  "generated": "2026-11-12 15:08:58",
+  "tool": "codex exec (built-in image generation)"
+ },
+ "bookstore": {
+  "prompt": "Use your built-in image generation tool to create this image: Icon 1 (left): a book with a blank price-tag sticker on its cover. Icon 2 (right): a paper shopping bag with two books sticking out of the top. Two separate pictogram icons side by side, evenly spaced in two equal-width columns with lots of empty space between them, each icon centred in its column and about the same size. Solid pure black flat silhouettes on a pure white background, like simple signage pictograms or classroom flashcard icons: bold, clean, no outlines-only, no grey, no shading, no gradients, no shadows, no frames or boxes around icons, no people or hands. Absolutely no text, letters, numbers or symbols with writing anywhere. Wide landscape image, 3:2. Save the PNG as bookstore.png in the current directory. Reply with the saved file path only.",
+  "sha256": "3dac7c55b76911cefd56ab86380fd0429e2eb04f32bb87a596bfe4210f702e62",
+  "src": "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\5b34f038e9120482\\c19d1837-142e-4994-ae13-cf5aaa41e2fc\\scratchpad\\codexwork_listen_icons\\bookstore\\bookstore.png",
+  "generated": "2026-11-12 15:09:06",
+  "tool": "codex exec (built-in image generation)"
+ }
+}

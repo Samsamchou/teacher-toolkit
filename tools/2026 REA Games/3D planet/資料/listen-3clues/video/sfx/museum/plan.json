@@ -1,0 +1,26 @@
+{
+ "place": "museum",
+ "events": [
+  {
+   "layer": "ticket",
+   "start": 1.75,
+   "len": 1.6,
+   "db": -1,
+   "label": "投幣＋售票機嗶（買票）"
+  },
+  {
+   "layer": "amb:museum/footsteps",
+   "start": 3.2,
+   "len": 1.8,
+   "db": -5,
+   "label": "輕輕的腳步（安靜看展品）"
+  },
+  {
+   "layer": "amb:museum/shutter",
+   "start": 6.8,
+   "len": 0.2,
+   "db": 2,
+   "label": "相機快門喀嚓（拍照）"
+  }
+ ]
+}
