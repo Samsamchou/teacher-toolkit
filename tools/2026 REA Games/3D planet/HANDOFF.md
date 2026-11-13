@@ -116,6 +116,7 @@
 - Listen 默劇影片看的時候放大到約 320 px 高（看完縮回）。
 - 檢查圖都在 `資料/museum/`：ririxin-location-v1、arrival-ground-check-v1、video-size-v1、dumpling-*。
 - **11/12 23:00 已上預覽 ershui-preview**（pck 72,211,620；live 沒動，仍 20:43:49）。測試：Listen 53/53、分組 28/28、個人 19/19、網頁 82/82。等老師 iPad 試，再和 Listen and Guess 一起上正式站。未 commit。
+- 11/13：美珍鞋坊側面亂字用黃色看板蓋住、寫 SHOES；重新匯出 pck 72,212,244（site/public/ershui-planet 與 web-build 相同），等主對話經 staging 上正式站。
 
 ## Free Time 版兩種玩法（2026-11-10，Ken A 路線 11 題；`godot-ershui-freetime/`）
 規格：`rdq/RDQ-spec-freetime-planet-hwg7u03-20261109.md`（rev 1–3）。**尚未部署**（老師自己上預覽頻道）。

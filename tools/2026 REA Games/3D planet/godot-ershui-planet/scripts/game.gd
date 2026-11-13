@@ -2388,6 +2388,23 @@ func _test_arrivals() -> void:
 			cam_mode = "fixed"
 			await _wait(0.4)
 			await _shot("sign_%s" % id)
+			# SIDES=1：再從左前、右前 45 度各拍一張（檢查側面牆上的字）
+			if OS.get_environment("SIDES") != "":
+				for sg in [-1.0, 1.0]:
+					var od2 := outd.rotated(deg_to_rad(50.0 * sg))
+					var c3 := pos2 + od2 * (hh * 0.9 + 7.0)
+					world.clear_fade()
+					world.fade_between(c3, pos2, id, 0.0)
+					fixed_cam = [world.bend2(c3, hh * 0.55), world.bend2(pos2, hh * 0.5), world.bend2(door).normalized()]
+					cam_mode = "fixed"
+					await _wait(0.4)
+					await _shot("sign_%s_%s" % [id, "L" if sg < 0 else "R"])
+				# 正上方往下看（看招牌在牆角哪一邊）：畫面上方＝正面那一側
+				world.clear_fade()
+				fixed_cam = [world.bend2(pos2 - outd * 0.01, hh + 9.0), world.bend2(pos2, 0.0), (world.bend2(pos2 + outd * 3.0) - world.bend2(pos2)).normalized()]
+				cam_mode = "fixed"
+				await _wait(0.4)
+				await _shot("sign_%s_TOP" % id)
 	# 店家正面特寫（SHOP=店名，例：SHOP=日日新商店）：從臨街那一面往外 7 m、高 2.5 m 看店面
 	if OS.get_environment("SHOP") != "":
 		for B in data["buildings"]:

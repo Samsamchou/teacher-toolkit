@@ -594,6 +594,10 @@ func _build_places() -> void:
 			_place_sign(root, P, m.get_meta("width"), h, m.get_meta("depth"))
 			if P["id"] == "museum":
 				_museum_extras(root, P, m.get_meta("width"), h, m.get_meta("depth"))
+			if BLADE_SIGN.has(P["id"]):
+				_blade_sign(root, BLADE_SIGN[P["id"]], m.get_meta("width"), h, m.get_meta("depth"))
+			if COVER_BOX.has(P["id"]):
+				_cover_box(root, COVER_BOX[P["id"]], m.get_meta("width"), h, m.get_meta("depth"))
 		elif kind == "model" or (kind == "outer" and style == "model"):
 			var m := fit_model(P["model"], P["size"])
 			root.add_child(m)
@@ -1910,7 +1914,7 @@ func _place_sign(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) ->
 	l.outline_size = 14
 	l.outline_modulate = Color(0.12, 0.1, 0.16)
 	l.double_sided = false   # 從背面看不到（不會出現反字）
-	l.position = Vector3(0, h * float(SIGN_Y.get(P["id"], 0.55)), dp / 2.0 + 0.12)
+	l.position = Vector3(wd * float(SIGN_X.get(P["id"], 0.0)), h * float(SIGN_Y.get(P["id"], 0.55)), dp / 2.0 + 0.12)
 	# 老師 10/26 去品牌化：模型上有品牌字樣／配色的招牌，用一塊素色看板蓋住，中文招牌寫在看板上
 	if SIGN_PLATE.has(P["id"]):
 		var c: Array = SIGN_PLATE[P["id"]]   # [中心高度比例, 高度比例, 寬度比例, 顏色, 往前凸出 m]
@@ -1934,6 +1938,17 @@ func _place_sign(root: Node3D, P: Dictionary, wd: float, h: float, dp: float) ->
 				sp.material_override = mt
 				sp.position = Vector3(sx * (wd / 2.0 + float(c[4])), h * float(c[0]), 0)
 				root.add_child(sp)
+				if SIGN_SIDE_TEXT.has(P["id"]):
+					var st := Label3D.new()
+					st.text = SIGN_SIDE_TEXT[P["id"]]
+					st.font = font_bold
+					st.font_size = 64
+					st.pixel_size = minf(dp * 0.7 / (64.0 * 0.62 * st.text.length()), h * float(c[1]) * 0.6 / 64.0)
+					st.modulate = Color("#3a2a10")
+					st.double_sided = false
+					st.position = Vector3(sx * (wd / 2.0 + float(c[4]) + 0.12), h * float(c[0]), 0)
+					st.rotation.y = deg_to_rad(90.0 * sx)
+					root.add_child(st)
 		l.position = Vector3(0, h * float(c[0]), dp / 2.0 + float(c[4]) + 0.14)
 		l.pixel_size = minf(l.pixel_size, h * float(c[1]) * 0.75 / 64.0)
 		if SIGN_SUB.has(P["id"]):
@@ -1964,14 +1979,72 @@ const SIGN_PLATE := {
 	"asia_inn": [0.24, 0.07, 0.8, "#b23a2e", 0.25],
 	"dental": [0.36, 0.08, 0.95, "#3b8fd9", 0.25],
 	"decheng": [0.42, 0.09, 0.98, "#b03a2e", 0.3],
-	"shoes": [0.385, 0.11, 1.02, "#d9a21b", 0.25],
+	"shoes": [0.385, 0.12, 1.02, "#d9a21b", 0.25, true],   # 11/13 老師：側面牆上的英文像亂字 → 兩側也蓋，寫 SHOES（SIGN_SIDE_TEXT）
 	"ensheng": [0.33, 0.12, 0.98, "#2f9e44", 0.3],
-	"farmers": [0.3, 0.07, 0.95, "#2b6b3f", 0.3],
+	"farmers": [0.305, 0.17, 1.0, "#2b6b3f", 0.3, true],   # 11/13：綠色招牌上的英文小字亂掉 → 加高、兩側也蓋（素色）
 	"ande": [0.58, 0.07, 0.3, "#7a1f14", 0.45],
 	"dumpling": [0.465, 0.19, 0.98, "#c92a2a", 0.3],   # 11/12：加高往下蓋住模型上拼錯的「DUMPINGG」，下半寫 DUMPLING（SIGN_SUB）
 }
 ## 看板第二行英文（模型貼圖上的英文字拼錯時，看板加高蓋住再寫正確的）
 const SIGN_SUB := {"dumpling": "DUMPLING"}
+## 側面看板上的英文（模型側面牆的英文字亂掉時，兩側看板蓋住再寫正確的；11/13 美珍鞋坊）
+const SIGN_SIDE_TEXT := {"shoes": "SHOES"}
+## 直立招牌（垂直正面、伸出牆外的那種）：模型上的英文亂掉時用一塊直板蓋住，兩面直寫英文（11/13 書店 BOOKS）
+## [往旁邊 x 比例, 中心高度比例, 高度比例, 伸出深度 m, 前後中心 z 比例（正面＝0.5）, 顏色, 字, 厚度（寬的比例）]
+## 書店：模型的直立招牌夾在牆角和路之間，用一塊有厚度的招牌箱整個包住
+const BLADE_SIGN := {"bookstore": [-0.38, 0.62, 0.58, 2.3, 0.5, "#e8a21a", "BOOKS", 0.36],
+	# 11/13 老師「4 處都蓋」：亞洲旅社正面右側的直立 HOTEL 招牌（二水超市的塔招牌老師 11/13 說維持原樣，已拿掉）
+	"asia_inn": [0.4, 0.6, 0.46, 1.0, 0.5, "#f4f1e8", "HOTEL", 0.2]}
+## 整塊遮住模型上的立體字（模型是一整個網格、不能只藏字）：[x 範圍, y 範圍（高度比例）, z 範圍（-0.5＝背面、0.5＝正面）, 顏色]
+## 11/13 水心之初大草原：平台前排的白色立體字（字最高）→ 整排包進一道樹籬（從上面看也看不到字）
+const COVER_BOX := {}   # 11/13 老師：水心之初大草原維持原來版本（原本 {"lawn": [[-0.47, 0.47], [0.0, 1.06], [-0.02, 0.39], "#3f7d3a"]} 樹籬）
+func _cover_box(root: Node3D, c: Array, wd: float, h: float, dp: float) -> void:
+	var x0: float = c[0][0] * wd
+	var x1: float = c[0][1] * wd
+	var y0: float = c[1][0] * h
+	var y1: float = c[1][1] * h
+	var z0: float = c[2][0] * dp
+	var z1: float = c[2][1] * dp
+	var mi := MeshInstance3D.new()
+	var bm := BoxMesh.new()
+	bm.size = Vector3(x1 - x0, y1 - y0, z1 - z0)
+	mi.mesh = bm
+	var mt := StandardMaterial3D.new()
+	mt.albedo_color = Color(c[3])
+	mt.roughness = 1.0
+	mi.material_override = mt
+	mi.position = Vector3((x0 + x1) / 2.0, (y0 + y1) / 2.0, (z0 + z1) / 2.0)
+	root.add_child(mi)
+## 中文招牌往旁邊挪（寬的比例）：書店的直立招牌箱在左邊，中文招牌往右挪才不重疊
+const SIGN_X := {"bookstore": 0.07}
+func _blade_sign(root: Node3D, c: Array, wd: float, h: float, dp: float) -> void:
+	var pm := MeshInstance3D.new()
+	var bm := BoxMesh.new()
+	var th: float = wd * float(c[7]) if c.size() > 7 else 0.16
+	bm.size = Vector3(th, h * float(c[2]), float(c[3]))
+	pm.mesh = bm
+	var mt := StandardMaterial3D.new()
+	mt.albedo_color = Color(c[5])
+	mt.roughness = 0.9
+	pm.material_override = mt
+	var ctr := Vector3(wd * float(c[0]), h * float(c[1]), dp * float(c[4]) + float(c[3]) * 0.5 - 0.15)   # 從牆面往外伸
+	pm.position = ctr
+	root.add_child(pm)
+	var txt := "
+".join(PackedStringArray(Array(String(c[6]).split("")).filter(func(x): return x != "")))
+	for sx in [-1.0, 1.0]:
+		var l := Label3D.new()
+		l.text = txt
+		l.font = font_bold
+		l.font_size = 64
+		l.line_spacing = -18
+		l.pixel_size = minf(float(c[3]) * 0.55 / (0.62 * 64.0), h * float(c[2]) * 0.85 / (String(c[6]).length() * 64.0 * 0.95))
+		l.modulate = Color("#7a1f14")
+		l.double_sided = false
+		l.position = ctr + Vector3(sx * (th * 0.5 + 0.03), 0, 0)
+		l.outline_size = 0
+		l.rotation.y = deg_to_rad(90.0 * sx)
+		root.add_child(l)
 ## 招牌高度（占建築高度比例），對照參考圖英文佔位招牌的位置
 const SIGN_Y := {
 	"station": 0.78, "school": 0.55, "esjh": 0.6, "yuanquan": 0.45, "fuxing": 0.82, "library": 0.6, "post": 0.42,
