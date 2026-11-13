@@ -10,7 +10,8 @@ CHILD='Read exactly the supplied single vocabulary term, once, in a light, brigh
 
 def key_from_private_store():
     key=os.environ.get('OPENAI_API_KEY','').strip()
-    if not key:
+    if not re.fullmatch(r'sk-[A-Za-z0-9_-]{16,}',key):
+        key=''
         private=Path('C:/Users/User/.codex/.env.local')
         if private.is_file():
             for line in private.read_text(encoding='utf-8-sig').splitlines():
@@ -37,12 +38,20 @@ def generate(root,manifest,execute=False,approved=False,reuse_key=False):
         prepared.append((item,payload,dest,existing))
     missing=sum(not p[3] for p in prepared)
     if missing>int(job.get('max_new_requests',0)):raise ValueError('Required new requests exceed this job request limit.')
+    budget=float(job.get('max_total_cost_usd',0))
+    if execute and missing and (budget<=0 or missing*.02>budget):raise ValueError('Conservative per-request reserve exceeds current task budget; no request made.')
     if not execute:
         print(json.dumps({'requests':len(prepared),'cache_hits':len(prepared)-missing,'new_requests':missing,'sent':0}));return
     if missing and not (approved and reuse_key and job.get('authorization_note')):raise ValueError('Explicit current-task paid and key-use authorization required.')
+    reserve_per_call=10/60*.05
+    input_reserve=sum(len(json.dumps(p[1]))/1000000 for p in prepared)
+    budget=float(job.get('budget_usd',0))
+    if input_reserve+missing*reserve_per_call>budget:raise ValueError('Conservative cost reserve exceeds authorized budget; no request made.')
+    spent_reserve=input_reserve
     key=key_from_private_store() if missing else None;records=[]
-    for item,payload,dest,existing in prepared:
+    for request_number,(item,payload,dest,existing) in enumerate(prepared,1):
         if not existing:
+            if spent_reserve+reserve_per_call>budget:raise ValueError('Budget reserve exhausted; stopped before next request.')
             dest.mkdir(parents=True,exist_ok=False)
             save_json(dest/'attempt.json',{'timestamp_utc':datetime.now(timezone.utc).isoformat(),'request_fingerprint':fingerprint(payload),
                                          'status':'sent_or_outcome_unknown','authorization_note':job['authorization_note']})
@@ -57,11 +66,15 @@ def generate(root,manifest,execute=False,approved=False,reuse_key=False):
                 raise ValueError('Speech outcome unknown; retained attempt and stopped without retry.')
             with wave.open(io.BytesIO(data)) as f:
                 pcm=f.readframes(f.getnframes());duration=len(pcm)/f.getsampwidth()/f.getnchannels()/f.getframerate()
+            spent_reserve+=duration/60*.05
             if duration<=0:raise ValueError('Empty generated WAV; attempt retained.')
             (dest/'raw.wav').write_bytes(data)
             save_json(dest/'raw.json',{'kind':'normal-speed-source','request':payload,'sha256':sha(dest/'raw.wav'),'speed':1,
                                       'request_id':request_id,'timestamp_utc':datetime.now(timezone.utc).isoformat(),'duration_sec':duration,
                                       'usage':None,'actual_charge':None,'voice_note':'Built-in synthetic voice; coral is directed to sound youthful, not a real child recording.'})
+        print(json.dumps({'clip':request_number,'total':len(prepared),'term':item['spoken_text'],'role':item['role'],'status':'cache_verified' if existing else 'generated'},ensure_ascii=False),flush=True)
+        if not existing and spent_reserve>budget:raise ValueError('Unexpected long output exhausted reserve; retained audio and stopped.')
+        print(json.dumps({'completed_clip':len(records)+1,'spoken_text':item['spoken_text'],'role':item['role'],'cache_hit':existing}),flush=True)
         records.append({'spoken_text':item['spoken_text'],'role':item['role'],'voice':payload['voice'],
                         'path':str((dest/'raw.wav').relative_to(root)),'sha256':sha(dest/'raw.wav'),
                         'source_record':str((dest/'raw.json').relative_to(root))})

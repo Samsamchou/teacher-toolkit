@@ -58,8 +58,64 @@
       "overview_columns": 4,
       "overview_rows": 2,
       "display_case": "ordinary lowercase; Chinese and English initial uppercase; PE uppercase"
+    },
+    "nine_cards_per_round_distinct_images_502": {
+      "acceptance_record": "productions\\9 subjects 502\\v01\\full\\segment-01\\TEACHER_ACCEPTANCE.json",
+      "video": "productions\\9 subjects 502\\v01\\full\\segment-01\\502 9 subjects video.mp4",
+      "sha256": "f291d82c67c9473d490a1471a44c78f9bca648211559f6251b0eea9cd21cdbc4",
+      "bytes": 21528258,
+      "status": "teacher_accepted_formal",
+      "overview_columns": 3,
+      "overview_rows": 3,
+      "source_image_count": 18,
+      "rounds": 2,
+      "display_case": "ordinary lowercase; Chinese and English initial uppercase; PE uppercase"
+    },
+    "ten_cards_per_round_same_images_three_rounds_hwg7_u02": {
+      "video": "productions/HWG7 U02/v01/full/segment-01/video.mp4",
+      "sha256": "3e569fa81a8bfbeafa6e002c8db85d66fc7824311fbc2d0fc695756861aa8149",
+      "bytes": 51359681,
+      "status": "teacher_accepted_formal",
+      "overview_columns": 5,
+      "overview_rows": 2,
+      "source_image_count": 10,
+      "rounds": 3,
+      "images_per_round": 10,
+      "same_images_same_order_every_round": true,
+      "duration_sec": 164.46666666666667,
+      "utterances": 60,
+      "acceptance_record": "productions/HWG7 U02/v01/full/segment-01/TEACHER_ACCEPTANCE.json"
+    },
+    "six_cards_per_round_four_rounds_ershui_planet_places": {
+      "video": "productions/ershui-planet-places/v01/full/segment-01/video.mp4",
+      "sha256": "8fe5142463f783f8da33ef033b4ea00b9015fd4c9dfd44444ccd616507b7b941",
+      "bytes": 24351167,
+      "status": "teacher_accepted_formal",
+      "overview_columns": 3,
+      "overview_rows": 2,
+      "source_image_count": 24,
+      "rounds": 4,
+      "images_per_round": 6,
+      "same_words_rounds_1_3_and_2_4": true,
+      "duration_sec": 120.933333,
+      "utterances": 48,
+      "acceptance_record": "productions/ershui-planet-places/v01/full/segment-01/TEACHER_ACCEPTANCE.json"
+    },
+    "six_cards_per_round_three_rounds_sf3_u02": {
+      "video": "productions/SF3 U02/v01/full/segment-01/video.mp4",
+      "sha256": "45762f4ec6fe83bb4e9fbb0cd0a280c77b995dbca9128fc3459af6393cd5e224",
+      "bytes": 38337673,
+      "status": "teacher_accepted_formal",
+      "overview_columns": 3,
+      "overview_rows": 2,
+      "source_image_count": 18,
+      "rounds": 3,
+      "images_per_round": 6,
+      "duration_sec": 95.3,
+      "utterances": 36,
+      "acceptance_record": "productions/SF3 U02/v01/full/segment-01/TEACHER_ACCEPTANCE.json"
     }
   },
-  "latest_accepted_variant_record": "productions/sixteen-subjects-01-20261002/v02-grid4x2-lowercase/segment-01/TEACHER_ACCEPTANCE.json",
-  "variant_note": "Original top-level nine-card reference remains accepted and unchanged. The eight-card variant has separate explicit teacher acceptance."
+  "latest_accepted_variant_record": "productions/ershui-planet-places/v01/full/segment-01/TEACHER_ACCEPTANCE.json",
+  "variant_note": "Original top-level nine-card reference and accepted eight-card variant remain unchanged. The 502 eighteen-image 9+9 production has separate explicit teacher acceptance. HWG7 U02 reuses the same ten images across three rounds with a 5x2 overview and separate explicit teacher acceptance."
 }

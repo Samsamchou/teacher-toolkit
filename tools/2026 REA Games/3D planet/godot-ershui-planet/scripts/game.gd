@@ -2214,6 +2214,10 @@ func _run_test() -> void:
 		await _test_arrivals()
 		get_tree().quit()
 		return
+	if OS.get_environment("CARDS") != "":
+		await _test_cards()
+		get_tree().quit()
+		return
 	_ground_check()
 	if OS.get_environment("GROUND") != "":
 		print("TEST SUMMARY pass=%d fail=%d" % [test_pass, test_fail])
@@ -2333,6 +2337,54 @@ func _test_personal() -> void:
 	_check("12 results reported", rep_n == 12, str(rep_n))
 	print("PERSONAL DONE mode=%s scores=%s" % [mode, scores])
 	print("TEST SUMMARY pass=%d fail=%d" % [test_pass, test_fail])
+
+## 2026-11-13 單字朗讀影片用（tools/2026 listen read aloud videos）：只拍建築本身。
+## CARDS=post,market,... ；school_gate＝明德橋旁西門。藏浮動地名（billboard Label3D）、人物移走、沒有 HUD。
+## 每個地點拍近／中／遠 3 張：test_card_<id>_<k>.png
+func _hide_billboards(n: Node) -> void:
+	for c in n.get_children():
+		if c is Label3D and (c as Label3D).billboard != BaseMaterial3D.BILLBOARD_DISABLED:
+			(c as Label3D).visible = false
+		_hide_billboards(c)
+
+func _test_cards() -> void:
+	hud.visible = false
+	setup_ui.visible = false
+	for k in walkers:
+		walkers[k]["pos"] = Vector2(9999, 9999)
+	await _wait(0.5)
+	var ids := Array(OS.get_environment("CARDS").split(","))
+	for id in ids:
+		var door: Vector2
+		var pos2: Vector2
+		var hh: float
+		if id == "school_gate":
+			var C: Dictionary = world.map.get("campus", {})
+			for G in C["gates"]:
+				if String(G["kind"]) == "west":
+					pos2 = world.v2(G["p"]) as Vector2
+			var bm: Vector2 = (world.v2(C["bridge"][0]) + world.v2(C["bridge"][1])) / 2.0
+			door = pos2 + (bm - pos2).normalized() * 1.0
+			hh = 4.0
+		else:
+			var P: Dictionary = world.places[id]
+			door = P["door2"]
+			pos2 = P["pos2"]
+			hh = P.get("height", 6.0)
+		var outd := (door - pos2).normalized()
+		var dists := [hh * 0.5 + 3.5, hh * 0.8 + 5.5]
+		var k := 0
+		for deg in [0.0, -30.0, 30.0]:
+			for dd in dists:
+				var c2 := pos2 + outd.rotated(deg_to_rad(deg)) * ((door - pos2).length() + float(dd))
+				world.clear_fade()
+				world.fade_between(c2, pos2, "" if id == "school_gate" else id, 0.0)
+				_hide_billboards(world)
+				fixed_cam = [world.bend2(c2, hh * 0.5 + 0.8), world.bend2(pos2, hh * 0.45), world.bend2(door).normalized()]
+				cam_mode = "fixed"
+				await _wait(0.6)
+				await _shot("card_%s_%d" % [id, k])
+				k += 1
 
 ## 每個會去的地點：Ken 站在門口、用抵達鏡頭拍一張（檢查表）
 func _test_arrivals() -> void:

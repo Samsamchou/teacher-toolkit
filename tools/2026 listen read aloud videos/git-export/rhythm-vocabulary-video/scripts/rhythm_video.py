@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw
 from media_core import *
-VISUAL_POLICY_VERSION=2
+VISUAL_POLICY_VERSION=4
 
 def load_job(project,config):
     root=Path(project).resolve(); cfg=read_json(resolve(root,config))
@@ -19,7 +19,7 @@ def load_job(project,config):
         if item['word']!=expected:raise ValueError(f'Display case for {item["id"]}: use {expected!r}, not {item["word"]!r}.')
     groups=routes(items,cfg.get('mode','auto'))
     for rounds in groups:
-        if cfg.get('round_word_policy','same-order')=='same-order' and [i['spoken_text'] for i in rounds[0]]!=[i['spoken_text'] for i in rounds[1]]:
+        if cfg.get('round_word_policy','same-order')=='same-order' and any([i['spoken_text'] for i in rounds[0]]!=[i['spoken_text'] for i in group] for group in rounds[1:]):
             raise ValueError('Rounds differ. Review mapping and explicitly select round_word_policy=explicit before continuing.')
     speed=float(cfg.get('speech_speed',.85));bpm=float(cfg.get('bpm',93.6734693877551))
     if not .5<=speed<=1.5 or not 40<=bpm<=180: raise ValueError('Speed/BPM outside supported range.')
@@ -112,16 +112,23 @@ def plan(project,config,pilot=False):
             for f in old['plan_files']:verified_asset(root,f)
             print(json.dumps({'status':'reused_verified_plan','output':str(out)}));return out
         raise ValueError('Output exists or incomplete. Preserve it and choose a new output_dir.')
+    pilot_context=groups[0][int(cfg.get('pilot_overview_round',1))-1] if pilot and cfg.get('pilot_overview_round') else None
     if pilot:
         chosen=cfg.get('pilot_indices',[0,len(groups[0][0])//2,len(groups[0][0])-1])
         if len(set(chosen))!=len(chosen) or not 1<=len(chosen)<=4:raise ValueError('Pilot requires 1–4 distinct indices.')
-        groups=[[[groups[0][0][i] for i in chosen]]]
+        pool=[i for group in groups[0] for i in group]
+        if any(not isinstance(i,int) or not 0<=i<len(pool) for i in chosen):raise ValueError('Pilot index outside image list.')
+        groups=[[[pool[i] for i in chosen]]]
     timelines=[layout(group,voices,samples,bar,cfg) for group in groups]
     out.mkdir(parents=True)
     plan_files=[]
     for number,t in enumerate(timelines,1):
         part=out/f'segment-{number:02d}';part.mkdir()
         t.update({'segment':number,'kind':'pilot' if pilot else 'full','config_fingerprint':fp,'font':font,'visual_policy_version':VISUAL_POLICY_VERSION})
+        if pilot_context is not None:
+            for scene in t['scenes']:
+                if scene['kind']=='overview':scene['items']=pilot_context
+            t['pilot_source_round']=cfg['pilot_overview_round']
         n=round(t['duration_sec']*SR);voice=np.zeros(n,np.float32);duck=np.ones(n,np.float32)
         for cue in t['cues']:
             x=samples[(cue['spoken_text'],cue['role'])];start=cue['start_sample'];voice[start:start+len(x)]+=x
@@ -176,6 +183,14 @@ def renderer(root,cfg,t):
 
 def render(project,config,segment=1,reuse_audio=None):
     root,cfg,*_=load_job(project,config);out=output_path(root,cfg['output_dir']);job=read_json(out/'job.json')
+    if cfg.get('required_pilot_acceptance'):
+        gate=cfg['required_pilot_acceptance']
+        acceptance=resolve(root,gate['record'])
+        if not acceptance.is_file():raise ValueError('Full render awaits explicit teacher pilot acceptance.')
+        accepted=read_json(acceptance)
+        pilot=verified_asset(root,gate['pilot'])
+        if accepted.get('status')!='teacher_accepted' or accepted.get('sha256')!=sha(pilot) or not accepted.get('user_quote','').strip():
+            raise ValueError('Full render awaits valid teacher acceptance of the exact pilot.')
     if job.get('visual_policy_version')!=VISUAL_POLICY_VERSION:raise ValueError('Visual rules changed; plan a new output directory.')
     if job['config_fingerprint']!=fingerprint(cfg):raise ValueError('Job config changed; plan a new output directory.')
     part=out/f'segment-{segment:02d}';t=read_json(part/'timeline.json');video=part/'video.mp4'
@@ -283,6 +298,9 @@ def verify(project,config,segment=1):
         'all_encoded_word_frames':all(v['expected_frame_mae']<3 for v in visuals),'source_and_voice_hashes_verified':True,
         'all_encoded_overview_frames':bool(overviews) and all(v['expected_frame_mae']<3 for v in overviews),
         'eight_card_overview_four_columns_two_rows':all(v['columns']==4 and v['rows']==2 for v in overviews if v['count']==8),
+        'nine_card_overview_three_columns_three_rows':all(v['columns']==3 and v['rows']==3 for v in overviews if v['count']==9),
+        'ten_card_overview_five_columns_two_rows':all(v['columns']==5 and v['rows']==2 for v in overviews if v['count']==10),
+        'six_card_overview_three_columns_two_rows':all(v['columns']==3 and v['rows']==2 for v in overviews if v['count']==6),
         'display_case_checked':all(i['word']==display_word(i['word'],cfg.get('display_case_exceptions')) for i in cfg['items'])}
     report={'checks':checks,'passed':all(checks.values()),'audio_correlation':corr,'sha256':sha(video),'bytes':video.stat().st_size,
             'audio_rows':audio_rows,'visual_samples_directory':qa.name,'visual_samples':visuals,'teacher_acceptance':'pending',

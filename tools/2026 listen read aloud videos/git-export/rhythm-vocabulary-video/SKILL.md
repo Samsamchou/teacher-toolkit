@@ -5,6 +5,19 @@ description: 以圖片或學生掃描作品製作節奏單字朗讀MP4，包含�
 
 # 節奏單字朗讀影片製作
 
+## 字體規則（老師 2026-11-10 指定：所有有字的動畫與影片）
+
+> **本 skill 例外（老師 2026-11-13）**：朗讀影片的英文字 **Comic Relief 與 Comic Sans Bold 交替使用**，一支用一種、下一支換另一種，兩種都算合格。
+> - 用 job 的 `font` 欄位切換：`C:/Windows/Fonts/comicbd.ttf` 或 `C:/Users/User/AppData/Local/Microsoft/Windows/Fonts/ComicRelief-Bold.ttf`。
+> - 上一支用哪一種，記在專案的 `CLAUDE.md`。
+> - 下面的「一律 Comic Relief」只適用其他影片流程。
+
+- 畫面上所有英文字（字幕、句子、標籤、倒數數字、片頭片尾、字卡）一律用 **Comic Relief**（以 Bold 為主、Regular 為輔），不換成 Nunito、Arial、Comic Sans 等其他字體。
+- 字型檔：`C:\Users\User\AppData\Local\Microsoft\Windows\Fonts\ComicRelief-Bold.ttf`、`ComicRelief-Regular.ttf`。網頁／Canvas／Three.js 先把字型檔複製進專案，用 `@font-face` 載入，等 `document.fonts.load(...)` 完成才截圖；ffmpeg ASS 字幕用 `subtitles=...:fontsdir=<含這兩個檔的資料夾>`，`Fontname=Comic Relief`。
+- Comic Relief 沒有中文字：中文字幕、注音沿用該流程原本的中文字型，字型家族寫成 `'Comic Relief', <中文字型>`，英文用 Comic Relief、中文自動退回中文字型。
+- 抽格檢查時確認字真的是 Comic Relief，不是瀏覽器預設字體。
+
+
 將教師提供的圖片與字詞製成可驗收的MP4。正式樣式源自教師已驗收的v05九科目影片；不是把九科目、90.17秒或特定學生座標固定套到所有新案。
 
 ## 正式預設與來源
@@ -35,6 +48,14 @@ description: 以圖片或學生掃描作品製作節奏單字朗讀MP4，包含�
 | 8或9 | 同組圖片用於兩輪 |
 | 16 | 前8張第一輪，後8張第二輪 |
 | 32 | 前16張為一段、後16張另一段；每段再前後8張分兩輪 |
+| 10 | `mode: three-rounds-ten-repeat`：同10張同序重複3輪，總覽5欄×2列（HWG7 U02正式版，60次朗讀） |
+| 18（9+9） | `mode: two-rounds`：01–09第一輪、10–18第二輪，各3×3（502九科目正式版） |
+| 18（6+6+6） | `mode: three-rounds-six`：三輪各6張，總覽3欄×2列（SF3 U02） |
+
+| 12（6+6） | `mode: two-rounds-six`：兩輪各6張，3×2（二水地點試片用；也可用於12張新題組） |
+| 24（6×4） | `mode: four-rounds-six`：四輪各6張，3×2；例：R1–R2 3D建築、R3–R4 同12字的雙圖示卡（二水小行星12地點正式版，2026-11-13） |
+
+12／24張同字不同圖時用`round_word_policy: explicit`。18張有兩種切法，`auto`不會自動判斷，必須依教師指定寫明`mode`。
 
 依檔名數字排序，不以英文字母排序；每張圖片使用明確的顯示字及發音文字。兩輪預設同詞同序，**若實際檔案不同，先列出差異；教師明確選擇依檔名／不同輪次內容時用`round_word_policy: explicit`，不得強制刪圖或替換單字。** 其他張數先釐清配對，不自行猜分組。
 
@@ -50,7 +71,11 @@ python scripts/rhythm_video.py render --project PROJECT --config JOB_JSON --segm
 python scripts/rhythm_video.py verify --project PROJECT --config JOB_JSON --segment 1
 ```
 
-以上`PROJECT`等是使用者本次實際路徑；scripts相對於本技能。初始化作業時複製profile後填寫items、output_dir、配對確認狀態。路徑含空白時使用shell正確引號；將資料寫JSON，不拼接成shell程式。
+以上`PROJECT`等是使用者本次實際路徑；scripts相對於本技能。
+
+**Claude 版說明（2026-11-13 交接）**：scripts 已併入 502／SF3／HWG7 三次製作時的擴充（10／18張路由、6／10張總覽、`pilot_overview_round`、`required_pilot_acceptance` 試片驗收門檻、語音預算上限）。新語音生成的 job 需寫 `max_total_cost_usd` 與 `budget_usd`（本次授權金額），超過就不送請求。專案慣例與歷次正式片見專案資料夾 `CLAUDE.md`。舊版備份：專案 `skills/rhythm-vocabulary-video-claude-before-20261113.zip`。
+
+初始化作業時複製profile後填寫items、output_dir、配對確認狀態。路徑含空白時使用shell正確引號；將資料寫JSON，不拼接成shell程式。
 
 ## 檢查與交付
 

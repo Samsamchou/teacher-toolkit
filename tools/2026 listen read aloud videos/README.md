@@ -4,9 +4,54 @@
 
 ## 目前狀態 / Current status
 
+<!-- claude-handoff-20261113 -->
+## 2026-11-13 交接到 Claude＋二水小行星 12 地點正式版
+
+- 之後一律在 Claude 用 `rhythm-vocabulary-video` skill；先讀 `CLAUDE.md`。skill 已補 10／12／18／24 張版型。
+- **二水小行星 12 地點**（`productions/ershui-planet-places/v01/full/segment-01/video.mp4`，120.93 秒，4 輪 × 6 張）：老師「A（確定為正式版）」。
+- **SF3 U02 完整版**：老師「完整版確認」，已補正式驗收紀錄。
+- 字型：Comic Relief／Comic Sans 交替使用，下一支用 Comic Relief。
+- 目前沒有待驗收的片子。
+<!-- /claude-handoff-20261113 -->
+
+<!-- hwg7-u02-closeout-20261011 -->
+## 2026-10-11 HWG7 U02正式版已收工保存
+
+已由教師「完整版通過，確定為正式版」明確接受；三輪同10圖、60次朗讀、164.466667秒／1080p30。正式影片與預覽在productions/HWG7 U02/v01/full/segment-01；交接見CLOSEOUT-20261011-HWG7-U02.md。收工核對影片及20個原圖／圖卡雜湊。指定Obsidian四區段已保存；Git未提交推送，Drive服務端同步未獨立驗證。HWG7 U02無待验收事項；後續按新素材接續。電腦保持運作。
+<!-- /hwg7-u02-closeout-20261011 -->
+
+
+<!-- hwg7-u02-formal-acceptance-20261011 -->
+## 2026-10-11 HWG7 U02 已驗收為正式版
+
+教師原話：「完整版通過，確定為正式版」。同10張圖片按相同順序重複3輪，5欄×2列總覽、60次朗讀，164.466667秒／1080p30。
+
+正式影片：`productions/HWG7 U02/v01/full/segment-01/video.mp4`；播放與下載：同層 `preview.html`。正式驗收紀錄：`productions/HWG7 U02/v01/full/segment-01/TEACHER_ACCEPTANCE.json`，對應SHA-256 `3e569fa81a8bfbeafa6e002c8db85d66fc7824311fbc2d0fc695756861aa8149`，51,359,681 bytes；已登記於 `FORMAL_BASELINE.json` 的獨立變體。
+
+媒體20/20與瀏覽器11/11技術QA已完成；教師另已明確接受完整版。先前交付紀錄及QA內的待驗收文字為歷史快照。本次只登記驗收並更新文件，影片、原圖、試片、既有聲音及舊正式版保留。HWG7 U02無待驗收事項，後續依新素材或指示接續。
+<!-- /hwg7-u02-formal-acceptance-20261011 -->
+
+
+<!-- sf3-u02-closeout-20261008:readme -->
+2026-10-08 SF3 U02已收工保存：3輪各6張、18圖、36次朗讀，95.3秒／1080p30。完整版與逐詞預覽在productions/SF3 U02/v01/full/segment-01，收工交接為CLOSEOUT-20261008-SF3-U02.md。試片已明確通過；完整版正式驗收尚待教師確認，本次不改FORMAL_BASELINE。Obsidian四區段同步保存，Git未提交推送；電腦保持運作。
+<!-- /sf3-u02-closeout-20261008:readme -->
+
+<!-- 502-video-formal-closeout-20261006 -->
+2026-10-06：502九科目18張圖片完整版已由教師「確定為正式版，然後收工」確認為正式版。01–09第一輪、10–18第二輪，各9張3×3，0.85倍雙聲線共36次，90.166667秒／1080p30。影片：`productions/9 subjects 502/v01/full/segment-01/502 9 subjects video.mp4`；預覽同層preview.html。接受紀錄同層TEACHER_ACCEPTANCE.json，收工交接 `CLOSEOUT-20261006-502-video.md`。下方10/05待選圖及尚未產片為歷史紀錄。
+<!-- /502-video-formal-closeout-20261006 -->
+
+
+<!-- listen-read-aloud-502-closeout-20261005:status -->
+2026-10-05：502七份掃描已完成35張1024×1024本機圖卡，預覽、清單、ZIP與QA已保存；尚待教師選圖及提供單字順序，沒有製作新影片。收工交接見 `CLOSEOUT-20261005-502.md`。下方2026-10-02為既有正式影片紀錄。
+<!-- /listen-read-aloud-502-closeout-20261005:status -->
+
 2026-10-02：九圖正式基準與16圖01新版均已由教師驗收通過；技能已完成、修訂及安裝。全部已指定製作工作完成，目前沒有新題組或待驗收影片。舊版本和原始素材保留。
 
 ## 正式影片 / Accepted videos
+
+- **HWG7 U02 交通方式正式版**：`productions/HWG7 U02/v01/full/segment-01/video.mp4`；同10圖重複3輪、5×2總覽、60次朗讀，164.466667秒／1080p30。教師「完整版通過，確定為正式版」明確驗收，同層保存正式接受紀錄與預覽。
+
+- **502九科目18圖正式版**：`productions/9 subjects 502/v01/full/segment-01/502 9 subjects video.mp4`；90.166667秒，1080p30，01–09／10–18兩輪各9張、3×3，36次0.85倍雙聲線。已由教師正式接受；同層preview.html提供播放、下載與逐詞跳轉。
 
 - **16張圖片01新版 v02**：`productions/sixteen-subjects-01-20261002/v02-grid4x2-lowercase/segment-01/video.mp4`；82.5秒、1080p30，兩輪各8張，01–08第一輪、09–16第二輪，允許兩輪單字及順序不同。總覽每列4張、共兩列。教師原話「驗收新版 通過」，記錄在同目錄 `TEACHER_ACCEPTANCE.json`。
   [雲端 MP4](https://drive.google.com/file/d/151kOoat5pUMy9ifw1Eifs-2ErA6X_FSq/view?usp=drivesdk)。
@@ -37,12 +82,20 @@
 
 ## 圖片與分析 / Image and analysis records
 
+<!-- listen-read-aloud-502-closeout-20261005:assets -->
+- 502新素材35張：`assets/student-art/502/`；每份原檔名加01–05依Monday→Friday。入口 `assets/student-art/502/preview.html`，ZIP `502-student-art-35-20261005.zip` 與CSV／JSON／逐圖紀錄同層。Fanny05下緣在原掃描中已截斷。
+<!-- /listen-read-aloud-502-closeout-20261005:assets -->
+
 - 學生作品40張1024×1024正式PNG：`assets/student-art/501/batch-20261002/square/`；選圖入口為上層 `preview.html`，下載包、清單及製作QA同層保存。
 - 來源分析與背景音源分離：`analysis/HWG5-U2-20261002/影片分析與重製方法.md`。
 - 真實PDF檔、EXIF及失敗案例已用本機測試驗證；32圖路由測試使用8個來源重複成32個ID，不能當作32張不同學生作品驗收。
 - 初始分析／製作過程保留於 `PROJECT_HANDOFF.md` 及原始資料夾，歷史狀態不覆蓋目前接受紀錄。
 
 ## 收工與同步 / Closeout
+
+<!-- listen-read-aloud-502-closeout-20261005:closeout -->
+- 2026-10-05本機裁圖收工：`CLOSEOUT-20261005-502.md`，核對 `analysis/closeout-502-20261005/`。Obsidian已追加與讀回；本次無Git提交或推送，GDrive服務端完整同步未獨立驗證。
+<!-- /listen-read-aloud-502-closeout-20261005:closeout -->
 
 - 本次交接：`CLOSEOUT-20261002.md`。後續順序：`NEXT_TASKS.md`。
 - 核對紀錄：`analysis/closeout-20261002/verification.json`，兩支MP4與15檔技能／ZIP雜湊一致。

@@ -77,10 +77,14 @@ def routes(items,mode='auto'):
     n=len(items)
     if mode=='auto':
         mode='repeat' if n in (8,9) else 'two-rounds' if n==16 else 'two-segments' if n==32 else ''
+    if mode=='three-rounds-ten-repeat' and n==10: return [[items,items,items]]
+    if mode=='three-rounds-six' and n==18: return [[items[:6],items[6:12],items[12:18]]]
+    if mode=='two-rounds-six' and n==12: return [[items[:6],items[6:]]]
+    if mode=='four-rounds-six' and n==24: return [[items[:6],items[6:12],items[12:18],items[18:24]]]
     if mode=='repeat' and n in (8,9): return [[items,items]]
-    if mode=='two-rounds' and n==16: return [[items[:8],items[8:]]]
+    if mode=='two-rounds' and n in (16,18): return [[items[:n//2],items[n//2:]]]
     if mode=='two-segments' and n==32: return [[items[:8],items[8:16]],[items[16:24],items[24:]]]
-    raise ValueError('Image routing needs 8/9 repeat, 16 two-rounds, or 32 two-segments; no images were discarded.')
+    raise ValueError('Image routing needs 8/9 repeat, 10 three-rounds-ten-repeat, 16 two-rounds, 18 two-rounds (9+9) or three-rounds-six (6+6+6, explicit mode), 12 two-rounds-six (6+6, explicit), 24 four-rounds-six (explicit), or 32 two-segments; no images were discarded.')
 
 def display_word(text,exceptions=None):
     """Lowercase ordinary vocabulary; language names and acronyms retain their case."""
@@ -97,7 +101,13 @@ def display_word(text,exceptions=None):
     return fixed.get(value.casefold(),value.lower())
 
 def overview_layout(count):
-    if not 1<=count<=9:raise ValueError('Overview supports one to nine cards.')
+    if count==10:
+        return {'columns':5,'rows':2,'side':252,'label_offset':174,'font_size':36,
+                'centers':[(x,y) for y in (302,766) for x in (210,585,960,1335,1710)]}
+    if not 1<=count<=9:raise ValueError('Overview supports one to ten cards.')
+    if count==6:
+        return {'columns':3,'rows':2,'side':290,'label_offset':196,'font_size':42,
+                'centers':[(x,y) for y in (302,766) for x in (460,960,1460)]}
     if count==8:
         return {'columns':4,'rows':2,'side':290,'label_offset':196,'font_size':42,
                 'centers':[(x,y) for y in (302,766) for x in (285,735,1185,1635)]}

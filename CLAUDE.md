@@ -54,6 +54,9 @@
   整個資料夾不入庫（.gitignore）；部署用 `stage-for-deploy.ps1` 到 C 槽暫存再 deploy，`--account u9431818@gmail.com`。
   先讀該資料夾 `CLAUDE.md`、`HANDOFF.md`。
 
+- `tools/2026 listen read aloud videos/`：節奏單字朗讀影片（read aloud clips，黑板圖卡＋marin／coral 雙聲線 0.85 倍對拍）。
+  2026-11-13 從 Codex 交接到 Claude，之後一律用 skill `rhythm-vocabulary-video`；先讀該資料夾 `CLAUDE.md`。學生作品與影音不入庫。
+
 - `tools/2026 Thanksgiving/`：五六年級感恩節英語活動。參考報告（Markdown＋Google 文件）、
   開場影片（南瓜派小子 Pippy，hybrid-ai-film 的 Colab 流程，進度見 HANDOFF）、
   `thankful-35/` 35 句感謝句程式動畫（網頁播放器＋MP4）。先讀該資料夾 `HANDOFF.md`；影音不入庫。
