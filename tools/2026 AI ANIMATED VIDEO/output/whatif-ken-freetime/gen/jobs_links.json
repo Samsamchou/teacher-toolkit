@@ -1,0 +1,83 @@
+[
+ {
+  "out": "link_s01.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) sits at his wooden desk in his small bedroom after school, reading an open English textbook with a pencil in hand, a little worried but focused; rain on the window, warm desk lamp, school bag on the chair."
+ },
+ {
+  "out": "link_s02.png",
+  "refs": [
+   "ken_flat.png",
+   "mom_A.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) and Ken's Mom (shoulder-length black hair, lavender cardigan, white T-shirt, jeans) from the second attached image sit together on a cozy living-room sofa at night, both laughing at a TV in front of them (TV seen from the side, screen shows only bright colors and a cartoon cat, no text); rainy window behind."
+ },
+ {
+  "out": "link_s03.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) jogs happily along a quiet Ershui town street in the cool sunny early morning, running shoes, big stride, both feet clearly running; old two-floor shop houses, the gate of an elementary school ahead."
+ },
+ {
+  "out": "link_s04.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) sits in a bright, air-conditioned public library reading room, wearing big new orange over-ear headphones, eyes closed, smiling and nodding to music; tall bookshelves, sunlight outside the big windows."
+ },
+ {
+  "out": "link_s05.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) stands in his bedroom in the evening playing a soprano recorder: BOTH hands on the recorder (left hand on top, right hand below, fingers covering the holes), the mouthpiece in his lips, cheeks a little puffed; a music sheet stand with only note symbols, warm lamp light."
+ },
+ {
+  "out": "link_s06.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) sits at a desk with a computer at night wearing a gaming headset with a microphone, both fists raised in a big cheer because he won; the screen shows a colorful cartoon game with fireworks and a trophy icon, no text."
+ },
+ {
+  "out": "link_s07.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) sits at his desk using a computer on a rainy afternoon, one hand on the mouse, looking happily at the screen which shows a photo grid of a small Taiwanese town: a white old train station, green rice fields, a red brick shop street; a printed report with only pictures on the desk."
+ },
+ {
+  "out": "link_s08.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) rides a blue bicycle on a sunny, windy street, BOTH hands on the handlebars, feet on the pedals, leaves blowing; at the elementary school gate ahead, two friends (a boy and a girl) wave at him."
+ },
+ {
+  "out": "link_s09.png",
+  "refs": [
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) jumps and shoots a basketball toward a basketball hoop that stands on a wide green grass lawn under a sunny sky; the ball is in the air near the hoop, two friends cheer, their bikes parked on the side."
+ },
+ {
+  "out": "link_s10.png",
+  "refs": [
+   "ken_flat.png",
+   "mom_A.png",
+   "dad_B.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Night camping on a wide grass lawn: Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers), Ken's Mom (shoulder-length black hair, lavender cardigan, white T-shirt, jeans) from the second attached image and Ken's Dad (orange-and-white baseball cap, grey zip-up sports jacket, white T-shirt, dark track pants) from the third attached image sit in front of a small orange tent with a glowing camping lantern; Ken points up at a sky full of stars; a gentle campfire glow."
+ },
+ {
+  "out": "link_s11.png",
+  "refs": [
+   "ken_flat.png",
+   "dad_B.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene, Ken is the first attached image. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Sunny Sunday morning on a wide green grass lawn: Ken's Dad (orange-and-white baseball cap, grey zip-up sports jacket, white T-shirt, dark track pants) from the third attached image has just pitched a baseball, Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket, navy pants, orange-white sneakers) holds a baseball bat with BOTH hands and swings, the ball flying far into the blue sky; joyful faces."
+ }
+]

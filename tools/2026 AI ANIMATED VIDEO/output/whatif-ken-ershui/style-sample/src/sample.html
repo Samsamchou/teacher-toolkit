@@ -1,0 +1,102 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: "Comic Relief"; src: url("fonts/ComicRelief-Bold.ttf"); font-weight: 700; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #140c2e; }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Comic Relief", "Microsoft JhengHei", sans-serif; font-weight: 700; }
+.layer { position: absolute; inset: 0; }
+#bg { background: url("bg.png") center/cover no-repeat; transform: scale(1.06); transform-origin: 50% 60%; }
+/* 程式光束：從車站屋頂後方放射 */
+#rays { background: repeating-conic-gradient(from 0deg at 50% 38%, rgba(255,190,140,0.10) 0deg 4deg, rgba(255,190,140,0) 4deg 11deg);
+        mask-image: radial-gradient(ellipse 60% 55% at 50% 38%, #000 0%, transparent 75%);
+        -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 38%, #000 0%, transparent 75%); mix-blend-mode: screen; }
+#vignette { background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, rgba(10,4,30,0.65) 100%); }
+#shade { background: linear-gradient(180deg, rgba(20,10,50,0.35) 0%, transparent 35%, transparent 70%, rgba(20,10,50,0.45) 100%); }
+canvas { position: absolute; inset: 0; }
+#ken { position: absolute; filter: drop-shadow(-6px 0 10px rgba(255,150,80,0.55)) drop-shadow(0 0 2px rgba(20,10,40,0.6)); }
+#kenShadow { position: absolute; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(10,5,30,0.55), transparent 70%); }
+.glow { color: #fff; text-shadow: 0 0 18px rgba(255,170,110,0.55), 0 4px 0 rgba(30,15,60,0.55); }
+#title { position: absolute; top: 70px; width: 100%; text-align: center; }
+#title .small { font-size: 46px; letter-spacing: 6px; color: #ffd9b8; }
+#title .big { font-size: 118px; line-height: 1.05; }
+#title .accent { color: #ff9a3c; }
+.hud { position: absolute; }
+.hud .lab { font-size: 26px; letter-spacing: 5px; color: #ffcf9e; opacity: 0.9; }
+.hud .val { font-size: 92px; line-height: 1; }
+#oneword { position: absolute; bottom: 250px; width: 100%; text-align: center; font-size: 120px; color: #fff;
+           -webkit-text-stroke: 10px #1d1240; paint-order: stroke fill; }
+#karaoke { position: absolute; bottom: 245px; left: 50%; transform: translateX(-56%); padding: 22px 46px; border-radius: 28px;
+           background: rgba(20,12,48,0.72); font-size: 54px; white-space: nowrap; color: #fff; }
+#karaoke .done { color: #ffb347; } #karaoke .now { color: #ffb347; text-decoration: underline 6px; text-underline-offset: 12px; }
+#karaoke .zh { display: block; font-family: "Microsoft JhengHei"; font-size: 36px; color: #d9cff5; text-align: center; margin-top: 8px; }
+#who { position: absolute; bottom: 300px; left: 120px; font-size: 40px; color: #ffd9b8; }
+</style></head>
+<body><div id="stage">
+  <div class="layer" id="bg"></div>
+  <div class="layer" id="rays"></div>
+  <div id="kenShadow"></div>
+  <img id="ken" src="ken.png">
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <div class="layer" id="shade"></div>
+  <div class="layer" id="vignette"></div>
+  <div id="overlay"></div>
+</div>
+<script>
+const P = new URLSearchParams(location.search);
+const frame = P.get("frame") || "A";
+const ov = document.getElementById("overlay");
+const ken = document.getElementById("ken"), sh = document.getElementById("kenShadow");
+const fx = document.getElementById("fx").getContext("2d");
+function rnd(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+function bokeh(n, seed) {           // 前景散景光點（固定種子，每次一樣）
+  const r = rnd(seed);
+  for (let i = 0; i < n; i++) {
+    const x = r() * 1920, y = 600 + r() * 480, rad = 18 + r() * 60;
+    const g = fx.createRadialGradient(x, y, 0, x, y, rad);
+    const warm = r() > 0.4;
+    g.addColorStop(0, warm ? "rgba(255,190,120,0.22)" : "rgba(170,150,255,0.18)");
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    fx.fillStyle = g; fx.beginPath(); fx.arc(x, y, rad, 0, Math.PI * 2); fx.fill();
+  }
+}
+function rain(seed) {
+  const r = rnd(seed);
+  fx.strokeStyle = "rgba(200,210,255,0.35)"; fx.lineWidth = 2;
+  for (let i = 0; i < 420; i++) {
+    const x = r() * 2100 - 90, y = r() * 1080, len = 30 + r() * 50;
+    fx.beginPath(); fx.moveTo(x, y); fx.lineTo(x - len * 0.25, y + len); fx.stroke();
+  }
+}
+function placeKen(cx, footY, h) {
+  ken.onload = null;
+  const w = ken.naturalWidth * h / ken.naturalHeight;
+  Object.assign(ken.style, { left: (cx - w / 2) + "px", top: (footY - h) + "px", height: h + "px" });
+  Object.assign(sh.style, { left: (cx - w * 0.55) + "px", top: (footY - 22) + "px", width: (w * 1.1) + "px", height: "44px" });
+}
+function hud(x, y, lab, val, align) {
+  return `<div class="hud glow" style="left:${x}px;top:${y}px;text-align:${align}"><div class="lab">${lab}</div><div class="val">${val}</div></div>`;
+}
+function go() {
+  if (frame === "A") {                      // 片名畫面
+    placeKen(960, 830, 540);
+    bokeh(26, 7);
+    ov.innerHTML = `<div id="title" class="glow"><div class="small">WHAT IF YOU WERE</div>
+      <div class="big"><span class="accent">KEN</span> IN ERSHUI?</div></div>`;
+  } else {                                   // 第 1 段：Monday 7:30 rainy
+    document.getElementById("bg").style.filter = "saturate(0.75) brightness(0.8) hue-rotate(-12deg)";
+    document.getElementById("rays").style.opacity = 0.35;
+    placeKen(frame === "B" ? 1380 : 1760, 800, 440);
+    rain(3); bokeh(12, 11);
+    let h = hud(90, 70, "DAY", "MONDAY", "left") + hud(1520, 70, "TIME", "7:30", "right")
+          + `<div class="hud glow" style="left:1520px;top:230px;width:310px;text-align:right"><div class="lab">WEATHER</div><div class="val" style="font-size:64px">🌧 RAINY</div></div>`;
+    if (frame === "B") h += `<div id="oneword">RAINY</div>`;
+    else h += `<div id="karaoke"><span class="done">It's Monday. It's </span><span class="now">rainy</span> today. It's seven thirty.
+               <span class="zh">今天星期一，下雨天。現在七點半。</span></div>`;
+    ov.innerHTML = h;
+  }
+}
+document.fonts.load('700 40px "Comic Relief"').then(() => {
+  if (ken.complete) go(); else ken.onload = go;
+  setTimeout(() => document.body.setAttribute("data-ready", "1"), 300);
+});
+</script></body></html>

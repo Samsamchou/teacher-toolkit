@@ -1,0 +1,217 @@
+{
+ "note": "edge-tts（0.8 倍＝rate -20%）。句子照故事稿 v1（老師 11/13 核准，script/make_story.py）。老師 11/13 挑：媽媽聲音 A（Aria）、爸爸聲音 A（Andrew）。",
+ "voices": {
+  "ken": {
+   "voice": "en-US-GuyNeural",
+   "rate": "-20%",
+   "pitch": "+18Hz"
+  },
+  "narrator": {
+   "voice": "en-US-JennyNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "mom": {
+   "voice": "en-US-AriaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "dad": {
+   "voice": "en-US-AndrewNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  }
+ },
+ "candidates": {
+  "mom": {
+   "A": [
+    "en-US-AriaNeural",
+    "+0Hz"
+   ],
+   "B": [
+    "en-US-MichelleNeural",
+    "+0Hz"
+   ],
+   "C": [
+    "en-US-EmmaNeural",
+    "+0Hz"
+   ]
+  },
+  "dad": {
+   "A": [
+    "en-US-AndrewNeural",
+    "+0Hz"
+   ],
+   "B": [
+    "en-US-ChristopherNeural",
+    "+0Hz"
+   ],
+   "C": [
+    "en-US-BrianNeural",
+    "-6Hz"
+   ]
+  }
+ },
+ "lines": {
+  "s00_wake": [
+   "narrator",
+   "You wake up. You look in the mirror."
+  ],
+  "s00_huh": [
+   "narrator",
+   "Huh? You are Ken!"
+  ],
+  "s00_title": [
+   "narrator",
+   "What if you were Ken in Ershui?"
+  ],
+  "s00_week": [
+   "narrator",
+   "It's a new week. After school, you have free time!"
+  ],
+  "s01_ask": [
+   "mom",
+   "Today is Monday. School is over. It's rainy. Time to go home. It's four ten. What do you do in your free time?"
+  ],
+  "s01_ken": [
+   "ken",
+   "I study English in my free time."
+  ],
+  "s01_link": [
+   "narrator",
+   "You read your English book. There's a quiz tomorrow!"
+  ],
+  "s02_ask": [
+   "dad",
+   "It's Monday evening. It's rainy outside. It's seven thirty. What do you do in your free time?"
+  ],
+  "s02_ken": [
+   "ken",
+   "I watch TV in my free time."
+  ],
+  "s02_link": [
+   "narrator",
+   "You sit on the sofa with Mom. Ha ha! The show is so funny."
+  ],
+  "s03_ask": [
+   "mom",
+   "Today is Tuesday. It's a cool, sunny morning. Time to go to school. It's seven o'clock. What do you do in your free time?"
+  ],
+  "s03_ken": [
+   "ken",
+   "I go jogging in my free time."
+  ],
+  "s03_link": [
+   "narrator",
+   "You put on your running shoes. You jog to school. Good morning, school!"
+  ],
+  "s04_ask": [
+   "dad",
+   "It's Tuesday afternoon. School is over. It's very hot. It's four twenty. What do you do in your free time?"
+  ],
+  "s04_ken": [
+   "ken",
+   "I listen to music in my free time."
+  ],
+  "s04_link": [
+   "narrator",
+   "You go to the library. It's cool inside. You put on your new headphones."
+  ],
+  "s05_ask": [
+   "mom",
+   "It's Tuesday evening. Time to go home. It's six fifteen. What do you do in your free time?"
+  ],
+  "s05_ken": [
+   "ken",
+   "I play the recorder in my free time."
+  ],
+  "s05_link": [
+   "narrator",
+   "Mom picks you up at the library. At home, you play a song. Toot, toot!"
+  ],
+  "s06_ask": [
+   "dad",
+   "It's Wednesday evening. It's cloudy and cold. It's eight o'clock. What do you do in your free time?"
+  ],
+  "s06_ken": [
+   "ken",
+   "I play online games in my free time."
+  ],
+  "s06_link": [
+   "narrator",
+   "You put on your headset. You play with Tom. You win!"
+  ],
+  "s07_ask": [
+   "mom",
+   "Today is Thursday. It's rainy after school. It's four forty. What do you do in your free time?"
+  ],
+  "s07_ken": [
+   "ken",
+   "I surf the Internet in my free time."
+  ],
+  "s07_link": [
+   "narrator",
+   "You look for photos of Ershui. Your report looks great!"
+  ],
+  "s08_ask": [
+   "dad",
+   "Today is Saturday. It's sunny and windy. It's nine thirty. What do you do in your free time?"
+  ],
+  "s08_ken": [
+   "ken",
+   "I ride a bike in my free time."
+  ],
+  "s08_link": [
+   "narrator",
+   "Your bike is fixed! You ride to Ershui Elementary School. Your friends are there."
+  ],
+  "s09_ask": [
+   "mom",
+   "It's Saturday afternoon. It's sunny. It's two fifty. What do you do in your free time?"
+  ],
+  "s09_ken": [
+   "ken",
+   "I play basketball in my free time."
+  ],
+  "s09_link": [
+   "narrator",
+   "You and your friends ride to the big lawn. Shoot! Score!"
+  ],
+  "s10_ask": [
+   "mom",
+   "It's Saturday evening. The sky is clear. It's six forty. What do you do in your free time?"
+  ],
+  "s10_ken": [
+   "ken",
+   "I go camping in my free time."
+  ],
+  "s10_link": [
+   "narrator",
+   "Mom and Dad come to the lawn. You put up a tent. Look at all the stars!"
+  ],
+  "s11_ask": [
+   "dad",
+   "Today is Sunday. It's a sunny morning. It's eight forty. What do you do in your free time?"
+  ],
+  "s11_ken": [
+   "ken",
+   "I play baseball in my free time."
+  ],
+  "s11_link": [
+   "narrator",
+   "Dad throws the ball. You hit it. Home run!"
+  ],
+  "s12_week": [
+   "narrator",
+   "Monday, Tuesday, Wednesday, Thursday, Saturday, Sunday. What a free week!"
+  ],
+  "s12_end": [
+   "narrator",
+   "So, what if YOU were Ken in Ershui?"
+  ],
+  "s12_you": [
+   "narrator",
+   "What do YOU do in your free time?"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+  "note": "edge-tts 角色聲音（規格卡：0.8 倍＝rate -20%）。Ken 同遊戲（Guy +18Hz）。句子照 Google 文件故事稿 v1（老師 11/13 核准）。",
+  "voices": {
+    "ken":      {"voice": "en-US-GuyNeural",   "rate": "-20%", "pitch": "+18Hz"},
+    "grandma":  {"voice": "en-US-AvaNeural",   "rate": "-25%", "pitch": "-18Hz"},
+    "narrator": {"voice": "en-US-JennyNeural", "rate": "-20%", "pitch": "+0Hz"},
+    "zunbo":    {"voice": "en-US-AnaNeural",   "rate": "-20%", "pitch": "-25Hz"},
+    "shuiling": {"voice": "en-US-AnaNeural",   "rate": "-20%", "pitch": "+0Hz"}
+  },
+  "lines": {
+    "s00_wake":     ["narrator", "You wake up. You look in the mirror."],
+    "s00_huh":      ["narrator", "Huh? You are Ken!"],
+    "s00_title":    ["narrator", "What if you were Ken in Ershui?"],
+    "s00_break":    ["narrator", "It's spring break. No classes for seven days!"],
+
+    "s01_grandma":  ["grandma",  "It's Monday. It's rainy today. It's seven thirty. Where are you going?"],
+    "s01_ken":      ["ken",      "I'm going to the train station. I want to take a train."],
+    "s01_link":     ["narrator", "Choo-choo! You take the Jiji Line train. On the train, you write a letter."],
+
+    "s02_ask":      ["zunbo",    "It's Monday. It's cloudy today. It's three forty. Where are you going?"],
+    "s02_ken":      ["ken",      "I'm going to the post office. I want to send a letter."],
+    "s02_link":     ["narrator", "Bye-bye, letter! Bye-bye, Monday!"],
+
+    "s03_ask":      ["shuiling", "It's Tuesday. It's windy today. It's nine o'clock. Where are you going?"],
+    "s03_ken":      ["ken",      "I'm going to school. I want to play basketball."],
+    "s03_link":     ["narrator", "Whoosh! The wind takes your ball. You run and run!"],
+
+    "s04_ask":      ["grandma",  "It's Wednesday. It's rainy today. It's two thirty. Where are you going?"],
+    "s04_ken":      ["ken",      "I'm going to the library. I want to read some books."],
+    "s04_link":     ["narrator", "You read a book about old trains. Cool! But... achoo!"],
+
+    "s05_ask":      ["grandma",  "It's Thursday. It's cold today. It's eight fifteen. Where are you going?"],
+    "s05_ken":      ["ken",      "I'm going to the hospital. I want to see a doctor."],
+    "s05_link":     ["narrator", "The doctor says, \"Drink water and rest.\" In the afternoon, the sun comes out."],
+
+    "s06_ask":      ["zunbo",    "It's Thursday. It's sunny today. It's four o'clock. Where are you going?"],
+    "s06_ken":      ["ken",      "I'm going to the bookstore. I want to buy a comic book."],
+    "s06_link":     ["narrator", "You read your comic book. Ha ha ha! Now you are hungry."],
+
+    "s07_ask":      ["shuiling", "It's Friday. It's hot today. It's six twenty. Where are you going?"],
+    "s07_ken":      ["ken",      "I'm going to the restaurant. I want to eat some dumplings."],
+    "s07_link":     ["narrator", "One, two, three... twenty dumplings! Yum!"],
+
+    "s08_ask":      ["zunbo",    "It's Saturday. It's sunny today. It's ten thirty. Where are you going?"],
+    "s08_ken":      ["ken",      "I'm going to the park. I want to fly a kite."],
+    "s08_link":     ["narrator", "Your kite goes up, up, up! The sun is hot. You are thirsty."],
+
+    "s09_ask":      ["shuiling", "It's Saturday. It's hot today. It's one fifty. Where are you going?"],
+    "s09_ken":      ["ken",      "I'm going to the tea shop. I want to drink bubble tea."],
+    "s09_link":     ["narrator", "Cold bubble tea on a hot day. Ahh! Tomorrow is the last day."],
+
+    "s10_ask":      ["grandma",  "It's Sunday. It's sunny today. It's nine forty-five. Where are you going?"],
+    "s10_ken":      ["ken",      "I'm going to the supermarket. I want to buy some cookies."],
+    "s10_link":     ["narrator", "Cookies for you, for Zun-Bo, and for Shuiling!"],
+
+    "s11_ask":      ["shuiling", "It's Sunday. It's cloudy today. It's two o'clock. Where are you going?"],
+    "s11_ken":      ["ken",      "I'm going to the museum. I want to see old trains."],
+
+    "s12_look":     ["narrator", "Look! An old train, just like the train in your book!"],
+    "s12_week":     ["narrator", "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. What a week!"],
+    "s12_end":      ["narrator", "So... what if YOU were Ken in Ershui? Where are YOU going?"]
+  }
+}

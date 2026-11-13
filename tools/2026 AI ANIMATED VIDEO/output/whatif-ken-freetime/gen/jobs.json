@@ -1,0 +1,10 @@
+[
+ {"out": "mom_A.png", "refs": ["ken_flat.png"], "green": true,
+  "prompt": "The attached image is our film style (Ken, a 10-year-old Taiwanese boy). Draw KEN'S MOM in exactly this flat 2D vector film style: a warm, friendly Taiwanese mother in her late 30s, shoulder-length straight black hair tucked behind one ear, gentle smile, soft lavender cardigan over a white T-shirt, dark blue jeans, white sneakers, small orange tote bag strap on one shoulder. Adult woman height (about 1.3 times Ken's height)."},
+ {"out": "mom_B.png", "refs": ["ken_flat.png"], "green": true,
+  "prompt": "The attached image is our film style (Ken, a 10-year-old Taiwanese boy). Draw KEN'S MOM in exactly this flat 2D vector film style: a cheerful Taiwanese mother in her late 30s, black hair in a low ponytail, short fringe, big warm smile, teal blouse with rolled sleeves, beige long skirt, orange flat shoes, a small wristwatch. Adult woman height (about 1.3 times Ken's height)."},
+ {"out": "dad_A.png", "refs": ["ken_flat.png"], "green": true,
+  "prompt": "The attached image is our film style (Ken, a 10-year-old Taiwanese boy). Draw KEN'S DAD in exactly this flat 2D vector film style: a friendly Taiwanese father around 40, short spiky black hair a bit like Ken's, round dark-framed glasses, kind smile, navy polo shirt with a thin orange stripe on the collar, khaki pants, brown shoes. Adult man height (about 1.4 times Ken's height)."},
+ {"out": "dad_B.png", "refs": ["ken_flat.png"], "green": true,
+  "prompt": "The attached image is our film style (Ken, a 10-year-old Taiwanese boy). Draw KEN'S DAD in exactly this flat 2D vector film style: a sporty, cheerful Taiwanese father around 40, short black hair, light stubble, big grin, orange-and-white baseball cap, grey zip-up sports jacket over a white T-shirt, dark track pants, white running shoes. Adult man height (about 1.4 times Ken's height)."}
+]

@@ -1,0 +1,181 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- What if you were Ken in Ershui?｜畫風 I 2D 引擎（每格只由時間 t 決定；render.py 逐格呼叫 renderAt） -->
+<style>
+@font-face { font-family: "Comic Relief"; src: url("fonts/ComicRelief-Bold.ttf"); font-weight: 700; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #140c2e; }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Comic Relief", "Microsoft JhengHei", sans-serif; font-weight: 700; }
+.abs { position: absolute; left: 0; top: 0; }
+.shot { position: absolute; inset: 0; overflow: hidden; display: none; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center; will-change: transform; }
+.char { position: absolute; filter: drop-shadow(-5px 0 9px rgba(255,150,80,0.45)) drop-shadow(0 0 2px rgba(20,10,40,0.6)); transform-origin: 50% 100%; }
+.cshadow { position: absolute; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(10,5,30,0.5), transparent 70%); }
+canvas.fx { position: absolute; inset: 0; pointer-events: none; }
+#vignette { position: absolute; inset: 0; background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, rgba(10,4,30,0.6) 100%); }
+.glow { color: #fff; text-shadow: 0 0 18px rgba(255,170,110,0.55), 0 4px 0 rgba(30,15,60,0.55); }
+.hud { position: absolute; transform-origin: 50% 50%; }
+.hud .lab { font-size: 26px; letter-spacing: 5px; color: #ffcf9e; }
+.hud .val { font-size: 92px; line-height: 1; }
+#kara { position: absolute; left: 960px; bottom: 245px; transform: translateX(-50%); padding: 16px 40px 18px; border-radius: 28px; width: max-content; max-width: 1000px;
+        background: rgba(20,12,48,0.74); font-size: 54px; line-height: 1.25; color: #fff; display: none; text-align: center; }
+#kara .who { display: inline-block; font-size: 30px; color: #1d1240; background: #ffb347; border-radius: 14px; padding: 2px 16px; margin-bottom: 6px; }
+#kara .done { color: #ffb347; }
+#kara .now { color: #ffb347; text-decoration: underline 6px; text-underline-offset: 12px; }
+#kara .zh { display: block; font-family: "Microsoft JhengHei"; font-size: 36px; color: #d9cff5; margin-top: 8px; }
+#listen { position: absolute; left: 50%; top: 360px; transform: translate(-50%,-50%); text-align: center; display: none; }
+#listen .word { font-size: 84px; }
+</style></head>
+<body><div id="stage">
+  <!-- 鏡頭 1：Ken 家門口（奶奶問） -->
+  <div class="shot" id="sh_home">
+    <div class="bg" id="home_bg" style="background-image:url('assets/ken_home_rain.png');background-position:center 100%"></div>
+    <div class="cshadow" id="gm_sh"></div><img class="char" id="gm" src="assets/grandma_cut.png">
+    <div class="cshadow" id="kh_sh"></div><img class="char" id="kh" src="assets/ken_cut.png">
+  </div>
+  <!-- 鏡頭 3：抵達火車站（3D 鏡頭；還沒渲染時用 2D 代替） -->
+  <div class="shot" id="sh_arrive">
+    <img class="abs" id="arr3d" style="width:1920px;height:1080px;display:none">
+    <div id="arr2d" style="position:absolute;inset:0">
+      <div class="bg" id="st_bg" style="background-image:url('assets/ershui_station_night.png')"></div>
+      <div class="cshadow" id="ka_sh"></div><img class="char" id="ka" src="assets/ken_cut.png">
+    </div>
+  </div>
+  <!-- 鏡頭 4：集集線火車經過 -->
+  <div class="shot" id="sh_train">
+    <div class="bg" id="hills_bg" style="background-image:url('assets/jiji_hills.png')"></div>
+    <img class="abs" id="train" src="assets/jiji_train_cut.png">
+  </div>
+  <!-- 鏡頭 5：車窗內 Ken 寫信 -->
+  <div class="shot" id="sh_window">
+    <div class="bg" id="win_bg" style="background-image:url('assets/ken_train_window.png')"></div>
+  </div>
+  <canvas class="fx" id="fx" width="1920" height="1080"></canvas>
+  <div id="vignette"></div>
+  <div id="listen" class="glow"><canvas id="lc" width="420" height="420"></canvas><div class="word">Listen!</div></div>
+  <div id="hud"></div>
+  <div id="kara"></div>
+</div>
+<script>
+// ---------- 小工具 ----------
+const $ = id => document.getElementById(id);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x); return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; };
+const back = x => { x = clamp(x); const c = 1.70158 * 1.3; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const lerp = (a, b, k) => a + (b - a) * k;
+function rnd(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+const fx = $("fx").getContext("2d");
+
+// ---------- 資料（render.py 先把逐字時間注入 window.LINES） ----------
+window.SHOW_ZH = false;
+let SEG = null;   // 由 seg.js 定義（renderAt 時取 window.SEG）
+let charSize = {};
+function placeChar(id, cx, footY, h, opt = {}) {
+  const el = $(id), w = el.naturalWidth * h / el.naturalHeight;
+  const bob = opt.bob || 0, flip = opt.flip ? -1 : 1, sy = opt.sy || 1;
+  el.style.left = (cx - w / 2) + "px"; el.style.top = (footY - h - bob) + "px"; el.style.height = h + "px";
+  el.style.transform = `scale(${flip},${sy})`;
+  el.style.opacity = opt.op ?? 1;
+  const sh = $(id + "_sh");
+  if (sh) Object.assign(sh.style, { left: (cx - w * 0.55) + "px", top: (footY - 20) + "px", width: (w * 1.1) + "px", height: "40px", opacity: opt.op ?? 1 });
+}
+function cam(id, t, t0, t1, s0, s1, x0 = 0, x1 = 0, y0 = 0, y1 = 0) {   // 鏡頭推拉（整個 shot 一起縮放平移）
+  const k = ease((t - t0) / (t1 - t0));
+  $(id).style.transform = `translate(${lerp(x0, x1, k)}px,${lerp(y0, y1, k)}px) scale(${lerp(s0, s1, k)})`;
+  $(id).style.transformOrigin = "50% 60%";
+}
+function rain(t, amount, seed = 3) {             // 程式雨：每條雨線依時間往下掉
+  if (amount <= 0) return;
+  const r = rnd(seed);
+  fx.strokeStyle = `rgba(205,215,255,${0.38 * amount})`; fx.lineWidth = 2;
+  const n = Math.round(380 * amount);
+  for (let i = 0; i < n; i++) {
+    const x0 = r() * 2200 - 140, sp = 900 + r() * 500, len = 30 + r() * 45, ph = r();
+    const y = ((ph * 1180 + t * sp) % 1180) - 60, x = x0 - (y + 60) * 0.22;
+    fx.beginPath(); fx.moveTo(x, y); fx.lineTo(x - len * 0.22, y + len); fx.stroke();
+  }
+}
+function bokeh(t, n, seed, alpha = 1) {
+  const r = rnd(seed);
+  for (let i = 0; i < n; i++) {
+    const x = (r() * 1920 + t * (8 + r() * 14)) % 1980 - 30, y = 620 + r() * 460, rad = 18 + r() * 60;
+    const g = fx.createRadialGradient(x, y, 0, x, y, rad), warm = r() > 0.4;
+    g.addColorStop(0, warm ? `rgba(255,190,120,${0.2 * alpha})` : `rgba(170,150,255,${0.16 * alpha})`);
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    fx.fillStyle = g; fx.beginPath(); fx.arc(x, y, rad, 0, Math.PI * 2); fx.fill();
+  }
+}
+function drops(t, amount, seed = 21) {          // 車窗上的雨滴，慢慢往下滑
+  if (amount <= 0) return;
+  const r = rnd(seed);
+  for (let i = 0; i < 70; i++) {
+    const x = r() * 1920, y0 = r() * 1080, rad = 4 + r() * 9, sp = 6 + r() * 30;
+    const y = y0 + t * sp;
+    fx.fillStyle = `rgba(230,235,255,${0.35 * amount})`;
+    fx.beginPath(); fx.ellipse(x, y % 1100, rad * 0.8, rad, 0, 0, Math.PI * 2); fx.fill();
+    fx.fillStyle = `rgba(255,255,255,${0.5 * amount})`;
+    fx.beginPath(); fx.arc(x - rad * 0.25, (y % 1100) - rad * 0.3, rad * 0.25, 0, Math.PI * 2); fx.fill();
+  }
+}
+// ---------- 卡拉 OK（逐字變色＋目前的字加底線） ----------
+function kara(t) {
+  const el = $("kara");
+  const c = SEG.captions.find(c => t >= c.t0 - 0.15 && t <= c.t0 + window.LINES[c.key].dur + (c.hold ?? 0.5));
+  if (!c) { el.style.display = "none"; return; }
+  const L = window.LINES[c.key], lt = t - c.t0;
+  // 依原句切字（保留標點），逐字對應 WordBoundary
+  const toks = L.text.split(" ");
+  let wi = 0, html = "";
+  toks.forEach((tok, i) => {
+    const w = L.words[Math.min(i, L.words.length - 1)];
+    const cls = lt >= w.t1 ? "done" : (lt >= w.t0 ? "now" : "");
+    html += `<span class="${cls}">${tok}</span>` + (i < toks.length - 1 ? " " : "");
+  });
+  el.innerHTML = (c.who ? `<div class="who">${c.who}</div><br>` : "") + html + (window.SHOW_ZH ? `<span class="zh">${c.zh}</span>` : "");   // 老師 11/13：不要中文字幕（zh 只留在資料裡）
+  el.style.display = "block"; el.style.left = (c.x ?? 960) + "px";
+  if (c.top != null) { el.style.top = c.top + "px"; el.style.bottom = "auto"; } else { el.style.top = "auto"; el.style.bottom = "245px"; }
+  el.style.opacity = clamp((t - c.t0 + 0.15) / 0.2);
+}
+// ---------- HUD：說到那個字才跳出來 ----------
+function hud(t) {
+  let h = "";
+  for (const H of SEG.hud) {
+    if (t < H.t0 || t > H.t1) continue;
+    const k = back((t - H.t0) / 0.35), out = clamp((H.t1 - t) / 0.3);
+    h += `<div class="hud glow" style="left:${H.x}px;top:${H.y}px;width:${H.w || 420}px;text-align:${H.align};opacity:${out};transform:scale(${0.6 + 0.4 * k})">
+      <div class="lab">${H.lab}</div><div class="val" style="font-size:${H.size || 92}px">${H.val}</div></div>`;
+  }
+  $("hud").innerHTML = h;
+}
+function listenIcon(t, t0, t1) {               // 線索：聲音波紋
+  const el = $("listen");
+  if (t < t0 || t > t1) { el.style.display = "none"; return; }
+  el.style.display = "block";
+  el.style.opacity = clamp((t - t0) / 0.25) * clamp((t1 - t) / 0.25);
+  const c = $("lc").getContext("2d"); c.clearRect(0, 0, 420, 420);
+  for (let i = 0; i < 4; i++) {
+    const p = ((t - t0) * 0.9 + i / 4) % 1;
+    c.strokeStyle = `rgba(255,179,71,${1 - p})`; c.lineWidth = 10;
+    c.beginPath(); c.arc(210, 210, 70 + p * 140, 0, Math.PI * 2); c.stroke();
+  }
+  // 喇叭
+  c.fillStyle = "#fff";
+  c.beginPath(); c.moveTo(160, 180); c.lineTo(195, 180); c.lineTo(240, 140); c.lineTo(240, 280); c.lineTo(195, 240); c.lineTo(160, 240); c.closePath(); c.fill();
+  c.strokeStyle = "#fff"; c.lineWidth = 9; c.lineCap = "round";
+  c.beginPath(); c.arc(240, 210, 30, -0.8, 0.8); c.stroke();
+  c.beginPath(); c.arc(240, 210, 52, -0.8, 0.8); c.stroke();
+}
+window.renderAt = function (t) {
+  SEG = window.SEG; fx.clearRect(0, 0, 1920, 1080);
+  for (const s of document.querySelectorAll(".shot")) s.style.display = "none";
+  SEG.draw(t);
+  kara(t); hud(t);
+  const pd = window._pending; window._pending = null;
+  return pd ? pd.then(() => true, () => true) : true;
+};
+const bgUrls = [...document.querySelectorAll(".bg")].map(d => d.style.backgroundImage.slice(5, -2));
+window.ready = Promise.all([document.fonts.load('700 40px "Comic Relief"'),
+  ...bgUrls.map(u => new Promise(r => { const im = new Image(); im.onload = r; im.onerror = r; im.src = u; })),
+  ...[...document.images].map(im => im.complete ? 1 : new Promise(r => { im.onload = r; im.onerror = r; }))]);
+</script>
+<script src="seg.js"></script>
+</body></html>
