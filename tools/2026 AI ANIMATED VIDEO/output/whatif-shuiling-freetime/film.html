@@ -1,0 +1,257 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- What if you were Ken in Ershui?｜全片引擎（畫風 I）。畫面全部畫在 canvas；字幕、HUD 用 DOM。每格只由時間 t 決定。
+     render.py 先注入 window.LINES（逐字時間）與 window.OPTS（kara=字幕版/聽力版）。時間軸在 film.js。 -->
+<style>
+@font-face { font-family: "Comic Relief"; src: url("fonts/ComicRelief-Bold.ttf"); font-weight: 700; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #140c2e; }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Comic Relief", sans-serif; font-weight: 700; }
+canvas { position: absolute; inset: 0; }
+#vignette { position: absolute; inset: 0; background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, rgba(10,4,30,0.55) 100%); }
+.glow { color: #fff; text-shadow: 0 0 18px rgba(255,170,110,0.55), 0 4px 0 rgba(30,15,60,0.55); }
+.hud { position: absolute; transform-origin: 50% 50%; }
+.hud .lab { font-size: 26px; letter-spacing: 5px; color: #ffcf9e; }
+.hud .val { font-size: 92px; line-height: 1; }
+#kara { position: absolute; left: 960px; bottom: 28px; transform: translateX(-50%); padding: 16px 40px 18px; border-radius: 28px; width: max-content; max-width: 1000px;
+        background: rgba(20,12,48,0.74); font-size: 54px; line-height: 1.25; color: #fff; display: none; text-align: center; }
+#kara .who { display: inline-block; font-size: 30px; color: #1d1240; background: #ffb347; border-radius: 14px; padding: 2px 16px; margin-bottom: 6px; }
+#kara .done { color: #ffb347; }
+#kara .suf { color: #ff5d73 !important; text-decoration: underline 6px #ff5d73; text-underline-offset: 12px; }
+#kara .now { color: #ffb347; text-decoration: underline 6px; text-underline-offset: 12px; }
+</style></head>
+<body><div id="stage">
+  <canvas id="cv" width="1920" height="1080"></canvas>
+  <div id="vignette"></div>
+  <div id="hud"></div>
+  <div id="kara"></div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const cv = $("cv"), X = cv.getContext("2d");
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = x => { x = clamp(x); return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; };
+const back = x => { x = clamp(x); const c = 2.2; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const lerp = (a, b, k) => a + (b - a) * k;
+function rnd(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+const OPTS = Object.assign({ kara: true }, window.OPTS || {});
+
+// ---------- 圖片 ----------
+const IM = {};
+function load(name, url) {
+  if (IM[name]) return IM[name].p;
+  const im = new Image(); const p = new Promise(r => { im.onload = () => r(im); im.onerror = () => r(im); });
+  im.src = url; IM[name] = { im, p }; return p;
+}
+const img = n => IM[n] && IM[n].im;
+
+// ---------- 鏡頭與繪圖 ----------
+let CAM = { s: 1, x: 0, y: 0 };
+function camAt(t, t0, t1, s0, s1, x0 = 0, x1 = 0, y0 = 0, y1 = 0) {
+  const k = ease((t - t0) / Math.max(0.001, t1 - t0)); CAM = { s: lerp(s0, s1, k), x: lerp(x0, x1, k), y: lerp(y0, y1, k) };
+}
+function withCam(fn, shake = 0) {
+  X.save(); const ox = 960, oy = 648;
+  X.translate(ox + Math.sin(T * 90) * shake, oy + Math.cos(T * 73) * shake); X.scale(CAM.s, CAM.s); X.translate(-ox + CAM.x, -oy + CAM.y);
+  fn(); X.restore();
+}
+function cover(name, ay = 0.5, filter = "none", alpha = 1) {   // 鋪滿畫面（像 CSS cover）
+  const im = img(name); if (!im || !im.width) return;
+  const s = Math.max(1920 / im.width, 1080 / im.height), w = im.width * s, h = im.height * s;
+  X.save(); X.filter = filter; X.globalAlpha = alpha; X.drawImage(im, (1920 - w) / 2, (1080 - h) * ay, w, h); X.restore();
+}
+function char(name, cx, footY, h, o = {}) {   // 2D 立牌（綠幕去背）＋暖色輪廓光＋地面陰影
+  const im = img(name); if (!im || !im.width) return;
+  const w = im.width * h / im.height, bob = o.bob || 0, sy = o.sy || 1;
+  X.save(); X.globalAlpha = o.alpha ?? 1;
+  const g = X.createRadialGradient(cx, footY - 4, 2, cx, footY - 4, w * 0.6);
+  g.addColorStop(0, "rgba(10,5,30,0.45)"); g.addColorStop(1, "rgba(10,5,30,0)");
+  X.fillStyle = g; X.beginPath(); X.ellipse(cx, footY - 4, w * 0.6, 20, 0, 0, Math.PI * 2); X.fill();
+  X.translate(cx + (o.dx || 0), footY - bob); X.scale(o.flip ? -1 : 1, sy); X.rotate(o.rot || 0);
+  X.shadowColor = "rgba(255,150,80,0.5)"; X.shadowBlur = 10; X.shadowOffsetX = o.flip ? 5 : -5;
+  X.drawImage(im, -w / 2, -h, w, h); X.restore();
+  return { x: cx - w / 2, y: footY - h - bob, w, h };
+}
+function sprite(name, cx, cy, h, rot = 0, alpha = 1) {
+  const im = img(name); if (!im || !im.width) return; const w = im.width * h / im.height;
+  X.save(); X.globalAlpha = alpha; X.translate(cx, cy); X.rotate(rot); X.drawImage(im, -w / 2, -h / 2, w, h); X.restore();
+}
+function bigText(s, x, y, size, k = 1, color = "#fff", rot = 0) {   // 漫畫大字（Comic Relief，粗描邊）
+  if (k <= 0) return;
+  X.save(); X.translate(x, y); X.rotate(rot); X.scale(0.4 + 0.6 * back(k), 0.4 + 0.6 * back(k)); X.globalAlpha = clamp(k * 3);
+  X.font = `700 ${size}px "Comic Relief"`; X.textAlign = "center"; X.textBaseline = "middle"; X.lineJoin = "round";
+  X.lineWidth = size * 0.16; X.strokeStyle = "#1d1240"; X.strokeText(s, 0, 0); X.fillStyle = color; X.fillText(s, 0, 0); X.restore();
+}
+// ---------- 天氣與特效 ----------
+function rain(t, amount, seed = 3) {
+  if (amount <= 0) return; const r = rnd(seed);
+  X.save(); X.strokeStyle = `rgba(205,215,255,${0.38 * amount})`; X.lineWidth = 2;
+  for (let i = 0, n = Math.round(380 * amount); i < n; i++) {
+    const x0 = r() * 2200 - 140, sp = 900 + r() * 500, len = 30 + r() * 45, ph = r();
+    const y = ((ph * 1180 + t * sp) % 1180) - 60, x = x0 - (y + 60) * 0.22;
+    X.beginPath(); X.moveTo(x, y); X.lineTo(x - len * 0.22, y + len); X.stroke();
+  }
+  X.restore();
+}
+function leaves(t, amount, seed = 5) {
+  if (amount <= 0) return; const r = rnd(seed);
+  for (let i = 0; i < 40 * amount; i++) {
+    const sp = 500 + r() * 600, y0 = r() * 900, ph = r(), x = ((ph * 2200 + t * sp) % 2200) - 140, y = y0 + Math.sin(t * 3 + i) * 40;
+    X.save(); X.translate(x, y); X.rotate(t * (3 + r() * 4) + i); X.fillStyle = r() > 0.5 ? "#e8a33a" : "#6fae4a";
+    X.beginPath(); X.ellipse(0, 0, 14, 6, 0, 0, Math.PI * 2); X.fill(); X.restore();
+  }
+}
+function bokeh(t, n, seed, alpha = 1) {
+  const r = rnd(seed);
+  for (let i = 0; i < n; i++) {
+    const x = (r() * 1920 + t * (8 + r() * 14)) % 1980 - 30, y = 620 + r() * 460, rad = 18 + r() * 60;
+    const g = X.createRadialGradient(x, y, 0, x, y, rad), warm = r() > 0.4;
+    g.addColorStop(0, warm ? `rgba(255,190,120,${0.2 * alpha})` : `rgba(170,150,255,${0.16 * alpha})`); g.addColorStop(1, "rgba(0,0,0,0)");
+    X.fillStyle = g; X.beginPath(); X.arc(x, y, rad, 0, Math.PI * 2); X.fill();
+  }
+}
+function drops(t, amount, seed = 21) {
+  if (amount <= 0) return; const r = rnd(seed);
+  for (let i = 0; i < 70; i++) {
+    const x = r() * 1920, y0 = r() * 1080, rad = 4 + r() * 9, sp = 6 + r() * 30, y = (y0 + t * sp) % 1100;
+    X.fillStyle = `rgba(230,235,255,${0.35 * amount})`; X.beginPath(); X.ellipse(x, y, rad * 0.8, rad, 0, 0, Math.PI * 2); X.fill();
+  }
+}
+function rays(t, cx, cy, alpha, color = "255,200,140") {   // 放射光束
+  if (alpha <= 0) return;
+  X.save(); X.globalCompositeOperation = "screen";
+  for (let i = 0; i < 14; i++) {
+    const a = i / 14 * Math.PI * 2 + t * 0.05, a2 = a + 0.12;
+    const g = X.createRadialGradient(cx, cy, 0, cx, cy, 1300); g.addColorStop(0, `rgba(${color},${0.16 * alpha})`); g.addColorStop(1, `rgba(${color},0)`);
+    X.fillStyle = g; X.beginPath(); X.moveTo(cx, cy); X.lineTo(cx + Math.cos(a) * 1600, cy + Math.sin(a) * 1600); X.lineTo(cx + Math.cos(a2) * 1600, cy + Math.sin(a2) * 1600); X.fill();
+  }
+  X.restore();
+}
+function puffs(t, x, y, seed = 9) {   // 冷天呼出的白氣
+  const r = rnd(seed);
+  for (let i = 0; i < 6; i++) {
+    const p = ((t * 0.8 + i / 6) % 1); X.fillStyle = `rgba(255,255,255,${0.45 * (1 - p)})`;
+    X.beginPath(); X.arc(x - p * 60 + r() * 10, y - p * 50, 8 + p * 22, 0, Math.PI * 2); X.fill();
+  }
+}
+function dim(k, blur = 0) { if (k <= 0) return; X.save(); X.fillStyle = `rgba(16,8,40,${0.5 * k})`; X.fillRect(0, 0, 1920, 1080); X.restore(); }
+// ---------- 程式畫的小道具 ----------
+function envelope(x, y, s, rot) {
+  X.save(); X.translate(x, y); X.rotate(rot); X.scale(s, s); X.lineWidth = 5; X.strokeStyle = "#1d1240";
+  X.fillStyle = "#fff6e6"; X.beginPath(); X.rect(-80, -52, 160, 104); X.fill(); X.stroke();
+  X.beginPath(); X.moveTo(-80, -52); X.lineTo(0, 10); X.lineTo(80, -52); X.stroke();
+  X.fillStyle = "#e85a4f"; X.fillRect(40, -40, 26, 30); X.restore();
+}
+function basketball(x, y, r, rot) {
+  X.save(); X.translate(x, y); X.rotate(rot); X.fillStyle = "#f08a2a"; X.strokeStyle = "#1d1240"; X.lineWidth = 5;
+  X.beginPath(); X.arc(0, 0, r, 0, Math.PI * 2); X.fill(); X.stroke();
+  X.beginPath(); X.moveTo(-r, 0); X.lineTo(r, 0); X.moveTo(0, -r); X.lineTo(0, r); X.stroke();
+  X.beginPath(); X.arc(-r * 1.25, 0, r * 0.9, -0.75, 0.75); X.stroke(); X.beginPath(); X.arc(r * 1.25, 0, r * 0.9, Math.PI - 0.75, Math.PI + 0.75); X.stroke();
+  X.restore();
+}
+function kite(x, y, s, rot, t) {
+  X.save(); X.translate(x, y); X.rotate(rot); X.scale(s, s); X.lineWidth = 5; X.strokeStyle = "#1d1240";
+  X.fillStyle = "#ef4f5a"; X.beginPath(); X.moveTo(0, -90); X.lineTo(60, -10); X.lineTo(0, 110); X.lineTo(-60, -10); X.closePath(); X.fill(); X.stroke();
+  X.fillStyle = "#ffcf4a"; X.beginPath(); X.moveTo(0, -90); X.lineTo(60, -10); X.lineTo(0, -10); X.closePath(); X.fill(); X.stroke();
+  X.beginPath(); X.moveTo(0, -90); X.lineTo(0, 110); X.moveTo(-60, -10); X.lineTo(60, -10); X.stroke();
+  X.beginPath(); X.moveTo(0, 110);
+  for (let i = 1; i <= 6; i++) X.lineTo(Math.sin(t * 6 + i) * 18, 110 + i * 28); X.stroke();
+  for (let i = 1; i <= 3; i++) { X.fillStyle = "#5bb5ff"; const yy = 110 + i * 56; X.beginPath(); X.moveTo(Math.sin(t * 6 + i * 2) * 18 - 14, yy - 8); X.lineTo(Math.sin(t * 6 + i * 2) * 18 + 14, yy + 8); X.lineTo(Math.sin(t * 6 + i * 2) * 18 + 14, yy - 8); X.lineTo(Math.sin(t * 6 + i * 2) * 18 - 14, yy + 8); X.fill(); }
+  X.restore();
+}
+function cookies(x, y, s, rot) {
+  X.save(); X.translate(x, y); X.rotate(rot); X.scale(s, s); X.lineWidth = 5; X.strokeStyle = "#1d1240";
+  X.fillStyle = "#ffb347"; X.beginPath(); X.roundRect(-60, -42, 120, 84, 14); X.fill(); X.stroke();
+  X.fillStyle = "#b8743a"; for (const [cx, cy] of [[-28, 0], [0, -6], [28, 2]]) { X.beginPath(); X.arc(cx, cy, 18, 0, Math.PI * 2); X.fill(); X.stroke(); }
+  X.fillStyle = "#5a3418"; for (const [cx, cy] of [[-32, -4], [-22, 6], [4, -10], [-4, 2], [26, -2], [32, 8]]) { X.beginPath(); X.arc(cx, cy, 3, 0, Math.PI * 2); X.fill(); }
+  X.restore();
+}
+function calendar(x, y, s, day, k = 1, color = "#ff9a3c") {   // 月曆卡片
+  if (k <= 0) return;
+  X.save(); X.translate(x, y); X.scale(s * (0.5 + 0.5 * back(k)), s * (0.5 + 0.5 * back(k))); X.globalAlpha = clamp(k * 3);
+  X.lineWidth = 8; X.strokeStyle = "#1d1240"; X.fillStyle = "#fffaf0"; X.beginPath(); X.roundRect(-170, -130, 340, 260, 26); X.fill(); X.stroke();
+  X.fillStyle = color; X.beginPath(); X.roundRect(-170, -130, 340, 80, [26, 26, 0, 0]); X.fill(); X.stroke();
+  X.fillStyle = "#1d1240"; for (const cx of [-90, 90]) { X.beginPath(); X.roundRect(cx - 9, -150, 18, 44, 8); X.fill(); }
+  X.font = '700 64px "Comic Relief"'; X.textAlign = "center"; X.textBaseline = "middle"; X.fillStyle = "#1d1240"; X.fillText(day, 0, 40);
+  X.restore();
+}
+// ---------- Free Time：默劇舞台框（720p 原檔逐格 → 畫面中央的框，左上 Watch!） ----------
+function mimeStage(name, t, t0, t1, done) {
+  if (t < t0 || t > t1) return;
+  const a = clamp((t - t0) / 0.3) * clamp((t1 - t) / 0.3), k = back(clamp((t - t0) / 0.45));
+  const W = 1440 * (0.85 + 0.15 * k), H = W * 9 / 16, cx = 960, cy = 515, x = cx - W / 2, y = cy - H / 2;
+  X.save(); X.globalAlpha = a;
+  X.fillStyle = "rgba(0,0,0,0.35)"; X.beginPath(); X.roundRect(x + 10, y + 16, W, H, 34); X.fill();
+  X.fillStyle = "#fff"; X.beginPath(); X.roundRect(x - 14, y - 14, W + 28, H + 28, 40); X.fill();
+  X.save(); X.beginPath(); X.roundRect(x, y, W, H, 28); X.clip();
+  const im = img(name); if (im && im.width) X.drawImage(im, x, y, W, H); else { X.fillStyle = "#333"; X.fillRect(x, y, W, H); }
+  X.restore(); X.restore();
+  const bx = x + 40, by = y - 14;   // Watch! 標籤（眼睛圖示）
+  X.save(); X.globalAlpha = a; X.fillStyle = "#ffb347"; X.beginPath(); X.roundRect(bx - 20, by - 46, 300, 92, 46); X.fill();
+  X.strokeStyle = "#1d1240"; X.lineWidth = 7; X.beginPath(); X.ellipse(bx + 34, by, 30, 18, 0, 0, Math.PI * 2); X.stroke();
+  X.fillStyle = "#1d1240"; X.beginPath(); X.arc(bx + 34, by, 9, 0, Math.PI * 2); X.fill();
+  X.font = '700 56px "Comic Relief"'; X.textBaseline = "middle"; X.fillText("Watch!", bx + 80, by + 3); X.restore();
+  if (done && t > done) bigText("?", x + W - 40, y + 50, 150 + Math.sin(t * 6) * 8, clamp((t - done) / 0.25), "#ffb347", 0.12);   // 播完：大問號（猜猜看）
+}
+function listenIcon(t, t0, t1, cx = 960, cy = 380) {
+  if (t < t0 || t > t1) return; const a = clamp((t - t0) / 0.25) * clamp((t1 - t) / 0.25);
+  X.save(); X.globalAlpha = a;
+  for (let i = 0; i < 4; i++) { const p = ((t - t0) * 0.9 + i / 4) % 1; X.strokeStyle = `rgba(255,179,71,${1 - p})`; X.lineWidth = 10; X.beginPath(); X.arc(cx, cy, 70 + p * 140, 0, Math.PI * 2); X.stroke(); }
+  X.fillStyle = "#fff"; X.beginPath(); X.moveTo(cx - 50, cy - 30); X.lineTo(cx - 15, cy - 30); X.lineTo(cx + 30, cy - 70); X.lineTo(cx + 30, cy + 70); X.lineTo(cx - 15, cy + 30); X.lineTo(cx - 50, cy + 30); X.closePath(); X.fill();
+  X.strokeStyle = "#fff"; X.lineWidth = 9; X.lineCap = "round";
+  X.beginPath(); X.arc(cx + 30, cy, 30, -0.8, 0.8); X.stroke(); X.beginPath(); X.arc(cx + 30, cy, 52, -0.8, 0.8); X.stroke();
+  X.restore(); bigText("Listen!", cx, cy + 180, 84, clamp((t - t0) / 0.3));
+}
+function lookIcons(t, t0, t1, a, b) {
+  if (t < t0 || t > t1) return; const out = clamp((t1 - t) / 0.25);
+  X.save(); X.globalAlpha = out;
+  [[a, 760, 0.0], [b, 1160, 0.35]].forEach(([n, cx, d]) => {
+    const k = back((t - t0 - d) / 0.35); if (k <= 0) return; const s = 330 * k;
+    X.fillStyle = "rgba(255,250,240,0.95)"; X.strokeStyle = "#ffb347"; X.lineWidth = 10;
+    X.beginPath(); X.roundRect(cx - s / 2 - 16, 380 - s / 2 - 16, s + 32, s + 32, 30); X.fill(); X.stroke();
+    const im = img(n); if (im && im.width) X.drawImage(im, cx - s / 2, 380 - s / 2, s, s);
+  });
+  X.restore(); bigText("Look!", 960, 650, 84, clamp((t - t0) / 0.3));
+}
+// ---------- 卡拉 OK：逐字對齊（標點跟著前一個字） ----------
+const norm = s => s.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+function kara(t) {
+  const el = $("kara");
+  if (!OPTS.kara) { el.style.display = "none"; return; }
+  const c = FILM.captions.find(c => t >= c.t0 - 0.15 && t <= c.t0 + window.LINES[c.key].dur + (c.hold ?? 0.5));
+  if (!c) { el.style.display = "none"; return; }
+  const L = window.LINES[c.key], lt = t - c.t0; let wi = -1, html = "";
+  L.text.split(" ").forEach((tok, i, arr) => {
+    if (norm(tok)) wi++; const w = L.words[Math.max(0, Math.min(wi, L.words.length - 1))];
+    const cls = lt >= w.t1 ? "done" : (lt >= w.t0 ? "now" : "");
+    let body = tok;
+    if (c.suf && norm(tok) === c.suf[0]) { const m = tok.match(/^([A-Za-z]+)(.*)$/); const w = m[1], n = c.suf[1]; body = `${w.slice(0, -n)}<span class="suf">${w.slice(-n)}</span>${m[2]}`; }   // 第三人稱字尾 s/es 換色
+    html += `<span class="${cls}">${body}</span>` + (i < arr.length - 1 ? " " : "");
+  });
+  el.innerHTML = (c.who ? `<div class="who">${c.who}</div><br>` : "") + html;
+  el.style.display = "block"; el.style.left = (c.x ?? 960) + "px"; el.style.maxWidth = (c.maxw || 1000) + "px"; el.style.fontSize = (c.size || 54) + "px";
+  if (c.top != null) { el.style.top = c.top + "px"; el.style.bottom = "auto"; } else { el.style.top = "auto"; el.style.bottom = "28px"; }
+  el.style.opacity = clamp((t - c.t0 + 0.15) / 0.2);
+}
+function hud(t) {
+  let h = "";
+  for (const H of FILM.hud) {
+    if (t < H.t0 || t > H.t1) continue;
+    const k = back((t - H.t0) / 0.35), out = clamp((H.t1 - t) / 0.3);
+    h += `<div class="hud glow" style="left:${H.x}px;top:${H.y}px;width:${H.w || 420}px;text-align:${H.align};opacity:${out};transform:scale(${0.6 + 0.4 * k})">
+      <div class="lab">${H.lab}</div><div class="val" style="font-size:${H.size || 92}px">${H.val}</div></div>`;
+  }
+  $("hud").innerHTML = h;
+}
+let T = 0;
+window.renderAt = async function (t) {
+  T = t; const seg = FILM.segs.find(s => t >= s.t0 && t < s.t0 + s.dur) || FILM.segs[FILM.segs.length - 1];
+  if (seg.pre) await seg.pre(t - seg.t0);
+  X.setTransform(1, 0, 0, 1, 0, 0); X.clearRect(0, 0, 1920, 1080); X.fillStyle = "#140c2e"; X.fillRect(0, 0, 1920, 1080);
+  CAM = { s: 1, x: 0, y: 0 };
+  seg.draw(t - seg.t0, t);
+  kara(t); hud(t);
+  return true;
+};
+</script>
+<script src="film.js"></script>
+</body></html>

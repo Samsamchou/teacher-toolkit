@@ -1,0 +1,88 @@
+[
+ {
+  "out": "open_door.png",
+  "refs": [
+   "shuiling_flat.png",
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Seen from inside Ken's cozy home entrance hall: the front door is open and SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) stands in the doorway on the porch, smiling and waving hello; warm afternoon light; a shoe rack and a small plant by the door. Ken himself is not in the picture (we are Ken)."
+ },
+ {
+  "out": "link_s01.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) jogs happily along a sunny Ershui town path toward a small water park with splashing fountains and a shallow water channel, cool sunny afternoon, big running stride, both feet clearly running."
+ },
+ {
+  "out": "link_s02.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) stands in her cozy bedroom at night playing a soprano recorder: BOTH hands on the recorder (left hand on top, right hand below, fingers covering the holes), the mouthpiece at her lips; the window shows a windy night with swaying trees; warm lamp."
+ },
+ {
+  "out": "link_s03.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) sits at her wooden desk at home and opens an English textbook with both hands, a little wet from the rain, a folded umbrella by the desk; rain on the window."
+ },
+ {
+  "out": "link_s04.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) sits on a soft sofa in her living room at night, laughing hard at a TV in front of her (TV seen from the side, the screen shows only bright colours and a cartoon duck, no text); rain on the window behind."
+ },
+ {
+  "out": "link_s05.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) sits in a bright, cool, air-conditioned public library reading room wearing big over-ear headphones, eyes closed, smiling and nodding to music; tall bookshelves, hot sunny day outside the big windows."
+ },
+ {
+  "out": "link_s06.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) sits at a desk at home on a cloudy evening, one hand on the computer mouse, happily looking at the screen which shows a photo grid of green rice fields, a water canal and mountains; no text anywhere."
+ },
+ {
+  "out": "link_s07.png",
+  "refs": [
+   "shuiling_flat.png",
+   "ken_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) sits at her computer at night wearing a gaming headset, both fists raised in a big happy cheer because she won; the screen shows a colourful cartoon game where a little water-drop character beats a spiky-haired boy character with goggles (like Ken (spiky black hair, orange goggles on his forehead, navy and orange jacket)), fireworks and a trophy icon, no text; rain and wind outside the window."
+ },
+ {
+  "out": "link_s08.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) jumps and shoots a basketball at an elementary school outdoor court after school on a sunny day; the ball is about to drop through the hoop; school building behind."
+ },
+ {
+  "out": "link_s09.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) rides a light-green bicycle along a path across a wide green grass lawn on a sunny, very windy morning, BOTH hands on the handlebars, feet on the pedals, her hair and ribbons blowing, leaves flying."
+ },
+ {
+  "out": "link_s10.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Sunny afternoon on a wide green grass lawn: SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) holds a baseball bat with BOTH hands and has just swung, the ball flying far into the blue sky, two friends cheering behind her."
+ },
+ {
+  "out": "link_s11.png",
+  "refs": [
+   "shuiling_flat.png"
+  ],
+  "prompt": "Landscape 1536x1024 scene. Keep important people and objects in the upper 3/4 of the picture (the bottom quarter will be covered by subtitles). Evening camping at a grassy park beside a calm water canal: SHUILING (from the attached reference shuiling_flat.png: a cute water-drop girl with light-blue water-drop hair, golden rice-ear hair ornaments, white puffy sleeves, green dress with rice-field waves and a small golden bell, green-and-white boots) sits in front of a small green tent with a glowing camping lantern, next to her family (two friendly adults seen from behind, no faces visible), she points up at a sky full of stars."
+ }
+]

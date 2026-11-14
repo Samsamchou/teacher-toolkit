@@ -1,0 +1,231 @@
+{
+ "note": "水鈴版：edge-tts 0.8 倍；聲音沿用 Ken 版 Free Time（媽媽 Aria、爸爸 Andrew、Ken Guy +18Hz、旁白 Jenny）。句子照故事稿 v1（老師 11/14 核准，script/make_story.py）。",
+ "voices": {
+  "ken": {
+   "voice": "en-US-GuyNeural",
+   "rate": "-20%",
+   "pitch": "+18Hz"
+  },
+  "narrator": {
+   "voice": "en-US-JennyNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "mom": {
+   "voice": "en-US-AriaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "dad": {
+   "voice": "en-US-AndrewNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  }
+ },
+ "lines": {
+  "s00_bell": [
+   "narrator",
+   "Ding-dong! Someone is at your door."
+  ],
+  "s00_shui": [
+   "narrator",
+   "It's Shuiling! She is your good friend."
+  ],
+  "s00_title": [
+   "narrator",
+   "What if you were Ken in Ershui?"
+  ],
+  "s00_week": [
+   "narrator",
+   "Mom and Dad ask you about Shuiling's week. Can you answer?"
+  ],
+  "s01_ask": [
+   "mom",
+   "Today is Monday. School is over. It's cool and sunny. It's four thirty. What does she do in her free time?"
+  ],
+  "s01_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s01_ken": [
+   "ken",
+   "She goes jogging in her free time."
+  ],
+  "s01_link": [
+   "narrator",
+   "Shuiling jogs to the Ershui Water Park. She is so fast!"
+  ],
+  "s02_ask": [
+   "dad",
+   "It's Monday evening. It's cold and windy. It's seven fifteen. What does she do in her free time?"
+  ],
+  "s02_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s02_ken": [
+   "ken",
+   "She plays the recorder in her free time."
+  ],
+  "s02_link": [
+   "narrator",
+   "At night, Shuiling plays a song on her recorder. Toot, toot!"
+  ],
+  "s03_ask": [
+   "mom",
+   "Today is Tuesday. It's rainy after school. It's four ten. What does she do in her free time?"
+  ],
+  "s03_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s03_ken": [
+   "ken",
+   "She studies English in her free time."
+  ],
+  "s03_link": [
+   "narrator",
+   "Shuiling walks home in the rain. She opens her English book."
+  ],
+  "s04_ask": [
+   "dad",
+   "It's Tuesday evening. It's still rainy outside. It's eight o'clock. What does she do in her free time?"
+  ],
+  "s04_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s04_ken": [
+   "ken",
+   "She watches TV in her free time."
+  ],
+  "s04_link": [
+   "narrator",
+   "Shuiling sits on the sofa. Ha ha! The show is so funny."
+  ],
+  "s05_ask": [
+   "mom",
+   "It's Wednesday afternoon. School is over. It's very hot. It's one thirty. What does she do in her free time?"
+  ],
+  "s05_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s05_ken": [
+   "ken",
+   "She listens to music in her free time."
+  ],
+  "s05_link": [
+   "narrator",
+   "It's too hot! Shuiling goes to the library. She puts on her headphones."
+  ],
+  "s06_ask": [
+   "dad",
+   "It's Wednesday evening. It's cloudy and cold. It's six forty. What does she do in her free time?"
+  ],
+  "s06_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s06_ken": [
+   "ken",
+   "She surfs the Internet in her free time."
+  ],
+  "s06_link": [
+   "narrator",
+   "Shuiling walks home. She looks for pictures of rice fields online."
+  ],
+  "s07_ask": [
+   "mom",
+   "It's Thursday evening. It's rainy and windy. It's seven thirty. What does she do in her free time?"
+  ],
+  "s07_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s07_ken": [
+   "ken",
+   "She plays online games in her free time."
+  ],
+  "s07_link": [
+   "narrator",
+   "Wind and rain outside! Shuiling plays an online game with you. She wins!"
+  ],
+  "s08_ask": [
+   "dad",
+   "Today is Friday. School is over. It's sunny. It's four twenty. What does she do in her free time?"
+  ],
+  "s08_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s08_ken": [
+   "ken",
+   "She plays basketball in her free time."
+  ],
+  "s08_link": [
+   "narrator",
+   "After school, Shuiling shoots the ball. Swish! She scores!"
+  ],
+  "s09_ask": [
+   "mom",
+   "Today is Saturday. It's a sunny, windy morning. It's nine o'clock. What does she do in her free time?"
+  ],
+  "s09_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s09_ken": [
+   "ken",
+   "She rides a bike in her free time."
+  ],
+  "s09_link": [
+   "narrator",
+   "Shuiling rides her bike to the big lawn. The wind is so strong!"
+  ],
+  "s10_ask": [
+   "dad",
+   "It's Saturday afternoon. It's warm and sunny. It's two forty. What does she do in her free time?"
+  ],
+  "s10_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s10_ken": [
+   "ken",
+   "She plays baseball in her free time."
+  ],
+  "s10_link": [
+   "narrator",
+   "Shuiling swings the bat and hits the ball. Home run!"
+  ],
+  "s11_ask": [
+   "mom",
+   "It's Sunday evening. It's cool. The sky is clear. It's six fifteen. What does she do in her free time?"
+  ],
+  "s11_turn": [
+   "narrator",
+   "Your turn!"
+  ],
+  "s11_ken": [
+   "ken",
+   "She goes camping in her free time."
+  ],
+  "s11_link": [
+   "narrator",
+   "Shuiling and her family camp at Babao Canal Park. Look at the stars!"
+  ],
+  "s12_week": [
+   "narrator",
+   "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. What a busy week, Shuiling!"
+  ],
+  "s12_end": [
+   "narrator",
+   "So, what if YOU were Ken in Ershui?"
+  ],
+  "s12_you": [
+   "narrator",
+   "What does YOUR friend do in his or her free time?"
+  ]
+ }
+}
