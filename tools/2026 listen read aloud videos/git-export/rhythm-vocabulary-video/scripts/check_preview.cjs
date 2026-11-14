@@ -28,7 +28,7 @@ const base=path.resolve(process.argv[2]||'.');
   const mobile=await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth);
   const timeline=JSON.parse(fs.readFileSync(path.join(base,'timeline.json'),'utf8'));
   const checks={video_1080p:meta.width===1920&&meta.height===1080,duration_matches:Math.abs(meta.duration-timeline.duration_sec)<.05,
-   actual_1x_playback:played,all_word_jumps:count===timeline.utterances/2&&jumps.every(j=>j.playing&&Math.abs(j.target-j.actual)<.5),
+   actual_1x_playback:played,all_word_jumps:count===timeline.scenes.filter(s=>s.kind==='word').length&&jumps.every(j=>j.playing&&Math.abs(j.target-j.actual)<.5),
    ending:ended,no_errors:!meta.error&&!errors.length,mobile_no_overflow:mobile};
   const report={checks,passed:Object.values(checks).every(Boolean),meta,jumps,errors,method:'Muted 1x playback up to 10s, all word jumps, ending and responsive screenshots; human listening is separate.'};
   fs.writeFileSync(path.join(base,'QA-browser.json'),JSON.stringify(report,null,2)+'\n',{flag:'wx'});

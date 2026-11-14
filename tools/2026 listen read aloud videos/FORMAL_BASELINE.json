@@ -114,8 +114,27 @@
       "duration_sec": 95.3,
       "utterances": 36,
       "acceptance_record": "productions/SF3 U02/v01/full/segment-01/TEACHER_ACCEPTANCE.json"
+    },
+    "follow_along_six_five_four_rounds_freetime": {
+      "video": "productions/freetime-activities/v02-follow-along/full/segment-01/video.mp4",
+      "sha256": "669568848c39c474ccec6b274253c69f850ae3231df85ee1c3ce7af666006754",
+      "bytes": 28953208,
+      "status": "teacher_accepted_formal",
+      "overview": "6 cards 3x2; 5 cards 3+2 centred",
+      "source_image_count": 22,
+      "rounds": 4,
+      "images_per_round": [
+        6,
+        5,
+        6,
+        5
+      ],
+      "duration_sec": 239.33333333333334,
+      "utterances": 39,
+      "follow_along": true,
+      "acceptance_record": "productions/freetime-activities/v02-follow-along/full/segment-01/TEACHER_ACCEPTANCE.json"
     }
   },
-  "latest_accepted_variant_record": "productions/ershui-planet-places/v01/full/segment-01/TEACHER_ACCEPTANCE.json",
+  "latest_accepted_variant_record": "productions/freetime-activities/v02-follow-along/full/segment-01/TEACHER_ACCEPTANCE.json",
   "variant_note": "Original top-level nine-card reference and accepted eight-card variant remain unchanged. The 502 eighteen-image 9+9 production has separate explicit teacher acceptance. HWG7 U02 reuses the same ten images across three rounds with a 5x2 overview and separate explicit teacher acceptance."
 }

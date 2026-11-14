@@ -80,11 +80,12 @@ def routes(items,mode='auto'):
     if mode=='three-rounds-ten-repeat' and n==10: return [[items,items,items]]
     if mode=='three-rounds-six' and n==18: return [[items[:6],items[6:12],items[12:18]]]
     if mode=='two-rounds-six' and n==12: return [[items[:6],items[6:]]]
+    if mode=='four-rounds-six-five' and n==22: return [[items[:6],items[6:11],items[11:17],items[17:22]]]
     if mode=='four-rounds-six' and n==24: return [[items[:6],items[6:12],items[12:18],items[18:24]]]
     if mode=='repeat' and n in (8,9): return [[items,items]]
     if mode=='two-rounds' and n in (16,18): return [[items[:n//2],items[n//2:]]]
     if mode=='two-segments' and n==32: return [[items[:8],items[8:16]],[items[16:24],items[24:]]]
-    raise ValueError('Image routing needs 8/9 repeat, 10 three-rounds-ten-repeat, 16 two-rounds, 18 two-rounds (9+9) or three-rounds-six (6+6+6, explicit mode), 12 two-rounds-six (6+6, explicit), 24 four-rounds-six (explicit), or 32 two-segments; no images were discarded.')
+    raise ValueError('Image routing needs 8/9 repeat, 10 three-rounds-ten-repeat, 16 two-rounds, 18 two-rounds (9+9) or three-rounds-six (6+6+6, explicit mode), 12 two-rounds-six (6+6, explicit), 24 four-rounds-six (explicit), 22 four-rounds-six-five (6+5+6+5, explicit), or 32 two-segments; no images were discarded.')
 
 def display_word(text,exceptions=None):
     """Lowercase ordinary vocabulary; language names and acronyms retain their case."""
@@ -105,6 +106,9 @@ def overview_layout(count):
         return {'columns':5,'rows':2,'side':252,'label_offset':174,'font_size':36,
                 'centers':[(x,y) for y in (302,766) for x in (210,585,960,1335,1710)]}
     if not 1<=count<=9:raise ValueError('Overview supports one to ten cards.')
+    if count==5:   # 2026-11-14：上 3 下 2 置中，卡片和 6 張同大小
+        return {'columns':3,'rows':2,'side':290,'label_offset':196,'font_size':42,
+                'centers':[(460,302),(960,302),(1460,302),(710,766),(1210,766)]}
     if count==6:
         return {'columns':3,'rows':2,'side':290,'label_offset':196,'font_size':42,
                 'centers':[(x,y) for y in (302,766) for x in (460,960,1460)]}

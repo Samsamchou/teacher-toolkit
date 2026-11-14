@@ -23,6 +23,14 @@
 | HWG7 U02 交通方式 | `three-rounds-ten-repeat` 10 張 × 3 輪，5×2 | `productions/HWG7 U02/v01/full/job.json` | 164.47 秒 |
 | SF3 U02 | `three-rounds-six` 6+6+6，3×2 | `productions/SF3 U02/v01/full/job.json` | 95.3 秒 |
 | 二水小行星 12 地點（2026-11-13，Claude 第一支） | `four-rounds-six`：R1–R2 3D 建築、R3–R4 雙圖示卡，3×2 | `productions/ershui-planet-places/v01/full-job.json` | 120.93 秒 |
+| **Free Time 11 活動跟讀版**（2026-11-14） | `four-rounds-six-five`＋**`follow_along`**：R1–R2 Ken 3D、R3–R4 雙圖示卡，5 張排上 3 下 2 | `productions/freetime-activities/v02-follow-along/full-job.json` | 239.33 秒 |
+
+**跟讀模式**（Free Time 跟讀版定案）：
+- 每個字 16 拍：老師 → 學生 → 兒童 → 學生。最後一輪拿掉老師聲：學生 → 兒童 → 學生 → 空。
+- 伴奏用 `backing.py` 本機合成（style 4，`drum_gain` 1.8、`ding_gain` 2.5）。
+- 整片響度 −14 LUFS，學生拍出現麥克風圖示。
+- 老師嫌太小聲、鼓太小，才調成這組參數，新片沿用。
+- 細節見該資料夾 `README.md`。
 
 二水小行星這支的做法：
 - 3D 圖用 Godot 的 `CARDS=1` 測試模式拍。
@@ -72,7 +80,7 @@ SF3 U02：老師 2026-11-13 回「完整版確認」，已寫入同資料夾的 
 - 換字型的方法：在 job 的 `font` 欄位改路徑。
   - Comic Sans Bold：`C:/Windows/Fonts/comicbd.ttf`（`baseline-profile.json` 的預設）
   - Comic Relief Bold：`C:/Users/User/AppData/Local/Microsoft/Windows/Fonts/ComicRelief-Bold.ttf`
-- 到 2026-11-13 為止的正式片都是 Comic Sans（二水小行星也是），**下一支用 Comic Relief**。
+- 到 2026-11-13 為止的正式片都是 Comic Sans（二水小行星也是）；2026-11-14 Free Time 跟讀版用 Comic Relief，**下一支用 Comic Sans**。
 - 已驗收的正式片不重做。
 
 ## Git

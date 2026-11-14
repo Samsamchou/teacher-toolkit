@@ -5267,6 +5267,12 @@ func _test_groups(only: int) -> void:
 			_on_listen()   # [perf] 演出出來就按「聽句子」（不等截圖、檢查）
 		await _wait(1.6)
 		await _shot(tag + "_4act")
+		if OS.get_environment("CARDS") != "":   # 2026-11-14 朗讀影片用（tools/2026 listen read aloud videos）：藏 UI，演出中隔一下各拍一張
+			ui.visible = false
+			for k in 3:
+				await _wait(0.3 if k == 0 else 1.1)
+				await _shot("%s_card%d" % [It["act"], k])
+			ui.visible = true
 		_check(_hud_safe(), "A q%d key objects not under HUD buttons / bottom panel" % (qi + 1))
 		if in_home and mascot:
 			var iv := _indoor_visible()
