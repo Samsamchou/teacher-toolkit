@@ -99,7 +99,7 @@ def main():
         script = os.environ.get("B3D", "b3d_act.py")
         lines += [f"os.makedirs('{od}', exist_ok=True)",
                   f"r = subprocess.run('{env} /content/blender/blender -b --factory-startup --python /content/src/{script} -- /content/props {od} {shot} {frames} {samples} {scale}', shell=True, capture_output=True, text=True)",
-                  "ls = [l for l in (r.stdout + r.stderr).splitlines() if l.startswith(('FRAME', 'CLIP', 'RATIO', 'HIPS', 'RETARGET', 'MODEL', 'RATIO', 'CLIP', 'DESK', 'OBJS', 'HEADGEAR', 'SCALE', 'BIG', 'BAD', 'BIKE', 'BAT', 'SOFA', 'DESK', 'DRIB', 'PENCIL')) or 'Error' in l or 'Traceback' in l or 'line ' in l]",
+                  "ls = [l for l in (r.stdout + r.stderr).splitlines() if l.startswith(('FRAME', 'CLIP', 'RATIO', 'HIPS', 'RETARGET', 'MODEL', 'RATIO', 'CLIP', 'FACECAM', 'DESK', 'OBJS', 'HEADGEAR', 'SCALE', 'BIG', 'BAD', 'BIKE', 'BAT', 'SOFA', 'DESK', 'DRIB', 'PENCIL')) or 'Error' in l or 'Traceback' in l or 'line ' in l]",
                   f"print('== {shot}', len([l for l in ls if l.startswith('FRAME')]), 'frames'); print(chr(10).join(l for l in ls if not l.startswith('FRAME'))[-1500:], flush=True)"]
     lines.append("os.system('cd /content && rm -f o.zip && zip -q -r o.zip %s')" % ("out" if full else "tout"))
     NL = chr(10)

@@ -1,0 +1,248 @@
+{
+ "note": "問路動畫：edge-tts 0.8 倍；聲音沿用 What if Ken in Ershui（Ken Guy、旁白 Jenny、水鈴 Ana、圳寶 Ana -25Hz、奶奶 Ava）。句子照故事稿 v2（老師 11/15 核准）。",
+ "voices": {
+  "ken": {
+   "voice": "en-US-GuyNeural",
+   "rate": "-20%",
+   "pitch": "+18Hz"
+  },
+  "grandma": {
+   "voice": "en-US-AvaNeural",
+   "rate": "-25%",
+   "pitch": "-18Hz"
+  },
+  "narrator": {
+   "voice": "en-US-JennyNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "zunbo": {
+   "voice": "en-US-AnaNeural",
+   "rate": "-20%",
+   "pitch": "-25Hz"
+  },
+  "shuiling": {
+   "voice": "en-US-AnaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  }
+ },
+ "lines": {
+  "s00_0": [
+   "narrator",
+   "Look! A little Ershui on the table!"
+  ],
+  "s00_1": [
+   "narrator",
+   "The roads have colors. Red Road, Blue Street, Green Road..."
+  ],
+  "s00_2": [
+   "narrator",
+   "A road is big. A street is small."
+  ],
+  "s00_3": [
+   "ken",
+   "Let's play a map game! I ask, you answer!"
+  ],
+  "s01_ask": [
+   "ken",
+   "Where's the train station?"
+  ],
+  "s01_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s01_ans": [
+   "shuiling",
+   "It's on Red Road."
+  ],
+  "s01_thx": [
+   "ken",
+   "Thanks, Shuiling!"
+  ],
+  "s01_link": [
+   "narrator",
+   "Choo-choo! The train is coming!"
+  ],
+  "s02_ask": [
+   "ken",
+   "Where's the post office?"
+  ],
+  "s02_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s02_ans": [
+   "zunbo",
+   "It's on Blue Street."
+  ],
+  "s02_thx": [
+   "ken",
+   "Thank you, Zun-Bo!"
+  ],
+  "s02_link": [
+   "narrator",
+   "You put a letter in the red mailbox."
+  ],
+  "s03_ask": [
+   "ken",
+   "Where's the school?"
+  ],
+  "s03_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s03_ans": [
+   "grandma",
+   "It's on Green Road."
+  ],
+  "s03_thx": [
+   "ken",
+   "Thanks, Grandma!"
+  ],
+  "s03_link": [
+   "narrator",
+   "Ding-dong! The school bell rings."
+  ],
+  "s04_ask": [
+   "ken",
+   "Where's the library?"
+  ],
+  "s04_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s04_ans": [
+   "shuiling",
+   "It's on Yellow Street."
+  ],
+  "s04_thx": [
+   "ken",
+   "Thank you, Shuiling!"
+  ],
+  "s04_link": [
+   "narrator",
+   "Shh! The library is very quiet."
+  ],
+  "s05_ask": [
+   "ken",
+   "Where's the hospital?"
+  ],
+  "s05_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s05_ans": [
+   "zunbo",
+   "It's on White Road."
+  ],
+  "s05_thx": [
+   "ken",
+   "Thanks, Zun-Bo!"
+  ],
+  "s05_link": [
+   "narrator",
+   "The doctor says, \"Drink some water.\""
+  ],
+  "s06_ask": [
+   "ken",
+   "Where's the bookstore?"
+  ],
+  "s06_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s06_ans": [
+   "grandma",
+   "It's on Orange Street."
+  ],
+  "s06_thx": [
+   "ken",
+   "Thank you, Grandma!"
+  ],
+  "s06_link": [
+   "narrator",
+   "Look at all the comic books!"
+  ],
+  "s07_ask": [
+   "ken",
+   "Where's the supermarket?"
+  ],
+  "s07_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s07_ans": [
+   "shuiling",
+   "It's on Purple Road."
+  ],
+  "s07_thx": [
+   "ken",
+   "Thanks, Shuiling!"
+  ],
+  "s07_link": [
+   "narrator",
+   "Milk, bread and apples. Yum!"
+  ],
+  "s08_ask": [
+   "ken",
+   "Where's the museum?"
+  ],
+  "s08_find": [
+   "narrator",
+   "Find it!"
+  ],
+  "s08_ans": [
+   "zunbo",
+   "It's on Brown Street."
+  ],
+  "s08_thx": [
+   "ken",
+   "Thank you, Zun-Bo!"
+  ],
+  "s08_link": [
+   "narrator",
+   "Wow! An old, old train!"
+  ],
+  "s09_q1": [
+   "narrator",
+   "Where's the post office?"
+  ],
+  "s09_a1": [
+   "narrator",
+   "It's on Blue Street."
+  ],
+  "s09_q2": [
+   "narrator",
+   "Where's the school?"
+  ],
+  "s09_a2": [
+   "narrator",
+   "It's on Green Road."
+  ],
+  "s09_q3": [
+   "narrator",
+   "Where's the bookstore?"
+  ],
+  "s09_a3": [
+   "narrator",
+   "It's on Orange Street."
+  ],
+  "s09_q4": [
+   "narrator",
+   "Where's the museum?"
+  ],
+  "s09_a4": [
+   "narrator",
+   "It's on Brown Street."
+  ],
+  "s10_turn": [
+   "narrator",
+   "Your turn! Ask your friend."
+  ],
+  "s10_end": [
+   "narrator",
+   "Now you know Ershui. Let's play the game!"
+  ]
+ }
+}

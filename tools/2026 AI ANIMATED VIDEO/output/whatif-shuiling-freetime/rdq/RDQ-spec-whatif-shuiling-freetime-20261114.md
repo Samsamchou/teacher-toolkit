@@ -105,3 +105,6 @@ downstream: whatif-situation-video
 - 2026-11-14：老師「2D 可以」。剩 3D 水鈴 11 鏡（依 4A 等 Ken 版 Free Time 定案；或先做水鈴模型檢查）。
 - 2026-11-14 晚：水鈴 3D 模型檢查（`src/b3d_check.py`，`style-sample/shuiling-3d-check-v2.jpg`）：外觀正常；坐姿（Mixamo sitting_idle）裙子跟著腿、沒明顯穿模；跑步步伐正常。手掌是張開的（不是握拳），但手指是低面數的尖爪狀，特寫會難看 → 3D 鏡頭不拍手部特寫。Q 版比例手臂短，手要碰到嘴（直笛）、頭（耳機）要逐鏡確認。Colab 約 0.04 單位（第一次等 G4 27 分鐘沒扣）。
 - 2026-11-14 晚：3D 開始（老師「開始試渲 11 鏡」）。`src/b3d_act.py`＝Ken 版定案 3D 程式複製＋`CHAR=shuiling`（shuiling_softhand.glb、1.28 m、ALIAS 把水鈴鏡號對到 Ken 版同場景鏡：s01←s03…）。第 1 輪 11 鏡試渲（`style-sample/shuiling-3d-test-v1.jpg`）動作都對；水鈴大頭髮擋臉 → 6 鏡（s01、s02、s03、s06、s07、s10）加 `CAM_OV` 鏡頭較低、右前方，**還沒重渲**：今晚 G4／L4／T4 一直 Service Unavailable，一台 L4 拿到後 exec 卡死（空轉約 0.6 單位）。老師：「明天早上 GPU 比較空時再試」。Colab 今天水鈴部分約 1.3 單位，餘額 89.38。
+- 2026-11-15：6 鏡新鏡頭重渲＋3 鏡再修（FACECAM 依她腳尖方向、AZCAM 依 8 方向測試：s04 225°、s10 250°）。檢查圖 `style-sample/shuiling-3d-test-v3.jpg`：11 鏡都看得到臉；看電視大笑彎腰那段頭髮仍會遮臉（動作本身）。Colab 今天約 0.6 單位，餘額 88.53。
+- 2026-11-15：正式渲 11 鏡（約 11 單位，餘額 77.38）→ 全片 v1 字幕版＋聽力版（7:07，-16.3 LUFS）`renders/whatif-shuiling-freetime-full-v1(-listening)(-720p).mp4`，等老師驗收。
+- ✅ 2026-11-15：老師「Final」——全片 v1（字幕版＋聽力版，各 1080p＋720p，7:07）定案。雲端字幕 1080p https://drive.google.com/file/d/14foM6ThNYutDGDgspQpNzmNZJK1MWjQ1/view （私人）。

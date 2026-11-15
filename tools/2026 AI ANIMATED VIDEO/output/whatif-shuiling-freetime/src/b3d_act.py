@@ -47,7 +47,11 @@ if CHAR == "shuiling" and C["clip"] == "ken:idle": C["clip"] = "ken:walk@0"
 CAM_OV = {"s01": dict(track=(0.9, -2.7, 0.15)), "s02": dict(cam=(-1.55, -2.05, 0.30), look=0.45),
           "s03": dict(cam=(-0.85, -1.65, 0.02), look=0.32), "s06": dict(cam=(-1.25, -1.55, 0.08), look=0.30),
           "s07": dict(cam=(-1.25, -1.55, 0.08), look=0.30), "s10": dict(cam=(-1.10, -2.60, 0.20), look=0.15, lens=35)}
-if CHAR == "shuiling": C.update(CAM_OV.get(SHOT, {}))   # Shuiling's glb has only 'walk' -> hold its first frame (standing)
+if CHAR == "shuiling": C.update(CAM_OV.get(SHOT, {}))
+# test v2: English (head bowed), TV (laughing bend) and baseball (BATCAM is behind her) still hide her face ->
+# camera placed from HER facing (toes direction) in front-right, static: (front, right, height, look height, lens)
+AZCAM = {"s04": (225, 2.3), "s10": (250, 2.6)} if CHAR == "shuiling" else {}
+FACECAM = {"s03": (1.45, 0.45, 0.05, 0.42, 40), "s04": (1.0, 2.3, 0.30, 0.30, 36), "s10": (-2.5, -0.9, 0.35, 0.15, 35)}   # s04: TV is in front -> from her right side; s10: batting stance faces opposite to toes if CHAR == "shuiling" else {}   # Shuiling's glb has only 'walk' -> hold its first frame (standing)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 sc = bpy.context.scene
@@ -1032,9 +1036,24 @@ lo_ = C.get("look_off", (0.0, -0.1)); cd.lens = C.get("lens", 38)
 look = Vector((hips.x + lo_[0], hips.y + lo_[1], hips.z + C.get("look", 0.25)))
 foc = empty("foc", look); cd.dof.focus_object = foc
 CAMO = Vector(C.get("cam", (-1.25, -1.75, 0.45)))
+FC_ = FACECAM.get(SHOT)
+if FC_:
+    sc.frame_set(0); bpy.context.view_layer.update()
+    kc_ = arm.matrix_world @ PB["Hips"].head
+    fw_ = sum(((arm.matrix_world @ PB[f"{sd}ToeBase"].head) - (arm.matrix_world @ PB[f"{sd}Foot"].head) for sd in ("Left", "Right")), Vector())
+    fw_.z = 0; fw_.normalize(); rt_ = fw_.cross(Vector((0, 0, 1))).normalized()   # her right
+    BATCAM = {}
+    cd.lens = FC_[4]
+    look = kc_ + Vector((0, 0, FC_[3])); foc.location = look
+    FCPOS = kc_ + fw_ * FC_[0] + rt_ * FC_[1] + Vector((0, 0, FC_[2]))
+    if SHOT in AZCAM:   # angle (deg, world) from the 8-direction test 11/15: where her face actually shows
+        az_, d_ = AZCAM[SHOT]; FCPOS = kc_ + Vector((math.cos(math.radians(az_)) * d_, math.sin(math.radians(az_)) * d_, FC_[2]))
+    print("FACECAM", tuple(round(v, 2) for v in fw_), flush=True)
 for fr in range(nfr):
     k = fr / max(1, nfr - 1); ke = k * k * (3 - 2 * k)
-    if C.get("track"):   # side tracking from Ken's right/front while he travels along +X
+    if FC_:
+        cam.location = FCPOS + (look - FCPOS) * (0.06 * ke)   # slow push in
+    elif C.get("track"):   # side tracking from Ken's right/front while he travels along +X
         sc.frame_set(fr); bpy.context.view_layer.update(); kc = arm.matrix_world @ PB["Hips"].head
         look = kc + Vector(C.get("track_look", (0.6, 0, 0.15))); foc.location = kc; foc.keyframe_insert("location", frame=fr)
         cam.location = kc + Vector(C["track"])
@@ -1063,6 +1082,15 @@ for kind in ("OPTIX", "CUDA"):
 for d in cp.devices: d.use = d.type != "CPU"
 sc.render.resolution_percentage = SCALE; sc.render.image_settings.file_format = "PNG"
 os.makedirs(OUT, exist_ok=True)
+if FR == "az":   # debug: same frame from 8 directions around her (find where the face points)
+    cam.animation_data_clear(); cd.dof.use_dof = False; cd.lens = 35
+    for f_ in (30, 100):
+        sc.frame_set(f_); bpy.context.view_layer.update(); kc_ = arm.matrix_world @ PB["Hips"].head; hd_ = arm.matrix_world @ PB["Head"].head
+        for ang in range(0, 360, 45):
+            r_ = math.radians(ang); cam.location = kc_ + Vector((math.cos(r_) * 2.6, math.sin(r_) * 2.6, 0.35))
+            cam.rotation_euler = (hd_ - cam.location).to_track_quat("-Z", "Y").to_euler()
+            sc.render.filepath = f"{OUT}/{SHOT}_az{ang:03d}_f{f_:03d}.png"; bpy.ops.render.render(write_still=True); print("FRAME az", ang, f_, flush=True)
+    sys.exit(0)
 if FR == "cu":
     cam.animation_data_clear(); cd.dof.use_dof = False
     mid = lambda *ns: sum((wp(n) for n in ns), Vector()) / len(ns)
