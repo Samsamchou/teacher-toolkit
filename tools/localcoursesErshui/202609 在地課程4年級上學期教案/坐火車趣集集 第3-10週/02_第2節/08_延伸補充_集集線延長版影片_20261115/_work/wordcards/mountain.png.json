@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-11-15T12:46:57.354Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a NEW picture-card illustration for a Grade 4 English word card. Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork, clean thin ink outlines, warm natural light, friendly for 10-year-old children. 4:3 landscape. THE MAIN SUBJECT MUST BE LARGE, CENTERED AND COMPLETE, filling at least 60 percent of the image area, sharp and bright, instantly recognizable at a glance. The background is a soft, blurred, lighter version of the scene from the reference so it still feels like the same place, but it must not compete with the subject. No people unless stated. Absolutely no text, letters, numbers, Chinese characters, arrows, circles, frames, logos or watermarks anywhere.\r\n\r\nSubject: one tall, pointed rocky mountain peak (Jade Mountain) standing in the centre, with a few white clouds around its middle, the peak and slopes taking most of the image. Very little foreground. Clear blue sky.",
+  "requested_size": "1536x1152",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "mountain.png",
+  "output_index": 1,
+  "output_sha256": "e1e6c2a39adeacf6b0b3a737703db21950b7cdac8aa9720df2c48f5af4e101bf",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1152,
+  "request_id": "req_d2745c1c62334a66926ee448946239da",
+  "usage": {
+    "input_tokens": 3228,
+    "input_tokens_details": {
+      "image_tokens": 3016,
+      "text_tokens": 212
+    },
+    "output_tokens": 1629,
+    "output_tokens_details": {
+      "image_tokens": 1629,
+      "text_tokens": 0
+    },
+    "total_tokens": 4857
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "S28_車窗看玉山.png",
+      "sha256": "865d54f65b020f2e7760f1dd095110797f37bfc1a8bc0aae9d4954d204d42c85",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    },
+    {
+      "file": "S27_登山客往玉山.png",
+      "sha256": "d1ac299c7684568ada3215a0f8f1c1ab1d6719d725124d99ebc248af4a5082ee",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    }
+  ],
+  "mask": null
+}

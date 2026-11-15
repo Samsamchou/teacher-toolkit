@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-11-15T12:45:48.546Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a NEW picture-card illustration for a Grade 4 English word card. Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork, clean thin ink outlines, warm natural light, friendly for 10-year-old children. 4:3 landscape. THE MAIN SUBJECT MUST BE LARGE, CENTERED AND COMPLETE, filling at least 60 percent of the image area, sharp and bright, instantly recognizable at a glance. The background is a soft, blurred, lighter version of the scene from the reference so it still feels like the same place, but it must not compete with the subject. No people unless stated. Absolutely no text, letters, numbers, Chinese characters, arrows, circles, frames, logos or watermarks anywhere.\r\n\r\nSubject: one big, fresh bunch of yellow-green Taiwanese bananas (many curved bananas on one stalk), shown large in the centre, clearly banana-shaped and yellow. Background: blurred old wooden railway freight wagon and banana trees in soft sepia-green light.",
+  "requested_size": "1536x1152",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "banana.png",
+  "output_index": 1,
+  "output_sha256": "b4f708f172b3db2062cf6c4b09a2fdec1e3d0d6ff46fc6e96bd3964602bdfc30",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1152,
+  "request_id": "req_a8fb4d2236714113abc13ed0420273d3",
+  "usage": {
+    "input_tokens": 3232,
+    "input_tokens_details": {
+      "image_tokens": 3016,
+      "text_tokens": 216
+    },
+    "output_tokens": 1629,
+    "output_tokens_details": {
+      "image_tokens": 1629,
+      "text_tokens": 0
+    },
+    "total_tokens": 4861
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "N01_古早載香蕉木材.png",
+      "sha256": "282700e4b2256253eda9df88808181378d008bb62122ae651975297129c8e24a",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    },
+    {
+      "file": "S24a_集集老街.png",
+      "sha256": "a15f085c2e58cc29319b2bbc19b5265692d3e2bea1a94a81a38084ef8b2d6810",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    }
+  ],
+  "mask": null
+}

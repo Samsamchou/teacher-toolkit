@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-11-15T12:48:31.684Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a NEW picture-card illustration for a Grade 4 English word card. Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork, clean thin ink outlines, warm natural light, friendly for 10-year-old children. 4:3 landscape. THE MAIN SUBJECT MUST BE LARGE, CENTERED AND COMPLETE, filling at least 60 percent of the image area, sharp and bright, instantly recognizable at a glance. The background is a soft, blurred, lighter version of the scene from the reference so it still feels like the same place, but it must not compete with the subject. No people unless stated. Absolutely no text, letters, numbers, Chinese characters, arrows, circles, frames, logos or watermarks anywhere.\r\n\r\nSubject: one cute commemorative train ticket card lying flat and filling most of the picture, clearly shaped like a small rectangular paper ticket with rounded corners, a punched hole and a printed border; on it a small picture of a spotted Taiwanese leopard cat beside a little yellow train. The ticket itself must be the obvious main object. No hands. Background: blurred station platform. The ticket has blank areas but NO writing at all.",
+  "requested_size": "1536x1152",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "ticket.png",
+  "output_index": 1,
+  "output_sha256": "75a7cc5d22677b0618504fef3ecad6a9f14b310bb4d207510237deeffa633970",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1152,
+  "request_id": "req_906ef6b0543d4e9cb6369df3b9965d3d",
+  "usage": {
+    "input_tokens": 1759,
+    "input_tokens_details": {
+      "image_tokens": 1508,
+      "text_tokens": 251
+    },
+    "output_tokens": 1629,
+    "output_tokens_details": {
+      "image_tokens": 1629,
+      "text_tokens": 0
+    },
+    "total_tokens": 3388
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "N16_石虎紀念車票.png",
+      "sha256": "8c23fe9cd3f1cce664c0e8b08053a93f0be28fb213a99e2e1d3500897081777f",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    }
+  ],
+  "mask": null
+}

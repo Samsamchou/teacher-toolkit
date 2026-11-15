@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-11-15T12:46:24.002Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a NEW picture-card illustration for a Grade 4 English word card. Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork, clean thin ink outlines, warm natural light, friendly for 10-year-old children. 4:3 landscape. THE MAIN SUBJECT MUST BE LARGE, CENTERED AND COMPLETE, filling at least 60 percent of the image area, sharp and bright, instantly recognizable at a glance. The background is a soft, blurred, lighter version of the scene from the reference so it still feels like the same place, but it must not compete with the subject. No people unless stated. Absolutely no text, letters, numbers, Chinese characters, arrows, circles, frames, logos or watermarks anywhere.\r\n\r\nSubject: one whole blue bicycle with a front basket, seen from the side, both wheels, frame, handlebar and seat fully visible, filling most of the picture. No rider, no people. Background: blurred green tunnel of big camphor trees over a bike path.",
+  "requested_size": "1536x1152",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "bike.png",
+  "output_index": 1,
+  "output_sha256": "89d9a61630cb3355b2265ad9766d8b8bbf4a73aaf0991dcad705675c1478ae51",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1152,
+  "request_id": "req_2746fcb95ee046879426771433606518",
+  "usage": {
+    "input_tokens": 3238,
+    "input_tokens_details": {
+      "image_tokens": 3016,
+      "text_tokens": 222
+    },
+    "output_tokens": 1629,
+    "output_tokens_details": {
+      "image_tokens": 1629,
+      "text_tokens": 0
+    },
+    "total_tokens": 4867
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "S24b_綠色隧道騎車.png",
+      "sha256": "cc9f9a952e026e0a4aa60242eab533519e7d439074569f51dab3db9eebcae257",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    },
+    {
+      "file": "N17_雙鐵小旅行.png",
+      "sha256": "d556611b311674f44eec34e92dc6a1a422683c6b5c016cce39f1f60d22734f51",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    }
+  ],
+  "mask": null
+}

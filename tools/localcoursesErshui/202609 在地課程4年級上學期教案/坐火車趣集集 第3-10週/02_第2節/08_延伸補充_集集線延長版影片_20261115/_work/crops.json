@@ -1,0 +1,252 @@
+{
+ "w_banana": {
+  "source": "_work/wordcards/banana.png",
+  "box": null,
+  "size": [
+   1600,
+   1200
+  ],
+  "sha256": "bc82d5706775507e248a8fd6109a506bb61bb6c0a7d2161191739454efc4f2cf"
+ },
+ "w_bike": {
+  "source": "_work/wordcards/bike.png",
+  "box": null,
+  "size": [
+   1600,
+   1200
+  ],
+  "sha256": "9de0a14685b5b915ea9d7bf13138f804ba66e94d4fc0af4768c7a747ab9f4180"
+ },
+ "w_mountain": {
+  "source": "_work/wordcards/mountain.png",
+  "box": null,
+  "size": [
+   1600,
+   1200
+  ],
+  "sha256": "063b6bc39194e1c985eb15be07ab71a4686c4fea8ebd439deecbd00f24d88711"
+ },
+ "w_lake": {
+  "source": "_work/wordcards/lake.png",
+  "box": null,
+  "size": [
+   1600,
+   1200
+  ],
+  "sha256": "89a22ef716c062266d7c2995b24c5a144ca1df0957456316e131ba5d15f62a74"
+ },
+ "w_icepop": {
+  "source": "_work/wordcards/ice_pop.png",
+  "box": null,
+  "size": [
+   1600,
+   1200
+  ],
+  "sha256": "6c908063bc06725c17dd3d039fb037ba5931ef8a8e858f8270b43dd9820940b0"
+ },
+ "w_ticket": {
+  "source": "_work/wordcards/ticket.png",
+  "box": null,
+  "size": [
+   1600,
+   1200
+  ],
+  "sha256": "6232ca40b686c21e021fc0c5f41002228bc235c7324c0fe4fd1fc8661ebefe31"
+ },
+ "h_kids": {
+  "source": "art/scenes-v1/S01-03_車窗揮手.png",
+  "box": [
+   420,
+   120,
+   1500,
+   760
+  ],
+  "size": [
+   1000,
+   593
+  ],
+  "sha256": "ee37340e338f6345bc45ecf8aa8211be2756572ee65e52046b4d800b3214bf99"
+ },
+ "s_ershui": {
+  "source": "art/scenes-v1/S08_二水車站-整修後.png",
+  "box": [
+   40,
+   220,
+   1640,
+   820
+  ],
+  "size": [
+   1000,
+   375
+  ],
+  "sha256": "cf8baaf44da22d5c09a10258045d448dd4a04c5ab23bd991acb5035b8665cc13"
+ },
+ "s_yuanquan": {
+  "source": "art/scenes-v1/S13-14_源泉車站.png",
+  "box": [
+   200,
+   120,
+   1480,
+   840
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "75dda5003855e15452675412edf4552f04d450f90b87c45808bf0f09c2821e67"
+ },
+ "s_jiji": {
+  "source": "art/scenes-v1/S20-22_集集車站正面.png",
+  "box": [
+   200,
+   150,
+   1480,
+   870
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "65ee07b664f951e1490cd2099722914523495d7961f70b8318de211b58495c47"
+ },
+ "s_shuili": {
+  "source": "art/scenes-v1/S25_水里車站.png",
+  "box": [
+   200,
+   120,
+   1480,
+   840
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "070fe7545ca24b77426d2bc07e6da436bd409883bd56f8eb6345202195cd83e4"
+ },
+ "s_checheng": {
+  "source": "art/scenes-v1/S31_車埕車站.png",
+  "box": [
+   120,
+   150,
+   1560,
+   860
+  ],
+  "size": [
+   1000,
+   493
+  ],
+  "sha256": "9b827aef1f9f3d19176988cebe9e95c167579060d69eb702db45f264d80a9947"
+ },
+ "q_banana_wood": {
+  "source": "art/scenes-v2/N01_古早載香蕉木材.png",
+  "box": [
+   560,
+   160,
+   1680,
+   790
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "1e7d853abccaede4c6d9568993a44c1c7411b44520c5050af8991000bae80a55"
+ },
+ "q_jiji_quake": {
+  "source": "art/scenes-v2/N07_居民守護集集車站.png",
+  "box": [
+   280,
+   80,
+   1400,
+   710
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "49b0da798f5f7ec1fcfc3c8e5f99442c502245c66439d4ef6a226aa5657e1b2c"
+ },
+ "q_babao": {
+  "source": "art/scenes-v1/S16_八堡圳源頭取水口.png",
+  "box": [
+   240,
+   120,
+   1440,
+   795
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "4255f599e71cd9c02c49afeff737d38978da4db5ba6566cdf7aca55bea3059f6"
+ },
+ "q_kiln": {
+  "source": "art/scenes-v2/N11_水里蛇窯.png",
+  "box": [
+   0,
+   180,
+   1280,
+   900
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "25bc3da0570ef785f6a6c548412703107ee32ddf6eddaf82d6ad80004ca17e54"
+ },
+ "f_yuanquan": {
+  "source": "art/scenes-v1/S19_水圳旁拍手.png",
+  "box": [
+   200,
+   100,
+   1480,
+   820
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "ff612ba759492824f33761af38d0cfae41886c6cb278c569da37c8cb2f3e18de"
+ },
+ "f_pool_before": {
+  "source": "art/scenes-v1/S35a_貯木池以前.png",
+  "box": [
+   200,
+   120,
+   1480,
+   840
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "744d8fe86cf605e9497da2325d4b824c1392aeb7560bddc9274d4b345a1ef55a"
+ },
+ "f_pool_now": {
+  "source": "art/scenes-v1/S35b_貯木池現在生態池.png",
+  "box": [
+   200,
+   120,
+   1480,
+   840
+  ],
+  "size": [
+   1000,
+   562
+  ],
+  "sha256": "0eb0fbfb93f13375a4609eacc9c6073979b82351c9eb5775051a407be84de00a"
+ },
+ "f_transfer": {
+  "source": "art/scenes-v2/N02_二水月台換車.png",
+  "box": [
+   0,
+   120,
+   1680,
+   944
+  ],
+  "size": [
+   1000,
+   490
+  ],
+  "sha256": "e55e1dc1d62e8e158acd8013461b048c588a27e29be24f04d299f8cbf0ea3e1b"
+ }
+}

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-11-15T12:47:29.495Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a NEW picture-card illustration for a Grade 4 English word card. Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork, clean thin ink outlines, warm natural light, friendly for 10-year-old children. 4:3 landscape. THE MAIN SUBJECT MUST BE LARGE, CENTERED AND COMPLETE, filling at least 60 percent of the image area, sharp and bright, instantly recognizable at a glance. The background is a soft, blurred, lighter version of the scene from the reference so it still feels like the same place, but it must not compete with the subject. No people unless stated. Absolutely no text, letters, numbers, Chinese characters, arrows, circles, frames, logos or watermarks anywhere.\r\n\r\nSubject: a wide, calm, bright blue lake (Sun Moon Lake) filling most of the picture, with one or two small green islands and gentle reflections, seen from a little above. Soft green hills around the edges only. No pipes, no dam, no buildings.",
+  "requested_size": "1536x1152",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "lake.png",
+  "output_index": 1,
+  "output_sha256": "7ea504274db30e125cb7ebd5e2d28940f17cf12d71d1924185cb59f9a1756e6b",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1152,
+  "request_id": "req_6f2a8083df2a4e84a397af2d59b50af3",
+  "usage": {
+    "input_tokens": 1729,
+    "input_tokens_details": {
+      "image_tokens": 1508,
+      "text_tokens": 221
+    },
+    "output_tokens": 1629,
+    "output_tokens_details": {
+      "image_tokens": 1629,
+      "text_tokens": 0
+    },
+    "total_tokens": 3358
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "N10_日月潭水到明潭.png",
+      "sha256": "3498273ad03161bf4c866796bb5977937bbab33401739e77f931336f43b1c257",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    }
+  ],
+  "mask": null
+}

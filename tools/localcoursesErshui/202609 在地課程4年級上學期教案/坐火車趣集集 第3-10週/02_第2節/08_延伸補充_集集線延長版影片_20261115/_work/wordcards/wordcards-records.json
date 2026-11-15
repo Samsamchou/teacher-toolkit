@@ -1,0 +1,74 @@
+[
+ {
+  "file": "_work/wordcards/banana.png",
+  "model": "gpt-image-2",
+  "quality": "medium",
+  "size": "1536x1152",
+  "sha256": "b4f708f172b3db2062cf6c4b09a2fdec1e3d0d6ff46fc6e96bd3964602bdfc30",
+  "sha_match": true,
+  "request_id": "req_a8fb4d2236714113abc13ed0420273d3",
+  "attempts": 1,
+  "qa": "5 秒辨識檢查通過（主體置中、≥60%、無字無箭頭）",
+  "status": "老師已確認（2026-11-15 定案）"
+ },
+ {
+  "file": "_work/wordcards/bike.png",
+  "model": "gpt-image-2",
+  "quality": "medium",
+  "size": "1536x1152",
+  "sha256": "89d9a61630cb3355b2265ad9766d8b8bbf4a73aaf0991dcad705675c1478ae51",
+  "sha_match": true,
+  "request_id": "req_2746fcb95ee046879426771433606518",
+  "attempts": 1,
+  "qa": "5 秒辨識檢查通過（主體置中、≥60%、無字無箭頭）",
+  "status": "老師已確認（2026-11-15 定案）"
+ },
+ {
+  "file": "_work/wordcards/ice_pop.png",
+  "model": "gpt-image-2",
+  "quality": "medium",
+  "size": "1536x1152",
+  "sha256": "75be9cfeaec4ea2722278dd61e745257f823632cf7d5e256e6faff30d61378fd",
+  "sha_match": true,
+  "request_id": "req_0d6202d332dc4b70b96bbea0a13c7de8",
+  "attempts": 1,
+  "qa": "5 秒辨識檢查通過（主體置中、≥60%、無字無箭頭）",
+  "status": "老師已確認（2026-11-15 定案）"
+ },
+ {
+  "file": "_work/wordcards/lake.png",
+  "model": "gpt-image-2",
+  "quality": "medium",
+  "size": "1536x1152",
+  "sha256": "7ea504274db30e125cb7ebd5e2d28940f17cf12d71d1924185cb59f9a1756e6b",
+  "sha_match": true,
+  "request_id": "req_6f2a8083df2a4e84a397af2d59b50af3",
+  "attempts": 1,
+  "qa": "5 秒辨識檢查通過（主體置中、≥60%、無字無箭頭）",
+  "status": "老師已確認（2026-11-15 定案）"
+ },
+ {
+  "file": "_work/wordcards/mountain.png",
+  "model": "gpt-image-2",
+  "quality": "medium",
+  "size": "1536x1152",
+  "sha256": "e1e6c2a39adeacf6b0b3a737703db21950b7cdac8aa9720df2c48f5af4e101bf",
+  "sha_match": true,
+  "request_id": "req_d2745c1c62334a66926ee448946239da",
+  "attempts": 1,
+  "qa": "5 秒辨識檢查通過（主體置中、≥60%、無字無箭頭）",
+  "status": "老師已確認（2026-11-15 定案）"
+ },
+ {
+  "file": "_work/wordcards/ticket.png",
+  "model": "gpt-image-2",
+  "quality": "medium",
+  "size": "1536x1152",
+  "sha256": "75a7cc5d22677b0618504fef3ecad6a9f14b310bb4d207510237deeffa633970",
+  "sha_match": true,
+  "request_id": "req_906ef6b0543d4e9cb6369df3b9965d3d",
+  "attempts": 1,
+  "qa": "5 秒辨識檢查通過（主體置中、≥60%、無字無箭頭）",
+  "status": "老師已確認（2026-11-15 定案）"
+ }
+]

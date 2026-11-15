@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "script_version": "1.0.1",
+  "created_at": "2026-11-15T12:48:00.351Z",
+  "api": "OpenAI Images API",
+  "endpoint": "/v1/images/edits",
+  "model": "gpt-image-2",
+  "mode": "edit",
+  "prompt": "Create a NEW picture-card illustration for a Grade 4 English word card. Match the art style of the reference images exactly: hand-painted watercolor and gouache anime illustration, soft Ghibli-like brushwork, clean thin ink outlines, warm natural light, friendly for 10-year-old children. 4:3 landscape. THE MAIN SUBJECT MUST BE LARGE, CENTERED AND COMPLETE, filling at least 60 percent of the image area, sharp and bright, instantly recognizable at a glance. The background is a soft, blurred, lighter version of the scene from the reference so it still feels like the same place, but it must not compete with the subject. No people unless stated. Absolutely no text, letters, numbers, Chinese characters, arrows, circles, frames, logos or watermarks anywhere.\r\n\r\nSubject: one yellow old-fashioned Taiwanese ice pop (a rectangular frozen popsicle on a wooden stick), shown big and upright in the centre, with a little frost and a tiny drip, clearly an ice pop. No people and no hands. Background: blurred old shop counter with a freezer.",
+  "requested_size": "1536x1152",
+  "requested_quality": "medium",
+  "requested_format": "png",
+  "requested_background": "auto",
+  "output_file": "ice_pop.png",
+  "output_index": 1,
+  "output_sha256": "75be9cfeaec4ea2722278dd61e745257f823632cf7d5e256e6faff30d61378fd",
+  "detected_format": "png",
+  "detected_width": 1536,
+  "detected_height": 1152,
+  "request_id": "req_0d6202d332dc4b70b96bbea0a13c7de8",
+  "usage": {
+    "input_tokens": 1732,
+    "input_tokens_details": {
+      "image_tokens": 1508,
+      "text_tokens": 224
+    },
+    "output_tokens": 1629,
+    "output_tokens_details": {
+      "image_tokens": 1629,
+      "text_tokens": 0
+    },
+    "total_tokens": 3361
+  },
+  "revised_prompt": null,
+  "source_images": [
+    {
+      "file": "S30_吃枝仔冰.png",
+      "sha256": "89c5644ad80d435ffa6c9a8c4d92d31aa8432c9efeebaa3abd14381c6b39c63c",
+      "format": "png",
+      "width": 1680,
+      "height": 944
+    }
+  ],
+  "mask": null
+}

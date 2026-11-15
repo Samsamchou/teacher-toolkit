@@ -1,0 +1,21 @@
+{
+ "說明": "在地課程學習單共用難字注音詞表（三、四年級）。注音用字型「ㄅ字嗨注音標楷」（pptx 字型名 Bpmf Zihi KaiStd Regular；PIL 檔 BpmfZihiKaiStd-Regular.ttf），只套在難字上，其餘中文用楷書。讀音是字型預設讀音，每次成品仍要轉圖逐字核對；多音字若預設讀音不對，用 IVS 選字（U+E01E1 起為其他讀音；U+E01E0 為不顯示注音）。",
+ "updated": "2026-11-15",
+ "entries": [
+  {"text": "圳", "zhuyin": ["ㄗㄨㄣˋ"], "unit": "四年級 坐火車趣集集", "example": "八堡圳", "used_in": "集集線影片學習單 20261115", "checked": true},
+  {"text": "貯", "zhuyin": ["ㄓㄨˇ"], "unit": "四年級 坐火車趣集集", "example": "貯木池", "used_in": "集集線影片學習單 20261115", "checked": true},
+  {"text": "窯", "zhuyin": ["ㄧㄠˊ"], "unit": "四年級 坐火車趣集集", "example": "蛇窯", "used_in": "集集線影片學習單 20261115", "checked": true},
+  {"text": "埕", "zhuyin": ["ㄔㄥˊ"], "unit": "四年級 坐火車趣集集", "example": "車埕", "used_in": "集集線影片學習單 20261115", "checked": true},
+  {"text": "縱", "zhuyin": ["ㄗㄨㄥˋ"], "unit": "四年級 坐火車趣集集", "example": "縱貫線", "used_in": "集集線影片學習單 20261115", "checked": true},
+  {"text": "祭典巡禮", "zhuyin": ["ㄐㄧˋ", "ㄉㄧㄢˇ", "ㄒㄩㄣˊ", "ㄌㄧˇ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "水思源", "zhuyin": ["ㄕㄨㄟˇ", "ㄙ", "ㄩㄢˊ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "八堡圳", "zhuyin": ["ㄅㄚ", "ㄅㄠˇ", "ㄗㄨㄣˋ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "源泉", "zhuyin": ["ㄩㄢˊ", "ㄑㄩㄢˊ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "迎請", "zhuyin": ["ㄧㄥˊ", "ㄑㄧㄥˇ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "街巷", "zhuyin": ["ㄐㄧㄝ", "ㄒㄧㄤˋ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "農曆", "zhuyin": ["ㄋㄨㄥˊ", "ㄌㄧˋ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "欣賞", "zhuyin": ["ㄒㄧㄣ", "ㄕㄤˇ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "廟", "zhuyin": ["ㄇㄧㄠˋ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true},
+  {"text": "隊伍", "zhuyin": ["ㄉㄨㄟˋ", "ㄨˇ"], "unit": "三年級 二水的現在", "used_in": "第2節九句子學習單 20261104", "checked": true}
+ ]
+}
