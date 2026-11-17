@@ -81,13 +81,14 @@ var setup_set_label: Label
 const PERSONAL_POINTS := 10
 const PERSONAL_URL := "../ershui-3d-quest-planet/"
 ## Listen and Guess（RDQ 2026-11-08）：聽環境音猜地點；題目畫面（選擇／拖放／口說）在外框網頁，遊戲只負責情境、環境音、走路、揭曉
-const LISTEN_URL := "../ershui-3d-quest-planetlisten/"
+const LISTEN_URL := "../ershui-planet-guess/"   # [1117] Guess 版獨立網址（逛街版選單已不放入口）
 var listen_mode := false        # 外框 getInitial() 帶 mode:"listen"
 var listen_items: Array = []
 var amb: AudioStreamPlayer      # 環境音
 var ask_poll := false
 var ask_t := 0.0
 var listen_score := 0
+var listen_pts := 10            # [1117] 這題得分（拖放／選擇第 1／2／3 次答對＝10／6／3；口說＝10）
 ## 三種線索版（RDQ-spec-listen-guess-3clues-20261112）：10 個地點、每回合 10 題（11/12 晚加博物館＝11 個地點，每回合抽 10 個）；題型 5 口說＋3 拖放＋2 選擇（s/d/c），
 ## 每題只出一種線索：環境音 a（遊戲播）／兩個圖示 i／默劇影片 v（外框顯示，圖示和影片放在遊戲檔外，用到才下載）。
 ## 兩張表都由 seed 洗牌、在 start 時交給外框存進 cleared（"types:…"、"clues:…"），換裝置「繼續上次」也一樣。
@@ -218,6 +219,7 @@ func _host_run(d: Dictionary) -> Dictionary:
 	var res: Dictionary = d.get("results", {})
 	var n := 0
 	var ok := 0
+	var pts_sum := 0
 	for k in (LISTEN_N if listen_mode else 12):
 		var r = res.get("q%02d" % (k + 1))
 		if typeof(r) != TYPE_DICTIONARY:
@@ -225,8 +227,10 @@ func _host_run(d: Dictionary) -> Dictionary:
 		n += 1
 		if r.get("finalCorrect", false):
 			ok += 1
+			pts_sum += int(r.get("points", PERSONAL_POINTS))
 	run["answered"] = n
 	run["correct"] = ok
+	run["points"] = pts_sum
 	return run
 
 func _go_personal() -> void:
@@ -256,7 +260,7 @@ func _resume_personal() -> void:
 		plan_override = {"types": String(run.get("types", "")), "clues": String(run.get("clues", ""))}
 	_make_rounds()
 	qi = mini(int(run["answered"]), rounds.size())
-	scores = [int(run["correct"]) * PERSONAL_POINTS]
+	scores = [int(run["points"]) if listen_mode else int(run["correct"]) * PERSONAL_POINTS]
 	# 角色站回上一題走到的地方
 	var start: Vector2 = world.places["station"]["door2"]
 	walkers["ken"]["pos"] = start + Vector2(-0.9, 0.0)
@@ -748,7 +752,9 @@ func play_amb(id: String, quiet := false) -> void:
 	if not ResourceLoader.exists(path):
 		return
 	amb.stream = load(path)
-	amb.volume_db = (VOL_DB[vol_level] + (-12.0 if quiet else 4.0)) if vol_level > 0 else -80.0
+	# [1117] 老師：出題的環境音要跟答案句一樣大聲 → 出題時固定原音量（同 voice，0 dB；Sound 0 才靜音），
+	#   揭曉時（quiet）維持跟著 Sound 鍵小聲播，免得蓋過答案句（RDQ-spec-planet-amb-volume-20261117）
+	amb.volume_db = ((VOL_DB[vol_level] - 12.0) if quiet else 0.0) if vol_level > 0 else -80.0
 	amb.play()
 	music.volume_db = VOL_DB[vol_level] - (14.0 if quiet else 30.0)
 	await amb.finished
@@ -1140,7 +1146,7 @@ func _show_title() -> void:
 		if continue_btn.visible:
 			continue_btn.text = "  Continue 繼續上次（Q%d/%d）  " % [int(run["answered"]) + 1, total]
 		if listen_mode:
-			sid_label.text = "Listen and Guess 聽聲音猜地點\n學號 Student ID：%s" % personal_sid
+			sid_label.text = "Guess 版 聽聲音猜地點\n學號 Student ID：%s" % personal_sid
 		return
 	var sv := _read_save()
 	continue_btn.visible = not sv.is_empty()
@@ -1224,10 +1230,7 @@ func _build_setup() -> void:
 		mb.pressed.connect(func(): _set_mode(i))
 		mg.add_child(mb)
 		setup_mode_btns.append(mb)
-	var lb := _btn("Listen and Guess 聽聲音猜地點\n要輸入學號（個人）", 19, Color("#ffe3e3"))
-	lb.custom_minimum_size = Vector2(300, 64)
-	lb.pressed.connect(_go_listen)
-	mg.add_child(lb)
+	# [1117] Listen and Guess 獨立成「二水小行星 Guess 版」（ershui-planet-guess/），逛街版選單不再有入口
 	setup_set_label = _label("4. Choose a route  選路線（每次順序都不同）", 30)
 	v.add_child(setup_set_label)
 	var sg := GridContainer.new()
@@ -1625,6 +1628,7 @@ func _poll_host(delta: float) -> void:
 			ask_poll = false
 			amb.stop()
 			bets[0] = 0 if m.get("correct", false) else 1
+			listen_pts = int(m.get("points", PERSONAL_POINTS))
 			_on_start()
 
 func _build_bet_row() -> void:
@@ -1638,6 +1642,11 @@ func _build_bet_row() -> void:
 		var h := HBoxContainer.new()
 		h.add_theme_constant_override("separation", 3)
 		pc.add_child(h)
+		if not personal:
+			# 老師 11/14 1A：投票列每組圖示左邊加 G1–G5 小字（和上方分數卡一樣）
+			var gl := _label("G%d" % (g + 1), 16)
+			gl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			h.add_child(gl)
 		h.add_child(_icon(g, 34))
 		var row := []
 		for i in 4:
@@ -1744,6 +1753,8 @@ func _on_arrive(k: String) -> void:
 	q_label.text = sentence(Rd, Rd["answer"])
 	q_label.add_theme_color_override("font_color", Color("#2b8a3e"))
 	var pts := PERSONAL_POINTS if personal else POINTS
+	if Rd["pattern"] == "listen":
+		pts = listen_pts
 	for g in group_count:
 		var hit: bool = bets.get(g, -1) == Rd["correct"]
 		if hit:

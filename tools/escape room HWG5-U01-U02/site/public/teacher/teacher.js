@@ -115,7 +115,7 @@ const battles = r => Object.keys(r.battles || {}).length;
 const score = r => (typeof r.summary?.score === "number" ? r.summary.score : null);
 const itemPoints = (r, it) => {
   const x = (r.items || []).find(i => i.seq === it.seq);
-  if (planet()) return x?.finalCorrect ? bank().pointsPer : 0;
+  if (planet()) return x?.finalCorrect ? (Number.isFinite(x.points) ? x.points : bank().pointsPer) : 0;
   return x?.finalCorrect ? Math.round(100 / total() * Math.min(4, Math.max(1, x.quality || 1)) / 4 * 10) / 10 : 0;
 };
 const planetNote = r => r.summary?.note || "—";
@@ -211,10 +211,10 @@ function showDetail(r) {
       <div class="items">${(r.inventory || []).map(icon).join("")}</div>
       <p class="meta">作答日期 ${daysOf(r).join("、")}｜最後更新 ${when(r.updatedAt)}${r.completedAt ? `｜完成 ${when(r.completedAt)}` : ""}</p>
     </div>
-    <h3>${planet() ? "答錯的題目" : "需要重試的題目"}（${re.length} 題）</h3>
+    <h3>${planet() ? "答錯或重試才答對的題目" : "需要重試的題目"}（${re.length} 題）</h3>
     ${re.length ? `<table class="retry"><thead><tr><th>題</th><th>題目與答案</th><th>作答次數</th><th>提示</th><th>最後</th></tr></thead><tbody>
       ${re.map(i => `<tr><td>Q${String(i.seq).padStart(2, "0")}<br><small>${esc(i.id)}</small></td><td>${esc(questionText(i.seq, i))}</td>
-        <td class="n">${i.attempts}</td><td>${i.hintUsed ? "有" : "—"}</td><td>${i.finalCorrect ? "答對" : planet() ? "答錯" : "未完成"}</td></tr>`).join("")}
+        <td class="n">${i.attempts}</td><td>${i.hintUsed ? "有" : "—"}</td><td>${i.finalCorrect ? (planet() && i.attempts > 1 ? `第 ${i.attempts} 次答對` : "答對") : planet() ? "答錯" : "未完成"}</td></tr>`).join("")}
       </tbody></table>` : '<p class="hint">作答過的題目都是第一次就答對。</p>'}
     <p class="note">${planet() ? "答對的題目不列出。" : "第一次就答對的題目不列出。"}</p>`;
 }

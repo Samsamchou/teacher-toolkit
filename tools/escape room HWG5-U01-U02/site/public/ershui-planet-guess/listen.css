@@ -74,3 +74,15 @@
   .quiz.bigclue.cluedone .clue .icons img { width: min(15vw, 140px); height: min(15vw, 140px); }
 }
 
+
+/* [1114] 兩人一組（照 Free Time）：口說輪到誰、登入時顯示拆開的兩個學號、結果頁兩個學號 */
+.quiz .turn { display: inline-block; margin: 4px 0 6px; padding: 6px 14px; border-radius: 999px;
+  background: #7b5ea7; color: #fff; font-weight: 700; font-size: 1.15rem; }
+.pairhelp { margin: 6px 0 0; font-size: 1rem; color: #555; }
+.pairview { min-height: 1.4em; font-size: 1.3rem; font-weight: 700; color: #2b8a3e; margin: 6px 0 0; }
+.result .big-id.pair { font-size: clamp(1.8rem, 5vw, 2.8rem); white-space: nowrap; }
+
+/* [1117] Guess 版：拖放／選擇答錯「再試一次」、開始頁計分規則 */
+.quiz .msg.again { color: #c92a2a; font-weight: 700; font-size: 1.15em; animation: againShake .4s; }
+@keyframes againShake { 0%,100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.screen .rules { background: #fff4d6; border-radius: 12px; padding: 8px 12px; font-weight: 600; line-height: 1.6; }

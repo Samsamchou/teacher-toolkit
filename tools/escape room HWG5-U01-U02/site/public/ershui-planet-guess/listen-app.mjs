@@ -7,6 +7,11 @@
 //   換裝置「繼續上次」一樣；不用改 firestore.rules。圖示／影片載入失敗 → 改請遊戲播環境音。
 // 口說規則（照 Free Time 兩人一組 11/12）：說對地點＋文法對（I'm going to、the 的有無、地點單字）＋AI 總分 ≥ 80 才過；
 //   文法錯並排「你說的句子／正確句子」紅字、算一次；第 3 次起還說錯地點 → 顯示三個選項地點；第 5 次沒過 → 直接去揭曉、記答錯。
+// [1114] 老師 RDQ-spec-planet-glabel-listen-pair-20261114：改成兩人一組（兩個學號連在一起輸入，例 5012750128），寫法照 Free Time 兩人一組；
+//   進度與作答紀錄兩個學號各存一份（cleared 有 "pair:A+B"）；口說題兩人輪流；頁面被 iPad 重新整理時自動接回同一組（不用再輸入）。
+// [1117] RDQ-spec-planet-guess-retry-20261117：獨立成「二水小行星 Guess 版」（ershui-planet-guess/，舊網址轉過來；線索檔仍在 ../ershui-3d-quest-planetlisten/clues/）；
+//   拖放／選擇題答錯只說「再試一次」，最多答 3 次：第 1／2／3 次答對＝10／6／3 分，三次都錯 0 分；口說題規則與計分不變（通過＝10）。
+//   每題 results 存 points；遊戲照 answer 的 points 加分；教師後台顯示「第幾次答對」。
 // 計分：猜對 +10（滿分 100）。雲端和個人模式同一套（questProgress＋questAttempts），只存學號與成績。
 import { uploadAttempt, loadProgress, saveProgress } from "../shared/quest-cloud.mjs";
 import { available as aiAvailable, scoreGuess } from "./speech-ai.mjs";
@@ -14,7 +19,8 @@ import { available as aiAvailable, scoreGuess } from "./speech-ai.mjs";
 let BANK = null;
 let MISSION = "";
 const KEY = sid => `quest3d:v1:${MISSION}:${sid}`;
-const STUDENT_ID = /^\d{5,8}$/u;
+const STUDENT_ID = /^\d{5,8}$/u;          // 資料庫規則 ^[0-9]{5,8}$
+const PAIR_INPUT = /^\d{10}$/u;           // 兩個 5 位數學號連在一起
 const ITEM_ID = /^q(0[1-9]|10)$/u;
 const app = document.getElementById("app");
 const quiz = document.getElementById("quiz");
@@ -22,26 +28,52 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": 
 const today = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Taipei" }).format(new Date());
 const clip = (s, n = 80) => String(s ?? "").slice(0, n);
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-let state = null;
+let state = null;  // { pair:[A,B], attemptIds:{A,B}, startedAt, updatedAt, completedAt, results, cleared, activeDays }
 let outbox = [];   // 給遊戲的訊息（poll 一次拿一個）
 const N = () => BANK.items.length;
 
 // ------------------------------------------------------------------ storage
 const local = {
   load(sid) { try { const r = localStorage.getItem(KEY(sid)); return r ? JSON.parse(r) : null; } catch { return null; } },
-  save(s) { try { localStorage.setItem(KEY(s.studentId), JSON.stringify(s)); } catch { /* private mode */ } },
+  save(rec) { try { localStorage.setItem(KEY(rec.studentId), JSON.stringify(rec)); } catch { /* private mode */ } },
 };
-function newAttempt(studentId) {
-  const now = new Date();
-  return { studentId, attemptId: `${studentId}-${now.getTime().toString(36)}`, startedAt: now.toISOString(),
-    updatedAt: now.toISOString(), results: {}, cleared: [], activeDays: [], types: {} };
+// ------------------------------------------------------------------ pair login（照 Free Time）
+function splitPair(raw) {
+  const v = String(raw || "").replace(/\s+/g, "");
+  if (!PAIR_INPUT.test(v)) return "請把兩個人的學號連在一起輸入，共 10 位數字（例如 5012750128）。Type both student IDs together: 10 digits.";
+  const a = v.slice(0, 5), b = v.slice(5);
+  if (!STUDENT_ID.test(a) || !STUDENT_ID.test(b)) return "學號格式不對。Please check the student IDs.";
+  if (a === b) return "兩個學號不能一樣。The two student IDs must be different.";
+  return [a, b];
 }
+const pairTag = p => `pair:${p[0]}+${p[1]}`;
+const newId = sid => `${sid}-${Date.now().toString(36)}`;
+function newAttempt(pair) {
+  const now = new Date().toISOString();
+  return { pair, attemptIds: Object.fromEntries(pair.map(sid => [sid, newId(sid)])), startedAt: now, updatedAt: now,
+    completedAt: null, results: {}, cleared: [pairTag(pair)], activeDays: [] };
+}
+// iPad 第一次載入遊戲時可能因記憶體不足整頁重新整理 → 記住剛登入的一組（這個分頁、10 分鐘內），重新整理後自動接回
+const RESUME_KEY = "planetlisten:resume";
+const RESUME_MS = 10 * 60 * 1000;
+const resume = {
+  set(pair) { try { sessionStorage.setItem(RESUME_KEY, JSON.stringify({ pair, t: Date.now() })); } catch { /* private mode */ } },
+  clear() { try { sessionStorage.removeItem(RESUME_KEY); } catch { /* private mode */ } },
+  get() {
+    try {
+      const r = JSON.parse(sessionStorage.getItem(RESUME_KEY) || "null");
+      return r && Array.isArray(r.pair) && Date.now() - r.t < RESUME_MS && Array.isArray(splitPair(r.pair.join(""))) ? r.pair : null;
+    } catch { return null; }
+  },
+};
 const newer = (a, b) => (!a ? b : !b ? a : String(a.updatedAt) >= String(b.updatedAt) ? a : b);
 const withTimeout = (p, ms) => Promise.race([p, new Promise(r => setTimeout(() => r(null), ms))]);
 
 const answered = s => BANK.items.filter(i => s.results[i.id]).length;
 const correct = s => BANK.items.filter(i => s.results[i.id]?.finalCorrect).length;
-const scoreOf = s => correct(s) * BANK.pointsPer;
+const ptsOf = r => !r?.finalCorrect ? 0 : (Number.isFinite(r.points) ? r.points : BANK.pointsPer);
+const scoreOf = s => BANK.items.reduce((a, i) => a + ptsOf(s.results[i.id]), 0);
+const retried = s => BANK.items.filter(i => { const r = s.results[i.id]; return r?.finalCorrect && r.type !== "speak" && (r.attempts || 1) > 1; }).length;
 const speakAvg = s => {
   const v = BANK.items.map(i => s.results[i.id]?.ai).filter(Boolean);
   return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null;
@@ -52,37 +84,62 @@ function summaryOf(s) {
   return {
     total: N(), finished: n, firstTry: correct(s), correct: correct(s), attempts: n, hintsUsed: 0,
     battlesDone: 0, score: scoreOf(s), maxScore: BANK.maxScore, mode: "listen", route: 0,
-    modeLabel: "Listen and Guess", routeLabel: avg == null ? "—" : `口說平均 ${avg}`,
+    modeLabel: "Guess 版", routeLabel: avg == null ? "—" : `口說平均 ${avg}`,
     current: s.completedAt ? n : Math.min(n + 1, N()),
-    note: `Listen and Guess・${avg == null ? "無口說題" : `口說平均 ${avg}`}・${s.completedAt ? "完成" : `第 ${Math.min(n + 1, N())}/${N()} 題`}`,
+    note: `Guess 版 兩人一組（${s.pair[0]}＋${s.pair[1]}）・${avg == null ? "無口說題" : `口說平均 ${avg}`}・重試後答對 ${retried(s)} 題・${s.completedAt ? "完成" : `第 ${Math.min(n + 1, N())}/${N()} 題`}`,
   };
 }
-function cloudRecord(s) {
+function cloudRecord(s, sid) {
   return {
-    mission: MISSION, studentId: s.studentId, attemptId: s.attemptId, startedAt: s.startedAt,
+    mission: MISSION, studentId: sid, attemptId: s.attemptIds[sid], startedAt: s.startedAt,
     updatedAt: s.updatedAt, completedAt: s.completedAt || null, stepIndex: answered(s), stepCount: N(), version: 1,
     activeDays: s.activeDays.slice(-60),
     items: BANK.items.filter(i => s.results[i.id]).map(i => {
       const r = s.results[i.id];
+      // 拖放／選擇：第 1 次就答對才算 firstTryCorrect（後台列出「第幾次答對」）；口說照舊（通過就算）
+      const first = !!r.finalCorrect && (r.type === "speak" || (r.attempts || 1) === 1);
       return { seq: i.seq, id: i.id, type: r.type, attempts: r.attempts || 1, wrong: r.finalCorrect ? 0 : 1,
-        firstTryCorrect: !!r.finalCorrect, hintUsed: false, finalCorrect: !!r.finalCorrect,
+        firstTryCorrect: first, hintUsed: false, finalCorrect: !!r.finalCorrect, points: ptsOf(r),
         quality: r.finalCorrect ? 4 : 0, q: clip(r.q), a: clip(r.a), pick: clip(r.pick) };
     }),
     battles: {}, summary: summaryOf(s),
   };
 }
-function progressRecord(s) {
-  return { mission: MISSION, studentId: s.studentId, attemptId: s.attemptId, startedAt: s.startedAt,
+function progressRecord(s, sid) {
+  return { mission: MISSION, studentId: sid, attemptId: s.attemptIds[sid], startedAt: s.startedAt,
     updatedAt: s.updatedAt, completedAt: s.completedAt || null, results: s.results, cleared: s.cleared,
     version: 1, activeDays: s.activeDays.slice(-60) };
 }
-function persist(immediate = false) {
+// quest-cloud 只留一筆待送（後送的會蓋掉前一筆），所以兩個學號都用 immediate，各自立刻送出。
+function persist() {
   state.updatedAt = new Date().toISOString();
   const d = today();
   if (!state.activeDays.includes(d)) state.activeDays.push(d);
-  local.save(state);
-  saveProgress(progressRecord(state), { immediate });
-  uploadAttempt(cloudRecord(state), { immediate });
+  for (const sid of state.pair) {
+    local.save(progressRecord(state, sid));
+    saveProgress(progressRecord(state, sid), { immediate: true });
+    uploadAttempt(cloudRecord(state, sid), { immediate: true });
+  }
+}
+// 登入：兩個學號的本機＋雲端進度，取 cleared 有同一組 "pair:A+B" 的最新一份；沒有就重新開始
+async function loadPair(pair) {
+  const tag = pairTag(pair);
+  const clouds = await Promise.all(pair.map(sid => withTimeout(loadProgress(MISSION, sid), 6000)));
+  const locals = pair.map(sid => local.load(sid));
+  const ok = (r, sid) => r && r.studentId === sid && Array.isArray(r.cleared) && r.cleared.includes(tag) ? r : null;
+  let best = null;
+  pair.forEach((sid, i) => { best = newer(best, ok(locals[i], sid)); best = newer(best, ok(clouds[i], sid)); });
+  if (!best) return { s: newAttempt(pair), fresh: false };
+  const s = { pair, attemptIds: {}, startedAt: best.startedAt, updatedAt: best.updatedAt, completedAt: best.completedAt || null,
+    results: best.results || {}, cleared: best.cleared, activeDays: best.activeDays || [] };
+  // 這台裝置自己建的紀錄（同一次開始）沿用 attemptId；從別台裝置接續的就開新的 attemptId（questAttempts 只能改自己建的）
+  let fresh = false;
+  pair.forEach((sid, i) => {
+    const l = ok(locals[i], sid);
+    if (l && l.startedAt === best.startedAt && l.attemptId) s.attemptIds[sid] = l.attemptId;
+    else { s.attemptIds[sid] = newId(sid); fresh = true; }
+  });
+  return { s, fresh };
 }
 
 // ------------------------------------------------------------------ plans (types / clues)
@@ -100,7 +157,7 @@ function typeCode() {
   if (r && validTypes(String(r).slice(6))) return String(r).slice(6);
   const code = shuffle([...MIX]).map(t => CODE[t]).join("");
   state.cleared = [...(state.cleared || []).filter(c => !String(c).startsWith("types:")), "types:" + code];
-  persist(true);
+  persist();
   return code;
 }
 function typeTable() {
@@ -125,23 +182,23 @@ function pickType(id) {
 // ------------------------------------------------------------------ bridge used by the Godot game
 window.ershuiHost = {
   getInitial() {
-    return state ? { studentId: state.studentId, results: state.results, cleared: state.cleared, mode: "listen" } : {};
+    return state ? { studentId: `${state.pair[0]}+${state.pair[1]}`, pair: [...state.pair], results: state.results, cleared: state.cleared, mode: "listen" } : {};
   },
   report(json) {
     if (!state) return;
     let m;
     try { m = JSON.parse(json); } catch { return; }
     if (m.type === "start" && Number.isInteger(m.seed)) {
-      if (Object.keys(state.results).length || state.completedAt) state = newAttempt(state.studentId);
+      if (Object.keys(state.results).length || state.completedAt) state = newAttempt(state.pair);
       const types = validTypes(m.types) ? m.types : shuffle([...MIX]).map(t => CODE[t]).join("");
       const clues = validClues(m.clues) ? m.clues : shuffle([...CLUE_MIX]).join("");
-      state.cleared = ["mode:listen", "set:0", `seed:${m.seed}`, `types:${types}`, `clues:${clues}`];
+      state.cleared = [pairTag(state.pair), "mode:listen", "set:0", `seed:${m.seed}`, `types:${types}`, `clues:${clues}`];
       state.results = {};
       state.completedAt = null;
-      persist(true);
+      persist();
     } else if (m.type === "complete") {
       state.completedAt = new Date().toISOString();
-      persist(true);
+      persist();
       closeQuiz();
       renderResult();
     }
@@ -158,7 +215,15 @@ const tell = m => outbox.push(m);
 
 // ------------------------------------------------------------------ question panel
 const answerText = p => `I'm going to ${p.the ? "the " : ""}${p.word}.`;
-let Q = null;   // 目前這一題 {id, lid, type, clue, ...}
+let Q = null;   // 目前這一題 {id, lid, type, clue, by, ...}
+// 口說題輪流：本回合第 1、3、5 個口說題＝第一個學號，第 2、4 個＝第二個學號
+function speakerOf(id) {
+  const code = typeCode();
+  const idx = BANK.items.findIndex(it => it.id === id);
+  let k = 0;
+  for (let i = 0; i <= idx; i++) if (code[i] === "s") k++;
+  return state.pair[(Math.max(k, 1) - 1) % 2];
+}
 
 function openQuiz(id, lid, clueFromGame) {
   stopRec();
@@ -168,7 +233,7 @@ function openQuiz(id, lid, clueFromGame) {
   if (FORCE_CLUE && ["amb", "icons", "video"].includes(FORCE_CLUE)) clue = FORCE_CLUE;
   const others = shuffle(Object.keys(BANK.places).filter(k => k !== lid));
   Q = { id, lid, type, clue, place: BANK.places[lid], tries: 0, fails: 0, clueDone: clue === "amb",
-    hint3: shuffle([lid, others[0], others[1]]) };   // 口說第 3 次起的三個選項
+    hint3: shuffle([lid, others[0], others[1]]), by: type === "speak" ? speakerOf(id) : null };   // 口說第 3 次起的三個選項
   quiz.hidden = false;
   quiz.classList.toggle("bigclue", clue !== "amb");   // [1112 晚] 影片／圖示線索：面板變寬、線索放大（看完縮回）
   quiz.classList.remove("cluedone");
@@ -308,19 +373,28 @@ function replayClue() {
 
 function finish(ok, pick, extra = {}) {
   const p = Q.place;
-  state.results[Q.id] = { type: Q.type, clue: Q.clueFallback ? `${Q.clueFallback}→amb` : Q.clue, attempts: Q.tries || 1, finalCorrect: ok, lid: Q.lid,
-    q: `Where are you going?（${{ amb: "聽環境音", icons: "看兩個圖示", video: "看默劇影片" }[Q.clue] || "線索"}）`, a: answerText(p), pick: clip(pick), ...extra };
+  // 拖放／選擇（含口說 AI 沒回應改成選擇）用 Q.ctries；口說用 Q.tries
+  const tries = Q.type === "speak" ? (Q.tries || 1) : (Q.ctries || 1);
+  const points = !ok ? 0 : Q.type === "speak" ? BANK.pointsPer : (BANK.retryPoints[tries - 1] ?? 0);
+  state.results[Q.id] = { type: Q.type, clue: Q.clueFallback ? `${Q.clueFallback}→amb` : Q.clue, attempts: tries, finalCorrect: ok, lid: Q.lid,
+    q: `Where are you going?（${{ amb: "聽環境音", icons: "看兩個圖示", video: "看默劇影片" }[Q.clue] || "線索"}）`, a: answerText(p), pick: clip(pick, 120), ...extra, points };
   persist();
-  tell({ type: "answer", correct: ok, pick });
+  tell({ type: "answer", correct: ok, pick, points });
   closeQuiz();
+}
+// [1117] 拖放／選擇答錯：還有機會就只說「再試一次」（不說哪裡錯）；第 3 次還錯才去揭曉
+const MAX_PICK = 3;
+function tryAgainMsg() {
+  return `再試一次 Try again!（第 ${Q.ctries + 1}／${MAX_PICK} 次・答對 +${BANK.retryPoints[Q.ctries] ?? 0} 分）`;
 }
 
 // 選擇題：4 個地點句子
 function drawChoice(msg = "") {
   Q.msg = msg;
+  const bad = /^再試一次/u.test(msg);
   const others = shuffle(Object.keys(BANK.places).filter(k => k !== Q.lid)).slice(0, 3);
   Q.opts ||= shuffle([Q.lid, ...others]);
-  setBody(`${msg ? `<p class="msg">${esc(msg)}</p>` : ""}
+  setBody(`${msg ? `<p class="msg ${bad ? "again" : ""}">${esc(msg)}</p>` : ""}
     <div class="choices">${Q.opts.map((k, i) => `<button class="btn opt" data-pick="${k}">${"ABCD"[i]}　${esc(answerText(BANK.places[k]))}</button>`).join("")}</div>`);
 }
 
@@ -354,7 +428,7 @@ function drawDrag(init = false) {
   });
   const pool = D.tiles.map(t => used.has(t.id) ? `<span class="tile ghost"></span>` : `<button class="tile" data-tile="${t.id}">${esc(t.text)}</button>`).join("");
   const full = D.placed.every(Boolean);
-  setBody(`<p class="sent">${line.replace(/ \./, ".")}</p><div class="pool">${pool}</div>
+  setBody(`${Q.msg ? `<p class="msg again">${esc(Q.msg)}</p>` : ""}<p class="sent">${line.replace(/ \./, ".")}</p><div class="pool">${pool}</div>
     <div class="row"><button class="btn ghost" data-act="clear">Clear 清除</button>
     <button class="btn primary" data-act="check" ${full ? "" : "disabled"}>Go! 出發 ✓</button></div>`);
 }
@@ -498,7 +572,8 @@ function drawSpeak(msg = "", result = null, J = null) {
   Q.msg = msg;
   const pass = !!(J && J.pass);
   const out = !pass && J && Q.tries >= MAX_TRIES;
-  setBody(`<p class="sent hint">I'm going to the <span class="blank">______</span>.</p>
+  setBody(`<p class="turn">🎙 輪到 ${esc(Q.by)} 說 / ${esc(Q.by)}'s turn</p>
+    <p class="sent hint">I'm going to the <span class="blank">______</span>.</p>
     <p class="msg">第 ${Math.min(Q.tries + (pass || out ? 0 : 1), MAX_TRIES)}／${MAX_TRIES} 次${Q.best ? `・最高 ${Q.best} 分` : ""}</p>
     ${result ? `<div class="ai ${pass ? "good" : "try"}">
       <p class="said">你說：「${esc(result.transcript || "（聽不清楚）")}」</p>
@@ -658,8 +733,13 @@ quiz.addEventListener("click", e => {
   if (!Q.clueDone) return;   // 線索還沒看完：不能作答
   if (b.dataset.pick) {
     const spoke = Q.note ? `（${Q.note}）` : "";
-    if (!Q.note) Q.tries = 1;
-    finish(b.dataset.pick === Q.lid, answerText(BANK.places[b.dataset.pick]) + spoke, Q.best ? { ai: Q.best } : {});
+    const ok = b.dataset.pick === Q.lid;
+    Q.ctries = (Q.ctries || 0) + 1;
+    (Q.picks ||= []).push(BANK.places[b.dataset.pick].word);
+    window.__listenLastPick = { tries: Q.ctries, ok };
+    if (!ok && Q.ctries < MAX_PICK) { drawChoice(tryAgainMsg()); return; }
+    const hist = Q.picks.length > 1 ? `（${Q.picks.map((w, i) => `第${i + 1}次 ${w}`).join("→")}）` : "";
+    finish(ok, answerText(BANK.places[b.dataset.pick]) + hist + spoke, { ...(Q.best ? { ai: Q.best } : {}), ...(Q.by ? { by: Q.by } : {}) });
     return;
   }
   if (Q.type === "drag") {
@@ -670,20 +750,23 @@ quiz.addEventListener("click", e => {
     if (act === "check" && D.placed.every(Boolean)) {
       const said = D.placed.map(id => D.tiles.find(t => t.id === id).text);
       const ok = said.every((w, i) => w === D.answers[i]);
-      Q.tries = 1;
-      finish(ok, said.join(" / "));
+      Q.ctries = (Q.ctries || 0) + 1;
+      (Q.picks ||= []).push(said.join(" / "));
+      window.__listenLastPick = { tries: Q.ctries, ok };
+      if (!ok && Q.ctries < MAX_PICK) { D.placed = D.placed.map(() => null); Q.msg = tryAgainMsg(); drawDrag(); return; }
+      finish(ok, Q.picks.length > 1 ? Q.picks.map((w, i) => `第${i + 1}次 ${w}`).join(" → ") : said.join(" / "));
       return;
     }
   }
   if (Q.type === "speak") {
     if (act === "rec") { startRec(); return; }
     if (act === "reveal" && Q.last && Q.lastJ?.pass) {
-      finish(true, `說：${Q.last.transcript}（AI ${Q.last.total_score}，錄 ${Q.tries} 次）`, { ai: Q.last.total_score, said: clip(Q.last.transcript) });
+      finish(true, `${Q.by} 說：${Q.last.transcript}（AI ${Q.last.total_score}，錄 ${Q.tries} 次）`, { ai: Q.last.total_score, said: clip(Q.last.transcript), by: Q.by });
       return;
     }
     if (act === "release" && Q.last && Q.tries >= MAX_TRIES) {   // 5 次沒過：去揭曉、記答錯
-      finish(false, `說：${Q.last.transcript}（${MAX_TRIES} 次未通過：${Q.why || ""}）`,
-        { ai: Q.best, said: clip(Q.last.transcript), note: clip(`口說 ${MAX_TRIES} 次未通過：${Q.why || ""}`, 120) });
+      finish(false, `${Q.by} 說：${Q.last.transcript}（${MAX_TRIES} 次未通過：${Q.why || ""}）`,
+        { ai: Q.best, said: clip(Q.last.transcript), by: Q.by, note: clip(`口說 ${MAX_TRIES} 次未通過：${Q.why || ""}`, 120) });
     }
   }
 });
@@ -695,33 +778,46 @@ function renderStart(message = "") {
   app.innerHTML = `<main class="screen"><section class="panel">
     <h1>${esc(BANK.unit)}</h1>
     <p class="en">${esc(BANK.title)}</p>
-    <p>聽聲音、看圖示、看 Ken 比手畫腳，猜猜 Ken 要去二水的哪裡！<br>Where are you going? — I'm going to the ___.</p>
+    <p>聽聲音、看圖示、看 Ken 比手畫腳，猜猜 Ken 要去二水的哪裡！<br>Where are you going? — I'm going to the ___.<br>兩人一組，口說題兩人輪流錄音。</p>
     <form id="startForm">
-      <label for="sid">學號 Student ID</label>
-      <input id="sid" type="text" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="50100" required>
+      <label for="sid">兩人學號連在一起 Both student IDs</label>
+      <input id="sid" type="text" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="5012750128" required>
+      <p class="pairhelp">兩人學號連在一起輸入，例如 5012750128（＝50127＋50128）</p>
+      <p class="pairview" id="pairview"></p>
       <p class="msg" id="msg">${esc(message)}</p>
       <button class="btn primary" type="submit">▶ Start</button>
     </form>
-    <p class="small">每一輪 ${N()} 題・猜對一題 +${BANK.pointsPer} 分・iPad 請橫放、戴耳機更好聽<br>English audio is AI-generated, not a human recording.<br>Sound effects: KIE AI (Suno Sounds), Kenney (CC0) · Mime videos: KIE AI (Seedance) · Icons: AI-generated · Music: Suno · 3D buildings: Tripo</p>
-    <a class="home" href="../ershui-planet/">← 回到二水小行星首頁</a>
+    <p class="rules">拖放題、選擇題可以試 3 次：第 1 次答對 +${BANK.retryPoints[0]}、第 2 次 +${BANK.retryPoints[1]}、第 3 次 +${BANK.retryPoints[2]}<br>口說題通過 +${BANK.pointsPer}（最多錄 5 次）</p>
+    <p class="small">每一輪 ${N()} 題・滿分 ${BANK.maxScore}・iPad 請橫放、戴耳機更好聽<br>English audio is AI-generated, not a human recording.<br>Sound effects: KIE AI (Suno Sounds), Kenney (CC0) · Mime videos: KIE AI (Seedance) · Icons: AI-generated · Music: Suno · 3D buildings: Tripo</p>
+    <a class="home" href="../">← 回到首頁 Home</a>
   </section></main>`;
   const form = app.querySelector("#startForm");
-  form.addEventListener("submit", async e => {
-    e.preventDefault();
-    const sid = app.querySelector("#sid").value.trim();
-    if (!STUDENT_ID.test(sid)) { app.querySelector("#msg").textContent = "請輸入 5–8 位數字的學號。"; return; }
-    form.querySelector("button").disabled = true;
-    app.querySelector("#msg").textContent = "讀取進度中… Loading your progress…";
-    const cloud = await withTimeout(loadProgress(MISSION, sid), 6000);
-    const mine = local.load(sid);
-    const saved = newer(mine, cloud && cloud.studentId === sid ? cloud : null);
-    state = saved ? { activeDays: [], cleared: [], results: {}, types: {}, ...saved } : newAttempt(sid);
-    if (saved && saved !== mine && mine?.attemptId !== saved.attemptId) {
-      state.attemptId = `${sid}-${Date.now().toString(36)}`;
-      if (Object.keys(state.results).length && !state.completedAt) persist(true);
-    }
-    renderGame();
+  const input = app.querySelector("#sid");
+  const view = app.querySelector("#pairview");
+  app.querySelector(".home").addEventListener("click", () => resume.clear());
+  input.addEventListener("input", () => {
+    const p = splitPair(input.value);
+    view.textContent = Array.isArray(p) ? `${p[0]} ＋ ${p[1]}` : "";
+    if (Array.isArray(p)) app.querySelector("#msg").textContent = "";
   });
+  const go = async p => {
+    form.querySelector("button").disabled = true;
+    input.value = p.join("");
+    view.textContent = `${p[0]} ＋ ${p[1]}`;
+    app.querySelector("#msg").textContent = "讀取進度中… Loading your progress…";
+    const { s, fresh } = await loadPair(p);
+    state = s;
+    if (fresh && Object.keys(state.results).length && !state.completedAt) persist();
+    resume.set(p);
+    renderGame();
+  };
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const p = splitPair(input.value);
+    if (!Array.isArray(p)) { app.querySelector("#msg").textContent = p; return; }
+    go(p);
+  });
+  return go;
 }
 function renderGame() {
   outbox = [];
@@ -729,27 +825,32 @@ function renderGame() {
 }
 function renderResult() {
   const sm = summaryOf(state);
+  resume.clear();
   app.innerHTML = `<main class="screen result">
     <div class="confetti" aria-hidden="true">${Array.from({ length: 18 }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</div>
     <section class="panel">
       <h1>Great listening!</h1>
       <p class="en">逛完二水了！</p>
-      <p class="big-id">${esc(state.studentId)}</p>
+      <p class="big-id pair">${esc(state.pair[0])} ＋ ${esc(state.pair[1])}</p>
       <p class="score">${sm.score}<small> / ${BANK.maxScore}</small></p>
       <div class="stats">
         <div><b>${sm.correct}/${N()}</b><span>猜對</span></div>
+        <div><b>${retried(state)}</b><span>重試後答對</span></div>
         <div><b>${esc(sm.routeLabel)}</b><span>口說</span></div>
       </div>
       <button class="btn primary" id="again">🎧 再玩一次 Play again</button>
-      <br><a class="home" href="../ershui-planet/">← 回到二水小行星首頁</a>
+      <br><a class="home" href="../">← 回到首頁 Home</a>
     </section></main>`;
+  app.querySelector(".home").addEventListener("click", () => resume.clear());
   new Audio("../hwg5-u01-u02/assets/audio/sfx/celebrate.mp3").play().catch(() => {});
-  app.querySelector("#again").addEventListener("click", renderGame);
+  app.querySelector("#again").addEventListener("click", () => { resume.set(state.pair); renderGame(); });
 }
 
 export function start(bank) {
   BANK = bank;
   MISSION = bank.mission;
   document.title = bank.unit;
-  renderStart();
+  const go = renderStart();
+  const back = resume.get();
+  if (back) go(back);   // 被重新整理（iPad 記憶體不足等）：自動接回同一組，不用再輸入
 }
