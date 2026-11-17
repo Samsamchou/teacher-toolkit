@@ -1,0 +1,35 @@
+[
+ {
+  "shot": "V1",
+  "res": "720p",
+  "take": 1,
+  "taskId": "d4ab397e9c21445058c04ccfc9d4acdc",
+  "state": "success",
+  "credits": 41.0,
+  "secs": 122,
+  "fail": "",
+  "file": "V1/720p_1.mp4"
+ },
+ {
+  "shot": "V2",
+  "res": "720p",
+  "take": 1,
+  "taskId": "68197a456e23f70a144c5f2ab6b2f797",
+  "state": "success",
+  "credits": 32.8,
+  "secs": 137,
+  "fail": "",
+  "file": "V2/720p_1.mp4"
+ },
+ {
+  "shot": "V3",
+  "res": "720p",
+  "take": 1,
+  "taskId": "3c89baa59fd49f6a0f0ce6cf475e9843",
+  "state": "success",
+  "credits": 32.8,
+  "secs": 153,
+  "fail": "",
+  "file": "V3/720p_1.mp4"
+ }
+]

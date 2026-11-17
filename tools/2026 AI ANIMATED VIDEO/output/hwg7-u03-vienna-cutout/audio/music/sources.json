@@ -1,0 +1,32 @@
+[
+ {
+  "key": "k525_1_allegro",
+  "title": "File:Mozart K525 Serenade in G Major 1 - Allegro.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mozart_K525_Serenade_in_G_Major_1_-_Allegro.ogg",
+  "license": "Musopen（上傳者標 Public Domain Mark 1.0；頁面寫明無已知著作權限制，含鄰接權）",
+  "dur": 252.6,
+  "sr": 44100,
+  "ch": 1,
+  "checked": "2026-11-17"
+ },
+ {
+  "key": "k525_2_romanze",
+  "title": "File:Mozart - Serenade No. 13 for strings in G major, K. 525 - Romanze.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:Mozart_-_Serenade_No._13_for_strings_in_G_major,_K._525_-_Romanze.ogg",
+  "license": "Musopen；頁面只標「在美國屬公有領域」，並註明美國以外不一定",
+  "dur": 266.4,
+  "sr": 44100,
+  "ch": 1,
+  "checked": "2026-11-17"
+ },
+ {
+  "key": "k545_1_allegro",
+  "title": "File:K545 allegro.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:K545_allegro.ogg",
+  "license": "由 Raul654 從 Mutopia 公有領域 MIDI 轉成的電腦演奏，作者聲明全球公有領域",
+  "dur": 125.1,
+  "sr": 44100,
+  "ch": 2,
+  "checked": "2026-11-17"
+ }
+]

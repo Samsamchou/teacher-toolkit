@@ -1,0 +1,200 @@
+[
+ {
+  "id": "N01",
+  "who": "narrator",
+  "text": "It's a sunny day in Vienna, the city of music.",
+  "dur": 3.13
+ },
+ {
+  "id": "N02",
+  "who": "narrator",
+  "text": "Amber, Teddy, Mia, Edison, Rocky and Robot Abu visit a big, beautiful garden.",
+  "dur": 7.55
+ },
+ {
+  "id": "L01",
+  "who": "amber",
+  "text": "Wow! Vienna is so beautiful!",
+  "dur": 4.0
+ },
+ {
+  "id": "L02",
+  "who": "teddy",
+  "text": "Look! The flowers make a music note!",
+  "dur": 3.21
+ },
+ {
+  "id": "N03",
+  "who": "narrator",
+  "text": "A girl rides her bike into the garden.",
+  "dur": 2.76
+ },
+ {
+  "id": "L03",
+  "who": "lena",
+  "text": "Hi! I'm Lena. I live in Vienna.",
+  "dur": 5.34
+ },
+ {
+  "id": "L04",
+  "who": "mia",
+  "text": "How do you go to the park, Lena?",
+  "dur": 2.54
+ },
+ {
+  "id": "L05",
+  "who": "lena",
+  "text": "I go there by bike.",
+  "dur": 1.69
+ },
+ {
+  "id": "L06",
+  "who": "lena",
+  "text": "Let's go to the opera house!",
+  "dur": 2.18
+ },
+ {
+  "id": "N04",
+  "who": "narrator",
+  "text": "The kids walk to the tram stop.",
+  "dur": 2.05
+ },
+ {
+  "id": "L07",
+  "who": "rocky",
+  "text": "How can we go there?",
+  "dur": 1.39
+ },
+ {
+  "id": "L08",
+  "who": "edison",
+  "text": "We can go there by tram. Look!",
+  "dur": 2.26
+ },
+ {
+  "id": "N05",
+  "who": "narrator",
+  "text": "Ding, ding! Here comes the red tram.",
+  "dur": 3.38
+ },
+ {
+  "id": "N06",
+  "who": "narrator",
+  "text": "At the opera house, many people play Mozart's music together.",
+  "dur": 4.75
+ },
+ {
+  "id": "L09",
+  "who": "amber",
+  "text": "The music is beautiful. I love Mozart!",
+  "dur": 4.7
+ },
+ {
+  "id": "L10",
+  "who": "abu",
+  "text": "Let's visit Mozart!",
+  "dur": 1.44
+ },
+ {
+  "id": "N07",
+  "who": "narrator",
+  "text": "Abu pushes a button. Whoosh! They go back in time!",
+  "dur": 4.86
+ },
+ {
+  "id": "N08",
+  "who": "narrator",
+  "text": "Now they are in Mozart's room.",
+  "dur": 2.03
+ },
+ {
+  "id": "L11",
+  "who": "amber+teddy",
+  "text": "Hi, Mister Mozart. We're your fans.",
+  "dur": 4.63
+ },
+ {
+  "id": "L12",
+  "who": "mozart",
+  "text": "Oh, welcome! This is Beethoven.",
+  "dur": 3.48
+ },
+ {
+  "id": "L13",
+  "who": "abu",
+  "text": "What do you do in your free time?",
+  "dur": 1.88
+ },
+ {
+  "id": "L14",
+  "who": "beethoven",
+  "text": "I play the piano in my free time.",
+  "dur": 2.53
+ },
+ {
+  "id": "L15",
+  "who": "edison",
+  "text": "What does Mozart do in his free time?",
+  "dur": 2.49
+ },
+ {
+  "id": "L16",
+  "who": "beethoven",
+  "text": "He writes music in his free time.",
+  "dur": 2.45
+ },
+ {
+  "id": "N09",
+  "who": "narrator",
+  "text": "Then Mozart has a question for the kids.",
+  "dur": 2.77
+ },
+ {
+  "id": "L17",
+  "who": "mozart",
+  "text": "And you? What do you do in your free time?",
+  "dur": 3.92
+ },
+ {
+  "id": "L18",
+  "who": "amber",
+  "text": "I play the recorder in my free time.",
+  "dur": 2.9
+ },
+ {
+  "id": "L19",
+  "who": "mozart",
+  "text": "What does he do in his free time?",
+  "dur": 2.26
+ },
+ {
+  "id": "L20",
+  "who": "teddy",
+  "text": "He plays online games in his free time.",
+  "dur": 3.12
+ },
+ {
+  "id": "N10",
+  "who": "narrator",
+  "text": "Everyone laughs.",
+  "dur": 1.35
+ },
+ {
+  "id": "N11",
+  "who": "narrator",
+  "text": "The sun goes down. It's time to go home.",
+  "dur": 3.6
+ },
+ {
+  "id": "L21",
+  "who": "amber+teddy",
+  "text": "Bye, Vienna! Bye, Mozart!",
+  "dur": 4.2
+ },
+ {
+  "id": "N12",
+  "who": "narrator",
+  "text": "What a wonderful day in Vienna!",
+  "dur": 2.04
+ }
+]
