@@ -31,3 +31,6 @@ const assignmentText=await readFile(new URL('../src/assignments/assignment-domai
 await writeFile(new URL('../functions/generated/assignment-domain.mjs',import.meta.url),assignmentText.replace("'../live/domain.mjs'","'./live-domain.mjs'"));
 
 await copyFile(new URL('../src/assignments/game-heroes.mjs',import.meta.url),new URL('../functions/generated/game-heroes.mjs',import.meta.url));
+// Assignment reward games reuse the trusted classroom generators from the same folder.
+const rewardText=await readFile(new URL('../src/assignments/assignment-rewards.mjs',import.meta.url),'utf8');
+await writeFile(new URL('../functions/generated/assignment-rewards.mjs',import.meta.url),rewardText.replace("'../live/rewards.mjs'","'./rewards.mjs'").replace("'../live/reward-sports.mjs'","'./reward-sports.mjs'"));

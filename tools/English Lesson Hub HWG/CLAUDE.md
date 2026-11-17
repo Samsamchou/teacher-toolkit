@@ -30,7 +30,9 @@
 | `skills/` | Codex 專案 skill 原件（`godot-games`） |
 | `research/`、`prototypes/`、`generated-*`、`HWG5/HWG7` 圖卡資料夾 | 研究、原型、AI 生成與單字圖卡來源，視為教學來源，不刪改 |
 
-## 目前狀態（截至 2026-10-27 部署）
+## 目前狀態（截至 2026-11-17 部署）
+
+- 2026-11-17：分配可選 5 款課堂單人遊戲已上線（Hosting `ee5feb721b238850`、liveV2 `livev2-00023-wuq`），見 `rdq/DEPLOYMENT-assignment-reward-games-20261117.md`。liveV2 部署前用 `qa/reward-games-production-20261117/cloud.cjs envfile` 由線上值產生 Temp 專用 `functions/.env.hwg7teaching`，保留 LIVE_AI_MODEL 等 7 個設定。
 
 - 2026-10-27 晚：右鍵刪除單一學生紀錄＋AI 口說 85 分過關已上線（liveV2 `livev2-00022-qix`、liveAudioV2 `liveaudiov2-00006-hic`），見 `rdq/DEPLOYMENT-student-reset-audio-pass-20261027.md`。
 - 2026-10-27：AI 錄音題修復已上線（liveV2 `livev2-00021-hut`、liveAudioV2 `liveaudiov2-00005-yel`，模型 `gemini-3.5-flash`）。部署時 Functions 環境變數必須包含 `LIVE_AI_MODEL`，見 `rdq/DEPLOYMENT-ai-audio-fix-20261027.md`。

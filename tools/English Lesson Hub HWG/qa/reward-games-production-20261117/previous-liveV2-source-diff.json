@@ -1,0 +1,14 @@
+{
+  "zip": "previous-liveV2-source.zip",
+  "files": 43,
+  "changed": [
+    "generated/assignment-domain.mjs",
+    "src/assignment-service.mjs"
+  ],
+  "new": [
+    "generated/assignment-rewards.mjs"
+  ],
+  "missingLocally": [
+    ".env.hwg7teaching"
+  ]
+}

@@ -1,8 +1,9 @@
 import {isHeroes,normalizeHeroGame} from '../generated/game-heroes.mjs';
 import {randomInt,randomBytes,createHash} from 'node:crypto';
-import {createAssignment,publicAssignment,newAssignmentRun,currentBlock,recordFor,applyAttempt,advanceAssignment,assignmentSnapshot,feedbackFor,scoreAssignment,manuallyGrade,checkOpen,checkRevision,isStudentId} from '../generated/assignment-domain.mjs';
+import {createAssignment,publicAssignment,newAssignmentRun,currentBlock,recordFor,applyAttempt,advanceAssignment,assignmentSnapshot,feedbackFor,scoreAssignment,manuallyGrade,checkOpen,checkRevision,isStudentId,isRewardAssignment} from '../generated/assignment-domain.mjs';
+import {withReward,playAssignmentReward,finishAssignmentReward,checkRewardAdvance,rewardGameResult} from '../generated/assignment-rewards.mjs';
 export const ASSIGNMENT_TEACHER_ACTIONS=['assignmentCreate','assignmentList','assignmentReport','assignmentStudent','assignmentGrade','assignmentClose','assignmentRelease','assignmentRecording','assignmentDelete','assignmentStudentDelete'];
-export const ASSIGNMENT_ACTIONS=[...ASSIGNMENT_TEACHER_ACTIONS,'assignmentInfo','assignmentJoin','assignmentSnapshot','assignmentSubmit','assignmentAdvance','assignmentCheckpoint'];
+export const ASSIGNMENT_ACTIONS=[...ASSIGNMENT_TEACHER_ACTIONS,'assignmentInfo','assignmentJoin','assignmentSnapshot','assignmentSubmit','assignmentAdvance','assignmentCheckpoint','assignmentRewardPlay','assignmentRewardFinish'];
 const json=v=>JSON.stringify(v);
 const parse=doc=>doc.exists?JSON.parse(doc.data().json):null;
 export function answerHash(value){const stable=v=>Array.isArray(v)?v.map(stable):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,stable(v[k])])):v;return createHash('sha256').update(json(stable(value))).digest('hex');}
@@ -70,7 +71,7 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
    const a=parse(await ref.get());if(!a||a.ownerUid!==uid)throw Error('沒有這份分配的教師權限。');if(a.retentionAt<=now())throw Error('保存期限已到。');
    if(action==='assignmentReport'){
     const docs=await ref.collection('runs').limit(500).get(),runs=docs.docs.map(parse),seen=new Set(runs.map(r=>r.studentId));
-    const rows=runs.map(r=>({studentId:r.studentId,roleId:r.game?.roleId||null,...scoreAssignment(a,r),index:r.index,completedAt:r.completedAt,gameResult:r.gameResult||null,updatedAt:r.updatedAt}));
+    const rows=runs.map(r=>({studentId:r.studentId,roleId:r.game?.roleId||null,...scoreAssignment(a,r),index:r.index,completedAt:r.completedAt,gameResult:isRewardAssignment(a)?rewardGameResult(a,r):r.gameResult||null,updatedAt:r.updatedAt}));
     for(const id of a.studentIds||[])if(!seen.has(id)){const r=newAssignmentRun(a,id,'unjoined','roster-'+id,a.createdAt);rows.push({studentId:id,...scoreAssignment(a,r),index:0,completedAt:null,updatedAt:null});}
     return {assignment:publicAssignment(a),rows};
    }
@@ -79,6 +80,7 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
    const attempts=await ref.collection('attempts').where('studentId','==',payload.studentId).limit(3000).get();
    const list=attempts.docs.map(parse).sort((x,y)=>x.submittedAt-y.submittedAt||x.ordinal-y.ordinal);
    if(signRecording)for(const attempt of list)if(attempt.audioPath)attempt.recordingUrl=await signRecording(attempt.audioPath);
+   if(isRewardAssignment(a))run.gameResult=rewardGameResult(a,run);
    return {assignment:publicAssignment(a),run,score:scoreAssignment(a,run),attempts:list,blocks:a.deck.blocks};
   }
   return db.runTransaction(async tx=>{
@@ -108,27 +110,34 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
     const r=existing||newAssignmentRun(a,sid,uid,randomBytes(16).toString('hex'),now(),payload.roleId||'mage');r.uid=uid;
     const b=currentBlock(a,r),lastId=b?recordFor(r,b.id).lastAttemptId:null,last=lastId?parse(await tx.get(ref.collection('attempts').doc(lastId))):null;
     tx.set(runRef,{uid,studentId:sid,json:json(r),expiresAt:new Date(a.retentionAt)});tx.set(memberRef,{uid,studentId:sid,expiresAt:new Date(a.retentionAt)});
-    return assignmentSnapshot(a,r,last,now());
+    return withReward(assignmentSnapshot(a,r,last,now()),a,r,now());
    }
    if(!member.exists)throw Error('請先輸入學號加入分配。');
    const runRef=ref.collection('runs').doc(member.data().studentId),r=parse(await tx.get(runRef));if(!r||r.uid!==uid)throw Error('這份進度不屬於目前裝置。');
    const b=currentBlock(a,r);
    if(action==='assignmentSnapshot'){
     const lastId=b?recordFor(r,b.id).lastAttemptId:null,last=lastId?parse(await tx.get(ref.collection('attempts').doc(lastId))):null;
-    return assignmentSnapshot(a,r,last,now());
+    return withReward(assignmentSnapshot(a,r,last,now()),a,r,now());
    }
    if(action==='assignmentSubmit'){
     if(!/^[-\w]{8,100}$/.test(payload.attemptId||''))throw Error('作答識別碼無效。');
     const attemptRef=ref.collection('attempts').doc(payload.attemptId),old=parse(await tx.get(attemptRef)),hash=answerHash({blockId:payload.blockId,answer:payload.answer??null});
-    if(old){if(old.uid!==uid||old.answerHash!==hash)throw Error('作答重送內容衝突。');return {...assignmentSnapshot(a,r,old,now()),feedback:feedbackFor(a,r,old),duplicate:true};}
+    if(old){if(old.uid!==uid||old.answerHash!==hash)throw Error('作答重送內容衝突。');return {...withReward(assignmentSnapshot(a,r,old,now()),a,r,now()),feedback:feedbackFor(a,r,old),duplicate:true};}
     checkOpen(a,now());checkRevision(r,payload.revision);
     if(!b||b.id!==payload.blockId)throw Error('題目已變更，請重新載入。');if(b.type==='audio')throw Error('錄音題需使用錄音提交服務。');
     const attempt=applyAttempt(a,r,b,payload.answer,payload.attemptId,now());attempt.answerHash=hash;
     tx.create(attemptRef,{uid,studentId:r.studentId,json:json(attempt),expiresAt:new Date(a.retentionAt)});tx.update(runRef,{json:json(r)});
-    return {...assignmentSnapshot(a,r,attempt,now()),feedback:feedbackFor(a,r,attempt),saved:true};
+    return {...withReward(assignmentSnapshot(a,r,attempt,now()),a,r,now()),feedback:feedbackFor(a,r,attempt),saved:true};
+   }
+   if(action==='assignmentRewardPlay'||action==='assignmentRewardFinish'){
+    // Reads stay before the write; the returned snapshot keeps the saved answer and feedback.
+    const lastId=b?recordFor(r,b.id).lastAttemptId:null,last=lastId?parse(await tx.get(ref.collection('attempts').doc(lastId))):null;
+    const changed=action==='assignmentRewardPlay'?playAssignmentReward(a,r,payload,now(),randomInt(0,4294967295)):finishAssignmentReward(a,r,payload);
+    if(changed)tx.update(runRef,{json:json(r)});
+    return withReward(assignmentSnapshot(a,r,last,now()),a,r,now());
    }
    if(action==='assignmentAdvance'){
-    advanceAssignment(a,r,payload.revision,now());tx.update(runRef,{json:json(r)});return assignmentSnapshot(a,r,null,now());
+    checkRewardAdvance(a,r);advanceAssignment(a,r,payload.revision,now());tx.update(runRef,{json:json(r)});return withReward(assignmentSnapshot(a,r,null,now()),a,r,now());
    }
    if(action==='assignmentCheckpoint'){
     checkOpen(a,now());if(payload.index!==r.index||r.completedAt)throw Error('關卡進度已變更。');

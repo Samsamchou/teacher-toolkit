@@ -6,6 +6,9 @@ export const ITEM_NAMES=['日光法杖','葉盾','輕巧靴','星環球','冰晶
 export const LEVEL_NAMES=['單字森林','月光池畔','水晶林地','古老遺跡','天空花園','曙光城堡'];
 export const TIER_NAMES=['','傳說','史詩','稀有','基本'];
 const DAY=86400000;
+// Classroom reward games that an assignment may use instead of Forest of Words.
+export const REWARD_GAME_IDS=['basketball','plinkoh','slot','bowling','worldpup'];
+export const isRewardAssignment=a=>REWARD_GAME_IDS.includes(a?.game);
 export const isStudentId=v=>/^[3-6]\d{2}(0[1-9]|[12]\d|30)$/.test(v||'');
 export function shuffled(values,seed) {
   let x=2166136261;for(const c of String(seed))x=Math.imul(x^c.charCodeAt(0),16777619);
@@ -20,7 +23,7 @@ export function createAssignment(deck,input,ownerUid,code,now=Date.now()) {
   if(!visible.blocks.length)throw Error('請先建立至少一道可作答題目。');
   const title=String(input.title||'').trim(),dueAt=Number(input.dueAt);
   if(!title||title.length>120)throw Error('分配名稱需為1–120字。');
-  if(!['exam','practice'].includes(input.mode)||!['sequential','random'].includes(input.questionOrder)||!['original','random'].includes(input.optionOrder)||!['survivors','none'].includes(input.game||'survivors'))throw Error('分配模式或排列設定無效。');
+  if(!['exam','practice'].includes(input.mode)||!['sequential','random'].includes(input.questionOrder)||!['original','random'].includes(input.optionOrder)||!['survivors','none',...REWARD_GAME_IDS].includes(input.game||'survivors'))throw Error('分配模式或排列設定無效。');
   if(!Number.isFinite(dueAt)||dueAt<=now||dueAt>now+365*DAY)throw Error('有效期限需在現在之後、一年以內。');
   return {gameVersion:input.gameVersion===2?2:1,schemaVersion:ASSIGNMENT_VERSION,code,ownerUid,title,mode:input.mode,questionOrder:input.questionOrder,optionOrder:input.optionOrder,game:input.game||'survivors',createdAt:now,dueAt,retentionAt:dueAt+180*DAY,deck:visible,levels:levelPlan(visible.blocks.length),closed:false};
 }
@@ -90,7 +93,7 @@ export function advanceAssignment(a,r,revision,now=Date.now()) {
   if(r.index>=r.sequence.length){
     r.completedAt=now;
     const g=r.game;
-    r.gameResult=isHeroes(a)?heroGameResult(a,r,now):{status:a.game==='none'?'questions-only':'cleared',levelsCompleted:a.game==='none'?0:a.levels.length,defeated:g.defeated,seconds:Math.round(g.seconds),recoveries:g.recoveries,score:a.game==='none'?0:g.defeated*10,finishedAt:now};
+    r.gameResult=isHeroes(a)?heroGameResult(a,r,now):isRewardAssignment(a)?{status:'reward',game:a.game,levelsCompleted:0,score:(r.rewards?.turns||[]).reduce((n,t)=>n+(t.result?.points||0),0),turns:(r.rewards?.turns||[]).length,finishedAt:now}:{status:a.game==='none'?'questions-only':'cleared',levelsCompleted:a.game==='none'?0:a.levels.length,defeated:g.defeated,seconds:Math.round(g.seconds),recoveries:g.recoveries,score:a.game==='none'?0:g.defeated*10,finishedAt:now};
   }
 }
 export function scoreAssignment(a,r) {

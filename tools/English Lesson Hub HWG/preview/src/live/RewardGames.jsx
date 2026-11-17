@@ -169,7 +169,8 @@ export function RewardGames(props) {
     ? <React.Suspense fallback={<p role="status">正在載入遊戲…</p>}><SportRewards key={props.room.reward.game} {...props}/></React.Suspense>
     : <LegacyRewardGames {...props}/>;
 }
-function LegacyRewardGames({ room, onRoom }) {
+// `call` lets assignments reuse these games with their own trusted endpoints.
+function LegacyRewardGames({ room, onRoom, call = api, note, doneText }) {
   const saved = useRef(preferences()),
     [muted, setMuted] = useState(saved.current.soundPreferenceVersion === 3
       ? saved.current.muted ?? true
@@ -253,7 +254,7 @@ function LegacyRewardGames({ room, onRoom }) {
     setBusy(true);
     try {
       callback.current(
-        await api("rewardFinish", latest.current.code, {
+        await call("rewardFinish", latest.current.code, {
           turnId: id,
           revision: latest.current.revision,
         }),
@@ -347,7 +348,7 @@ function LegacyRewardGames({ room, onRoom }) {
       ...extra,
     };
     try {
-      onRoom(await api("rewardPlay", room.code, request.current));
+      onRoom(await call("rewardPlay", room.code, request.current));
       request.current = null;
     } catch (e) {
       slotAudio.current.stop();
@@ -484,7 +485,7 @@ function LegacyRewardGames({ room, onRoom }) {
         </p>
       )}
       {!active && reward.remaining === 0 && (
-        <h3>機會已用完，請等待老師下一題。</h3>
+        <h3>{doneText ?? "機會已用完，請等待老師下一題。"}</h3>
       )}
       {error && (
         <div role="alert">
@@ -497,9 +498,9 @@ function LegacyRewardGames({ room, onRoom }) {
           </button>
         </div>
       )}
-      <p className="lh-note">
-        遊戲分數不影響學習成績。老師暫停或換頁時，遊戲會收起；未用機會留在本堂課。
-      </p>
+      {note !== "" && <p className="lh-note">
+        {note ?? "遊戲分數不影響學習成績。老師暫停或換頁時，遊戲會收起；未用機會留在本堂課。"}
+      </p>}
     </section>
   );
 }

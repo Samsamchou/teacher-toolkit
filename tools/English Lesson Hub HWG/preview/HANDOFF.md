@@ -1,5 +1,9 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
+<!-- lesson-hub-reward-games-20261117:handoff -->
+> 最新狀態（2026-11-17 22:05）：分配可選 5 款課堂單人遊戲（練習每題完成後玩、測驗交卷後玩，遊戲分不計成績）已**正式部署**；Hosting `ee5feb721b238850`、liveV2 `livev2-00023-wuq`（LIVE_* 含 LIVE_AI_MODEL 保留）。詳見 `rdq/DEPLOYMENT-assignment-reward-games-20261117.md`；正式登入建立新分配與 iPad 實玩待教師驗收。未 Git commit／push。
+<!-- /lesson-hub-reward-games-20261117:handoff -->
+
 <!-- lesson-hub-student-reset-20261027:handoff -->
 > 最新狀態（2026-10-27 晚）：已完成兩項功能並**正式部署**（liveV2 `livev2-00022-qix`、liveAudioV2 `liveaudiov2-00006-hic`、Hosting 已更新，見 `rdq/DEPLOYMENT-student-reset-audio-pass-20261027.md`；教師右鍵刪除尚待教師登入後實測）。① 教師明細的學生列按右鍵，跳出確認視窗後刪除該生在這份分配的作答、成績、道具、錄音與裝置綁定，同一學號可以重新從第 1 題作答（新動作 `assignmentStudentDelete`，已加入 live-teacher-scope）。② AI 口說評分 85 分以上算滿分、給獎勵並過關（`audioPoints`／`AUDIO_PASS_SCORE`），錄音題畫面提示「85 分以上就過關」。舊分數不回溯。測試 317/317、建置通過；規格：`rdq/RDQ-spec-student-reset-audio-pass-20261027.md`。
 <!-- /lesson-hub-student-reset-20261027:handoff -->

@@ -34,7 +34,7 @@ function BowlingStage({result,progress,zone,setZone,blocked}){
   </div></div>;
 }
 
-export default function SportRewards({room,onRoom}){
+export default function SportRewards({room,onRoom,call=api,note}){
   const reward=room.reward,game=reward.game,pending=reward.pending,turn=pending||reward.last,r=turn?.result;
   const saved=useRef(readPreferences());
   const [skin,setSkin]=useState(saved.current.skin??0),[country,setCountry]=useState(saved.current.country||'TPE'),[zone,setZone]=useState(1);
@@ -87,7 +87,7 @@ export default function SportRewards({room,onRoom}){
         req.payload.revision=current.revision;req.payload.blockId=current.block.id;req.payload.walletVersion=v.version;
       }
       if(!p&&req.action==='rewardPlay'&&!req.payload.actionId&&req.payload.walletVersion===v.version&&v.eligible){req.payload.revision=current.revision;req.payload.blockId=current.block.id;}
-      const next=await api(req.action,current.code,req.payload);request.current=null;if(mounted.current)latest.current.onRoom(next);}
+      const next=await call(req.action,current.code,req.payload);request.current=null;if(mounted.current)latest.current.onRoom(next);}
     catch(e){if(mounted.current)setError(e.message);}
     finally{lock.current=false;if(mounted.current)setBusy(false);}
   }
@@ -119,6 +119,6 @@ export default function SportRewards({room,onRoom}){
     {r&&progress===1&&<p className="lh-reward-result">本次 {r.points>=0?'+':''}{r.points} 分</p>}
     {error&&<div role="alert"><p>{error}</p><button disabled={busy} onClick={()=>send('retry')}>重試原操作（不重複扣次數）</button></div>}
     {!pending&&reward.remaining===0&&<h3>機會已用完，請等待老師下一題。</h3>}
-    <p className="lh-note">遊戲分數不影響學習成績。老師暫停或切題時收起，已開始的球局可在下次遊戲時段繼續。</p>
+    {note!==''&&<p className="lh-note">{note??'遊戲分數不影響學習成績。老師暫停或切題時收起，已開始的球局可在下次遊戲時段繼續。'}</p>}
   </section>;
 }
