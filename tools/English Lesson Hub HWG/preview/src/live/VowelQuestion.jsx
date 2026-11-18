@@ -49,6 +49,29 @@ function WordImage({ asset, word }) {
   return <img src={url} alt={word || asset.name} />;
 }
 
+// Read-only result after an assignment vowel question closes (server sends only selected correct letters).
+export function VowelResult({ block, result }) {
+  return (
+    <div className="lh-vowel-result" aria-label="這題你找到的母音拼讀字母">
+      {block.vowelWords.map((entry, wi) => {
+        const ok = result.correct?.[wi] || [], groups = result.combos?.[wi] || [], marks = comboMarks(entry.word, groups);
+        return (
+          <div className={`lh-vowel-letters ${groups.length ? "has-combo" : ""}`} key={wi} role="group"
+            aria-label={`${entry.word}${groups.length ? `，字母組合 ${groups.map((g) => vowelComboLabel(entry.word, g)).join("、")}` : ""}`}>
+            {byWord(entry.word, (letter, li) => (
+              <span key={li} className={`lh-vowel-key ${ok.includes(li) ? "is-correct" : ""} ${comboClass(marks.get(li))}`}>
+                {letter}
+                {ok.includes(li) && <span aria-hidden="true">✓</span>}
+                <ComboLabel mark={marks.get(li)} />
+              </span>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function VowelEditor({ block, onPatch, onChange, onStatus, onError }) {
   const cards = block.vowelWords || [];
   const [uploads, setUploads] = useState({});

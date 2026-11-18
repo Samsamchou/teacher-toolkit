@@ -5,6 +5,24 @@ import {
   vowelCombos, vowelComboLabel,
 } from "../src/live/domain.mjs";
 import { editVowelPhrase, pruneVowelLinks } from "../src/live/vowel-phrase.mjs";
+import { feedbackFor, vowelResult } from "../src/assignments/assignment-domain.mjs";
+
+test("assignment feedback shows found letter groups only after the question closes", () => {
+  const b = { id: "v", type: "vowel", vowelWords: [
+    { word: "surf", targets: [1, 2] },
+    { word: "make", targets: [1, 3], links: [[1, 3]] },
+    { word: "TV", targets: [1] },
+  ] };
+  // Picked u only in surf, a+e in make, and a wrong T in TV.
+  const answer = [[1], [1, 3], [0]];
+  assert.deepEqual(vowelResult(b, answer), { correct: [[1], [1, 3], []], combos: [[], [[1, 3]], []] });
+  const attempt = { attemptId: "x", blockId: "v", outcome: "partial", grade: { score: 0, max: 1 }, ordinal: 1, answer };
+  const a = { mode: "practice", deck: { blocks: [b] } };
+  const open = { records: { v: { count: 1, closed: false } }, awards: {} };
+  assert.equal("vowel" in feedbackFor(a, open, attempt), false);
+  const closed = { records: { v: { count: 4, closed: true, best: 0 } }, awards: {} };
+  assert.deepEqual(feedbackFor(a, closed, attempt).vowel.combos, [[], [[1, 3]], []]);
+});
 
 const surf = { word: "surf the Internet", targets: [1, 2, 7, 9, 12, 13, 15] };
 

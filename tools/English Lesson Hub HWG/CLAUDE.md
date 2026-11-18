@@ -30,7 +30,9 @@
 | `skills/` | Codex 專案 skill 原件（`godot-games`） |
 | `research/`、`prototypes/`、`generated-*`、`HWG5/HWG7` 圖卡資料夾 | 研究、原型、AI 生成與單字圖卡來源，視為教學來源，不刪改 |
 
-## 目前狀態（截至 2026-11-18 部署）
+## 目前狀態（截至 2026-11-19 部署）
+
+- 2026-11-19：分配作答頁母音題結束後回饋框顯示字母組合顏色已上線（liveV2 `livev2-00026-xat`、Hosting `34412addf3b034e1`），見 `rdq/DEPLOYMENT-vowel-assignment-combo-20261119.md`。
 
 - 2026-11-18 第四次：母音題照輸入大小寫顯示＋字母組合（ur/er 自動、a_e 老師連結）綠底紅字已上線（liveV2 `livev2-00025-rik`、Hosting `f02c74c0d84956f0`），見 `rdq/DEPLOYMENT-vowel-case-combo-20261118.md`。G 槽 `preview/node_modules` 的 firebase 套件損壞，完整測試在 Temp 副本跑。
 

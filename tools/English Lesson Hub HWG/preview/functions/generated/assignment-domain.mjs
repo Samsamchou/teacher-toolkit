@@ -1,5 +1,5 @@
 import {isHeroes,initialHeroGame,heroGameResult} from './game-heroes.mjs';
-import {validateDeck,publicBlock,grade,copy,identifier} from './live-domain.mjs';
+import {validateDeck,publicBlock,grade,copy,identifier,vowelCombos} from './live-domain.mjs';
 export const ASSIGNMENT_VERSION=1;
 export const ITEM_IDS=['sunbeam','leaf-shield','swift-boots','orbit-star','frost-bell','lightning-feather','healing-bloom','dawn-wings'];
 export const ITEM_NAMES=['日光法杖','葉盾','輕巧靴','星環球','冰晶鈴','閃電羽','治癒花','曙光羽翼'];
@@ -105,7 +105,13 @@ export function assignmentSnapshot(a,r,lastAttempt=null,now=Date.now()) {
   const b=r?currentBlock(a,r):null;
   return {assignment:publicAssignment(a),expired:a.closed||a.dueAt<=now,run:r?{studentId:r.studentId,index:r.index,revision:r.revision,completedAt:r.completedAt,createdAt:r.createdAt,sequence:copy(r.sequence),records:copy(r.records),awards:copy(r.awards),game:copy(r.game),gameResult:copy(r.gameResult||null),pendingAudio:r.pendingAudio?{attemptId:r.pendingAudio.attemptId,blockId:r.pendingAudio.blockId}:null}:null,block:r?publicAssignmentBlock(a,r):null,level:r?currentLevel(a,r):a.levels[0],score:r?scoreAssignment(a,r):null,lastAnswer:lastAttempt&&b&&lastAttempt.blockId===b.id?copy(lastAttempt.answer):null,lastAttemptId:lastAttempt&&b&&lastAttempt.blockId===b.id?lastAttempt.attemptId:null,feedback:r&&lastAttempt&&b&&lastAttempt.blockId===b.id?feedbackFor(a,r,lastAttempt):null};
 }
-export function feedbackFor(a,r,attempt) {const b=a.deck.blocks.find(b=>b.id===attempt.blockId),rec=recordFor(r,b.id);return {attemptId:attempt.attemptId,blockId:b.id,outcome:attempt.outcome,score:attempt.grade.score,max:attempt.grade.max,ordinal:attempt.ordinal,retry:!rec.closed,adopted:a.mode==='exam'?rec.first:rec.best,reward:r.awards[b.id]||null,ai:attempt.ai?{total:attempt.ai.total_score,feedback:attempt.ai.feedback}:null};}
+export function feedbackFor(a,r,attempt) {const b=a.deck.blocks.find(b=>b.id===attempt.blockId),rec=recordFor(r,b.id);return {attemptId:attempt.attemptId,blockId:b.id,outcome:attempt.outcome,score:attempt.grade.score,max:attempt.grade.max,ordinal:attempt.ordinal,retry:!rec.closed,adopted:a.mode==='exam'?rec.first:rec.best,reward:r.awards[b.id]||null,ai:attempt.ai?{total:attempt.ai.total_score,feedback:attempt.ai.feedback}:null,...(b.type==='vowel'&&rec.closed?{vowel:vowelResult(b,attempt.answer)}:{})};}
+// After a vowel question closes: the student's correct letters and the letter groups (ur, a_e) they found in full.
+// Only selected letters are reported, so unfound answers stay hidden.
+export function vowelResult(b,answer) {
+  const picked=wi=>Array.isArray(answer?.[wi])?answer[wi]:[];
+  return {correct:b.vowelWords.map((w,wi)=>picked(wi).filter(i=>w.targets.includes(i)).sort((x,y)=>x-y)),combos:b.vowelWords.map((w,wi)=>vowelCombos(w).filter(g=>g.every(i=>picked(wi).includes(i))))};
+}
 // AI speaking score of 85+ passes: it counts as full marks so the student moves on to the game.
 export const AUDIO_PASS_SCORE=85;
 export function audioPoints(total,points){return total>=AUDIO_PASS_SCORE?points:Math.round(total/100*points*100)/100;}

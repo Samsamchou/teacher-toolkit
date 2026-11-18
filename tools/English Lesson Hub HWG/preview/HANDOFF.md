@@ -1,8 +1,8 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
-<!-- lesson-hub-next-20261118:handoff -->
-> **下次開機先做（教師 2026-11-18 收工前指定）**：分配作答頁的母音題（`src/assignments/AssignmentQuestion.jsx` 的 `as-vowel-word`）也加上字母組合顏色（綠底紅字＋紅色括線＋標籤），沿用 `src/live/domain.mjs` 的 `vowelCombos`／`vowelComboLabel`。注意：分配作答時學生看不到 targets／links，組合顏色只能在送出／判分後由伺服器回傳（勿提前洩漏答案）；分配題是多選後送出，需先確認在作答中或送出後顯示。改完依慣例本機驗收、等教師授權再部署。
-<!-- /lesson-hub-next-20261118:handoff -->
+<!-- lesson-hub-vowel-assignment-20261119:handoff -->
+> 最新狀態（2026-11-19，**已正式部署**：liveV2 `livev2-00026-xat`、Hosting `34412addf3b034e1`，LIVE_* 保留，讀回 209/209；見 `rdq/DEPLOYMENT-vowel-assignment-combo-20261119.md`；iPad 實作待教師驗收）：分配作答頁的母音題也有字母組合顏色。題目「結束」後（全對或用完 4 次／測驗交卷），回饋框顯示學生選對的字母（綠）與完整找到的組合（綠底紅字＋紅括線＋ur／a_e 標籤）；還能再試時不顯示，避免洩漏答案。伺服器 `assignment-domain.mjs` 的 `feedbackFor` 加 `vowel: vowelResult(...)`（只回報學生有選的字母）；前端 `VowelResult`（`src/live/VowelQuestion.jsx`）；有組合時自動開遊戲頁延到 4 秒。tile 樣式改 `:is(.lh-lab, .lh-vowel-result)`。重新整理後只看到分數（回饋框不含組合，因為 restoredFeedback 沒有 vowel）。**部署需 Hosting＋liveV2**。證據 `qa/vowel-assignment-combo-20261119/`（Node 331/331、Functions 10/10、建置、1024×768 截圖）。未 commit。
+<!-- /lesson-hub-vowel-assignment-20261119:handoff -->
 
 <!-- lesson-hub-vowel-case-combo-20261118:handoff -->
 > 最新狀態（2026-11-18 15:55，**已正式部署**：liveV2 `livev2-00025-rik`、Hosting `f02c74c0d84956f0`，LIVE_* 保留，讀回 209/209；見 `rdq/DEPLOYMENT-vowel-case-combo-20261118.md`；教師正式站實測待驗收）：「點選母音拼讀字母」題字母方塊照輸入大小寫顯示（English、TV、the Internet）；相鄰標記字母（ur、er、ay）自動成組，a_e／i_e 由老師在編輯頁「連成一組」；學生整組點完才變綠底紅字＋紅色括線＋標籤（計分不變）；片語只在單字間換行。改到共用 `src/live/domain.mjs`（已同步 `functions/generated/live-domain.mjs`），**部署需 Hosting＋liveV2**。規格 `rdq/RDQ-spec-vowel-case-combo-20261118.md`；證據 `qa/vowel-case-combo-20261118/`（Node 330/330、Functions 10/10、建置、4 張截圖）。G 槽 `preview/node_modules` 的 firebase 套件損壞，完整測試請在 Temp 副本跑。未 Git commit／push。

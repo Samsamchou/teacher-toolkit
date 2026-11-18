@@ -48,3 +48,4 @@ downstream: self
 - 另修：片語只在單字之間換行（不再出現 th|e、Inter|net）；單字比卡片還寬時才在字內換行。
 - 驗證（Temp 副本）：Node 330/330（新增 4 項）、Functions 10/10、建置通過；本機編輯頁與學生預覽實測（1366、1920 寬）截圖於 `qa/vowel-case-combo-20261118/screenshots/`。點一個字母只綠、整組點完才綠底紅字。
 - 部署需 Hosting＋liveV2（後端共用 `functions/generated/live-domain.mjs` 已同步）。分配作答頁的母音題（另一個介面）沒有加組合顏色。
+- 2026-11-19 追加（教師指定，未部署）：分配作答頁母音題在題目結束後的回饋框顯示選對字母與組合顏色；還能再試時不顯示。見 `preview/HANDOFF.md` 與 `qa/vowel-assignment-combo-20261119/`。
