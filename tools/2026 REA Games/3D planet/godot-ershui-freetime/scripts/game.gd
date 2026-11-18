@@ -3589,6 +3589,10 @@ func _build_bet_row() -> void:
 		var h := HBoxContainer.new()
 		h.add_theme_constant_override("separation", 3)
 		pc.add_child(h)
+		# [1118] 老師：頭像左邊加組號 G1–G5（同逛街版 11/14 投票列；RDQ-spec-freetime-load-glabel-20261118 1A）
+		var gl := _label("G%d" % (g + 1), 16)
+		gl.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		h.add_child(gl)
 		h.add_child(_icon(g, 32))
 		var row := {"opt": [], "wager": []}
 		for i in 3:
