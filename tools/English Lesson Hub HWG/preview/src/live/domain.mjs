@@ -259,6 +259,20 @@ export function validateDeck(deck, { draft = false } = {}) {
           )
         )
           fail("母音題每個單字都要標記有效的答案字母位置。");
+        if (
+          entry.links !== undefined &&
+          (!Array.isArray(entry.links) ||
+            entry.links.length > 12 ||
+            entry.links.some(
+              (link) =>
+                !Array.isArray(link) ||
+                link.length < 2 ||
+                new Set(link).size !== link.length ||
+                link.some((i) => !entry.targets.includes(i)) ||
+                word.slice(Math.min(...link), Math.max(...link) + 1).includes(' '),
+            ))
+        )
+          fail("母音題的字母組合必須連結同一個單字裡已標記的字母。");
       }
       if (!draft && images.size !== 3)
         fail("母音題需要三張不同的對應圖片。");
@@ -288,8 +302,8 @@ export function publicBlock(block, reveal = false) {
   if (block.type === "order") safe.items = copy(displayItems || block.items);
   if (block.type === 'order' && reveal) safe.correctOrder=copy(block.items);
   if (block.type === "vowel")
-    safe.vowelWords = vowelWords.map(({ targets, ...word }) =>
-      reveal ? { ...word, targets } : word,
+    safe.vowelWords = vowelWords.map(({ targets, links, ...word }) =>
+      reveal ? { ...word, targets, ...(links ? { links } : {}) } : word,
     );
   if (reveal) Object.assign(safe, { answer, alternatives, mapping });
   return safe;
@@ -684,6 +698,25 @@ export function submitRoom(room, uid, input, now = Date.now(), trustedVowel = fa
   response.rewardGranted = rewardAllowance(b, response);
   return response;
 }
+// Phonics letter groups: adjacent marked letters (ur, er, ay) plus teacher links (a_e, i_e).
+// Returns groups of two or more letter indices; single marked letters are not groups.
+export function vowelCombos(entry) {
+  const targets = [...(entry?.targets || [])].sort((a, b) => a - b);
+  const parent = new Map(targets.map((i) => [i, i]));
+  const find = (i) => (parent.get(i) === i ? i : find(parent.get(i)));
+  const join = (a, b) => {
+    if (parent.has(a) && parent.has(b)) parent.set(find(a), find(b));
+  };
+  targets.forEach((i) => join(i, i + 1));
+  (Array.isArray(entry?.links) ? entry.links : []).forEach((link) =>
+    link.slice(1).forEach((i) => join(link[0], i)),
+  );
+  const groups = new Map();
+  targets.forEach((i) => groups.set(find(i), [...(groups.get(find(i)) || []), i]));
+  return [...groups.values()].filter((group) => group.length > 1);
+}
+export const vowelComboLabel = (word, group) =>
+  group.map((i, k) => (k && i !== group[k - 1] + 1 ? "_" : "") + word[i].toLowerCase()).join("");
 export function tapVowel(room, uid, input, now = Date.now()) {
   checkRoom(room, now);
   if (!room.participants[uid]) fail("請先加入課堂。");
@@ -792,6 +825,14 @@ export function snapshot(room, uid, now = Date.now()) {
               ? room.deck.blocks[room.index].vowelWords.map((word, wi) =>
                   word.targets.every((i) =>
                     room.vowelProgress[uid].selected[wi].includes(i),
+                  ),
+                )
+              : undefined,
+            // Only fully found letter groups are sent, so unfinished groups never leak answers.
+            combos: room.deck.blocks[room.index].type === "vowel"
+              ? room.deck.blocks[room.index].vowelWords.map((word, wi) =>
+                  vowelCombos(word).filter((group) =>
+                    group.every((i) => room.vowelProgress[uid].selected[wi].includes(i)),
                   ),
                 )
               : undefined,

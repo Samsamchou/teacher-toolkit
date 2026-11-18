@@ -19,9 +19,11 @@ const animals = [
   ["Fox", "fox-penguin", 0],
   ["Penguin", "fox-penguin", 1],
 ];
-function preferences() {
+// Assignments keep their own settings so they start with sound on; classroom rooms keep theirs.
+const ASSIGNMENT_PREFERENCES = "lh-assignment-reward-preferences";
+function preferences(key = "lh-reward-preferences") {
   try {
-    return JSON.parse(localStorage.getItem("lh-reward-preferences")) || {};
+    return JSON.parse(localStorage.getItem(key)) || {};
   } catch {
     return {};
   }
@@ -163,6 +165,7 @@ function PegBoard({ turn, frame, zone }) {
   );
 }
 import { createSlotAudio } from './slot-audio.mjs';
+import { playBasketballCue } from './basketball-sounds.mjs';
 const SportRewards = React.lazy(() => import('./SportRewards.jsx'));
 export function RewardGames(props) {
   return ['bowling','worldpup'].includes(props.room.reward?.game)
@@ -170,9 +173,10 @@ export function RewardGames(props) {
     : <LegacyRewardGames {...props}/>;
 }
 // `call` lets assignments reuse these games with their own trusted endpoints.
-function LegacyRewardGames({ room, onRoom, call = api, note, doneText }) {
-  const saved = useRef(preferences()),
-    [muted, setMuted] = useState(saved.current.soundPreferenceVersion === 3
+function LegacyRewardGames({ room, onRoom, call = api, note, doneText, soundOn = false }) {
+  const prefsKey = soundOn ? ASSIGNMENT_PREFERENCES : "lh-reward-preferences";
+  const saved = useRef(preferences(prefsKey)),
+    [muted, setMuted] = useState(soundOn ? saved.current.muted ?? false : saved.current.soundPreferenceVersion === 3
       ? saved.current.muted ?? true
       : ["plinkoh","slot"].includes(room.reward?.game) ? false : saved.current.muted ?? true),
     [reduced, setReduced] = useState(
@@ -213,7 +217,7 @@ function LegacyRewardGames({ room, onRoom, call = api, note, doneText }) {
   useEffect(() => {
     try {
       localStorage.setItem(
-        "lh-reward-preferences",
+        prefsKey,
         JSON.stringify({ muted, reduced, volume, soundPreferenceVersion: 3 }),
       );
     } catch {}
@@ -248,6 +252,17 @@ function LegacyRewardGames({ room, onRoom, call = api, note, doneText }) {
       o.stop(c.currentTime + duration + 0.01);
     } catch {}
   }
+  // Basketball: swish or rim when the ball reaches the hoop, a small cheer after a made shot.
+  function cue(kind) {
+    if (mutedCurrent.current) return;
+    try {
+      const C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return;
+      audio.current ??= new C();
+      void audio.current.resume().catch(() => {});
+      playBasketballCue(audio.current, kind);
+    } catch {}
+  }
   async function finish(id) {
     if (guard.current) return;
     guard.current = true;
@@ -277,7 +292,9 @@ function LegacyRewardGames({ room, onRoom, call = api, note, doneText }) {
     let handle,
       start,
       last,
-      stopped = false;
+      stopped = false,
+      hoopCue = false,
+      cheerCue = false;
     const sim =
       active.game === "plinkoh"
         ? createDrop(
@@ -316,6 +333,10 @@ function LegacyRewardGames({ room, onRoom, call = api, note, doneText }) {
       } else {
         const p = reduced ? 1 : Math.min(1, (t - start) / 2500);
         setProgress(p);
+        if (active.game === "basketball") {
+          if (!hoopCue && p >= 0.68) { hoopCue = true; cue(active.result.hit ? "swish" : "rim"); }
+          if (!cheerCue && p >= 1 && active.result.hit) { cheerCue = true; cue("cheer"); }
+        }
         done = p === 1;
       }
       last = t;

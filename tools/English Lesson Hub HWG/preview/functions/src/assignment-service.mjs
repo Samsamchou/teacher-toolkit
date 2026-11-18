@@ -104,16 +104,19 @@ export function createAssignmentService({db,requireTeacher,now=Date.now,rateLimi
    if(action==='assignmentJoin'){
     checkOpen(a,now());const sid=String(payload.studentId||'');if(!isStudentId(sid))throw Error('五位數學號無效。');
     if(a.studentIds?.length&&!a.studentIds.includes(sid))throw Error('此學號不在本次分配名單中。');
-    if(member.exists&&member.data().studentId!==sid)throw Error('此裝置已用另一學號加入，請教師協助。');
+    // No device binding: a shared tablet may switch student IDs, and a student ID may move to
+    // another device. The run follows the latest device; the previous device is told it moved.
     const runRef=ref.collection('runs').doc(sid),existing=parse(await tx.get(runRef));
-    if(existing&&existing.uid&&existing.uid!==uid)throw Error('此學號已由另一裝置加入，請教師解除裝置綁定。');
-    const r=existing||newAssignmentRun(a,sid,uid,randomBytes(16).toString('hex'),now(),payload.roleId||'mage');r.uid=uid;
+    const moved=existing&&existing.uid&&existing.uid!==uid;
+    if(moved&&existing.pendingAudio)throw Error('這個學號在另一台裝置的錄音還在評分，請等一分鐘再加入。');
+    const r=existing||newAssignmentRun(a,sid,uid,randomBytes(16).toString('hex'),now(),payload.roleId||'mage');
+    if(moved)r.revision++;r.uid=uid;
     const b=currentBlock(a,r),lastId=b?recordFor(r,b.id).lastAttemptId:null,last=lastId?parse(await tx.get(ref.collection('attempts').doc(lastId))):null;
     tx.set(runRef,{uid,studentId:sid,json:json(r),expiresAt:new Date(a.retentionAt)});tx.set(memberRef,{uid,studentId:sid,expiresAt:new Date(a.retentionAt)});
     return withReward(assignmentSnapshot(a,r,last,now()),a,r,now());
    }
    if(!member.exists)throw Error('請先輸入學號加入分配。');
-   const runRef=ref.collection('runs').doc(member.data().studentId),r=parse(await tx.get(runRef));if(!r||r.uid!==uid)throw Error('這份進度不屬於目前裝置。');
+   const runRef=ref.collection('runs').doc(member.data().studentId),r=parse(await tx.get(runRef));if(!r||r.uid!==uid)throw Error('這個學號已在其他裝置接續，請重新輸入學號加入。');
    const b=currentBlock(a,r);
    if(action==='assignmentSnapshot'){
     const lastId=b?recordFor(r,b.id).lastAttemptId:null,last=lastId?parse(await tx.get(ref.collection('attempts').doc(lastId))):null;

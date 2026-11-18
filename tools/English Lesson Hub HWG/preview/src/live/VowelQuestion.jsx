@@ -1,7 +1,46 @@
 import React, { useEffect, useRef, useState } from "react";
 import { saveAsset } from "./media.mjs";
-import { editVowelPhrase } from "./vowel-phrase.mjs";
+import { editVowelPhrase, pruneVowelLinks } from "./vowel-phrase.mjs";
+import { vowelCombos, vowelComboLabel } from "./domain.mjs";
 import { useMediaResource } from "./useMediaResource.jsx";
+
+// Per letter: combo member (green tile, red letter), the red bar under the group, and the label on its first tile.
+function comboMarks(word, groups) {
+  const marks = new Map();
+  for (const group of groups || []) {
+    const first = Math.min(...group), last = Math.max(...group), name = vowelComboLabel(word, group);
+    for (let i = first; i <= last; i++)
+      marks.set(i, {
+        member: group.includes(i),
+        name,
+        bar: `lh-combo-bar${i === first ? " lh-combo-start" : ""}${i === last ? " lh-combo-end" : ""}`,
+        label: i === first ? name : "",
+      });
+  }
+  return marks;
+}
+// Keep each word's tiles together so a phrase only wraps between words (never "Inter|net").
+function byWord(word, render) {
+  const out = [];
+  let run = [];
+  const flush = (key) => {
+    if (run.length) out.push(<span className="lh-vowel-run" key={`run-${key}`}>{run}</span>);
+    run = [];
+  };
+  Array.from(word).forEach((letter, li) => {
+    if (letter !== " ") return run.push(render(letter, li));
+    flush(li);
+    out.push(<span key={li} className="lh-vowel-space" aria-hidden="true" />);
+  });
+  flush("end");
+  return out;
+}
+function comboClass(mark) {
+  return mark ? `${mark.bar}${mark.member ? " is-combo" : ""}` : "";
+}
+function ComboLabel({ mark }) {
+  return mark?.label ? <em className="lh-vowel-combo-label">{mark.label}</em> : null;
+}
 
 function WordImage({ asset, word }) {
   const { url, error } = useMediaResource(asset?.id);
@@ -13,6 +52,13 @@ function WordImage({ asset, word }) {
 export function VowelEditor({ block, onPatch, onChange, onStatus, onError }) {
   const cards = block.vowelWords || [];
   const [uploads, setUploads] = useState({});
+  const [linking, setLinking] = useState({});
+  function finishLink(wi) {
+    const entry = cards[wi], picked = [...(linking[wi] || [])].sort((a, b) => a - b);
+    if (picked.length > 1)
+      updateCard(wi, { links: [...pruneVowelLinks(entry.links, entry.targets).filter((link) => !link.some((i) => picked.includes(i))), picked] });
+    setLinking((current) => ({ ...current, [wi]: undefined }));
+  }
   function uploadMessage(index, message, failed = false, busy = false) {
     setUploads((current) => ({
       ...current,
@@ -132,30 +178,57 @@ export function VowelEditor({ block, onPatch, onChange, onStatus, onError }) {
                   </select>
                 </label>
               )}
-              <div className="lh-vowel-letters" role="group" aria-label={`${entry.word || `單字 ${wi + 1}`} 的正確字母`}>
-                {Array.from(entry.word).map((letter, li) => letter === ' ' ? (
-                  <span key={li} className="lh-vowel-space" aria-hidden="true" />
-                ) : (
-                  <button
-                    type="button"
-                    key={li}
-                    className={`lh-vowel-key ${entry.targets.includes(li) ? "is-correct" : ""}`}
-                    aria-pressed={entry.targets.includes(li)}
-                    aria-label={`第 ${li + 1} 個字母 ${letter}`}
-                    onClick={() =>
-                      updateCard(wi, {
-                        targets: entry.targets.includes(li)
-                          ? entry.targets.filter((i) => i !== li)
-                          : [...entry.targets, li].sort((a, b) => a - b),
-                      })
-                    }
-                  >
-                    {letter}
-                    {entry.targets.includes(li) && <span aria-hidden="true">✓</span>}
-                  </button>
-                ))}
-              </div>
-              <small>已標記 {entry.targets.length} 個位置</small>
+              {(() => {
+                const groups = vowelCombos(entry), marks = comboMarks(entry.word, groups), picking = linking[wi];
+                return (
+                  <>
+                    <div className={`lh-vowel-letters ${groups.length ? "has-combo" : ""}`} role="group" aria-label={`${entry.word || `單字 ${wi + 1}`} 的正確字母`}>
+                      {byWord(entry.word, (letter, li) => (
+                        <button
+                          type="button"
+                          key={li}
+                          className={`lh-vowel-key ${entry.targets.includes(li) ? "is-correct" : ""} ${comboClass(marks.get(li))} ${picking?.includes(li) ? "is-linking" : ""}`}
+                          aria-pressed={picking ? picking.includes(li) : entry.targets.includes(li)}
+                          aria-label={`第 ${li + 1} 個字母 ${letter}`}
+                          disabled={Boolean(picking) && !entry.targets.includes(li)}
+                          onClick={() => {
+                            if (picking) {
+                              setLinking((current) => ({ ...current, [wi]: picking.includes(li) ? picking.filter((i) => i !== li) : [...picking, li] }));
+                              return;
+                            }
+                            const targets = entry.targets.includes(li)
+                              ? entry.targets.filter((i) => i !== li)
+                              : [...entry.targets, li].sort((a, b) => a - b);
+                            updateCard(wi, { targets, ...(entry.links ? { links: pruneVowelLinks(entry.links, targets) } : {}) });
+                          }}
+                        >
+                          {letter}
+                          {entry.targets.includes(li) && <span aria-hidden="true">✓</span>}
+                          <ComboLabel mark={marks.get(li)} />
+                        </button>
+                      ))}
+                    </div>
+                    <small>已標記 {entry.targets.length} 個位置{groups.length ? `；字母組合：${groups.map((g) => vowelComboLabel(entry.word, g)).join("、")}` : ""}</small>
+                    <div className="lh-vowel-link-tools">
+                      {picking ? (
+                        <>
+                          <small>點已標記的字母（例如 make 的 a 和 e），再按完成。</small>
+                          <button type="button" disabled={picking.length < 2 || new Set(picking.map((i) => entry.word.slice(0, i).split(" ").length)).size > 1} onClick={() => finishLink(wi)}>完成連結</button>
+                          <button type="button" onClick={() => setLinking((current) => ({ ...current, [wi]: undefined }))}>取消</button>
+                        </>
+                      ) : (
+                        <button type="button" disabled={entry.targets.length < 2} onClick={() => setLinking((current) => ({ ...current, [wi]: [] }))}>a_e／i_e 連成一組</button>
+                      )}
+                      {pruneVowelLinks(entry.links, entry.targets).map((link, k) => (
+                        <button type="button" key={link.join("-")} className="lh-vowel-link-chip" aria-label={`取消組合 ${vowelComboLabel(entry.word, link)}`}
+                          onClick={() => updateCard(wi, { links: pruneVowelLinks(entry.links, entry.targets).filter((_, n) => n !== k) })}>
+                          {vowelComboLabel(entry.word, link)} ✕
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                );
+              })()}
             </article>
           );
         })}
@@ -190,6 +263,11 @@ export function VowelQuestion({
         word.targets.every((i) => selected[wi].includes(i)),
       )
     : progress?.completedWords || [false, false, false];
+  const combos = preview
+    ? block.vowelWords.map((word, wi) =>
+        vowelCombos(word).filter((group) => group.every((i) => selected[wi].includes(i))),
+      )
+    : progress?.combos || [[], [], []];
   async function choose(wi, li) {
     if (disabled || working || selected[wi]?.includes(li)) return;
     clearTimeout(timer.current);
@@ -239,14 +317,14 @@ export function VowelQuestion({
       <div className="lh-vowel-grid">
         {block.vowelWords.map((entry, wi) => {
           const asset = block.media.find((item) => item.id === entry.imageId);
+          const marks = comboMarks(entry.word, combos[wi]);
           return (
             <article className="lh-vowel-card" key={wi}>
               <div className="lh-vowel-picture">
                 <WordImage asset={asset} word={entry.word} />
               </div>
-              <div className="lh-vowel-letters" role="group" aria-label={`${entry.word} 的字母`}>
-                {Array.from(entry.word).map((letter, li) => {
-                  if (letter === ' ') return <span key={li} className="lh-vowel-space" aria-hidden="true" />;
+              <div className={`lh-vowel-letters ${combos[wi]?.length ? "has-combo" : ""}`} role="group" aria-label={`${entry.word} 的字母`}>
+                {byWord(entry.word, (letter, li) => {
                   const right = selected[wi]?.includes(li);
                   const wrong = flash?.wi === wi && flash.li === li && !flash.correct;
                   return (
@@ -254,13 +332,14 @@ export function VowelQuestion({
                       type="button"
                       key={li}
                       disabled={disabled || working || right}
-                      className={`lh-vowel-key ${right ? "is-correct" : ""} ${wrong ? "is-wrong" : ""}`}
-                      aria-label={`${entry.word} 第 ${li + 1} 個字母 ${letter}${right ? "，已選對" : wrong ? "，請再試" : ""}`}
+                      className={`lh-vowel-key ${right ? "is-correct" : ""} ${wrong ? "is-wrong" : ""} ${comboClass(marks.get(li))}`}
+                      aria-label={`${entry.word} 第 ${li + 1} 個字母 ${letter}${right ? "，已選對" : wrong ? "，請再試" : ""}${marks.get(li)?.member ? `，字母組合 ${marks.get(li).name}` : ""}`}
                       aria-pressed={Boolean(right)}
                       onClick={() => void choose(wi, li)}
                     >
                       {letter}
                       {(right || wrong) && <span aria-hidden="true">{right ? "✓" : "✕"}</span>}
+                      <ComboLabel mark={marks.get(li)} />
                     </button>
                   );
                 })}

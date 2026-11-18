@@ -457,6 +457,8 @@
   margin: 4px 0 10px;
 }
 .lh-vowel-space { flex: 0 0 24px; align-self: stretch; }
+/* A word moves to the next line as a whole; only a word wider than the card wraps inside itself. */
+.lh-vowel-run { display: flex; flex-wrap: wrap; justify-content: center; gap: inherit; max-width: 100%; }
 .lh-lab .lh-vowel-key {
   position: relative;
   display: grid;
@@ -471,7 +473,8 @@
   color: #19345f;
   font-size: 27px;
   font-weight: 800;
-  text-transform: lowercase;
+  /* Show letters exactly as the teacher typed them (English, TV, the Internet). */
+  text-transform: none;
   text-shadow: 0 1px 0 #fff;
   box-shadow: inset 0 2px 2px #ffffffdd, 0 5px 0 #8195bc,
     0 8px 17px #4363ad5c;
@@ -519,6 +522,60 @@
 }
 .lh-vowel-key.is-wrong span {
   background: #b53143;
+}
+/* Letter groups (ur, er, ay, a_e): green tile, red letter, red bar under the group and a small label. */
+.lh-vowel-letters.has-combo {
+  row-gap: 40px;
+  padding-bottom: 30px;
+}
+.lh-lab .lh-vowel-key.is-correct.is-combo {
+  color: #d11f35;
+  text-shadow: 0 1px 0 #ffffffcc;
+}
+.lh-lab .lh-vowel-key.lh-combo-bar::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  bottom: -14px;
+  height: 5px;
+  background: #d11f35;
+}
+.lh-lab .lh-vowel-key.lh-combo-start::after {
+  left: 4px;
+  border-radius: 3px 0 0 3px;
+}
+.lh-lab .lh-vowel-key.lh-combo-end::after {
+  right: 4px;
+  border-radius: 0 3px 3px 0;
+}
+.lh-vowel-combo-label {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 1;
+  padding: 1px 8px;
+  border-radius: 999px;
+  color: #fff;
+  background: #d11f35;
+  font: italic 800 17px/1.3 system-ui, sans-serif;
+  white-space: nowrap;
+}
+.lh-lab .lh-vowel-key.is-linking {
+  outline: 3px dashed #d11f35;
+  outline-offset: 3px;
+}
+.lh-vowel-link-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.lh-vowel-link-chip {
+  color: #d11f35;
+  font-weight: 800;
 }
 .lh-vowel-done {
   color: #14633c;

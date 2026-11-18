@@ -15,7 +15,8 @@ import './sports-source/bowling.css';
 import './sports-source/worldpup.css';
 import './reward-sports.css';
 
-function readPreferences(){try{return JSON.parse(localStorage.getItem('lh-sports-preferences'))||{};}catch{return {};}}
+// Assignments keep separate settings so they start with sound on.
+function readPreferences(key='lh-sports-preferences'){try{return JSON.parse(localStorage.getItem(key))||{};}catch{return {};}}
 
 function BowlingStage({result,progress,zone,setZone,blocked}){
   const active=result?.session.active,plan=result?.plan;
@@ -34,16 +35,17 @@ function BowlingStage({result,progress,zone,setZone,blocked}){
   </div></div>;
 }
 
-export default function SportRewards({room,onRoom,call=api,note}){
+export default function SportRewards({room,onRoom,call=api,note,soundOn=false}){
+  const prefsKey=soundOn?'lh-assignment-sports-preferences':'lh-sports-preferences';
   const reward=room.reward,game=reward.game,pending=reward.pending,turn=pending||reward.last,r=turn?.result;
-  const saved=useRef(readPreferences());
+  const saved=useRef(readPreferences(prefsKey));
   const [skin,setSkin]=useState(saved.current.skin??0),[country,setCountry]=useState(saved.current.country||'TPE'),[zone,setZone]=useState(1);
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
-  const [muted,setMuted]=useState(saved.current.muted??true),[music,setMusic]=useState(saved.current.music??.25),[sounds,setSounds]=useState(saved.current.sounds??.65);
+  const [muted,setMuted]=useState(saved.current.muted??!soundOn),[music,setMusic]=useState(saved.current.music??.25),[sounds,setSounds]=useState(saved.current.sounds??.65);
   const [reduced,setReduced]=useState(()=>saved.current.reduced??matchMedia('(prefers-reduced-motion: reduce)').matches),[progress,setProgress]=useState(1);
   const lock=useRef(false),request=useRef(null),audio=useRef(null),mounted=useRef(false),latest=useRef({room,onRoom});
   latest.current={room,onRoom};
-  useEffect(()=>{try{localStorage.setItem('lh-sports-preferences',JSON.stringify({skin,country,muted,music,sounds,reduced}));}catch{}},[skin,country,muted,music,sounds,reduced]);
+  useEffect(()=>{try{localStorage.setItem(prefsKey,JSON.stringify({skin,country,muted,music,sounds,reduced}));}catch{}},[skin,country,muted,music,sounds,reduced]);
   useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;audio.current?.dispose();audio.current=null;};},[]);
   useEffect(()=>{
     const stop=()=>{if(document.hidden)audio.current?.pause();};document.addEventListener('visibilitychange',stop);

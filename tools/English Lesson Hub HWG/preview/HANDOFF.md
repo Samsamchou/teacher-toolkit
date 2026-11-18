@@ -1,5 +1,25 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
+<!-- lesson-hub-next-20261118:handoff -->
+> **下次開機先做（教師 2026-11-18 收工前指定）**：分配作答頁的母音題（`src/assignments/AssignmentQuestion.jsx` 的 `as-vowel-word`）也加上字母組合顏色（綠底紅字＋紅色括線＋標籤），沿用 `src/live/domain.mjs` 的 `vowelCombos`／`vowelComboLabel`。注意：分配作答時學生看不到 targets／links，組合顏色只能在送出／判分後由伺服器回傳（勿提前洩漏答案）；分配題是多選後送出，需先確認在作答中或送出後顯示。改完依慣例本機驗收、等教師授權再部署。
+<!-- /lesson-hub-next-20261118:handoff -->
+
+<!-- lesson-hub-vowel-case-combo-20261118:handoff -->
+> 最新狀態（2026-11-18 15:55，**已正式部署**：liveV2 `livev2-00025-rik`、Hosting `f02c74c0d84956f0`，LIVE_* 保留，讀回 209/209；見 `rdq/DEPLOYMENT-vowel-case-combo-20261118.md`；教師正式站實測待驗收）：「點選母音拼讀字母」題字母方塊照輸入大小寫顯示（English、TV、the Internet）；相鄰標記字母（ur、er、ay）自動成組，a_e／i_e 由老師在編輯頁「連成一組」；學生整組點完才變綠底紅字＋紅色括線＋標籤（計分不變）；片語只在單字間換行。改到共用 `src/live/domain.mjs`（已同步 `functions/generated/live-domain.mjs`），**部署需 Hosting＋liveV2**。規格 `rdq/RDQ-spec-vowel-case-combo-20261118.md`；證據 `qa/vowel-case-combo-20261118/`（Node 330/330、Functions 10/10、建置、4 張截圖）。G 槽 `preview/node_modules` 的 firebase 套件損壞，完整測試請在 Temp 副本跑。未 Git commit／push。
+<!-- /lesson-hub-vowel-case-combo-20261118:handoff -->
+
+<!-- lesson-hub-resume-progress-20261118:handoff -->
+> 最新狀態（2026-11-18 13:05，**已正式部署**：liveV2 `livev2-00024-seq`、Hosting `b8124e78932d0a87`，LIVE_* 含 LIVE_AI_MODEL 保留，讀回 209/209；詳見 `rdq/DEPLOYMENT-resume-progress-20261118.md`；教室共用平板實際輪流作答待教師驗收）：分配作答取消裝置綁定。共用平板可按「不是你？換學號」換人；任何裝置輸入同一學號即接續（舊裝置下次操作回學號頁並提示「已在其他裝置接續」；另一台裝置錄音評分中時暫不能接手）。選了答案未送出就關分頁會跳離開提醒；報表與 CSV 加「最後作答時間／目前第幾題」；教師「協助學生更換裝置」按鈕已隱藏（後端 `assignmentRelease` 保留）。改到後端 `functions/src/assignment-service.mjs`，**部署需同時部署 Hosting＋liveV2**（沿用保留 LIVE_* 的流程）。規格 `rdq/RDQ-spec-resume-progress-20261118.md`；證據 `qa/resume-progress-20261118/`（Node 326/326、Functions 10/10、模擬器 12/12、建置、7 張本機實測截圖）。未 Git commit／push。
+<!-- /lesson-hub-resume-progress-20261118:handoff -->
+
+<!-- lesson-hub-projector-sound-20261118:handoff -->
+> 最新狀態（2026-11-18 08:50）：分配作答頁投影大字（題目約 40／選項約 34 px，iPad 自動縮小）、分配遊戲預設有聲音、投籃入網／碰框／歡呼音效已**正式部署**；Hosting `2c9fe24aa6b7412d`（liveV2 未變）。詳見 `rdq/DEPLOYMENT-projector-text-sound-20261118.md`；大電視後排可讀性與實際音量待教師驗收。未 Git commit／push。
+<!-- /lesson-hub-projector-sound-20261118:handoff -->
+
+<!-- lesson-hub-game-page-20261118:handoff -->
+> 最新狀態（2026-11-18 08:10）：分配遊戲改為全螢幕獨立遊戲頁（答對自動翻頁、一頁看完、測驗成績頁進出）已**正式部署**；Hosting `e321f6982d1fcdb6`（liveV2 未變 `livev2-00023-wuq`）。詳見 `rdq/DEPLOYMENT-assignment-game-page-20261118.md`；iPad Safari 實機待教師驗收。未 Git commit／push。
+<!-- /lesson-hub-game-page-20261118:handoff -->
+
 <!-- lesson-hub-reward-games-20261117:handoff -->
 > 最新狀態（2026-11-17 22:05）：分配可選 5 款課堂單人遊戲（練習每題完成後玩、測驗交卷後玩，遊戲分不計成績）已**正式部署**；Hosting `ee5feb721b238850`、liveV2 `livev2-00023-wuq`（LIVE_* 含 LIVE_AI_MODEL 保留）。詳見 `rdq/DEPLOYMENT-assignment-reward-games-20261117.md`；正式登入建立新分配與 iPad 實玩待教師驗收。未 Git commit／push。
 <!-- /lesson-hub-reward-games-20261117:handoff -->

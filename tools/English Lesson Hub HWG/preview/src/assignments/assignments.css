@@ -115,3 +115,87 @@
 .as-result .as-reward-game{max-width:1100px;margin:18px auto}
 .as-reward-game button{min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid #b9a6f0;background:#fff;color:#17324d;font:inherit;cursor:pointer}
 .as-reward-game button:disabled{opacity:.5;cursor:default}
+
+/* Full-screen assignment game page: bar, game (fills the rest), navigation. One screen, no scrolling. */
+.as-game-page{position:fixed;inset:0;z-index:20;display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100dvh;background:radial-gradient(circle at 50% 0,#3b2a7a,#140f33 70%);color:#fff;font-family:'Comic Relief','Noto Sans TC',system-ui,sans-serif;box-sizing:border-box}
+.as-game-page *{box-sizing:border-box}
+.as-game-bar{display:flex;align-items:center;gap:18px;padding:8px 16px;background:#0e0a28cc;border-bottom:2px solid #6c55d8;font-size:17px;flex-wrap:wrap}
+.as-game-bar b{color:#ffe28a}
+.as-game-bar .as-game-sound{margin-left:auto;min-height:38px;padding:4px 14px;border-radius:999px;border:1px solid #a998ff;background:#251c5c;color:#fff;font:inherit;cursor:pointer}
+.as-game-stage{min-height:0;padding:8px 12px;display:flex}
+.as-game-nav{display:flex;align-items:center;gap:12px;padding:8px 16px;background:#0e0a28cc;border-top:2px solid #6c55d8}
+.as-game-nav span{flex:1;font-size:15px;color:#d9d2ff}
+.as-game-nav button{min-height:46px;padding:8px 20px;border-radius:12px;border:2px solid #a998ff;background:#fff;color:#2b1d6b;font:inherit;font-weight:bold;cursor:pointer}
+.as-game-nav button.lh-primary{background:#ffd34d;border-color:#ffd34d;color:#2b1d6b;font-size:18px}
+.as-game-nav button.as-game-forfeit{background:transparent;color:#d9d2ff;font-weight:normal}
+.as-game-nav button:disabled{opacity:.45;cursor:default}
+/* The game section becomes a column whose visual stage takes the free height. */
+.as-game-stage>.lh-reward{flex:1;min-width:0;min-height:0;max-width:none;margin:0;display:flex;flex-direction:column;gap:6px;overflow:hidden;padding:10px 14px}
+.as-game-stage>.lh-reward>*{flex:none;margin-top:0;margin-bottom:0}
+.as-game-page .lh-reward>p[role="status"],.as-game-page .lh-reward-heading>div:first-child,.as-game-page .lh-reward-scoreboard,.as-game-page .lh-sports .lh-reward-heading{display:none}
+.as-game-page .lh-reward-heading:not(:has(.lh-slot-award)){display:none}
+.as-game-page .lh-reward-heading{justify-content:center}
+/* Sound and motion settings live behind the bar's ♫ button. */
+.as-game-page:not([data-options]) .lh-reward>.lh-row,.as-game-page:not([data-options]) .lh-sports-options{display:none}
+.as-game-page[data-options] .lh-reward>.lh-row,.as-game-page[data-options] .lh-sports-options{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.as-game-stage .lh-reward-court{flex:1 1 0;min-height:0;width:auto;max-width:100%;align-self:center}
+.as-game-stage .lh-reward-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.as-game-stage .lh-reward-actions button{min-height:52px;padding:6px 18px}
+/* Plink-oh!: the board scales with the page height (board drawing is about 0.9 wide per 1 tall). */
+.as-game-stage .lh-reward-plink-stage{flex:1 1 0;min-height:0;container-type:size;grid-template-rows:auto minmax(0,1fr) auto;align-content:start;padding:2px 10px 4px}
+.as-game-stage .lh-reward-plink-logo{font-size:30px;line-height:1.1}
+.as-game-stage .lh-reward-plink-board{width:min(100%,570px,calc((100cqh - 80px) * .896 + 36px))}
+.as-game-stage .lh-reward-plink-legend{margin:2px 0 0}
+.as-game-stage .lh-reward-slot-machine{flex:1 1 0;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+.as-game-stage .lh-reward-slot-machine>*{margin:0}
+.as-game-stage button.lh-reward-spin{min-height:64px;min-width:240px;padding:8px 28px;border-radius:999px;border:0;background:linear-gradient(135deg,#ff4f9a,#8a3ff0);color:#fff;font:inherit;font-size:26px;font-weight:bold;box-shadow:0 6px 0 #5a1f8f;cursor:pointer}
+.as-game-stage button.lh-reward-spin:disabled{opacity:.5;cursor:default}
+/* Bowling / World Pup: the lane or stadium takes the free height; choosers become one compact row. */
+.as-game-stage .lh-sports{max-width:none}
+.as-game-stage .lh-sports>label{display:flex;align-items:center;gap:10px;font-size:15px}
+.as-game-stage .lh-sports>label select{flex:1;max-width:320px;min-height:40px}
+.as-game-stage .lh-bowling-stage,.as-game-stage .lh-soccer-stage{flex:1 1 0;min-height:120px;margin:0}
+.as-game-page .lh-bowling-stage .bw-lane-stage{height:100%}
+.as-game-page .lh-soccer-stage .wp-stadium{height:100%}
+.as-game-stage .lh-sports>p{font-size:14px}
+.as-game-stage .lh-sports>button.lh-primary,.as-game-stage .lh-sports .lh-reward-actions button{min-height:52px;font-size:18px;font-weight:bold}
+.as-game-stage .lh-sports .lh-reward-actions button{background:#ffd34d;border:2px solid #b8860b;color:#2b1d6b}
+.as-game-stage .lh-sports .lh-reward-actions button+button{background:#7b4dff;border-color:#4a2bb0;color:#fff}
+.as-game-stage .lh-sports .lh-reward-actions button:disabled{opacity:.45;color:#2b1d6b}
+.as-game-stage .lh-sports .lh-reward-actions button+button:disabled{color:#fff}
+.as-game-stage .lh-sports>button.lh-primary{background:#ffd34d;border:2px solid #b8860b;color:#2b1d6b;border-radius:12px}
+.as-game-stage .lh-sports>button.lh-primary:disabled{opacity:.5}
+/* Exam result page: launch banner for the separate game page. */
+.as-reward-launch{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;max-width:900px;margin:16px auto;padding:16px 22px;border-radius:20px;background:#2b1d6bf0;border:3px solid #ffd34d;color:#fff;font-size:22px;text-align:center}
+.as-reward-launch button.lh-primary{min-height:58px;padding:8px 28px;border-radius:999px;border:0;background:#ffd34d;color:#2b1d6b;font:inherit;font-size:22px;font-weight:bold;cursor:pointer;box-shadow:0 5px 0 #b8860b}
+.as-game-page .as-sound-hint{position:absolute;z-index:5;top:64px;left:50%;transform:translateX(-50%);min-height:52px;padding:8px 26px;border-radius:999px;border:3px solid #ffd34d;background:#2b1d6b;color:#fff;font:inherit;font-size:22px;font-weight:bold;box-shadow:0 6px 18px #0008;cursor:pointer;animation:as-hint-pulse 1.4s ease-in-out infinite}
+@keyframes as-hint-pulse{50%{transform:translateX(-50%) scale(1.06)}}
+@media (prefers-reduced-motion: reduce){.as-game-page .as-sound-hint{animation:none}}
+
+/* Projector-size text (2026-11-18): about 40 px question / 34 px options on a 1280+ px wide screen,
+   scaling down with the screen width on iPad. Options use one column so long sentences wrap. */
+.as-question-content>h2{font-size:clamp(26px,3.2vw,40px)}
+.as-question-content>p,.as-question-content .as-stem-copy,.as-question-content .lh-stem-copy{font-size:clamp(20px,2.4vw,32px);line-height:1.45}
+.as-student .as-question-content .lh-options{grid-template-columns:1fr}
+.as-student .as-question-content .lh-options button,.as-student .as-question-content .lh-answer .lh-options button,.as-student .as-question-panel .lh-answer .lh-options button{font-size:clamp(22px,2.8vw,34px);line-height:1.35;padding:clamp(12px,1.4vw,20px) clamp(16px,1.8vw,26px);white-space:normal;overflow-wrap:anywhere;text-align:left}
+.as-question-content .lh-answer h3{font-size:clamp(20px,2.2vw,30px)}
+.as-question-content .lh-answer>p{font-size:clamp(15px,1.6vw,22px)}
+.as-question-content audio{width:min(100%,560px);height:clamp(44px,4.2vw,64px)}
+.as-question-content .as-feedback h3{font-size:clamp(30px,3.4vw,46px)}
+.as-question-content .as-feedback p{font-size:clamp(17px,1.9vw,26px)}
+.as-question-actions button,.as-question-footer .lh-primary{font-size:clamp(17px,1.8vw,24px)}
+.as-student-header h1{font-size:clamp(20px,2.2vw,30px)}
+.as-question-rule{font-size:clamp(12px,1.2vw,17px)}
+/* Game page text (bar, buttons, results) also grows on the projector. */
+.as-game-bar{font-size:clamp(17px,1.8vw,26px)}
+.as-game-nav span{font-size:clamp(15px,1.5vw,22px)}
+.as-game-nav button{font-size:clamp(17px,1.7vw,24px)}
+.as-game-stage>.lh-reward{font-size:clamp(16px,1.5vw,22px)}
+.as-game-stage .lh-reward-actions button,.as-game-stage .lh-reward[data-game] .lh-reward-actions button{font-size:clamp(17px,1.7vw,26px)}
+/* Report: last-activity column (2026-11-18 resume progress) */
+.as-report-header,.as-report-row{grid-template-columns:85px minmax(220px,1fr) 95px 95px 95px 110px}
+.as-report-last{font-size:14px;white-space:nowrap}
+/* Shared tablets: switch student ID; join-page help (2026-11-18 resume progress) */
+.as-answer-watch{display:contents}
+.as-student button.as-switch-student,.as-result button.as-switch-student,.as-game-page button.as-switch-student{min-height:32px;padding:3px 12px;font-size:.85em;border-radius:999px;background:#fff7e0;border:1px solid #e0b84a;color:#6b4a00}
+.as-join-help{margin:12px 0 0;color:#5b5870;font-size:15px}

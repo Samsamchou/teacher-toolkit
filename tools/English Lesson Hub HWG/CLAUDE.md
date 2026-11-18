@@ -30,7 +30,15 @@
 | `skills/` | Codex 專案 skill 原件（`godot-games`） |
 | `research/`、`prototypes/`、`generated-*`、`HWG5/HWG7` 圖卡資料夾 | 研究、原型、AI 生成與單字圖卡來源，視為教學來源，不刪改 |
 
-## 目前狀態（截至 2026-11-17 部署）
+## 目前狀態（截至 2026-11-18 部署）
+
+- 2026-11-18 第四次：母音題照輸入大小寫顯示＋字母組合（ur/er 自動、a_e 老師連結）綠底紅字已上線（liveV2 `livev2-00025-rik`、Hosting `f02c74c0d84956f0`），見 `rdq/DEPLOYMENT-vowel-case-combo-20261118.md`。G 槽 `preview/node_modules` 的 firebase 套件損壞，完整測試在 Temp 副本跑。
+
+- 2026-11-18 第三次：作答中斷接續（不綁裝置、換學號、離開提醒、報表最後作答欄）已上線（liveV2 `livev2-00024-seq`、Hosting `b8124e78932d0a87`），見 `rdq/DEPLOYMENT-resume-progress-20261118.md`。部署流程沿用 `qa/reward-games-production-20261117/cloud.cjs`（envfile → deploy → hosting → after）＋`http.cjs`（需先產生 `dist-manifest.tsv`）。
+
+- 2026-11-18 第二次：投影大字＋分配遊戲預設有聲音＋投籃音效（Hosting `2c9fe24aa6b7412d`），見 `rdq/DEPLOYMENT-projector-text-sound-20261118.md`。分配遊戲用自己的偏好鍵（`lh-assignment-*-preferences`），課堂版不受影響；投籃音效在 `src/live/basketball-sounds.mjs`。
+
+- 2026-11-18：分配遊戲獨立頁已上線（Hosting `e321f6982d1fcdb6`，只部署 Hosting），見 `rdq/DEPLOYMENT-assignment-game-page-20261118.md`。遊戲頁樣式在 `src/assignments/assignments.css` 的 `.as-game-page`／`.as-game-stage` 區段，逐款調整讓 1024×768 一頁看完。
 
 - 2026-11-17：分配可選 5 款課堂單人遊戲已上線（Hosting `ee5feb721b238850`、liveV2 `livev2-00023-wuq`），見 `rdq/DEPLOYMENT-assignment-reward-games-20261117.md`。liveV2 部署前用 `qa/reward-games-production-20261117/cloud.cjs envfile` 由線上值產生 Temp 專用 `functions/.env.hwg7teaching`，保留 LIVE_AI_MODEL 等 7 個設定。
 
