@@ -1,7 +1,7 @@
 # RDQ 規格卡｜影片 8〈I go to school by bus.〉（confirmed）
 
 - 日期：2026-11-08
-- 狀態：**confirmed**（2026-11-08 老師 1A 2A 3B 4B、建議①–⑤全採；「照這份開始」；Tripo 點數已購買；Colab 沒有每日上限）
+- 狀態：**✅ 定案 2026-11-18**（全片 v1）；原 confirmed（2026-11-08 老師 1A 2A 3B 4B、建議①–⑤全採；「照這份開始」；Tripo 點數已購買；Colab 沒有每日上限）
 - 出處：翰林 HWG7（六年級上）U02 Listen, Say, and Number「Transportation」＋ p.29 文法表（老師截圖）；老師 Canva〈HWG7 u02 He goes to school 文法〉9 頁
 - 程式起點：複製 `video7-countries/`（十位朋友、各自聲音、拍音節、board_v7）；情境動畫用畫風 H（`tools/2026 Thanksgiving/classroom-tabletop/` 引擎）
 
@@ -60,6 +60,7 @@
   踩坑已記到 skill `3d-teacher-lesson-video/references/pitfalls.md` 最後一節與記憶 `colab-tabletop-render-efficiency`。
 - 2026-11-09 下午：老師看試片 B 回饋「不能倒車、不能站在車上」→ 修正規格 `rdq/RDQ-spec-video8-tabletop-logic-fix-20261109.md`，桌上微縮重渲。
   老師「通過，渲染全片」→ 全片 v1 `renders/video8-v1.mp4`（19,634 格、10:54；預覽 `video8-v1-720p-small.mp4` 已傳），等老師說「定案」。
+- 2026-11-18：老師「定案」→ **全片 v1 定案**：`video8-gotoschool/renders/video8-v1.mp4`（1080p、10:54）＋`video8-v1-720p.mp4`。
 
 ## 驗收
 

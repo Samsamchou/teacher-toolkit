@@ -41,6 +41,7 @@
   中途 Colab kernel 沒回應 → `colab_run8.py` 改成自動 restart-kernel 再試）。試片 B v2 `renders/video8-pilotB-v2-720p.mp4` 已傳，等老師看。
   注意：`run_segments.py` 的 `--audio`／`--out` 要給絕對路徑（相對路徑會算到 pilot-nova/）。
 - 2026-11-09：老師「試片 B v2 通過，渲染全片」→ 全片 v1 已渲染並傳給老師。
+- 2026-11-18：老師「定案」，全片 v1 定案。
 
 ## 驗收
 
