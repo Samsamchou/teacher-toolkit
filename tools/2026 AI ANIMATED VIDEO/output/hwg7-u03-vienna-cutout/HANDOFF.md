@@ -130,3 +130,26 @@
 - 全片音量：平均 -21.3 dB、最大 -0.4 dB（未做 LUFS 正規化）。
 - **下次開工**：先問老師看完 v1 的回饋；常見可能要調：配樂音量、男孩聲、道具特寫節奏、轉場。改完重跑 `film.py --stills` 看檢查圖再輸出。
 - git：只 commit 程式與文件（`src/`、`work/` 裡的 Colab 腳本、HANDOFF、報告、旁白稿、RDQ 規格卡、seedance 腳本與花費紀錄、音樂來源表）；影音圖片不入庫。
+
+## 2026-11-18 v2 修改（RDQ `rdq/RDQ-spec-vienna-v2-tram-card-opera-20261118.md`，confirmed）
+
+- 老師看完 v1：(1) BY TRAM 字卡要有電車圖示；(2) 歌劇院外觀畫面一閃一閃。選 1A、2B、3A，建議全採納。
+- 字卡：`film.icon_card()`（紙色底紅雙框＋圖示＋76 級字），`icon_tram`、`icon_bike` 程式畫；放在畫面上方（y=132）不擋臉。電車 3D 鏡頭 `hud_tram3d` 在停車後標 tram 大標籤＋紅箭頭，beat 最短 5.2 秒（多停約 1 秒）。其他字卡字級 56→72，WRITE MUSIC 移到左上不擋手。全片長 149.1 秒。
+- 歌劇院閃爍原因：拱窗用「方塊＋圓柱」兩個物件拼，接縫處 Freestyle 描邊每格忽有忽無。`b3d_vienna.arch()` 改成單一網格（prism 擠出拱形輪廓）。舊檔留作對照 `renders/3d/full/s3_v1_flicker.mp4`。重渲腳本 `work/run_s3.sh`（只渲 s3）。
+- 其他鏡頭抽查連續 3 格（s0、s1、s4、s5 各一處）描邊穩定。量化指標（單格跳變像素）會被鏡頭移動干擾，不能用來比較不同鏡頭。
+- 改前備份 `work/film_v1.py`；修改腳本 `work/patch2.py`；檢查圖 `renders/film/v2_check_cards.jpg`。
+- 11/18 中午：s3 重渲完成（`renders/3d/full/s3.mp4`），連續 12 格放大看拱窗內無忽有忽無的線。Colab 0.77 單位（37.45 → 36.68），已停機。
+- **全片 v2**：`renders/film/vienna_v2_sub_1080p.mp4`（71 MB）／`vienna_v2_sub_720p.mp4`（25 MB），149.1 秒。720p 已傳老師，待回饋。聽力版仍未輸出（老師說可以後跑 `python src/film.py v2 --nosub`）。
+- v2 修改尚未 commit（film.py、b3d_vienna.py、HANDOFF、RDQ 規格卡、work/patch2.py、run_s3.sh、_t6.py）。
+- 11/18 下午：老師說 v2 可以 → 聽力版輸出 `renders/film/vienna_v2_listen_1080p.mp4`（70 MB）／`vienna_v2_listen_720p.mp4`（25 MB），149.1 秒，720p 已傳老師。聽力版只拿掉卡拉 OK 字幕；字卡（BY BIKE、BY TRAM、tram、PLAY THE PIANO…）、名字標籤、地點牌、片名都保留，已告知老師，待老師決定要不要也拿掉。
+- 目前成品：v2 字幕版＋聽力版各 1080p／720p。老師尚未說「定案」。v2 修改未 commit。
+
+## ✅ 2026-11-18 定案：全片 v2
+
+- 老師：「保留，這樣定案」。定案成品（`renders/film/`）：`vienna_v2_sub_1080p.mp4`／`_720p.mp4`（字幕版）、`vienna_v2_listen_1080p.mp4`／`_720p.mp4`（聽力版，只拿掉卡拉 OK 字幕，字卡與名字標籤保留）。長度 2:29。
+- 總花費：KIE 106.6 credits；Colab 約 13.7 單位（11/17 約 12.9＋11/18 0.77）。
+- 待辦：v2 修改未 commit；畫風 J 流程尚未寫進 `tools/影片與動畫工作流總覽.md` 與 growkaz-cutout-tales skill。
+- 11/18：畫風 J 流程已寫進 `tools/影片與動畫工作流總覽.md`（A11：素材表、畫風選單、章節＋踩坑表、缺口、開口說法）。Google 文件版總覽尚未同步。改前備份 `work/overview_bak.md`。
+- 11/18：總覽的 Google 文件版已同步 A11（三個表格各加一列、「目前的缺口」加一行、文末照舊例附加【2026-11-18 新增】A11 整段，讀回確認）。注意：Google 文件版本來就比 md 舊——畫風選單只到 F、表格沒有 A7–A10 與 B4 的列（A7、A10 是附在文末），這次沒有補。
+
+- 2026-11-18：老師說「補齊」→ Google 文件版總覽補上原本就缺的舊內容（一次 55 個操作，讀回確認）：三個表格補列（素材表 A9／A7／A10／B4、「下次這樣跟我說」A7／A9／A10／B4、畫風選單 G／H／I）、開頭加更新紀錄＋字幕位置與字體兩條共用規則、「更多共通技巧」、缺口 11/05・11/07・11/13 三行；文件最後用「【2026-11-18 補齊】」附上 A9、A8、B4、A7 更新、其他程式渲染工具、Phonics 規則、3D 人物檢查。比對腳本顯示 md 的內容在 Google 文件都找得到（只剩措辭不同）。

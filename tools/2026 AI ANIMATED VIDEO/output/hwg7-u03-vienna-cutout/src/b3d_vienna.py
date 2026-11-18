@@ -327,7 +327,9 @@ def shot_s2():
 
 # ============================ opera house (s3) ============================
 def arch(x, y, z, w, h, col, depth=0.5):
-    box((x, y, z + (h - w / 2) / 2), (w, depth, h - w / 2), col, "arch_b"); cyl((x, y, z + h - w / 2), w / 2, depth, col, "arch_t", rot=(math.pi / 2, 0, 0), v=24)
+    """one single mesh (rectangle + half circle outline, extruded): no seam, so the Freestyle outline cannot pop in and out between frames."""
+    r = w / 2; pts = [(-r, 0), (r, 0)] + [(r * math.cos(a), h - r + r * math.sin(a)) for a in [k * math.pi / 24 for k in range(25)]]
+    return prism(pts, depth, (x, y, z), col, "arch")
 
 
 def shot_s3():

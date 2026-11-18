@@ -59,6 +59,74 @@ def image(path):
     return _img[path]
 
 
+# ======================= 圖示字卡（v2：字卡上有圖，學生看圖就懂單字） =======================
+def icon_tram(c, u):
+    """紅色電車側面圖，寬約 2.3u、高約 1.3u，原點在中心。"""
+    w, h = 2.3*u, 0.86*u; y0 = -0.42*u
+    c.new_path(); c.move_to(-0.25*u, y0 - 0.02*u); c.line_to(0.0, y0 - 0.30*u); c.line_to(0.25*u, y0 - 0.02*u); stroke(c, 3.0)        # 集電弓
+    c.new_path(); c.move_to(-0.42*u, y0 - 0.30*u); c.line_to(0.42*u, y0 - 0.30*u); stroke(c, 3.0)
+    rrect(c, -w/2 + 0.08*u, y0 - 0.06*u, w - 0.16*u, 0.14*u, 0.05*u); fs(c, hexc('b9bec4'), 2.6)                                     # 車頂
+    rrect(c, -w/2, y0, w, h, 0.16*u); fs(c, hexc('f4f1ea'), 3.2)                                                                    # 上半（米白）
+    c.save(); rrect(c, -w/2, y0, w, h, 0.16*u); c.clip(); c.rectangle(-w/2, y0 + h*0.52, w, h); c.set_source_rgba(*hexc('d8332e')); c.fill(); c.restore()
+    rrect(c, -w/2, y0, w, h, 0.16*u); stroke(c, 3.2)
+    for k in range(4):                                                                                                               # 車窗
+        rrect(c, -w/2 + 0.16*u + k*0.52*u, y0 + 0.10*u, 0.40*u, 0.30*u, 0.05*u); fs(c, hexc('8fc4e6'), 2.4)
+    rrect(c, -0.13*u, y0 + h*0.50, 0.26*u, h*0.46, 0.03*u); fs(c, hexc('a81e24'), 2.2)                                               # 車門
+    c.new_path(); c.arc(w/2 - 0.12*u, y0 + h*0.72, 0.06*u, 0, math.tau); fs(c, hexc('fff3b8'), 2)                                    # 車燈
+    for x in (-0.68*u, 0.68*u): c.new_path(); c.arc(x, y0 + h + 0.02*u, 0.15*u, 0, math.tau); fs(c, hexc('2a2f3a'), 2.6)             # 輪子
+    c.new_path(); c.move_to(-w/2 - 0.12*u, y0 + h + 0.19*u); c.line_to(w/2 + 0.12*u, y0 + h + 0.19*u); stroke(c, 4, hexc('4a4a52'))  # 軌道
+
+
+def icon_bike(c, u):
+    """紅色腳踏車側面圖，寬約 2.1u，原點在中心。"""
+    R = 0.40*u; y = 0.22*u; xa, xb = -0.62*u, 0.62*u
+    for x in (xa, xb): c.new_path(); c.arc(x, y, R, 0, math.tau); stroke(c, 7, hexc('2a2a30')); c.new_path(); c.arc(x, y, 0.05*u, 0, math.tau); fs(c, hexc('8a8f96'), 2)
+    bb = (-0.02*u, y); seat = (-0.26*u, -0.34*u); head = (0.44*u, -0.40*u)
+    for a, b in ((bb, (xa, y)), (bb, seat), (seat, (xa, y)), (seat, (head[0] - 0.05*u, head[1] + 0.10*u)), (bb, (head[0] - 0.02*u, head[1] + 0.16*u)), (head, (xb, y))):
+        c.new_path(); c.move_to(*a); c.line_to(*b); stroke(c, 10, LINE); c.new_path(); c.move_to(*a); c.line_to(*b); stroke(c, 5.5, hexc('d8433a'))
+    rrect(c, seat[0] - 0.18*u, seat[1] - 0.10*u, 0.34*u, 0.10*u, 0.04*u); fs(c, hexc('3a2a24'), 2.4)
+    c.new_path(); c.move_to(*head); c.line_to(head[0] - 0.02*u, head[1] - 0.16*u); stroke(c, 6, hexc('8a8f96'))
+    rrect(c, head[0] - 0.18*u, head[1] - 0.22*u, 0.32*u, 0.08*u, 0.04*u); fs(c, hexc('3a2a24'), 2.2)
+
+
+def icon_card(c, t, t0, x, y, txt, icon, rot=-0.03, size=76, t1=None):
+    """圖示＋大字的字卡：紙色底、紅色雙框（和印章同風格），蓋章式彈出。"""
+    if t < t0 or (t1 is not None and t > t1): return
+    sc = E.lerp(2.0, 1, E.ease((t - t0)/0.18)) if t - t0 < 0.18 else 1
+    a = E.clamp((t - t0)/0.12)*(1 if t1 is None else E.clamp((t1 - t)/0.2))
+    col = (0.78, 0.15, 0.13); u = size*1.3                           # 圖示比字高，一眼先看到圖
+    E.font(c, size); tw = c.text_extents(txt).x_advance; iw = 2.6*u; w = iw + tw + 76; h = size*2.7
+    c.save(); c.translate(x, y); c.rotate(rot); c.scale(sc, sc)
+    c.push_group()
+    rrect(c, -w/2 + 8, -h/2 + 10, w, h, 10); c.set_source_rgba(0, 0, 0, 0.22); c.fill()
+    rrect(c, -w/2, -h/2, w, h, 10); c.set_source_rgba(0.98, 0.95, 0.88, 1); c.fill()
+    for o in (0, 10):
+        rrect(c, -w/2 + o/2, -h/2 + o/2, w - o, h - o, 10); c.set_source_rgba(*col, 1); c.set_line_width(6 if o == 0 else 3); c.stroke()
+    c.save(); c.translate(-w/2 + 22 + iw/2, 0.04*u); icon(c, u); c.restore()
+    c.move_to(-w/2 + 22 + iw + 14, size*0.36); c.set_source_rgba(*col, 1); E.font(c, size); c.show_text(txt)
+    c.pop_group_to_source(); c.paint_with_alpha(a)
+    c.restore()
+
+
+def hud_tram3d(c, t, B):
+    """電車停好之後，在電車旁用大標籤標出 tram，箭頭指到車身（圖和字對在一起）。"""
+    t0 = B['t0'] + 3.25
+    if t < t0: return
+    k = E.back_out((t - t0)/0.28); a = E.clamp((t - t0)/0.15); x, y = 470, 215; tx, ty = 845, 400
+    c.push_group()
+    e = E.ease((t - t0 - 0.15)/0.3); ex, ey = E.lerp(x + 120, tx, e), E.lerp(y + 50, ty, e)
+    for wd, col in ((16, (1, 1, 1)), (8, (0.78, 0.15, 0.13))):                       # 白邊紅箭頭
+        c.new_path(); c.move_to(x + 120, y + 50); c.line_to(ex, ey); stroke(c, wd, col)
+        if e > 0.95:
+            an = math.atan2(ty - y - 50, tx - x - 120)
+            for da in (2.55, -2.55): c.new_path(); c.move_to(tx, ty); c.line_to(tx + 44*math.cos(an + da), ty + 44*math.sin(an + da)); stroke(c, wd, col)
+    c.save(); c.translate(x, y); c.rotate(-0.04); c.scale(k, k)
+    E.font(c, 92); tw = c.text_extents('tram').x_advance; w, h = tw + 80, 150
+    rrect(c, -w/2, -h/2, w, h, 16); c.set_source_rgba(0.98, 0.95, 0.88, 1); c.fill_preserve(); stroke(c, 6, (0.78, 0.15, 0.13))
+    c.move_to(-tw/2, 30); c.set_source_rgba(0.78, 0.15, 0.13, 1); c.show_text('tram'); c.restore()
+    c.pop_group_to_source(); c.paint_with_alpha(a)
+
+
 # ======================= 背景 =======================
 def box_bg(c, t):
     """歌劇院包廂：深紅牆、金色拱、布幕。"""
@@ -203,7 +271,7 @@ def hud_garden(c, t, B):
         rrect(c, -w/2 - 14, -h/2 - 14, w + 28, h + 28, 16); fs(c, hexc('fbf6ea'))
         c.save(); rrect(c, -w/2, -h/2, w, h, 8); c.clip(); c.translate(-w/2, -h/2); c.scale(w/1000, w/1000); c.set_source_surface(image(fl[-1]), -460, -470); c.paint(); c.restore()
         rrect(c, -w/2, -h/2, w, h, 8); stroke(c, 3.2); c.restore()
-    E.stamp(c, t, wt('L05', 3) - 0.05, 620, 240, 'BY BIKE', rot=-0.06, size=58) if LN['L05']['t0'] <= t <= LN['L06']['t0'] + 0.2 else None
+    icon_card(c, t, wt('L05', 3) - 0.05, 1100, 132, 'BY BIKE', icon_bike, t1=LN['L06']['t0'] + 0.2)
 
 
 def act_stop(who, t, B):
@@ -352,8 +420,8 @@ def draw_insert(c, t, B):
 
 def hud_tag(title, sub, x=300, y=150, d=0.5):
     return lambda c, t, B: E.tag(c, t, B['t0'] + d, x, y, title, sub)
-def hud_stamp(txt, d, x=1480, y=230):
-    return lambda c, t, B: E.stamp(c, t, B['t0'] + d, x, y, txt, size=56)
+def hud_stamp(txt, d, x=1380, y=200):
+    return lambda c, t, B: E.stamp(c, t, B['t0'] + d, x, y, txt, size=72)
 
 
 def hud_end(c, t, B):
@@ -376,8 +444,8 @@ BEATS = [
  # ---- S2 電車站 ----
  dict(n='street', kind='clip', clips=[('V3', 4.0)], lines=[('N04', 0.2)], min=3.8, tail=0.5, hud=hud_tag('VIENNA', 'on the street')),
  dict(n='stop', kind='stage', bg=PS.tram_stop_bg, cast=PS.CASTX, ground=PS.GROUND, act=act_stop, lines=[('L07', 0.3), ('L08', 0.5)], tail=1.0,
-      hud=lambda c, t, B: E.stamp(c, t, wt('L08', 4) - 0.05, 1500, 250, 'BY TRAM', size=58)),
- dict(n='tram', kind='clip', clips=[('s1', 4.0)], lines=[('N05', 0.0)], lead=0.35, min=4.0, tail=0.5),
+      hud=lambda c, t, B: icon_card(c, t, wt('L08', 4) - 0.05, 960, 132, 'BY TRAM', icon_tram)),
+ dict(n='tram', kind='clip', clips=[('s1', 4.0)], lines=[('N05', 0.0)], lead=0.35, min=5.2, tail=0.5, hud=hud_tram3d),
  # ---- S3 歌劇院 ----
  dict(n='opera', kind='clip', clips=[('s3', 3.0), ('V1', 5.0)], lines=[('N06', 0.2)], min=7.6, tail=0.4, hud=hud_tag('THE OPERA HOUSE', 'Mozart concert')),
  dict(n='box1', kind='stage', bg=box_bg, cast=BOX_CAST, ground=900, act=act_box, front=box_front, lines=[('L09', 0.3)], tail=0.5),
@@ -389,7 +457,7 @@ BEATS = [
  dict(n='piano2d', kind='insert', fn=QP.piano_frame, step=0.4, min=1.6, lines=[]),
  dict(n='piano3d', kind='clip', clips=[('s5', 3.0)], lines=[], min=3.3, hud=hud_stamp('PLAY THE PIANO', 0.9)),
  dict(ROOM, n='room2', lines=[('L15', 0.4), ('L16', 0.5)], tail=0.4),
- dict(n='quill', kind='insert', fn=QP.quill_frame, step=0.6, min=2.6, lines=[], hud=hud_stamp('WRITE MUSIC', 1.3)),
+ dict(n='quill', kind='insert', fn=QP.quill_frame, step=0.6, min=2.6, lines=[], hud=hud_stamp('WRITE MUSIC', 1.3, x=560, y=170)),
  # ---- S5 Mozart 反問 ----
  dict(ROOM, n='room3', lines=[('N09', 0.3), ('L17', 0.5), ('L18', 0.5)], tail=0.4),
  dict(n='recorder', kind='insert', fn=QP.recorder_frame, step=0.6, min=2.6, lines=[], hud=hud_stamp('PLAY THE RECORDER', 1.3)),
