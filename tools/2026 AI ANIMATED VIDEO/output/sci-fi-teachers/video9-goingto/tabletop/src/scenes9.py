@@ -16,12 +16,12 @@ PROPS, FONTS, SID = A[0], A[1], A[2]
 TM = json.load(open(os.path.join(HERE, "timing.json"), encoding="utf-8"))
 # (SID, 模型, 招牌字)；順序＝影片順序＝繞圈順序（第一個 POST 在正前方 -Y）
 PLACES = [("POST", "bld_post", "post office"), ("SUPER", "bld_pxmart", "supermarket"), ("LIB", "bld_library", "library"),
-          ("HOSP", "bld_health", "hospital"), ("PARK", "bld_waterpark", "park"), ("BOOK", "bld_bookstore", "bookstore"),
+          ("HOSP", "bld_health", "hospital"), ("PARK", "bld_waterpark_clean", "park"), ("BOOK", "bld_bookstore", "bookstore"),
           ("MUSEUM", "bld_museum", "museum"), ("STATION", "bld_station", "train station")]
 ORDER = [p[0] for p in PLACES]
 ANG = {sid: math.radians(-90 + 45 * i) for i, sid in enumerate(ORDER)}
 YAW = json.load(open(os.path.join(HERE, "yaw9.json"))) if os.path.exists(os.path.join(HERE, "yaw9.json")) else {}
-BLD_SIZE = {"bld_station": 0.26, "bld_pxmart": 0.24, "bld_waterpark": 0.24}   # 其他 0.21（最長邊，公尺）
+BLD_SIZE = {"bld_station": 0.26, "bld_pxmart": 0.24, "bld_waterpark": 0.24, "bld_waterpark_clean": 0.24}   # 其他 0.21（最長邊，公尺）
 R_BLD, R_SIGN, R_ARR, R_START = 0.60, 0.43, 0.38, 0.07
 KID_H = 0.075; GZ = 0.012
 WX = {"sunny": (1.0, (0.55, 0.72, 0.95)), "cloudy": (0.55, (0.62, 0.66, 0.72)), "rainy": (0.4, (0.45, 0.5, 0.6)),
@@ -87,6 +87,12 @@ def building(sid, model):
     root = E.place(f"{PROPS}/{model}.glb", BLD_SIZE.get(model, 0.21), (0, 0, 0), 0.0, axis="long")
     hold = E.empty("hold_" + sid); root.parent = hold
     root.rotation_euler = (0, 0, math.radians(YAW.get(model, 0)))   # 修正後：正門朝 -Y
+    if model == "bld_waterpark_clean":   # 2026-11-19：拿掉戰鬥機、火車頭後，原位置的白色空地和碎石軌道台蓋上綠色毛氈草地（模型座標）
+        for (x, y, w_, h_, rot) in ((-0.30, -0.043, 0.33, 0.70, -5.7), (0.064, -0.157, 0.20, 0.38, -9.5), (0.127, 0.298, 0.27, 0.16, -34.0)):
+            g = E.box((x, y, 0.058), (w_, h_, 0.036), E.felt("parklawn", (0.36, 0.66, 0.32)), "parklawn", bevel=0.004, rot=(0, 0, math.radians(rot)))
+            g.parent = root; g.matrix_parent_inverse.identity()
+            for k in range(3):   # 草地上幾叢圓圓的毛氈樹叢
+                b = E.ball((x + (k - 1) * w_ * 0.28, y + (k - 1) * h_ * 0.25, 0.09), 0.035, E.felt("leaf", (0.2, 0.5, 0.25)), "bush"); b.parent = root; b.matrix_parent_inverse.identity()
     return hold
 
 
@@ -203,7 +209,9 @@ if SID in ORDER:
         s_ = ease((t - t_go) / (t_arr - t_go)); kq = start.lerp(end, s_); kq = Vector((kq.x, kq.y, GZ))
         wd = wide_of(t)
         t0 = kq + Vector((0, 0, 0.04)); c0 = t0 + p * 0.24 - u * 0.05 + Vector((0, 0, 0.03))   # 近景：側面平拍 Ken，背景是天空和牆
-        return c0.lerp(CAM_W, wd), t0.lerp(AIM_W, wd), kq.lerp(end + Vector((0, 0, GZ)), wd) + Vector((0, 0, 0.04))
+        # 2026-11-19 試片 B：鏡頭轉太快，Ken 走路時被切到畫面右邊 → 瞄準點先慢慢移（中途偏向 Ken），到達時才對準招牌（Ken 最多偏 16 度，畫面邊緣 24 度）
+        wa = wd * (0.55 + 0.45 * wd ** 3)
+        return c0.lerp(CAM_W, wd), t0.lerp(AIM_W, wa), kq.lerp(end + Vector((0, 0, GZ)), wd) + Vector((0, 0, 0.04))
     E.key_cam(c, aim, foc, cam_path)
     for fr in E.frames():
         c.data.dof.aperture_fstop = lerp(2.8, 16, wide_of(fr / E.FPS)); c.data.dof.keyframe_insert("aperture_fstop", frame=fr)
