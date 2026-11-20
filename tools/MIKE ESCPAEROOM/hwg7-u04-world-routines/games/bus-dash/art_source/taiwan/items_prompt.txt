@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 top view.
+Row 1 (Taiwanese breakfast foods), left to right:
+1. a Taiwanese egg pancake roll (dan bing), yellow and golden, cut into pieces on a small plate
+2. a paper cup of soy milk with a red-striped straw
+3. a Taiwanese rice ball (fan tuan) wrapped in a clear bag, filling visible
+4. a white steamed bun (baozi)
+5. a triangle sandwich with egg and ham
+Row 2, left to right:
+6. three slices of pan-fried radish cake on a small plate
+7. a blue water puddle lying flat on the ground
+8. an orange-and-white traffic cone
+9. a small brown-and-white dog curled up asleep
+10. a yellow banana peel lying on the ground
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO "zzz", no frame lines between cells, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

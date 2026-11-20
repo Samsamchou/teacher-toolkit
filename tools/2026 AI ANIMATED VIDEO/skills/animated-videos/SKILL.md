@@ -5,13 +5,42 @@ description: 以 V13 已驗收成品為品質基準，收到 MP3 與歌詞即分
 
 # Animated Videos
 
+## 字幕位置規則（老師 2026-11-15 指定：之後所有動畫影片）
+- 下方字幕整體比原本往上移 **56 px**（以 1080p 為準；720p 約 37 px）：字幕框底邊離畫面底邊至少 84 px，不貼著最下緣。
+- 程式動畫（Canvas／HTML）改字幕框的 `bottom`；ffmpeg ASS 字幕把 `MarginV` 加 56（1080p）；其他排版工具同樣往上 56 px。
+- 字幕若擋到人物臉，個別段落再移到左下或上方。
+- 字幕上移後，畫面下方原本的字（片語、中文句意、選項、片尾大字）要一起往上移；出片前每 8 秒抽一格檢查有沒有被字幕蓋到（所有格動畫 v3 踩過）。
+
+## 字體規則（老師 2026-11-10 指定：所有有字的動畫與影片）
+
+- 畫面上所有英文字（字幕、句子、標籤、倒數數字、片頭片尾、字卡）一律用 **Comic Relief**（以 Bold 為主、Regular 為輔），不換成 Nunito、Arial、Comic Sans 等其他字體。
+- 字型檔：`C:\Users\User\AppData\Local\Microsoft\Windows\Fonts\ComicRelief-Bold.ttf`、`ComicRelief-Regular.ttf`。網頁／Canvas／Three.js 先把字型檔複製進專案，用 `@font-face` 載入，等 `document.fonts.load(...)` 完成才截圖；ffmpeg ASS 字幕用 `subtitles=...:fontsdir=<含這兩個檔的資料夾>`，`Fontname=Comic Relief`。
+- Comic Relief 沒有中文字：中文字幕、注音沿用該流程原本的中文字型，字型家族寫成 `'Comic Relief', <中文字型>`，英文用 Comic Relief、中文自動退回中文字型。
+- 抽格檢查時確認字真的是 Comic Relief，不是瀏覽器預設字體。
+
+
 以 How Do You Go V13 最終成品為品質基準（2026-10-07 教師確認）。收到 MP3 與歌詞就開始來源與內容分析；未另指定時採國小高年級、聽歌學英文句子／聽力練習、V13 K-POP 動漫風。明列這些預設，發現不合適處提出調整；教師明確指定優先。不預設六人、國家、交通或原曲長度。新歌重新設計，不自動重製已驗收影片。
+
+## 共用踩坑規則（老師 2026-11-20 指定：所有動畫影片與動畫程式）
+- 完整清單（15 類、165 條，11/20 擴充 9–11 月全部動畫專案）：`G:\我的雲端硬碟\teacher-toolkit\tools\動畫共用踩坑規則.md`。**開工前讀和這支片有關的類別；踩到新坑當天補進那份檔案（現象 → 原因 → 規則＋出處），再把這段短版同步到 15 份影片 skill。**
+- 動作先查真實做法再擺：拿東西、握筆、樂器、騎車、球類先查、寫成表（哪隻手／手心朝向／拇指位置／接觸點／怎麼到嘴）；左右手是鏡像（Mixamo `PALM_SIGN` 右 −1、左 +1）；動詞照字面演；每個效果要有起因（碰到才動、接觸成立才算完成），接觸用數字驗（手到物 ≤2 cm、輪胎 ±1 cm、2D 0–1 px）。
+- 人物不浮、不陷、不背對：量真實地面（3D `ground_z`；2D 新背景先疊格線量地面）；坐姿大腿蓋住椅墊、小腿在椅面前垂下（椅面＝膝高 − 大腿厚度）；說話時身體不上下彈（只留約 3 px 呼吸；What if 系列例外，問的人說話時輕彈）；手和道具不擋臉；車頭朝前進方向、騎乘用坐姿；鏡頭在主角右前方 3/4。
+- 檢查圖先交：第一批固定有手部特寫（兩角度、不開景深）與腿部鏡頭；3D 鏡頭先交特寫檢查圖、2D 每段先出 4×4 總表；動作的開始／中間／結束都抽格，原尺寸放大看手和頭頸。
+- 對嘴依畫風：AI／點陣角色不用程式畫嘴（生同角度張嘴圖、只貼回嘴部小塊）；全向量剪紙可程式嘴；精準對嘴用 wav2vec2 強制對齊（edge-tts 逐字時間早約 0.16 秒）；說話句用中景；歌曲片對嘴原曲、不另配 TTS。
+- 配音：顯示文字和送 TTS 的文字分開（`TTS_FIX`），台詞不放「／」和音標；發音教學只用老師錄音或 Wikimedia；edge-tts 60 秒逾時＋重試 10 次；已變速的音檔不再變速；whisper 只抓時間，字幕照劇本，念錯與否給老師聽。
+- 生圖：Codex CLI prompt 走 stdin（`codex exec ... -s workspace-write -i ref.png - < prompt.txt`），先輸出到 C 槽再複製，同時最多 3 張；圖上不放字（字、國旗、月曆用程式疊或 Commons SVG）；付費 API 先報價、老師同意上限。
+- AI 短片：H3 照明只寫正向描述、要避免的東西連字都不寫；Seedance／KIE 只寫身體動作與空手、另列不准出現的東西、鏡頭固定；多出的片長用剪的不重生；KIE 先 480p 試 1 鏡，錯誤碼看 body 的 `code`。
+- Blender：用座標改模型前 `view_layer.update()`；材質色是線性色彩；`transform_apply(location=False, rotation=False, scale=True)`；拼接物件合成單一網格（Freestyle 才不閃）；Tripo 家具黏住就換程式家具；Tripo 抓檔先 `--mark` 再按 Export、用三角面數核對；>15 萬面先 predecimate＋`use_persistent_data`；燈光換場景重調。
+- Colab：Blender 只在 Colab；exec 只跑立刻返回的指令、渲染用分離執行、每 50 秒短 exec 保持連線、一鏡一批、渲完立刻下載；先建資料夾再上傳、上傳前 `ast.parse`；給老師看之前先停機；開機前報預估、做完報實際；不手改 `colab_usage.log`。
+- 合成：不用 `-shortest`（先接無聲畫面再配完整音軌＋`apad`）；ffmpeg 9.0.1 不用 `-loop 1`、不用 `drawtext`、加 `-nostdin`；舊 .ogg 用 soundfile 解碼；配樂說話時比人聲低 18 dB、無配音段 1/4、整片 −16 LUFS（有閃避的混音不用 loudnorm）；前一句字幕早 0.2 秒結束；重點物件不放畫面下方 1/4。
+- 交件：分鏡 → 試片 → 全片，每關等老師；改版只重做改到的段落、先交段落預覽、定案資料夾不動；聽力版只拿掉卡拉 OK 字幕；只交 1080p＋720p（720p 維持原畫質，不為 30 MB 壓縮）；自己先抽格，把可能被抓的地方先說出來，附用量與未驗證項目。
+- 檔案：大量 PNG／影格／建置放 C 槽暫存，不放 G 槽；用腳本改字串先 `assert count == 1`、改完 `ast.parse`；不用 heredoc 寫程式；反斜線路徑會被吃成 tab 或響鈴字元，寫完讀回檢查。
 
 ## 先讀與路由
 
 - 新案：讀 [V13 基準](references/v13-baseline.md) 與 [通用製作規格](references/production-spec.md)，使用 [專案設定模板](assets/project-template.json) 填寫已知資訊；收到兩份來源即可分析，不先要求老師填表。只詢問影響結果的缺項。
 - 不同人物、動作、道具或場景：讀 [新歌拆解與實作](references/new-song-and-motion.md)，逐句建立事件與接觸狀態，不硬套舊曲程式。
-- 生圖前：讀 [內建 Image Gen 工作流程](references/image-gen.md)。本 Skill 的 AI 點陣素材生成與修改一律使用內建 Image Gen，不用 Images API、CLI、第三方或自動備援。使用者於 2026-10-07 再次明確指定；不修改其他專案的全域規則。若當前更高優先規則阻止或工具不可用，報告並繼續不依賴生圖的工作，不私自換工具。
+- 生圖前：讀 [內建 Image Gen 工作流程](references/image-gen.md)。本 Skill 的 AI 點陣素材生成與修改使用 Codex 的內建 Image Gen；**在 Claude Code 裡一律透過 Codex CLI 呼叫**（`codex exec ... -s workspace-write -i ref.png - < prompt.txt`；老師 10/23 起指定，11/20 確認和共用規則第 11 類一致）。不用付費 Images API，除非老師先同意上限；不用第三方或自動備援。若當前更高優先規則阻止或工具不可用，報告並繼續不依賴生圖的工作，不私自換工具。
 - 試片與全曲抽格前：讀 [角色動畫 12 原則檢查表](references/character-motion-checklist.md)。
 - 輸出前：讀 [驗證與工具](references/verification.md)。既有案先讀實際交接與教師驗收紀錄；避免重做已接受內容。
 
@@ -47,4 +76,4 @@ description: 以 V13 已驗收成品為品質基準，收到 MP3 與歌詞即分
 ## 2026年10月7日追加的強制品質要求
 
 - 每種尚未驗證的新動作，實作前必須上網研究並實際檢視相關動畫影片；記錄來源、時間碼及動作分解。真人示範可補充，不取代動畫研究；無法觀看不得宣稱完成。詳見 references/new-song-and-motion.md。
-- 所有點陣素材生成與編輯使用內建 Image Gen，以最高可用品質與細節製作，原尺寸及影片尺寸逐圖 QA；不合格素材不得交付。工具未提供品質控制就如實記錄，不捏造參數。詳見 references/image-gen.md。
+- 所有點陣素材生成與編輯使用 Codex 內建 Image Gen（Claude Code 裡經 Codex CLI 呼叫），以最高可用品質與細節製作，原尺寸及影片尺寸逐圖 QA；不合格素材不得交付。工具未提供品質控制就如實記錄，不捏造參數。詳見 references/image-gen.md。

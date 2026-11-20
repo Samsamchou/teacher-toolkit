@@ -1,0 +1,307 @@
+{
+ "note": "Tripo Studio, HD H3.1, 30000 faces, 4K PBR, Private; characters + Auto Rig (Humanoid, Mixamo); exported GLB 2k",
+ "2026-11-19 Japan batch (teacher approved 390)": [
+  {
+   "item": "japan_boy (model 55 + rig 20)",
+   "points": 75
+  },
+  {
+   "item": "japan_boy_lunch (model 55 + rig 20)",
+   "points": 75
+  },
+  {
+   "item": "traveler_girl (model 55 + rig 20)",
+   "points": 75
+  },
+  {
+   "item": "lunch_cart",
+   "points": 55
+  },
+  {
+   "item": "lunch_tray",
+   "points": 55
+  },
+  {
+   "item": "school_desk",
+   "points": 55,
+   "balance_before": 570,
+   "balance_after": 180
+  }
+ ],
+ "2026-11-19 opening + 3D hero (spec approved 150)": [
+  {
+   "item": "traveler_boy (model 55 + rig 20)",
+   "points": 75,
+   "balance_before": 180,
+   "balance_after": 105
+  },
+  {
+   "item": "toy_plane / toy_ship / toy_train: exported existing models",
+   "points": 0
+  }
+ ],
+ "2026-11-19 Taiwan pupil (teacher approved)": [
+  {
+   "item": "taiwan_girl, yellow shirt + green sleeves + school badge (model 55 + rig 20)",
+   "points": 75,
+   "balance_before": 105,
+   "balance_after": 30
+  }
+ ],
+ "2026-11-20 top-up by the teacher (batch 1)": [
+  {
+   "item": "teacher topped up 1000 points; balance read on the Tripo Studio page",
+   "points": 0,
+   "balance_before": 30,
+   "balance_after": 1030
+  }
+ ],
+ "2026-11-20 Taiwan breakfast film props (teacher approved 165)": [
+  {
+   "item": "breakfast_shop (first try: stuck in Generating for 40+ minutes; Tripo cancelled it and refunded the 55 points about an hour later)",
+   "points": 55,
+   "balance_before": 1030,
+   "balance_after": 975
+  },
+  {
+   "item": "breakfast_table (folding table + two red stools)",
+   "points": 55,
+   "balance_before": 975,
+   "balance_after": 920
+  },
+  {
+   "item": "breakfast_tray (dan bing plate + chopsticks)",
+   "points": 55,
+   "balance_before": 920,
+   "balance_after": 865
+  },
+  {
+   "item": "breakfast_shop regenerated (teacher approved another 55)",
+   "points": 55,
+   "balance_before": 865,
+   "balance_after": 810
+  },
+  {
+   "item": "refund of the stuck breakfast_shop job",
+   "points": -55,
+   "balance_before": 810,
+   "balance_after": 865
+  }
+ ],
+ "2026-11-20 USA pupil (teacher approved 75, chose the girl)": [
+  {
+   "item": "usa_girl (model 55 + rig 20)",
+   "points": 75,
+   "balance_before": 865,
+   "balance_after": 790
+  }
+ ],
+ "2026-11-20 UK station (teacher approved 185)": [
+  {
+   "item": "uk_boy model",
+   "points": 55,
+   "balance_before": 790,
+   "balance_after": 735
+  },
+  {
+   "item": "uk_desk (desk with the chair tucked in behind)",
+   "points": 55,
+   "balance_before": 735,
+   "balance_after": 680
+  },
+  {
+   "item": "uk_teaset (side table, teapot, biscuits)",
+   "points": 55,
+   "balance_before": 680,
+   "balance_after": 625
+  },
+  {
+   "item": "uk_boy auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 625,
+   "balance_after": 605
+  }
+ ],
+ "2026-11-20 top-up by the teacher (batch 2, for stations 5-10)": [
+  {
+   "item": "teacher topped up 1000 points; balance read on the Tripo Studio page",
+   "points": 0,
+   "balance_before": 605,
+   "balance_after": 1605
+  }
+ ],
+ "2026-11-20 stations 5-10 batch 1: Spain + Egypt (teacher approved 555)": [
+  {
+   "item": "spain_girl model",
+   "points": 55,
+   "balance_before": 1605,
+   "balance_after": 1550
+  },
+  {
+   "item": "egypt_boy model",
+   "points": 55,
+   "balance_before": 1550,
+   "balance_after": 1495
+  },
+  {
+   "item": "spain_mum model",
+   "points": 55,
+   "balance_before": 1495,
+   "balance_after": 1440
+  },
+  {
+   "item": "spain_dining_set",
+   "points": 55,
+   "balance_before": 1440,
+   "balance_after": 1385
+  },
+  {
+   "item": "spain_dinner_set",
+   "points": 55,
+   "balance_before": 1385,
+   "balance_after": 1330
+  },
+  {
+   "item": "spain_balcony",
+   "points": 55,
+   "balance_before": 1330,
+   "balance_after": 1275
+  },
+  {
+   "item": "egypt_table_chair",
+   "points": 55,
+   "balance_before": 1275,
+   "balance_after": 1220
+  },
+  {
+   "item": "egypt_breakfast_set",
+   "points": 55,
+   "balance_before": 1220,
+   "balance_after": 1165
+  },
+  {
+   "item": "egypt_ful_pot",
+   "points": 55,
+   "balance_before": 1165,
+   "balance_after": 1110
+  },
+  {
+   "item": "spain_girl auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 1110,
+   "balance_after": 1090
+  },
+  {
+   "item": "egypt_boy auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 1090,
+   "balance_after": 1070
+  },
+  {
+   "item": "spain_mum auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 1070,
+   "balance_after": 1050
+  }
+ ],
+ "2026-11-20 stations 5-10 batch 2: Kenya + India (teacher approved 370)": [
+  {
+   "item": "kenya_girl_pyjamas model",
+   "points": 55,
+   "balance_before": 1050,
+   "balance_after": 995
+  },
+  {
+   "item": "india_boy model",
+   "points": 55,
+   "balance_before": 995,
+   "balance_after": 940
+  },
+  {
+   "item": "kenya_bed",
+   "points": 55,
+   "balance_before": 940,
+   "balance_after": 885
+  },
+  {
+   "item": "kenya_window_table",
+   "points": 55,
+   "balance_before": 885,
+   "balance_after": 830
+  },
+  {
+   "item": "india_auto_rickshaw",
+   "points": 55,
+   "balance_before": 830,
+   "balance_after": 775
+  },
+  {
+   "item": "india_school_gate",
+   "points": 55,
+   "balance_before": 775,
+   "balance_after": 720
+  },
+  {
+   "item": "kenya_girl_pyjamas auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 720,
+   "balance_after": 700
+  },
+  {
+   "item": "india_boy auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 700,
+   "balance_after": 680
+  }
+ ],
+ "2026-11-20 stations 5-10 batch 3: Singapore + Australia (teacher approved 370)": [
+  {
+   "item": "singapore_girl_pyjamas model",
+   "points": 55,
+   "balance_before": 680,
+   "balance_after": 625
+  },
+  {
+   "item": "australia_boy model",
+   "points": 55,
+   "balance_before": 625,
+   "balance_after": 570
+  },
+  {
+   "item": "singapore_bed",
+   "points": 55,
+   "balance_before": 570,
+   "balance_after": 515
+  },
+  {
+   "item": "singapore_bedside",
+   "points": 55,
+   "balance_before": 515,
+   "balance_after": 460
+  },
+  {
+   "item": "australia_bathroom_wall",
+   "points": 55,
+   "balance_before": 460,
+   "balance_after": 405
+  },
+  {
+   "item": "australia_backyard",
+   "points": 55,
+   "balance_before": 405,
+   "balance_after": 350
+  },
+  {
+   "item": "singapore_girl_pyjamas auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 350,
+   "balance_after": 330
+  },
+  {
+   "item": "australia_boy auto rig (Mixamo)",
+   "points": 20,
+   "balance_before": 330,
+   "balance_after": 310
+  }
+ ]
+}

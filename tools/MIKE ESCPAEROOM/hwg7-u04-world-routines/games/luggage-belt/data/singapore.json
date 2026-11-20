@@ -1,0 +1,40 @@
+{
+  "country": "singapore",
+  "title": "Luggage Belt",
+  "subtitle": "Pack for bedtime in Singapore!",
+  "howto_good": "Pack these!",
+  "howto_bad": "Leave these!",
+  "target_time": "9:45",
+  "background": "res://art/singapore/bg.png",
+  "player": {
+    "height": 236,
+    "default": "girl",
+    "meta": "res://art/hero/player_meta.json",
+    "poses": {
+      "girl": "res://art/hero/girl_",
+      "boy": "res://art/hero/boy_"
+    }
+  },
+  "good_items": [
+    {"id": "pyjamas", "art": "res://art/singapore/pyjamas.png", "points": 30},
+    {"id": "teddy_bear", "art": "res://art/singapore/teddy_bear.png", "points": 30},
+    {"id": "toothbrush", "art": "res://art/singapore/toothbrush.png", "points": 30},
+    {"id": "story_book", "art": "res://art/singapore/story_book.png", "points": 30},
+    {"id": "pillow", "art": "res://art/singapore/pillow.png", "points": 30},
+    {"id": "night_light", "art": "res://art/singapore/night_light.png", "points": 30}
+  ],
+  "bad_items": [
+    {"id": "durian", "art": "res://art/singapore/durian.png"},
+    {"id": "wet_umbrella", "art": "res://art/singapore/wet_umbrella.png"},
+    {"id": "chewing_gum", "art": "res://art/singapore/chewing_gum.png"},
+    {"id": "air_horn", "art": "res://art/singapore/air_horn.png"}
+  ],
+  "review_times": ["6:45", "12:15", "7:35", "4:30", "9:15", "6:35", "5:40", "2:40"],
+  "clock_rounds": [
+    {"time": "9:45", "distractors": ["9:15", "10:45"]},
+    {"time": "7:30", "distractors": ["7:00", "8:30"]},
+    {"time": "10:00", "distractors": ["10:30", "11:00"]}
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": ["Good try!", "Nice packing!", "Sweet dreams!"]
+}

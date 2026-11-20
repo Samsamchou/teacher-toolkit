@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create ONE wide 16:9 image (1536x864): a line-up of 5 separate 11-year-old primary school pupils standing side by side in ONE row, evenly spaced. From left to right:
+1. Egyptian boy: light blue school shirt, navy trousers, black shoes, school backpack, holding a small sandwich wrapped in paper.
+2. Kenyan girl: green V-neck school sweater over a white collared shirt, grey skirt, white socks, black shoes, short natural hair, holding a water bottle.
+3. Indian boy: white short-sleeve school shirt with a striped tie, navy shorts, black shoes, an ID card on a lanyard, holding a round stainless-steel tiffin lunch box.
+4. Singaporean girl: white short-sleeve blouse under a navy pinafore dress, white socks and white shoes, ponytail, a transport card on a lanyard around her neck.
+5. Australian boy: yellow school polo shirt, navy shorts, sneakers, a navy wide-brim school sun hat on his head, school backpack.
+Style: bright, cheerful children's-game cartoon, thick clean outlines, flat colours with soft highlights, friendly round faces, consistent proportions (about 3.5 heads tall), full body from head to shoes, standing straight facing the viewer with a warm smile and one hand waving, both hands open and clearly drawn. Pure flat white (#FFFFFF) background, wide white gaps between characters, no shadows touching neighbours, no text, no letters, no numbers, no flags.
+Save the PNG as chars_b.png in the current directory. Reply with the saved file path only.

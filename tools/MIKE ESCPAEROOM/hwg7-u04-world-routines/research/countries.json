@@ -1,0 +1,927 @@
+[
+  {
+    "country": "Taiwan",
+    "route_order": 1,
+    "transport_in": "起點與終點（出發前在家；最後從澳洲搭飛機回台灣）",
+    "times": {
+      "get_up": "06:30",
+      "have_breakfast": "06:45",
+      "go_to_school": "07:15",
+      "school_starts": "07:50",
+      "have_lunch": "12:00",
+      "go_home": "16:00",
+      "do_homework": "17:00",
+      "have_dinner": "18:30",
+      "take_shower": "20:00",
+      "go_to_bed": "22:00"
+    },
+    "time_notes": "台南多所國小 115 學年作息表：7:30 打掃、7:50/8:00 晨光時間（早自習）、12:00–12:40 營養午餐、12:40–13:20 午休、16:00 放學；各校與星期幾不同（部分日子 12:40 放學）。起床、早餐、作業、晚餐、洗澡、睡覺為估計。",
+    "uniform": "各校不同；常見為運動服式制服（短袖 polo 或 T 恤＋運動短褲／長褲，校色多為藍、白、綠），胸前繡學號姓名；另有白襯衫＋深藍短褲／裙的制服日。（一般知識，估計）",
+    "accessory": "環保餐具袋（自帶碗、筷子、湯匙，裝在小布袋掛在書包旁）",
+    "accessory_reason": "台灣學生每天吃營養午餐需自備環保餐具，是全台常見的日常生活細節，不涉宗教或族群標籤，也能連結環保教育。（一般知識）",
+    "foods": {
+      "breakfast": "早餐店的蛋餅、飯糰、蘿蔔糕、豆漿或奶茶",
+      "lunch": "學校營養午餐：白飯、一主菜、兩副菜、一湯、水果（在教室吃）",
+      "dinner": "家常菜：白飯、炒青菜、魚或肉、湯"
+    },
+    "culture_notes": [
+      "早上 7:30 先打掃，再晨光時間（早自習）",
+      "在教室吃營養午餐，學生輪流打菜",
+      "午餐後約 40 分鐘午休，趴在桌上睡",
+      "很多學生上學前到早餐店買早餐",
+      "放學後有些學生去安親班寫作業"
+    ],
+    "question_routine": "have breakfast",
+    "question": "What time do you have breakfast?",
+    "answer_time": "06:45",
+    "target_sentence": "I have breakfast at 6:45.",
+    "extended_sentences": [
+      "I get up at 6:30.",
+      "I have breakfast at 6:45. I eat a dan bing and drink soy milk.",
+      "Then I go to school at 7:15."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "清晨的台灣街角，早餐店招牌亮著，鐵板冒蒸氣；角色穿運動服式制服、背書包、掛環保餐具袋走進店裡。",
+        "line": "I get up at 6:30.",
+        "props": "書包、環保餐具袋、早餐店菜單看板"
+      },
+      {
+        "shot": 2,
+        "visual": "牆上數字鐘跳到 6:45；老闆在鐵板上翻蛋餅，角色伸手接過紙袋。",
+        "line": "I have breakfast at 6:45.",
+        "props": "數字鐘 6:45、鐵板、蛋餅紙袋"
+      },
+      {
+        "shot": 3,
+        "visual": "角色坐在店內小板凳，雙手拿蛋餅咬一口，另一手接過豆漿杯插吸管喝。",
+        "line": "I eat a dan bing and drink soy milk.",
+        "props": "蛋餅、豆漿杯、吸管"
+      },
+      {
+        "shot": 4,
+        "visual": "角色把空杯丟進回收桶，揮手說再見，走向校門口，導護志工舉旗。",
+        "line": "Then I go to school at 7:15.",
+        "props": "回收桶、校門、導護旗"
+      },
+      {
+        "shot": 5,
+        "visual": "教室裡同學拿掃把打掃，角色放下書包加入。",
+        "line": "We clean the classroom.",
+        "props": "掃把、畚箕"
+      }
+    ],
+    "sources": [
+      {
+        "title": "台南市安溪國小 115 學年全校一週作息時間表",
+        "url": "https://course.tn.edu.tw/course/115E安溪國小C9-1全校一週作息時間表0618084041.pdf",
+        "what_it_supports": "7:30 整潔活動、8:00 晨光/朝會、12:00–12:40 營養午餐、12:40–13:20 午休、16:00 放學"
+      },
+      {
+        "title": "台南市億載國小 115 學年全校一週作息時間表",
+        "url": "https://course.tn.edu.tw/course/115E億載國小C9-1全校一週作息時間表051315077.pdf",
+        "what_it_supports": "7:50–8:30 晨光時間、12:00–12:40 午餐"
+      },
+      {
+        "title": "Reach the World: Welcome to a Taiwanese Elementary School",
+        "url": "https://reachtheworld.org/welcome-taiwanese-elementary-school-images-0",
+        "what_it_supports": "在教室吃午餐、午休等校園生活描述"
+      }
+    ]
+  },
+  {
+    "country": "Japan",
+    "route_order": 2,
+    "transport_in": "船（基隆搭郵輪到沖繩／日本；也可改搭飛機）",
+    "times": {
+      "get_up": "06:30",
+      "have_breakfast": "06:50",
+      "go_to_school": "07:45",
+      "school_starts": "08:30",
+      "have_lunch": "12:15",
+      "go_home": "15:30",
+      "do_homework": "16:30",
+      "have_dinner": "18:45",
+      "take_shower": "20:00",
+      "go_to_bed": "21:30"
+    },
+    "time_notes": "到校約 8:00–8:20、朝の会約 8:25–8:35、第一節約 8:45；給食約 12:15 開始約 45 分鐘；打掃約 13:20；五六年級多上 6 節，約 15:30 放學（e-housing.jp 指南，各校不同）。起床、早餐、作業、晚餐、泡澡、睡覺為估計；日本家庭多為晚上泡澡（ofuro），題目用 take a shower 時可畫成先沖洗再泡澡。",
+    "uniform": "多數公立小學沒有制服，穿便服＋胸前名牌；私立或部分學校有制服（深藍外套、短褲／裙）。（一般知識，估計）",
+    "accessory": "書包 randoseru（硬殼雙肩書包）；給食值日時加白色割烹著（kappogi）圍裙與帽子",
+    "accessory_reason": "randoseru 是日本小學生普遍使用的書包，白色圍裙是給食值日的真實工作服，都屬學校生活而非刻板服飾。注意：黃色小帽主要是一年級生配戴，五六年級角色不要戴。",
+    "foods": {
+      "breakfast": "白飯、味噌湯、烤魚或玉子燒（也常見吐司）",
+      "lunch": "學校給食：白飯或麵包、牛奶、主菜（如燉菜、炸魚）、湯；在教室吃",
+      "dinner": "白飯、味噌湯、咖哩飯或煮物等家常菜"
+    },
+    "culture_notes": [
+      "學生輪流當給食值日生，穿白圍裙替同學打菜",
+      "老師和學生在教室一起吃",
+      "午餐後全班一起打掃（掃除）",
+      "很多學校有集團登校／集團下校，高年級帶低年級走路",
+      "上學走路，不由家長開車接送"
+    ],
+    "question_routine": "have lunch",
+    "question": "What time do you have lunch?",
+    "answer_time": "12:15",
+    "target_sentence": "I have lunch at 12:15.",
+    "extended_sentences": [
+      "I have lunch at 12:15.",
+      "I eat lunch in my classroom. I eat rice, fish and miso soup.",
+      "I serve lunch to my classmates."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "日本小學教室，黑板旁時鐘 12:15；值日生從走廊推著餐車進來。",
+        "line": "It's 12:15. It's lunch time!",
+        "props": "時鐘 12:15、給食餐車"
+      },
+      {
+        "shot": 2,
+        "visual": "角色先在洗手台洗手，再穿上白色割烹著圍裙、戴帽子和口罩。",
+        "line": "I wash my hands and put on my apron.",
+        "props": "洗手台、肥皂、白圍裙、帽子"
+      },
+      {
+        "shot": 3,
+        "visual": "角色用飯杓把白飯盛進碗裡，遞給排隊的同學；同學用托盤接住。",
+        "line": "I serve lunch to my classmates.",
+        "props": "飯鍋、飯杓、碗、托盤"
+      },
+      {
+        "shot": 4,
+        "visual": "全班坐好，雙手合十一起說「いただきます」，再拿起筷子吃。",
+        "line": "I have lunch at 12:15. Itadakimasu!",
+        "props": "筷子、牛奶盒"
+      },
+      {
+        "shot": 5,
+        "visual": "角色吃一口魚、喝味噌湯，然後喝牛奶。",
+        "line": "I eat rice, fish and miso soup.",
+        "props": "魚、味噌湯、牛奶"
+      },
+      {
+        "shot": 6,
+        "visual": "吃完後同學把空碗疊回餐車，角色把牛奶盒摺平放進回收籃。",
+        "line": "Then we clean up.",
+        "props": "空碗、回收籃"
+      }
+    ],
+    "sources": [
+      {
+        "title": "Elementary School Time in Japan: Daily Schedule, Lunch, and After-School Care (e-housing.jp)",
+        "url": "https://e-housing.jp/post/elementary-school-time-in-japan-daily-schedule-lunch-and-after-school-care",
+        "what_it_supports": "到校、朝の会、第一節、給食 12:15 約 45 分鐘、打掃、放學時間"
+      },
+      {
+        "title": "Japan Society: School Lunch",
+        "url": "https://aboutjapan.japansociety.org:443/school_lunch",
+        "what_it_supports": "學生輪流穿白圍裙替同學打菜、師生在教室一起吃"
+      },
+      {
+        "title": "Randoseru (Wikipedia) 與 Japan Society UK Background Notes",
+        "url": "https://en.wikipedia.org/wiki/Randoseru",
+        "what_it_supports": "randoseru 書包、黃帽主要為一年級、集團登校"
+      }
+    ]
+  },
+  {
+    "country": "USA",
+    "route_order": 3,
+    "transport_in": "飛機（東京飛洛杉磯）",
+    "times": {
+      "get_up": "06:40",
+      "have_breakfast": "07:00",
+      "go_to_school": "07:35",
+      "school_starts": "08:16",
+      "have_lunch": "11:45",
+      "go_home": "15:00",
+      "do_homework": "16:00",
+      "have_dinner": "18:00",
+      "take_shower": "19:30",
+      "go_to_bed": "21:00"
+    },
+    "time_notes": "NCES 2020–21：公立小學平均上課時間 8:16（各州、各學區差異大）。約 37% 小學生例行搭校車（NHTS）。其他時間為估計；美國小學午餐時段常偏早（11:00–12:30）。",
+    "uniform": "多數公立小學不穿制服，穿便服；部分學區或特許學校有制服（polo 衫＋卡其或深藍褲／裙）。（一般知識，估計）",
+    "accessory": "背包＋午餐盒（lunch box），可加學校吉祥物 T 恤",
+    "accessory_reason": "美國學童沒有統一制服，背包、午餐盒是普遍日常物品，不帶族群或宗教暗示；避免牛仔帽等觀光刻板印象。",
+    "foods": {
+      "breakfast": "穀片加牛奶、吐司、水果；部分學生在學校吃 school breakfast",
+      "lunch": "學校餐廳的 school lunch（例如雞肉、蔬菜、牛奶）或自帶三明治",
+      "dinner": "義大利麵、雞肉、沙拉、玉米等"
+    },
+    "culture_notes": [
+      "黃色校車停車時伸出 STOP 牌，車輛必須停下",
+      "學生在學校餐廳（cafeteria）吃午餐",
+      "早上有效忠誓詞或晨間廣播（各校不同）",
+      "下課有 recess 在操場玩"
+    ],
+    "question_routine": "go to school",
+    "question": "What time do you go to school?",
+    "answer_time": "07:35",
+    "target_sentence": "I go to school at 7:35.",
+    "extended_sentences": [
+      "I go to school at 7:35.",
+      "I go to school by school bus. The bus is yellow.",
+      "School starts at 8:15."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "美國郊區街道，早晨陽光；角色穿便服、背背包、手提午餐盒走到路邊站牌。",
+        "line": "I go to school at 7:35.",
+        "props": "背包、午餐盒、校車站牌"
+      },
+      {
+        "shot": 2,
+        "visual": "黃色校車停下，車側的紅色 STOP 牌伸出、燈閃爍；後方汽車停住。",
+        "line": "Here comes the school bus!",
+        "props": "黃色校車、STOP 牌"
+      },
+      {
+        "shot": 3,
+        "visual": "角色踏上階梯，向司機揮手說早安，坐下後扣好座位旁的扶手。",
+        "line": "Good morning!",
+        "props": "校車座椅"
+      },
+      {
+        "shot": 4,
+        "visual": "車窗外經過房子與樹，角色手腕上的錶顯示 7:50。",
+        "line": "The bus is yellow. It's big.",
+        "props": "手錶 7:50"
+      },
+      {
+        "shot": 5,
+        "visual": "校車到學校，角色下車走進校門，走廊時鐘 8:15，鈴響。",
+        "line": "School starts at 8:15.",
+        "props": "校門、走廊時鐘 8:15"
+      }
+    ],
+    "sources": [
+      {
+        "title": "NCES NTPS 2020–21 table: average start time",
+        "url": "https://nces.ed.gov/surveys/ntps/estable/table/ntps/ntps2021_fl05_s12n",
+        "what_it_supports": "公立小學平均上課時間 8:16"
+      },
+      {
+        "title": "Brookings: Can school buses improve access for students…",
+        "url": "https://www.brookings.edu/articles/can-school-buses-improve-access-for-students-without-driving-down-academic-outcomes/",
+        "what_it_supports": "約 37% 小學生例行搭校車"
+      }
+    ]
+  },
+  {
+    "country": "the UK",
+    "route_order": 4,
+    "transport_in": "飛機（美國紐約飛倫敦）",
+    "times": {
+      "get_up": "07:00",
+      "have_breakfast": "07:30",
+      "go_to_school": "08:20",
+      "school_starts": "08:45",
+      "have_lunch": "12:00",
+      "go_home": "15:15",
+      "do_homework": "16:30",
+      "have_dinner": "17:30",
+      "take_shower": "19:00",
+      "go_to_bed": "20:00"
+    },
+    "time_notes": "DfE 期望每週至少 32.5 小時，舉例相當於 8:45–15:15（含午休）；非法定、各校不同。英格蘭小學約 61% 每週至少四天吃學校午餐、16% 每天帶便當（ParentPay 2023）。作業、晚餐（英國孩子常稱 tea，偏早）、洗澡、睡覺為估計。",
+    "uniform": "校徽毛衣或開襟衫（各校顏色，如深藍、紅、綠）、白色 polo 衫、灰色長褲／短褲或裙、黑鞋。（一般知識，估計）",
+    "accessory": "書袋 book bag（印有校徽的資料袋，裝閱讀書本與聯絡簿）",
+    "accessory_reason": "英國小學生普遍每天帶 book bag 交換閱讀書，是學校生活細節，不涉族群或宗教。（一般知識）",
+    "foods": {
+      "breakfast": "穀片加牛奶、吐司塗果醬或奶油",
+      "lunch": "學校午餐（school dinner，如烤馬鈴薯、魚條、蔬菜）或自帶 packed lunch 三明治",
+      "dinner": "（tea）義大利麵、香腸配薯泥、炸魚薯條（週五）"
+    },
+    "culture_notes": [
+      "中午可以吃學校午餐或自帶 packed lunch",
+      "每天帶 book bag 和閱讀書回家讀",
+      "作業常是閱讀紀錄（reading record）和拼字",
+      "很多孩子走路上學"
+    ],
+    "question_routine": "do my homework",
+    "question": "What time do you do your homework?",
+    "answer_time": "16:30",
+    "target_sentence": "I do my homework at 4:30.",
+    "extended_sentences": [
+      "I go home at 3:15.",
+      "I do my homework at 4:30. I read my book and learn my spellings.",
+      "Then I have tea with my family."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "英國小學門口，下午 3:15，家長在校門等；角色穿校徽毛衣，提著 book bag 走出來。",
+        "line": "I go home at 3:15.",
+        "props": "book bag、校門"
+      },
+      {
+        "shot": 2,
+        "visual": "英式磚造聯排屋的客廳，窗外下小雨；牆上時鐘 4:30。",
+        "line": "It's 4:30.",
+        "props": "時鐘 4:30、雨窗"
+      },
+      {
+        "shot": 3,
+        "visual": "角色坐在餐桌，從 book bag 拿出閱讀書翻開，手指一行一行唸。",
+        "line": "I do my homework at 4:30. I read my book.",
+        "props": "閱讀書、reading record 小冊"
+      },
+      {
+        "shot": 4,
+        "visual": "角色拿鉛筆在拼字單上寫字，然後在 reading record 打勾。",
+        "line": "I learn my spellings.",
+        "props": "拼字單、鉛筆"
+      },
+      {
+        "shot": 5,
+        "visual": "角色把書放回 book bag，走到廚房，桌上有義大利麵。",
+        "line": "Then I have tea with my family.",
+        "props": "餐盤、叉子"
+      }
+    ],
+    "sources": [
+      {
+        "title": "DfE information note: Minimum expectation for length of school week",
+        "url": "https://dera.ioe.ac.uk/39119/1/Minimum_expectation_for_length_of_school_week_-__information_note.pdf",
+        "what_it_supports": "32.5 小時、相當於 8:45–15:15"
+      },
+      {
+        "title": "ParentPay/Cypad 2023 National School Meals Report",
+        "url": "https://www.parentpay.com/cypad/wp-content/uploads/sites/7/2023/06/2023-national-school-meals-report.pdf",
+        "what_it_supports": "英格蘭小學學校午餐與 packed lunch 比例"
+      }
+    ]
+  },
+  {
+    "country": "Spain",
+    "route_order": 5,
+    "transport_in": "火車（倫敦搭歐洲之星 Eurostar 到巴黎，再轉高速火車到巴塞隆納）",
+    "times": {
+      "get_up": "07:45",
+      "have_breakfast": "08:00",
+      "go_to_school": "08:40",
+      "school_starts": "09:00",
+      "have_lunch": "14:00",
+      "go_home": "16:30",
+      "do_homework": "18:00",
+      "have_dinner": "21:15",
+      "take_shower": "20:30",
+      "go_to_bed": "22:15"
+    },
+    "time_notes": "小學多為 9:00–14:00 連續上課（約 81% 公立學校），或 9:00–12:30＋14:30–16:00 分段；午餐在學校餐廳 comedor 或回家吃，多在 13:00–15:00。CIS 調查：約 48% 受訪者 21:00–22:00 吃晚餐（成人資料，兒童晚餐可能稍早，估計）；新聞片段指西班牙兒童就寢多在 21:30–22:00（來源弱）。下午 17:30 左右常有點心 merienda（一般知識）。",
+    "uniform": "多數公立學校不穿制服，穿便服；私立與 concertada 學校常有制服（深藍毛衣、格子裙或灰褲）。（一般知識，估計）",
+    "accessory": "拉桿書包（mochila con ruedas，有輪子的書包）",
+    "accessory_reason": "西班牙小學生常用有輪子的拉桿書包，是日常校園物品，避免鬥牛士、佛朗明哥服裝等觀光刻板印象。（一般知識）",
+    "foods": {
+      "breakfast": "牛奶（可可粉）、吐司淋橄欖油配番茄、餅乾",
+      "lunch": "學校 comedor 或在家：扁豆湯、西班牙蛋餅 tortilla、雞肉、水果；下午點心 bocadillo 三明治",
+      "dinner": "較晚吃：蔬菜湯、蛋、魚、沙拉、麵包"
+    },
+    "culture_notes": [
+      "很多學校 9:00–14:00 連續上課，午餐約 14:00",
+      "下午有點心時間 merienda",
+      "晚餐通常比台灣晚很多，約 21:00",
+      "午餐是一天中最豐盛的一餐"
+    ],
+    "question_routine": "have dinner",
+    "question": "What time do you have dinner?",
+    "answer_time": "21:15",
+    "target_sentence": "I have dinner at 9:15.",
+    "extended_sentences": [
+      "I have lunch at 2:00. Lunch is my big meal.",
+      "I have dinner at 9:15. It's late!",
+      "I eat a tortilla and salad with my family."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "西班牙公寓陽台，天色已暗，街燈亮起；屋內時鐘 9:15。",
+        "line": "It's 9:15 at night.",
+        "props": "時鐘 9:15、街燈"
+      },
+      {
+        "shot": 2,
+        "visual": "角色從廚房端著西班牙蛋餅盤子走到餐桌放下，家人擺好盤子。",
+        "line": "I have dinner at 9:15.",
+        "props": "西班牙蛋餅、盤子"
+      },
+      {
+        "shot": 3,
+        "visual": "角色用叉子吃一口蛋餅，另一手拿麵包；桌上有沙拉碗。",
+        "line": "I eat a tortilla and salad.",
+        "props": "叉子、麵包、沙拉碗"
+      },
+      {
+        "shot": 4,
+        "visual": "畫面右上角跳出台灣角色的小視窗（已在睡覺），對比時間。",
+        "line": "It's late! In Taiwan, I go to bed at 10:00.",
+        "props": "對比小視窗"
+      },
+      {
+        "shot": 5,
+        "visual": "晚餐後角色把盤子拿到水槽，和家人說晚安。",
+        "line": "Good night!",
+        "props": "水槽、盤子"
+      }
+    ],
+    "sources": [
+      {
+        "title": "idealista: Spanish school system explained for international families",
+        "url": "https://www.idealista.com/en/news/lifestyle-in-spain/2026/09/09/912712-spanish-school-system-explained-for-international-families",
+        "what_it_supports": "9:00–14:00 連續上課或 9:00–12:30＋14:30–16:00；comedor 或回家吃"
+      },
+      {
+        "title": "Science Media Centre Spain: Continuous or split school day",
+        "url": "https://sciencemediacentre.es/en/continuous-or-split-school-day-data-studies-and-evidence",
+        "what_it_supports": "約 81% 公立學前與小學採連續上課日"
+      },
+      {
+        "title": "Euroresidentes：CIS 調查西班牙晚餐時間",
+        "url": "https://www.euroresidentes.com/euroresiuk/news-spain/?p=6141",
+        "what_it_supports": "48% 受訪者 21:00–22:00 吃晚餐（成人資料）"
+      }
+    ]
+  },
+  {
+    "country": "Egypt",
+    "route_order": 6,
+    "transport_in": "飛機（馬德里飛開羅）",
+    "times": {
+      "get_up": "06:15",
+      "have_breakfast": "06:35",
+      "go_to_school": "07:10",
+      "school_starts": "07:30",
+      "have_lunch": "15:00",
+      "go_home": "14:00",
+      "do_homework": "17:00",
+      "have_dinner": "20:30",
+      "take_shower": "21:00",
+      "go_to_bed": "22:00"
+    },
+    "time_notes": "公立學校傳統採兩部制（上午班約 7:30–12:00、下午班約 12:30–17:00）；教育部表示學校現多為全天至 14:00，目標 2027/28 年取消分班。開始時間 7:30–8:30 為一般性資料（來源可信度中等）。家庭主餐多在放學後 15:00 左右（一般知識，估計）；晚餐、睡覺為估計。",
+    "uniform": "依學校／省份不同；常見為襯衫或 polo 衫＋長褲或裙／連身裙，顏色如藍、灰、米色。（一般知識，估計）",
+    "accessory": "紙包的 ful 豆泥口袋餅三明治（aish baladi）放在書包側袋",
+    "accessory_reason": "以日常早餐食物作為文化細節，不替角色預設宗教服飾（是否戴頭巾屬個人與家庭選擇），也避免法老、駱駝等觀光刻板印象。",
+    "foods": {
+      "breakfast": "ful medames 蠶豆泥、ta'ameya（蠶豆做的炸豆餅），夾在 aish baladi 圓麵包",
+      "lunch": "放學後在家吃主餐：koshari（米、扁豆、通心粉）、molokhia 湯配米飯",
+      "dinner": "較清淡：麵包、白起司、優格、水果"
+    },
+    "culture_notes": [
+      "ful 與 ta'ameya 是經典早餐，早上麵包店與 ful 小攤最忙",
+      "部分公立學校仍分上午班、下午班",
+      "一天主餐在下午放學後",
+      "ta'ameya 是用蠶豆而非鷹嘴豆做"
+    ],
+    "question_routine": "have breakfast",
+    "question": "What time do you have breakfast?",
+    "answer_time": "06:35",
+    "target_sentence": "I have breakfast at 6:35.",
+    "extended_sentences": [
+      "I get up at 6:15.",
+      "I have breakfast at 6:35. I eat ful and ta'ameya in bread.",
+      "I go to school at 7:10."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "開羅清晨的街道，路邊 ful 小推車冒熱氣，麵包店堆著圓麵包；角色穿制服、背書包走來。",
+        "line": "I get up at 6:15.",
+        "props": "ful 推車、圓麵包"
+      },
+      {
+        "shot": 2,
+        "visual": "推車上的小時鐘 6:35；老闆把豆泥舀進對半切開的口袋麵包，再放兩顆 ta'ameya。",
+        "line": "I have breakfast at 6:35.",
+        "props": "時鐘 6:35、湯杓、aish baladi、ta'ameya"
+      },
+      {
+        "shot": 3,
+        "visual": "角色雙手接過紙包三明治，咬一口，點頭說好吃。",
+        "line": "I eat ful and ta'ameya in bread. Yum!",
+        "props": "紙包三明治"
+      },
+      {
+        "shot": 4,
+        "visual": "角色把另一個三明治放進書包側袋，揮手道別。",
+        "line": "One for school, too.",
+        "props": "書包側袋"
+      },
+      {
+        "shot": 5,
+        "visual": "角色走進校門，學生在操場排隊參加晨間集合。",
+        "line": "I go to school at 7:10.",
+        "props": "校門、操場"
+      }
+    ],
+    "sources": [
+      {
+        "title": "NPR: Ta'amiya — Egypt's ancient fava bean duo is still a modern breakfast classic",
+        "url": "https://www.npr.org/2026/08/30/nx-s1-5945114/taamiya-egypts-ancient-fava-bean-duo-is-still-a-modern-breakfast-classic",
+        "what_it_supports": "ful 與 ta'ameya 是經典早餐、小攤一份約 10 埃鎊"
+      },
+      {
+        "title": "Ahram Online: Back to class",
+        "url": "https://english.ahram.org.eg/News/576269.aspx",
+        "what_it_supports": "學校現多全天至 14:00、目標 2027/28 取消分班"
+      },
+      {
+        "title": "Citizen Daily Post: How long is a school day in Egypt?",
+        "url": "https://www.citizendailypost.com/faq/how-long-is-a-school-day-in-egypt",
+        "what_it_supports": "上課約 7:30–8:30 開始；上午班 7:30–12:00、下午班 12:30–17:00（一般性來源）"
+      }
+    ]
+  },
+  {
+    "country": "Kenya",
+    "route_order": 7,
+    "transport_in": "飛機到蒙巴薩，再搭 SGR 標準軌火車 Madaraka Express 到奈洛比（亦可直飛奈洛比）",
+    "times": {
+      "get_up": "05:40",
+      "have_breakfast": "06:00",
+      "go_to_school": "06:20",
+      "school_starts": "07:15",
+      "have_lunch": "12:45",
+      "go_home": "16:45",
+      "do_homework": "18:00",
+      "have_dinner": "19:30",
+      "take_shower": "19:00",
+      "go_to_bed": "21:00"
+    },
+    "time_notes": "法規（Basic Education Regulations 2015 第 84(2) 條）：走讀生不得被要求 7:15 前到校；上課 8:00–15:30、15:30–16:45 課外活動。實際許多學校更早（有報導 6:30 甚至更早）。UNESCO 2023 報告：平均每天走約 2 公里上學，15% 超過 3 公里。起床、早餐、午餐、作業、晚餐、洗澡、睡覺為估計。",
+    "uniform": "依學校不同：校色 V 領毛衣＋襯衫，男生短褲、女生裙或連身裙，常見綠、藍、紅、褐等。（一般知識，估計）",
+    "accessory": "校徽 V 領毛衣＋手提水壺",
+    "accessory_reason": "校色毛衣是肯亞小學生最常見的穿著，清晨走路上學天氣涼；避免把單一族群（如馬賽人服飾）當成全國代表。",
+    "foods": {
+      "breakfast": "uji 小米玉米粥或奶茶（chai）配麵包、mandazi 炸麵包",
+      "lunch": "學校供餐常見 githeri（玉米加豆子）或米飯",
+      "dinner": "ugali 玉米糕配 sukuma wiki（羽衣甘藍）和燉菜"
+    },
+    "culture_notes": [
+      "很多學生走好幾公里上學，天沒亮就出門",
+      "政府規定 7:15 前不可要求到校，但不少學校更早",
+      "學校供餐常見 githeri",
+      "放學後還有課外活動和球類"
+    ],
+    "question_routine": "get up",
+    "question": "What time do you get up?",
+    "answer_time": "05:40",
+    "target_sentence": "I get up at 5:40.",
+    "extended_sentences": [
+      "I get up at 5:40. It's dark.",
+      "I drink tea and eat mandazi.",
+      "I walk to school. It's two kilometers."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "肯亞鄉間的家，天還很暗，屋外有公雞剪影；床頭小鬧鐘 5:40 響起。",
+        "line": "I get up at 5:40.",
+        "props": "鬧鐘 5:40"
+      },
+      {
+        "shot": 2,
+        "visual": "角色伸手按掉鬧鐘、坐起來伸懶腰，望向窗外說天還黑。",
+        "line": "It's dark!",
+        "props": "鬧鐘、窗戶"
+      },
+      {
+        "shot": 3,
+        "visual": "廚房小桌，角色拿杯子喝奶茶，另一手拿起一塊 mandazi 咬一口。",
+        "line": "I drink tea and eat mandazi.",
+        "props": "茶杯、mandazi 盤子"
+      },
+      {
+        "shot": 4,
+        "visual": "角色穿上校色毛衣、背書包、拿水壺出門，紅土小路上天邊開始亮。",
+        "line": "I walk to school.",
+        "props": "毛衣、書包、水壺"
+      },
+      {
+        "shot": 5,
+        "visual": "角色和兩位同學一起走在路上，路旁出現「2 km」的路標。",
+        "line": "It's two kilometers.",
+        "props": "2 km 路標"
+      },
+      {
+        "shot": 6,
+        "visual": "太陽升起，角色走進學校大門，操場上同學排隊。",
+        "line": "I'm at school!",
+        "props": "校門、操場"
+      }
+    ],
+    "sources": [
+      {
+        "title": "Mwakilishi: Education CS orders school days to start at 8am, end at 3:45pm",
+        "url": "https://mwakilishi.com/article/kenya-news/2023-01-31/education-cs-machogu-orders-school-days-to-start-at-8am",
+        "what_it_supports": "官方上課時間、早到校的規定"
+      },
+      {
+        "title": "The Standard: UNESCO — long commute to school exposes children to security risks",
+        "url": "https://www.standardmedia.co.ke/sports/amp/education/article/2001489626/www.digger.co.ke",
+        "what_it_supports": "平均每天走約 2 公里、15% 超過 3 公里"
+      },
+      {
+        "title": "Education News: stop forcing learners to arrive before sunrise",
+        "url": "https://educationnews.co.ke/?p=494891",
+        "what_it_supports": "實際許多學校早於規定時間要求到校"
+      },
+      {
+        "title": "The Star: Kiharu pupils githeri / school feeding",
+        "url": "https://www.the-star.co.ke/news/2024-01-11-kiharu-pupils-to-enjoy-chapati-every-last-friday-of-the-month-mp-nyoro",
+        "what_it_supports": "學校供餐 githeri"
+      }
+    ]
+  },
+  {
+    "country": "India",
+    "route_order": 8,
+    "transport_in": "飛機（奈洛比飛孟買）",
+    "times": {
+      "get_up": "06:00",
+      "have_breakfast": "06:40",
+      "go_to_school": "07:20",
+      "school_starts": "08:00",
+      "have_lunch": "12:30",
+      "go_home": "14:40",
+      "do_homework": "17:30",
+      "have_dinner": "20:30",
+      "take_shower": "06:15",
+      "go_to_bed": "22:00"
+    },
+    "time_notes": "上課時間由各邦政府決定，差異很大（比哈爾邦夏季 6:30 開始；西孟加拉某校 10:40 朝會）。私立 CBSE 學校例：清奈 8:00–15:00（8:00 朝會、12:30 午餐）、德里一校 7:50–14:35。很多家庭習慣早上上學前洗澡，所以 take_shower 放在早上（一般知識，估計）。晚餐偏晚約 20:30–21:00、睡覺為估計。",
+    "uniform": "依學校不同：襯衫＋短褲／長褲或裙／背心裙，常配領帶、皮帶、黑鞋；常見白、藍、灰、卡其色。（一般知識，估計）",
+    "accessory": "不鏽鋼便當盒 tiffin（dabba）＋學生證掛繩",
+    "accessory_reason": "帶 tiffin 便當上學、午休時和同學分享，是跨地區、跨宗教的共同校園經驗；不使用 bindi、tilak、頭巾等宗教或特定族群標記。",
+    "foods": {
+      "breakfast": "北印度常見 paratha 配優格，南印度常見 idli、dosa，或 poha",
+      "lunch": "自帶 tiffin：roti 或 chapati 配乾式蔬菜 sabzi，或米飯配 dal",
+      "dinner": "roti、dal、蔬菜咖哩、米飯"
+    },
+    "culture_notes": [
+      "一天從朝會（morning assembly）開始",
+      "午休時打開 tiffin，常和同學交換食物",
+      "北印度多 roti、南印度多米飯",
+      "放學常搭校車、小型校車 van 或嘟嘟車 auto-rickshaw"
+    ],
+    "question_routine": "go home",
+    "question": "What time do you go home?",
+    "answer_time": "14:40",
+    "target_sentence": "I go home at 2:40.",
+    "extended_sentences": [
+      "School ends at 2:35.",
+      "I go home at 2:40. I go home by school van.",
+      "My tiffin box is empty. I eat all my lunch at school."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "印度城市學校操場，熱帶陽光；鐘聲響，教室時鐘 2:35，學生收書包。",
+        "line": "School ends at 2:35.",
+        "props": "時鐘 2:35、鐘"
+      },
+      {
+        "shot": 2,
+        "visual": "角色把空的不鏽鋼 tiffin 盒蓋好放進書包，搖一搖沒聲音。",
+        "line": "My tiffin box is empty!",
+        "props": "不鏽鋼 tiffin 盒"
+      },
+      {
+        "shot": 3,
+        "visual": "校門外停著黃色小型校車 van，角色手錶 2:40，和同學一起上車坐好。",
+        "line": "I go home at 2:40.",
+        "props": "黃色 school van、手錶 2:40"
+      },
+      {
+        "shot": 4,
+        "visual": "車窗外經過嘟嘟車、水果攤和腳踏車，角色向窗外揮手。",
+        "line": "I go home by school van.",
+        "props": "嘟嘟車、水果攤"
+      },
+      {
+        "shot": 5,
+        "visual": "角色到家，把 tiffin 交給家人，家人笑著說吃完了真棒。",
+        "line": "I eat all my lunch at school.",
+        "props": "tiffin 盒"
+      }
+    ],
+    "sources": [
+      {
+        "title": "NPS Chennai: School Day Schedule",
+        "url": "https://npschennai.com/school_day_schedule.html",
+        "what_it_supports": "8:00 到校與朝會、12:30 午餐、15:00 放學"
+      },
+      {
+        "title": "Rajya Sabha PQ 267 (19-03-2025)",
+        "url": "https://rsdebate.nic.in/bitstream/123456789/757266/1/PQ_267_19032025_U2106_p159_p159.pdf",
+        "what_it_supports": "上課時間由各邦政府依當地情況決定"
+      },
+      {
+        "title": "NPS East: School Schedule",
+        "url": "https://npseast.com/school-schedule.html",
+        "what_it_supports": "德里地區私校 7:50–14:35"
+      },
+      {
+        "title": "Tarla Dalal: Indian tiffin box / lunch box recipes",
+        "url": "https://www.tarladalal.com/recipes-for-indian-tiffin-box-lunch-box-dabba--243?page=2",
+        "what_it_supports": "tiffin 常見 chapati 或米飯、sabzi、dal"
+      }
+    ]
+  },
+  {
+    "country": "Singapore",
+    "route_order": 9,
+    "transport_in": "飛機（孟買飛新加坡）",
+    "times": {
+      "get_up": "06:00",
+      "have_breakfast": "06:15",
+      "go_to_school": "06:45",
+      "school_starts": "07:30",
+      "have_lunch": "13:45",
+      "go_home": "13:30",
+      "do_homework": "15:30",
+      "have_dinner": "19:00",
+      "take_shower": "20:30",
+      "go_to_bed": "21:45"
+    },
+    "time_notes": "多數小學 7:30–13:30（各校官網），學生 7:30 前進教室；下課 recess 依年級錯開，例如淡馬錫小學 P5 10:30–11:00、P6 11:00–11:30，在學校 canteen 買東西吃。睡眠：MOE 2025 調查 P5／中三平均上學日睡 7 小時；NUS 報告 7–12 歲平週平均 8.4 小時。就寢 21:45、起床 6:00、晚餐、作業為估計。",
+    "uniform": "各校不同：男生白襯衫＋藍色或卡其短褲，女生背心裙（pinafore）或裙，配校徽。（一般知識，估計）",
+    "accessory": "學生搭車卡（EZ-Link 學生優惠卡）掛繩＋水壺",
+    "accessory_reason": "新加坡學生普遍用學生卡搭公車、地鐵上學，是中性的城市生活細節，也能接續搭乘交通的主題；不以單一族裔服飾代表多元的新加坡。",
+    "foods": {
+      "breakfast": "kaya 吐司配半熟蛋、Milo 美祿，或家中麵包",
+      "lunch": "recess 在學校 canteen 買雞飯、麵；放學後回家或在學生托管中心吃午餐",
+      "dinner": "小販中心 hawker centre：海南雞飯、叻沙、炒粿條"
+    },
+    "culture_notes": [
+      "上課 7:30 很早，學生 6 點多就出門",
+      "recess 在學校 canteen 自己買食物",
+      "家庭常到 hawker centre 吃晚餐",
+      "放學後有 CCA 課外活動或補習，睡眠偏少"
+    ],
+    "question_routine": "go to bed",
+    "question": "What time do you go to bed?",
+    "answer_time": "21:45",
+    "target_sentence": "I go to bed at 9:45.",
+    "extended_sentences": [
+      "School starts at 7:30. It's early!",
+      "I go to bed at 9:45.",
+      "I brush my teeth and read a book."
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "新加坡組屋公寓夜景，窗外高樓燈光；房間時鐘 9:30。",
+        "line": "It's 9:30 at night.",
+        "props": "時鐘 9:30、窗外組屋"
+      },
+      {
+        "shot": 2,
+        "visual": "角色在浴室拿起牙刷擠牙膏刷牙，然後把杯子放回架上。",
+        "line": "I brush my teeth.",
+        "props": "牙刷、牙膏、漱口杯"
+      },
+      {
+        "shot": 3,
+        "visual": "角色把明天的書和學生卡放進書包，拉上拉鍊。",
+        "line": "I pack my bag for tomorrow.",
+        "props": "書包、學生卡"
+      },
+      {
+        "shot": 4,
+        "visual": "角色坐在床上翻開故事書讀了兩頁，再把書放到床頭櫃。",
+        "line": "I read a book.",
+        "props": "故事書、床頭櫃"
+      },
+      {
+        "shot": 5,
+        "visual": "時鐘 9:45，角色關燈、拉好被子閉上眼睛。",
+        "line": "I go to bed at 9:45. Good night!",
+        "props": "時鐘 9:45、檯燈、被子"
+      },
+      {
+        "shot": 6,
+        "visual": "畫面右下小字幕：School starts at 7:30!（鬧鐘已設定 6:00）",
+        "line": "School starts at 7:30. It's early!",
+        "props": "鬧鐘 6:00"
+      }
+    ],
+    "sources": [
+      {
+        "title": "Temasek Primary School: School Hours and Recess",
+        "url": "https://www.temasekpri.moe.edu.sg/about-us/School-Services/school-hours-and-recess",
+        "what_it_supports": "7:30–13:30、各年級 recess 時間"
+      },
+      {
+        "title": "MOE Parliamentary reply (2026-08-05): Sleep health among school-going children",
+        "url": "https://www.moe.gov.sg/news/parliamentary-replies/20260805-sleep-health-among-school-going-children-and-adolescents",
+        "what_it_supports": "P5 與中三上學日平均睡約 7 小時"
+      },
+      {
+        "title": "NUS CHILD Evidence Insight: Sleep",
+        "url": "https://medicine.nus.edu.sg/wp-content/uploads/sites/25/2022/12/1122-CHILD_Evidence-Insight-Sleep_FINALdigital2.pdf",
+        "what_it_supports": "7–12 歲平日平均睡 8.4 小時"
+      }
+    ]
+  },
+  {
+    "country": "Australia",
+    "route_order": 10,
+    "transport_in": "船（新加坡搭郵輪到澳洲伯斯 Fremantle；回程從澳洲搭飛機回台灣）",
+    "times": {
+      "get_up": "07:00",
+      "have_breakfast": "07:20",
+      "go_to_school": "08:20",
+      "school_starts": "08:50",
+      "have_lunch": "12:50",
+      "go_home": "15:10",
+      "do_homework": "16:30",
+      "have_dinner": "18:15",
+      "take_shower": "19:15",
+      "go_to_bed": "20:30"
+    },
+    "time_notes": "一般說法上課約 8:30 開始、15:00 左右結束（Teach Starter，概括）；各州各校鐘聲表不同（如新州 Canobolas 小學 9:10 開始、15:10 結束，並有 Crunch and Sip 蔬果補水時間）。午餐時段各校不同，約 12:30–13:30（估計）。洗澡、晚餐、睡覺為估計；多個水公司（Water Corporation、Sydney Water、Yarra Valley Water）推廣 4 分鐘洗澡、唱一首歌的時間。",
+    "uniform": "校色 polo 衫（如深藍、綠、酒紅）＋短褲或 skort／格子連身裙，配寬簷遮陽帽。（一般知識，估計）",
+    "accessory": "寬簷校帽（broad-brim school hat）",
+    "accessory_reason": "SunSmart 政策讓戶外活動戴帽子成為全澳小學的共同規範（常見 No hat, no play／No hat, play in the shade），是健康安全習慣，不是族群標籤。",
+    "foods": {
+      "breakfast": "Vegemite 吐司、穀片加牛奶",
+      "lunch": "自帶午餐盒：三明治或 wrap、水果；上午 Crunch and Sip 吃蔬果喝水",
+      "dinner": "烤肉 barbecue 的香腸或雞肉、沙拉、義大利麵"
+    },
+    "culture_notes": [
+      "戶外活動要戴寬簷帽（SunSmart）",
+      "上午有 Crunch and Sip 蔬果補水時間",
+      "午餐多自帶便當，在戶外有遮蔽處吃",
+      "節約用水，推廣 4 分鐘短時間淋浴"
+    ],
+    "question_routine": "take a shower",
+    "question": "What time do you take a shower?",
+    "answer_time": "19:15",
+    "target_sentence": "I take a shower at 7:15.",
+    "extended_sentences": [
+      "I play soccer after school.",
+      "I take a shower at 7:15.",
+      "It's a four-minute shower. I sing a song!"
+    ],
+    "storyboard": [
+      {
+        "shot": 1,
+        "visual": "澳洲住家後院黃昏，角色穿運動服抱著足球走進屋，身上沾泥。",
+        "line": "I play soccer after school.",
+        "props": "足球、寬簷校帽掛在門邊"
+      },
+      {
+        "shot": 2,
+        "visual": "浴室牆上時鐘 7:15；角色把毛巾掛好，拿起一個 4 分鐘沙漏放在架上翻轉。",
+        "line": "I take a shower at 7:15.",
+        "props": "時鐘 7:15、毛巾、4 分鐘沙漏"
+      },
+      {
+        "shot": 3,
+        "visual": "角色打開蓮蓬頭（只畫肩膀以上與水花），用手搓洗頭髮上的泡泡，一邊唱歌。",
+        "line": "It's a four-minute shower. I sing a song!",
+        "props": "蓮蓬頭、洗髮精、音符"
+      },
+      {
+        "shot": 4,
+        "visual": "沙漏流完，角色伸手關水，水滴停止。",
+        "line": "Turn off the water. Save water!",
+        "props": "沙漏、水龍頭"
+      },
+      {
+        "shot": 5,
+        "visual": "角色穿上睡衣、用毛巾擦頭髮，走出浴室比讚。",
+        "line": "I'm clean!",
+        "props": "睡衣、毛巾"
+      }
+    ],
+    "sources": [
+      {
+        "title": "Teach Starter: School hours around the world",
+        "url": "https://www.teachstarter.com/au/blog/school-hours-around-the-world",
+        "what_it_supports": "澳洲上課約 8:30–15:00（概括說法）"
+      },
+      {
+        "title": "Canobolas Public School: School hours",
+        "url": "https://canobolas-p.schools.nsw.gov.au/content/dam/doe/sws/schools/c/canobolas-p/localcontent/School_hours_updated_231020.pdf",
+        "what_it_supports": "鐘聲表含 Crunch and Sip、15:10 放學"
+      },
+      {
+        "title": "Cancer Council WA: SunSmart Primary School Students",
+        "url": "https://www.cancerwa.asn.au/prevention/sunsmart/sunsmartschools/",
+        "what_it_supports": "學校戴帽政策（建議 No hat, play in the shade）"
+      },
+      {
+        "title": "Water Corporation WA: Help kids save water on a school day",
+        "url": "https://www.watercorporation.com.au/about-us/latest-updates/april-2021/help-kids-save-water-on-a-school-day",
+        "what_it_supports": "4 分鐘洗澡歌、淋浴占家中用水 37%"
+      }
+    ]
+  }
+]

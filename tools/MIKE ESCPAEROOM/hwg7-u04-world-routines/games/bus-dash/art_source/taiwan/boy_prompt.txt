@@ -1,0 +1,10 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A character sprite sheet on a PURE WHITE (#FFFFFF) background: the SAME child character drawn 4 times in ONE horizontal row, evenly spaced with WIDE empty white gaps between the figures (figures never touch or overlap). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Cute chibi proportions (about 3 heads tall), full body from head to shoes in every pose, all four figures the same height, feet near the same baseline.
+Character: the boy traveller from the attached reference image, redrawn as a 2D cartoon: keep exactly the same hair, hat, clothes, colours and backpack as the reference.
+Poses, left to right:
+1. RUN A: running toward the RIGHT seen from the side, left leg stretched forward, right leg back, arms pumping, happy determined face.
+2. RUN B: running toward the RIGHT seen from the side, the opposite stride (right leg forward, left leg back, arms swapped).
+3. HAPPY: facing the viewer, jumping with both arms up, big open smile.
+4. OOPS: turned toward the RIGHT, stumbling with arms flailing, dizzy worried face, one foot off the ground.
+Strict rules: NO text, NO letters, NO numbers, no ground shadows, no dust clouds, no background objects, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

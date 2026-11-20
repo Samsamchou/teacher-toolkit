@@ -1,0 +1,12 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 6 separate game objects on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 3 columns, each object centred in its own cell with WIDE empty white gaps between objects (nothing touches or overlaps, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game.
+Row 1, left to right: three hard-shell travel suitcases of the same shape and size, standing upright, seen exactly from the front, each with a short pull handle on top, four small black wheels at the bottom and a few vertical ridges at the sides. On the front of each suitcase there is ONE big plain empty white circle (no numbers, no marks, nothing inside it) that fills most of the front.
+1. a bright RED suitcase
+2. a bright BLUE suitcase
+3. a bright YELLOW suitcase
+Row 2, left to right:
+4. an open, completely EMPTY pink travel suitcase lying flat on the floor, seen from the front and above, its lid standing open behind it, so the empty light-grey lining inside is clearly visible
+5. a silver airport luggage trolley seen exactly from the side, completely empty, with its push handle on the LEFT, a long flat low platform, and black wheels
+6. the entrance of an airport baggage belt: a grey metal box seen from the front with a dark opening covered by hanging black rubber strip curtains
+Strict rules: NO text, NO letters, NO numbers, NO clocks, NO labels, NO logos, no frame lines between cells, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

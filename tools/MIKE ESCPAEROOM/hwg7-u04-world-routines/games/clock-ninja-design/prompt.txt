@@ -1,0 +1,22 @@
+Use your built-in image generation tool to create ONE image and save it as out.png in the current folder. Do not write any code.
+
+The image is a 16:9 landscape (1536x864 or similar) mock-up screenshot of a children's tablet game called "Clock Ninja", bright friendly glossy 2D cartoon style with thick clean dark outlines and saturated colours, for 11-year-old pupils. It must look like a real game screenshot, flat and front-facing, no tablet frame, no hands holding a device.
+
+Scene (background): a cosy British child's bedroom in the late afternoon, seen straight on. A big window in the middle of the back wall shows red-brick terraced houses with chimneys, a red double-decker bus and a light rainy sky. A small Union Jack bunting hangs on the wall, a bookshelf on the left, a red school blazer on a hook on the right. There is NO wall clock and NO clock tower anywhere in the background. Along the bottom of the picture runs a wooden homework desk, and on the desk at the bottom centre sits an open blue school bag.
+
+Character: at the bottom-left, standing beside the desk, a cute chibi girl traveller (about 3 heads tall): dark bob hair, straw sun hat with a pink ribbon bow, beige explorer vest with pockets over a white shirt, olive shorts, pink backpack, pink sneakers. She is cheering with one arm up. She is small, about one third of the picture height.
+
+Main action: this is the "clock round". Three BIG round analog alarm clocks float in the air in one horizontal row across the middle of the picture, evenly spaced, each about one quarter of the picture height, each with two little bells on top and a clear white face with the numbers 1 to 12 and exactly two black hands:
+- left clock, RED rim: shows four o'clock (short hand on 4, long hand on 12).
+- middle clock, BLUE rim: shows half past four (short hand halfway between 4 and 5, long hand on 6).
+- right clock, YELLOW rim: shows half past five (short hand halfway between 5 and 6, long hand on 6).
+A child's pointing finger cursor (a simple white cartoon hand with a pointing index finger) is tapping the middle BLUE clock, and a bright curved white-and-yellow "ninja slash" light streak with a few sparkle stars crosses that clock, showing that a tap or a swipe chooses it.
+
+Around and below the clocks, a few smaller homework things are tossed up in the air in gentle arcs with faint dotted arc trails, slightly faded because the action is paused: a yellow pencil, a blue exercise book, a pink eraser, a ruler. Two "distraction" things are also in the air, each inside a soft red glow: a game controller and a smartphone.
+
+HUD, drawn exactly like this:
+- top-left: a rounded white panel with a dark navy outline containing the small word SCORE and below it the big number 320.
+- top-right: a rounded white panel with a dark navy outline containing three red hearts in a row, and under them a green horizontal timer bar with the number 30 at its right end. Directly under this panel: four small round clock icons in a row, the first one green with a tick, the other three grey.
+- top-centre: a wide rounded white banner with a dark navy outline; at its left end a round BLUE button with a white speaker icon; to the right of it the text "Listen! Which clock?" and a thin blue progress line under the text.
+
+All text must be in English only, spelled exactly as given: SCORE, 320, 30, "Listen! Which clock?" and the numbers 1 to 12 on the clock faces. Rounded comic handwriting font like Comic Relief. No other words anywhere, no digital time such as 4:30, no title, no watermark, no speech bubbles.

@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create ONE wide 16:9 image (1536x864): a line-up of 5 separate 11-year-old primary school pupils standing side by side in ONE row, evenly spaced. From left to right:
+1. Taiwanese girl: short-sleeve white-and-blue sports-style school polo shirt and navy shorts, sneakers, school backpack, a small cloth pouch with reusable chopsticks and spoon hanging from the backpack strap.
+2. Japanese boy: everyday clothes (striped T-shirt, shorts), a small name tag pinned on his chest (blank), a black leather randoseru backpack on his back with straps visible.
+3. American girl: casual clothes (hoodie, jeans, sneakers), colourful backpack, holding a lunch box in one hand.
+4. British boy: red school jumper with a small plain crest, white polo collar, grey trousers, black shoes, holding a flat navy book bag by its handle.
+5. Spanish girl: casual clothes (T-shirt, skirt, sneakers), pulling a wheeled trolley school backpack by its handle.
+Style: bright, cheerful children's-game cartoon, thick clean outlines, flat colours with soft highlights, friendly round faces, consistent proportions (about 3.5 heads tall), full body from head to shoes, standing straight facing the viewer with a warm smile and one hand waving, both hands open and clearly drawn. Pure flat white (#FFFFFF) background, wide white gaps between characters, no shadows touching neighbours, no text, no letters, no numbers, no flags.
+Save the PNG as chars_a.png in the current directory. Reply with the saved file path only.

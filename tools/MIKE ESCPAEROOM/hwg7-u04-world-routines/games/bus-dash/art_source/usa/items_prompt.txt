@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 top view.
+Row 1 (things an American pupil takes to school), left to right:
+1. a red school backpack standing upright, zipped
+2. a blue metal lunchbox with a handle, closed
+3. a shiny red apple with a green leaf
+4. a yellow zipped pencil case with two pencils sticking out
+5. a thick green closed school book with a plain blank cover
+Row 2, left to right:
+6. a light-blue water bottle with a white cap
+7. a blue water puddle lying flat on the ground
+8. an orange skateboard lying on the ground, seen from the side
+9. a grey metal trash can tipped over on its side with its lid off and a little crumpled paper spilling out
+10. a small brown squirrel sitting up holding an acorn
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO logos, no frame lines between cells, pure white background everywhere. No icon is drawn in pure white: every item has a clearly coloured body.
+Save the PNG as out.png in the current directory.

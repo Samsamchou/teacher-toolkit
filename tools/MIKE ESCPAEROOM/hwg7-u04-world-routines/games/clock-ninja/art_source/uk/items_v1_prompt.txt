@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 view, each drawn a little tilted as if tossed in the air.
+Row 1 (a British pupil's homework things), left to right:
+1. a yellow wooden pencil with a pink rubber end, sharpened
+2. a blue exercise book, closed, with a plain blank white label rectangle on the cover
+3. a pink rubber eraser block
+4. a light wooden ruler with small tick marks only (no numbers)
+5. a thick closed green hardback story book with a simple gold star on the cover
+Row 2, left to right:
+6. a small fanned stack of three pastel flash cards (yellow, blue, pink) held together by a silver ring, each card plain with no writing
+7. a dark grey video game controller with coloured buttons
+8. a smartphone with a dark glossy screen in a pink case
+9. a black TV remote control with small coloured buttons
+10. an open comic magazine showing a page of colourful comic panels with tiny cartoon figures, bright pop-art colours, no words
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO logos, no frame lines between cells, pure white background everywhere. No icon is drawn in pure white: every item has a clearly coloured body.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

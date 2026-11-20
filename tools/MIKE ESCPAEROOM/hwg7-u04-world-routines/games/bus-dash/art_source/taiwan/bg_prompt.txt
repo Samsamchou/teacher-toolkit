@@ -1,0 +1,6 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A wide side-on panorama of an early-morning small-town street in Taiwan for a side-scrolling children's game background. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game.
+Layout, top to bottom: the top 45% is a soft sunrise sky (pink, peach and pale blue) with distant green hills and a low sun; the middle band (from 45% to 85% of the height) is a continuous row of street-side things seen flat from the side, spread evenly across the FULL width: a breakfast shop with a red-and-white striped awning and steamers, a low house with a tiled roof, a low brick wall with hibiscus bushes, parked scooters, palm trees, a betel-nut palm, a red mailbox, a small temple gate, potted plants; the bottom 15% is a plain light-pink tiled sidewalk and a grey kerb running straight across the full width.
+The left edge and the right edge of the picture must look alike (sky, low wall and bushes only at both edges) so the picture can be repeated side by side.
+NO road, NO people, NO vehicles on a road, NO text, NO letters, NO signs with writing.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

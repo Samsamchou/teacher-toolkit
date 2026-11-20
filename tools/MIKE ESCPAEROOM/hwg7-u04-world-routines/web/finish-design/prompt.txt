@@ -1,0 +1,34 @@
+Use your built-in image generation tool to create ONE image and save it as out.png in the current folder. Do not write any code.
+
+The image is a UI design mock-up: a single screenshot of a children's English-learning web page on an iPad, landscape, 16:10 wide format (1536 x 960 or similar wide landscape). Flat screenshot, no device frame, no hands.
+
+Style: copy the look of the attached website screenshot (ref_site.png): cream rounded panels (#fffbee) with soft shadows, turquoise sea world-map background with pale yellow-green continents, orange gradient pill buttons with white border, lilac outlines, dark purple text, playful rounded handwriting-like font similar to "Comic Relief". The traveller character must match the attached 3D figure (ref_hero_girl.png): a cute clay-toy 3D girl with a beige sun hat with pink ribbon, beige safari vest, khaki shorts, pink backpack and pink sneakers.
+
+Layout, left to right:
+
+1. TOP BAR (thin cream strip across the top): on the left the small text "World Routines Trip"; in the middle ten small filled red dots in a row; on the right a small white pill button "Music".
+
+2. BIG BANNER under the top bar, centered, with paper confetti around it: "You travelled around the world!"
+
+3. LEFT COLUMN (about one quarter of the width): the 3D girl traveller standing happily on a small green island with a tiny sign that reads "Taiwan", waving one hand and holding a red passport in the other. A small toy plane parked behind her.
+
+4. MIDDLE (about one third of the width): an open red passport seen from above, two cream pages, with ten round red ink stamps, five on each page, in two neat columns. Each stamp has a country name and a time, exactly these ten:
+Taiwan 6:45, Japan 12:15, USA 7:35, the UK 4:30, Spain 9:15, Egypt 6:35, Kenya 5:40, India 2:40, Singapore 9:45, Australia 7:15.
+Below the passport, a large gold line of text: "27 / 30" followed by a gold star.
+
+5. RIGHT COLUMN (about one third of the width): a cream card titled "My Day Around the World". Inside, ten short rows, each row = a small round turquoise speaker button, then the sentence. Exactly these ten sentences, in this order:
+I have breakfast at 6:45.
+I have lunch at 12:15.
+I go to school at 7:35.
+I do my homework at 4:30.
+I have dinner at 9:15.
+I have breakfast at 6:35.
+I get up at 5:40.
+I go home at 2:40.
+I go to bed at 9:45.
+I take a shower at 7:15.
+The time in each sentence is in red.
+
+6. BOTTOM, centered under the middle and right columns: two buttons side by side. A big orange pill button "My Certificate" and a white pill button "Back to the map".
+
+Rules: spell every English word exactly as written above; do not add any other words, numbers, names, logos or watermarks; no analog clock faces anywhere; keep all text large and readable; bright, friendly, uncluttered.

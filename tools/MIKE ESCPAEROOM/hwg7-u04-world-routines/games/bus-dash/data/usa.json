@@ -1,0 +1,123 @@
+{
+  "country": "usa",
+  "title": "Bus Dash",
+  "subtitle": "Catch the school bus in the USA!",
+  "howto_good": "Grab your things!",
+  "target_time": "7:35",
+  "scenery": "res://art/usa/scenery.png",
+  "bus": "res://art/usa/bus.png",
+  "player": {
+    "height": 176,
+    "default": "girl",
+    "meta": "res://art/taiwan/player_meta.json",
+    "poses": {
+      "girl": "res://art/taiwan/girl_",
+      "boy": "res://art/taiwan/boy_"
+    }
+  },
+  "good_items": [
+    {
+      "id": "backpack",
+      "art": "res://art/usa/backpack.png",
+      "points": 20
+    },
+    {
+      "id": "lunchbox",
+      "art": "res://art/usa/lunchbox.png",
+      "points": 15
+    },
+    {
+      "id": "apple",
+      "art": "res://art/usa/apple.png",
+      "points": 10
+    },
+    {
+      "id": "pencil_case",
+      "art": "res://art/usa/pencil_case.png",
+      "points": 10
+    },
+    {
+      "id": "book",
+      "art": "res://art/usa/book.png",
+      "points": 15
+    },
+    {
+      "id": "water_bottle",
+      "art": "res://art/usa/water_bottle.png",
+      "points": 10
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "puddle",
+      "art": "res://art/usa/puddle.png"
+    },
+    {
+      "id": "skateboard",
+      "art": "res://art/usa/skateboard.png"
+    },
+    {
+      "id": "trash_can",
+      "art": "res://art/usa/trash_can.png"
+    },
+    {
+      "id": "squirrel",
+      "art": "res://art/usa/squirrel.png"
+    }
+  ],
+  "review_times": [
+    "6:45",
+    "12:15"
+  ],
+  "clock_rounds": [
+    {
+      "time": "7:35",
+      "distractors": [
+        "7:25",
+        "8:35"
+      ]
+    },
+    {
+      "time": "8:15",
+      "distractors": [
+        "8:50",
+        "9:15"
+      ]
+    },
+    {
+      "time": "7:00",
+      "distractors": [
+        "7:30",
+        "11:00"
+      ]
+    },
+    {
+      "time": "3:30",
+      "distractors": [
+        "3:00",
+        "4:30"
+      ]
+    },
+    {
+      "time": "7:50",
+      "distractors": [
+        "7:15",
+        "8:50"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice run!",
+    "You caught the bus!"
+  ],
+  "fx": {
+    "dust": [
+      "res://art/taiwan/dust_1.png",
+      "res://art/taiwan/dust_2.png",
+      "res://art/taiwan/dust_3.png"
+    ],
+    "speed": "res://art/taiwan/speed.png"
+  }
+}

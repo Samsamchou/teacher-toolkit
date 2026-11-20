@@ -1,0 +1,35 @@
+; Engine configuration file.
+config_version=5
+
+[application]
+
+config/name="Bento Catch"
+config/description="World Routines Trip - catch the school lunch, listen and catch the right clock."
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(1, 0.96, 0.84, 1)
+boot_splash/show_image=false
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=0
+
+[gui]
+
+theme/custom_font="res://fonts/ComicRelief-Bold.ttf"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=false
+pointing/emulate_mouse_from_touch=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=false
+environment/defaults/default_clear_color=Color(1, 0.96, 0.84, 1)

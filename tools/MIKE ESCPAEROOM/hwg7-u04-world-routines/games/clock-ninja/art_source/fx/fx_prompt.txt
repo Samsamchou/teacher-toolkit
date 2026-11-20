@@ -1,0 +1,9 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 4 separate cartoon effect sprites on a PURE WHITE (#FFFFFF) background, in ONE horizontal row with WIDE empty white gaps (they never touch). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game.
+Left to right:
+1. a long thin curved "ninja sword slash" swoosh: a crescent-shaped streak of light that is thick in the middle and tapers to sharp points at both ends, bright golden-yellow core with sky-blue edges and a thin dark-blue outline, lying almost horizontally (it is the widest sprite, about twice as wide as the others)
+2. a big four-pointed sparkle star, bright yellow with an orange centre and a dark outline
+3. a small cluster of three little sparkle stars of different sizes, yellow and light blue, with dark outlines
+4. a round cartoon impact burst (a spiky starburst shape), orange-yellow in the middle with a red-orange edge and a dark outline
+Strict rules: NO text, NO letters, NO characters, no shadows, pure white background everywhere. Nothing is drawn in pure white: every sprite is clearly coloured.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

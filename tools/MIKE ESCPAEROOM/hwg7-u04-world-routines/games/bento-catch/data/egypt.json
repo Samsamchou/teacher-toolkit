@@ -1,0 +1,121 @@
+{
+  "country": "egypt",
+  "title": "Breakfast Catch",
+  "subtitle": "Breakfast time in Egypt!",
+  "howto_good": "Catch breakfast!",
+  "target_time": "6:35",
+  "background": "res://art/egypt/bg.png",
+  "floor_y": 0.9,
+  "player": {
+    "poses": {
+      "idle": "res://art/egypt/player_idle.png",
+      "run": "res://art/egypt/player_run.png",
+      "happy": "res://art/egypt/player_happy.png",
+      "sad": "res://art/egypt/player_sad.png"
+    },
+    "meta": "res://art/egypt/player_meta.json",
+    "run_faces_right": true,
+    "height": 300,
+    "catch_half_width": 62
+  },
+  "good_items": [
+    {
+      "id": "ful_medames",
+      "art": "res://art/egypt/ful_medames.png",
+      "points": 15
+    },
+    {
+      "id": "taameya",
+      "art": "res://art/egypt/taameya.png",
+      "points": 15
+    },
+    {
+      "id": "baladi_bread",
+      "art": "res://art/egypt/baladi_bread.png",
+      "points": 10
+    },
+    {
+      "id": "boiled_egg",
+      "art": "res://art/egypt/boiled_egg.png",
+      "points": 10
+    },
+    {
+      "id": "white_cheese",
+      "art": "res://art/egypt/white_cheese.png",
+      "points": 10
+    },
+    {
+      "id": "tea",
+      "art": "res://art/egypt/tea.png",
+      "points": 20
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "slipper",
+      "art": "res://art/egypt/slipper.png"
+    },
+    {
+      "id": "toy_car",
+      "art": "res://art/egypt/toy_car.png"
+    },
+    {
+      "id": "rubber_duck",
+      "art": "res://art/egypt/rubber_duck.png"
+    },
+    {
+      "id": "yarn_ball",
+      "art": "res://art/egypt/yarn_ball.png"
+    }
+  ],
+  "clock_rounds": [
+    {
+      "time": "6:35",
+      "distractors": [
+        "6:05",
+        "7:05"
+      ]
+    },
+    {
+      "time": "7:10",
+      "distractors": [
+        "7:40",
+        "8:10"
+      ]
+    },
+    {
+      "time": "6:20",
+      "distractors": [
+        "6:50",
+        "7:20"
+      ]
+    },
+    {
+      "time": "8:25",
+      "distractors": [
+        "8:55",
+        "9:25"
+      ]
+    },
+    {
+      "time": "5:50",
+      "distractors": [
+        "5:20",
+        "6:50"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice work!",
+    "Yummy! Great job!"
+  ],
+  "review_times": [
+    "6:45",
+    "12:15",
+    "7:35",
+    "4:30",
+    "9:15"
+  ]
+}

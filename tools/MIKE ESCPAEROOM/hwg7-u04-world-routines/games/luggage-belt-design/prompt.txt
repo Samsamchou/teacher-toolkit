@@ -1,0 +1,19 @@
+Use your built-in image generation tool to create ONE image and save it as out.png in the current folder. Do not write any code.
+
+The image is a 16:9 (1536x864 or similar) mock-up screenshot of a children's tablet game called "Luggage Belt", bright friendly 2D cartoon style with clean dark outlines and soft flat colours, for 11-year-old pupils. It must look like a real game screenshot, simple and uncluttered.
+
+Scene: the baggage claim hall of a modern Singapore airport at night. Background wall: tall windows showing a dark blue night sky with a moon and stars, and an indoor tropical garden with palm plants and a round waterfall. No signs with writing in the background.
+
+Middle of the picture: ONE wide grey airport baggage conveyor belt running horizontally across the whole width of the picture, seen slightly from above, with small arrows on its edge pointing to the right, and black rubber flap curtains at the far left where bags come out.
+
+On the belt, evenly spaced in a row, THREE big suitcases standing upright, facing the viewer: a red one, a blue one and a yellow one. Each suitcase has a large round white analog clock face on its front, with numbers 1 to 12, a short thick hour hand and a long thin minute hand. The clocks show three different times: the red suitcase shows 9:15, the blue suitcase shows 9:45, the yellow suitcase shows 10:45. The clock faces must be big and easy to read.
+
+Below the belt, on the shiny floor in the lower centre: a silver airport luggage trolley, empty, with a glowing yellow dashed outline on it in the shape of a suitcase (a drop target). Next to the trolley on its left stands the girl from the attached reference image ref_girl.png (same hat with pink bow, same hair, same safari vest, shorts and pink backpack, cute toy-like figure), full body, feet on the floor, one hand on the trolley handle, looking up at the suitcases and thinking.
+
+A white cartoon hand pointer is touching the blue suitcase, and a curved yellow dashed arrow goes from the blue suitcase down to the trolley, showing "drag this suitcase onto the trolley".
+
+In the lower right corner on the floor: a small open suitcase lying flat that already holds bedtime things: folded blue pajamas, a teddy bear, a toothbrush and a story book.
+
+HUD: top-left a rounded white panel with a dark navy outline, the small word SCORE and below it the big number 430. Top-right a rounded white panel with a dark navy outline containing three red hearts and under them a green timer bar with the number 38; just under that panel a row of four small round clock icons, the first one coloured green with a tick, the other three grey. Top-centre a rounded white banner with a dark navy outline, a round blue speaker button on its left end, and the text "Listen! Which suitcase?".
+
+All text must be in English only, spelled exactly as given, in a rounded comic font like Comic Relief. The only words in the picture are: SCORE, 430, 38, "Listen! Which suitcase?" and the clock numbers. No other text, no time written as digits anywhere, no watermark, no logos.

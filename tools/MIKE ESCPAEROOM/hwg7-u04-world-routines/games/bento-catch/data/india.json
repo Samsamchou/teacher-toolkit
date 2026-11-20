@@ -1,0 +1,123 @@
+{
+  "country": "india",
+  "title": "Home Time Catch",
+  "subtitle": "Home time in India!",
+  "howto_good": "Pack to go home!",
+  "target_time": "2:40",
+  "background": "res://art/india/bg.png",
+  "floor_y": 0.9,
+  "player": {
+    "poses": {
+      "idle": "res://art/india/player_idle.png",
+      "run": "res://art/india/player_run.png",
+      "happy": "res://art/india/player_happy.png",
+      "sad": "res://art/india/player_sad.png"
+    },
+    "meta": "res://art/india/player_meta.json",
+    "run_faces_right": true,
+    "height": 300,
+    "catch_half_width": 62
+  },
+  "good_items": [
+    {
+      "id": "tiffin_box",
+      "art": "res://art/india/tiffin_box.png",
+      "points": 15
+    },
+    {
+      "id": "school_bag",
+      "art": "res://art/india/school_bag.png",
+      "points": 15
+    },
+    {
+      "id": "water_bottle",
+      "art": "res://art/india/water_bottle.png",
+      "points": 10
+    },
+    {
+      "id": "notebook",
+      "art": "res://art/india/notebook.png",
+      "points": 10
+    },
+    {
+      "id": "pencil_box",
+      "art": "res://art/india/pencil_box.png",
+      "points": 10
+    },
+    {
+      "id": "mango",
+      "art": "res://art/india/mango.png",
+      "points": 20
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "kite",
+      "art": "res://art/india/kite.png"
+    },
+    {
+      "id": "spinning_top",
+      "art": "res://art/india/spinning_top.png"
+    },
+    {
+      "id": "cricket_ball",
+      "art": "res://art/india/cricket_ball.png"
+    },
+    {
+      "id": "yoyo",
+      "art": "res://art/india/yoyo.png"
+    }
+  ],
+  "clock_rounds": [
+    {
+      "time": "2:40",
+      "distractors": [
+        "2:10",
+        "3:40"
+      ]
+    },
+    {
+      "time": "3:10",
+      "distractors": [
+        "3:40",
+        "4:10"
+      ]
+    },
+    {
+      "time": "1:45",
+      "distractors": [
+        "1:15",
+        "2:45"
+      ]
+    },
+    {
+      "time": "2:25",
+      "distractors": [
+        "2:55",
+        "3:25"
+      ]
+    },
+    {
+      "time": "3:55",
+      "distractors": [
+        "3:25",
+        "4:55"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice work!",
+    "All packed! Great job!"
+  ],
+  "review_times": [
+    "6:45",
+    "12:15",
+    "7:35",
+    "4:30",
+    "9:15",
+    "6:35",
+    "5:40"
+  ]
+}

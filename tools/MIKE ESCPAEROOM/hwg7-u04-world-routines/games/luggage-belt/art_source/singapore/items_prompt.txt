@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size and chunky, seen from the front or a slight 3/4 view.
+Row 1 (bedtime things a child packs to go to bed), left to right:
+1. a pair of light-blue pyjamas with white buttons and little stars, neatly folded
+2. a cute brown teddy bear with a red bow tie, sitting
+3. a toothbrush with a blue handle and a blob of white and mint toothpaste on the bristles
+4. a closed children's story book with a dark-blue cover showing a yellow moon and stars (no words)
+5. a fluffy white pillow with a light-blue edge
+Row 2, left to right:
+6. a small cute night light lamp shaped like a glowing yellow crescent moon on a little round base
+7. a spiky green-yellow durian fruit with a few wavy green smell lines above it
+8. an open red umbrella dripping big blue water drops
+9. a pink stick of chewing gum half out of its plain pink wrapper with a stretchy pink gum blob
+10. a loud red air horn with big yellow sound burst lines around it
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO logos, NO clocks, no frame lines between cells, pure white background everywhere. No icon is drawn in pure white only: the pillow must have a light-blue edge and soft grey shading so it stands out from the background.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

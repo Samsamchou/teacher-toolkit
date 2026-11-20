@@ -1,0 +1,10 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A 4-panel reference sheet (2 rows x 2 columns, thin white gutters, a small number 1-4 in the top-left corner of each panel and NO other text) showing the CORRECT way to eat with chopsticks, drawn in the same soft tabletop-miniature 3D toy style as the attached image, with the SAME girl (brown ponytail, yellow T-shirt with green sleeves and collar, round red-and-blue badge) sitting at the same small steel table with a plate of rolled Taiwanese egg pancake (dan bing) pieces and a cup of soy milk with a straw.
+Camera in every panel: three-quarter view from the girl's front-right, close enough to see her face, her right hand and the plate clearly.
+Correct chopstick grip in every panel (very important): two chopsticks held parallel in the RIGHT hand, about two thirds of the way up; the LOWER chopstick rests still in the web between thumb and index finger and is supported by the tip of the ring finger; the UPPER chopstick is held like a pencil between the thumb pad, index finger and middle finger; the ring finger and little finger are curled under; the chopsticks never cross.
+Panel 1: tips pointing down into the plate, slightly open, about to pick up one piece of dan bing.
+Panel 2: the upper chopstick has closed onto the lower one, a single round slice of rolled dan bing is pinched between the two tips, lifted just above the plate.
+Panel 3: the forearm is raised to chest height and the wrist turned so the chopsticks are almost horizontal, pointing at her mouth from the front; the slice is right in front of her lips, her mouth slightly open; the chopsticks do not touch or cover her nose or eyes.
+Panel 4: she is chewing with closed smiling mouth, the empty chopsticks rest in her right hand near the plate, her left hand holds the soy milk cup with fingers wrapped around it.
+Her left hand rests flat on the table beside the plate in panels 1-3. Hands have five fingers, natural size.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

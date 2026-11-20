@@ -1,0 +1,4 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+One single object on a PURE WHITE (#FFFFFF) background: a cute royal-blue school bag (a soft fabric satchel) standing upright, seen from the front and a little from above, with its top WIDE OPEN so the dark-blue inside of the bag is clearly visible, the open zip running along the top edge, a short carry handle, and its flat bottom resting as if on a desk edge. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. The bag is empty. It fills about two thirds of the picture height, centred.
+Strict rules: NO text, NO letters, NO numbers, NO logos, no badges with writing, no ground shadow, no desk, no background, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

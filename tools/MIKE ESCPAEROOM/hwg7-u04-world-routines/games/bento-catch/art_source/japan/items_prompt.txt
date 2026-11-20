@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024).
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 top view.
+Row 1 (Japanese school lunch foods), left to right:
+1. a bowl of white rice (blue-and-white bowl)
+2. a bowl of miso soup (dark red lacquer bowl with tofu cubes and green onion)
+3. a grilled fish (salmon slice / whole small grilled fish) on a small rectangular plate
+4. a small school milk carton (white and blue, plain, with a simple cow spot pattern, NO text)
+5. tamagoyaki (yellow rolled omelette slices) on a small plate
+Row 2, left to right:
+6. a plate of Japanese curry rice (brown curry with carrot and potato next to white rice)
+7. a red-and-white sneaker shoe
+8. a pink-and-blue rubber eraser
+9. a classic black-and-white soccer ball
+10. a single striped sock (slightly smelly green wavy lines above it are OK but keep them close)
+Strict rules: NO text, NO letters, NO numbers, NO labels, no frame lines between cells, pure white background everywhere.
+Save the PNG as items.png in the current directory. Reply with the saved file path only.

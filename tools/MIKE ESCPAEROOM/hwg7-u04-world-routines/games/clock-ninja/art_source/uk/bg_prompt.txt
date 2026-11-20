@@ -1,0 +1,7 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A game background for a children's tablet game: a cosy British child's bedroom in the late afternoon, seen straight on from the front, flat and front-facing. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game.
+Layout: the top 15% is plain ceiling and wall (it may be cropped). In the middle of the back wall is one big window showing red-brick terraced houses with chimneys, a red double-decker bus on the street and a light rainy grey-blue sky. Blue curtains at both sides of the window. A small Union Jack bunting hangs high on the wall at the upper left. A tall bookshelf with coloured books stands at the far LEFT edge; a red school blazer hangs on a hook at the far RIGHT edge. Soft lilac wall colour.
+The bottom 20% of the picture is the top surface and front edge of a long wooden homework desk running across the FULL width; the desk top is completely EMPTY (nothing on it).
+The big middle area of the picture (from 20% to 80% of the width, and from 15% to 78% of the height) must stay calm and simple: only the plain wall and the window, no objects in front of it, so game items can fly over it.
+Strict rules: NO wall clock, NO clock of any kind, NO clock tower, NO Big Ben, NO watch, NO people, NO animals, NO text, NO letters, NO numbers, NO pens, pencils, books or stationery on the desk.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

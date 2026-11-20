@@ -1,0 +1,9 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 4 separate cartoon effect sprites on a PURE WHITE (#FFFFFF) background, in ONE horizontal row with WIDE empty white gaps (they never touch). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game.
+Left to right:
+1. a small round puff of running dust, light sandy beige with a darker tan outline
+2. a medium puff of running dust made of three bumps, light sandy beige with a darker tan outline
+3. a large puff of running dust that is breaking apart into little bits, light sandy beige with a darker tan outline
+4. a bundle of four horizontal cartoon speed lines of different lengths, pale sky blue with a darker blue outline, tapering to the left
+Strict rules: NO text, NO letters, NO characters, no shadows, pure white background everywhere. The puffs must NOT be white.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

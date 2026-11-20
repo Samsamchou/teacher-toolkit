@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024).
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 top view.
+Row 1 (Egyptian breakfast foods), left to right:
+1. ful medames: a small round clay bowl of brown mashed fava beans with a swirl of olive oil, a little chopped tomato and parsley on top
+2. ta'ameya (Egyptian falafel): a small plate with four round golden-brown fried patties, one broken open showing a bright green inside, sesame seeds on top
+3. one round Egyptian baladi bread: a puffy, round, light-brown whole-wheat flatbread with a little bran dusting
+4. a boiled egg: one white peeled boiled egg in a small blue egg cup, plus one half egg showing the yellow yolk next to it
+5. white cheese: a small plate with a few soft white cheese cubes and two slices of red tomato
+Row 2, left to right:
+6. a clear glass of hot black tea with a fresh green mint sprig, on a small saucer (gentle steam curl)
+7. a single blue house slipper (flip-flop style sandal)
+8. a small red toy car
+9. a yellow rubber duck bath toy
+10. a ball of purple knitting yarn with a loose strand
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO Arabic writing, no frame lines between cells, pure white background everywhere.
+Save the PNG as items.png in the current directory. Reply with the saved file path only.

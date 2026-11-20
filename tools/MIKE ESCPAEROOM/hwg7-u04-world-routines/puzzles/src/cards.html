@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>Puzzle cards</title>
+<style>
+@font-face { font-family: "CR"; src: local("Comic Relief Bold"), local("ComicRelief-Bold"); font-weight: 700; }
+@font-face { font-family: "CR"; src: local("Comic Relief"), local("ComicRelief-Regular"); font-weight: 400; }
+:root { --ink:#2b2140; --teal:#1f9e8f; --purple:#6b4f9a; --pink:#ef8fb0; --gold:#f4b73a; --red:#e2483d; }
+html,body { margin:0; padding:0; }
+body { width:1600px; height:900px; overflow:hidden; font-family:"CR","Microsoft JhengHei","微軟正黑體",sans-serif; color:var(--ink); background:#bfe6ea; }
+#card { position:relative; width:1600px; height:900px; background:url("../assets/card_bg.png") center/cover no-repeat; }
+#sheet { position:absolute; left:96px; top:66px; width:1408px; height:756px; }
+#ribbon { position:absolute; left:50%; top:16px; z-index:2; transform:translateX(-50%); background:linear-gradient(#ffcf5c,#f39c34); border:5px solid #fff; border-radius:999px; padding:10px 46px 12px; font-size:44px; font-weight:700; white-space:nowrap; box-shadow:0 6px 0 #c76a1c; color:#4a2400; }
+#ribbon small { font-size:30px; margin-left:12px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; }
+#stage { position:absolute; right:200px; top:26px; z-index:3; transform:rotate(6deg); padding:8px 22px; border-radius:16px; font-size:34px; font-weight:700; color:#fff; border:4px solid #fff; }
+#inst { position:absolute; left:0; right:0; top:58px; text-align:center; font-size:36px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; }
+#inst .en { display:block; font-family:"CR"; font-size:28px; font-weight:400; color:#5b4f73; margin-top:2px; }
+#body { position:absolute; left:20px; right:20px; top:158px; bottom:212px; display:flex; align-items:center; justify-content:center; }
+#answer { position:absolute; left:0; right:0; bottom:112px; display:flex; justify-content:center; align-items:center; gap:14px; font-size:30px; font-weight:700; }
+.box { width:78px; height:86px; border:5px dashed #8b7bb0; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:60px; color:var(--red); }
+.colon { font-size:64px; color:#8b7bb0; }
+#hint { position:absolute; left:330px; right:330px; bottom:84px; z-index:3; padding:6px 22px !important; background:#fff3c4; border:4px solid var(--gold); border-radius:22px; padding:10px 22px; font-size:28px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; text-align:center; }
+#hint .en { font-family:"CR"; font-weight:400; font-size:24px; display:block; color:#6a5a2a; }
+.item { display:flex; flex-direction:column; align-items:center; margin:0 34px; position:relative; }
+.item img { width:250px; height:250px; object-fit:contain; filter:drop-shadow(0 6px 4px rgba(0,0,0,.18)); }
+.item .lab { margin-top:8px; font-size:34px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; background:#fff; border:3px solid #c9b8ea; border-radius:14px; padding:2px 16px; }
+.item .ghost { position:absolute; top:44px; font-size:160px; font-weight:700; color:rgba(226,72,61,.80); -webkit-text-stroke:4px #fff; font-family:"Arial Black",sans-serif; }
+.frame { background:#fff; border:5px solid #c9b8ea; border-radius:20px; margin:0 14px; }
+.keytbl { display:grid; grid-template-columns:repeat(2,auto); gap:14px 26px; background:#fff; border:4px solid #c9b8ea; border-radius:20px; padding:12px 18px; margin-left:30px; }
+.keytbl .row { display:flex; align-items:center; gap:8px; font-size:30px; font-weight:700; }
+.big-ans { display:flex; align-items:center; gap:60px; }
+.say { font-size:52px; font-weight:700; color:var(--purple); text-align:center; margin-top:16px; }
+.seq { font-family:"Arial Black",sans-serif; font-size:29px; letter-spacing:2px; white-space:nowrap; text-align:center; margin-bottom:10px; color:#2b2140; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div id="ribbon"></div>
+  <div id="stage"></div>
+  <div id="hint" style="display:none"></div>
+  <div id="sheet">
+    <div id="inst"></div>
+    <div id="body"></div>
+    <div id="answer"></div>
+  </div>
+</div>
+<script>
+const P = new URLSearchParams(location.search);
+const TYPE = P.get('type'), ANS = P.get('ans'), STAGE = P.get('stage') || 'puzzle';
+const D = ANS.split('');
+const NS = 'http://www.w3.org/2000/svg';
+const svg = (w,h,inner,extra='') => `<svg xmlns="${NS}" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" ${extra}>${inner}</svg>`;
+
+// ---------- clocks ----------
+function analog(hh, mm, size=300){
+  const h = hh % 12, c = size/2, r = size/2-12;
+  let t = '';
+  for (let i=1;i<=12;i++){ const a=(i/12)*2*Math.PI; t += `<text x="${c+Math.sin(a)*(r-36)}" y="${c-Math.cos(a)*(r-36)+13}" font-size="36" text-anchor="middle" font-family="CR" font-weight="700" fill="#2b2140">${i}</text>`; }
+  for (let i=0;i<60;i++){ const a=(i/60)*2*Math.PI, l=i%5?8:16; t += `<line x1="${c+Math.sin(a)*(r-2)}" y1="${c-Math.cos(a)*(r-2)}" x2="${c+Math.sin(a)*(r-2-l)}" y2="${c-Math.cos(a)*(r-2-l)}" stroke="#2b2140" stroke-width="${i%5?2:5}"/>`; }
+  const ma = mm/60*2*Math.PI, ha = (h+mm/60)/12*2*Math.PI;
+  t += `<line x1="${c}" y1="${c}" x2="${c+Math.sin(ha)*r*.5}" y2="${c-Math.cos(ha)*r*.5}" stroke="#e2483d" stroke-width="14" stroke-linecap="round"/>`;
+  t += `<line x1="${c}" y1="${c}" x2="${c+Math.sin(ma)*r*.78}" y2="${c-Math.cos(ma)*r*.78}" stroke="#1f9e8f" stroke-width="9" stroke-linecap="round"/>`;
+  t += `<circle cx="${c}" cy="${c}" r="12" fill="#2b2140"/>`;
+  return svg(size,size,`<circle cx="${c}" cy="${c}" r="${r}" fill="#fff" stroke="#f39c34" stroke-width="14"/>${t}`);
+}
+function digital(str){
+  return `<div style="background:#1d1730;border:8px solid #f39c34;border-radius:30px;padding:14px 34px;box-shadow:0 8px 0 #c76a1c">`+
+    `<div style="display:flex;align-items:center;gap:26px">${segDigit(str[0],'#ff5a6e',1.15)}${segDigit(str[1],'#ff5a6e',1.15)}`+
+    `<div style="font-size:90px;color:#ff5a6e;font-weight:700;margin:0 6px">:</div>${segDigit(str[2],'#ff5a6e',1.15)}${segDigit(str[3],'#ff5a6e',1.15)}</div></div>`;
+}
+const WORDS = ['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+const MINW = m => { const ones=['','one','two','three','four','five','six','seven','eight','nine'], teens=['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'], tens=['','','twenty','thirty','forty','fifty'];
+  if (m===0) return "o'clock"; if (m<10) return 'oh-'+ones[m]; if (m<20) return teens[m-10]; return tens[Math.floor(m/10)]+(m%10?'-'+ones[m%10]:''); };
+function timeWords(hh,mm){ const h = hh%12===0?12:hh%12; return mm===0 ? `${WORDS[h]} o'clock` : `${WORDS[h]} ${MINW(mm)}`; }
+
+// ---------- seven segment ----------
+// segments: a top, b upper-right, c lower-right, d bottom, e lower-left, f upper-left, g middle
+const SEGS = {'0':'abcdef','1':'bc','2':'abged','3':'abgcd','4':'fgbc','5':'afgcd','6':'afgedc','7':'abc','8':'abcdefg','9':'abcdfg'};
+function segDigit(d, color='#2b2140', k=1){
+  const w=70*k,h=62*k,t=13*k,pad=8*k; const W=w+2*pad, H=2*h+2*pad;
+  const on = SEGS[d]||''; const R=[];
+  const hz=(x,y)=>`<rect x="${x+t*.6}" y="${y-t/2}" width="${w-t*1.2}" height="${t}" rx="${t/2}" fill="${color}"/>`;
+  const vt=(x,y)=>`<rect x="${x-t/2}" y="${y+t*.6}" width="${t}" height="${h-t*1.2}" rx="${t/2}" fill="${color}"/>`;
+  if (on.includes('a')) R.push(hz(pad,pad)); if (on.includes('g')) R.push(hz(pad,pad+h)); if (on.includes('d')) R.push(hz(pad,pad+2*h));
+  if (on.includes('f')) R.push(vt(pad,pad)); if (on.includes('b')) R.push(vt(pad+w,pad));
+  if (on.includes('e')) R.push(vt(pad,pad+h)); if (on.includes('c')) R.push(vt(pad+w,pad+h));
+  return svg(W,H,R.join(''));
+}
+// half-cell glyph (T,L,R,B) drawn as segments, for the key table
+function halfGlyph(sides, color='#2b2140'){
+  const w=44,h=40,t=9,p=6; let r='';
+  const hz=y=>`<rect x="${p+t*.6}" y="${y-t/2}" width="${w-t*1.2}" height="${t}" rx="${t/2}" fill="${color}"/>`;
+  const vt=x=>`<rect x="${x-t/2}" y="${p+t*.6}" width="${t}" height="${h-t*1.2}" rx="${t/2}" fill="${color}"/>`;
+  if (sides.includes('T')) r+=hz(p); if (sides.includes('B')) r+=hz(p+h); if (sides.includes('L')) r+=vt(p); if (sides.includes('R')) r+=vt(p+w);
+  return svg(w+2*p,h+2*p,r);
+}
+// coded shapes (book original: ◣=L, trapezoid=∩, circle=□, bar=one line; others are the book's rotations)
+const SHAPES = {
+  'L':  {sides:'LB', poly:[[0,0],[0,1],[1,1]], col:'#1f9e8f'},
+  'J':  {sides:'RB', poly:[[1,0],[1,1],[0,1]], col:'#1f9e8f'},
+  '7':  {sides:'TR', poly:[[0,0],[1,0],[1,1]], col:'#1f9e8f'},
+  'G':  {sides:'TL', poly:[[0,0],[1,0],[0,1]], col:'#1f9e8f'},
+  'n':  {sides:'TLR', poly:[[.45,0],[1,0],[1,1],[0,1]], col:'#6b4f9a'},
+  'u':  {sides:'LRB', poly:[[0,0],[1,0],[.55,1],[0,1]], col:'#6b4f9a'},
+  'c':  {sides:'TLB', poly:[[0,.45],[1,0],[1,1],[0,1]], col:'#6b4f9a'},
+  'k':  {sides:'TRB', poly:[[0,0],[1,.45],[1,1],[0,1]], col:'#6b4f9a'},
+  'o':  {sides:'TLRB', circle:true, col:'#e7b8c0'},
+  'iR': {sides:'R', bar:'R', col:'#6b4f9a'},
+  'iL': {sides:'L', bar:'L', col:'#6b4f9a'},
+};
+function shapeSVG(key, s=110){
+  const S = SHAPES[key]; if (!S) return svg(s,s,'');
+  let inner='';
+  if (S.circle) inner = `<circle cx="${s/2}" cy="${s/2}" r="${s*.42}" fill="${S.col}"/>`;
+  else if (S.bar) { const x = S.bar==='R'? s*.68 : s*.08; inner = `<rect x="${x}" y="${s*.04}" width="${s*.24}" height="${s*.92}" fill="${S.col}"/>`; }
+  else inner = `<polygon points="${S.poly.map(([x,y])=>`${x*s*.92+s*.04},${y*s*.92+s*.04}`).join(' ')}" fill="${S.col}"/>`;
+  return svg(s,s,inner);
+}
+// each digit = [upper shape, lower shape]
+const SEG_PUZ = {'0':['n','u'],'1':['iR','iR'],'2':['k','L'],'3':['k','J'],'4':['u','iR'],'5':['c','J'],'6':['G','o'],'7':['7','iR'],'8':['n','o'],'9':['o','J']};
+
+// ---------- utopia number cipher (book original) ----------
+function utopia(d, size=120, col='#2b2140'){
+  const s=120, c=s/2, sw=7; const st=`stroke="${col}" stroke-width="${sw}" fill="none" stroke-linecap="round"`;
+  const g = {
+    '1':`<line x1="${c}" y1="12" x2="${c}" y2="${s-12}" ${st}/>`,
+    '2':`<polyline points="22,${s-12} ${c},12 ${s-22},${s-12}" ${st}/>`,
+    '3':`<line x1="22" y1="14" x2="${s-22}" y2="14" ${st}/><line x1="${c}" y1="14" x2="${c}" y2="${s-12}" ${st}/>`,
+    '4':`<line x1="22" y1="14" x2="${s-22}" y2="${s-14}" ${st}/><line x1="${s-22}" y1="14" x2="22" y2="${s-14}" ${st}/>`,
+    '5':`<circle cx="${c}" cy="${c+14}" r="18" ${st}/>`,
+    '6':`<circle cx="${c}" cy="40" r="26" ${st}/><line x1="${c}" y1="66" x2="${c}" y2="${s-10}" ${st}/>`,
+    '7':`<circle cx="${c}" cy="38" r="24" ${st}/><polyline points="24,${s-10} ${c},62 ${s-24},${s-10}" ${st}/>`,
+    '8':`<circle cx="${c}" cy="40" r="24" ${st}/><line x1="${c}" y1="64" x2="${c}" y2="${s-10}" ${st}/><line x1="12" y1="40" x2="${c-24}" y2="40" ${st}/><line x1="${c+24}" y1="40" x2="${s-12}" y2="40" ${st}/>`,
+    '9':`<circle cx="${c}" cy="${c}" r="28" ${st}/><line x1="${c-44}" y1="${c-44}" x2="${c-20}" y2="${c-20}" ${st}/><line x1="${c+44}" y1="${c-44}" x2="${c+20}" y2="${c-20}" ${st}/><line x1="${c-44}" y1="${c+44}" x2="${c-20}" y2="${c+20}" ${st}/><line x1="${c+44}" y1="${c+44}" x2="${c+20}" y2="${c+20}" ${st}/>`,
+    '0':`<circle cx="${c}" cy="${c}" r="${s/2-12}" ${st}/>`,
+  };
+  return `<svg xmlns="${NS}" width="${size}" height="${size}" viewBox="0 0 120 120">${g[d]}</svg>`;
+}
+
+// ---------- keypad ----------
+const KP = {'0':['123698741'],'1':['258'],'2':['123654789'],'3':['1236987','456'],'4':['1456','369'],'5':['321456987'],'6':['3214789654'],'7':['12369'],'8':['123698741','456'],'9':['6541236987']};
+function keypad(strokes, s=230){
+  const cell=s/3, pos = n => { n=+n-1; return [ (n%3)*cell+cell/2, Math.floor(n/3)*cell+cell/2 ]; };
+  let t = `<rect x="4" y="4" width="${s-8}" height="${s-8}" rx="26" fill="#cfeaf7" stroke="#7fb6d6" stroke-width="5"/>`;
+  for (let n=1;n<=9;n++){ const [x,y]=pos(n); t+=`<text x="${x}" y="${y+20}" font-size="58" text-anchor="middle" font-family="Arial Black" fill="#2c5aa0">${n}</text>`; }
+  (strokes||[]).forEach(sq => { const pts = sq.split('').map(pos).map(p=>p.join(',')).join(' ');
+    t += `<polyline points="${pts}" fill="none" stroke="#e2483d" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`; });
+  return svg(s,s,t);
+}
+
+// ---------- mirror ----------
+const OV = {'0':30,'1':34,'2':26,'3':26,'4':30,'5':26,'6':28,'7':24,'8':28,'9':28};
+function mirror(d, mask=false){
+  const W=224,H=210, ax=W/2;
+  let t = `<g font-family="Arial Black" font-size="150" fill="#1e8fd6">`+
+          `<text x="${ax-OV[d]}" y="160" text-anchor="start">${d}</text>`+
+          `<text x="${ax-OV[d]}" y="160" text-anchor="start" transform="translate(${2*ax},0) scale(-1,1)">${d}</text></g>`;
+  if (mask) t += `<rect x="0" y="0" width="${ax}" height="${H}" fill="#3b2f55" opacity=".92"/><line x1="${ax}" y1="0" x2="${ax}" y2="${H}" stroke="#f4b73a" stroke-width="5" stroke-dasharray="12 8"/>`;
+  return `<div class="frame" style="overflow:hidden;zoom:1.35">${svg(W,H,t)}</div>`;
+}
+
+// ---------- icon sets (book original) ----------
+const SHAPE_ICON = {'0':['donut','甜甜圈'],'1':['pencil','鉛筆'],'2':['swan','天鵝'],'3':['ear','耳朵'],'4':['flag','旗子'],'5':['hook','鉤子'],'6':['whistle','哨子'],'7':['scythe','鐮刀'],'8':['gourd','葫蘆'],'9':['ladle','湯勺']};
+const HOMO_ICON  = {'0':['bell','鈴鐺','鈴→零'],'1':['clothes','衣服','衣→一'],'2':['crocodile','鱷魚','鱷→二'],'3':['mountain','高山','山→三'],'4':['persimmon','柿子','柿→四'],'5':['weapons','武器','武→五'],'6':['skate','溜冰','溜→六'],'7':['paint','油漆','漆→七'],'8':['trumpet','喇叭','叭→八'],'9':['bottle','酒瓶','酒→九']};
+
+// ---------- card config ----------
+const CFG = {
+  mirror:  {n:1, title:'Mirror Code', zh:'鏡像密碼', inst:'每一格都是「數字＋它的鏡子倒影」黏在一起，找出 4 個數字！', en:'Each box is a number joined with its mirror image.',
+            h1:'每格正中間有一條「鏡子線」，只看右半邊就好。', h1en:'Look at the right half only.', h2:'把左半邊遮起來了，現在看得出來嗎？', h2en:'The left half is covered. Can you read it now?'},
+  shape:   {n:2, title:'Shape Code', zh:'物品形狀密碼', inst:'每個物品的外形，長得像一個數字！', en:'Each object looks like a number.',
+            h1:'用手指沿著物品的外框描一描，像哪個數字？', h1en:'Trace the outline with your finger.', h2:'前兩個物品已經幫你描出數字了！', h2en:'The first two are done for you!'},
+  homo:    {n:3, title:'Sound Code', zh:'諧音密碼', inst:'用中文唸出物品的名稱，第一個字聽起來像哪個數字？', en:'Say each object in Chinese. Which number does it sound like?',
+            h1:'物品的中文名稱出現了，唸唸看！', h1en:'Read the Chinese names aloud.', h2:'前兩個的諧音告訴你了，其他的你來！', h2en:'Sound key: the first two are given.'},
+  seg:     {n:4, title:'Clock Code', zh:'電子鐘密碼', inst:'每個形狀代表電子鐘的幾條線，上下兩個形狀拼成一個數字！', en:'Each shape = some clock lines. Stack two shapes to make one number.',
+            h1:'看右邊對照表，把每個形狀換成線條，畫在紙上。', h1en:'Use the key. Change each shape into lines.', h2:'前兩個數字已經拼好了！', h2en:'The first two numbers are done.'},
+  utopia:  {n:5, title:'Utopia Code', zh:'烏托邦密碼', inst:'照著密碼表，把每個符號換成數字！', en:'Use the code table. Change each symbol into a number.',
+            h1:'注意：大圓圈和小圓圈不是同一個數字喔！', h1en:'Big circle and small circle are different!', h2:'前兩個符號已經換好了！', h2en:'The first two are done.'},
+  keypad:  {n:6, title:'Phone Pad Code', zh:'手機密碼', inst:'照著數字順序在九宮格上連線，線條畫出來的形狀就是密碼！', en:'Connect the numbers in order. The lines make a number.',
+            h1:'「／」代表提起筆，換一個地方重新畫。', h1en:'"/" means lift your pen and start again.', h2:'前兩個九宮格已經畫好了！', h2en:'The first two are drawn for you.'},
+};
+const C = CFG[TYPE];
+const HH = +(ANS.slice(0,2)), MM = +(ANS.slice(2));
+document.getElementById('ribbon').innerHTML = `Puzzle ${C.n} · ${C.title}<small>${C.zh}</small>`;
+const ST = {puzzle:['Puzzle','#7a5bc7'], hint1:['Hint 1','#f39c34'], hint2:['Hint 2','#e2483d'], answer:['Answer','#1f9e8f']}[STAGE];
+const stEl = document.getElementById('stage'); stEl.textContent = ST[0]; stEl.style.background = ST[1];
+document.getElementById('inst').innerHTML = `${C.inst}<span class="en">${C.en}</span>`;
+const body = document.getElementById('body'), ansEl = document.getElementById('answer'), hintEl = document.getElementById('hint');
+const H = STAGE==='hint1' ? 1 : STAGE==='hint2' ? 2 : 0;
+if (H){ hintEl.style.display='block'; hintEl.innerHTML = `💡 ${H===1?C.h1:C.h2}<span class="en">${H===1?C.h1en:C.h2en}</span>`; }
+
+if (STAGE === 'answer'){
+  document.getElementById('inst').innerHTML = `答對了！密碼是 <span style="color:#e2483d;font-family:'Arial Black'">${D.join('')}</span><span class="en">Great job! The code is ${D.join('')}.</span>`;
+  body.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center"><div class="big-ans" style="zoom:1.15">${digital(D.join(''))}${analog(HH,MM,300)}</div>`+
+                   `<div class="say">It's ${timeWords(HH,MM)}.</div></div>`;
+  ansEl.innerHTML = '';
+} else {
+  ansEl.innerHTML = `<span style="margin-right:10px">密碼 Code:</span><div class="box"></div><div class="box"></div><span class="colon">:</span><div class="box"></div><div class="box"></div>`;
+  let html = '';
+  if (TYPE==='mirror') html = D.map(d=>mirror(d, H===2)).join('');
+  if (TYPE==='shape') html = D.map((d,i)=>{ const [f,zh]=SHAPE_ICON[d]; return `<div class="item"><img src="../assets/icons/shape_${f}.png">${H===2&&i<2?`<div class="ghost">${d}</div>`:''}${H?`<div class="lab">${zh}</div>`:''}</div>`; }).join('');
+  if (TYPE==='homo') html = D.map((d,i)=>{ const [f,zh,k]=HOMO_ICON[d]; return `<div class="item"><img src="../assets/icons/homo_${f}.png">${H?`<div class="lab">${H===2&&i<2?k:zh}</div>`:''}</div>`; }).join('');
+  if (TYPE==='seg'){
+    const cols = D.map((d,i)=>{ const [u,l]=SEG_PUZ[d];
+      const solved = H===2 && i<2 ? `<div style="margin-top:8px">${segDigit(d,'#e2483d',.6)}</div>` : '';
+      return `<div style="display:flex;flex-direction:column;align-items:center;margin:0 8px"><div style="display:flex;flex-direction:column;gap:6px;padding:8px;border:4px dashed #c9b8ea;border-radius:16px;background:rgba(255,255,255,.7)">${shapeSVG(u,96)}${shapeSVG(l,96)}</div>${solved}</div>`; }).join('');
+    const keys = ['L','J','7','G','n','u','c','k','o','iR'];
+    const tbl = keys.map(k=>`<div class="row">${shapeSVG(k,44)}<span>=</span>${halfGlyph(SHAPES[k].sides)}</div>`).join('');
+    html = `<div style="display:flex;align-items:center;zoom:1.15"><div style="display:flex;align-items:flex-start">${cols}</div><div class="keytbl">${tbl}</div></div>`;
+    
+  }
+  if (TYPE==='utopia'){
+    const syms = D.map((d,i)=>`<div style="display:flex;flex-direction:column;align-items:center;margin:0 18px">${utopia(d,150)}${H===2&&i<2?`<div style="font-size:56px;color:#e2483d;font-family:'Arial Black'">${d}</div>`:'<div style="height:70px"></div>'}</div>`).join('');
+    const key = ['1','2','3','4','5','6','7','8','9','0'].map(d=>`<div style="display:flex;flex-direction:column;align-items:center">${utopia(d,62,'#6b4f9a')}<b style="font-size:28px">${d}</b></div>`).join('');
+    html = `<div style="display:flex;flex-direction:column;align-items:center;zoom:1.1"><div style="display:flex;gap:4px;background:#fff;border:4px solid #c9b8ea;border-radius:18px;padding:8px 16px;margin-bottom:18px">${key}</div><div style="display:flex">${syms}</div></div>`;
+  }
+  if (TYPE==='keypad'){
+    html = D.map((d,i)=>{ const seq = KP[d]; const draw = (H===2 && i<2) ? seq : (H===1 && i===0 ? [seq[0].slice(0,3)] : []);
+      return `<div style="display:flex;flex-direction:column;align-items:center;margin:0 14px;zoom:1.25"><div class="seq">${seq.join(' / ')}</div>${keypad(draw,230)}</div>`; }).join('');
+  }
+  body.innerHTML = html;
+}
+// Inside the site the card sits in a smaller iframe: shrink the whole 1600x900 card to fit it.
+function fitCard(){const k=Math.min(innerWidth/1600,innerHeight/900),c=document.getElementById('card');c.style.transformOrigin='0 0';c.style.transform=Math.abs(k-1)<.001?'':`scale(${k})`;document.body.style.width=innerWidth+'px';document.body.style.height=innerHeight+'px'}
+fitCard();addEventListener('resize',fitCard);
+</script>
+</body>
+</html>

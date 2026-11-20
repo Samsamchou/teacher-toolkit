@@ -49,7 +49,7 @@
 3. 對嘴時段 `const SING? = {AMY: [[a,b],…], …}`；`talk: sings(who,t) ? mouthAt(t) : 0`。
 4. `const SCENE = { dur, songStart, tag, draw(c, t) { 背景 → 角色 → 道具 → tag(c, SCENE.tag, .2, t) → drawLyrics(c, t) } }`。
 5. 場景專用函式加前綴（`s04Ball`），不可重宣告引擎名稱。
-6. 版面：字幕帶 y 930–1018、左上標籤 x<520、y<130 不放重要內容；腳底約 y 880–905。
+6. 版面：字幕帶 y 874–962（11/15 起往上 56 px，字幕框底邊離畫面底 ≥84 px）、左上標籤 x<520、y<130 不放重要內容；腳底約 y 824–850（在字幕帶上緣之上）。
 
 ## 5. 對嘴與字幕
 - 字幕直接取 `SONG.cues`（＝ ASR 對時後的正式歌詞），逐字卡拉 OK 變色；聽力版不畫。
@@ -71,7 +71,7 @@ python -I render_all.py assemble
 python -I qa_full.py
 python -I qa_lines.py
 ```
-720p 手機預覽：`ffmpeg -i <English>.mp4 -vf scale=1280:-2 -c:v libx264 -preset slow -b:v 950k -maxrate 1200k -bufsize 2400k -c:a aac -b:a 96k <preview>.mp4`（約 25 MB）。
+720p 版（維持原畫質，不為 30 MB 壓縮，不另做手機版；老師 11/11、11/20）：`ffmpeg -i <English>.mp4 -vf scale=1280:-2 -c:v libx264 -preset slow -crf 20 -c:a aac -b:a 128k <720p>.mp4`。超過 30 MB 傳不到手機時，請老師在桌面版看。
 
 ## 7. 新歌要改的地方
 `scripts/new_song_setup.py` 會換檔名與歌長，並印出清單：演唱順序展開規則、qa_full 時窗、角色名與徽章、歌曲專用道具與副歌編舞、彩旗、SCENES。

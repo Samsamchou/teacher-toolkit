@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024).
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 top view.
+Row 1 (things an Indian pupil takes home after school), left to right:
+1. a shiny stainless-steel tiffin lunch box: three round stacked steel containers held together by a steel clip frame with a carry handle on top
+2. a red school backpack with two straps (plain, no logo, no writing)
+3. a blue plastic water bottle with a flip-top lid and a small strap
+4. a closed school notebook with a plain orange cover and a white blank label patch (the label is EMPTY, no writing)
+5. a rectangular metal pencil box, light blue, slightly open, showing two pencils and a ruler without markings
+Row 2, left to right:
+6. a ripe yellow-orange mango with a small green leaf on the stem
+7. a diamond-shaped paper kite, pink and green, with a short tail (keep the tail and string compact and close to the kite)
+8. a wooden spinning top toy (lattu), red and yellow stripes, with its string wound around it
+9. a red leather cricket ball with a white raised seam
+10. a bright green yo-yo with its string
+Strict rules: NO text, NO letters, NO numbers, NO labels with writing, NO logos, no frame lines between cells, pure white background everywhere.
+Save the PNG as items.png in the current directory. Reply with the saved file path only.

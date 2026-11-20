@@ -1,0 +1,259 @@
+{
+ "version": 1,
+ "stations": [
+  {
+   "id": "taiwan",
+   "order": 1,
+   "country": "Taiwan",
+   "transport": "home",
+   "routine": "have breakfast",
+   "question": "What time do you have breakfast?",
+   "code": "0645",
+   "hour": 6,
+   "minute": 45,
+   "display": "I have breakfast at 6:45.",
+   "spoken": "I have breakfast at six forty-five.",
+   "extended": [
+    "I get up at 6:30.",
+    "I have breakfast at 6:45. I eat a dan bing and drink soy milk.",
+    "Then I go to school at 7:15."
+   ],
+   "mode": "drag",
+   "puzzle": "mirror",
+   "game": "bus-dash",
+   "drag": {
+    "slots": [
+     "time",
+     "have",
+     "breakfast"
+    ],
+    "distractors": [
+     "color",
+     "get",
+     "up"
+    ]
+   }
+  },
+  {
+   "id": "japan",
+   "order": 2,
+   "country": "Japan",
+   "transport": "ship",
+   "routine": "have lunch",
+   "question": "What time do you have lunch?",
+   "code": "1215",
+   "hour": 12,
+   "minute": 15,
+   "display": "I have lunch at 12:15.",
+   "spoken": "I have lunch at twelve fifteen.",
+   "extended": [
+    "I eat lunch in my classroom. I eat rice, fish and miso soup.",
+    "I serve lunch to my classmates."
+   ],
+   "mode": "speak",
+   "puzzle": "shape",
+   "game": "bento-catch"
+  },
+  {
+   "id": "usa",
+   "order": 3,
+   "country": "USA",
+   "transport": "plane",
+   "routine": "go to school",
+   "question": "What time do you go to school?",
+   "code": "0735",
+   "hour": 7,
+   "minute": 35,
+   "display": "I go to school at 7:35.",
+   "spoken": "I go to school at seven thirty-five.",
+   "extended": [
+    "I go to school by school bus. The bus is yellow.",
+    "School starts at 8:15."
+   ],
+   "mode": "speak",
+   "puzzle": "homo",
+   "game": "bus-dash"
+  },
+  {
+   "id": "uk",
+   "order": 4,
+   "country": "the UK",
+   "transport": "plane",
+   "routine": "do my homework",
+   "question": "What time do you do your homework?",
+   "code": "1630",
+   "hour": 16,
+   "minute": 30,
+   "display": "I do my homework at 4:30.",
+   "spoken": "I do my homework at four thirty.",
+   "extended": [
+    "I go home at 3:15.",
+    "I do my homework at 4:30. I read my book and learn my spellings.",
+    "Then I have tea with my family."
+   ],
+   "mode": "drag",
+   "puzzle": "seg",
+   "game": "clock-ninja",
+   "drag": {
+    "slots": [
+     "What",
+     "do",
+     "homework"
+    ],
+    "distractors": [
+     "How",
+     "go",
+     "home"
+    ]
+   }
+  },
+  {
+   "id": "spain",
+   "order": 5,
+   "country": "Spain",
+   "transport": "train",
+   "routine": "have dinner",
+   "question": "What time do you have dinner?",
+   "code": "2115",
+   "hour": 21,
+   "minute": 15,
+   "display": "I have dinner at 9:15.",
+   "spoken": "I have dinner at nine fifteen.",
+   "extended": [
+    "I have lunch at 2:00. Lunch is my big meal.",
+    "I have dinner at 9:15. It's late!",
+    "I eat a tortilla and salad with my family."
+   ],
+   "mode": "speak",
+   "puzzle": "utopia",
+   "game": "clock-ninja"
+  },
+  {
+   "id": "egypt",
+   "order": 6,
+   "country": "Egypt",
+   "transport": "plane",
+   "routine": "have breakfast",
+   "question": "What time do you have breakfast?",
+   "code": "0635",
+   "hour": 6,
+   "minute": 35,
+   "display": "I have breakfast at 6:35.",
+   "spoken": "I have breakfast at six thirty-five.",
+   "extended": [
+    "I get up at 6:15.",
+    "I have breakfast at 6:35. I eat ful and ta'ameya in bread.",
+    "I go to school at 7:10."
+   ],
+   "mode": "speak",
+   "puzzle": "keypad",
+   "game": "bento-catch"
+  },
+  {
+   "id": "kenya",
+   "order": 7,
+   "country": "Kenya",
+   "transport": "plane",
+   "routine": "get up",
+   "question": "What time do you get up?",
+   "code": "0540",
+   "hour": 5,
+   "minute": 40,
+   "display": "I get up at 5:40.",
+   "spoken": "I get up at five forty.",
+   "extended": [
+    "I get up at 5:40. It's dark.",
+    "I drink tea and eat mandazi.",
+    "I walk to school. It's two kilometers."
+   ],
+   "mode": "drag",
+   "puzzle": "mirror",
+   "game": "bus-dash",
+   "drag": {
+    "slots": [
+     "time",
+     "get",
+     "up"
+    ],
+    "distractors": [
+     "color",
+     "go",
+     "home"
+    ]
+   }
+  },
+  {
+   "id": "india",
+   "order": 8,
+   "country": "India",
+   "transport": "plane",
+   "routine": "go home",
+   "question": "What time do you go home?",
+   "code": "1440",
+   "hour": 14,
+   "minute": 40,
+   "display": "I go home at 2:40.",
+   "spoken": "I go home at two forty.",
+   "extended": [
+    "School ends at 2:35.",
+    "I go home at 2:40. I go home by school van.",
+    "My tiffin box is empty. I eat all my lunch at school."
+   ],
+   "mode": "speak",
+   "puzzle": "shape",
+   "game": "bento-catch"
+  },
+  {
+   "id": "singapore",
+   "order": 9,
+   "country": "Singapore",
+   "transport": "plane",
+   "routine": "go to bed",
+   "question": "What time do you go to bed?",
+   "code": "2145",
+   "hour": 21,
+   "minute": 45,
+   "display": "I go to bed at 9:45.",
+   "spoken": "I go to bed at nine forty-five.",
+   "extended": [
+    "School starts at 7:30. It's early!",
+    "I brush my teeth and read a book."
+   ],
+   "mode": "drag",
+   "puzzle": "homo",
+   "game": "luggage-belt",
+   "drag": {
+    "slots": [
+     "What",
+     "go",
+     "bed"
+    ],
+    "distractors": [
+     "How",
+     "take",
+     "shower"
+    ]
+   }
+  },
+  {
+   "id": "australia",
+   "order": 10,
+   "country": "Australia",
+   "transport": "ship",
+   "routine": "take a shower",
+   "question": "What time do you take a shower?",
+   "code": "1915",
+   "hour": 19,
+   "minute": 15,
+   "display": "I take a shower at 7:15.",
+   "spoken": "I take a shower at seven fifteen.",
+   "extended": [
+    "I play soccer after school.",
+    "It's a four-minute shower. I sing a song!"
+   ],
+   "mode": "speak",
+   "puzzle": "seg",
+   "game": "luggage-belt"
+  }
+ ]
+}

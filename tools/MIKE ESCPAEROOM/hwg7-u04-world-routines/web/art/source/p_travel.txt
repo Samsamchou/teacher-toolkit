@@ -1,0 +1,5 @@
+Use your built-in image generation tool to create ONE wide 16:9 image (1536x864): a sticker sheet of 6 separate cute cartoon items in a grid of 3 columns x 2 rows, each well separated by wide pure white space, on a pure flat white (#FFFFFF) background. No text, no letters, no numbers, no flags, no logos.
+Row 1: (1) a cheerful white-and-red passenger airplane, side view, flying to the RIGHT; (2) a white-and-blue cruise ship with a red funnel, side view, sailing to the RIGHT on a small wave; (3) a red-and-yellow high-speed train (two cars), side view, heading to the RIGHT.
+Row 2: (4) an 11-year-old Taiwanese traveller boy, full body, explorer vest, small backpack, holding a blank folded map, waving; (5) an 11-year-old Taiwanese traveller girl, full body, explorer vest, small backpack, holding a toy camera, waving; (6) a closed dark-red passport booklet with a simple gold globe emblem, front view.
+Style: bright, cheerful children's-game cartoon, thick clean outlines, flat colours with soft highlights.
+Save the PNG as travel_sheet.png in the current directory. Reply with the saved file path only.

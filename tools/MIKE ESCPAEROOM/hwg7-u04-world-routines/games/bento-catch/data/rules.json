@@ -1,0 +1,8 @@
+{
+  "_note": "Shared round rules for all four World Routines games. Edit here, then copy into each game's data/rules.json (python games/sync_rules.py) and re-export.",
+  "run_time": 60,
+  "clock_every": 10,
+  "clock_rounds": 4,
+  "star2": {"score": 550, "clocks": 2},
+  "star3": {"score": 1250, "clocks": 3}
+}

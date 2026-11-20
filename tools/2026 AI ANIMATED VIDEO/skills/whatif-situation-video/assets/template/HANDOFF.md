@@ -7,7 +7,7 @@
 - **第 1 段試片 v2**（Monday 火車站，24.6 秒，含 1 個 3D 鏡頭）：`renders/s01-trial-v2.mp4`＋`-720p.mp4`。
 - **全片 v1（11/13 15:26 完成，4:59，等老師看）**：字幕版 `renders/whatif-ken-full-v1.mp4`＋`-720p.mp4`；聽力版 `renders/whatif-ken-full-v1-listening.mp4`＋`-720p.mp4`（720p 約 49 MB，傳不到手機，要在桌面版看）。
 - **v2 修改（11/13 晚，規格卡 `rdq/RDQ-spec-whatif-ken-v2-fixes-20261113.md`）**：預覽 `renders/whatif-ken-v2-preview.mp4`（57 秒）老師看過後說「製作全片 v2」→ **全片 v2（5:14）✅ 老師 11/13 定案**：`renders/whatif-ken-full-v2(-listening)(-720p).mp4`。雲端：字幕版 1080p https://drive.google.com/file/d/1ICztDgfWY0lgOFo_hWErSa5ISBydLUEH/view ；聽力版 1080p https://drive.google.com/file/d/1RGOIqd-l4K2-sajOtIAJ6I6A3PvGl53s/view （目前私人）。
-  - 下方字幕改到最下緣（`film.html` bottom 28px）；comic book 字幕左下（`cap: {x: 470}`）；museum 線索改播完整 `sfx/amb_museum.mp3` 18 秒＋背景音樂閃避（`F.duck`，render.py 的 volume 運算式）；全片變 5:14。
+  - 下方字幕改到最下緣（`film.html` bottom 28px；11/15 起全部影片改成 bottom 84px，字幕框底邊離畫面底 ≥84 px）；comic book 字幕左下（`cap: {x: 470}`）；museum 線索改播完整 `sfx/amb_museum.mp3` 18 秒＋背景音樂閃避（`F.duck`，render.py 的 volume 運算式）；全片變 5:14。
   - 3D 手勢：`b3d_shot.py` 的 `aim(bone, 方向, 掌心方向)` 會轉掌心；道具位置由真實手掌座標算（`hand_frame`）：信＝捏在食指與拇指間、托球＝單手掌心向上在肩旁（服務生）、風箏＝手掌張開夾住下方竹骨、風箏直立在旁邊。
   - 「You run and run」改成 3D 跑步鏡頭 `s03run`（164 格）：模型沒有跑步動作、走路放大會像踢腿 → 用骨頭角度程式做跑步（大腿擺 32°、收腿時膝蓋折 107°、手肘 90° 反向擺、身體前傾、腳貼地）。
   - v1 的 s02／s03／s08 3D 圖備份在 `renders/3d/_v1/`。

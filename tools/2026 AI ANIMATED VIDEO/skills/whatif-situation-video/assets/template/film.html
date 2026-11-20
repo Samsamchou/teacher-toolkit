@@ -12,7 +12,7 @@ canvas { position: absolute; inset: 0; }
 .hud { position: absolute; transform-origin: 50% 50%; }
 .hud .lab { font-size: 26px; letter-spacing: 5px; color: #ffcf9e; }
 .hud .val { font-size: 92px; line-height: 1; }
-#kara { position: absolute; left: 960px; bottom: 28px; transform: translateX(-50%); padding: 16px 40px 18px; border-radius: 28px; width: max-content; max-width: 1000px;
+#kara { position: absolute; left: 960px; bottom: 84px; transform: translateX(-50%); padding: 16px 40px 18px; border-radius: 28px; width: max-content; max-width: 1000px;
         background: rgba(20,12,48,0.74); font-size: 54px; line-height: 1.25; color: #fff; display: none; text-align: center; }
 #kara .who { display: inline-block; font-size: 30px; color: #1d1240; background: #ffb347; border-radius: 14px; padding: 2px 16px; margin-bottom: 6px; }
 #kara .done { color: #ffb347; }
@@ -208,7 +208,7 @@ function kara(t) {
   });
   el.innerHTML = (c.who ? `<div class="who">${c.who}</div><br>` : "") + html;
   el.style.display = "block"; el.style.left = (c.x ?? 960) + "px"; el.style.maxWidth = (c.maxw || 1000) + "px";
-  if (c.top != null) { el.style.top = c.top + "px"; el.style.bottom = "auto"; } else { el.style.top = "auto"; el.style.bottom = "28px"; }
+  if (c.top != null) { el.style.top = c.top + "px"; el.style.bottom = "auto"; } else { el.style.top = "auto"; el.style.bottom = (window.KARA_BOTTOM || 84) + "px"; }
   el.style.opacity = clamp((t - c.t0 + 0.15) / 0.2);
 }
 function hud(t) {

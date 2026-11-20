@@ -18,7 +18,7 @@ RULES:
 - Lip-sync: `python -I lipsync/song_lipsync.py <scene> --start <songStart> --dur <dur> --adlibs`. Apply mouthAt/roundAt only to the character singing the line.
 - Use grpPop() (E.back(0) is ~2e-16 > 0 and makes things appear early).
 - DO NOT edit engine/, lipsync/, planning, or other scenes. Prefix helpers s<nn>…; never redeclare engine names.
-- No cuts inside a scene. Keep y 930–1018 (lyrics) and the top-left tag clear. Characters must not be hidden.
+- No cuts inside a scene. Keep y 874–962 (lyrics; raised 56 px on 2026-11-15, box bottom ≥84 px above the frame edge; feet at y 824–850) and the top-left tag clear. Characters must not be hidden.
 - Verify: `python -I render.py <scene> --still <t>` at EVERY sung keyword, READ the PNGs, fix, iterate; save contact sheets to qa/.
 - Motion check: read `G:\我的雲端硬碟\teacher-toolkit\tools\2026 AI ANIMATED VIDEO\skills\2d-animations\references\character-motion-checklist.md`. For every line with a clear body action (jump, throw, wave, clap, turn, sit, point…), render stills at anticipation → start → peak/contact → settle → hold and check items 6–12 (anticipation, squash & stretch with constant volume, follow-through of hair/clothes, slow in/out spacing, arcs, key teaching pose held ≥ 8–10 frames). Report pass/fix per line; write "not checked" for anything you did not look at.
 - Final: `python -I render.py <scene>` (silent) and confirm `ffmpeg -v error -i file -f null -` decodes.

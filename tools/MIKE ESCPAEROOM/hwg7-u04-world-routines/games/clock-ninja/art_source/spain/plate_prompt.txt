@@ -1,0 +1,4 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+One single object on a PURE WHITE (#FFFFFF) background: a big round empty dinner plate seen from the front and a little from above (a wide flat oval), in a Spanish ceramic style: a warm cream-yellow plate (NOT white) with a wide cobalt-blue rim decorated with a simple yellow and blue flower pattern, a thick clean dark outline around the whole plate. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. The plate is completely empty. It fills about three quarters of the picture width, centred.
+Strict rules: NO text, NO letters, NO numbers, NO food, NO cutlery, no table, no ground shadow, no background, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

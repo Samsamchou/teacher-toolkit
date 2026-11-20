@@ -5,6 +5,20 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 
 # 2D Animations — 歌曲 2D 程式動畫＋Suno 歌曲提示詞
 
+## 字幕位置規則（老師 2026-11-15 指定：之後所有動畫影片）
+- 下方字幕整體比原本往上移 **56 px**（以 1080p 為準；720p 約 37 px）：字幕框底邊離畫面底邊至少 84 px，不貼著最下緣。
+- 程式動畫（Canvas／HTML）改字幕框的 `bottom`；ffmpeg ASS 字幕把 `MarginV` 加 56（1080p）；其他排版工具同樣往上 56 px。
+- 字幕若擋到人物臉，個別段落再移到左下或上方。
+- 字幕上移後，畫面下方原本的字（片語、中文句意、選項、片尾大字）要一起往上移；出片前每 8 秒抽一格檢查有沒有被字幕蓋到（所有格動畫 v3 踩過）。
+
+## 字體規則（老師 2026-11-10 指定：所有有字的動畫與影片）
+
+- 畫面上所有英文字（字幕、句子、標籤、倒數數字、片頭片尾、字卡）一律用 **Comic Relief**（以 Bold 為主、Regular 為輔），不換成 Nunito、Arial、Comic Sans 等其他字體。
+- 字型檔：`C:\Users\User\AppData\Local\Microsoft\Windows\Fonts\ComicRelief-Bold.ttf`、`ComicRelief-Regular.ttf`。網頁／Canvas／Three.js 先把字型檔複製進專案，用 `@font-face` 載入，等 `document.fonts.load(...)` 完成才截圖；ffmpeg ASS 字幕用 `subtitles=...:fontsdir=<含這兩個檔的資料夾>`，`Fontname=Comic Relief`。
+- Comic Relief 沒有中文字：中文字幕、注音沿用該流程原本的中文字型，字型家族寫成 `'Comic Relief', <中文字型>`，英文用 Comic Relief、中文自動退回中文字型。
+- 抽格檢查時確認字真的是 Comic Relief，不是瀏覽器預設字體。
+
+
 教師（國小英語，3–6 年級）的核心要求：**每一句歌詞都要對應到動作或圖片，而且落在唱到那個字的時候。** 這份 skill 的所有步驟都是為了做到這件事，並讓教師在花大量渲染時間之前就能看到、改到。
 
 兩種工作：
@@ -15,6 +29,21 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 - `output/how-do-you-go/2d-v1/`（How Do You Go，172 s，11 場景，2026-10-18 正式版）
 - `output/every-day-is-fun/2d-v1/`（Every Day Is Fun，190 s，12 場景，2026-10-18 正式版，**引擎最新版，新歌從這裡複製**）
 專案根目錄：`G:\我的雲端硬碟\teacher-toolkit\tools\2026 AI ANIMATED VIDEO\`。案例細節與數字見 `references/case-studies.md`。
+
+## 共用踩坑規則（老師 2026-11-20 指定：所有動畫影片與動畫程式）
+- 完整清單（15 類、165 條，11/20 擴充 9–11 月全部動畫專案）：`G:\我的雲端硬碟\teacher-toolkit\tools\動畫共用踩坑規則.md`。**開工前讀和這支片有關的類別；踩到新坑當天補進那份檔案（現象 → 原因 → 規則＋出處），再把這段短版同步到 15 份影片 skill。**
+- 動作先查真實做法再擺：拿東西、握筆、樂器、騎車、球類先查、寫成表（哪隻手／手心朝向／拇指位置／接觸點／怎麼到嘴）；左右手是鏡像（Mixamo `PALM_SIGN` 右 −1、左 +1）；動詞照字面演；每個效果要有起因（碰到才動、接觸成立才算完成），接觸用數字驗（手到物 ≤2 cm、輪胎 ±1 cm、2D 0–1 px）。
+- 人物不浮、不陷、不背對：量真實地面（3D `ground_z`；2D 新背景先疊格線量地面）；坐姿大腿蓋住椅墊、小腿在椅面前垂下（椅面＝膝高 − 大腿厚度）；說話時身體不上下彈（只留約 3 px 呼吸；What if 系列例外，問的人說話時輕彈）；手和道具不擋臉；車頭朝前進方向、騎乘用坐姿；鏡頭在主角右前方 3/4。
+- 檢查圖先交：第一批固定有手部特寫（兩角度、不開景深）與腿部鏡頭；3D 鏡頭先交特寫檢查圖、2D 每段先出 4×4 總表；動作的開始／中間／結束都抽格，原尺寸放大看手和頭頸。
+- 對嘴依畫風：AI／點陣角色不用程式畫嘴（生同角度張嘴圖、只貼回嘴部小塊）；全向量剪紙可程式嘴；精準對嘴用 wav2vec2 強制對齊（edge-tts 逐字時間早約 0.16 秒）；說話句用中景；歌曲片對嘴原曲、不另配 TTS。
+- 配音：顯示文字和送 TTS 的文字分開（`TTS_FIX`），台詞不放「／」和音標；發音教學只用老師錄音或 Wikimedia；edge-tts 60 秒逾時＋重試 10 次；已變速的音檔不再變速；whisper 只抓時間，字幕照劇本，念錯與否給老師聽。
+- 生圖：Codex CLI prompt 走 stdin（`codex exec ... -s workspace-write -i ref.png - < prompt.txt`），先輸出到 C 槽再複製，同時最多 3 張；圖上不放字（字、國旗、月曆用程式疊或 Commons SVG）；付費 API 先報價、老師同意上限。
+- AI 短片：H3 照明只寫正向描述、要避免的東西連字都不寫；Seedance／KIE 只寫身體動作與空手、另列不准出現的東西、鏡頭固定；多出的片長用剪的不重生；KIE 先 480p 試 1 鏡，錯誤碼看 body 的 `code`。
+- Blender：用座標改模型前 `view_layer.update()`；材質色是線性色彩；`transform_apply(location=False, rotation=False, scale=True)`；拼接物件合成單一網格（Freestyle 才不閃）；Tripo 家具黏住就換程式家具；Tripo 抓檔先 `--mark` 再按 Export、用三角面數核對；>15 萬面先 predecimate＋`use_persistent_data`；燈光換場景重調。
+- Colab：Blender 只在 Colab；exec 只跑立刻返回的指令、渲染用分離執行、每 50 秒短 exec 保持連線、一鏡一批、渲完立刻下載；先建資料夾再上傳、上傳前 `ast.parse`；給老師看之前先停機；開機前報預估、做完報實際；不手改 `colab_usage.log`。
+- 合成：不用 `-shortest`（先接無聲畫面再配完整音軌＋`apad`）；ffmpeg 9.0.1 不用 `-loop 1`、不用 `drawtext`、加 `-nostdin`；舊 .ogg 用 soundfile 解碼；配樂說話時比人聲低 18 dB、無配音段 1/4、整片 −16 LUFS（有閃避的混音不用 loudnorm）；前一句字幕早 0.2 秒結束；重點物件不放畫面下方 1/4。
+- 交件：分鏡 → 試片 → 全片，每關等老師；改版只重做改到的段落、先交段落預覽、定案資料夾不動；聽力版只拿掉卡拉 OK 字幕；只交 1080p＋720p（720p 維持原畫質，不為 30 MB 壓縮）；自己先抽格，把可能被抓的地方先說出來，附用量與未驗證項目。
+- 檔案：大量 PNG／影格／建置放 C 槽暫存，不放 G 槽；用腳本改字串先 `assert count == 1`、改完 `ast.parse`；不用 heredoc 寫程式；反斜線路徑會被吃成 tab 或響鈴字元，寫完讀回檢查。
 
 ## A. 歌曲 → 2D 動畫：六階段（每階段結束都停下來給教師確認）
 
@@ -55,7 +84,7 @@ description: 2D Animations：把一首英語教學歌曲（MP3＋歌詞）做成
 - `qa_full.py`：兩版完整解碼、原曲 10 窗相關（應 ≥ 0.99、偏移 0）、兩版音軌相同、SHA-256。
 - `qa_lines.py`：每句在唱到一半時從成片抽一格，做成 `qa/lines-contact-*.jpg`，**逐張看**每句是否真的有對應動作，並確認沒有一句被場景交界切開。
 - 角色動作原則檢查：照 `references/character-motion-checklist.md`。每句一格看 A 段（演出清楚、立體感、誇張、吸引力、次要動作）；有明顯肢體動作的句子另抽動作關鍵格條看 B 段（預備、擠壓伸展、跟隨／重疊、緩入緩出、弧線、時間）。結果寫 `qa/motion-principles-<版本>.md`，沒看過格條的項目寫「未檢查」。
-- 交付：英文字幕版＋聽力版（1080p／30 fps）、720p 手機預覽（1080p 檔超過 30 MB 時傳不到手機）、逐句總表、`HANDOFF.md`。
+- 交付：英文字幕版＋聽力版（1080p／30 fps）、720p 版（維持原畫質、不另做手機版；超過 30 MB 請老師在桌面版看，老師 11/11、11/20）、逐句總表、`HANDOFF.md`。
 - 教師說「定為正式版」後：寫 `qa/teacher-acceptance-2d-v1.json`（驗收當下重新算雜湊比對）、`FORMAL_RELEASE.json`、更新專案 README／PROJECT_HANDOFF 頂端紀錄。舊正式版移到 `previous_official_releases`，檔案全部保留。
 
 ## B. Suno 兒童英語歌提示詞

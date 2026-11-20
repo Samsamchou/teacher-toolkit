@@ -1,0 +1,11 @@
+Use your built-in image generation tool to create ONE image and save it as bus_dash_mock.png in the current folder. Do not write any code.
+
+The image is a 16:9 (1536x864 or similar) mock-up screenshot of a children's tablet game called "Bus Dash", bright friendly 2D cartoon style with clean outlines, for 11-year-old pupils in Taiwan.
+
+Scene: an early-morning Taiwanese small-town street seen from the side, soft sunrise sky, a breakfast shop with a striped awning, scooters parked, palm trees and distant green hills. The road has THREE horizontal lanes running left to right, separated by dashed white lines.
+Character: the girl from the attached reference image (same hair, same outfit, same backpack, drawn as a cute toy-like figure) running to the right in the middle lane, on the left third of the picture.
+Far right: the back of a yellow school bus driving away, with a little puff of smoke.
+On the lanes ahead of her: Taiwanese breakfast items to collect floating above the road (an egg pancake roll, a cup of soy milk, a rice ball, a steamed bun), and things to avoid on the road (a puddle, an orange traffic cone, a sleeping dog).
+In the middle-right of the picture, one in each of the three lanes: three big round analog clock gates standing like arches, with coloured rims (red, blue, yellow), showing three different times (6:45, 6:15 and 7:45). The girl must run through the correct clock.
+HUD: top-left a rounded white panel with the word SCORE and the number 320; top-right a rounded white panel with three red hearts and a green timer bar with the number 42; under it four small clock icons. Top-centre a banner with a blue round speaker button and the text "Listen! Which clock?".
+All text must be in English only, spelled exactly as given, in a rounded comic font. No other text, no watermark.

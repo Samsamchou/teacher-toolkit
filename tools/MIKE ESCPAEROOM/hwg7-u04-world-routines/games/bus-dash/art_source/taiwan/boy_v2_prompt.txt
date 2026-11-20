@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A character animation sprite sheet on a PURE WHITE (#FFFFFF) background: the SAME child character drawn 8 times in a tidy grid of 2 rows x 4 columns, each figure centred in its own cell with WIDE empty white gaps (figures never touch or overlap). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Cute chibi proportions (about 3 heads tall), full body from head to shoes in every cell, all eight figures drawn at exactly the same size.
+Character: the boy traveller from the attached reference image, redrawn as a 2D cartoon: keep exactly the same hair, hat, clothes, colours and backpack as the reference.
+Cells 1 to 6 are the six frames of ONE running cycle, seen exactly from the side, running toward the RIGHT, body leaning forward, happy determined face. The legs and arms must be clearly DIFFERENT in every frame, like a classic 2D game run cycle:
+Row 1, left to right:
+1. CONTACT A: RIGHT leg stretched far forward with the heel touching the ground, LEFT leg stretched far back with the toe pushing off; LEFT arm swung forward, RIGHT arm swung back. Widest stride.
+2. DOWN A: the right foot is flat on the ground under the body and that knee is bent (body at its lowest); the left leg is bent behind with the heel lifted up toward the bottom; arms halfway.
+3. PASSING A: standing tall on the right leg, the left knee lifted high in front and passing forward; both feet close together under the body; arms close to the body.
+4. CONTACT B: mirror of frame 1: LEFT leg stretched far forward with the heel touching the ground, RIGHT leg stretched far back; RIGHT arm forward, LEFT arm back. Widest stride.
+Row 2, left to right:
+5. DOWN B: mirror of frame 2: the left foot flat under the body with the knee bent, the right leg bent behind with the heel lifted.
+6. PASSING B: mirror of frame 3: standing tall on the left leg, the right knee lifted high in front.
+7. HAPPY: facing the viewer, jumping with both arms up, big open smile, both feet off the ground.
+8. OOPS: turned toward the RIGHT, stumbling and tipping forward with arms flailing, dizzy worried face with a sweat drop, one foot off the ground.
+Strict rules: NO text, NO letters, NO numbers, NO labels, no ground line, no ground shadows, no dust clouds, no speed lines, no background objects, no frame lines between cells, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

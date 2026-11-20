@@ -1,0 +1,4 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+One single object on a PURE WHITE (#FFFFFF) background: a cute classic yellow American school bus with a long engine hood at the front, black stripes along the side, and a small folded red octagonal stop arm with a completely blank face, seen exactly from the side, facing and driving toward the RIGHT, with children's happy faces in the windows and a small open door near the front. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. It fills most of the picture width.
+Strict rules: NO text, NO letters, NO numbers, no ground shadow, no smoke, no background, pure white background everywhere.
+Save the PNG as out.png in the current directory.

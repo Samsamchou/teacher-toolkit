@@ -1,0 +1,14 @@
+Use your built-in image generation tool to create ONE square image (1024x1024): a sticker sheet of 10 separate cute, colourful cartoon icons for children, arranged in a neat grid of 4 columns x 3 rows (last row has 2 icons, centered), each icon well separated by wide pure white space, on a pure flat white (#FFFFFF) background, no text, no numbers, no labels.
+The 10 icons in this order (left-to-right, top-to-bottom):
+1. a shiny golden hand bell / school bell with a red ribbon
+2. a navy blue long-sleeve sweater (clothes)
+3. a friendly green crocodile, side view
+4. a green mountain with a snowy top
+5. an orange persimmon fruit with green leaves on top
+6. a crossed sword and axe (cartoon weapons, toy-like, not scary)
+7. a blue ice skate boot
+8. a paint brush dipping orange paint, with a small paint can
+9. a golden trumpet
+10. a dark green glass bottle with a small round label (no writing) next to a stemmed glass
+Style: bright, thick clean outlines, flat colours with soft highlights, sticker style, friendly for 11-year-old students.
+Save the PNG as homophone_sheet.png in the current directory. Reply with the saved file path only.

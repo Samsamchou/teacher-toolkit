@@ -1,0 +1,6 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+One single character on a PURE WHITE (#FFFFFF) background, in the middle of the picture, full body from hat to shoes, about 80% of the picture height. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game, cute chibi proportions (about 3 heads tall).
+Character: the girl traveller from the attached reference images, redrawn in exactly the same style: keep exactly the same hat with pink bow, hair, white T-shirt, beige safari vest with pockets, olive shorts, white socks, pink shoes and pink backpack.
+Pose: STANDING calmly with BOTH feet flat on the ground side by side (no jumping, no running), body turned a little toward the RIGHT, friendly smile, looking to the right; her RIGHT-side arm (the one toward the right of the picture) is stretched forward to the right at waist height with the hand closed as if holding a trolley handle, the other arm relaxed by her side.
+Strict rules: NO trolley, NO objects, NO text, NO letters, NO numbers, no ground line, no shadow, pure white background everywhere.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

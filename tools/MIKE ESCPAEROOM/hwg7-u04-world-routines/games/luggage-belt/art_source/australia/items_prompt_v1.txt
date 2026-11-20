@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size and chunky, seen from the front or a slight 3/4 view.
+Row 1 (things a child packs to take a shower), left to right:
+1. a fluffy turquoise bath towel, neatly folded and rolled
+2. a pink bar of soap with a few soap bubbles
+3. a purple shampoo bottle with a pump top and a plain white label area with no writing
+4. a yellow rubber duck with an orange beak
+5. a frilly pink-and-white polka-dot shower cap
+Row 2, left to right:
+6. a round light-blue mesh bath puff (shower sponge) on a short cord
+7. a black-and-white soccer ball covered in brown mud splashes
+8. a sneaker caked in thick brown mud with mud drips
+9. a green cactus in a small orange pot, with sharp spines
+10. a cartoon black spider with eight legs and two big googly eyes (friendly, not scary)
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO logos, NO clocks, no frame lines between cells, pure white background everywhere. No icon is drawn in pure white only: every item has a clearly coloured body.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

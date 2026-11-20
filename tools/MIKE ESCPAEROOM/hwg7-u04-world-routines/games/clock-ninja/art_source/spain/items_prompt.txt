@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 view, each drawn a little tilted as if tossed in the air.
+Row 1 (a Spanish family dinner), left to right:
+1. one thick wedge slice of Spanish potato omelette (tortilla espanola), golden-yellow outside with pale yellow potato layers inside
+2. a small wooden bowl of fresh green salad with lettuce, tomato slices and onion rings
+3. a long crusty golden Spanish bread loaf (barra de pan)
+4. a shiny red tomato with a green stem
+5. three green olives on a small wooden stick
+Row 2, left to right:
+6. a bright orange fruit with one green leaf
+7. a classic black-and-white soccer ball
+8. a single colourful striped sock (red, yellow and blue stripes)
+9. a smartphone with a dark glossy screen in a purple case
+10. a small red toy race car with black wheels
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO logos, no plates under the food, no frame lines between cells, pure white background everywhere. No icon is drawn in pure white: every item has a clearly coloured body (the white parts of the soccer ball must have a dark outline).
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

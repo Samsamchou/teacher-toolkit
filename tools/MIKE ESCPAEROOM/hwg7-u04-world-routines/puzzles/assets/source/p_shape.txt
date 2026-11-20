@@ -1,0 +1,14 @@
+Use your built-in image generation tool to create ONE square image (1024x1024): a sticker sheet of 10 separate cute, glossy, colourful cartoon icons for children, arranged in a neat grid of 4 columns x 3 rows (last row has 2 icons, centered), each icon well separated by wide pure white space, on a pure flat white (#FFFFFF) background, no shadows touching neighbours, no text, no numbers, no labels.
+The 10 icons (in this order, left-to-right, top-to-bottom), each drawn in a pose whose silhouette clearly looks like a digit:
+1. a pink glazed donut seen from the front (looks like 0)
+2. a yellow pencil standing straight up, tip down (looks like 1)
+3. a white swan swimming facing LEFT with curved S neck (looks like 2)
+4. a human ear, side view, right ear (looks like 3)
+5. a red triangular flag on a thin pole, flag pointing to the right at the top (looks like 4)
+6. a dark metal crane hook with a gold top ring, hook opening to the left (looks like 5)
+7. a silver coach's whistle seen from the side, ring on top (looks like 6)
+8. a farm sickle/scythe blade curving left over a wooden handle (looks like 7)
+9. an orange butternut gourd standing upright (looks like 8)
+10. a black soup ladle, bowl at the bottom, handle curving up and hooking over to the right (looks like 9, upside down hook)
+Style: bright, thick clean outlines, flat colours with soft highlights, sticker style, friendly for 11-year-old students.
+Save the PNG as shape_sheet.png in the current directory. Reply with the saved file path only.

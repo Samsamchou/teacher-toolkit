@@ -1,0 +1,16 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+A sticker sheet of 10 separate game item icons on a PURE WHITE (#FFFFFF) background, arranged in a tidy grid of 2 rows x 5 columns, each icon centred in its own cell with WIDE empty white gaps between icons (no icon touches or overlaps another, no shadows on the background). Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game. Every icon about the same size, seen from a slight 3/4 top view.
+Row 1 (things a Kenyan pupil has in the early morning before school), left to right:
+1. a colourful enamel mug of hot milky chai tea, light caramel-brown tea, with little curls of steam
+2. three soft puffy pillowy mandazi (Kenyan fried sweet buns: plump rounded-triangle shapes with smooth light golden-brown skin, soft like small doughnuts without a hole, NOT crispy, NOT pastry, NOT samosas) on a small blue plate
+3. two round golden flatbread chapatis, one folded in half, on a small green plate
+4. one ripe yellow banana
+5. a neatly folded dark-green school jumper (V-neck sweater) with a white shirt collar showing
+Row 2, left to right:
+6. a light-blue water bottle with a white cap
+7. a brown muddy puddle of reddish-brown water lying flat on the ground
+8. a big grey rock with a few small pebbles beside it
+9. a cute white and brown goat lying curled up asleep on the ground with peacefully closed eyes
+10. an old black bicycle tyre lying flat on the ground
+Strict rules: NO text, NO letters, NO numbers, NO labels, NO logos, no frame lines between cells, pure white background everywhere. No icon is drawn in pure white: every item has a clearly coloured body.
+Save the PNG as out.png in the current directory.

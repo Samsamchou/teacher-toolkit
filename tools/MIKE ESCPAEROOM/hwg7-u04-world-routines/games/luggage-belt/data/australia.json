@@ -1,0 +1,40 @@
+{
+  "country": "australia",
+  "title": "Luggage Belt",
+  "subtitle": "Pack for shower time in Australia!",
+  "howto_good": "Pack these!",
+  "howto_bad": "Leave these!",
+  "target_time": "7:15",
+  "background": "res://art/australia/bg.png",
+  "player": {
+    "height": 236,
+    "default": "girl",
+    "meta": "res://art/hero/player_meta.json",
+    "poses": {
+      "girl": "res://art/hero/girl_",
+      "boy": "res://art/hero/boy_"
+    }
+  },
+  "good_items": [
+    {"id": "towel", "art": "res://art/australia/towel.png", "points": 30},
+    {"id": "soap", "art": "res://art/australia/soap.png", "points": 30},
+    {"id": "shampoo", "art": "res://art/australia/shampoo.png", "points": 30},
+    {"id": "rubber_duck", "art": "res://art/australia/rubber_duck.png", "points": 30},
+    {"id": "shower_cap", "art": "res://art/australia/shower_cap.png", "points": 30},
+    {"id": "bath_puff", "art": "res://art/australia/bath_puff.png", "points": 30}
+  ],
+  "bad_items": [
+    {"id": "muddy_ball", "art": "res://art/australia/muddy_ball.png"},
+    {"id": "muddy_shoe", "art": "res://art/australia/muddy_shoe.png"},
+    {"id": "cactus", "art": "res://art/australia/cactus.png"},
+    {"id": "muddy_flipflop", "art": "res://art/australia/muddy_flipflop.png"}
+  ],
+  "review_times": ["6:45", "12:15", "7:35", "4:30", "9:15", "6:35", "5:40", "2:40", "9:45"],
+  "clock_rounds": [
+    {"time": "7:15", "distractors": ["7:45", "8:15"]},
+    {"time": "4:00", "distractors": ["4:30", "5:00"]},
+    {"time": "6:30", "distractors": ["6:00", "7:30"]}
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": ["Good try!", "Nice packing!", "Squeaky clean!"]
+}

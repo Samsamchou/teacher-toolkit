@@ -1,0 +1,9 @@
+Use your built-in image generation tool to create ONE image, landscape (1536x1024). Do not write code.
+The background of a children's side-view tablet game: the inside of the baggage claim hall of a modern Singapore airport at NIGHT, seen straight from the front like a stage set. Bright glossy cartoon sticker style with thick clean dark outlines, soft cel shading, saturated colours, for a children's mobile game.
+Layout, top to bottom (follow these heights exactly):
+- top 10%: a plain light ceiling with a few round warm ceiling lights.
+- from 10% to 46%: one row of very tall glass windows across the FULL width with thin white frames, showing a dark-blue night sky with a round moon and small stars, and an indoor tropical garden with palm trees, ferns and red and pink flowers, and in the centre a big round glass-funnel indoor waterfall pouring down in a column of water, lit with soft blue light.
+- from 46% to 64%: a long plain flat light-grey wall base / low barrier running straight across the full width, completely empty and evenly lit (a game will draw a baggage belt on top of this band, so nothing may stand in it).
+- bottom 36%: a big empty shiny light-grey tiled airport floor with soft reflections, completely empty.
+Strict rules: NO conveyor belt, NO luggage, NO suitcases, NO trolleys, NO people, NO clocks, NO screens, NO text, NO letters, NO numbers, NO signs with writing, NO logos. Keep the lower 54% of the picture calm and simple.
+Save the PNG as out.png in the current directory. Reply with the saved file path only.

@@ -1,0 +1,116 @@
+{
+  "country": "japan",
+  "title": "Bento Catch",
+  "subtitle": "School lunch time in Japan!",
+  "target_time": "12:15",
+  "background": "res://art/japan/bg.png",
+  "floor_y": 0.9,
+  "player": {
+    "poses": {
+      "idle": "res://art/japan/player_idle.png",
+      "run": "res://art/japan/player_run.png",
+      "happy": "res://art/japan/player_happy.png",
+      "sad": "res://art/japan/player_sad.png"
+    },
+    "meta": "res://art/japan/player_meta.json",
+    "run_faces_right": true,
+    "height": 300,
+    "catch_half_width": 62
+  },
+  "good_items": [
+    {
+      "id": "rice",
+      "art": "res://art/japan/rice.png",
+      "points": 10
+    },
+    {
+      "id": "miso_soup",
+      "art": "res://art/japan/miso_soup.png",
+      "points": 10
+    },
+    {
+      "id": "grilled_fish",
+      "art": "res://art/japan/grilled_fish.png",
+      "points": 15
+    },
+    {
+      "id": "milk",
+      "art": "res://art/japan/milk.png",
+      "points": 10
+    },
+    {
+      "id": "tamagoyaki",
+      "art": "res://art/japan/tamagoyaki.png",
+      "points": 15
+    },
+    {
+      "id": "curry_rice",
+      "art": "res://art/japan/curry_rice.png",
+      "points": 20
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "sneaker",
+      "art": "res://art/japan/sneaker.png"
+    },
+    {
+      "id": "eraser",
+      "art": "res://art/japan/eraser.png"
+    },
+    {
+      "id": "soccer_ball",
+      "art": "res://art/japan/soccer_ball.png"
+    },
+    {
+      "id": "sock",
+      "art": "res://art/japan/sock.png"
+    }
+  ],
+  "clock_rounds": [
+    {
+      "time": "12:15",
+      "distractors": [
+        "12:50",
+        "2:15"
+      ]
+    },
+    {
+      "time": "6:30",
+      "distractors": [
+        "6:15",
+        "7:30"
+      ]
+    },
+    {
+      "time": "7:45",
+      "distractors": [
+        "7:15",
+        "8:45"
+      ]
+    },
+    {
+      "time": "3:30",
+      "distractors": [
+        "3:00",
+        "6:15"
+      ]
+    },
+    {
+      "time": "9:30",
+      "distractors": [
+        "9:15",
+        "6:45"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice work!",
+    "Yummy! Great job!"
+  ],
+  "review_times": [
+    "6:45"
+  ]
+}
