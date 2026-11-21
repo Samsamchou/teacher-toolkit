@@ -1,0 +1,473 @@
+{
+ "note": "edge-tts；一般 0.8 倍（-20%），慢速版 key 結尾 s（-45%）。台詞照 情境英文稿 v1（老師 11/15 確認）。",
+ "voices": {
+  "ken": {
+   "voice": "en-US-GuyNeural",
+   "rate": "-20%",
+   "pitch": "+18Hz"
+  },
+  "narrator": {
+   "voice": "en-US-JennyNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "mom": {
+   "voice": "en-US-AriaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "dad": {
+   "voice": "en-US-AndrewNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "shuiling": {
+   "voice": "en-US-AnaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  }
+ },
+ "lines": {
+  "g00_hi": [
+   "narrator",
+   "Whose book is it? Let's learn six words!"
+  ],
+  "g01_i": [
+   "narrator",
+   "I, my. My book."
+  ],
+  "g02_you": [
+   "narrator",
+   "You, your. Your book."
+  ],
+  "g03_he": [
+   "narrator",
+   "He, his. His book."
+  ],
+  "g04_she": [
+   "narrator",
+   "She, her. Her book."
+  ],
+  "g05_we": [
+   "narrator",
+   "We, our. Our book."
+  ],
+  "g06_they": [
+   "narrator",
+   "They, their. Their book."
+  ],
+  "g07_rule": [
+   "narrator",
+   "Put these words before a thing."
+  ],
+  "g08_which": [
+   "narrator",
+   "Ken says, this is, blank, book. Which word?"
+  ],
+  "g08_ken": [
+   "ken",
+   "I'm Ken. This is my book."
+  ],
+  "g09_go": [
+   "narrator",
+   "Now, let's watch six stories!"
+  ],
+  "s01_t": [
+   "narrator",
+   "I, my."
+  ],
+  "s01_1": [
+   "ken",
+   "Good morning. I'm Ken."
+  ],
+  "s01_1s": [
+   "ken",
+   "Good morning. I'm Ken.",
+   "-45%"
+  ],
+  "s01_2": [
+   "ken",
+   "This is my room."
+  ],
+  "s01_2s": [
+   "ken",
+   "This is my room.",
+   "-45%"
+  ],
+  "s01_3": [
+   "ken",
+   "This is my book."
+  ],
+  "s01_3s": [
+   "ken",
+   "This is my book.",
+   "-45%"
+  ],
+  "s01_4": [
+   "ken",
+   "And this is my baseball."
+  ],
+  "s01_4s": [
+   "ken",
+   "And this is my baseball.",
+   "-45%"
+  ],
+  "s01_5": [
+   "ken",
+   "I play baseball in my free time."
+  ],
+  "s01_5s": [
+   "ken",
+   "I play baseball in my free time.",
+   "-45%"
+  ],
+  "s01_rep": [
+   "narrator",
+   "Listen and repeat."
+  ],
+  "s01_q": [
+   "narrator",
+   "Which word?"
+  ],
+  "s01_qa": [
+   "ken",
+   "This is my baseball."
+  ],
+  "g06b_all": [
+   "narrator",
+   "I, my. You, your. He, his. She, her. We, our. They, their.",
+   "-5%"
+  ],
+  "s02_t": [
+   "narrator",
+   "You, your."
+  ],
+  "s02_1": [
+   "mom",
+   "Ken, this is your water bottle."
+  ],
+  "s02_1s": [
+   "mom",
+   "Ken, this is your water bottle.",
+   "-45%"
+  ],
+  "s02_2": [
+   "mom",
+   "Take more water."
+  ],
+  "s02_2s": [
+   "mom",
+   "Take more water.",
+   "-45%"
+  ],
+  "s02_3": [
+   "mom",
+   "And this is your cap. It's hot today."
+  ],
+  "s02_3s": [
+   "mom",
+   "And this is your cap. It's hot today.",
+   "-45%"
+  ],
+  "s02_4": [
+   "ken",
+   "Thanks, Mom!"
+  ],
+  "s02_4s": [
+   "ken",
+   "Thanks, Mom!",
+   "-45%"
+  ],
+  "s02_5": [
+   "ken",
+   "I go jogging in my free time."
+  ],
+  "s02_5s": [
+   "ken",
+   "I go jogging in my free time.",
+   "-45%"
+  ],
+  "s02_qa": [
+   "mom",
+   "This is your cap."
+  ],
+  "s03_t": [
+   "narrator",
+   "He, his."
+  ],
+  "s03_1": [
+   "ken",
+   "Look! This is my dad."
+  ],
+  "s03_1s": [
+   "ken",
+   "Look! This is my dad.",
+   "-45%"
+  ],
+  "s03_2": [
+   "ken",
+   "He likes music."
+  ],
+  "s03_2s": [
+   "ken",
+   "He likes music.",
+   "-45%"
+  ],
+  "s03_3": [
+   "ken",
+   "This is his guitar."
+  ],
+  "s03_3s": [
+   "ken",
+   "This is his guitar.",
+   "-45%"
+  ],
+  "s03_4": [
+   "ken",
+   "And that is his hat."
+  ],
+  "s03_4s": [
+   "ken",
+   "And that is his hat.",
+   "-45%"
+  ],
+  "s03_5": [
+   "ken",
+   "He plays the guitar in his free time."
+  ],
+  "s03_5s": [
+   "ken",
+   "He plays the guitar in his free time.",
+   "-45%"
+  ],
+  "s03_qa": [
+   "ken",
+   "This is his guitar."
+  ],
+  "s04_t": [
+   "narrator",
+   "She, her."
+  ],
+  "s04_1": [
+   "shuiling",
+   "Hi! I'm Shuiling."
+  ],
+  "s04_1s": [
+   "shuiling",
+   "Hi! I'm Shuiling.",
+   "-45%"
+  ],
+  "s04_2": [
+   "ken",
+   "She is my friend. This is her room."
+  ],
+  "s04_2s": [
+   "ken",
+   "She is my friend. This is her room.",
+   "-45%"
+  ],
+  "s04_3": [
+   "ken",
+   "This is her cat, Mimi."
+  ],
+  "s04_3s": [
+   "ken",
+   "This is her cat, Mimi.",
+   "-45%"
+  ],
+  "s04_4": [
+   "ken",
+   "And this is her TV."
+  ],
+  "s04_4s": [
+   "ken",
+   "And this is her TV.",
+   "-45%"
+  ],
+  "s04_5": [
+   "ken",
+   "She watches TV in her free time."
+  ],
+  "s04_5s": [
+   "ken",
+   "She watches TV in her free time.",
+   "-45%"
+  ],
+  "s04_qa": [
+   "ken",
+   "This is her cat."
+  ],
+  "s05_t": [
+   "narrator",
+   "We, our."
+  ],
+  "s05_1": [
+   "ken",
+   "We are in Class 601."
+  ],
+  "s05_1s": [
+   "ken",
+   "We are in Class 601.",
+   "-45%"
+  ],
+  "s05_1g": [
+   "shuiling",
+   "We are in Class 601."
+  ],
+  "s05_1gs": [
+   "shuiling",
+   "We are in Class 601.",
+   "-45%"
+  ],
+  "s05_2": [
+   "ken",
+   "This is our classroom."
+  ],
+  "s05_2s": [
+   "ken",
+   "This is our classroom.",
+   "-45%"
+  ],
+  "s05_3": [
+   "shuiling",
+   "This is our teacher, Ms. Yeh."
+  ],
+  "s05_3s": [
+   "shuiling",
+   "This is our teacher, Ms. Yeh.",
+   "-45%"
+  ],
+  "s05_4": [
+   "ken",
+   "And this is our basketball court."
+  ],
+  "s05_4s": [
+   "ken",
+   "And this is our basketball court.",
+   "-45%"
+  ],
+  "s05_5": [
+   "ken",
+   "We play basketball in our free time."
+  ],
+  "s05_5s": [
+   "ken",
+   "We play basketball in our free time.",
+   "-45%"
+  ],
+  "s05_5g": [
+   "shuiling",
+   "We play basketball in our free time."
+  ],
+  "s05_5gs": [
+   "shuiling",
+   "We play basketball in our free time.",
+   "-45%"
+  ],
+  "s05_qa": [
+   "ken",
+   "This is our classroom."
+  ],
+  "s06_t": [
+   "narrator",
+   "They, their."
+  ],
+  "s06_1": [
+   "ken",
+   "They are my grandpa and grandma."
+  ],
+  "s06_1s": [
+   "ken",
+   "They are my grandpa and grandma.",
+   "-45%"
+  ],
+  "s06_2": [
+   "ken",
+   "This is their house."
+  ],
+  "s06_2s": [
+   "ken",
+   "This is their house.",
+   "-45%"
+  ],
+  "s06_3": [
+   "ken",
+   "This is their dog, Lucky."
+  ],
+  "s06_3s": [
+   "ken",
+   "This is their dog, Lucky.",
+   "-45%"
+  ],
+  "s06_4": [
+   "ken",
+   "They love Lucky."
+  ],
+  "s06_4s": [
+   "ken",
+   "They love Lucky.",
+   "-45%"
+  ],
+  "s06_5": [
+   "ken",
+   "They walk their dog in their free time."
+  ],
+  "s06_5s": [
+   "ken",
+   "They walk their dog in their free time.",
+   "-45%"
+  ],
+  "s06_qa": [
+   "ken",
+   "This is their dog."
+  ],
+  "c00_hi": [
+   "narrator",
+   "His or her? Our or their? Let's check!"
+  ],
+  "c01_a": [
+   "narrator",
+   "This is his guitar."
+  ],
+  "c02_a": [
+   "narrator",
+   "This is her cat."
+  ],
+  "c03_a": [
+   "narrator",
+   "This is her bag."
+  ],
+  "c04_a": [
+   "narrator",
+   "This is our classroom."
+  ],
+  "c05_a": [
+   "narrator",
+   "This is their dog."
+  ],
+  "c06_a": [
+   "narrator",
+   "This is his hat."
+  ],
+  "e00_q1": [
+   "mom",
+   "What do you do in your free time?"
+  ],
+  "e00_a1": [
+   "ken",
+   "I go jogging in my free time."
+  ],
+  "e00_q2": [
+   "dad",
+   "What does she do in her free time?"
+  ],
+  "e00_a2": [
+   "ken",
+   "She watches TV in her free time."
+  ],
+  "e00_end": [
+   "narrator",
+   "Great job! Now you know my, your, his, her, our, and their!"
+  ]
+ }
+}

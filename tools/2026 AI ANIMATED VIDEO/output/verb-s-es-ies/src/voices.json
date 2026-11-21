@@ -1,0 +1,125 @@
+{
+ "note": "edge-tts；一般 0.8 倍（-20%）。動詞 -s/-es/-ies 文法片，英文稿 情境英文稿-draft-20261121.md v1（老師 11/21 確認）。",
+ "voices": {
+  "ken": {
+   "voice": "en-US-GuyNeural",
+   "rate": "-20%",
+   "pitch": "+18Hz"
+  },
+  "narrator": {
+   "voice": "en-US-JennyNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "mom": {
+   "voice": "en-US-AriaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "dad": {
+   "voice": "en-US-AndrewNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "shuiling": {
+   "voice": "en-US-AnaNeural",
+   "rate": "-20%",
+   "pitch": "+0Hz"
+  },
+  "zunbo": {
+   "voice": "en-US-AnaNeural",
+   "rate": "-20%",
+   "pitch": "-25Hz"
+  }
+ },
+ "lines": {
+  "v00_ken": [
+   "ken",
+   "I'm Ken. I ride a bike in my free time."
+  ],
+  "v00_mom": [
+   "ken",
+   "She's my mom. She rides a bike in her free time, too."
+  ],
+  "v00_why": [
+   "narrator",
+   "Ride. Rides. Why S?"
+  ],
+  "v01_land": [
+   "narrator",
+   "Welcome to Snowman Land!"
+  ],
+  "v01_three": [
+   "narrator",
+   "Look! He. She. One name."
+  ],
+  "v01_cold": [
+   "narrator",
+   "Just one person. So lonely! So cold!"
+  ],
+  "v02_fire": [
+   "narrator",
+   "Here come three little fires!"
+  ],
+  "v02_names": [
+   "narrator",
+   "S. E, S. I, E, S."
+  ],
+  "v02_warm": [
+   "narrator",
+   "Put a fire after the verb. Now he is warm!"
+  ],
+  "v03_rule": [
+   "narrator",
+   "Fire one. Add S. Ride, rides. Play, plays."
+  ],
+  "v03_dad": [
+   "ken",
+   "He's my dad. He plays basketball in his free time."
+  ],
+  "v04_rule": [
+   "narrator",
+   "Fire two. Add E, S. Look at the end!"
+  ],
+  "v04_five": [
+   "narrator",
+   "S. S, H. C, H. X. O."
+  ],
+  "v04_go": [
+   "narrator",
+   "Go, goes. Watch, watches."
+  ],
+  "v04_sl": [
+   "ken",
+   "She's Shuiling. She goes jogging in her free time."
+  ],
+  "v05_rule": [
+   "narrator",
+   "Fire three. Y to I. Add E, S."
+  ],
+  "v05_st": [
+   "narrator",
+   "Study, studies. Fly, flies."
+  ],
+  "v05_zb": [
+   "ken",
+   "He's Zun-Bo. He studies English in his free time."
+  ],
+  "v06_many": [
+   "narrator",
+   "I, you, we, they. So many friends! They are warm."
+  ],
+  "v06_no": [
+   "narrator",
+   "No fire. No S! I ride. We play. They go."
+  ],
+  "v07_sum": [
+   "narrator",
+   "Remember! He, she, one name. Add S, E, S, or I, E, S."
+  ],
+  "v07_go": [
+   "narrator",
+   "Now, let's watch three stories!"
+  ]
+ }
+}
