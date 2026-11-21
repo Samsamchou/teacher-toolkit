@@ -303,5 +303,19 @@
    "balance_before": 330,
    "balance_after": 310
   }
+ ],
+ "2026-11-21 table-only redo: Spain + Egypt (teacher approved 2x55)": [
+  {
+   "item": "spain_table_only (fused-chair table redo)",
+   "points": 55,
+   "balance_before": 310,
+   "balance_after": 255
+  },
+  {
+   "item": "egypt_table_only (fused-chair table redo)",
+   "points": 55,
+   "balance_before": 255,
+   "balance_after": 200
+  }
  ]
 }

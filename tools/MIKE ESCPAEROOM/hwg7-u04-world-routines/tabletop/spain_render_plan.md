@@ -1,4 +1,4 @@
-# 西班牙站〈九點十五分的晚餐〉渲染計畫（2026-11-20）
+# 西班牙站〈九點十五分的晚餐〉渲染計畫（2026-11-20，11/21 改用只有桌子的模型）
 
 - 場景程式：`tabletop/src/spain_dinner.py`；配音：`tabletop/src/spain_voice.py`（已產生 `audio/spain_q/a/eat/late.mp3`、`spain_words.json`）；合成：`tabletop/src/spain_compose.py`。
 - 分鏡：`tabletop/spain_storyboard.md`（老師 11/20 決定：0A、1A、2B、3B 媽媽、4B 陽台）。
@@ -26,42 +26,51 @@
 | SP2MF／SP2MS | 媽媽兩手平放桌面（新模型，第一次用手）：手心朝下、拇指朝她身體中間、手指沒有往手背彎 | 前上方／鏡頭那一側低角度 |
 | （另有）SP2C SP3C／SP2S SP3S | 近景前斜方／右側，跟台灣 B4C、B4S 一樣 | 需要時再加 |
 
-## (a) 第一批檢查圖（light：32 樣本、50%）
+## 11/21 改版：只用桌子的 Tripo 模型＋程式做的椅子
+
+- 舊的 `spain_dining_set` 桌椅黏在一起（椅背穿過桌面），刪椅子會在近景留下破洞／碎片 → 改用老師同意的 **`spain_table_only.glb`**（26,374 面，彩繪花的木桌、沒有椅子）。
+- 桌子：先放在場景外量（`probe_table`）→ 放進場景後 `level_model` 擺平（印出量到的傾斜）→ 再量桌面高度、桌面範圍、四支腳、桌面下緣（`measure_table`）。長邊轉到 x 方向。
+- **桌面＝她坐著的手肘高度**（`TOP = 椅面 + 手肘離椅面`）。用等比例縮放；縮完桌面不夠放道具（`NEED_W` 0.056 × `NEED_D` 0.034）時，只把長寬放大、高度不變，log 會寫是哪一種。原因：桌面在胸口時盤子在下巴下面、伸手會擋臉。
+- 椅面＝膝蓋高 − 大腿網格厚度（`seat_under`）；她的椅子用 `build_code_chair`，前緣在膝蓋後 2.5 mm，椅背在 +y；椅子前緣伸進桌下時會自動變窄、穿過桌子兩支後腳之間。
+- 媽媽的椅子也是程式做的，放在桌子右端（+x），跟著她轉 `MUM_F` 度（`hands.build_code_chair(..., yaw_deg=)`）；椅面＝她自己的膝蓋高 − 她自己的大腿厚度。她的膝蓋若會頂到桌子端的下緣，就往後坐、讓膝蓋留在桌子外面（log 寫 `knees outside the table end`）。
+
+## (a) 第一批檢查圖（light：32 樣本、50%）——11/21 版
 
 分兩個指令（整批渲完才下載，斷線整批會沒了，所以拆開）：
 
 ```text
 python tabletop/src/colab_run.py light spain_dinner "SP1 72" "SP2 60" "SP3 50" "SP4 72" "SP2HF 0,22,36,60,74" "SP2HS 0,22,36,60,74"
-python tabletop/src/colab_run.py light spain_dinner "SP3HF 12,30,42,50,68" "SP3HS 12,30,42,50,68" "SP2HL 24" "SP2HL2 24" "SP2MF 0,84" "SP2MS 0"
+python tabletop/src/colab_run.py light spain_dinner "SP3HF 12,30,42,50,68" "SP3HS 12,30,42,50,68" "SP2HL 24" "SP2HL2 24" "SP2MF 0,84" "SP2MS 0" "SP2L 0,60" "SP2L2 0,60"
 ```
 
 - 影格對應：SP2 第 0 格＝手在叉子上方、22＝拿起、36＝叉起那一小口、60＝在嘴角、74＝拿著叉子停在盤子上方、84＝「with my family」媽媽點頭；
   SP3 第 12 格＝叉子放回、30＝握住水杯、42＝杯子到臉的右側、50＝喝、68＝杯子放回。
-- 共 29 格，約 **0.6 單位**（light 每格約 0.02；每個鏡頭還要重新量家具，多幾分鐘）。
+- 腿部鏡頭：`SP2L` 側面、座面高度；`SP2L2` 前左方低角度（大腿要平放在椅墊上、不穿過椅墊；小腿垂下、腳踩地）。
+- 共 33 格，約 **0.7 單位**（light 每格約 0.02；每個鏡頭還要重新量桌子，多幾分鐘）。
 - 總表：`python tabletop/src/sheet4.py tabletop/qa/<資料夾>`。
 
-### 看 log（`tabletop/qa/<資料夾>/tout/<鏡頭>.log`）
+### 看 log（`tabletop/qa/<資料夾>/tout/<鏡頭>.log`）——11/21 版
 
-- `DESK PROBE`：桌面／兩張椅面高度、`turn`、`mirror`（媽媽那張椅子轉到右邊需不需要鏡像）、`end_face`（媽媽椅子朝向）。**有 `DESK WARN` 先處理。**
-- `DESK FIT`、`DESK CHAIR pulled`（她的椅子從桌下拉出來多少）、`DESK SIT`（臀部是否在座面上、腳離地）、`DESK MUM`（媽媽臀部位置、朝向角度）。
-- `DESK GRIP fork ... thumb_side`（> 0＝拇指在食指那一側＝身體中間那側，對）、`DESK GRIP glass ... thumb_y_from_glass`（> 0＝拇指在胸口那一側，對）。
-- `DESK REACH`：need 要小於 arm；`CONTACT SP2 grab ... fork_jump`、`spear`、`bite`（沒有 `WARN forced` 才是真的碰到）、`CONTACT SP3 fork_release`／`glass_grab`／`glass_release`。
-- `DESK VIEW`：時鐘、嘴、媽媽的頭、鞋子在畫面中的位置（x 0 左–1 右、y 0 下–1 上），時鐘要在右上（x > 0.6、y > 0.6），鞋子 y > 0。
-- 引擎每格的 `GND`：坐著是負值正常；站著的女孩、女主角要接近 0。
+- `DESK SEAT_UNDER`（她的、媽媽的大腿網格厚度）。
+- `DESK LEVEL spain_table_only.glb probe ...` 與 `DESK LEVEL spain_table ...`：量到的傾斜角度（x、y 各幾度）和擺平後的桌面高度。
+- `DESK TABLE spain_table uniform scale` 或 `footprint widened xN, height kept for the elbow`；`DESK TABLE ... top ... top_box ... legs ... underside ...`（桌面、四支腳、桌面下緣）。`DESK WARN ... top ... but wanted` 不能出現。
+- `DESK CHAIR built herChair ...`、`DESK CHAIR built mumChair ...`＋`DESK CHAIR mumChair turned ... deg`；`DESK WARN herChair narrowed ...`（椅子為了穿過桌腳變窄）。
+- `DESK FIT ... table top wanted ... got ...`（兩個數字要一樣）、`DESK LEGS girl knee top ... room ...`（膝蓋上面離桌面下緣的空間，要 > 0.5 mm）。
+- `DESK MUM face ... seat ... knees under the table / outside the table end ...`、`DESK LEGS mum ...`、**`DESK REACH mum setup Right/Left need ... arm ...`**（need 要小於 arm，否則有 `WARN her hand cannot reach the table`）。
+- `DESK SIT`、`DESK LEGS seat_z ...`（臀部、大腿根、膝蓋、腳的位置）、`DESK GRIP fork/glass`、每 12 格的 `DESK REACH`、`CONTACT SP2/SP3/SP4 ...`、`DESK VIEW`、`GND`（同 11/20 的說明）。
 
-### 待渲染確認（只能看圖才知道）
+### 待渲染確認（11/21 版）
 
-1. 餐桌椅模型轉向：她的椅子在桌子後面（+y）、媽媽那張在右端（+x）；若程式選了鏡像，看起來是否自然。
-2. 她的椅子拉出來後，人坐在座面上、不在椅背後面；腳踩地。
-3. 媽媽（大人比例 `MUM_K` 1.22）坐小孩椅：膝蓋高度、肚子沒有插進桌子端（`DESK WARN mum's tummy` 會提醒）、兩手平放在桌面上。
-4. 叉子握法兩角度：手心朝下、拇指在內側、叉子沒有穿過手指；叉子到嘴時手不擋眼睛和嘴巴正前方。
-5. 水杯握法兩角度：拇指在胸口側、四指在鏡頭側；杯緣碰下嘴唇、杯子不擋眼睛。
-6. 晚餐托盤（Tripo）大小與位置、陽台（Tripo）有沒有從落地窗看到、夜景亮度；吊燈與整體光（`LAMP`、`FRONT`、`PEND`、`MOON` 預設值是猜的）。
-7. 字幕位置：SP1 放上方（`SUB_POS` 240）會不會蓋到右上時鐘；SP2／SP4 放下方會不會蓋到鞋子或晚餐組。
+1. 桌子（新模型）擺平後四腳貼地、桌面正對鏡頭；她的手肘剛好在桌面高度，盤子不在下巴下面、伸手不擋臉。
+2. 她坐在程式椅的椅墊上：大腿平放蓋住椅墊、不穿過；椅子沒有撞到桌腳；屁股和椅背之間有空隙。
+3. 媽媽的程式椅轉向和她一致、她坐在椅墊上；膝蓋沒有頂到桌子；兩手平放在桌面上（看 `SP2MF`／`SP2MS`）。
+4. 叉子、水杯握法兩角度（同 11/20 的說明）；手和叉子、杯子都不擋臉。
+5. 晚餐托盤、陽台、夜景亮度、吊燈；字幕位置（同 11/20）。
 
 ### 常用調整值（都在 `spain_dinner.py` 開頭，改預設值；`colab_run.py` 不帶環境變數）
 
-`LEAN`（前傾）、`SEAT_HIP`、`GAP`、`MUM_K`（媽媽身高）、`MUM_TURN`（媽媽身體轉向鏡頭幾度）、`PLATE_DX`、`FORK_L`、`FORK_OUT`、`BITE_D*`、`SIP_D*`、`SIP_TILT`、`CLOCK_Z`、`TRAY_MAX`、`LAMP`／`FRONT`／`PEND`／`MOON`。
+`LEAN`（前傾）、`GAP`、`DESK_K`（桌面高度＝手肘 × 這個倍數）、`NEED_W`／`NEED_D`（道具需要的桌面大小）、`GIRL_DX`、`MUM_K`（媽媽身高）、`MUM_TURN`、`MUM_DY`、
+`PLATE_DX`、`FORK_L`、`FORK_OUT`、`BITE_D*`、`SIP_D*`、`SIP_TILT`、`CLOCK_Z`、`TRAY_MAX`、`LAMP`／`FRONT`／`PEND`／`MOON`。
 
 ## (b) 正式渲染（final：64 樣本、100%）——檢查圖老師說可以之後
 
@@ -87,6 +96,6 @@ python tabletop/src/spain_compose.py tabletop/qa/<SP1+SP2 資料夾> tabletop/qa
 
 | 項目 | 單位 |
 |---|---|
-| 檢查圖 (a)（可能要再修一兩輪，每輪約 0.2–0.4） | 約 0.6 |
+| 檢查圖 (a)（11/21 版 33 格；可能要再修一兩輪，每輪約 0.2–0.4） | 約 0.7 |
 | 正式渲染 (b) | 約 1.7–1.9 |
-| 合計 | 約 2.3–2.5（不含重渲） |
+| 合計 | 約 2.4–2.6（不含重渲） |

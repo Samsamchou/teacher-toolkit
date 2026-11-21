@@ -1,4 +1,4 @@
-# 埃及站〈看得到金字塔的早餐〉渲染計畫（2026-11-20）
+# 埃及站〈看得到金字塔的早餐〉渲染計畫（2026-11-20，11/21 改用只有桌子的模型）
 
 - 場景程式：`tabletop/src/egypt_breakfast.py`；配音：`tabletop/src/egypt_voice.py`（已產生 `audio/egypt_q/a/eat.mp3`、`egypt_words.json`）；合成：`tabletop/src/egypt_compose.py`。
 - 分鏡：`tabletop/egypt_storyboard.md`（老師 11/20 決定：0A、1A、2B、3B 燉豆鍋）。
@@ -26,35 +26,43 @@
 | EG3HL／EG3HL2 | 左手平放：手心朝下、手指併攏、大拇指在靠身體中間那一側，手指沒有往手背彎 | 前左方／他的左側 |
 | （另有）EG2C EG3C／EG2S EG3S | 近景前斜方／右側 | 需要時再加 |
 
-## (a) 第一批檢查圖（light：32 樣本、50%）
+## 11/21 改版：只用桌子的 Tripo 模型＋程式做的椅子；麵包重做
+
+- 舊的 `egypt_table_chair` 椅子黏在桌面上、整個模型還歪 4.3 度，刪椅子在近景留下破洞（qa/1121-090851、1121-091120，`egypt_check1.jpg`）→ 改用老師同意的 **`egypt_table_only.glb`**（24,844 面，有桌裙的素面桌、沒有椅子）。
+- 桌子：先放在場景外量（`probe_table`）→ 放進場景後 `level_model` 擺平（印出量到的傾斜）→ 再量桌面高度、桌面範圍、四支腳、桌裙下緣（`measure_table`）。
+- **桌面＝他坐著的手肘高度**。用等比例縮放；縮完桌面不夠放道具（`NEED_W` 0.034 × `NEED_D` 0.030）時，只把長寬放大、高度不變，log 會寫是哪一種。原因：舊桌面在胸口，EG2 伸手拿麵包時手擋住嘴（EG2HF／HS 第 18 格）——手絕不能擋臉。
+- 椅面＝膝蓋高 − 大腿網格厚度（`seat_under`）；椅子用 `build_code_chair`，前緣在膝蓋後 2.5 mm；椅子前緣伸進桌下時會自動變窄、穿過桌子兩支後腳之間。桌裙下緣離膝蓋的空間印在 `DESK LEGS boy`。
+- **口袋麵包重做**（原本看起來像白碗）：平的半月形 pita，顏色是金黃褐色（線性色彩），兩面有幾個烤焦的深色點，厚度約高度的 1/4、中間稍微鼓起；切開的直邊朝上，有深色開口，炸豆餅和生菜、番茄從開口露出來；咬過的版本外觀一樣，只少一角（開口和生菜不會伸進咬掉的地方）。
+
+## (a) 第一批檢查圖（light：32 樣本、50%）——11/21 版
 
 ```text
 python tabletop/src/colab_run.py light egypt_breakfast "EG1 72" "EG2 48" "EG3 24" "EG4 96" "EG2HF 0,18,24,32,48" "EG2HS 0,18,24,32,48"
-python tabletop/src/colab_run.py light egypt_breakfast "EG3HF 0,18,24,28,40" "EG3HS 0,18,24,28,40" "EG3HL 24" "EG3HL2 24"
+python tabletop/src/colab_run.py light egypt_breakfast "EG3HF 0,18,24,28,40" "EG3HS 0,18,24,28,40" "EG3HL 24" "EG3HL2 24" "EG2L 0,48" "EG2L2 0,48"
 ```
 
-- 影格對應：EG2 第 0 格＝手在麵包旁、18＝手指張開靠近、24＝握住、32＝舉起中、48＝在胸口前（ta'ameya）；
+- 影格對應：EG2 第 0 格＝手在麵包旁、18＝手指張開靠近（**這一格以前手擋住嘴，要特別看**）、24＝握住、32＝舉起中、48＝在胸口前（ta'ameya）；
   EG3 第 0 格＝胸口前、18＝到臉的右側、24＝碰到嘴角（咬）、28＝咬過的麵包、40＝回到胸口前。
-- 共 26 格，約 **0.5 單位**。總表：`python tabletop/src/sheet4.py tabletop/qa/<資料夾>`。
+- 腿部鏡頭：`EG2L` 側面、座面高度；`EG2L2` 前左方低角度。
+- 共 30 格，約 **0.6 單位**。總表：`python tabletop/src/sheet4.py tabletop/qa/<資料夾>`。
 
-### 看 log（`tabletop/qa/<資料夾>/tout/<鏡頭>.log`）
+### 看 log（`tabletop/qa/<資料夾>/tout/<鏡頭>.log`）——11/21 版
 
-- `DESK PROBE`、`DESK FIT`、`DESK CHAIR pulled`（椅子從桌下拉出來多少）、`DESK SIT`（臀部是否在座面上、`DESK WARN hips behind ...` 不能出現）。
-- `DESK GRIP bread ... thumb_y ... fingers_y`：拇指要在麵包平面的胸口側（thumb_y > 0）、手指在鏡頭側（fingers_y < 0）；出現 `WARN thumb not on the chest side` 就要改 `G_BREAD` 或校正用的手心方向。
-- `DESK REACH`（need < arm）、`CONTACT EG2 grab ... bread_jump`、`CONTACT EG3 bite ... corner_to_lips`（沒有 `WARN forced`）、`CONTACT EG4 release ... bread_bottom_above_plate`。
-- `DESK BREAKFASTSET`（托盤大小、位置）、`DESK FULPOT`（燉豆鍋大小）、`DESK VIEW`（時鐘右上、燉豆鍋與窗戶在畫面內、鞋子 y > 0）。
+- `DESK SEAT_UNDER`、`DESK LEVEL egypt_table_only.glb probe ...`／`DESK LEVEL egypt_table ...`（量到的傾斜，應該接近 0；舊模型是 4.3 度）。
+- `DESK TABLE egypt_table uniform scale` 或 `footprint widened ...`；`DESK TABLE ... top_box ... legs ... underside ...`；`DESK WARN ... but wanted` 不能出現。
+- `DESK CHAIR built hisChair ...`（`DESK WARN hisChair narrowed ...`＝為了穿過桌腳變窄）、`DESK FIT ... wanted ... got ...`、`DESK LEGS boy knee top ... room ...`（要 > 0.5 mm，桌裙不能壓到膝蓋）、`DESK LEGS seat_z ...`、`DESK SIT`。
+- `DESK GRIP bread ... thumb_y ... fingers_y`、每 12 格的 `DESK REACH`、`CONTACT EG2 grab`、`CONTACT EG3 bite`、`CONTACT EG4 release`、`DESK VIEW`、`GND`（同 11/20 的說明）。
 
-### 待渲染確認
+### 待渲染確認（11/21 版）
 
-1. 小方桌＋椅子模型：椅子拉出後人坐在座面上、不在椅背後面；腳踩地、桌下是空的。
-2. 口袋麵包握法兩角度（手心、拇指那一面）；麵包立在盤子上的樣子是否自然（稍微往後靠，`ZB`）。
-3. 咬一口：開口上角真的碰到右嘴角才換成咬過的；麵包在眼睛下面、不擋眼睛。
-4. 窗格、椰棗樹、金字塔、晨光天空的亮度與構圖；流理台與燉豆鍋在 EG1、EG4 畫面裡（右上時鐘下方）。
-5. 字幕位置：EG1 放上方（240）會不會蓋到時鐘；EG2／EG4 放下方會不會蓋到鞋子或托盤。
+1. 新桌子擺平、四腳貼地；桌面在他手肘高度；EG2 第 18 格伸手時手不擋嘴和臉。
+2. 他坐在程式椅的椅墊上：大腿平放、不穿過椅墊；桌裙沒有壓到大腿／膝蓋；椅子沒有撞到桌腳。
+3. 新麵包：看得出是扁扁的半月形口袋餅（不是碗）、開口朝上、露出炸豆餅和生菜；兩角度看握法（拇指在胸口那一面）。
+4. 咬一口、放回盤子、窗外景色、字幕位置（同 11/20）。
 
 ### 常用調整值（`egypt_breakfast.py` 開頭，改預設值）
 
-`LEAN`、`SEAT_HIP`、`GAP`、`PLATE_DX`、`BREAD_R`、`BITE_D*`、`CLOCK_Z`、`TRAY_MAX`、`POT_H`、`LAMP`／`FRONT`／`OUT`／`SUN`。
+`LEAN`、`GAP`、`DESK_K`（桌面高度＝手肘 × 這個倍數）、`NEED_W`／`NEED_D`、`PLATE_DX`、`BREAD_R`（厚度自動＝高度的 1/4）、`BITE_D*`、`CLOCK_Z`、`TRAY_MAX`、`POT_H`、`LAMP`／`FRONT`／`OUT`／`SUN`。
 
 ## (b) 正式渲染（final）——檢查圖老師說可以之後
 
@@ -80,6 +88,6 @@ python tabletop/src/egypt_compose.py tabletop/qa/<EG1+EG2 資料夾> tabletop/qa
 
 | 項目 | 單位 |
 |---|---|
-| 檢查圖 (a)（可能要再修一兩輪，每輪約 0.2–0.4） | 約 0.5 |
+| 檢查圖 (a)（11/21 版 30 格；可能要再修一兩輪，每輪約 0.2–0.4） | 約 0.6 |
 | 正式渲染 (b) | 約 1.5–1.7 |
-| 合計 | 約 2.0–2.2（不含重渲） |
+| 合計 | 約 2.1–2.3（不含重渲） |

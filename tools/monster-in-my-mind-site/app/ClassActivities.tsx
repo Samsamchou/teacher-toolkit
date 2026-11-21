@@ -6,8 +6,8 @@ import { TeacherPortal } from './components/TeacherPortal'
 import { Gallery } from './components/Gallery'
 import { localPreview } from './services/firebase'
 import { SpeechProvider } from './components/Speech'
-// World Routines Trip is live at /world-routines but hidden from the home page until the teacher has tried it (2026-11-19). Set to true to show the tile.
-const SHOW_ROUTINES_TILE = false
+// World Routines Trip at /world-routines: hidden from the home page 2026-11-19, shown since 2026-11-21 (teacher: all ten stations live). Set to false to hide the tile again.
+const SHOW_ROUTINES_TILE = true
 export function ClassActivities() {
   const [path] = useState(() => typeof window === 'undefined' ? '/' : window.location.pathname)
   const monster = path === '/festivals/monster-in-my-mind' || path === '/festivals/monster-in-my-mind/'

@@ -14,7 +14,7 @@ W, H = 1920, 1080
 # keep in step with egypt_breakfast.py (DUR, VOICE)
 SHOTS = [('EG1', 5.6, [('q', 0.4), ('a', 2.6)]), ('EG2', 4.5, [('eat', 0.5)]), ('EG3', 3.0, []), ('EG4', 7.6, [('a', 1.2)])]
 # subtitle position per shot: 0 = default bottom (MarginV 174), > 0 from the top edge, < 0 distance from the bottom edge (>= 84)
-SUB_POS = {'EG1': 240, 'EG2': 0, 'EG3': 0, 'EG4': 0}   # check after the first full render: EG1 line vs the clock, EG2/EG4 vs his shoes and the tray
+SUB_POS = {'EG1': -100, 'EG2': 0, 'EG3': 0, 'EG4': 0}   # check after the first full render: EG1 line vs the clock, EG2/EG4 vs his shoes and the tray
 # sound effects: (shot, start s, kind, length s) -- times follow the actions in egypt_breakfast.py
 SFX = [('EG2', 0.95, 'tap', 0.08), ('EG3', 0.95, 'crunch', 0.25), ('EG4', 0.8, 'tap', 0.08)]
 RED = '&H003C3CE6&'; GOLD = '&H0000D7FF&'

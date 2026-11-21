@@ -14,7 +14,7 @@ W, H = 1920, 1080
 # keep in step with spain_dinner.py (DUR, VOICE)
 SHOTS = [('SP1', 5.6, [('q', 0.4), ('a', 2.6)]), ('SP2', 5.0, [('eat', 0.5)]), ('SP3', 3.0, []), ('SP4', 7.6, [('late', 0.5)])]
 # subtitle position per shot: 0 = default bottom (MarginV 174), > 0 from the top edge, < 0 distance from the bottom edge (>= 84)
-SUB_POS = {'SP1': 240, 'SP2': 0, 'SP3': 0, 'SP4': 0}   # check after the first full render: SP1 line vs the clock, SP2/SP4 vs her shoes and the dinner set
+SUB_POS = {'SP1': 0, 'SP2': 0, 'SP3': 0, 'SP4': 0}   # 11/21 final: SP1 at the top covered the clock -> bottom (below the feet). check after the first full render: SP1 line vs the clock, SP2/SP4 vs her shoes and the dinner set
 # sound effects: (shot, start s, kind, length s) -- times follow the actions in spain_dinner.py
 SFX = [('SP2', 1.45, 'clink', 0.18), ('SP3', 0.5, 'clink', 0.15), ('SP3', 1.95, 'sip', 0.35), ('SP3', 2.78, 'clink_lo', 0.2)]
 RED = '&H003C3CE6&'; GOLD = '&H0000D7FF&'

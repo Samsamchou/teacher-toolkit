@@ -15,8 +15,10 @@
 #           SP3HF SP3HS   glass: front-3/4 and her right side, aimed between the glass and the mouth
 #           SP2HL SP2HL2  her flat left hand: front-left and her left side (mum hidden)
 #           SP2MF SP2MS   mum's flat hands: from the front above and low from the camera side
-# Models: spain_girl (rigged), spain_mum (rigged, adult), traveler_girl, spain_dining_set (table + chair behind it + chair at the
-#   right end, one model), spain_dinner_set (tray: tortilla with one slice missing, bread basket, salad; still), spain_balcony.
+#           SP2L SP2L2    her legs on the seat: side at seat height / low front-left (never through the seat)
+# Models: spain_girl (rigged), spain_mum (rigged, adult), traveler_girl, spain_table_only (11/21: table only, no chairs; levelled,
+#   top fitted to her seated elbow), spain_dinner_set (tray: tortilla with one slice missing, bread basket, salad; still), spain_balcony.
+# Both chairs are made in code (hands.build_code_chair): hers behind the table, mum's at the +x end turned with her (yaw_deg).
 # Made here: the room (white plaster, azulejo tile dado, terracotta floor, French window), the night city outside, pendant lamp,
 #   9:15 clock, her plate + tortilla slice + the cut bite, fork, glass of water, mum's empty plate.
 # Hands: shared helpers from hands.py (PALM_SIGN right -1 / left +1, hand_frame, curl, ik_arm, key_hand, lerp_keys).
@@ -73,7 +75,7 @@ CLOCK_Z = env("CLOCK_Z", "0.112")
 # --- small props (sized to the chibi hand: arms are only ~14 mm) ---
 PLATE_R, PLATE_T = env("PLATE_R", "0.0050"), 0.0005
 PLATE_DX = env("PLATE_DX", "0.0005")       # plate centre from her centre (+x = her left)
-FORK_L = env("FORK_L", "0.0105")
+FORK_L = env("FORK_L", "0.0092")       # 11/21 check 3: 10.5 mm lifted the hand to her mouth while spearing
 FORK_OUT = env("FORK_OUT", "0.0038")       # GUESS: fork tip this far beyond the index fingertip
 GLASS_R, GLASS_H = 0.0021, 0.0040
 WEDGE_T = 0.0015
@@ -81,12 +83,16 @@ BITE_D = Vector((env("BITE_DX", "-0.0010"), env("BITE_DY", "-0.0004"), env("BITE
 SIP_D = Vector((env("SIP_DX", "-0.0004"), env("SIP_DY", "-0.0003"), env("SIP_DZ", "-0.0006")))      # glass rim on the lower lip
 SIP_TILT = math.radians(env("SIP_TILT", "28"))
 TRAY_MAX = env("TRAY_MAX", "0.030")
+NEED_W, NEED_D = env("NEED_W", "0.056"), env("NEED_D", "0.034")     # table footprint the props need (x, y); widened if smaller
+KNEE_ROOM = env("KNEE_ROOM", "0.0012")     # table underside above the top of her knees (teacher 11/21: >= 1 mm)
+LAP_AT = env("LAP_AT", "0.6")              # mum's palms rest this far from hip to knee along her thigh
 HEAD0 = (0, 0, -4)
 HEAD_BITE = (0, -6, -8)          # (roll, yaw, pitch): yaw < 0 turns to her right (towards the fork), pitch < 0 bows
 HEAD_SIP = (0, -5, 3)
-Z_SPEAR = Vector((-0.35, 0.55, 0.75)).normalized()     # fork axis tip -> handle while spearing: handle up, back and to her right
+Z_SPEAR = Vector((-0.70, 0.55, 0.36)).normalized()     # fork axis tip -> handle while spearing: handle out to her right, back, ~20 deg up
+# 11/21 check 3 (qa/1121-105845 SP2HF f0036/74/84): the old (-0.35, 0.55, 0.75) stood the fork ~48 deg up, so the hand at the top
+# of the handle was at her mouth and the sleeve covered her cheek (table top only 3.5 mm under the shoulder after the knee-room raise)
 Z_MOUTH = Vector((-0.85, -0.20, -0.45)).normalized()   # at the mouth: handle out to her right, a little forward and down
-Z_HOLD = Vector((-0.30, 0.60, 0.60)).normalized()
 
 
 # ---------- generic helpers (from uk_homework.py) ----------
@@ -126,7 +132,9 @@ def frame_M(o, z, xhint):
 
 def blend_M(M0, M1, u):
     u = E.ease(u)
-    q = M0.to_3x3().normalized().to_quaternion().slerp(M1.to_3x3().normalized().to_quaternion(), u)
+    q0 = M0.to_3x3().normalized().to_quaternion(); q1 = M1.to_3x3().normalized().to_quaternion()
+    if q0.dot(q1) < 0: q1.negate()                 # 11/21: always the short way round (no extra half / full turn of the wrist)
+    q = q0.slerp(q1, u)
     M = q.to_matrix().to_4x4(); M.translation = M0.translation.lerp(M1.translation, u); return M
 
 
@@ -325,109 +333,119 @@ def pendant(x, y):
     return shade
 
 
-# ---------- furniture probing (rays straight down; several hits per column so a seat under the table top is found) ----------
-def probe(path, H0=0.1, n=56):
-    root = E.place(path, H0, (5, 5, 0)); bpy.context.view_layer.update()
-    x0, x1, y0, y1, top = E._bbox(root)
-    dg = bpy.context.evaluated_depsgraph_get(); cols = []
-    for i in range(n + 1):
-        for j in range(n + 1):
-            x = x0 + (x1 - x0) * i / n; y = y0 + (y1 - y0) * j / n; z = top + 0.05; hs = []
-            for _ in range(10):
-                ok, loc, nrm, idx, ob, mx = sc.ray_cast(dg, Vector((x, y, z)), Vector((0, 0, -1)), distance=1.0)
-                if not ok: break
-                hs.append((loc.z, nrm.z)); z = loc.z - 1e-5
-            cols.append((x - 5, y - 5, hs))
-    drop(root)
-    return cols, top
-
-
-def level(pts, top, lo, hi):
-    """The flat level with the most upward hits between lo*top and hi*top. Returns (z, points on it)."""
-    pts = [p for p in pts if lo * top < p[2] < hi * top]
-    if not pts: return None, []
-    bins = {}
-    for p in pts: bins.setdefault(int(p[2] / (0.01 * top)), []).append(p)
-    best = max(bins, key=lambda b: len(bins.get(b - 1, [])) + len(bins[b]) + len(bins.get(b + 1, [])))
-    g = bins.get(best - 1, []) + bins[best] + bins.get(best + 1, [])
-    zs = sorted(p[2] for p in g); z = zs[int(len(zs) * 0.9)]
-    return z, [p for p in g if abs(p[2] - z) < 0.012 * top]
-
-
+# ---------- table-only Tripo model (11/21): the old table+chair models were fused (backrest through the top, Egypt tilted 4.3 deg);
+#            the chairs are now made in code. Level the table, measure its top / legs / underside, fit the top to the seated elbow. ----------
 def bbox2(g):
     return (min(p[0] for p in g), max(p[0] for p in g), min(p[1] for p in g), max(p[1] for p in g))
 
 
-def two_groups(pts):
-    """Split seat points into two chairs (2-means in x, y, started from the two points furthest apart)."""
-    a = max(pts, key=lambda p: p[0] + p[1]); b = max(pts, key=lambda p: (p[0] - a[0]) ** 2 + (p[1] - a[1]) ** 2)
-    ca, cb = (a[0], a[1]), (b[0], b[1]); ga, gb = pts, []
-    for _ in range(12):
-        ga = [p for p in pts if (p[0] - ca[0]) ** 2 + (p[1] - ca[1]) ** 2 <= (p[0] - cb[0]) ** 2 + (p[1] - cb[1]) ** 2]
-        gb = [p for p in pts if p not in ga]
-        if not ga or not gb: break
-        ca = (sum(p[0] for p in ga) / len(ga), sum(p[1] for p in ga) / len(ga)); cb = (sum(p[0] for p in gb) / len(gb), sum(p[1] for p in gb) / len(gb))
-    return ga, gb
-
-
-def rot2(v, a):
-    c, s = math.cos(a), math.sin(a); return (v[0] * c - v[1] * s, v[0] * s + v[1] * c)
-
-
-def probe_set():
-    """Table top level and box; the two chair seats (the one behind the table for the girl, the one at an end for mum);
-    the turn (and mirror) that puts the girl's chair at +y and mum's chair at +x; the way mum's chair faces."""
-    cols, top = probe(f"{PROPS}/spain_dining_set.glb")
-    first = [(x, y, hs[0][0]) for x, y, hs in cols if hs and hs[0][1] > 0.7]
-    allup = [(x, y, z) for x, y, hs in cols for z, nz in hs if nz > 0.7]
-    dz, dp = level(first, top, 0.45, 1.001)
-    sz, sp = level([p for p in allup if p[2] < dz - 0.08 * top], top, 0.12, 0.9)
-    db = bbox2(dp); dc = ((db[0] + db[1]) / 2, (db[2] + db[3]) / 2)
-    ga, gb = two_groups(sp) if len(sp) > 10 else (sp, [])
-    if len(ga) < 5 or len(gb) < 5:
-        print("DESK WARN found %d + %d seat points: guessing the two chairs" % (len(ga), len(gb)), flush=True)
-        w, d = db[1] - db[0], db[3] - db[2]
-        ga = [(dc[0] - 0.12 * w, db[3], sz), (dc[0] + 0.12 * w, db[3] + 0.3 * d, sz)]
-        gb = [(db[1] + 0.05 * w, dc[1] - 0.15 * d, sz), (db[1] + 0.3 * w, dc[1] + 0.15 * d, sz)]
-    long_x = (db[1] - db[0]) >= (db[3] - db[2])
-    cen = lambda g: (sum(p[0] for p in g) / len(g), sum(p[1] for p in g) / len(g))
-    along = lambda g: abs(cen(g)[0] - dc[0]) if long_x else abs(cen(g)[1] - dc[1])
-    end_g, back_g = (ga, gb) if along(ga) > along(gb) else (gb, ga)
-    ob = (cen(back_g)[0] - dc[0], cen(back_g)[1] - dc[1]); oe = (cen(end_g)[0] - dc[0], cen(end_g)[1] - dc[1])
-    rot = max((k * math.pi / 2 for k in range(4)), key=lambda a: rot2(ob, a)[1] - 0.5 * abs(rot2(ob, a)[0]))
-    mirror = rot2(oe, rot)[0] < 0                 # mum's chair would be on the left: mirror the model in x
-    if mirror: rot = -rot                         # world = MirrorX @ R(rot) = R(-rot) @ MirrorX (Blender applies scale before rotation)
-    # mum's chair: the way it faces = from its back (high parts outside the table box) to its seat centre
-    eb = bbox2(end_g); ec = cen(end_g); grow = 0.6 * max(eb[1] - eb[0], eb[3] - eb[2])
-    backs = [p for p in first if eb[0] - grow < p[0] < eb[1] + grow and eb[2] - grow < p[1] < eb[3] + grow and p[2] > sz + 0.3 * (dz - sz)
-             and not (db[0] - 0.002 < p[0] < db[1] + 0.002 and db[2] - 0.002 < p[1] < db[3] + 0.002)]
-    if len(backs) >= 3:
-        bc = cen(backs); fv = Vector((ec[0] - bc[0], ec[1] - bc[1], 0))
-    else:
-        print("DESK WARN no back found for mum's chair: she faces the table centre", flush=True)
-        fv = Vector((dc[0] - ec[0], dc[1] - ec[1], 0))
-    fv = fv.normalized() if fv.length > 1e-6 else Vector((-1, 0, 0))
-    info = dict(H0=0.1, top=top, desk_z=dz, desk_box=db, seat_z=sz, back_box=bbox2(back_g), end_box=eb, end_face=fv, rot=rot, mirror=mirror)
-    print("DESK PROBE desk_z %.4f seat_z %.4f (model height %.3f) desk_box %s back_seat %s end_seat %s end_face %s turn %d mirror %s back_pts %d" % (
-        dz, sz, top, tuple(round(v, 4) for v in db), tuple(round(v, 4) for v in info["back_box"]), tuple(round(v, 4) for v in eb),
-        tuple(round(v, 3) for v in fv), round(math.degrees(rot)), mirror, len(backs)), flush=True)
+def measure_table(root, n=48, label="table"):
+    """Rays straight down -> the table-top level and its box (the biggest flat level in the upper 40 % of the model);
+    low vertices -> the four legs (x0, x1, y0, y1 each); vertices just under the top along the back (+y) edge and the +x end
+    -> the underside or apron bottom there (room for knees)."""
+    bpy.context.view_layer.update()
+    vs = H._mesh_world_verts(root)
+    zmin = min(w.z for w in vs); x0, x1, y0, y1, zmax = E._bbox(root); h = zmax - zmin
+    dg = bpy.context.evaluated_depsgraph_get(); hits = []
+    for i in range(n + 1):
+        for j in range(n + 1):
+            x = x0 + (x1 - x0) * i / n; y = y0 + (y1 - y0) * j / n
+            ok, loc, nrm, idx, ob, mx = sc.ray_cast(dg, Vector((x, y, zmax + 0.05)), Vector((0, 0, -1)), distance=1.0)
+            if ok and nrm.z > 0.7 and loc.z > zmin + 0.6 * h: hits.append((x, y, loc.z))
+    if not hits:
+        print("DESK WARN %s: no table top found by the rays, using the bounding box" % label, flush=True)
+        hits = [(x0, y0, zmax), (x1, y1, zmax)]
+    bins = {}
+    for p in hits: bins.setdefault(int((p[2] - zmin) / (0.01 * h)), []).append(p)
+    best = max(bins, key=lambda b: len(bins.get(b - 1, [])) + len(bins[b]) + len(bins.get(b + 1, [])))
+    g = bins.get(best - 1, []) + bins[best] + bins.get(best + 1, [])
+    zs = sorted(p[2] for p in g); top = zs[int(len(zs) * 0.9)]
+    box = bbox2([p for p in g if abs(p[2] - top) < 0.012 * h] or g)
+    cx, cy = (box[0] + box[1]) / 2, (box[2] + box[3]) / 2; w, d = box[1] - box[0], box[3] - box[2]
+    low = [v for v in vs if v.z < zmin + 0.25 * h]; legs = []
+    for sy in (-1, 1):
+        for sx in (-1, 1):
+            q = [v for v in low if (v.x - cx) * sx > 0 and (v.y - cy) * sy > 0]
+            if q: legs.append((min(v.x for v in q), max(v.x for v in q), min(v.y for v in q), max(v.y for v in q)))
+    mid = [v for v in vs if zmin + 0.4 * h < v.z < top - 0.004 * h]          # under the top surface, above mid-leg
+    ub = [v.z for v in mid if v.y > box[3] - 0.15 * d and abs(v.x - cx) < 0.3 * w]
+    ue = [v.z for v in mid if v.x > box[1] - 0.15 * w and abs(v.y - cy) < 0.3 * d]
+    info = dict(top=top, zmin=zmin, h=h, box=box, legs=legs, under_back=min(ub) if ub else top - 0.1 * h, under_end=min(ue) if ue else top - 0.1 * h)
+    print("DESK TABLE %s top %.4f base %.4f top_box %s legs %s underside at the back edge %.4f at the +x end %.4f" % (
+        label, top, zmin, tuple(round(v, 4) for v in box), [tuple(round(v, 4) for v in l) for l in legs], info["under_back"], info["under_end"]), flush=True)
     return info
 
 
-def xf(info, Hh, p, at):
-    k = Hh / info["H0"]; m = -1.0 if info["mirror"] else 1.0
-    c, s = math.cos(info["rot"]), math.sin(info["rot"]); px, py = m * p[0] * k, p[1] * k
-    return (at[0] + px * c - py * s, at[1] + px * s + py * c)
+def probe_table(path, H0=0.1):
+    """Place the model at height H0 away from the set, level it, measure: top-height ratio and footprint; turn it so its long side is along x."""
+    root = E.place(path, H0, (5, 5, 0)); bpy.context.view_layer.update()
+    zt = E._bbox(root)[4]
+    level_model(root, 0.7 * zt, zt + 0.01, 0.0, name=os.path.basename(path) + " probe")
+    m = measure_table(root, label="probe")
+    b = m["box"]; long_x = (b[1] - b[0]) >= (b[3] - b[2]) * 0.98
+    info = dict(H0=H0, rd=(m["top"] - m["zmin"]) / H0, w=b[1] - b[0], d=b[3] - b[2], rot=0.0 if long_x else math.pi / 2)
+    if not long_x: info["w"], info["d"] = info["d"], info["w"]
+    drop(root)
+    return info
 
 
-def xdir(info, v):
-    m = -1.0 if info["mirror"] else 1.0; r = rot2((m * v[0], v[1]), info["rot"])
-    return Vector((r[0], r[1], 0)).normalized()
+def fit_table(path, info, top_z, need_w, need_d, label):
+    """Table top exactly at top_z (the seated pupil's elbow): uniform scale from the measured top ratio; if the footprint is then too
+    small for the props, widen x and y only (height kept). Then level it, stand it on the floor and measure it."""
+    S = (top_z - FLOOR) / info["rd"]; k = S / info["H0"]
+    w, d = info["w"] * k, info["d"] * k
+    f = max(1.0, need_w / max(1e-6, w), need_d / max(1e-6, d))
+    root = E.place(path, S, (TX, TY, FLOOR), rot_z=info["rot"])
+    if f > 1.0001:
+        root.scale = (root.scale[0] * f, root.scale[1] * f, root.scale[2])
+    print("DESK TABLE %s %s: model height %.4f, footprint %.4f x %.4f (props need %.4f x %.4f), turn %d deg" % (
+        label, "uniform scale" if f <= 1.0001 else "footprint widened x%.2f, height kept for the elbow" % f, S, w * f, d * f, need_w, need_d,
+        round(math.degrees(info["rot"]))), flush=True)
+    bpy.context.view_layer.update()
+    zt = E._bbox(root)[4]
+    level_model(root, FLOOR + 0.7 * (zt - FLOOR), zt + 0.01, FLOOR, name=label)
+    m = measure_table(root, label=label)
+    if abs(m["top"] - top_z) > 0.0006: print("DESK WARN %s top %.4f but wanted %.4f (seated elbow)" % (label, m["top"], top_z), flush=True)
+    return root, m
 
 
-def xbox(info, Hh, b, at):
-    pts = [xf(info, Hh, (x, y), at) for x in b[:2] for y in b[2:]]
-    return (min(p[0] for p in pts), max(p[0] for p in pts), min(p[1] for p in pts), max(p[1] for p in pts))
+def pupil_chair(x_c, hy, M, seat_z, TM, name, **cols):
+    """Code chair behind the table for a pupil facing the camera (-y): seat top = seat_z, front edge 2.5 mm behind the knees,
+    backrest at +y; narrowed to pass between the table's back legs when its front reaches under the table. Returns (front, back, width)."""
+    front = hy - M["thigh"] + 0.0025; depth = max(0.016, M["thigh"] + 0.007)
+    width = min(0.028, max(0.020, 2 * M["sh_half"] + 0.008))
+    cy = (TM["box"][2] + TM["box"][3]) / 2
+    back_legs = sorted([l for l in TM["legs"] if (l[2] + l[3]) / 2 > cy], key=lambda l: l[0])
+    if len(back_legs) == 2 and front < max(l[3] for l in back_legs) + 0.0005:
+        gap = back_legs[1][0] - back_legs[0][1]
+        if width > gap - 0.002:
+            print("DESK WARN %s narrowed from %.4f to %.4f to pass between the table's back legs" % (name, width, max(0.012, gap - 0.002)), flush=True)
+            width = max(0.012, gap - 0.002)
+    f, b = build_code_chair(x_c, front, seat_z, width, FLOOR, depth=depth, name=name, **cols)
+    return f, b, width
+
+
+def leg_top_under(ch, y_max, x_c, half):
+    """Highest point of the posed thigh / knee skin (vertices weighted mostly to the leg bones) in front of y_max (= under the table)."""
+    bpy.context.view_layer.update(); dg = bpy.context.evaluated_depsgraph_get(); best = None
+    for o in ch.meshes:
+        legs = {g.index for g in o.vertex_groups if "UpLeg" in g.name or g.name.split(":")[-1] in ("RightLeg", "LeftLeg")}
+        if not legs: continue
+        src = o.data.vertices; oe = o.evaluated_get(dg); me = oe.to_mesh(); Mw = oe.matrix_world
+        if len(me.vertices) == len(src):
+            for v in me.vertices:
+                if sum(g.weight for g in src[v.index].groups if g.group in legs) < 0.5: continue
+                w = Mw @ v.co
+                if w.y < y_max and abs(w.x - x_c) < half: best = w.z if best is None else max(best, w.z)
+        oe.to_mesh_clear()
+    return best
+
+
+def knee_room(label, knee_top, under_z):
+    room = under_z - knee_top
+    print("DESK LEGS %s knee top ~%.4f, table underside / apron above the knees %.4f, room %.4f %s" % (
+        label, knee_top, under_z, room, "" if room > 0.0005 else "WARN knees may touch the table"), flush=True)
+    return room
 
 
 # ---------- characters ----------
@@ -543,8 +561,9 @@ class Sit:
     def __init__(self, ch, M, hips_xy, seat_z, lean, face_deg):
         self.ch, self.M, self.lean = ch, M, lean
         off = M["hips"] - M["root"]
-        ch.at(0, loc=(hips_xy[0] - off.x, hips_xy[1] - off.y, seat_z + SEAT_HIP - M["hip_h"]))
-        hipj = seat_z + SEAT_HIP + M["upleg_dz"]; dz = (FLOOR + M["knee_h"]) - hipj
+        sh = M.get("seat_hip", SEAT_HIP)
+        ch.at(0, loc=(hips_xy[0] - off.x, hips_xy[1] - off.y, seat_z + sh - M["hip_h"]))
+        hipj = seat_z + sh + M["upleg_dz"]; dz = (FLOOR + M["knee_h"]) - hipj
         dz = max(-0.95 * M["thigh"], min(0.7 * M["thigh"], dz)); hz = math.sqrt(max(1e-12, M["thigh"] ** 2 - dz * dz))
         self.legs = {"RightUpLeg": (-0.12 * M["thigh"], -hz, dz), "LeftUpLeg": (0.12 * M["thigh"], -hz, dz), "RightLeg": (0, -0.08, -1), "LeftLeg": (0, -0.08, -1)}
         a = math.radians(face_deg); c, s = math.cos(a), math.sin(a)
@@ -592,9 +611,45 @@ class Sit:
             if fr % 12 == 0: print("DESK REACH %s %s t=%.2f need %.4f arm %.4f" % ((ch.name, side, t) + ik_arm.last), flush=True)
         if extra: arms.update(extra)
         self.body(t, arms, head)
+        # 11/21 check 3: hands / sleeves in front of the face. Elbow and wrist height against the shoulder; WARN when the elbow is
+        # above the shoulder or the wrist more than 2 mm above it (the chibi mouth is only ~4 mm above the shoulder)
+        if fr % 6 == 0:
+            for side, g in (("Right", tr), ("Left", tl)):
+                if g is None: continue
+                sz = wpt(ch, side + "Arm").z; ez = wpt(ch, side + "ForeArm").z - sz; wz = wpt(ch, side + "Hand").z - sz
+                print("DESK ARMZ %s %s fr %d elbow %+.4f wrist %+.4f (from the shoulder)%s" % (ch.name, side, fr, ez, wz,
+                      "  WARN arm up in front of the face" if (ez > 0 or wz > 0.002) else ""), flush=True)
         for side, g in (("Right", tr), ("Left", tl)):
             if g is None: continue
-            set_hand_rot(ch, side, g[0]); curl(ch, side, g[2]); key_hand(ch, side, fr)
+            turn_hand(ch, side, g[0], fr); curl(ch, side, g[2]); key_hand(ch, side, fr)
+
+
+TWIST_MAX = math.radians(env("TWIST_MAX", "110"))      # forearm roll limit (pronation / supination)
+
+
+def turn_hand(ch, side, q, fr):
+    """11/21 (SP2 f0074 corkscrew wrist): the IK aims the forearm with the shortest swing only, so its roll is arbitrary and the whole
+    hand roll ended up in the wrist skin. Split the hand target into swing + twist about the forearm axis, give the twist to the forearm
+    (pronation / supination: turning about its own axis does not move the wrist), then set the hand. Call right after the arms are aimed
+    (hand bones still at rest). Prints DESK TWIST; WARN when the forearm roll or what is left in the wrist is large."""
+    bpy.context.view_layer.update()
+    Ar = ch.arm.matrix_world.to_3x3().normalized()
+    pf = ch.pb[side + "ForeArm"]
+    axis_w = (Ar @ pf.matrix.to_3x3().col[1]).normalized()
+    Hc = (Ar @ ch.pb[side + "Hand"].matrix.to_3x3()).normalized()
+    D = (q.to_matrix() @ Hc.inverted()).to_quaternion()
+    if D.w < 0: D.negate()
+    th = 2.0 * math.atan2(Vector((D.x, D.y, D.z)).dot(axis_w), D.w)   # mathutils Quaternion has no .vector (11/21 crash)
+    th = (th + math.pi) % (2 * math.pi) - math.pi
+    use = max(-TWIST_MAX, min(TWIST_MAX, th))
+    if abs(use) > 1e-4:
+        rot_bone(ch, side + "ForeArm", (Ar.inverted() @ axis_w).normalized(), use)
+        pf.keyframe_insert("rotation_quaternion", frame=fr)
+    set_hand_rot(ch, side, q)
+    left = math.degrees(th - use)
+    if fr % 12 == 0 or abs(math.degrees(use)) > 100 or abs(left) > 45:
+        print("DESK TWIST %s %s fr %d forearm_roll %.0f deg wrist_left %.0f deg %s" % (
+            ch.name, side, fr, math.degrees(use), left, "WARN" if abs(math.degrees(use)) > 100 or abs(left) > 45 else ""), flush=True)
 
 
 def wave_dirs(t):
@@ -670,94 +725,77 @@ seated = SHOT != "SP1"
 GIRL_F = 0 if seated else -15
 ch = E.Char("spain_girl", (0.30, -0.15), GIRL_F, height=PUPIL)          # placed properly below, after the table is fitted to her
 M_ = metrics(ch)
-DI = probe_set()
-# fit the table: top at her elbow when seated (the smaller of the two rules wins in uk_homework.py; here the elbow rule, like UK)
-rd, rs = DI["desk_z"] / DI["H0"], DI["seat_z"] / DI["H0"]
-e_el = SEAT_HIP + M_["sh_hips"] - M_["upper"] - ELBOW_DROP
-seat_feet = M_["knee_h"] - SEAT_HIP - M_["upleg_dz"]
-H_el, H_ft = e_el / max(1e-4, rd - rs), seat_feet / max(1e-4, rs)
-DESK_H = H_el * DESK_K
-desk_root = E.place(f"{PROPS}/spain_dining_set.glb", DESK_H, (TX, TY, FLOOR), rot_z=DI["rot"])
-if DI["mirror"]:
-    desk_root.scale = (-desk_root.scale[0], desk_root.scale[1], desk_root.scale[2])
-bpy.context.view_layer.update()
-TOP = FLOOR + rd * DESK_H; SEAT_Z = FLOOR + rs * DESK_H
-DBOX = xbox(DI, DESK_H, DI["desk_box"], (TX, TY)); SBOX = xbox(DI, DESK_H, DI["back_box"], (TX, TY)); EBOX = xbox(DI, DESK_H, DI["end_box"], (TX, TY))
-
-
-def pull_chair(root, dy, kc=1.0, z_cut=None):
-    """(uk_homework.py) Her chair is tucked under the table top in the one Tripo model: cut it out by position - seat, legs and back
-    between the seat's x edges, below the table-top underside or behind the table's back edge - and slide it dy along +y (her side)."""
-    import bmesh
-    x0, x1 = SBOX[0] - 0.004, SBOX[1] + 0.004
-    z_cut = SEAT_Z + 0.6 * (TOP - SEAT_Z) if z_cut is None else z_cut
-    n = 0
-    for o in [root] + list(root.children_recursive):
-        if o.type != "MESH": continue
-        Mw = o.matrix_world; d_loc = Mw.inverted().to_3x3() @ Vector((0, dy, 0))
-        bm = bmesh.new(); bm.from_mesh(o.data)
-
-        def chair(f):
-            for v in f.verts:
-                w = Mw @ v.co
-                if not (x0 < w.x < x1 and (w.z < z_cut or w.y > DBOX[3] + 0.0008)): return False
-            return True
-        faces = [f for f in bm.faces if chair(f)]
-        n += len(faces)
-        if faces:
-            dup = bmesh.ops.duplicate(bm, geom=faces)
-            Mi = Mw.inverted()
-            for v in [g for g in dup["geom"] if isinstance(g, bmesh.types.BMVert)]:
-                w = Mw @ v.co               # slide to her side, and lower her chair (heights x kc about the floor; mum's chair and the table keep theirs)
-                v.co = Mi @ Vector((w.x, w.y + dy, FLOOR + (w.z - FLOOR) * kc))
-            bmesh.ops.delete(bm, geom=faces, context="FACES")
-        bm.to_mesh(o.data); bm.free(); o.data.update()
-    print("DESK CHAIR pulled %d faces out by %.4f (x %.4f..%.4f, below z %.4f or behind y %.4f), heights x%.3f" % (n, dy, x0, x1, z_cut, DBOX[3] + 0.0008, kc), flush=True)
-
-
-# 11/20 teacher (UK film): a seat above the knee makes the thighs hang down and the pupil looks like she stands behind the chair.
-# Her seat goes down to her knee height (thighs flat, shins down, feet on the floor); the table stays (top at her chest, like Taiwan).
-Z_CUT = SEAT_Z + 0.6 * (TOP - SEAT_Z)
-SEAT_NEW = FLOOR + min(SEAT_Z - FLOOR, seat_feet)
-MUM_SEAT_Z = SEAT_Z                       # mum's chair (same model height) is not lowered
-KC = (SEAT_NEW - FLOOR) / (SEAT_Z - FLOOR); SEAT_Z = SEAT_NEW
-_lean = max(0.0, (TOP - SEAT_Z - SEAT_HIP)) * math.sin(math.radians(abs(LEAN[2])))
-CHAIR_DY = max(0.0, DBOX[3] + M_["front"] + GAP + _lean - (SBOX[2] + SBOX[3]) / 2) + env("CHAIR_EXTRA", "0.0")
-if CHAIR_DY > 0.0005 or KC < 0.999:
-    pull_chair(desk_root, CHAIR_DY, KC, Z_CUT)
-    SBOX = (SBOX[0], SBOX[1], SBOX[2] + CHAIR_DY, SBOX[3] + CHAIR_DY)
+# thighs ON the seat, not through it (UK 11/20): each sitter gets the depth measured on their own deformed mesh
+SEAT_UNDER = seat_under(ch, M_["thigh"]) - 0.0010
+SEAT_HIP = SEAT_UNDER - M_["upleg_dz"]
+M_["seat_hip"] = SEAT_HIP
+e_el = SEAT_HIP + M_["sh_hips"] - M_["upper"] - ELBOW_DROP          # her elbow above the seat when sitting
+seat_feet = M_["knee_h"] - SEAT_HIP - M_["upleg_dz"]                 # = knee height - thigh depth: feet flat on the floor
+SEAT_Z = FLOOR + seat_feet
+TOP_WANT = SEAT_Z + e_el * DESK_K
+# 11/21: table-only Tripo model; its top at her seated elbow (teacher check: with the top at the chest the plate sat under the chin
+# and the reaching hand covered the face - hands must never cover the face)
+TI = probe_table(f"{PROPS}/spain_table_only.glb")
+desk_root, TM = fit_table(f"{PROPS}/spain_table_only.glb", TI, TOP_WANT, NEED_W, NEED_D, "spain_table")
+# 11/21 check (qa/1121-095448): with the top at her elbow the thighs went 3.8 mm into the table. Feet on the floor fix the knee joint
+# at floor + shin length, and the chibi thigh is thicker than the elbow-to-seat gap, so a table at the elbow can never clear the knees.
+# Trade-off chosen: raise the table JUST enough that the underside clears the top of the knees by KNEE_ROOM (about 4-5 mm above the
+# elbow, still under her shoulders). The other way - sitting back until the knees are in front of the table edge - needs ~12 mm,
+# and then the wrist cannot reach the plate (need ~0.022-0.026 m, arm 0.016 m).
+KNEE_TOP = FLOOR + M_["knee_h"] + SEAT_UNDER + 0.001                  # knee joint + thigh depth (same mesh depth as under the hip)
+_room = TM["under_back"] - KNEE_TOP
+if _room < KNEE_ROOM:
+    _slab = (TM["top"] - TM["under_back"]) / max(1e-6, TM["top"] - FLOOR)        # top thickness, as a share of the table height
+    top2 = (KNEE_TOP + KNEE_ROOM - _slab * FLOOR) / (1.0 - _slab) + 0.0002
+    print("DESK FIT table raised from the elbow %.4f to %.4f (above floor) so the knees fit under it (room was %.4f, want %.4f)" % (
+        TM["top"] - FLOOR, top2 - FLOOR, _room, KNEE_ROOM), flush=True)
+    drop(desk_root)
+    desk_root, TM = fit_table(f"{PROPS}/spain_table_only.glb", TI, top2, NEED_W, NEED_D, "spain_table")
 E.obstacle(desk_root)
-print("DESK FIT elbow_above_seat %.4f seat_for_feet %.4f H_elbow %.4f H_feet %.4f -> model height %.4f table_top %.4f seat %.4f (above floor) table %s her_seat %s mum_seat %s" % (
-    e_el, seat_feet, H_el, H_ft, DESK_H, TOP - FLOOR, SEAT_Z - FLOOR, tuple(round(v, 4) for v in DBOX), tuple(round(v, 4) for v in SBOX),
-    tuple(round(v, 4) for v in EBOX)), flush=True)
-x_c = (SBOX[0] + SBOX[1]) / 2; DB = DBOX[3]
+TOP = TM["top"]; DBOX = TM["box"]; DB = DBOX[3]
+x_c = (DBOX[0] + DBOX[1]) / 2 + env("GIRL_DX", "0.0")
+_lean = max(0.0, (TOP - SEAT_Z - SEAT_HIP)) * math.sin(math.radians(abs(LEAN[2])))
+HY = DB + M_["front"] + GAP + _lean                                     # her hips: tummy just behind the table's back edge
+SEAT_FRONT, SEAT_BACK, CH_W = pupil_chair(x_c, HY, M_, SEAT_Z, TM, "herChair", wood_lin=(0.62, 0.20, 0.08), cushion_lin=(0.30, 0.02, 0.02))
+SBOX = (x_c - CH_W / 2, x_c + CH_W / 2, SEAT_FRONT, SEAT_BACK)
+if HY + 0.004 > SEAT_BACK: print("DESK WARN her bottom may touch the chair back: hips %.4f seat back %.4f" % (HY, SEAT_BACK), flush=True)
+print("DESK FIT elbow_above_seat %.4f seat_for_feet %.4f -> seat %.4f table top wanted %.4f got %.4f (above floor) table %s her_seat %s hips_y %.4f" % (
+    e_el, seat_feet, SEAT_Z - FLOOR, TOP_WANT - FLOOR, TOP - FLOOR, tuple(round(v, 4) for v in DBOX), tuple(round(v, 4) for v in SBOX), HY), flush=True)
+knee_room("girl", KNEE_TOP, TM["under_back"])
 
-# ---------- mum: on the chair at the right end, body turned a little to the camera; adult size, not scaled ----------
-FE = xdir(DI, DI["end_face"])
-th = math.degrees(math.atan2(FE.x, -FE.y))                 # Char faces (sin th, -cos th)
-MUM_F = th + MUM_TURN if th < 0 else th - MUM_TURN
-if not (-115 <= MUM_F <= -25): print("DESK WARN mum's chair faces %.0f deg (expected about -90): clamped" % th, flush=True)
-MUM_F = max(-115.0, min(-25.0, MUM_F))
+# ---------- mum: on a code chair at the right (+x) end, body turned a little to the camera; adult size, not scaled ----------
+MUM_F = -90.0 + MUM_TURN                                             # faces the table end (-x), turned MUM_TURN deg towards the camera
 chm = E.Char("spain_mum", (0.30, -0.32), MUM_F, height=MUM_H)
 MM = metrics(chm)
+MUM_UNDER = seat_under(chm, MM["thigh"]) - 0.0010                   # adult thighs: her own depth
+MM["seat_hip"] = MUM_UNDER - MM["upleg_dz"]
+MUM_SEAT_Z = FLOOR + MM["knee_h"] - MUM_UNDER                       # her own knee height - her own thigh depth
 Fm = Vector((math.sin(math.radians(MUM_F)), -math.cos(math.radians(MUM_F)), 0)); Rm = Vector((Fm.y, -Fm.x, 0))     # her forward / her right
-hm = Vector(((EBOX[0] + EBOX[1]) / 2, (EBOX[2] + EBOX[3]) / 2, 0))
-need = DBOX[1] + MM["front"] * abs(Fm.x) + GAP - hm.x                   # her tummy must stay clear of the table end
-lim = 0.35 * min(EBOX[1] - EBOX[0], EBOX[3] - EBOX[2])
-if need > 0:
-    s_ = need / max(0.2, abs(Fm.x))
-    if s_ > lim: print("DESK WARN mum's tummy %.4f into the table end even at the back of her seat (chair would need pulling)" % (s_ - lim), flush=True)
-    hm = hm - Fm * min(s_, lim)
+_hipj = MUM_SEAT_Z + MM["seat_hip"] + MM["upleg_dz"]
+_kdz = max(-0.95 * MM["thigh"], min(0.7 * MM["thigh"], (FLOOR + MM["knee_h"]) - _hipj)); _khz = math.sqrt(max(1e-12, MM["thigh"] ** 2 - _kdz ** 2))
+MUM_KNEE_TOP = _hipj + _kdz + MUM_UNDER + 0.001
+x_tummy = DBOX[1] + MM["front"] * abs(Fm.x) + GAP
+x_knees = DBOX[1] + 0.0015 + _khz * abs(Fm.x)                        # knees just outside the table end
+knees_out = MUM_KNEE_TOP > TM["under_end"] - 0.0005                  # her knees would hit the underside: she sits back from the end
+hm = Vector((max(x_tummy, x_knees) if knees_out else x_tummy, (DBOX[2] + DBOX[3]) / 2 + env("MUM_DY", "-0.002"), 0))
 PM = Sit(chm, MM, (hm.x, hm.y), MUM_SEAT_Z, MUM_LEAN, MUM_F)
-MC = Vector((DBOX[1] - 0.0045, max(DBOX[2] + 0.008, min(DB - 0.008, hm.y + Fm.y * 0.01)), TOP))     # on the table end in front of her
+_md = max(0.016, MM["thigh"] + 0.007); _mw = min(0.032, max(0.022, 2 * MM["sh_half"] + 0.008))
+_cc = hm - Fm * (_md / 2 - MM["thigh"] + 0.0025)                      # chair centre: front edge 2.5 mm behind her knees
+build_code_chair(_cc.x, _cc.y - _md / 2, MUM_SEAT_Z, _mw, FLOOR, depth=_md, wood_lin=(0.62, 0.20, 0.08), cushion_lin=(0.30, 0.02, 0.02),
+                 name="mumChair", yaw_deg=MUM_F)
+MC = Vector((DBOX[1] - (0.0035 if knees_out else 0.0045), max(DBOX[2] + 0.008, min(DB - 0.008, hm.y + Fm.y * 0.01)), TOP))     # on the table end in front of her
 MUM_PLATE = MC + Fm * 0.0025
-print("DESK MUM face %.1f hips %s seat %s table_end_x %.4f front %.4f plate %s" % (MUM_F, tuple(round(v, 4) for v in hm[:2]),
-      tuple(round(v, 4) for v in EBOX), DBOX[1], MM["front"], tuple(round(v, 4) for v in MUM_PLATE)), flush=True)
+print("DESK MUM face %.1f hips %s seat %.4f knees %s (knee top ~%.4f, underside at the end %.4f; tummy x %.4f, knees-out x %.4f) plate %s" % (
+    MUM_F, tuple(round(v, 4) for v in hm[:2]), MUM_SEAT_Z - FLOOR, "outside the table end" if knees_out else "under the table",
+    MUM_KNEE_TOP, TM["under_end"], x_tummy, x_knees, tuple(round(v, 4) for v in MUM_PLATE)), flush=True)
+if not knees_out: knee_room("mum", MUM_KNEE_TOP, TM["under_end"])
 
 # ---------- layout on the table (from her seated centre and the table edge on her side) ----------
 PL = Vector((x_c + PLATE_DX, DB - PLATE_R - 0.0007, TOP))
 FORK_X = PL.x - PLATE_R - 0.0012
-GLASS_HOME = Vector((FORK_X - 0.0045, DB - GLASS_R - 0.0012, TOP))     # clear of the little-finger side of the fork hand
+GLASS_HOME = Vector((FORK_X - 0.0045, max(DBOX[2] + GLASS_R + 0.002, DB - GLASS_R - env("GLASS_BACK", "0.0055")), TOP))
+# 11/21 check 4 (qa/1121-115737 SP2HF f0048): with the fork handle now out to her right the hand and handle went THROUGH the
+# glass at the table's near edge -> the glass stands 5.5 mm further forward (away from her), out of the fork hand's path
 L_PT = Vector((PL.x + PLATE_R + 0.0030, DB - 0.0026, TOP))
 F_REST = frame_M(Vector((FORK_X, DB - 0.0010 - FORK_L, TOP + 0.00025)), Vector((0, 1, 0)), Vector((1, 0, 0)))   # lying flat, tines away from her
 G_HOME = glass_M(GLASS_HOME, 0.0)
@@ -790,8 +828,15 @@ set_M(fork, F_REST, 0); set_M(glass, G_HOME, 0)
 
 
 def mum_targets():
-    fR, fL = (Fm - Rm * 0.25).normalized(), (Fm + Rm * 0.25).normalized()     # fingers forward, a little towards her middle
-    return PM.rest("Right", MC + Rm * 0.0070 - Fm * 0.0005, fR), PM.rest("Left", MC - Rm * 0.0070 - Fm * 0.0005, fL)
+    """11/21 check: her hands could not reach the table from the chair her knees need (need 0.026, arm 0.021). Her hands now rest
+    palms down on her thighs (lap), fingers towards the knees and a little inward; she still nods at 'with my family'."""
+    out = []
+    for side, inward in (("Right", -1.0), ("Left", 1.0)):
+        hip, knee = wpt(chm, side + "UpLeg"), wpt(chm, side + "Leg")
+        along = Vector((knee.x - hip.x, knee.y - hip.y, 0)).normalized()
+        P = hip.lerp(knee, LAP_AT) + Vector((0, 0, MUM_UNDER + 0.0003))         # on top of the thigh (same depth as under it)
+        out.append(PM.rest(side, P, (along + Rm * (0.25 * inward)).normalized()))
+    return out[0], out[1]
 
 
 def mum_head(t):
@@ -806,6 +851,11 @@ def mum_head(t):
 
 PM.learn_hands((0, 18, -3))
 MR, ML = mum_targets()
+PM.body(0, P_LAP, (0, 18, -3))
+for _s, _g in (("Right", MR), ("Left", ML)):     # hands on her lap: always within reach, printed as a check
+    ik_arm(chm, _s, _g[1], _g[3]); _need, _arm = ik_arm.last
+    print("DESK REACH mum setup %s (hand on her lap) need %.4f arm %.4f %s" % (_s, _need, _arm, "" if _need < 0.98 * _arm else "WARN her hand cannot reach her lap"), flush=True)
+MUM_LAP = (MR[1] + ML[1]) / 2
 
 
 def mum_frame(t, fr):
@@ -853,7 +903,7 @@ if SHOT == "SP1":
 else:
     # ---------- seated behind the table, facing the camera ----------
     lean_shift = max(0.0, (TOP - SEAT_Z - SEAT_HIP)) * math.sin(math.radians(abs(LEAN[2])))
-    hy = max((SBOX[2] + SBOX[3]) / 2, DB + M_["front"] + GAP + lean_shift)
+    hy = HY                     # tummy at the table edge; the code chair was placed for this
     P = Sit(ch, M_, (x_c, hy), SEAT_Z, LEAN, 0)
     P.learn_hands(HEAD0)
     mouth0 = mouth(ch)
@@ -866,7 +916,12 @@ else:
         hy, SBOX[2], SBOX[3], DB, ("%.4f" % chest.y) if chest is not None else "none",
         (wpt(ch, "RightFoot").z - FLOOR) - M_["ankle_h"], tuple(round(v, 4) for v in SHR), tuple(round(v, 4) for v in SHL),
         tuple(round(v, 4) for v in mouth0), TOP), flush=True)
+    print("DESK LEGS seat_z %.4f seat_y %.4f..%.4f | hips %s upleg %s knee %s foot %s" % (SEAT_Z, SBOX[2], SBOX[3], tuple(round(v, 4) for v in wpt(ch, "Hips")),
+          tuple(round(v, 4) for v in wpt(ch, "RightUpLeg")), tuple(round(v, 4) for v in wpt(ch, "RightLeg")), tuple(round(v, 4) for v in wpt(ch, "RightFoot"))), flush=True)
     if hy > SBOX[3] - 0.002: print("DESK WARN hips behind the back of the seat (the chair is tucked too far under the table)", flush=True)
+    _lt = leg_top_under(ch, DB, x_c, 0.012)
+    if _lt is None: print("DESK LEGS girl mesh: no leg skin under the table edge", flush=True)
+    else: knee_room("girl mesh (legs posed)", _lt, TM["under_back"])
     L_FLAT = P.rest("Left", L_PT, (-0.25, -1, 0))          # left hand flat beside the plate, thumb towards her middle
 
     # --- FORK, right hand (European grip): palm down, index along the back of the handle, thumb on the inner (+x) side ---
@@ -889,6 +944,10 @@ else:
         tuple(round(v, 2) for v in palm_g), (wpt(ch, "RightHandThumb3", True) - gc).y), flush=True)
     P.body(0, P_LAP, HEAD0)
 
+    # after the bite the fork waits over the plate in the spear pose (11/20: natural), 11/21: 3 mm further out and only 2 mm up -
+    # the old hold (spear pose + 3 mm up) put the wrist 4 mm from her shoulder (DESK REACH need 0.0044) and the forearm corkscrewed
+    HOLD_M = Tr(0, -env("HOLD_DY", "0.0030"), env("HOLD_DZ", "0.0008")) @ frame_M(PIECE_C, Z_SPEAR, Vector((1, 0, 0)))
+
     def fork_now():
         return hand_M(ch, "Right") @ C_FORK
 
@@ -904,7 +963,7 @@ else:
         GRAB, SPEAR, MOUTH_T = 0.9, 1.45, 2.45
         F_SPEAR = frame_M(PIECE_C, Z_SPEAR, Vector((1, 0, 0)))
         F_MOUTH = frame_M(mouth_bite + BITE_D, Z_MOUTH, Vector((0, 1, 0)))
-        F_HOLD = Tr(0, 0, 0.0030) @ frame_M(PIECE_C, Z_SPEAR, Vector((1, 0, 0)))   # 11/20 check: the old hold (near her chest, low) twisted the forearm; hover above the plate in the spear pose instead
+        F_HOLD = HOLD_M
         FK = [(GRAB, F_REST), (GRAB + 0.12, Tr(0, 0, 0.0018) @ F_REST), (1.25, Tr(0, 0, 0.0025) @ F_SPEAR), (SPEAR, F_SPEAR),
               (1.65, Tr(0, 0, 0.0022) @ F_SPEAR), (2.2, Tr(-0.0045, -0.0030, -0.0035) @ F_MOUTH), (MOUTH_T, F_MOUTH), (2.65, F_MOUTH),
               (3.05, F_HOLD), (9.0, F_HOLD)]
@@ -952,13 +1011,20 @@ else:
             if fr % 4 == 0:
                 print("CONTACT SP2 t=%.2f fork_tip_to_target %.4f tip_to_mouth %.4f tip_to_table %.4f" % (
                     t, (tip - key_M(FK, t).translation).length if t >= GRAB else 0.0, (tip - m_).length, tip.z - TOP), flush=True)
+                # hand and fork handle must stay out of the glass (11/21 check 4)
+                gc_ = G_HOME.translation; pts = [wpt(ch, "RightHand%s" % b, True) for b in ("Index3", "Middle3", "Ring3", "Pinky3", "Thumb3")]
+                pts += [wpt(ch, "RightHand"), wpt(ch, "RightHandMiddle1")]
+                ax_ = Mf.to_3x3().normalized().col[2]
+                pts += [Mf.translation + ax_ * (FORK_L * k / 6.0) for k in range(7)]
+                gap = min(((Vector((p_.x, p_.y, 0)) - Vector((gc_.x, gc_.y, 0))).length - GLASS_R) if p_.z < gc_.z + GLASS_H + 0.0005 else 9.0 for p_ in pts)
+                print("CONTACT SP2 t=%.2f hand_fork_to_glass %.4f%s" % (t, gap, "  WARN hand or fork in the glass" if gap < 0.0003 else ""), flush=True)
             mum_frame(t, fr)
         ch.finish(); chm.finish()
         for o in (fork, piece, glass): E.constant(o)
 
     elif SHOT == "SP3":
         REL_FORK, GRAB_G, LET_G = 0.5, 1.2, 2.8
-        F_HOLD = Tr(0, 0, 0.0030) @ frame_M(PIECE_C, Z_SPEAR, Vector((1, 0, 0)))   # 11/20 check: the old hold (near her chest, low) twisted the forearm; hover above the plate in the spear pose instead
+        F_HOLD = HOLD_M
         FK3 = [(0.0, F_HOLD), (0.28, Tr(0, 0, 0.0018) @ F_REST), (0.48, F_REST)]
         lips = mouth_sip + SIP_D; r10 = math.radians(10); up = Vector((0, 0, 0.0018))
         side_off = Vector((-0.0035, -0.0020, -0.0030))         # comes up beside her right cheek, then to the lips: never from below the face
@@ -1035,11 +1101,11 @@ else:
             elif t < W0 + 0.3: rdirs = blend_dirs(r_ik, wave_dirs(W0 + 0.3), (t - W0) / 0.3)
             else: rdirs = wave_dirs(t)
             P.body(t, {**rdirs, **left}, HEAD_W)
-            set_hand_rot(ch, "Left", L_FLAT[0]); curl(ch, "Left", G_FLAT)
+            turn_hand(ch, "Left", L_FLAT[0], fr); curl(ch, "Left", G_FLAT)
             if t < W0 + 0.15:
-                set_hand_rot(ch, "Right", R_OFF[0]); curl(ch, "Right", G_RELAX)
+                turn_hand(ch, "Right", R_OFF[0], fr); curl(ch, "Right", G_RELAX)
             else:
-                set_hand_rot(ch, "Right", Q_WAVE); curl(ch, "Right", G_WAVE)
+                turn_hand(ch, "Right", Q_WAVE, fr); curl(ch, "Right", G_WAVE)
             key_hand(ch, "Left", fr); key_hand(ch, "Right", fr)
             set_M(fork, F_REST, fr); set_M(glass, G_HOME, fr); set_M(piece, Matrix.Translation((0, 0, -1)), fr)
             if fr % 12 == 0:
@@ -1062,14 +1128,17 @@ else:
     if CAMSUB in ("HL", "HL2"):
         hide([chm.root])         # mum would stand between the left-side camera and the girl's left hand
     pick = (PIECE_C + mouth0) / 2; sip = (GLASS_HOME + Vector((0, 0, GLASS_H)) + mouth0) / 2
-    mumh = (MC + Vector((0, 0, 0.001)))
+    mumh = MUM_LAP + Vector((0, 0, 0.001))              # 11/21: her hands are on her lap now
     HANDCAM = {   # aim, camera offset, lens. Her right hand is on the -x side; DOF off.
         "HF": ((pick if SHOT == "SP2" else sip), Vector((-0.07, -0.12, 0.04)), 150),     # front-3/4 from her right front
         "HS": ((pick if SHOT == "SP2" else sip), Vector((-0.14, -0.01, 0.02)), 150),     # her right side
         "HL": (L_PT + Vector((0, 0, 0.001)), Vector((0.07, -0.12, 0.05)), 190),          # left hand, front-left
         "HL2": (L_PT + Vector((0, 0, 0.001)), Vector((0.14, -0.01, 0.03)), 190),         # left hand, her left side
-        "MF": (mumh, Vector((-0.02, -0.12, 0.07)), 170),                                  # mum's hands from the front, above
-        "MS": (mumh, Vector((0.01, -0.14, 0.016)), 170)}                                  # mum's hands low from the camera side
+        "MF": (mumh, Vector((0.02, -0.12, 0.07)), 170),                                   # mum's hands on her lap from the front, above
+        "MS": (mumh, Vector((0.03, -0.14, 0.012)), 170),                                  # mum's hands on her lap, low from the camera side
+        # legs ON the seat, never through it (UK 11/20): side at seat height + low front-left
+        "L": (Vector((x_c, HY - 0.004, SEAT_Z + 0.005)), Vector((-0.17, 0.0, 0.004)), 190),
+        "L2": (Vector((x_c, SBOX[2], SEAT_Z + 0.003)), Vector((0.06, -0.13, 0.0)), 190)}
     if CAMSUB in HANDCAM:
         aim, off, lens = HANDCAM[CAMSUB]
         cam_move(lens, aim + off, aim, aim + off, aim, focus=aim)
