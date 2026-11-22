@@ -23,6 +23,13 @@ def listen_first(page):
     page.wait_for_selector('button:has-text("Open the puzzle"):not([disabled])', timeout=20000)
 
 
+def end_clip(page):
+    """Map-animation clip (opening / flight): jump to its end so the walk goes on (web/qa_clips.py checks the clips themselves)."""
+    page.wait_for_selector('.wr-clip video', timeout=8000)
+    page.wait_for_function("document.querySelector('.wr-clip video').duration > 0", timeout=20000)
+    page.evaluate("(() => { const v = document.querySelector('.wr-clip video'); v.currentTime = v.duration - 0.25 })()")
+
+
 def listen_all(page):
     page.get_by_role('button', name='Listen 聽句子').click()
     page.wait_for_selector('button:has-text("Watch the story"):not([disabled])', timeout=90000)
@@ -36,7 +43,7 @@ with sync_playwright() as p:
     page.on('pageerror', lambda e: problems.append(f'pageerror: {str(e)[:200]}'))
     page.on('response', lambda r: problems.append(f'{r.status} {r.url}') if r.status >= 400 else None)
     page.goto(BASE); page.wait_for_selector('.wr-login'); shot(page, 'login')
-    page.click('.wr-hero-card:has-text("Boy")'); shot(page, 'login_boy'); page.fill('input', '60130'); page.click('button.wr-big'); page.wait_for_selector('.wr-map'); page.wait_for_timeout(800); shot(page, 'map')
+    page.click('.wr-hero-card:has-text("Boy")'); shot(page, 'login_boy'); page.fill('input', '60130'); page.click('button.wr-big'); end_clip(page); page.wait_for_selector('.wr-map'); page.wait_for_timeout(800); shot(page, 'map')
     page.click('button:has-text("World Clock")'); page.wait_for_timeout(300); shot(page, 'world_clock'); page.click('button:has-text("Close")')
 
     # ---- Taiwan: drag + code
@@ -66,7 +73,7 @@ with sync_playwright() as p:
     page.click('button:has-text("Back to the map")'); page.wait_for_selector('.wr-map')
 
     # ---- Japan: speaking
-    page.click('.wr-pin:has-text("Japan")'); page.wait_for_timeout(1600); shot(page, 'japan_travelling')
+    page.click('.wr-pin:has-text("Japan")'); page.wait_for_timeout(1600); shot(page, 'japan_travelling'); end_clip(page)
     page.wait_for_selector('.wr-meet', timeout=8000); shot(page, 'japan_meet')
     listen_first(page); page.click('button:has-text("Open the puzzle")'); page.wait_for_timeout(2500); shot(page, 'japan_puzzle')
     page.click('button:has-text("Hint 1")'); page.wait_for_timeout(1200); page.click('button:has-text("Hint 2")'); page.wait_for_timeout(1500); shot(page, 'japan_hint2')

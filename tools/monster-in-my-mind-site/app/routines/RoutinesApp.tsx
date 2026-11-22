@@ -73,7 +73,7 @@ function Login({ onStart, hero, onHero }: { onStart: (studentId: string) => Prom
   </main>
 }
 
-function WorldMap({ progress, current, onOpen, travelling, openAll, hero }: { progress: Progress; current: Station | null; onOpen: (s: Station) => void; travelling: { from: Station; to: Station } | null; openAll: boolean; hero: Hero }) {
+function WorldMap({ progress, current, onOpen, travelling, openAll, hero, onEnding }: { progress: Progress; current: Station | null; onOpen: (s: Station) => void; travelling: { from: Station; to: Station } | null; openAll: boolean; hero: Hero; onEnding: () => void }) {
   const [clock, setClock] = useState(false)
   const done = STATIONS.filter(s => progress[s.id]?.gameDone).length
   const vehicle = travelling ? VEHICLE[travelling.to.transport] : null
@@ -110,7 +110,8 @@ function WorldMap({ progress, current, onOpen, travelling, openAll, hero }: { pr
     {clock && <aside className="wr-clock-panel"><h2>When it is 7:00 a.m. in Taiwan…</h2>
       <ul>{STATIONS.map(s => <li key={s.id}><b>{s.country}</b><span>{WORLD_CLOCK[s.id]}</span></li>)}</ul>
       <button className="wr-chip" onClick={() => setClock(false)}>Close 關閉</button></aside>}
-    {done === STATIONS.length && <section className="wr-finish" role="status"><h2>🎉 You did it! 環遊世界完成！</h2><p>10 stamps · {STATIONS.reduce((n, s) => n + (progress[s.id]?.stars ?? 0), 0)} ★</p></section>}
+    {done === STATIONS.length && <section className="wr-finish" role="status"><h2>🎉 You did it! 環遊世界完成！</h2><p>10 stamps · {STATIONS.reduce((n, s) => n + (progress[s.id]?.stars ?? 0), 0)} ★</p>
+      <button className="wr-chip" onClick={onEnding}>🎬 Watch the trip again 再看一次回顧</button></section>}
     {!travelling && current && done < STATIONS.length && <p className="wr-hint-line">Tap <b>{current.order} {current.country}</b> to travel. 點地圖上的下一站出發。</p>}
   </main>
 }
@@ -319,25 +320,52 @@ function StationFlow({ station, state, remaining, onUpdate, onExit, hero }: { st
   </main>
 }
 
+// Map animation clips (opening, flight between stations, ending): map_<name>.mp4, 720p, made with map-anim/build*.py.
+// First view has no Skip (unless the video stalls); a clip seen before on this device can be skipped. A clip that cannot
+// load never blocks the trip: onFail runs instead (the old hero-on-the-map trip for flights).
+const clipSeen = (name: string) => (store.get('wr-clips') ?? '').split(',').includes(name)
+const markClipSeen = (name: string) => { if (!clipSeen(name)) store.set('wr-clips', [...(store.get('wr-clips') ?? '').split(',').filter(Boolean), name].join(',')) }
+function MapClip({ name, onDone, onFail }: { name: string; onDone: () => void; onFail: () => void }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [needTap, setNeedTap] = useState(false), [slow, setSlow] = useState(false), [seen] = useState(() => clipSeen(name))
+  useEffect(() => {
+    const v = ref.current; if (!v) return
+    void v.play().catch(() => setNeedTap(true))               // iPad: a clip that starts after a network wait needs one more tap
+    const t = setTimeout(() => { if (v.currentTime < 0.2) setSlow(true) }, 6000)
+    return () => clearTimeout(t)
+  }, [])
+  const done = () => { markClipSeen(name); onDone() }
+  return <div className="wr-clip" role="dialog" aria-label="Map animation">
+    <video ref={ref} src={`${ASSET}/video/map_${name}.mp4`} playsInline preload="auto" onEnded={done} onError={onFail} onPlaying={() => { setNeedTap(false); setSlow(false) }} />
+    {needTap && <button className="wr-big wr-clip-play" onClick={() => void ref.current?.play().catch(() => {})}>▶ Play 播放</button>}
+    {(seen || slow) && <button className="wr-chip wr-clip-skip" onClick={done}>Skip 跳過 ⏭</button>}
+  </div>
+}
+
 export default function RoutinesApp() {
   const [phase, setPhase] = useState<'login' | 'map' | 'station'>('login')
   const [progress, setProgress] = useState<Progress>({}), [remaining, setRemaining] = useState(30)
   const [station, setStation] = useState<Station | null>(null), [travelling, setTravelling] = useState<{ from: Station; to: Station } | null>(null)
   const [hero, setHeroState] = useState<Hero>(() => store.get('wr-hero') === 'boy' ? 'boy' : 'girl')
   const setHero = (h: Hero) => { setHeroState(h); store.set('wr-hero', h) }
+  const [clip, setClip] = useState<{ name: string; then: () => void; fail?: () => void } | null>(null)
   useEffect(() => { if (phase !== 'login') music.stop() }, [phase])
   const openAll = useMemo(() => new URLSearchParams(window.location.search).get('open') === 'all', [])
   const current = STATIONS.find(s => !progress[s.id]?.gameDone) ?? null
   async function load() { const r = await callCloud<{ stations: Progress; remaining: number }>('routinesState'); setProgress(r.stations); setRemaining(r.remaining) }
-  async function start(studentId: string) { await studentLogin(); await callCloud('joinStudent', { studentId }); await load(); setPhase('map') }
+  async function start(studentId: string) { await studentLogin(); await callCloud('joinStudent', { studentId }); await load(); setPhase('map'); if (!clipSeen('opening')) setClip({ name: 'opening', then: () => {} }) }
   function open(next: Station) {
     const index = STATIONS.indexOf(next), from = STATIONS[Math.max(0, index - 1)]
     if (progress[next.id]?.gameDone || next.transport === 'home') { setStation(next); setPhase('station'); return }
-    setTravelling({ from, to: next })
-    setTimeout(() => { setTravelling(null); setStation(next); setPhase('station') }, 3200)
+    const arrive = () => { setStation(next); setPhase('station') }
+    const walk = () => { setTravelling({ from, to: next }); setTimeout(() => { setTravelling(null); arrive() }, 3200) }
+    setClip({ name: `leg_${next.id}`, then: arrive, fail: walk })
   }
+  const allDone = (p: Progress) => STATIONS.every(s => p[s.id]?.gameDone)
+  const playEnding = () => setClip({ name: 'ending', then: () => {} })
+  if (clip) return <MapClip key={clip.name} name={clip.name} onDone={() => { const c = clip; setClip(null); c.then() }} onFail={() => { const c = clip; setClip(null); (c.fail ?? c.then)() }} />
   if (phase === 'login') return <Login onStart={start} hero={hero} onHero={setHero} />
   if (phase === 'station' && station) return <StationFlow key={station.id} station={station} state={progress[station.id]} remaining={remaining} hero={hero}
-    onUpdate={setProgress} onExit={() => { setPhase('map'); void load().catch(() => {}) }} />
-  return <WorldMap progress={progress} current={current} onOpen={open} travelling={travelling} openAll={openAll} hero={hero} />
+    onUpdate={setProgress} onExit={() => { setPhase('map'); void load().catch(() => {}); if (allDone(progress) && !clipSeen('ending')) playEnding() }} />
+  return <WorldMap progress={progress} current={current} onOpen={open} travelling={travelling} openAll={openAll} hero={hero} onEnding={playEnding} />
 }

@@ -311,3 +311,26 @@ Tripo：老師 11/19 說已儲值（分批），新餘額還沒讀，下一批�
 - 11/21 Colab 全部排隊任務完成，定時巡檢已關閉。今日 Colab 約 20.6 單位。
 - ✅ **11/21 夜 部署新加坡＋澳洲**（老師說「部署」）：部署前線上最後版本是 11/21 18:50 自己部署的那次（1,224 檔），比對後除 2 支新影片外全部相同、build 檔名一致（index-Cre58wmv.js）；只部署 hosting（`--account u9431818@gmail.com`）；正式站兩支影片和本機逐位元組相同。**十站情境動畫全部上線**。
 - ✅ **11/21 夜 首頁入口打開**（老師：「首頁入口不要藏著」）：`monster-in-my-mind-site/app/ClassActivities.tsx` 的 `SHOW_ROUTINES_TILE = true`；建置後只有首頁那段程式不同（index-DNsFaQEb.js），只部署 hosting，正式站 JS 和本機逐位元組相同，內建瀏覽器看到首頁「World Routines Trip」方塊。注意：部署後第一次讀首頁會拿到 CDN 舊快取，網址加 `?v=` 再看。
+
+## 2026-11-22 地圖動畫（kaz-map-animation skill）
+- 老師給 YT 影片〈I Made VIRAL Map Animation Videos Using Claude Code (FREE Skill)〉＋ZIP＋PDF。skill 已審查（不連網）並安裝到 `C:\Users\User\.claude\skills\kaz-map-animation`（npm install＋Playwright Chromium）；授權是作者私有 → 不放進 GitHub、不改它的程式、`rights/` 原樣保留。
+- 規格卡 `../rdq/RDQ-spec-world-routines-map-animation-20261122.md`（confirmed）：開場 1＋站間飛行 9＋結尾 1，橫式 1080p，英文旁白（Jenny −12%），不教時差，Comic Relief 字幕另外疊。
+- 程式 `map-anim/build.py`（`python build.py leg japan`；`--sheet` 只出檢查圖）；場景 JSON 存 `map-anim/scenes/`，成片 `map-anim/out/`。本機渲染，不花錢。
+- 飛行短片**不顯示作息時間**（那是本站謎題答案）→ 顯示「lunch ?:??」；真正的時間留到結尾回顧。
+- 試片「台灣 → 日本」（7.9 秒，−16.2 LUFS）11/22 已傳老師，**等老師看**；通過後做其餘 8 支飛行＋開場＋結尾，再接進網站（還沒動網站程式）。
+- 踩坑：faster-whisper 給檔名會壞（PyAV 版本）→ 用 soundfile 讀成陣列再傳；第一個字時間會被貼到 0 秒 → 用旁白起點修正；鏡頭移動時國名標籤會滑到字幕後面 → 整個畫面往南移、起點國名放島的上方；ffmpeg 9 沒有 `-vsync`，用 `-fps_mode vfr`。
+- 11/22 老師退試片：「船沒有由南往北航行的感覺」→ 小船改成沿虛線從台灣開到東京（每格一個只活一格的圖示，不改 skill）、放大 1.4 倍；老師回「可以，做其餘」。
+- ✅ **11/22 11 支地圖動畫全部做完**（都還沒給老師看過其餘 10 支，也**還沒部署、沒 commit**）：
+  - 飛行 9 支 `map-anim/out/leg_<站>.mp4`（各約 8 秒，`python build.py leg all`）；飛機沿弧線飛並轉向航向、火車走倫敦→巴黎→波爾多→馬德里、船走真實海路；新加坡太小不上色，用閃動橘點；印度相關兩段關掉全部國界線。
+  - 開場 `out/opening.mp4`（31 秒）、結尾回顧 `out/ending.mp4`（57 秒，十站各念一次「國名＋I … at 時間」，顯示真正的時間）：`python build_world.py opening|ending`（`--still 秒數` 先看一格）。世界總覽鏡頭中心東經 125 度；這兩支沒有 skill 音效，只有旁白＋小聲配樂。
+  - 11 支都是 −16.0～−16.2 LUFS（量成片）；720p 複本在 `web/video/map_<名稱>.mp4`（共約 19 MB）。
+  - 跨太平洋那段（日本→美國）要另給平移 360 度的國家外框才會上色：`map-anim/geo/japan_west.geojson`、`usa_east.geojson`（`geo/extract_country.cjs` 從 skill 內建的 Natural Earth 公有領域資料抽出）。
+- ✅ **網站程式已接好（本機）**：`monster-in-my-mind-site/app/routines/RoutinesApp.tsx` 新增 `MapClip`（全螢幕播放）＋`routines.css` 4 行。
+  - 開場：登入後、地圖出現前播一次（每台裝置一次，記在 localStorage `wr-clips`）。
+  - 飛行：點下一站時播 `map_leg_<站>.mp4` 取代原本小人偶移動；第一次不能跳過，看過之後有「Skip 跳過」；影片載不到或 6 秒沒開始 → 自動退回舊的小人偶移動／出現 Skip，不會卡住。
+  - 結尾：第 10 個印章後回地圖時播一次；完成卡片多一顆「🎬 Watch the trip again 再看一次回顧」。
+  - 本機檢查：typecheck（只有既有的 hosting.json 錯誤）、lint 乾淨、`python web/qa_clips.py <資料夾>` 7 個情境 0 錯誤、`web/qa_walk.py` 30 步 0 錯誤（已加 `end_clip` 跳過影片）、正式建置成功（index-BmKmoPbV.js）。
+  - **還沒驗證**：真 iPad（登入後隔了網路等待才播開場，Safari 可能要多點一次「▶ Play 播放」，程式已有這顆按鈕）；我沒有實際聽過 11 支的聲音，只量過響度、抽格看畫面。
+- 踩坑已寫進 `tools/動畫共用踩坑規則.md` §17（10 條）＋15 個影片 skill 開頭短版。
+- 下一步：老師看 10 支新片 → 要改就改 → 老師說「部署」才比對線上、只部署 hosting。收工 commit 時**不要**放 skill 本身、mp4、YT 影片資料夾。
+- ✅ **11/22 晚 地圖動畫部署上線**（老師看過 11 支合輯後說「可以，部署」）：部署前線上最後版本是 11/21 21:57（台灣時間）自己部署的「首頁入口」那版（1,226 檔），比對後除 11 支新影片（LOCAL-ONLY）與建置檔外 1,221 檔全部相同；只部署 hosting（`--account u9431818@gmail.com`）。部署後正式站 `index-BmKmoPbV.js`、`index-B_yHCcEj.css` 和 11 支 `map_*.mp4` 與本機逐位元組相同（13/13），影片支援分段讀取（206）。**還沒驗證**：真 iPad 實機、實際聽聲音。程式與文件都還沒 commit。
