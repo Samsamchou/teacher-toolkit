@@ -331,9 +331,9 @@ function buildShots() {
     label(c, '加水', 560, 160, 46, pop(lt, .4), { bg: '#bfe6ff', tail: true });
     label(c, '維修', 1250, 560, 46, pop(lt, 1.6), { bg: '#ffe0b3', tail: true });
   }, 'sepia(.15)');
-  // 句意 17：CT278「蒸汽女王」
-  const queen = (c, k) => { if (k <= 0) return; crown(c, 1440, 120, 46 * k); label(c, '蒸汽女王', 1440, 215, 50, k, { bg: '#ffe36e' });
-    c.save(); c.globalAlpha = k; c.strokeStyle = '#fff'; c.lineWidth = 6; c.setLineDash([12, 10]); c.beginPath(); c.moveTo(1360, 235); c.lineTo(1135, 250); c.stroke(); c.restore(); };
+  // 句意 17：CT278 老蒸汽火車頭（v2.2：2026-11-22 拿掉「蒸汽女王」暱稱與皇冠，主流媒體的女王是 CT273）
+  const queen = (c, k) => { if (k <= 0) return; label(c, 'CT278 老蒸汽火車頭', 1330, 150, 42, k, { bg: '#ffe36e' });
+    c.save(); c.globalAlpha = k; c.strokeStyle = '#fff'; c.lineWidth = 6; c.setLineDash([12, 10]); c.beginPath(); c.moveTo(1250, 178); c.lineTo(1110, 228); c.stroke(); c.restore(); };
   imgShot(U(17).t0, U(18).t0, 's12', [840, 472, 1.0], [980, 380, 1.25], (c, lt) => {
     sparkle(c, 330, 460, 70, lt, .05, .5); ct278(c); queen(c, pop(lt, .9, .45));
   });
@@ -342,7 +342,7 @@ function buildShots() {
     const a = ease(prog(lt, 0, 1.6)), b = ease(prog(lt, 2.4, 4.4));
     const cam = b > 0 ? camAt([840, 472, 1.0], [1400, 480, 1.45], b) : camAt([980, 380, 1.25], [840, 472, 1.0], a);
     withCam(c, cam, () => {
-      drawImg(c, 's12'); ct278(c); queen(c, 1 - prog(lt, 2.2, 2.6));
+      drawImg(c, 's12'); ct278(c); queen(c, 1 - prog(lt, .5, .85));
       label(c, '台糖小火車頭', 1440, 250, 40, pop(lt, 4.0), { bg: '#ffd6c9', tail: true });
     });
     label(c, '二八水水公園', W / 2, 150, 56, pop(lt, .8) * (1 - prog(lt, 3.6, 3.9)), { bg: '#d9f2c9' });

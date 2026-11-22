@@ -1,0 +1,114 @@
+{
+ "B03": {
+  "prompt": "Scene: the OPEN-AIR steam locomotive display in 二八水水公園 park, Ershui, Taiwan, redrawn faithfully from the two reference photos (Changhua County tourism, 2024). There is NO roof, NO shelter, NO canopy: the locomotives stand outdoors under open blue sky. Two black steam locomotives stand side by side on two short parallel display tracks with grey ballast: on the LEFT a SMALL narrow-gauge sugar-cane steam locomotive with a bright red front buffer beam and a tall thin chimney; on the RIGHT, slightly behind it, the LARGE mainline steam locomotive CT278 seen in three-quarter view, with big smoke deflector plates beside the front, a round smokebox front, a blank red rectangular number plate on the smokebox (no characters on it), black driving wheels with white rims and red connecting rods, and its coal tender behind. Around the display: a low barrier of short dark-red posts linked by chains, a reddish-brown wooden deck and grey stone paving in front, a few green trees and low houses behind, blue sky with white clouds, distant green hills. Keep the lower third of the picture as open stone paving in front of the barrier with nothing on it (space for characters added later). No people, no animals, no aeroplane, no flags, no banners. Plates and signs blank.",
+  "refs": [
+   "ref/style_girl.png",
+   "ref/chcg_park_two_locos.jpg",
+   "ref/chcg_park_ct278_front.jpg"
+  ]
+ },
+ "B08": {
+  "prompt": "Scene: the 二水花旗木鐵道 (pink shower tree railway) at Yuanquan, Ershui, Taiwan, in spring, redrawn faithfully from the reference photos (Changhua County tourism, 2025). Eye-level view standing on the bike path. Layout from LEFT to RIGHT: on the left, ONE single railway track (one pair of rails on gravel ballast) running through green grass and bushes and curving gently away into the distance in an S-curve; next to it a dark-green iron railing fence that runs along the whole length; then the grey paved bike path running away from the viewer beside the railing (the bike path is slightly higher than the track); then ONE row of pink shower trees (Cassia bakeriana) planted along the right edge of the bike path, full of pale pink and white blossom clusters with deeper pink buds, their branches arching over the bike path toward the railing; tall white street lamps between the trees. The trees are on the bike-path side only, NOT on both sides of the track. In the far distance, green hills and a tall rocky cliff. Blue sky. Fallen pink petals on the path. No train, no people, no animals, no cars, no signs with writing. Keep the lower right foreground of the bike path open (space for characters added later).",
+  "refs": [
+   "ref/style_girl.png",
+   "ref/chcg_cassia_railing_path.jpg",
+   "ref/chcg_cassia_curve_aerial.jpg"
+  ]
+ },
+ "B03s": {
+  "prompt": "Redraw the second reference image (an open-air steam locomotive display in 二八水水公園 park) as a painted anime background in exactly the same style as the third reference image: soft painterly anime scenery, clean outlines, warm saturated colours, cel-shaded light, like a Japanese animated film background. Keep EVERYTHING in the second reference the same: composition, open sky with no roof, the small locomotive with red front buffer beam on the left, the large CT278 locomotive with smoke deflectors on the right, the dark-red posts with chains, the wooden deck, the trees, houses and hills, and the empty stone paving in the lower third. Number plates stay blank red. No people, no animals.",
+  "refs": [
+   "ref/style_girl.png",
+   "ref/B03_photo_like.png",
+   "bg/B08.png"
+  ]
+ },
+ "B01": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). Front view of Ershui Station (二水車站, renovated in 2025) faithfully following the photo reference: a low, wide single-storey white station building with mustard-yellow / orange horizontal trim bands along the roof edge and base, white round columns at the central entrance portico, wide grey front steps, simple clean modern-retro look; the name board on the facade is left blank. A wide open paved front plaza (lower third empty, space for characters). Green hills behind, blue sky.",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/tdri_ershui_station.jpg"
+  ]
+ },
+ "B02": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). Overview of 二八水水公園 park in Ershui: an open grey stone-paved plaza and a green lawn with trees, a small colourful children's playground with a slide at the left side, and in the middle distance the two black steam locomotives displayed OUTDOORS (no roof) behind short dark-red posts with chains on a wooden deck (one large with smoke deflectors, one small). Low houses and green hills beyond, blue sky. Lower third open lawn and paving (space for characters).",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_park_plaza.jpg",
+   "ref/chcg_park_two_locos.jpg"
+  ]
+ },
+ "B04": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). Nostalgic scene from the 1950s: a black steam locomotive (shaped like the reference photo, with smoke deflectors) pulling three old passenger cars runs along a single track through green rice paddies in inland central Taiwan, a big plume of white steam and grey smoke rising from its chimney; low hills behind; warm, slightly sepia, nostalgic sunlight. No people visible.",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_park_ct278_front.jpg"
+  ]
+ },
+ "B05": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). View from inside a small local diesel train on the Jiji Line looking out through one wide side window: outside the window, green rice paddies, banana trees, low village houses and a tall rocky cliff hill covered with trees in the distance (inland Ershui, Taiwan), blue sky. Inside: simple window frame and the top of a blue seat back at the bottom edge. Clear depth layers: window frame foreground, fields middle, hills background. No people.",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_yq_aerial_fields.jpg"
+  ]
+ },
+ "B06": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). The 八堡圳 Babao Canal water intake at Ershui, following the photo reference: a long grey concrete sluice gate with a row of round concrete pillars and dark metal screens between them, light-blue metal railings along the top walkway; muddy grey-brown river water of the Zhuoshui River swirling in front of the gate. On the right third, the canal water flows away in a straight concrete channel toward bright green rice paddies. Green bushes, blue sky.",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_babao_gate.jpg"
+  ]
+ },
+ "B07": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). The small unstaffed Yuanquan Station (源泉車站) on the Jiji Line, following the photo references: a long simple concrete platform with a yellow safety line beside ONE single railway track; on the platform stands a small waiting-room hut with speckled grey washed-stone walls, a red-brick lower base and a grey tiled hip roof, an open doorway; a platform name sign on two posts whose board is left BLANK (white with a plain green band, no characters). There is NO ticket office and NO staff. Village houses and trees behind, blue sky. Lower third of the platform open (space for characters).",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/yq_waiting_room_web.jpg",
+   "ref/chcg_yq_platform_sign.jpg"
+  ]
+ },
+ "B09": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). Close-up of pink shower tree (Cassia bakeriana) blossom clusters: hanging bunches of pale pink and white five-petal flowers with curved yellow stamens, deeper pink round buds, small green leaflets, soft blue sky behind, gentle bokeh.",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_cassia_flower.jpg"
+  ]
+ },
+ "B10": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). The same place as the second reference image (bike path beside the dark-green iron railing and the single railway track, a row of pink shower trees). Five small background visitors (simple adults and one child, seen from the side or from behind, plain casual clothes, NOT the girl character) stand ON THE BIKE PATH, all BEHIND the green railing, taking photos of the pink trees with cameras and phones. A small yellow local diesel train is far away on the track around the curve. Keep the upper right corner simple sky (a symbol will be added later).",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_yq_cassia_train.jpg"
+  ]
+ },
+ "B11": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). The same place as the second reference image (single railway track, dark-green iron railing, bike path, row of pink shower trees), seen from the bike path. ONE small adult visitor (simple background person seen from the side, plain casual clothes, NOT a child, NOT the girl character) has stepped over the railing and stands between the rails ON THE RAILWAY TRACK, holding up a phone to take a photo of the flowers. A small yellow local diesel train is coming around the curve in the distance. Alerting but not scary mood. Keep the upper right corner simple sky (a symbol will be added later).",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png",
+   "ref/chcg_yq_cassia_train.jpg"
+  ]
+ },
+ "B12": {
+  "prompt": "Paint it in exactly the same soft painterly anime background style as the second reference image (bright, warm, clean outlines). Ershui at golden sunset: view over low town rooftops and green rice paddies toward a long forested hill ridge with a rocky cliff, warm orange and pink sky; the single Jiji Line track crosses the fields in the middle distance with a tiny yellow local train. Open grassy foreground in the lower third (space for characters).",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png"
+  ]
+ },
+ "B08g": {
+  "prompt": "Redraw the second reference image EXACTLY (same composition, same railway track, same dark-green railing, same bike path, same lamps, same hills and cliff, same painterly anime style) but in SUMMER after the flowering season: the row of shower trees along the bike path now has only fresh green leaves and NO pink flowers at all, no petals on the ground. Everything else unchanged.",
+  "refs": [
+   "ref/style_girl.png",
+   "bg/B08.png"
+  ]
+ }
+}

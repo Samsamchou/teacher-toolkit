@@ -59,10 +59,13 @@
 
 - `tools/2026 Thanksgiving/`：五六年級感恩節英語活動。參考報告（Markdown＋Google 文件）、
   開場影片（南瓜派小子 Pippy，hybrid-ai-film 的 Colab 流程，進度見 HANDOFF）、
-  `thankful-35/` 35 句感謝句程式動畫（網頁播放器＋MP4）。先讀該資料夾 `HANDOFF.md`；影音不入庫。
+  `thankful-35/` 35 句感謝句程式動畫（網頁播放器＋MP4）、
+  `thankful card/` 學生感恩卡動畫（6 位學生各一支，2D 繪本程式動畫，先讀 `thankful card/film-project/HANDOFF.md`）。
+  先讀該資料夾 `HANDOFF.md`；影音不入庫。
 
 ## 工作注意事項
 
+- **教材編輯規則 v2**（2026-11-22 起，所有課程）：做任何教案或教材前先讀 `tools/教材編輯規則_v2.md`——網路查證必走；每 1–3 堂同主題課交可編輯簡報＋影片＋單字圖字卡＋一張學習單（有影片加 Kahoot）。
 - 學生資料一律去識別化（只用座號與班級代號）。
 - 不提交 `.env`、金鑰、token、cookies、登入狀態或本機 agent 設定。
 - commit 訊息要寫清楚做了什麼與為什麼。
