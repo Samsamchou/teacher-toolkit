@@ -334,3 +334,172 @@ Tripo：老師 11/19 說已儲值（分批），新餘額還沒讀，下一批�
 - 踩坑已寫進 `tools/動畫共用踩坑規則.md` §17（10 條）＋15 個影片 skill 開頭短版。
 - 下一步：老師看 10 支新片 → 要改就改 → 老師說「部署」才比對線上、只部署 hosting。收工 commit 時**不要**放 skill 本身、mp4、YT 影片資料夾。
 - ✅ **11/22 晚 地圖動畫部署上線**（老師看過 11 支合輯後說「可以，部署」）：部署前線上最後版本是 11/21 21:57（台灣時間）自己部署的「首頁入口」那版（1,226 檔），比對後除 11 支新影片（LOCAL-ONLY）與建置檔外 1,221 檔全部相同；只部署 hosting（`--account u9431818@gmail.com`）。部署後正式站 `index-BmKmoPbV.js`、`index-B_yHCcEj.css` 和 11 支 `map_*.mp4` 與本機逐位元組相同（13/13），影片支援分段讀取（206）。**還沒驗證**：真 iPad 實機、實際聽聲音。程式與文件都還沒 commit。
+
+## 2026-11-23 he/she 版（規劃中）
+- 規格卡 `../rdq/RDQ-spec-world-routines-he-she-20261123.md`（confirmed）：另開 `/world-routines-he-she`、「世界小記者連線報導」（主播畫外音問、記者回報、主角不入鏡）、沿用 5 女 5 男人物並取名、10 站換新作息與謎底、每站換新謎題類型、10 部新桌上微縮動畫（先台灣試片）、建議 ①～⑤ 全採納。課本依據 p.45（She watches TV…、-s／-es／-ies）。
+- 印度：老師說「照這份開始」未指定 → 先照建議 "He plays cricket at 5:00."（1700），關卡 ② 可改回 homework。
+- 關卡 ② 文件 `he-she/關卡2_文字稿與教材清單_20261123.md`（10 站句子、延伸句、拖放誘答、10 種新謎題、動畫場景、網路查證表）11/23 已傳老師，**等老師確認**。還沒生圖、沒渲染、沒改網站、沒 commit。
+- 11/23 修訂：謎底新的、謎題用 I 版 6 種類型但**各站互換**（每站用往後第二站的 I 版類型；台灣諧音、日本電子鐘、美國烏托邦、英國九宮格、西班牙鏡像、埃及形狀、肯亞諧音、印度電子鐘、新加坡鏡像、澳洲形狀）；其餘不變。規格卡 confirmed（revision 2）。
+- 謎題卡預覽：`python he-she/render_cards.py` → `he-she/cards/`（10 張四格圖＋all.jpg），已傳老師，等看。不需要新生圖。
+- 11/23 he/she 台灣試片（Mei 起床）：
+  - 睡衣不建模：`tabletop/src/make_pyjamas.py taiwan_girl taiwan_girl_pyjamas` 把制服貼圖的黃綠色改成粉紅點點睡衣（0 點數）。
+  - 場景 `tabletop/src/taiwan_getup.py` 由 `taiwan_getup_build.py` 從 `kenya_morning.py` 產生（沿用床的高度擬合、手部 Rig；新寫臥室、雙鈴鬧鐘、洗手台、牙刷）。鏡頭 TW1 坐床邊指時鐘、TW2 按掉鬧鐘、TW3 刷牙、TW4 換制服；第 5 段重用 I 版早餐 B4 畫面（qa/1120-174646，畫面裡有主角）。
+  - 配音 `taiwan_getup_voice.py`（主播 Jenny、記者 Ana，−12%）；合成 `taiwan_getup_compose.py qa/1123-093405 qa/1123-095221` → `tabletop/out/hs_taiwan_getup.mp4`（23.4 秒、−16.0 LUFS）＋`web/video/hs/taiwan.mp4`；鬧鐘鈴聲程式合成。
+  - Colab：test 0.24＋0.16、final 0.98＋0.48，共約 1.9 單位。
+  - 踩坑：找拇指位置時 rot_bone 改了骨頭矩陣，留下的位移／縮放讓左手長出一條長尖刺 → 搜尋後把所有骨頭 location／scale 歸零；肯亞的鏡頭是兩個人的構圖，單人要拉近。
+  - ✅ 11/23 老師定案（「可以定案」）。下一站：日本 Haruto 洗澡（先檢查圖）。
+- 11/23 其餘 9 站分鏡 `he-she/其餘9站分鏡_20261123.md`；老師決定：**1A**（英國爸爸、埃及姊姊用 Tripo 新做，約 150 點，做到那站前先讀 Tripo 餘額再花）、**2 可以**（日本沖澡只拍霧面玻璃後身影、泡澡只露頭）、**3 一站一站**（每站：檢查圖 → 正式渲染 → 試片）。肯亞家人只拍多擺的碗盤。下一站日本。
+- 11/23 日本：老師選 **A 新做睡衣模型**（Tripo 75 點）。參考圖 `tabletop/refs/japan_boy_pyjamas.png`（Codex，附 japan_boy.png 保持同一張臉；提示詞在 ref_prompts.py）＋對照 `refs/japan_pyjamas_pair.jpg`，已傳老師，等「可以建模」。
+- 11/23 日本 Tripo：japan_boy_pyjamas 建模 55＋綁骨架 20（餘額 200 → **125**，帳本已記），65 根骨頭、兩手手指都有權重。
+- 日本場景 `tabletop/src/japan_bath.py`（由 `japan_bath_build.py` 產生）：JP1 更衣處＋霧面玻璃門後的黑影沖澡（牆上 8:20）、JP2 洗頭特寫、JP3 檜木浴缸只露頭＋頭上小毛巾、JP4 榻榻米房間坐在被褥上揮手（9:00）。檢查圖 `he-she/japan_check_1123.jpg` 已傳老師，等看。Colab test 約 0.4 單位。
+- 踩坑：白牆＋強光整片過曝 → 牆改米色、燈調暗；霧面玻璃後的人看得到衣服顏色 → 光從他背後打、他身上換成深色材質，只剩黑影；坐在地上的被褥要把腿往前伸、腳尖朝前，否則拖鞋從棉被頂出來。
+- 11/23 老師改流程：**其餘各站先一批一批做完檢查圖，全部一起給老師確認，再一批一批正式渲染**（取代「一站一站」）。Tripo 餘額 125：英國爸爸 75 → 剩 50；埃及姊姊還差 25 點，要老師自己加購，之前埃及檢查圖先放暫代人物。
+- 11/23 老師：**11/24 之後 Tripo 點數會補充，到時再建埃及姊姊；埃及動畫放最後再做**。英國爸爸 11/23 已送建模（55 點，餘額 125 → 70，綁骨架後 → 50）。
+- 11/23 日本正式渲染（qa/1123-123204、1123-125701，約 1.8 單位）→ `tabletop/src/hs_compose.py japan …`（通用合成，各站設定在 STATIONS）→ `tabletop/out/hs_japan.mp4`（21.0 秒、−16.0 LUFS）＋`web/video/hs/japan.mp4`，已傳老師。
+- 其餘各站程式都寫好（配音 `hs_voice.py <站>` 已產生）：`usa_lunch.py`、`spain_lunch.py`（由 spain_dinner.py 改）、`uk_home.py`、`kenya_dinner.py`（由 kenya_morning.py 改，kenya_girl_home 用 make_recolor.py 改色）、`india_cricket.py`、`singapore_study.py`／`australia_homework.py`（desk_study_build.py，singapore_girl_school 改色）。英國爸爸 `models/uk_dad.glb`（65 骨、雙手手指 OK）。檢查圖分批渲染中，做完一起給老師。
+- ✅ 11/23 老師：**日本試片通過**（tabletop/out/hs_japan.mp4）。
+- 11/23 其餘 7 站檢查圖（Colab test 約 1.0 單位）總表 `he-she/checks_1123/`（all_7_stations.jpg＋各站），已傳老師等確認。檢查時修過：美國指手尖刺（所有新場景 Char.finish 前把骨頭 location/scale 歸零）、英國時鐘移進畫面＋走到欄杆前＋真的牽手（hands_apart 0.3 mm）、肯亞 ugali 蓋住 Tripo 盤上的 mandazi、印度球棒加深加大＋鏡頭拉近、新加坡／澳洲寫字範圍縮小（筆尖碰紙）。
+- 已知小問題：肯亞改色後額頭有一點青綠色（改色範圍吃到皮膚亮部，門檻 0.68 時整張臉變色，已退回 0.80）；肯亞盤子邊緣仍看得到一點 mandazi；印度揮棒動作幅度小。
+- 11/23 老師：**7 站檢查圖可以，正式渲染**。佇列 `tabletop/src/hs_final_queue.sh`（14 批，每批 1～2 鏡，約 13 單位、5 小時），每批完成寫一行到 `tabletop/work/hs_final_queue.log`（BATCH 場景 鏡頭 -> qa 資料夾）。全部渲完後：`python tabletop/src/hs_compose.py <站> <qa…>`（英國會自動接 I 版 qa/1120-192007 的 K4 喝茶、K3 寫字畫面）。
+
+## 2026-11-23 16:00 關機交接（he/she 版正式渲染中斷點）
+
+- 老師要關機，已停掉背景佇列 `hs_final_queue.sh`，並 `colab stop -s wrt`（避免 Colab 空轉耗單位）。
+- **已完成的正式渲染**：
+  - 英國 UK1+UK2 → `tabletop/qa/1123-151815`；UK3 → `tabletop/qa/1123-152741`（全站完成，可直接合成）
+  - 美國 US3+US4 → `tabletop/qa/1123-145414`
+- **未完成**：美國 US1+US2（第 1 批失敗、沒有 qa 資料夾，原因未查）、西班牙第 1 批渲到一半被中斷（不保留），其餘肯亞、印度、新加坡、澳洲尚未開始。
+- 本次 Colab 用量約 1.8 單位。
+- **開機後接續**（在 tabletop 資料夾）：
+  1. 先申請保持清醒；背景執行 `bash src/hs_resume_queue.sh`（11 批：美國 US1/US2 → 西班牙 → 肯亞 → 印度 → 新加坡 → 澳洲，約 4 小時、約 10 單位）。進度看 `work/hs_final_queue.log`，看到 `DONE` 才算完。若美國 US1/US2 又失敗，看 `work/_hsq.log` 查原因。
+  2. 等佇列時可先合成英國：`python src/hs_compose.py uk qa/1123-151815 qa/1123-152741`，抽格＋量響度（−16 LUFS）後傳給老師。
+  3. 各站渲完即用 `hs_compose.py <station> <qa dirs>` 合成試片給老師看。
+  4. 埃及：11/24 後 Tripo 點數補充再建姊姊模型，放最後。
+
+## 2026-11-23 17:00 老師退件：指時鐘的手勢（he/she 全部站）
+
+- 老師看英國試片：Oliver 指後方時鐘的手「扭曲、不合常理」。要改成手肘彎曲、掌心朝上、一隻手指往上比。
+- 原因：舊寫法 `E.P_point` 把上臂和前臂都直直指向後上方的時鐘，手掌沒轉，手腕看起來反折。
+- 新寫法在 `tabletop/src/point_snip.py`（`point_arm`／`point_hand`／`rest_hand`），由 build 腳本插入；英國 `uk_home_build.py` 已套用。
+  檢查圖 `he-she/checks_1123/4_uk_point_v2.jpg`（qa/1123-165824），等老師確認。
+- 同樣的舊指法還在：美國 US1、西班牙 SP1、肯亞 KE1、印度 IN1、新加坡 D1、澳洲 D1（還有已定案的台灣 TW1）。
+  所以正式渲染改成先跑「沒有指時鐘」的鏡頭：`bash src/hs_rest_queue.sh`（背景執行中，log 結尾是 DONE_REST）。
+  指時鐘的鏡頭等老師確認新手勢後，各站 build 套 `point_snip` → 檢查圖 → 再正式渲。
+- 第二個 Colab 連線 `wrt2`：`src/colab_run2.py`（用 work2/，可和主佇列同時跑測試圖）。`hs_resume_queue.sh` 不要再用。
+- `hs_compose.py` 站名標籤已修成 UK／USA。
+
+### 11/23 17:40 新手勢套到全部站（等老師看檢查圖）
+
+- 老師：新手勢可以、台灣站也要改。已用 `src/apply_point.py`（讀 `point_snip.py`）改好 usa_lunch／india_cricket／singapore_study／australia_homework／kenya_dinner／spain_lunch／taiwan_getup／uk_home 的場景檔。
+  **注意：這次是直接改產生出來的場景檔**；之後若重跑各站 build 腳本，要再跑 `python src/apply_point.py <scene>`（英國 build 已內建）。
+- point_snip 內容：`point_arm`（上臂側抬、手肘彎）、`point_hand`（手指往上、略偏時鐘；不朝螢幕內，否則像握拳）、`tuck_thumb`（拇指收到中指上，不然像比 YA）、`E.Char.finish` 歸零骨頭位置（肯亞出現過長尖刺）。
+- 檢查圖：`he-she/checks_1123/point_v2_all_stations.jpg`（上排台灣、美國、英國、西班牙；下排肯亞、印度、新加坡、澳洲）。美國的手看起來較像整隻手舉起，已告知老師。
+- 踩坑：TaskStop 停掉背景佇列後，`bash hs_resume_queue.sh` 其實還活著，繼續和新佇列搶同一個 Colab session。停佇列後要 `ps -ef | grep hs_` 確認並 kill。西班牙 SP2／SP4 那一批可能受影響，下載後要核對格數（SP2 約 87、SP4 約 48）。
+- 老師確認檢查圖後才正式渲：US1、UK1、SP1、KE1、IN1、新加坡 D1、澳洲 D1、台灣 TW1。
+
+### 11/23 17:55 老師核准八站新手勢 →「可以，正式渲染」
+
+- 指時鐘 8 鏡正式渲染：`bash src/hs_point_queue.sh`（第二個 session wrt2，log `tabletop/work2/point_queue.log`，結尾 DONE_POINT）。順序 UK1、US1、IN1、新加坡 D1、澳洲 D1、TW1、SP1、KE1。
+- 主佇列 `hs_rest_queue.sh`（session wrt，log `tabletop/work/hs_final_queue.log`，結尾 DONE_REST）之後自動補渲西班牙 SP2（結尾 DONE_ALL）。
+  log 中若 `-> ` 後面是空的或「Binary file」，到 `tabletop/qa/` 看最新資料夾核對。
+- 已知可用的正式格：UK2 `qa/1123-151815`、UK3 `qa/1123-152741`、US3+US4 `qa/1123-145414`、US2 `qa/1123-170357`、SP4 `qa/1123-173631`（被舊佇列干擾那批，49 格，合成時要看一眼；同資料夾的 SP1 是舊手勢、不要用）。
+- 全部渲完後各站 `python src/hs_compose.py <station> <qa dirs>`；台灣用 `taiwan_getup_compose.py`（TW1 換新格）。
+
+### 11/23 18:50 英國、美國試片已合成送審
+
+- `hs_compose.py` 同一個鏡頭在多個 qa 資料夾都有時，**後面的資料夾會蓋掉前面的**：新渲的資料夾要放最後。
+- 英國：`python tabletop/src/hs_compose.py uk tabletop/qa/1123-151815 tabletop/qa/1123-152741 tabletop/qa/1123-182121`（UK1 新手勢在 182121）。
+- 美國：`python tabletop/src/hs_compose.py usa tabletop/qa/1123-183800 tabletop/qa/1123-170357 tabletop/qa/1123-145414`（US1 新手勢 183800、US2 170357、US3+US4 145414）。
+- 其他已渲好：KE4 `qa/1123-180245`、KE4UG `qa/1123-181520`、IN2+IN3 `qa/1123-183713`。
+
+- ✅ 11/23 老師定案：he/she 英國（hs_uk.mp4）、美國（hs_usa.mp4）。已定案共 4 站：台灣（TW1 新手勢重渲後要重新合成再給老師看）、日本、英國、美國。
+
+### 11/23 19:35 印度、新加坡試片已合成送審（等老師）
+
+- 印度：`hs_compose.py india tabletop/qa/1123-183713 tabletop/qa/1123-184725 tabletop/qa/1123-185432`（IN2+IN3、IN4、IN1 新手勢）
+- 新加坡：`hs_compose.py singapore tabletop/qa/1123-190641 tabletop/qa/1123-191524 tabletop/qa/1123-191224`（D2+D3、D4、D1 新手勢）
+- 還在渲：主佇列澳洲（D0+D3、D4）→ 補西班牙 SP2；第二條澳洲 D1 → 台灣 TW1 → 西班牙 SP1 → 肯亞 KE1。
+
+### 11/23 19:45 老師退件：印度 Arjun「用手背拿球棒」不合邏輯
+
+- 原因：握把放在手指第二節外側（鬆握 G_CUP），看起來握把在手背那一側；揮棒是朝鏡頭前後擺，幾乎看不出來。
+- 已改 `india_cricket_build.py`：`bat_fist()` 緊握拳（hinge curl）、握把放在「指根到指尖」圈的中心；`bat_M` 改成球棒在右大腿前、**橫向揮過畫面**（繞 Y 軸，後擺 −78° 朝他右側、打擊後 +70°）；球改從他左側（畫面右）來；頭轉向來球。之後 `python src/apply_point.py india_cricket`。
+- 新加坡試片老師尚未回覆（只退了印度）。
+- 檢查圖：等主佇列 DONE_REST 後在 session wrt 跑 `colab_run.py light india_cricket "IN1 40,130" "IN2 0,14,26,36,46,60" "IN3 20"`（背景中）。老師確認後要正式重渲 IN1、IN2、IN3（IN4 只有時鐘不用）。
+- 西班牙 SP2 補渲尚未開始（原本的等待腳本已停掉）：印度檢查圖出來後再手動跑 `python src/colab_run.py final spain_lunch "SP2 all"`。
+- 第三條 Colab 連線開不起來（Service Unavailable），同時最多用兩條。
+
+- 11/23 20:00 澳洲試片已合成送審：`hs_compose.py australia tabletop/qa/1123-193612 tabletop/qa/1123-194725 tabletop/qa/1123-193115`。主佇列 DONE_REST；印度檢查圖在 wrt 上跑。
+
+- 11/23 20:05 印度新握法檢查圖 `he-she/checks_1123/8_india_bat_v2.jpg`（qa/1123-194918）已傳老師，等確認後正式重渲 IN1、IN2、IN3。西班牙 SP2 補渲已在 wrt 開始（log `tabletop/work/_hsq2.log`，完成後到 qa/ 看最新資料夾，SP2 約 87 格）。
+
+### 11/23 20:50 老師再退兩項＋進度
+
+- **老師退件 1：板球要雙手握棒**。`india_cricket_build.py` 已改：左手（上手）`C_BAT_L` 在右手上方 `HAND_GAP=0.0036`，`two_hands(Mb)`／`fists(fr)`；握棒點在身體正前方、隨揮棒移動（`bat_M(..., lift, dx)`），收棒角度 48°；整段揮棒兩手 REACH 都 ≤ 手臂長。測試圖 `qa/1123-202621/toutT`（IN2、IN3），尚未給老師看、未正式重渲。IN1 仍是右手單手拿棒＋左手指時鐘。
+- **老師退件 2：Ling、Jack 寫字時右手臂有一段不見**。原因：筆記本在角色左手邊，右手橫過胸前，上臂穿進身體。`desk_study_build.py` 已改：書放正前方偏左（BX+0.005）、筆記本放右手邊（BX−0.0135）、D3 左手改放在書上、D3 鏡頭左右鏡射。新加坡／澳洲的 D1、D2、D3 都要重渲（D0、D4 不用）。測試在背景跑（task b1suwcjpd）。
+- `src/colab_runT.py`：可和正在跑的佇列共用 session wrt2 的測試用 runner（用 /content/toutT、jobT、work3/，不啟動閒置關機）。
+- 第二條佇列 DONE_POINT：TW1 `qa/1123-194943`、SP1 `qa/1123-200956`、KE1 `qa/1123-202847`；SP2 補渲 `qa/1123-200727`（87 格）。
+- 西班牙試片已送審：`hs_compose.py spain tabletop/qa/1123-173631 tabletop/qa/1123-200727 tabletop/qa/1123-200956`。
+- 台灣新手勢版已送審：`taiwan_getup_compose.py tabletop/qa/1123-093405 tabletop/qa/1123-095221 tabletop/qa/1123-194943`。
+- 肯亞：KE4 只有 98 格（需 108，被舊佇列干擾截斷），背景補渲 f0196–f0214（task b2y76m1x3），補完把 10 格複製進 `qa/1123-180245/tout/KE4/` 再 `hs_compose.py kenya tabletop/qa/1123-180245 tabletop/qa/1123-181520 tabletop/qa/1123-202847`。
+
+- ✅ 11/23 老師定案：西班牙（hs_spain.mp4）、台灣新手勢版（hs_taiwan_getup.mp4）。he/she 已定案 6 站：台灣、日本、美國、英國、西班牙＋（待）肯亞、印度、新加坡、澳洲、埃及。
+
+- 11/23 21:10 肯亞 KE4 補齊 108 格（10 格複製進 qa/1123-180245/tout/KE4），試片已送審：`hs_compose.py kenya tabletop/qa/1123-180245 tabletop/qa/1123-181520 tabletop/qa/1123-202847`。已知：特寫裡 sukuma 只有一小點綠、Tripo 的 mandazi 仍露在烏咖哩旁、手臂與臉有藍綠斑。新加坡 D3 測試 OK（qa/1123-203840/toutT）。印度握點前移測試在背景（task b0pgc41hx）。
+
+### 11/23 21:30 三組檢查圖送審（肯亞四項修正、印度雙手握棒、寫字手臂）
+
+- **肯亞**（老師貼回四項問題要修）：
+  - 藍綠斑：`make_recolor.py` 加兩道保護——小碎塊不改色（第 9 參數 MINFRAC）＋依骨架權重保護皮膚（第 10 參數骨頭名）。
+    `python src/make_recolor.py kenya_girl_pyjamas kenya_girl_home 10 42 0.45 0.80 0.12,0.55,0.55 preview.jpg 0.0003 "Head,Neck,ForeArm,Hand,Foot,Toe"`；舊模型備份 `tabletop/work2/kenya_girl_home_v1_backup.glb`。
+  - 炸餅：`kenya_dinner_build.py` 的 `cut_plate()` 用 bmesh 把 Tripo 桌子上的盤子＋mandazi 頂點刪掉，換扁平琺瑯盤＋烏咖哩＋46 片青菜堆。（試過用高圓筒蓋住→像蛋糕模、擋住身體，不行。）
+  - 開場：鏡頭 42→56、對準女孩與時鐘之間。
+  - 檢查圖 `he-she/checks_1123/7_kenya_v2.jpg`。老師確認後重渲 KE1、KE4、KE4UG。衣服袖口還有幾條橘色細線。
+- **印度雙手握棒 v4**：握點移到身體前方 11.8 mm、肩下 11 mm，雙臂都在胸前看得到。檢查圖 `he-she/checks_1123/8_india_bat_v4_two_hands.jpg`（qa/1123-212229）。確認後重渲 IN1、IN2、IN3。
+- **寫字手臂**：檢查圖 `he-she/checks_1123/9_10_desk_arms_v2.jpg`（新加坡 qa/1123-203840/toutT、澳洲 qa/1123-212103）。確認後重渲兩站 D1、D2、D3。
+- 踩坑：`colab_runT.py` 和佇列共用 session 時，佇列自己的閒置計時器仍會在 10 分鐘後關掉 session，測試就卡死（輪詢到 3000 秒）。佇列跑完後的測試改用 `colab_run.py`（session wrt）。
+
+### 11/23 21:55 老師再退：球棒右手反了、鉛筆穿過虎口；踩坑寫進總規則
+
+- 老師：「以上製作動畫踩過的坑，都要寫入動畫製作總覽規則之中」→ `tools/動畫共用踩坑規則.md` 新增第 18 類（18.1–18.17）；11 個影片 skill 的「共用踩坑規則」都加一行短版；總覽開頭加一句指向第 18 類。
+- 球棒：下手（右手）繞握把轉半圈，掌心與手腕內側朝來球（+x），拇指仍在上；`DESK BATHAND` 印出右手掌心方向（要 +1,0,0）。注意 `C_BAT` 由手的骨架推出，只翻 `q_g` 不會變（手和棒的相對關係不變），要連 `zb`（握把方向）一起選。測試 `qa/1123-213927`。右手 REACH 0.0184 稍超過手臂 0.0179。
+- 鉛筆：`desk_study_build.py` D3 把筆桿上端往「食指根部的拇指側」推到離皮膚 ≥ 筆半徑（`DESK PENWEB`）；往手背推會從手背穿出來。測試 澳洲 `qa/1123-215208`、新加坡 `qa/1123-215336`。
+- 檢查圖 `he-she/checks_1123/bat_pencil_grip_v5.jpg`（左：舊球棒、中兩格：新球棒、右：新握筆兩站）。
+
+### 11/23 22:00 老師：「可以，正式重渲」（新握棒、握筆、寫字手臂、肯亞四項）
+
+- `bash tabletop/src/hs_fix_queue.sh`（背景）：A 線 session wrt＝肯亞 KE1、KE4、KE4UG、印度 IN1、IN2+IN3；B 線 session wrt2＝新加坡 D1、D2+D3、澳洲 D1、D2+D3。log `tabletop/work/hs_fix_queue.log`（DONE_A、DONE_B）。
+- 渲完要核對格數（KE1 90、KE4 108、KE4UG 45、IN1 90、IN2 54、IN3 42；D1 新加坡 94／澳洲約 96、D2 49、D3 54），再合成：
+  - 肯亞 `hs_compose.py kenya <KE1 dir> <KE4 dir> <KE4UG dir>`
+  - 印度 `hs_compose.py india tabletop/qa/1123-184725 <IN1 dir> <IN2+IN3 dir>`（IN4 沿用 184725）
+  - 新加坡 `hs_compose.py singapore tabletop/qa/1123-191524 <D1 dir> <D2+D3 dir>`（D4 沿用 191524）
+  - 澳洲 `hs_compose.py australia tabletop/qa/1123-193612 tabletop/qa/1123-194725 <D1 dir> <D2+D3 dir>`（D0 沿用 193612，**舊 D3 也在 193612，新 D3 資料夾要放最後**）
+
+### 11/23 收工：12 鏡最後重渲完成，四支試片已傳，等 11/24 老師看
+
+- 佇列結果（`tabletop/work/hs_fix_queue.log`）：
+  - KE1 `qa/1123-221700`（90 格）
+  - KE4 `qa/1123-223952`（109 格）
+  - KE4UG `qa/1123-225048`（45 格）
+  - IN1 `qa/1123-230705`（90 格）
+  - IN2＋IN3 `qa/1123-232547`（54＋42 格）
+  - 新加坡 D2＋D3 `qa/1123-223928`
+  - 澳洲 D1 `qa/1123-225745`（97 格）
+  - 澳洲 D2＋D3 `qa/1123-231650`
+- **新加坡 D1 第一次是空的**：`colab_run2.py` 的每個鏡頭必須是一個帶引號的參數（`"D1 all"`）。不加引號時會出 `ValueError: not enough values to unpack`，而且佇列的 log 會被下一批覆蓋（`_fix_B.log`）。已單獨補渲到 `qa/1123-234659`（94 格）。
+- 合成方式：
+  - 肯亞 `hs_compose.py kenya qa/1123-221700 qa/1123-223952 qa/1123-225048`
+  - 印度 `hs_compose.py india qa/1123-184725 qa/1123-230705 qa/1123-232547`
+  - 澳洲 `hs_compose.py australia qa/1123-193612 qa/1123-194725 qa/1123-225745 qa/1123-231650`
+  - 新加坡 `hs_compose.py singapore qa/1123-191524 qa/1123-234659 qa/1123-223928`
+  - 四支都是 −16 LUFS，已用 SendUserFile 傳給老師。
+- **11/24 下一步**：
+  1. 等老師看四支試片，定案或退件。
+  2. 埃及：Tripo 補充點數後建姊姊模型，最後做。
+  3. he/she 網站頁面（部署前先問）。
+- 已知小瑕疵：
+  - 肯亞袖口有幾條橘線。
+  - 印度 IN1 仍是單手持棒加指時鐘。
+  - 印度右手 REACH 0.0184，比手臂長 0.0179 稍長。
+- 踩坑：印度合成時，混音的 ffmpeg 跑到 0.013 倍速，卡了 20 分鐘（同一份程式，肯亞一下子就跑完）。殺掉後重跑，一次就好。合成要加 `timeout`，跑超過 5 分鐘就殺掉重跑。
+- Colab 11/23 共用 40 多個單位。

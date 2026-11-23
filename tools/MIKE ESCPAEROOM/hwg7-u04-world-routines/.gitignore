@@ -27,3 +27,5 @@ games/*/qa/
 puzzles/out/
 web/qa/
 __pycache__/
+tabletop/work2/
+tabletop/work3/

@@ -317,5 +317,33 @@
    "balance_before": 255,
    "balance_after": 200
   }
+ ],
+ "2026-11-23 he/she Japan pyjamas (teacher approved A, 75)": [
+  {
+   "item": "japan_boy_pyjamas (HD H3.1, 4K PBR, 30000 tris, Private)",
+   "points": 55,
+   "balance_before": 200,
+   "balance_after": 145
+  },
+  {
+   "item": "japan_boy_pyjamas auto rig (Humanoid, Mixamo)",
+   "points": 20,
+   "balance_before": 145,
+   "balance_after": 125
+  }
+ ],
+ "2026-11-23 he/she UK dad (teacher approved 1A + reference)": [
+  {
+   "item": "uk_dad (HD H3.1, 4K PBR, 30000 tris, Private)",
+   "points": 55,
+   "balance_before": 125,
+   "balance_after": 70
+  },
+  {
+   "item": "uk_dad auto rig (Humanoid, Mixamo)",
+   "points": 20,
+   "balance_before": 70,
+   "balance_after": 50
+  }
  ]
 }
