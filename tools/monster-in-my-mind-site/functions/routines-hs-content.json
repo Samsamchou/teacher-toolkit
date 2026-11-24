@@ -1,0 +1,282 @@
+{
+ "version": 1,
+ "variant": "hs",
+ "stations": [
+  {
+   "id": "taiwan",
+   "order": 1,
+   "country": "Taiwan",
+   "transport": "home",
+   "name": "Mei",
+   "pronoun": "she",
+   "routine": "get up",
+   "question": "This is Mei. What time does she get up?",
+   "code": "0630",
+   "hour": 6,
+   "minute": 30,
+   "display": "She gets up at 6:30.",
+   "spoken": "She gets up at six thirty.",
+   "extended": [
+    "Her alarm clock rings at 6:30.",
+    "She brushes her teeth and puts on her school uniform.",
+    "Then she has breakfast at 6:45."
+   ],
+   "mode": "drag",
+   "puzzle": "homo",
+   "game": "bus-dash",
+   "drag": {
+    "slots": [
+     "does",
+     "get",
+     "up"
+    ],
+    "distractors": [
+     "do",
+     "gets",
+     "have"
+    ]
+   }
+  },
+  {
+   "id": "japan",
+   "order": 2,
+   "country": "Japan",
+   "transport": "ship",
+   "name": "Haruto",
+   "pronoun": "he",
+   "routine": "take a shower",
+   "question": "This is Haruto. What time does he take a shower?",
+   "code": "2020",
+   "hour": 20,
+   "minute": 20,
+   "display": "He takes a shower at 8:20.",
+   "spoken": "He takes a shower at eight twenty.",
+   "extended": [
+    "First, he washes in the shower.",
+    "Then he sits in the hot bath. It's called ofuro.",
+    "He goes to bed at 9:00."
+   ],
+   "mode": "speak",
+   "puzzle": "seg",
+   "game": "bento-catch"
+  },
+  {
+   "id": "usa",
+   "order": 3,
+   "country": "USA",
+   "transport": "plane",
+   "name": "Emma",
+   "pronoun": "she",
+   "routine": "have lunch",
+   "question": "This is Emma. What time does she have lunch?",
+   "code": "1130",
+   "hour": 11,
+   "minute": 30,
+   "display": "She has lunch at 11:30.",
+   "spoken": "She has lunch at eleven thirty.",
+   "extended": [
+    "She eats lunch in the school cafeteria.",
+    "She has a sandwich, an apple and milk.",
+    "Lunch is only 25 minutes!"
+   ],
+   "mode": "speak",
+   "puzzle": "utopia",
+   "game": "bus-dash"
+  },
+  {
+   "id": "uk",
+   "order": 4,
+   "country": "the UK",
+   "transport": "plane",
+   "name": "Oliver",
+   "pronoun": "he",
+   "routine": "go home",
+   "question": "This is Oliver. What time does he go home?",
+   "code": "1515",
+   "hour": 15,
+   "minute": 15,
+   "display": "He goes home at 3:15.",
+   "spoken": "He goes home at three fifteen.",
+   "extended": [
+    "School ends at 3:15.",
+    "His dad walks him home.",
+    "He has a snack, and then he does his homework."
+   ],
+   "mode": "drag",
+   "puzzle": "keypad",
+   "game": "clock-ninja",
+   "drag": {
+    "slots": [
+     "does",
+     "go",
+     "home"
+    ],
+    "distractors": [
+     "do",
+     "goes",
+     "bed"
+    ]
+   }
+  },
+  {
+   "id": "spain",
+   "order": 5,
+   "country": "Spain",
+   "transport": "train",
+   "name": "Lucia",
+   "pronoun": "she",
+   "routine": "have lunch",
+   "question": "This is Lucia. What time does she have lunch?",
+   "code": "1400",
+   "hour": 14,
+   "minute": 0,
+   "display": "She has lunch at 2:00.",
+   "spoken": "She has lunch at two o'clock.",
+   "extended": [
+    "Lunch is her big meal. She eats soup, fish and fruit with her family.",
+    "Then she rests for a while."
+   ],
+   "mode": "speak",
+   "puzzle": "mirror",
+   "game": "clock-ninja"
+  },
+  {
+   "id": "egypt",
+   "order": 6,
+   "country": "Egypt",
+   "transport": "plane",
+   "name": "Omar",
+   "pronoun": "he",
+   "routine": "go to school",
+   "question": "This is Omar. What time does he go to school?",
+   "code": "0710",
+   "hour": 7,
+   "minute": 10,
+   "display": "He goes to school at 7:10.",
+   "spoken": "He goes to school at seven ten.",
+   "extended": [
+    "School starts at 7:30.",
+    "He walks to school with his big sister.",
+    "He carries his school bag on his back."
+   ],
+   "mode": "speak",
+   "puzzle": "shape",
+   "game": "bento-catch"
+  },
+  {
+   "id": "kenya",
+   "order": 7,
+   "country": "Kenya",
+   "transport": "plane",
+   "name": "Amani",
+   "pronoun": "she",
+   "routine": "have dinner",
+   "question": "This is Amani. What time does she have dinner?",
+   "code": "1930",
+   "hour": 19,
+   "minute": 30,
+   "display": "She has dinner at 7:30.",
+   "spoken": "She has dinner at seven thirty.",
+   "extended": [
+    "Her family eats dinner together.",
+    "She eats ugali and sukuma wiki.",
+    "Ugali is made from white corn flour."
+   ],
+   "mode": "drag",
+   "puzzle": "homo",
+   "game": "bus-dash",
+   "drag": {
+    "slots": [
+     "does",
+     "have",
+     "dinner"
+    ],
+    "distractors": [
+     "do",
+     "has",
+     "lunch"
+    ]
+   }
+  },
+  {
+   "id": "india",
+   "order": 8,
+   "country": "India",
+   "transport": "plane",
+   "name": "Arjun",
+   "pronoun": "he",
+   "routine": "play cricket",
+   "question": "This is Arjun. What time does he play cricket?",
+   "code": "1700",
+   "hour": 17,
+   "minute": 0,
+   "display": "He plays cricket at 5:00.",
+   "spoken": "He plays cricket at five o'clock.",
+   "extended": [
+    "He plays cricket with his friends in the street.",
+    "A school bag is the wicket!",
+    "He goes home at 6:30."
+   ],
+   "mode": "speak",
+   "puzzle": "seg",
+   "game": "bento-catch"
+  },
+  {
+   "id": "singapore",
+   "order": 9,
+   "country": "Singapore",
+   "transport": "plane",
+   "name": "Ling",
+   "pronoun": "she",
+   "routine": "study English",
+   "question": "This is Ling. What time does she study English?",
+   "code": "1600",
+   "hour": 16,
+   "minute": 0,
+   "display": "She studies English at 4:00.",
+   "spoken": "She studies English at four o'clock.",
+   "extended": [
+    "She goes to an English class after school.",
+    "She reads a story and writes new words.",
+    "She goes home at 6:00."
+   ],
+   "mode": "drag",
+   "puzzle": "mirror",
+   "game": "luggage-belt",
+   "drag": {
+    "slots": [
+     "does",
+     "study"
+    ],
+    "distractors": [
+     "do",
+     "studies",
+     "studys"
+    ]
+   }
+  },
+  {
+   "id": "australia",
+   "order": 10,
+   "country": "Australia",
+   "transport": "ship",
+   "name": "Jack",
+   "pronoun": "he",
+   "routine": "do his homework",
+   "question": "This is Jack. What time does he do his homework?",
+   "code": "1645",
+   "hour": 16,
+   "minute": 45,
+   "display": "He does his homework at 4:45.",
+   "spoken": "He does his homework at four forty-five.",
+   "extended": [
+    "He plays soccer after school.",
+    "Then he does his homework at the kitchen table.",
+    "It takes 20 minutes."
+   ],
+   "mode": "speak",
+   "puzzle": "shape",
+   "game": "luggage-belt"
+  }
+ ]
+}

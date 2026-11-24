@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption -- Each student recording is shown next to its AI transcript; there is no separate caption file. */
 import { useEffect, useRef, useState } from 'react'
 import { portal } from '../services/firebase'
-import { STATIONS } from './content'
+import { TRIPS, tripData, type Station, type Variant } from './content'
 import './routines.css'
 
 type Cell = { mode: 'drag' | 'speak'; answered: boolean; score: number | null; gameDone: boolean; stars: number; gameScore?: number; minutes?: number | null }
@@ -9,7 +9,7 @@ type Row = { studentId: string; updatedAt: number; stations: Record<string, Cell
 type Rec = { kind: 'prev' | 'pass'; targetText: string; transcript: string; total_score: number; accuracy: number; fluency: number; completeness: number; timeCorrect: boolean; passed: boolean; createdAt: number }
 const CLASSES = ['501', '502', '601', '602']
 const when = (ms: number) => ms ? new Date(ms).toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—'
-const stamps = (r: Row) => STATIONS.filter(s => r.stations[s.id]?.gameDone).length
+const stamps = (STATIONS: Station[], r: Row) => STATIONS.filter(s => r.stations[s.id]?.gameDone).length
 
 function cellText(c: Cell | undefined) {
   if (!c?.answered) return ''
@@ -17,16 +17,18 @@ function cellText(c: Cell | undefined) {
   return c.gameDone ? `${ans} ${'★'.repeat(Math.max(1, c.stars))}${c.minutes != null ? ` · ${Math.round(c.minutes)}分` : ''}` : ans
 }
 
-function toCsv(rows: Row[]) {
+function toCsv(STATIONS: Station[], rows: Row[]) {
   const head = ['學號', '護照章數', ...STATIONS.map(s => `${s.order}.${s.country}(${s.mode === 'speak' ? '口說分數' : '拖放'})`), ...STATIONS.map(s => `${s.country} 遊戲星數`), ...STATIONS.map(s => `${s.country} 分鐘`), '最後更新']
-  const body = rows.map(r => [r.studentId, stamps(r),
+  const body = rows.map(r => [r.studentId, stamps(STATIONS, r),
     ...STATIONS.map(s => { const c = r.stations[s.id]; return !c?.answered ? '' : c.mode === 'speak' ? (c.score ?? '') : '過關' }),
     ...STATIONS.map(s => r.stations[s.id]?.gameDone ? r.stations[s.id].stars : ''),
     ...STATIONS.map(s => r.stations[s.id]?.minutes ?? ''), when(r.updatedAt)])
   return '﻿' + [head, ...body].map(line => line.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n')
 }
 
-export default function RoutinesTeacher() {
+// variant 'hs' = the he/she trip (/world-routines-he-she/teacher): same page, its own records (teacher 11/23, suggestion 4).
+export default function RoutinesTeacher({ variant = 'i' }: { variant?: Variant }) {
+  const trip = TRIPS[variant], STATIONS = trip.stations, hs = variant === 'hs'
   const [signedIn, setSignedIn] = useState(false), [pin, setPin] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('')
   const [classId, setClassId] = useState(''), [rows, setRows] = useState<Row[] | null>(null)
   const [pick, setPick] = useState<{ studentId: string; station: string } | null>(null), [records, setRecords] = useState<Rec[] | null>(null)
@@ -42,29 +44,29 @@ export default function RoutinesTeacher() {
   }
   async function loadClass(id: string) {
     setClassId(id); setPick(null); setRecords(null); setClip(null)
-    const data = await portal<{ students: Row[] }>('routines', { classId: id })
+    const data = await portal<{ students: Row[] }>('routines', tripData(trip, { classId: id }))
     setRows(data.students)
   }
   async function openRecords(studentId: string, station: string) {
     setPick({ studentId, station }); setRecords(null); setClip(null)
-    const data = await portal<{ records: Rec[] }>('routineRecords', { studentId, station })
+    const data = await portal<{ records: Rec[] }>('routineRecords', tripData(trip, { studentId, station }))
     setRecords(data.records.sort((a, b) => a.createdAt - b.createdAt))
   }
   async function play(kind: string) {
-    const data = await portal<{ audio: string }>('routineRecording', { studentId: pick!.studentId, station: pick!.station, kind })
+    const data = await portal<{ audio: string }>('routineRecording', tripData(trip, { studentId: pick!.studentId, station: pick!.station, kind }))
     const bytes = Uint8Array.from(atob(data.audio), c => c.charCodeAt(0))
     setClip({ kind, url: URL.createObjectURL(new Blob([bytes], { type: 'audio/wav' })) })
   }
   function download() {
-    const url = URL.createObjectURL(new Blob([toCsv(rows ?? [])], { type: 'text/csv;charset=utf-8' }))
-    const a = document.createElement('a'); a.href = url; a.download = `world-routines-${classId}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
+    const url = URL.createObjectURL(new Blob([toCsv(STATIONS, rows ?? [])], { type: 'text/csv;charset=utf-8' }))
+    const a = document.createElement('a'); a.href = url; a.download = `world-routines${hs ? '-he-she' : ''}-${classId}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
   const station = pick ? STATIONS.find(s => s.id === pick.station) : null
-  const done = rows ? rows.filter(r => stamps(r) === STATIONS.length).length : 0
+  const done = rows ? rows.filter(r => stamps(STATIONS, r) === STATIONS.length).length : 0
 
   return <main className="teacher-page wr-teacher">
-    <a href="/teacher">← 教師後台</a> · <a href="/world-routines">World Routines Trip 學生頁</a>
-    <h1>🌍 World Routines Trip · 作息之旅紀錄</h1>
+    <a href="/teacher">← 教師後台</a> · <a href={trip.page}>World Routines Trip{hs ? ' he/she' : ''} 學生頁</a> · <a href={hs ? TRIPS.i.teacher : TRIPS.hs.teacher}>{hs ? '看 I 版紀錄' : '看 he/she 版紀錄'}</a>
+    <h1>🌍 World Routines Trip{hs ? ' he/she · 世界小記者紀錄' : ' · 作息之旅紀錄'}</h1>
     {!signedIn ? <form onSubmit={e => { e.preventDefault(); void run(async () => { try { await portal('login', { pin }); setSignedIn(true) } finally { setPin('') } }) }}>
       <label>六碼通行碼（和教師後台相同）<input type="password" inputMode="numeric" autoComplete="current-password" maxLength={6} value={pin} onChange={e => setPin(e.target.value)} /></label>
       <button className="primary-button" disabled={busy || !/^\d{6}$/.test(pin)}>登入</button>
@@ -81,7 +83,7 @@ export default function RoutinesTeacher() {
           {STATIONS.map(s => <th scope="col" key={s.id}>{s.order}. {s.country}<small>{s.mode === 'speak' ? '🎙 口說' : '🧩 拖放'}</small></th>)}
           <th scope="col">最後更新</th></tr></thead>
         <tbody>{rows.map(r => <tr key={r.studentId}>
-          <th scope="row">{r.studentId}</th><td>{stamps(r)}</td>
+          <th scope="row">{r.studentId}</th><td>{stamps(STATIONS, r)}</td>
           {STATIONS.map(s => { const c = r.stations[s.id], speak = s.mode === 'speak'
             const on = pick?.studentId === r.studentId && pick.station === s.id
             return <td key={s.id} className={`${c?.answered ? 'ok' : ''}${c?.gameDone ? ' stamped' : ''}${on ? ' on' : ''}`}>

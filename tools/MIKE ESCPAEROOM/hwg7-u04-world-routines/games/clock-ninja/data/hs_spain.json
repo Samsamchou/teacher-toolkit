@@ -1,0 +1,124 @@
+{
+  "country": "hs_spain",
+  "title": "Clock Ninja",
+  "subtitle": "What time does Lucia have lunch?",
+  "howto_good": "Tap your dinner!",
+  "howto_bad": "Don't tap these!",
+  "target_time": "2:00",
+  "background": "res://art/spain/bg.png",
+  "holder": {
+    "art": "res://art/spain/plate.png",
+    "width": 300,
+    "bottom": 0.985,
+    "mouth": 0.45,
+    "pile": true
+  },
+  "player": {
+    "height": 212,
+    "default": "girl",
+    "meta": "res://art/hero/player_meta.json",
+    "idle": "stand",
+    "poses": {
+      "girl": "res://art/hero/girl_",
+      "boy": "res://art/hero/boy_"
+    }
+  },
+  "good_items": [
+    {
+      "id": "tortilla",
+      "art": "res://art/spain/tortilla.png",
+      "points": 10
+    },
+    {
+      "id": "salad",
+      "art": "res://art/spain/salad.png",
+      "points": 10
+    },
+    {
+      "id": "bread",
+      "art": "res://art/spain/bread.png",
+      "points": 10
+    },
+    {
+      "id": "tomato",
+      "art": "res://art/spain/tomato.png",
+      "points": 10
+    },
+    {
+      "id": "olives",
+      "art": "res://art/spain/olives.png",
+      "points": 10
+    },
+    {
+      "id": "orange",
+      "art": "res://art/spain/orange.png",
+      "points": 10
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "football",
+      "art": "res://art/spain/football.png"
+    },
+    {
+      "id": "sock",
+      "art": "res://art/spain/sock.png"
+    },
+    {
+      "id": "phone",
+      "art": "res://art/spain/phone.png"
+    },
+    {
+      "id": "toy_car",
+      "art": "res://art/spain/toy_car.png"
+    }
+  ],
+  "review_times": [
+    "6:30",
+    "8:20",
+    "11:30",
+    "3:15"
+  ],
+  "clock_rounds": [
+    {
+      "time": "2:00",
+      "distractors": [
+        "2:15",
+        "3:00"
+      ]
+    },
+    {
+      "time": "8:45",
+      "distractors": [
+        "8:15",
+        "9:45"
+      ]
+    },
+    {
+      "time": "10:00",
+      "distractors": [
+        "10:30",
+        "11:00"
+      ]
+    },
+    {
+      "time": "9:30",
+      "distractors": [
+        "9:00",
+        "10:30"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice work!",
+    "Dinner time!"
+  ],
+  "fx": {
+    "slash": "res://art/fx/slash.png",
+    "sparkle": "res://art/fx/sparkle.png",
+    "sparkles": "res://art/fx/sparkles.png",
+    "burst": "res://art/fx/burst.png"
+  }
+}

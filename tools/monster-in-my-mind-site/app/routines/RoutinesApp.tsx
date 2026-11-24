@@ -1,9 +1,13 @@
 /* eslint-disable jsx-a11y/media-has-caption -- Station clips carry burned-in karaoke captions; the learner's own recording has no authored captions. */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { callCloud, studentLogin } from '../services/firebase'
 import { normalizeRecording, base64Audio } from '../utils/recording'
-import { ASSET, MAP_POS, STATIONS, WORLD_CLOCK, charSrc, questionParts, shuffled, type Hero, type Station } from './content'
+import { ASSET, MAP_POS, TRIPS, WORLD_CLOCK, charSrc, questionParts, shuffled, tripData, type Hero, type Station, type Trip, type Variant } from './content'
 import './routines.css'
+
+// Which trip this page is (I version or he/she version): paths, voice lines, videos, game settings, cloud calls.
+const TripContext = createContext<Trip>(TRIPS.i)
+const useTrip = () => useContext(TripContext)
 
 type StationState = { answered: boolean; gameDone: boolean; stars: number; score: number | null }
 type Progress = Record<string, StationState>
@@ -54,13 +58,14 @@ function MuteButton() {
 function Login({ onStart, hero, onHero }: { onStart: (studentId: string) => Promise<void>; hero: Hero; onHero: (h: Hero) => void }) {
   const [studentId, setStudentId] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('')
   const valid = /^(501|502|601|602)[0-9]{1,9}$/.test(studentId.trim())
+  const hs = useTrip().variant === 'hs'
   return <main className="wr-login" onPointerDown={() => music.start()}>
     <div className="wr-corner"><MuteButton /></div>
     <img src={`${ASSET}/art/passport.png`} alt="" />
-    <h1>World Routines Trip</h1>
-    <p>世界作息之旅 · What time do you …?</p>
+    <h1>World Routines Trip{hs && <small className="wr-hs-badge"> he / she</small>}</h1>
+    <p>{hs ? '世界小記者連線報導 · What time does she / he …?' : '世界作息之旅 · What time do you …?'}</p>
     <form onSubmit={e => { e.preventDefault(); if (!valid || busy) return; setBusy(true); setError(''); onStart(studentId.trim()).catch(x => { setError(message(x)); setBusy(false) }) }}>
-      <fieldset className="wr-heroes"><legend>Choose your traveller / 選主角</legend>
+      <fieldset className="wr-heroes"><legend>{hs ? 'Choose your reporter / 選小記者' : 'Choose your traveller / 選主角'}</legend>
         {(['girl', 'boy'] as Hero[]).map(h => <button type="button" key={h} className="wr-hero-card" aria-pressed={hero === h} disabled={busy} onClick={() => onHero(h)}>
           <img src={`${ASSET}/art3d/hero_${h}.png`} alt="" /><span>{h === 'girl' ? 'Girl 女生' : 'Boy 男生'}</span></button>)}
       </fieldset>
@@ -73,7 +78,8 @@ function Login({ onStart, hero, onHero }: { onStart: (studentId: string) => Prom
   </main>
 }
 
-function WorldMap({ progress, current, onOpen, travelling, openAll, hero, onEnding }: { progress: Progress; current: Station | null; onOpen: (s: Station) => void; travelling: { from: Station; to: Station } | null; openAll: boolean; hero: Hero; onEnding: () => void }) {
+function WorldMap({ progress, current, onOpen, travelling, openAll, hero, onEnding, onGrammar }: { progress: Progress; current: Station | null; onOpen: (s: Station) => void; travelling: { from: Station; to: Station } | null; openAll: boolean; hero: Hero; onEnding: () => void; onGrammar: () => void }) {
+  const trip = useTrip(), STATIONS = trip.stations
   const [clock, setClock] = useState(false)
   const done = STATIONS.filter(s => progress[s.id]?.gameDone).length
   const vehicle = travelling ? VEHICLE[travelling.to.transport] : null
@@ -86,6 +92,7 @@ function WorldMap({ progress, current, onOpen, travelling, openAll, hero, onEndi
     <header className="wr-topbar">
       <strong>🌍 World Routines Trip</strong>
       <span className="wr-stamps" aria-label={`${done} of 10 stamps`}>{STATIONS.map(s => <i key={s.id} className={progress[s.id]?.gameDone ? 'on' : ''} />)}</span>
+      {trip.grammar && <button className="wr-chip" onClick={onGrammar}>📘 -s / -es / -ies</button>}
       <button className="wr-chip" onClick={() => setClock(x => !x)}>🕐 World Clock</button>
       <MuteButton />
     </header>
@@ -117,9 +124,11 @@ function WorldMap({ progress, current, onOpen, travelling, openAll, hero, onEndi
 }
 
 function DragAnswer({ station, onPassed }: { station: Station; onPassed: () => void }) {
-  const parts = useMemo(() => questionParts(station), [station])
+  // he/she questions start with "This is Mei." (heard on the first screen): the drag sentence keeps only "What time ___ she ___ ___?"
+  const parts = useMemo(() => questionParts({ ...station, question: station.question.replace(/^This is [^.]+\.\s*/, '') }), [station])
+  const trip = useTrip()
   const chips = useMemo(() => shuffled([...station.drag!.slots, ...station.drag!.distractors], station.order * 97 + 13), [station])
-  const [slots, setSlots] = useState<(string | null)[]>([null, null, null]), [code, setCode] = useState('')
+  const [slots, setSlots] = useState<(string | null)[]>(() => station.drag!.slots.map(() => null)), [code, setCode] = useState('')
   const [busy, setBusy] = useState(false), [note, setNote] = useState(''), [drag, setDrag] = useState<{ word: string; x: number; y: number } | null>(null)
   const used = (word: string) => slots.includes(word)
   const place = (word: string, index?: number) => setSlots(old => {
@@ -134,7 +143,7 @@ function DragAnswer({ station, onPassed }: { station: Station; onPassed: () => v
   async function submit() {
     setBusy(true); setNote('')
     try {
-      const r = await callCloud<{ slotsCorrect: boolean; codeCorrect: boolean; passed: boolean }>('routinesAnswer', { station: station.id, slots, code })
+      const r = await callCloud<{ slotsCorrect: boolean; codeCorrect: boolean; passed: boolean }>('routinesAnswer', tripData(trip, { station: station.id, slots, code }))
       if (r.passed) return onPassed()
       setNote(!r.slotsCorrect && !r.codeCorrect ? 'Check the words and the code. 單字和密碼都再看一次。' : !r.slotsCorrect ? 'The code is right! Check the words. 密碼對了，單字再想想。' : 'The words are right! Check the code. 單字對了，密碼再解一次。')
     } catch (e) { setNote(message(e)) } finally { setBusy(false) }
@@ -164,6 +173,7 @@ function SpeakAnswer({ station, onPassed, startRemaining }: { station: Station; 
   const [phase, setPhase] = useState<'idle' | 'starting' | 'recording' | 'preparing' | 'sending'>('idle')
   const [clip, setClip] = useState<{ blob: Blob; url: string; id: string } | null>(null), [result, setResult] = useState<SpeakResult | null>(null)
   const [error, setError] = useState(''), [remaining, setRemaining] = useState(startRemaining)
+  const trip = useTrip()
   const recorder = useRef<MediaRecorder | null>(null), stream = useRef<MediaStream | null>(null), timer = useRef<ReturnType<typeof setTimeout> | null>(null), alive = useRef(true)
   useEffect(() => { alive.current = true; return () => { alive.current = false; if (timer.current) clearTimeout(timer.current); if (recorder.current?.state === 'recording') recorder.current.stop(); stream.current?.getTracks().forEach(t => t.stop()) } }, [])
   useEffect(() => () => { if (clip) URL.revokeObjectURL(clip.url) }, [clip])
@@ -195,7 +205,7 @@ function SpeakAnswer({ station, onPassed, startRemaining }: { station: Station; 
     if (!clip || phase !== 'idle') return
     setPhase('sending'); setError('')
     try {
-      const r = await callCloud<SpeakResult>('scoreRoutineSpeaking', { station: station.id, attemptId: clip.id, audio: await base64Audio(clip.blob) })
+      const r = await callCloud<SpeakResult>('scoreRoutineSpeaking', tripData(trip, { station: station.id, attemptId: clip.id, audio: await base64Audio(clip.blob) }))
       if (!alive.current) return
       setResult(r); setRemaining(r.remaining); setClip(null); setPhase('idle')
     } catch (e) { fail(e) }
@@ -228,25 +238,25 @@ function StationFlow({ station, state, remaining, onUpdate, onExit, hero }: { st
   const [stage, setStage] = useState<'puzzle' | 'hint1' | 'hint2' | 'answer'>('puzzle')
   const [line, setLine] = useState(-1), [videoOk, setVideoOk] = useState(true), [videoEnded, setVideoEnded] = useState(false), [gameMissing, setGameMissing] = useState(false)
   const [saving, setSaving] = useState(false), [error, setError] = useState('')
-  const char = charSrc(station.id)
+  const char = charSrc(station.id), trip = useTrip(), hs = trip.variant === 'hs'
   // When this pupil first entered the station on this device (kept across reloads until the stamp), for the teacher's 'minutes' column.
-  const startKey = `wr-start-${station.id}`
+  const startKey = `${trip.store}-start-${station.id}`
   useEffect(() => { if (!state?.gameDone && !store.get(startKey)) store.set(startKey, String(Date.now())) }, [startKey, state?.gameDone])
   const [heard, setHeard] = useState(false), [asking, setAsking] = useState(false)
-  const ask = async () => { if (asking) return; setAsking(true); await play(`${ASSET}/audio/${station.id}-q.mp3`); setAsking(false); setHeard(true) }
+  const ask = async () => { if (asking) return; setAsking(true); await play(`${trip.audio}/${station.id}-q.mp3`); setAsking(false); setHeard(true) }
   const lines = useMemo(() => [station.spoken, ...station.extended], [station])
   const playing = useRef(false)
   const speakLines = useCallback(async () => {
     if (playing.current) return
     playing.current = true
-    for (let i = 0; i < lines.length; i++) { setLine(i); await play(`${ASSET}/audio/${station.id}-${i === 0 ? 'a' : 'x' + i}.mp3`) }
+    for (let i = 0; i < lines.length; i++) { setLine(i); await play(`${trip.audio}/${station.id}-${i === 0 ? 'a' : 'x' + i}.mp3`) }
     setLine(lines.length); playing.current = false
-  }, [lines, station.id])
+  }, [lines, station.id, trip.audio])
   const finishGame = useCallback(async (stars: number, score: number) => {
     setSaving(true); setError('')
-    try { const t0 = Number(store.get(startKey)), minutes = t0 > 0 ? Math.round((Date.now() - t0) / 6000) / 10 : undefined; const r = await callCloud<{ stations: Progress }>('routinesGameDone', { station: station.id, stars, score, minutes }); store.set(startKey, ''); onUpdate(r.stations); setStep('stamp') }
+    try { const t0 = Number(store.get(startKey)), minutes = t0 > 0 ? Math.round((Date.now() - t0) / 6000) / 10 : undefined; const r = await callCloud<{ stations: Progress }>('routinesGameDone', tripData(trip, { station: station.id, stars, score, minutes })); store.set(startKey, ''); onUpdate(r.stations); setStep('stamp') }
     catch (e) { setError(message(e)) } finally { setSaving(false) }
-  }, [station.id, onUpdate, startKey])
+  }, [station.id, onUpdate, startKey, trip])
   useEffect(() => {
     if (step !== 'game') return
     const listen = (e: MessageEvent) => {
@@ -265,15 +275,16 @@ function StationFlow({ station, state, remaining, onUpdate, onExit, hero }: { st
     <header className="wr-topbar"><button className="wr-chip" onClick={onExit}>← Map 地圖</button><strong>{station.order}. {station.country}</strong>
       <span className="wr-steps">{(['meet', 'puzzle', 'answer', 'reveal', 'video', 'game', 'stamp'] as Step[]).map(s => <i key={s} className={s === step ? 'on' : ''} />)}</span></header>
     {step === 'meet' && <section className="wr-meet">
-      <img className="wr-char wr-hero" src={`${ASSET}/art3d/hero_${hero}.png`} alt="You, the traveller" />
+      <img className="wr-char wr-hero" src={`${ASSET}/art3d/hero_${hero}.png`} alt={hs ? 'You, the reporter' : 'You, the traveller'} />
       <div className="wr-bubbles">
-        <p className="wr-bubble me">{station.question}
+        <p className="wr-bubble me">{hs && <small className="wr-who">📺 Taiwan studio 台灣主播</small>}{station.question}
           <button className={`wr-speaker${heard ? '' : ' wr-listen-first'}`} aria-label="Listen to the question / 聽問句" disabled={asking} onClick={() => void ask()}>🔊</button>
           {!heard && <em className="wr-listen-tip">{asking ? 'Listening… 聽完就可以打開謎題' : '← 先聽問句 Listen first'}</em>}</p>
-        <p className="wr-bubble you">{station.display.replace(/ at .*$/, ' at ')}<b>? ? : ? ?</b> Solve my puzzle! <small>解開我的謎題就知道！</small></p>
+        {hs ? <p className="wr-bubble you"><small className="wr-who">🎤 You, the reporter 小記者</small>{station.display.replace(/ at .*$/, ' at ')}<b>? ? : ? ?</b> Solve the puzzle and report! <small>解開謎題，向主播回報！</small></p>
+          : <p className="wr-bubble you">{station.display.replace(/ at .*$/, ' at ')}<b>? ? : ? ?</b> Solve my puzzle! <small>解開我的謎題就知道！</small></p>}
         <button className="wr-big" disabled={!heard} onClick={() => setStep('puzzle')}>Open the puzzle 打開謎題 →</button>
       </div>
-      <img className="wr-char" src={char} alt={`A pupil from ${station.country}`} />
+      <img className="wr-char" src={char} alt={hs && station.name ? `${station.name} from ${station.country}` : `A pupil from ${station.country}`} />
     </section>}
     {step === 'puzzle' && <section className="wr-puzzle">
       <iframe title="Number puzzle" src={cardUrl(stage)} />
@@ -285,7 +296,7 @@ function StationFlow({ station, state, remaining, onUpdate, onExit, hero }: { st
       </div>
     </section>}
     {step === 'answer' && <>
-      <p className="wr-bubble me wr-q">{station.mode === 'speak' ? station.question : 'What time …?'} <button className="wr-speaker" aria-label="Listen" onClick={() => void play(`${ASSET}/audio/${station.id}-q.mp3`)}>🔊</button>
+      <p className="wr-bubble me wr-q">{station.mode === 'speak' ? station.question : 'What time …?'} <button className="wr-speaker" aria-label="Listen" onClick={() => void play(`${trip.audio}/${station.id}-q.mp3`)}>🔊</button>
         <button className="wr-chip" onClick={() => setStep('puzzle')}>🔍 Puzzle 再看謎題</button></p>
       {station.mode === 'drag'
         ? <DragAnswer station={station} onPassed={() => { setStep('reveal') }} />
@@ -302,14 +313,14 @@ function StationFlow({ station, state, remaining, onUpdate, onExit, hero }: { st
       </div>
     </section>}
     {step === 'video' && <section className="wr-video">
-      {videoOk ? <video src={`${ASSET}/video/${station.id}.mp4`} controls autoPlay playsInline onEnded={() => setVideoEnded(true)} onError={() => setVideoOk(false)} />
+      {videoOk ? <video src={`${trip.video}/${station.id}.mp4`} controls autoPlay playsInline onEnded={() => setVideoEnded(true)} onError={() => setVideoOk(false)} />
         : <p className="wr-note">The story video for {station.country} is coming soon. 這一站的動畫還在製作中。</p>}
       <button className="wr-big" disabled={videoOk && !videoEnded} onClick={() => setStep('game')}>Play the game 玩遊戲 →</button>
     </section>}
     {step === 'game' && <section className="wr-game">
       {gameMissing ? <><p className="wr-note">The game for {station.country} is coming soon. 這一站的遊戲還在製作中。</p>
         <button className="wr-big" disabled={saving} onClick={() => void finishGame(1, 0)}>Get my stamp 先蓋章 →</button></>
-        : <iframe title="Game" src={`${ASSET}/games/${station.game}/index.html?country=${station.id}&hero=${hero}`} allow="autoplay" />}
+        : <iframe title="Game" src={`${ASSET}/games/${station.game}/index.html?country=${trip.gamePrefix}${station.id}&hero=${hero}`} allow="autoplay" />}
       {saving && <p role="status">Saving… 儲存中</p>}{error && <p role="alert" className="wr-error">{error} <button className="wr-chip" onClick={() => void finishGame(1, 0)}>Retry 重試</button></p>}
     </section>}
     {step === 'stamp' && <section className="wr-stamp">
@@ -323,37 +334,42 @@ function StationFlow({ station, state, remaining, onUpdate, onExit, hero }: { st
 // Map animation clips (opening, flight between stations, ending): map_<name>.mp4, 720p, made with map-anim/build*.py.
 // First view has no Skip (unless the video stalls); a clip seen before on this device can be skipped. A clip that cannot
 // load never blocks the trip: onFail runs instead (the old hero-on-the-map trip for flights).
-const clipSeen = (name: string) => (store.get('wr-clips') ?? '').split(',').includes(name)
-const markClipSeen = (name: string) => { if (!clipSeen(name)) store.set('wr-clips', [...(store.get('wr-clips') ?? '').split(',').filter(Boolean), name].join(',')) }
-function MapClip({ name, onDone, onFail }: { name: string; onDone: () => void; onFail: () => void }) {
-  const ref = useRef<HTMLVideoElement>(null)
-  const [needTap, setNeedTap] = useState(false), [slow, setSlow] = useState(false), [seen] = useState(() => clipSeen(name))
+// Seen clips are remembered per trip ('wr-clips' for the I version, as before; 'wrhs-clips' for he/she).
+const clipSeen = (trip: Trip, name: string) => (store.get(`${trip.store}-clips`) ?? '').split(',').includes(name)
+const markClipSeen = (trip: Trip, name: string) => { if (!clipSeen(trip, name)) store.set(`${trip.store}-clips`, [...(store.get(`${trip.store}-clips`) ?? '').split(',').filter(Boolean), name].join(',')) }
+function MapClip({ name, src, canSkip, onDone, onFail }: { name: string; src?: string; canSkip?: boolean; onDone: () => void; onFail: () => void }) {
+  const ref = useRef<HTMLVideoElement>(null), trip = useTrip()
+  const [needTap, setNeedTap] = useState(false), [slow, setSlow] = useState(false), [seen] = useState(() => canSkip || clipSeen(trip, name))
   useEffect(() => {
     const v = ref.current; if (!v) return
     void v.play().catch(() => setNeedTap(true))               // iPad: a clip that starts after a network wait needs one more tap
     const t = setTimeout(() => { if (v.currentTime < 0.2) setSlow(true) }, 6000)
     return () => clearTimeout(t)
   }, [])
-  const done = () => { markClipSeen(name); onDone() }
+  const done = () => { markClipSeen(trip, name); onDone() }
   return <div className="wr-clip" role="dialog" aria-label="Map animation">
-    <video ref={ref} src={`${ASSET}/video/map_${name}.mp4`} playsInline preload="auto" onEnded={done} onError={onFail} onPlaying={() => { setNeedTap(false); setSlow(false) }} />
+    <video ref={ref} src={src ?? trip.clip(name)} playsInline preload="auto" onEnded={done} onError={onFail} onPlaying={() => { setNeedTap(false); setSlow(false) }} />
     {needTap && <button className="wr-big wr-clip-play" onClick={() => void ref.current?.play().catch(() => {})}>▶ Play 播放</button>}
     {(seen || slow) && <button className="wr-chip wr-clip-skip" onClick={done}>Skip 跳過 ⏭</button>}
   </div>
 }
 
-export default function RoutinesApp() {
+export default function RoutinesApp({ variant = 'i' }: { variant?: Variant }) {
+  const trip = TRIPS[variant], STATIONS = trip.stations
   const [phase, setPhase] = useState<'login' | 'map' | 'station'>('login')
   const [progress, setProgress] = useState<Progress>({}), [remaining, setRemaining] = useState(30)
   const [station, setStation] = useState<Station | null>(null), [travelling, setTravelling] = useState<{ from: Station; to: Station } | null>(null)
   const [hero, setHeroState] = useState<Hero>(() => store.get('wr-hero') === 'boy' ? 'boy' : 'girl')
   const setHero = (h: Hero) => { setHeroState(h); store.set('wr-hero', h) }
-  const [clip, setClip] = useState<{ name: string; then: () => void; fail?: () => void } | null>(null)
+  const [clip, setClip] = useState<{ name: string; src?: string; canSkip?: boolean; then: () => void; fail?: () => void } | null>(null)
+  // he/she trip: the -s / -es / -ies grammar video once before the first station (always skippable), and from the map button.
+  const playGrammar = () => { if (trip.grammar) setClip({ name: 'grammar', src: trip.grammar, canSkip: true, then: () => {} }) }
+  const afterOpening = () => { if (trip.grammar && !clipSeen(trip, 'grammar')) playGrammar() }
   useEffect(() => { if (phase !== 'login') music.stop() }, [phase])
   const openAll = useMemo(() => new URLSearchParams(window.location.search).get('open') === 'all', [])
   const current = STATIONS.find(s => !progress[s.id]?.gameDone) ?? null
-  async function load() { const r = await callCloud<{ stations: Progress; remaining: number }>('routinesState'); setProgress(r.stations); setRemaining(r.remaining) }
-  async function start(studentId: string) { await studentLogin(); await callCloud('joinStudent', { studentId }); await load(); setPhase('map'); if (!clipSeen('opening')) setClip({ name: 'opening', then: () => {} }) }
+  async function load() { const r = await callCloud<{ stations: Progress; remaining: number }>('routinesState', tripData(trip)); setProgress(r.stations); setRemaining(r.remaining) }
+  async function start(studentId: string) { await studentLogin(); await callCloud('joinStudent', { studentId }); await load(); setPhase('map'); if (!clipSeen(trip, 'opening')) setClip({ name: 'opening', then: afterOpening }); else afterOpening() }
   function open(next: Station) {
     const index = STATIONS.indexOf(next), from = STATIONS[Math.max(0, index - 1)]
     if (progress[next.id]?.gameDone || next.transport === 'home') { setStation(next); setPhase('station'); return }
@@ -363,9 +379,11 @@ export default function RoutinesApp() {
   }
   const allDone = (p: Progress) => STATIONS.every(s => p[s.id]?.gameDone)
   const playEnding = () => setClip({ name: 'ending', then: () => {} })
-  if (clip) return <MapClip key={clip.name} name={clip.name} onDone={() => { const c = clip; setClip(null); c.then() }} onFail={() => { const c = clip; setClip(null); (c.fail ?? c.then)() }} />
-  if (phase === 'login') return <Login onStart={start} hero={hero} onHero={setHero} />
-  if (phase === 'station' && station) return <StationFlow key={station.id} station={station} state={progress[station.id]} remaining={remaining} hero={hero}
-    onUpdate={setProgress} onExit={() => { setPhase('map'); void load().catch(() => {}); if (allDone(progress) && !clipSeen('ending')) playEnding() }} />
-  return <WorldMap progress={progress} current={current} onOpen={open} travelling={travelling} openAll={openAll} hero={hero} onEnding={playEnding} />
+  let page
+  if (clip) page = <MapClip key={clip.name} name={clip.name} src={clip.src} canSkip={clip.canSkip} onDone={() => { const c = clip; setClip(null); c.then() }} onFail={() => { const c = clip; setClip(null); (c.fail ?? c.then)() }} />
+  else if (phase === 'login') page = <Login onStart={start} hero={hero} onHero={setHero} />
+  else if (phase === 'station' && station) page = <StationFlow key={station.id} station={station} state={progress[station.id]} remaining={remaining} hero={hero}
+    onUpdate={setProgress} onExit={() => { setPhase('map'); void load().catch(() => {}); if (allDone(progress) && !clipSeen(trip, 'ending')) playEnding() }} />
+  else page = <WorldMap progress={progress} current={current} onOpen={open} travelling={travelling} openAll={openAll} hero={hero} onEnding={playEnding} onGrammar={playGrammar} />
+  return <TripContext.Provider value={trip}>{page}</TripContext.Provider>
 }

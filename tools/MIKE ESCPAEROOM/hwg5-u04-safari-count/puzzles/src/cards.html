@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>Safari Count puzzle cards</title>
+<style>
+@font-face { font-family: "CR"; src: local("Comic Relief Bold"), local("ComicRelief-Bold"); font-weight: 700; }
+@font-face { font-family: "CR"; src: local("Comic Relief"), local("ComicRelief-Regular"); font-weight: 400; }
+:root { --ink:#2b2140; --teal:#1f9e8f; --purple:#6b4f9a; --pink:#ef8fb0; --gold:#f4b73a; --red:#e2483d; }
+html,body { margin:0; padding:0; }
+body { width:1600px; height:900px; overflow:hidden; font-family:"CR","Microsoft JhengHei","微軟正黑體",sans-serif; color:var(--ink); background:#bfe6ea; }
+#card { position:relative; width:1600px; height:900px; background:url("../assets/card_bg.png") center/cover no-repeat; }
+#sheet { position:absolute; left:96px; top:66px; width:1408px; height:756px; }
+#ribbon { position:absolute; left:50%; top:16px; z-index:2; transform:translateX(-50%); background:linear-gradient(#ffcf5c,#f39c34); border:5px solid #fff; border-radius:999px; padding:10px 46px 12px; font-size:44px; font-weight:700; white-space:nowrap; box-shadow:0 6px 0 #c76a1c; color:#4a2400; }
+#ribbon small { font-size:30px; margin-left:12px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; }
+#stage { position:absolute; right:200px; top:26px; z-index:3; transform:rotate(6deg); padding:8px 22px; border-radius:16px; font-size:34px; font-weight:700; color:#fff; border:4px solid #fff; }
+#inst { position:absolute; left:0; right:0; top:58px; text-align:center; font-size:36px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; }
+#inst .en { display:block; font-family:"CR"; font-size:28px; font-weight:400; color:#5b4f73; margin-top:2px; }
+#body { position:absolute; left:20px; right:20px; top:158px; bottom:212px; display:flex; align-items:center; justify-content:center; }
+#answer { position:absolute; left:0; right:0; bottom:112px; display:flex; justify-content:center; align-items:center; gap:14px; font-size:30px; font-weight:700; }
+.box { width:78px; height:86px; border:5px dashed #8b7bb0; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:60px; color:var(--red); }
+.colon { font-size:64px; color:#8b7bb0; }
+#hint { position:absolute; left:330px; right:330px; bottom:84px; z-index:3; padding:6px 22px !important; background:#fff3c4; border:4px solid var(--gold); border-radius:22px; padding:10px 22px; font-size:28px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; text-align:center; }
+#hint .en { font-family:"CR"; font-weight:400; font-size:24px; display:block; color:#6a5a2a; }
+.item { display:flex; flex-direction:column; align-items:center; margin:0 34px; position:relative; }
+.item img { width:250px; height:250px; object-fit:contain; filter:drop-shadow(0 6px 4px rgba(0,0,0,.18)); }
+.item .lab { margin-top:8px; font-size:34px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; background:#fff; border:3px solid #c9b8ea; border-radius:14px; padding:2px 16px; }
+.item .ghost { position:absolute; top:44px; font-size:160px; font-weight:700; color:rgba(226,72,61,.80); -webkit-text-stroke:4px #fff; font-family:"Arial Black",sans-serif; }
+.frame { background:#fff; border:5px solid #c9b8ea; border-radius:20px; margin:0 14px; }
+.keytbl { display:grid; grid-template-columns:repeat(2,auto); gap:14px 26px; background:#fff; border:4px solid #c9b8ea; border-radius:20px; padding:12px 18px; margin-left:30px; }
+.keytbl .row { display:flex; align-items:center; gap:8px; font-size:30px; font-weight:700; }
+.big-ans { display:flex; align-items:center; gap:60px; }
+.say { font-size:52px; font-weight:700; color:var(--purple); text-align:center; margin-top:16px; }
+.seq { font-family:"Arial Black",sans-serif; font-size:29px; letter-spacing:2px; white-space:nowrap; text-align:center; margin-bottom:10px; color:#2b2140; }
+</style>
+<style>
+.plus { font-family:"Arial Black",sans-serif; font-size:110px; color:#6b4f9a; margin:0 18px; }
+.tile { font-family:"Arial Black",sans-serif; font-size:96px; color:#fff; background:#1f9e8f; border:6px solid #fff; border-radius:22px; padding:0 26px; box-shadow:0 6px 0 #157a6e; }
+.tile.minus { background:#e2483d; box-shadow:0 6px 0 #a8302a; }
+.qbox { font-family:"Arial Black",sans-serif; font-size:110px; color:#8b7bb0; }
+.word { font-family:"Arial Black",sans-serif; font-size:44px; letter-spacing:6px; margin-top:6px; color:#2b2140; }
+.box.lt { font-family:"Arial Black",sans-serif; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div id="ribbon"></div>
+  <div id="stage"></div>
+  <div id="hint" style="display:none"></div>
+  <div id="sheet">
+    <div id="inst"></div>
+    <div id="body"></div>
+    <div id="answer"></div>
+  </div>
+</div>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>Safari Count puzzle cards</title>
+<style>
+@font-face { font-family: "CR"; src: local("Comic Relief Bold"), local("ComicRelief-Bold"); font-weight: 700; }
+@font-face { font-family: "CR"; src: local("Comic Relief"), local("ComicRelief-Regular"); font-weight: 400; }
+:root { --ink:#2b2140; --teal:#1f9e8f; --purple:#6b4f9a; --pink:#ef8fb0; --gold:#f4b73a; --red:#e2483d; }
+html,body { margin:0; padding:0; }
+body { width:1600px; height:900px; overflow:hidden; font-family:"CR","Microsoft JhengHei","微軟正黑體",sans-serif; color:var(--ink); background:#bfe6ea; }
+#card { position:relative; width:1600px; height:900px; background:url("../assets/card_bg.png") center/cover no-repeat; }
+#sheet { position:absolute; left:96px; top:66px; width:1408px; height:756px; }
+#ribbon { position:absolute; left:50%; top:16px; z-index:2; transform:translateX(-50%); background:linear-gradient(#ffcf5c,#f39c34); border:5px solid #fff; border-radius:999px; padding:10px 46px 12px; font-size:44px; font-weight:700; white-space:nowrap; box-shadow:0 6px 0 #c76a1c; color:#4a2400; }
+#ribbon small { font-size:30px; margin-left:12px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; }
+#stage { position:absolute; right:200px; top:26px; z-index:3; transform:rotate(6deg); padding:8px 22px; border-radius:16px; font-size:34px; font-weight:700; color:#fff; border:4px solid #fff; }
+#inst { position:absolute; left:0; right:0; top:58px; text-align:center; font-size:36px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; }
+#inst .en { display:block; font-family:"CR"; font-size:28px; font-weight:400; color:#5b4f73; margin-top:2px; }
+#body { position:absolute; left:20px; right:20px; top:158px; bottom:212px; display:flex; align-items:center; justify-content:center; }
+#answer { position:absolute; left:0; right:0; bottom:112px; display:flex; justify-content:center; align-items:center; gap:14px; font-size:30px; font-weight:700; }
+.box { width:78px; height:86px; border:5px dashed #8b7bb0; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:60px; color:var(--red); }
+.colon { font-size:64px; color:#8b7bb0; }
+#hint { position:absolute; left:330px; right:330px; bottom:84px; z-index:3; padding:6px 22px !important; background:#fff3c4; border:4px solid var(--gold); border-radius:22px; padding:10px 22px; font-size:28px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; text-align:center; }
+#hint .en { font-family:"CR"; font-weight:400; font-size:24px; display:block; color:#6a5a2a; }
+.item { display:flex; flex-direction:column; align-items:center; margin:0 34px; position:relative; }
+.item img { width:250px; height:250px; object-fit:contain; filter:drop-shadow(0 6px 4px rgba(0,0,0,.18)); }
+.item .lab { margin-top:8px; font-size:34px; font-family:"Microsoft JhengHei",sans-serif; font-weight:700; background:#fff; border:3px solid #c9b8ea; border-radius:14px; padding:2px 16px; }
+.item .ghost { position:absolute; top:44px; font-size:160px; font-weight:700; color:rgba(226,72,61,.80); -webkit-text-stroke:4px #fff; font-family:"Arial Black",sans-serif; }
+.frame { background:#fff; border:5px solid #c9b8ea; border-radius:20px; margin:0 14px; }
+.keytbl { display:grid; grid-template-columns:repeat(2,auto); gap:14px 26px; background:#fff; border:4px solid #c9b8ea; border-radius:20px; padding:12px 18px; margin-left:30px; }
+.keytbl .row { display:flex; align-items:center; gap:8px; font-size:30px; font-weight:700; }
+.big-ans { display:flex; align-items:center; gap:60px; }
+.say { font-size:52px; font-weight:700; color:var(--purple); text-align:center; margin-top:16px; }
+.seq { font-family:"Arial Black",sans-serif; font-size:29px; letter-spacing:2px; white-space:nowrap; text-align:center; margin-bottom:10px; color:#2b2140; }
+</style>
+<style>
+.plus { font-family:"Arial Black",sans-serif; font-size:110px; color:#6b4f9a; margin:0 18px; }
+.tile { font-family:"Arial Black",sans-serif; font-size:96px; color:#fff; background:#1f9e8f; border:6px solid #fff; border-radius:22px; padding:0 26px; box-shadow:0 6px 0 #157a6e; }
+.tile.minus { background:#e2483d; box-shadow:0 6px 0 #a8302a; }
+.qbox { font-family:"Arial Black",sans-serif; font-size:110px; color:#8b7bb0; }
+.word { font-family:"Arial Black",sans-serif; font-size:44px; letter-spacing:6px; margin-top:6px; color:#2b2140; }
+.box.lt { font-family:"Arial Black",sans-serif; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div id="ribbon"></div>
+  <div id="stage"></div>
+  <div id="hint" style="display:none"></div>
+  <div id="sheet">
+    <div id="inst"></div>
+    <div id="body"></div>
+    <div id="answer"></div>
+  </div>
+</div>
+<script>
+// Safari Count (HWG5 U4) puzzle cards: ?ans=<WORD>&stage=puzzle|hint1|hint2|answer
+// Each answer word has its own puzzle (type + data). The answer is the animal word only (teacher 11/24, 1A).
+const P = new URLSearchParams(location.search);
+const ANS = (P.get('ans')||'PANDA').toUpperCase(), STAGE = P.get('stage') || 'puzzle';
+const ICON = n => `../assets/icons/${n}.png`;
+const PUZ = {
+  PANDA: {type:'clues', n:1, items:[['bamboo','bamboo','竹子'],['blackwhite','black and white','黑和白'],['bear','bear','熊']],
+          h2:'牠是一種熊，最愛吃竹子，身上只有黑和白。', h2en:'It is a bear. It eats bamboo. It is black and white.'},
+  BEARS: {type:'addsub', n:2, img:'pears', word:'PEARS', minus:'P', plus:'B',
+          h2:'PEARS 拿掉 P，剩下 EARS；前面再加上 B。', h2en:'PEARS - P = EARS. Then put B in front.'},
+};
+const TYPES = {
+  clues:  {title:'Three Clues', zh:'三個線索', inst:'三個線索都指向同一種動物，牠是誰？', en:'Three clues, one animal. What is it?',
+           h1:'看看每張圖的英文。', h1en:'Look at the English for each picture.'},
+  addsub: {title:'Picture Math', zh:'圖像加減', inst:'說出圖片的英文，照算式拿掉、加上字母。', en:'Say the picture in English. Take away and add letters.',
+           h1:'圖片是兩顆梨子，英文是 pears。', h1en:'The picture is two pears: P-E-A-R-S.'},
+};
+const C = PUZ[ANS], T = TYPES[C.type];
+document.getElementById('ribbon').innerHTML = `Puzzle ${C.n} · ${T.title}<small>${T.zh}</small>`;
+const ST = {puzzle:['Puzzle','#7a5bc7'], hint1:['Hint 1','#f39c34'], hint2:['Hint 2','#e2483d'], answer:['Answer','#1f9e8f']}[STAGE];
+const stEl = document.getElementById('stage'); stEl.textContent = ST[0]; stEl.style.background = ST[1];
+document.getElementById('inst').innerHTML = `${T.inst}<span class="en">${T.en}</span>`;
+const body = document.getElementById('body'), ansEl = document.getElementById('answer'), hintEl = document.getElementById('hint');
+const H = STAGE==='hint1' ? 1 : STAGE==='hint2' ? 2 : 0;
+const h1 = C.type==='addsub' ? T.h1 : T.h1, h1en = T.h1en;
+if (H){ hintEl.style.display='block'; hintEl.innerHTML = `💡 ${H===1?h1:C.h2}<span class="en">${H===1?h1en:C.h2en}</span>`; }
+const boxes = (shown) => ANS.split('').map((ch,i)=>`<div class="box lt">${shown(i)?ch:''}</div>`).join('');
+
+if (STAGE === 'answer'){
+  document.getElementById('inst').innerHTML = `答對了！謎底是 <span style="color:#e2483d;font-family:'Arial Black'">${ANS}</span><span class="en">Great job! The answer is ${ANS.toLowerCase()}.</span>`;
+  ansEl.innerHTML = `<span style="margin-right:10px">Answer:</span>${boxes(()=>true)}`;
+} else {
+  ansEl.innerHTML = `<span style="margin-right:10px">謎底 Answer:</span>${boxes(i=>H===2 && i===0)}`;
+}
+let html = '';
+if (C.type==='clues'){
+  html = C.items.map(([f,en,zh],i)=>`<div class="item"><img src="${ICON(f)}">${H||STAGE==='answer'?`<div class="lab">${en}<br><small>${zh}</small></div>`:''}</div>${i<2?'<span class="plus">+</span>':''}`).join('');
+}
+if (C.type==='addsub'){
+  const lab = H||STAGE==='answer' ? `<div class="word">${C.word}</div>` : '';
+  const res = STAGE==='answer' ? `<span class="tile" style="background:#f4b73a;box-shadow:0 6px 0 #c78a1c">${ANS}</span>` : (H===2 ? `<span class="qbox">?EARS</span>` : '<span class="qbox">?</span>');
+  html = `<div class="item" style="margin:0 6px"><img src="${ICON(C.img)}">${lab}</div><span class="plus">−</span><span class="tile minus">${C.minus}</span><span class="plus">+</span><span class="tile">${C.plus}</span><span class="plus">=</span>${res}`;
+}
+body.innerHTML = html;
+function fitCard(){const k=Math.min(innerWidth/1600,innerHeight/900),c=document.getElementById('card');c.style.transformOrigin='0 0';c.style.transform=Math.abs(k-1)<.001?'':`scale(${k})`;document.body.style.width=innerWidth+'px';document.body.style.height=innerHeight+'px'}
+fitCard();addEventListener('resize',fitCard);
+</script>
+</body>
+</html>

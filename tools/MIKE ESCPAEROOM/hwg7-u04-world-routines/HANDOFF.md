@@ -503,3 +503,50 @@ Tripo：老師 11/19 說已儲值（分批），新餘額還沒讀，下一批�
   - 印度右手 REACH 0.0184，比手臂長 0.0179 稍長。
 - 踩坑：印度合成時，混音的 ffmpeg 跑到 0.013 倍速，卡了 20 分鐘（同一份程式，肯亞一下子就跑完）。殺掉後重跑，一次就好。合成要加 `timeout`，跑超過 5 分鐘就殺掉重跑。
 - Colab 11/23 共用 40 多個單位。
+
+### 11/24 老師：四支試片都定案；埃及先不動工；開始 he/she 網站部署任務
+
+- ✅ 肯亞、印度、新加坡、澳洲 he/she 動畫定案（`tabletop/out/hs_*.mp4`、`web/video/hs/*.mp4`）。he/she 十站裡只差埃及。
+- 11/24 老師決定 he/she 網站範圍（三題都選建議）：
+  1. 4 款 Godot 遊戲加 he/she 時間資料（時鐘回合用新時間、補時間語音）並重新匯出；I 版遊戲行為不能變。
+  2. 9 支飛行短片＋結尾回顧重做 he/she 版（本機），開場沿用。
+  3. 埃及站照常開放，動畫那一步顯示「製作中」，之後補。
+- 11/24 老師：埃及站網站語音可以做（hs_voice.py 加 egypt，edge-tts 免費；埃及情境動畫仍不動工）；**首頁先不放 he/she 入口**，只給網址 `/world-routines-he-she`。
+- 11/24 老師看過 he/she 飛行短片 5 支（日本、美國、英國、西班牙、埃及）：「都可以」。
+- 11/24 he/she 網站本機完成（**尚未部署**）：
+  - 題庫 `monster-in-my-mind-site/functions/routines-hs-content.json`（`he-she/build_site_bank.py` 產生，連 `web/audio/hs/` 49 個語音）。
+  - 函式 `routines.mjs`／`routines-core.mjs` 加 `variant:'hs'`（沒帶＝I 版，I 版集合／ID／提示詞不變）；he/she 用 `routines_hs_progress`、`routines_hs_records`、`routines-hs-recordings/`；每日 30 次口說兩版合計。測試 `functions/tests/routines-hs.test.mjs`，全部 45 項過。
+  - 前端 `content.ts` TRIPS、`RoutinesApp`／`RoutinesTeacher` 的 `variant` prop、`ClassActivities` 路由 `/world-routines-he-she`（＋`/teacher`）；首頁不放入口。`scripts/local-preview.ts` 支援 hs。
+  - 遊戲：`he-she/build_game_data.py` → `games/<遊戲>/data/hs_<站>.json`；`he-she/export_games.py` 重新匯出 4 款（舊 web 備份在 `tabletop/work/games_web_backup/`），I 版國家測試照舊通過。
+  - 地圖短片：`map-anim/build.py leg all --hs`、`build_world.py ending --hs` → `web/video/hs/map_*.mp4`；文法動畫 `web/video/hs/grammar.mp4`（verbs-1-explain 720p）。老師 11/24 看過 9 支飛行短片，前 5 支說「都可以」，後 4 支與結尾已傳。
+  - 走查 `web/qa_walk_hs.py`（31 張、只有登入前 401）、`web/qa_walk.py`（I 版 0 錯誤）、`web/qa_teacher.py`（改成接受開場動畫先播）。
+  - 部署前比對：線上最後發布是 11/22 20:42 自己的地圖動畫版（1,237 檔）。不同的只有 4 款遊戲（index.html、index.pck）和 69 個新檔。線上函式除 routines.mjs、routines-core.mjs 外和本機相同。建置 index-D3Fp-jST.js。
+- 11/24 老師：「可以，部署」（he/she 網站：函式＋hosting，首頁不放入口）。
+- ✅ **11/24 he/she 網站部署上線**：
+  - 函式 6 個更新成功：monsterPortal、routinesState、routinesAnswer、scoreRoutineSpeaking、routinesGameDone、purgeExpiredRoutines。最後跳出「沒有映像清理政策」的提醒，這是舊問題，不影響。
+  - hosting 另外一個指令部署。
+  - 部署後逐位元組比對 80/80 相同：index.html、assets、20 支影片、49 個語音、4 款遊戲。
+  - 三個網址都回 200：/world-routines-he-she、/world-routines-he-she/teacher、/world-routines。
+  - 首頁沒有入口，只給網址。
+  - **還沒驗證**：真實 AI 口說評分（he/she 第三人稱提示詞）、真 iPad、實際聽聲音。正式站沒有用測試學號登入，避免產生資料。
+  - 埃及站動畫顯示「製作中」，之後補上 `web/video/hs/egypt.mp4` 再部署 hosting 即可。
+- 11/24 10:20 老師：12:30 左右查 Tripo 點數，**補到 3,000 點以上就可以開始埃及 he/she 動畫建模**（先做埃及姊姊）；未到就只回報。已排 12:32 一次性提醒（只在這個對話開著時有效）。
+- 11/24 12:32 查 Tripo：餘額仍 **50**（還沒補點），埃及姊姊未建模，帳本已記。
+- 11/24 13:37 老師選用 Tripo 圖庫模型當埃及姊姊：NHtea〈cartoon girl 3d model〉（粉紅毛衣＋牛仔褲、黑雙馬尾、T-pose、5173 面），匯出 GLB 2k 花 **5 點**（50 → **45**，帳本已記）→ `tabletop/models/egypt_girl_gallery.glb`。**沒有骨架**（skins 0），要先綁骨架才能演動作。
+- 11/24 13:39 老師同意用 Tripo 綁骨架：Recraft 5＋Auto Rig 20（45 → **20**，帳本已記）→ `tabletop/models/egypt_girl.glb`（65 根 Mixamo 骨頭、兩手手指有權重、T-pose、5173 面）。粉紅毛衣＋牛仔褲、黑雙馬尾，跟參考圖 refs/egypt_girl.png 衣服不同（老師接受）。下一步：埃及檢查圖換上她（Colab 先報單位）。
+- 11/24 埃及 he/she 場景程式：`tabletop/src/egypt_school_build.py` → `egypt_school.py`（由 kenya_morning.py 產生，照 uk_home_build.py 做法）。EG1 家門口指 7:10 鐘＋姊姊在旁、EG2 和姊姊牽手走路（照 UK3）、EG3 校門鐘 7:30 特寫、EG4 背對鏡頭在校門口拉書包背帶兩下。書包程式做、固定在 Spine2 骨頭上。未渲染；檢查圖估 0.3 單位一輪（含修正約 1 單位），先問老師。
+- 11/24 埃及檢查圖第 1 輪 qa/1124-142515（0.33 單位，sheet.jpg 已給老師）：時鐘 7:10／7:30 正確、牽手手距 3.5 mm、姊姊站姿 OK。問題已改：整體太亮太淡（燈 0.40→0.25、太陽 2.4→1.1、牆色加深）、背帶頂端從頭上打光線打到頭→翹在頭髮旁（改肩關節上方 2.2 mm）、牆 0.24 高擋住天空金字塔（降到 0.15、金字塔加高）、書包偏粉紅（加深、口袋改藍）。第 2 輪還沒跑。
+- 11/24 下午 埃及第 2 輪檢查圖還沒跑：Colab 要 G4、L4 都回 503 Service Unavailable（沒有扣單位，餘額 119.93）。改好的 egypt_school.py 等 Colab 有空再跑：`python src/colab_run.py light egypt_school "EG1 30,130" "EG2 0,48" "EG3 40" "EG4 20,44"`。
+
+### 11/24 傍晚交接（老師關機）— 下次從這裡開始
+- **埃及 he/she 動畫進度**：姊姊＝Tripo 圖庫模型 `tabletop/models/egypt_girl.glb`（已綁骨架）。場景程式 `tabletop/src/egypt_school_build.py` → `egypt_school.py`（改了就重跑 build）。第 1 輪檢查圖 qa/1124-142515（0.33 單位，已給老師），四個問題已改進程式；**第 2 輪還沒跑**（Colab G4／L4 503，沒扣單位；16:53 提醒因關機取消）。
+- **下一步**：開機後先問老師可否跑第 2 輪（約 0.3 單位，老師 11/24 已同意這輪）→ `cd tabletop; python src/colab_run.py light egypt_school "EG1 30,130" "EG2 0,48" "EG3 40" "EG4 20,44"` → 做 sheet.jpg 自己先看（亮度、背帶貼肩、天空與金字塔、書包紅色、牽手）→ 給老師 → 正式渲染（約 1.3 單位，先報）→ `hs_compose.py` 要加 egypt（EG1 7.4 q0.4 a4.4／EG2 4.0 walk0.3／EG3 3.4 starts0.3／EG4 3.8 bag0.3）→ 試片 → 定案後放 `web/video/hs/egypt.mp4`、publish_to_site、比對線上、老師同意才部署 hosting。
+- **Tripo 餘額 20 點**（今天花 30：圖庫下載 5、Recraft 5、Auto Rig 20），帳本已記。Colab 今天用 0.33 單位。
+- **今天全部未 commit**：網站 he/she 程式、專案 he/she 腳本、egypt_school*.py、HANDOFF、共用踩坑規則 §19。收工時一起 commit（不含 mp4／圖片／glb／YT 資料夾／skills）。
+- he/she 網站已上線（`/world-routines-he-she`，首頁沒入口）；老師要用自己的學號試 AI 口說評分，結果還沒回報。
+- 新踩坑寫進 `tools/動畫共用踩坑規則.md` §19（7 條），短版已同步到 11 份影片 skill。
+- 11/24 17:00 埃及檢查圖第 2 輪 qa/1124-165755（0.10 單位，sheet.jpg 已給老師）：背帶已貼肩（不再翹在頭髮旁）、天空和金字塔露出來、畫面比較不刺眼、口袋藍色。還可改：金字塔頂端被畫面上緣切掉（只看到下半）、EG4 書包在陽光下仍偏橘粉、整體仍偏淡。等老師意見。
+- 11/24 17:20 埃及檢查圖第 3 輪 qa/1124-171725（顯示 0.00 單位，同一台主機）：牆 0.13、金字塔整個三角形露出、天空加藍、牆地加深、書包改深藍＋橘黃口袋（紅色在陽光下一直偏粉橘）。已給老師，等確認後正式渲染（約 1.3 單位，先報）。
+- 11/24 18:05 埃及 he/she 正式渲染（老師同意）：qa/1124-173543（EG1 90 格，0.64）、1124-175357（EG2 49＋EG3 42，0.48）、1124-180319（EG4 46，0.33），共 1.45 單位。hs_compose.py 加 egypt → `tabletop/out/hs_egypt.mp4`（18.6 秒、−16 LUFS、5.6 MB）＋`web/video/hs/egypt.mp4`（720p，**未部署**）。抽格 qa/eg_film_check/film_sheet.jpg。試片 v1 已給老師，待定案。注意：EG2 走路距離短（2 秒約走 6 cm）、EG3 字幕蓋到時鐘下緣。
+- ✅ 11/24 老師：**埃及 he/she 試片 v1 定案**（`tabletop/out/hs_egypt.mp4`、網站 `web/video/hs/egypt.mp4`）。he/she 十站動畫全部定案。網站埃及站目前顯示「製作中」，要 publish_to_site＋比對線上＋老師同意才部署 hosting。
+- ✅ 11/24 18:44 **埃及影片部署完成**（老師說「要把埃及影片部署到網站」）：publish_to_site → C 槽副本 build（index-D3Fp-jST.js 與線上相同）→ 比對線上（最後發布 11/24 09:51 自己部署，1,306 檔全同，只差新增 video/hs/egypt.mp4）→ 只部署 hosting（release 65b1e82d900eeb03）→ verify_live_hs.py 81/81 逐位元組相同、三個網址 200。he/she 十站動畫全部上線；首頁仍無 he/she 入口。

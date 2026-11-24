@@ -205,8 +205,12 @@ def ending(still=None):
     phrases = [('You did it!', 'You did it!'), ('Ten stops around the world!', 'Ten stops around the world!')]
     for cid in ORDER:
         c = PLACE[cid][2].replace('the ', '')
-        phrases.append((f'{c}: {S[cid]["display"]}', f'{c}. {S[cid]["spoken"]}'))
-    phrases += [('Great job, world traveler!', 'Great job, world traveler!')]
+        if B.HS:   # he/she trip: 'In Taiwan, Mei gets up at 6:30.'
+            s = S[cid]; who = lambda t: s['name'] + t[len(s['pronoun']):]
+            phrases.append((f'{c}: {who(s["display"])}', f'In {PLACE[cid][2]}, {who(s["spoken"])}'))
+        else:
+            phrases.append((f'{c}: {S[cid]["display"]}', f'{c}. {S[cid]["spoken"]}'))
+    phrases += [('Great job, world reporter!', 'Great job, world reporter!') if B.HS else ('Great job, world traveler!', 'Great job, world traveler!')]
     v, ph = narrate(work, phrases)
     dur = math.ceil(ph[-1]['end'] + 2.4)
     el = []
@@ -227,6 +231,7 @@ def ending(still=None):
 
 if __name__ == '__main__':
     still = float(sys.argv[sys.argv.index('--still') + 1]) if '--still' in sys.argv else None
+    if B.HS and len(sys.argv) >= 2 and sys.argv[1] == 'opening': raise SystemExit('the he/she trip shares the I opening clip')
     if len(sys.argv) >= 2 and sys.argv[1] in ('opening', 'ending'):
         {'opening': opening, 'ending': ending}[sys.argv[1]](still)
     else:

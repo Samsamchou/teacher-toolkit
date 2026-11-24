@@ -28,6 +28,11 @@ W, H, FPS, SR = 1920, 1080, 30, 48000
 VOICE = dict(voice='en-US-JennyNeural', pitch='+0Hz', rate='-12%')
 GOLD = '&H0000D7FF&'
 DUCK_DB, QUIET, TARGET = 18.0, 0.25, -16.0
+# --hs: the he/she trip (/world-routines-he-she, 11/24): its own bank (routine words, names), its own work / out / web folders
+#       -> out/hs/*.mp4 and web/video/hs/map_<name>.mp4. Same flights, same voice; the opening clip is shared.
+HS = '--hs' in sys.argv
+if HS:
+    SITE_BANK = SITE_BANK.with_name('routines-hs-content.json'); WORK = WORK / 'hs'; OUT = OUT / 'hs'; WEB = WEB / 'hs'
 
 # lon/lat of each station's place (city where the pupil lives) and a label anchor
 PLACE = {
@@ -58,7 +63,8 @@ LABEL = {'taiwan': (None, -95), 'japan': (None, -90), 'usa': ([-100, 39], 0), 'u
          'egypt': ([29, 26], 0), 'kenya': ([38, 0.5], 70), 'india': ([79, 21], 0), 'singapore': ([103.8, 1.35], 60),
          'australia': ([134, -25], 0)}
 ROUTINE_WORD = {'have breakfast': 'breakfast', 'have lunch': 'lunch', 'go to school': 'school', 'do my homework': 'homework',
-                'have dinner': 'dinner', 'get up': 'get up', 'go home': 'go home', 'go to bed': 'bed', 'take a shower': 'shower'}
+                'have dinner': 'dinner', 'get up': 'get up', 'go home': 'go home', 'go to bed': 'bed', 'take a shower': 'shower',
+                'play cricket': 'cricket', 'study English': 'English', 'do his homework': 'homework'}
 LEGS = ['japan', 'usa', 'uk', 'spain', 'egypt', 'kenya', 'india', 'singapore', 'australia']
 TRANSPORT_WORD = {'ship': 'by ship', 'plane': 'by plane', 'train': 'by train'}
 
@@ -297,7 +303,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     run(['ffmpeg', '-y', '-nostdin', '-i', 'film.mp4', '-vf', 'scale=1280:720', '-c:v', 'libx264', '-crf', '20', '-preset', 'medium',
          '-c:a', 'copy', '-movflags', '+faststart', 'film720.mp4'], cwd=work)
     print('final LUFS', lufs_file(work / 'film.mp4'), 'dur', dur, 'words', ws)
-    OUT.mkdir(exist_ok=True); WEB.mkdir(parents=True, exist_ok=True)
+    OUT.mkdir(parents=True, exist_ok=True); WEB.mkdir(parents=True, exist_ok=True)
     shutil.copy(work / 'film.mp4', OUT / f'{name}.mp4'); shutil.copy(work / 'film720.mp4', OUT / f'{name}_720.mp4')
     shutil.copy(work / 'film720.mp4', WEB / f'map_{name}.mp4')          # the site plays the 720p copy
     print('wrote', OUT / f'{name}.mp4')

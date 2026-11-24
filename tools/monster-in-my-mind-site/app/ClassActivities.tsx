@@ -2,6 +2,7 @@ import { useState } from 'react'
 import MonsterApp from './MonsterApp'
 import RoutinesApp from './routines/RoutinesApp'
 import RoutinesTeacher from './routines/RoutinesTeacher'
+import SafariApp from './safari/SafariApp'
 import { TeacherPortal } from './components/TeacherPortal'
 import { Gallery } from './components/Gallery'
 import { localPreview } from './services/firebase'
@@ -14,6 +15,11 @@ export function ClassActivities() {
   const banner=localPreview?<div className="preview-banner">本機流程預覽 · 示範圖片與分數 · 不呼叫 AI、不保存到雲端 · 教師示範碼 000000</div>:null
   if (path === '/world-routines/teacher' || path === '/world-routines/teacher/') return <>{banner}<RoutinesTeacher /></>
   if (path === '/world-routines' || path === '/world-routines/') return <>{banner}<RoutinesApp /></>
+  // he/she trip (2026-11-24): own progress and teacher records; same games, art and cards as /world-routines.
+  if (path === '/world-routines-he-she/teacher' || path === '/world-routines-he-she/teacher/') return <>{banner}<RoutinesTeacher variant="hs" /></>
+  if (path === '/world-routines-he-she' || path === '/world-routines-he-she/') return <>{banner}<RoutinesApp variant="hs" /></>
+  // Safari Count (HWG5 U4, 2026-11-24): skeleton, no home tile yet.
+  if (path === '/safari-count' || path === '/safari-count/') return <>{banner}<SafariApp /></>
   if (path === '/teacher') return <>{banner}<SpeechProvider><TeacherPortal /></SpeechProvider></>
   if (path === '/gallery') return <>{banner}<SpeechProvider><Gallery /></SpeechProvider></>
   return <>

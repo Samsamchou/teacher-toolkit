@@ -11,7 +11,7 @@ with sync_playwright() as p:
     page = browser.new_context(viewport={'width': 1366, 'height': 900}, accept_downloads=True).new_page()
     page.on('pageerror', lambda e: problems.append(f'pageerror: {e}'))
     page.on('console', lambda m: problems.append(f'console: {m.text[:200]}') if m.type == 'error' else None)
-    page.goto('http://127.0.0.1:3001/world-routines'); page.fill('input', '60130'); page.click('button.wr-big'); page.wait_for_selector('.wr-map')
+    page.goto('http://127.0.0.1:3001/world-routines'); page.fill('input', '60130'); page.click('button.wr-big'); page.wait_for_selector('.wr-map, .wr-clip')   # the opening clip may play first
     call = "async ([a, b]) => { const r = await fetch('/__preview/cloud/' + a, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(b)}); return r.status }"
     for a, b in (('routinesAnswer', {'station': 'taiwan', 'slots': ['time', 'have', 'breakfast'], 'code': '0645'}), ('routinesGameDone', {'station': 'taiwan', 'stars': 2}),
                  ('scoreRoutineSpeaking', {'station': 'japan', 'attemptId': 'a' * 20, 'audio': ''}), ('routinesGameDone', {'station': 'japan', 'stars': 3})):

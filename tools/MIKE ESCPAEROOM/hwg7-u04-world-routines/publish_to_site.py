@@ -29,6 +29,8 @@ print('card art', copy(here / 'puzzles' / 'assets', dest / 'assets', 'card_bg.pn
 print('art', copy(here / 'web' / 'art', dest / 'art', '*.*'), copy(here / 'web' / 'art' / 'chars', dest / 'art' / 'chars', '*.png'))
 print('audio', copy(here / 'web' / 'audio', dest / 'audio', '*.mp3'))
 print('video', copy(here / 'web' / 'video', dest / 'video', '*.mp4'))
+# he/she trip (/world-routines-he-she, 11/24): voice lines, story videos, flight clips + ending, grammar video
+print('audio hs', copy(here / 'web' / 'audio' / 'hs', dest / 'audio' / 'hs', '*.mp3'), 'video hs', copy(here / 'web' / 'video' / 'hs', dest / 'video' / 'hs', '*.mp4'))
 print('music', copy(here / 'web' / 'music', dest / 'music', '*.mp3'), 'art3d', copy(here / 'web' / 'art3d', dest / 'art3d', '*.png'))
 fonts = Path.home() / 'AppData' / 'Local' / 'Microsoft' / 'Windows' / 'Fonts'
 print('fonts', copy(fonts, dest / 'fonts', 'ComicRelief-*.ttf'))

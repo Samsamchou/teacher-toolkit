@@ -1,0 +1,127 @@
+{
+  "country": "hs_kenya",
+  "title": "Bus Dash",
+  "subtitle": "What time does Amani have dinner?",
+  "howto_good": "Grab your things!",
+  "target_time": "7:30",
+  "scenery": "res://art/kenya/scenery.png",
+  "bus": "res://art/kenya/bus.png",
+  "player": {
+    "height": 176,
+    "default": "girl",
+    "meta": "res://art/taiwan/player_meta.json",
+    "poses": {
+      "girl": "res://art/taiwan/girl_",
+      "boy": "res://art/taiwan/boy_"
+    }
+  },
+  "good_items": [
+    {
+      "id": "chai",
+      "art": "res://art/kenya/chai.png",
+      "points": 10
+    },
+    {
+      "id": "mandazi",
+      "art": "res://art/kenya/mandazi.png",
+      "points": 15
+    },
+    {
+      "id": "chapati",
+      "art": "res://art/kenya/chapati.png",
+      "points": 15
+    },
+    {
+      "id": "banana",
+      "art": "res://art/kenya/banana.png",
+      "points": 10
+    },
+    {
+      "id": "jumper",
+      "art": "res://art/kenya/jumper.png",
+      "points": 20
+    },
+    {
+      "id": "water_bottle",
+      "art": "res://art/kenya/water_bottle.png",
+      "points": 10
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "puddle",
+      "art": "res://art/kenya/puddle.png"
+    },
+    {
+      "id": "rock",
+      "art": "res://art/kenya/rock.png"
+    },
+    {
+      "id": "goat",
+      "art": "res://art/kenya/goat.png"
+    },
+    {
+      "id": "tyre",
+      "art": "res://art/kenya/tyre.png"
+    }
+  ],
+  "review_times": [
+    "6:30",
+    "8:20",
+    "11:30",
+    "3:15",
+    "2:00",
+    "7:10"
+  ],
+  "clock_rounds": [
+    {
+      "time": "7:30",
+      "distractors": [
+        "7:45",
+        "8:30"
+      ]
+    },
+    {
+      "time": "6:00",
+      "distractors": [
+        "6:30",
+        "12:00"
+      ]
+    },
+    {
+      "time": "5:15",
+      "distractors": [
+        "5:45",
+        "3:25"
+      ]
+    },
+    {
+      "time": "6:20",
+      "distractors": [
+        "6:40",
+        "4:30"
+      ]
+    },
+    {
+      "time": "6:50",
+      "distractors": [
+        "6:10",
+        "10:30"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice run!",
+    "You caught the bus!"
+  ],
+  "fx": {
+    "dust": [
+      "res://art/taiwan/dust_1.png",
+      "res://art/taiwan/dust_2.png",
+      "res://art/taiwan/dust_3.png"
+    ],
+    "speed": "res://art/taiwan/speed.png"
+  }
+}

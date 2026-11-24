@@ -1,0 +1,24 @@
+{
+ "note": "Safari Count (HWG5 U4) station bank. Teacher 11/24: six countries, two animals each (9 plural + 3 singular). Only Taiwan is filled in so far; the other five are map pins (coming soon).",
+ "stations": [
+  {"id": "taiwan", "order": 1, "country": "Taiwan", "pupil": "Mei", "pupilVoice": "girl",
+   "place": "Taipei Zoo", "vehicle": "zoo train",
+   "welcome": "Welcome to Taipei Zoo! Let's get on the zoo train.",
+   "items": [
+    {"key": "panda", "answer": "PANDA", "word": "panda", "plural": "pandas", "emoji": "🐼", "count": 1, "puzzle": "clues", "mode": "drag",
+     "question": "Look! How many pandas are there?", "spoken": "There's one panda.",
+     "drag": [{"sentence": "How ___ ___ ___ there?", "slots": ["many", "pandas", "are"]},
+              {"sentence": "There ___ ___ panda.", "slots": ["'s", "one"]}],
+     "distractors": ["much", "panda", "is", "are", "two"]},
+    {"key": "bears", "answer": "BEARS", "word": "bear", "plural": "bears", "emoji": "🐻", "count": 2, "puzzle": "addsub", "mode": "speak",
+     "question": "How many bears are there?", "spoken": "There are two bears."}
+   ],
+   "like": {"animal": "pandas", "yes": true,
+            "drag": {"sentence": "___, PRONOUN ___.", "slots": ["Yes", "does"]}, "distractors": ["No", "do", "doesn't"]}},
+  {"id": "japan", "order": 2, "country": "Japan", "comingSoon": true},
+  {"id": "kenya", "order": 3, "country": "Kenya", "comingSoon": true},
+  {"id": "india", "order": 4, "country": "India", "comingSoon": true},
+  {"id": "singapore", "order": 5, "country": "Singapore", "comingSoon": true},
+  {"id": "australia", "order": 6, "country": "Australia", "comingSoon": true}
+ ]
+}

@@ -28,10 +28,11 @@ export function localPreview():Plugin {
       if(action==='practiceStatus')return send({remaining:8})
       // World Routines Trip: in-memory demo of the four callables (no AI, nothing saved).
       if(['routinesState','routinesAnswer','routinesGameDone','scoreRoutineSpeaking'].includes(action??'')) {
-        const bank=JSON.parse(await readFile(resolve(server.config.root,'functions/routines-content.json'),'utf8')) as {stations:{id:string;mode:string;code:string;spoken:string;drag?:{slots:string[]}}[]}
+        const hs=body.variant==='hs'   // he/she trip (/world-routines-he-she): its own bank and its own demo progress
+        const bank=JSON.parse(await readFile(resolve(server.config.root,hs?'functions/routines-hs-content.json':'functions/routines-content.json'),'utf8')) as {stations:{id:string;mode:string;code:string;spoken:string;drag?:{slots:string[]}}[]}
         type RoutineState={answered:boolean;gameDone:boolean;stars:number;score:number|null;minutes?:number|null}
-        const store=session as Session&{routines?:Record<string,RoutineState>}
-        const saved=store.routines ??= {}
+        const store=session as Session&{routines?:Record<string,RoutineState>;routinesHs?:Record<string,RoutineState>}
+        const saved=hs?(store.routinesHs ??= {}):(store.routines ??= {})
         const blank=():RoutineState=>({answered:false,gameDone:false,stars:0,score:null})
         const view=()=>Object.fromEntries(bank.stations.map(x=>[x.id,saved[x.id]??blank()]))
         const station=bank.stations.find(x=>x.id===body.station)
@@ -72,9 +73,10 @@ export function localPreview():Plugin {
       if(action==='session')return send({signedIn:true})
       // World Routines Trip teacher view: the in-memory student progress plus a few demo students (no real data).
       if(action==='routines'||action==='routineRecords'||action==='routineRecording') {
-        const bank=JSON.parse(await readFile(resolve(server.config.root,'functions/routines-content.json'),'utf8')) as {stations:{id:string;country:string;mode:string;spoken:string}[]}
+        const hs=body.variant==='hs'
+        const bank=JSON.parse(await readFile(resolve(server.config.root,hs?'functions/routines-hs-content.json':'functions/routines-content.json'),'utf8')) as {stations:{id:string;country:string;mode:string;spoken:string}[]}
         type RS={answered:boolean;gameDone:boolean;stars:number;score:number|null}
-        const mine=(session as Session&{routines?:Record<string,RS>}).routines??{}
+        const mine=(hs?(session as Session&{routinesHs?:Record<string,RS>}).routinesHs:(session as Session&{routines?:Record<string,RS>}).routines)??{}
         const demo=(n:number)=>Object.fromEntries(bank.stations.map((s,i)=>[s.id,{mode:s.mode,answered:i<n,score:s.mode==='speak'&&i<n?85+((n*7+i*3)%15):null,gameDone:i<n-1,stars:i<n-1?1+((n+i)%3):0,gameScore:0,minutes:i<n-1?4+((n*3+i*5)%6):null}]))
         if(action==='routines') {
           const cls=String(body.classId??'')

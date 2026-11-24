@@ -47,6 +47,11 @@ LINES = {
                   'soccer': ('He plays soccer after school.',) + REPORTER,
                   'table': ('Then he does his homework at the kitchen table.',) + REPORTER,
                   'twenty': ('It takes twenty minutes.',) + REPORTER},
+    'egypt': {'q': ('This is Omar. What time does he go to school?',) + ANCHOR,
+              'a': ('He goes to school at seven ten.',) + REPORTER,
+              'starts': ('School starts at seven thirty.',) + REPORTER,
+              'walk': ('He walks to school with his big sister.',) + REPORTER,
+              'bag': ('He carries his school bag on his back.',) + REPORTER},
 }
 
 

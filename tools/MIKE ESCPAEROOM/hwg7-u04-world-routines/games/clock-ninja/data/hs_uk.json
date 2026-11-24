@@ -1,0 +1,123 @@
+{
+  "country": "hs_uk",
+  "title": "Clock Ninja",
+  "subtitle": "What time does Oliver go home?",
+  "howto_good": "Tap your homework things!",
+  "howto_bad": "Don't tap these!",
+  "target_time": "3:15",
+  "background": "res://art/uk/bg.png",
+  "holder": {
+    "art": "res://art/uk/bag.png",
+    "width": 270,
+    "bottom": 1.04,
+    "mouth": 0.3,
+    "pile": false
+  },
+  "player": {
+    "height": 212,
+    "default": "girl",
+    "meta": "res://art/hero/player_meta.json",
+    "idle": "stand",
+    "poses": {
+      "girl": "res://art/hero/girl_",
+      "boy": "res://art/hero/boy_"
+    }
+  },
+  "good_items": [
+    {
+      "id": "pencil",
+      "art": "res://art/uk/pencil.png",
+      "points": 10
+    },
+    {
+      "id": "exercise_book",
+      "art": "res://art/uk/exercise_book.png",
+      "points": 10
+    },
+    {
+      "id": "eraser",
+      "art": "res://art/uk/eraser.png",
+      "points": 10
+    },
+    {
+      "id": "ruler",
+      "art": "res://art/uk/ruler.png",
+      "points": 10
+    },
+    {
+      "id": "storybook",
+      "art": "res://art/uk/storybook.png",
+      "points": 10
+    },
+    {
+      "id": "spelling_cards",
+      "art": "res://art/uk/spelling_cards.png",
+      "points": 10
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "game_controller",
+      "art": "res://art/uk/game_controller.png"
+    },
+    {
+      "id": "phone",
+      "art": "res://art/uk/phone.png"
+    },
+    {
+      "id": "tv_remote",
+      "art": "res://art/uk/tv_remote.png"
+    },
+    {
+      "id": "comic",
+      "art": "res://art/uk/comic.png"
+    }
+  ],
+  "review_times": [
+    "6:30",
+    "8:20",
+    "11:30"
+  ],
+  "clock_rounds": [
+    {
+      "time": "3:15",
+      "distractors": [
+        "3:30",
+        "4:15"
+      ]
+    },
+    {
+      "time": "4:45",
+      "distractors": [
+        "4:15",
+        "5:45"
+      ]
+    },
+    {
+      "time": "5:00",
+      "distractors": [
+        "5:30",
+        "6:00"
+      ]
+    },
+    {
+      "time": "3:30",
+      "distractors": [
+        "3:00",
+        "4:30"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice work!",
+    "Homework done!"
+  ],
+  "fx": {
+    "slash": "res://art/fx/slash.png",
+    "sparkle": "res://art/fx/sparkle.png",
+    "sparkles": "res://art/fx/sparkles.png",
+    "burst": "res://art/fx/burst.png"
+  }
+}

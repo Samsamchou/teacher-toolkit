@@ -19,8 +19,8 @@
    "fadeIn": 0.3,
    "cam": {
     "from": {
-     "lon": 122.55,
-     "lat": 22.66016,
+     "lon": 122.464,
+     "lat": 22.83716,
      "span": 40.17493333333332
     },
     "to": {
@@ -44,10 +44,10 @@
       "Taiwan"
      ],
      "style": "tint",
-     "reveal": "pop",
-     "t0": 0.15,
      "label": "Taiwan",
-     "labelDy": -95
+     "labelDy": -95,
+     "reveal": "pop",
+     "t0": 0.15
     },
     {
      "type": "pin",
@@ -63,10 +63,10 @@
       "Japan"
      ],
      "style": "solid",
-     "reveal": "pop",
-     "t0": 1.68,
      "label": "Japan",
      "labelDy": -90,
+     "reveal": "pop",
+     "t0": 1.7,
      "pulse": true
     }
    ]
@@ -82,7 +82,7 @@
      "span": 50.21866666666665
     },
     "to": {
-     "lon": 135.38350000000003,
+     "lon": 135.3835,
      "lat": 29.673175999999998,
      "span": 44.192426666666655
     },
@@ -98,12 +98,12 @@
       "Taiwan"
      ],
      "style": "tint",
+     "label": "Taiwan",
+     "labelDy": -95,
      "reveal": "fade",
      "dur": 0.01,
      "t0": 0,
-     "sfx": false,
-     "label": "Taiwan",
-     "labelDy": -95
+     "sfx": false
     },
     {
      "type": "region",
@@ -112,12 +112,12 @@
       "Japan"
      ],
      "style": "solid",
+     "label": "Japan",
+     "labelDy": -90,
      "reveal": "fade",
      "dur": 0.01,
      "t0": 0,
-     "sfx": false,
-     "label": "Japan",
-     "labelDy": -90
+     "sfx": false
     },
     {
      "type": "tag",
@@ -1931,9 +1931,9 @@
     },
     {
      "type": "timeTag",
-     "lon": 145.19,
-     "lat": 32.69,
-     "text": "lunch  ?:??",
+     "lon": 145.21405333333334,
+     "lat": 32.68491498666666,
+     "text": "shower  ?:??",
      "size": 40,
      "t0": 3.7500000000000004
     }

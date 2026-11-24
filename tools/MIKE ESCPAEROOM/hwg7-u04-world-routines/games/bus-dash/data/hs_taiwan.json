@@ -1,0 +1,119 @@
+{
+  "country": "hs_taiwan",
+  "title": "Bus Dash",
+  "subtitle": "What time does Mei get up?",
+  "target_time": "6:30",
+  "scenery": "res://art/taiwan/scenery.png",
+  "bus": "res://art/taiwan/bus.png",
+  "player": {
+    "height": 176,
+    "default": "girl",
+    "meta": "res://art/taiwan/player_meta.json",
+    "poses": {
+      "girl": "res://art/taiwan/girl_",
+      "boy": "res://art/taiwan/boy_"
+    }
+  },
+  "good_items": [
+    {
+      "id": "dan_bing",
+      "art": "res://art/taiwan/dan_bing.png",
+      "points": 15
+    },
+    {
+      "id": "soy_milk",
+      "art": "res://art/taiwan/soy_milk.png",
+      "points": 10
+    },
+    {
+      "id": "rice_ball",
+      "art": "res://art/taiwan/rice_ball.png",
+      "points": 15
+    },
+    {
+      "id": "baozi",
+      "art": "res://art/taiwan/baozi.png",
+      "points": 10
+    },
+    {
+      "id": "sandwich",
+      "art": "res://art/taiwan/sandwich.png",
+      "points": 10
+    },
+    {
+      "id": "radish_cake",
+      "art": "res://art/taiwan/radish_cake.png",
+      "points": 20
+    }
+  ],
+  "bad_items": [
+    {
+      "id": "puddle",
+      "art": "res://art/taiwan/puddle.png"
+    },
+    {
+      "id": "cone",
+      "art": "res://art/taiwan/cone.png"
+    },
+    {
+      "id": "dog",
+      "art": "res://art/taiwan/dog.png"
+    },
+    {
+      "id": "banana_peel",
+      "art": "res://art/taiwan/banana_peel.png"
+    }
+  ],
+  "review_times": [],
+  "clock_rounds": [
+    {
+      "time": "6:30",
+      "distractors": [
+        "6:45",
+        "7:30"
+      ]
+    },
+    {
+      "time": "7:30",
+      "distractors": [
+        "7:00",
+        "8:30"
+      ]
+    },
+    {
+      "time": "6:15",
+      "distractors": [
+        "6:45",
+        "3:30"
+      ]
+    },
+    {
+      "time": "8:00",
+      "distractors": [
+        "8:30",
+        "12:40"
+      ]
+    },
+    {
+      "time": "7:15",
+      "distractors": [
+        "7:45",
+        "3:35"
+      ]
+    }
+  ],
+  "voice_dir": "res://audio/times",
+  "end_titles": [
+    "Good try!",
+    "Nice run!",
+    "You caught the bus!"
+  ],
+  "fx": {
+    "dust": [
+      "res://art/taiwan/dust_1.png",
+      "res://art/taiwan/dust_2.png",
+      "res://art/taiwan/dust_3.png"
+    ],
+    "speed": "res://art/taiwan/speed.png"
+  }
+}

@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create ONE square image (1024x1024): a sticker sheet of 4 separate cute, colourful cartoon icons for children, arranged in a neat grid of 2 columns x 2 rows, each icon well separated by wide pure white space, on a pure flat white (#FFFFFF) background, no text, no numbers, no letters, no labels.
+The 4 icons in this order (left-to-right, top-to-bottom):
+1. a bundle of three green bamboo stalks with a few leaves
+2. a friendly brown bear standing on four legs, side view (plain brown, no black and white patches)
+3. two round paint blobs side by side: one pure black blob and one pure white blob with a grey outline, like paint swatches
+4. two yellow-green pears with small brown stems and one leaf
+Style: bright, thick clean outlines, flat colours with soft highlights, sticker style, friendly for 11-year-old students.
+Save the PNG as taiwan_sheet.png in the current directory. Reply with the saved file path only.

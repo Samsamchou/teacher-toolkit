@@ -25,6 +25,7 @@ STATIONS = {
     'india': dict(name='Arjun', shots=[('IN1', 7.4, [('q', 0.4), ('a', 4.5)]), ('IN2', 4.4, [('friends', 0.3)]), ('IN3', 3.4, [('bag', 0.3)]), ('IN4', 3.6, [('home', 0.3)])]),
     'singapore': dict(name='Ling', shots=[('D1', 7.8, [('q', 0.4), ('a', 4.5)]), ('D2', 4.0, [('class', 0.3)]), ('D3', 4.4, [('read', 0.3)]), ('D4', 3.6, [('home', 0.3)])]),
     'australia': dict(name='Jack', shots=[('D1', 8.0, [('q', 0.4), ('a', 4.6)]), ('D0', 4.2, [('soccer', 0.3)]), ('D3', 4.4, [('table', 0.3)]), ('D4', 3.6, [('twenty', 0.3)])]),
+    'egypt': dict(name='Omar', shots=[('EG1', 7.4, [('q', 0.4), ('a', 4.4)]), ('EG2', 4.0, [('walk', 0.3)]), ('EG3', 3.4, [('starts', 0.3)]), ('EG4', 3.8, [('bag', 0.3)])]),
     'usa': dict(name='Emma', shots=[('US1', 7.4, [('q', 0.4), ('a', 4.5)]), ('US2', 4.4, [('cafe', 0.3)]),
                                     ('US3', 4.6, [('food', 0.3)]), ('US4', 4.0, [('min', 0.3)])]),
 }
