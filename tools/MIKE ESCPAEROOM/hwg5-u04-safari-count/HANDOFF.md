@@ -19,3 +19,9 @@
   - **還沒做**：學號登入與雲端紀錄、AI 口說評分（現在錄完就能下一步）、老師頁、3D 情境圖與動畫、拍照遊戲、其他五國。**未部署、未 commit**。
 - 11/24 晚 老師請我寫信問 Tripo 客服 support@tripo3d.ai：每月 3,000 點何時補（日期、時間、時區）、沒用完的點數會不會累積。已從老師 Gmail 寄出，等回信。
 - 11/24 晚 查 Tripo 說明中心〈How to Get Help and Contact Support〉：**沒有線上客服對話**；帳務問題官方管道是 Email support@tripo3d.ai（已寄），寫明 3 個工作天內回覆。其他管道：Discord（非官方）、Studio 的 Web Feedback（回報錯誤用）。
+- 11/24 晚 老師從 Tripo 使用紀錄找到：上個月補點是 **2026-10-24 22:35:49「积分充值 +3000」**。推測每月 24 日晚上約 22:35（Tripo 頁面顯示的時間）補 3000 點；11/24 22:35 後再看餘額。
+- 11/24 晚 老師：情境動畫裡的 3D 動物要會走路、漫步、跑。查 Tripo：Auto Rig 有人形與四腳（quadruped）骨架；綁骨架後可套動作庫（Preset，人形看得到 Basic／Interactive／Scene／Emotional／Combat）或「AI Animation」用文字描述動作（每次 20 點、5 秒）；匯出 GLB 可帶多段動作給 Blender。四腳動物的預設動作清單要等有四腳骨架模型才看得到（API 文件有 quadruped:walk；跑步可能要用 AI Animation 描述）。
+- 11/24 晚 老師：先寫程式與動作表（等點數補上前）。
+  - `12段動作表_v1_20261124.md`：12 段動物動作（坐、漫步、小跑、趴、吃草、張望、跳、爬、爬樹、打哈欠）、路線、交通工具、Tripo 點數預估約 600–1,100（圖庫為主約 700）、Colab 約 24 單位。✅ 11/24 老師確認。
+  - `tabletop/src/animal_path.py`（純 Python，本機可測：`python tabletop/src/animal_path.py` → self-test OK）：平滑路線（弧長）、從腳步量動作的地面速度、播放倍率（避免滑步）、群體錯開、最小間距。
+  - `tabletop/src/animals.py`（Blender，只在 Colab）：Animal（讀帶動作的 GLB、找腳骨、量步速、NLA 播放／循環、walk 沿路線走、climb 爬樹、play 原地動作）、herd_walk、report（著地腳滑動 mm、群體最近距離）。**還沒在 Blender 實際跑過**：要等有帶動作的四腳模型（先用臺灣黑熊試）。colab_run 要再加上傳 animal_path.py／animals.py。

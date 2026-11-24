@@ -6,6 +6,11 @@ export const textLength = value => Array.from(String(value)).length;
 export const inlineTypes = ['blank', 'drag', 'dropdown'];
 const clone = value => JSON.parse(JSON.stringify(value));
 const norm = value => String(value).normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+const exact = value => String(value).normalize('NFKC').trim().replace(/\s+/g, ' ');
+// Typed blanks ignore case; drag and dropdown cards must match case, so Street and street can be different cards.
+const sameAnswer = (type, a, b) => type === 'blank' ? norm(a) === norm(b) : exact(a) === exact(b);
+// Distractors that differ from an answer only in letter case (Street / street).
+export const caseOnlyDistractors = blank => (blank?.distractors || []).filter(t => t.trim() && (blank.answers || []).some(a => norm(a) === norm(t) && exact(a) !== exact(t)));
 const bad = message => { throw new Error(message); };
 const idOK = v => typeof v === 'string' && /^[\w-]{1,100}$/.test(v);
 const unit = n => Number.isFinite(n) && n >= 0 && n <= 1;
@@ -76,7 +81,7 @@ export function validateParity(b,{draft=false}={}) {
     if(new Set(b.blanks.map(x=>x.id)).size!==b.blanks.length) bad('空格識別碼重複。');
     for(const x of b.blanks) {
       if(!idOK(x.id)||!Array.isArray(x.answers)||!Array.isArray(x.distractors)||x.answers.length>20||x.distractors.length>20||[...x.answers,...x.distractors].some(t=>typeof t!=='string'||textLength(t)>200)) bad('空格答案格式無效。');
-      if(!draft && (!x.answers.length||[...x.answers,...x.distractors].some(t=>!t.trim())||x.distractors.some(t=>x.answers.some(a=>norm(a)===norm(t))))) bad('空格需有正解，干擾不能等於正解。');
+      if(!draft && (!x.answers.length||[...x.answers,...x.distractors].some(t=>!t.trim())||x.distractors.some(t=>x.answers.some(a=>sameAnswer(b.type,a,t))))) bad('空格需有正解，干擾不能等於正解。');
     }
   }
   if(['label','hotspot','draw'].includes(b.type)) {
@@ -156,7 +161,9 @@ export function gradeParity(b,a) {
       if(b.type==='label'&&!b.labels.some(l=>l.id===v))bad('標籤無效。');
       if(b.type==='dropdown'&&![...u.answers,...u.distractors].includes(v))bad('選項無效。');
       if(b.type==='drag'&&!b.blanks.flatMap(x=>[...x.answers,...x.distractors]).includes(v))bad('選項無效。');
-      return {id:u.id,correct:b.type==='label'?v===u.labelId:u.answers.some(x=>norm(x)===norm(v))};
+      if(b.type==='label')return {id:u.id,correct:v===u.labelId};
+      const correct=u.answers.some(x=>sameAnswer(b.type,x,v));
+      return {id:u.id,correct,...(!correct&&u.answers.some(x=>norm(x)===norm(v))?{caseOnly:true}:{})};
     });
     if(b.type==='label'&&new Set(Object.values(a)).size!==units.length)bad('同一標籤不能重複使用。');
   } else if(b.type==='hotspot') {

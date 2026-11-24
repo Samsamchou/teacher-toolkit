@@ -1,0 +1,12 @@
+{
+  "zip": "previous-liveV2-source.zip",
+  "files": 44,
+  "changed": [
+    "generated/assignment-domain.mjs",
+    "generated/parity.mjs"
+  ],
+  "new": [],
+  "missingLocally": [
+    ".env.hwg7teaching"
+  ]
+}

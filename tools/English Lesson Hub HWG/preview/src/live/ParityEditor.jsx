@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {inlineTypes} from './parity.mjs';
+import {inlineTypes, caseOnlyDistractors} from './parity.mjs';
 import {useMediaResource} from './useMediaResource.jsx';
 export function Picture({block,children,onPick}) {
   const {url,error}=useMediaResource(block.background?.assetId);
@@ -19,7 +19,7 @@ export function ParityEditor({block:b,patch}) {
     {inlineTypes.includes(b.type)&&<>
       <label>句子（用下方按鈕在游標位置插入空格）<textarea ref={sentence} value={b.sentence} onChange={e=>patch({sentence:e.target.value})}/></label>
       <button type="button" disabled={b.blanks.length>=12} onClick={()=>{const id=crypto.randomUUID();const start=sentence.current?.selectionStart??b.sentence.length;const end=sentence.current?.selectionEnd??start;const selected=b.sentence.slice(start,end);patch({sentence:b.sentence.slice(0,start)+`{{${id}}}`+b.sentence.slice(end),blanks:[...b.blanks,{id,answers:[selected||''],distractors:[]}]});}}>＋ 插入空格</button>
-      {b.blanks.map((x,i)=><fieldset key={x.id}><legend>空格 {i+1}</legend><label>正確／可接受的替代答案（每行一個）<textarea value={x.answers.join('\n')} onChange={e=>change('blanks',x.id,{answers:e.target.value.split('\n')})}/></label>{b.type!=='blank'&&<label>干擾答案（每行一個）<textarea value={x.distractors.join('\n')} onChange={e=>change('blanks',x.id,{distractors:e.target.value?e.target.value.split('\n'):[]})}/></label>}<button onClick={()=>patch({sentence:b.sentence.replaceAll(`{{${x.id}}}`,' '),blanks:b.blanks.filter(v=>v.id!==x.id)})}>移除空格 {i+1}</button></fieldset>)}
+      {b.blanks.map((x,i)=><fieldset key={x.id}><legend>空格 {i+1}</legend><label>正確／可接受的替代答案（每行一個）<textarea value={x.answers.join('\n')} onChange={e=>change('blanks',x.id,{answers:e.target.value.split('\n')})}/></label>{b.type!=='blank'&&<label>干擾答案（每行一個）<textarea value={x.distractors.join('\n')} onChange={e=>change('blanks',x.id,{distractors:e.target.value?e.target.value.split('\n'):[]})}/></label>}{b.type!=='blank'&&caseOnlyDistractors(x).length>0&&<p className="lh-case-only-note">🔠 只差大小寫：{caseOnlyDistractors(x).join('、')}（刻意設計，學生要選對大小寫才算對）</p>}<button onClick={()=>patch({sentence:b.sentence.replaceAll(`{{${x.id}}}`,' '),blanks:b.blanks.filter(v=>v.id!==x.id)})}>移除空格 {i+1}</button></fieldset>)}
     </>}
     {b.type==='draw'&&<label>畫布<select value={b.canvasMode} onChange={e=>patch({canvasMode:e.target.value})}><option value="blank">空白的畫布</option><option value="image">圖片畫布</option></select></label>}
     {b.background&&<><label>底圖<select value={b.background.assetId} onChange={e=>patch({background:{...b.background,assetId:e.target.value}})}><option value="">選擇已加入的圖片</option>{b.media.filter(a=>a.kind==='image').map(a=><option key={a.id} value={a.id}>{a.name}</option>)}</select></label><label>替代文字<input maxLength={500} value={b.background.alt} onChange={e=>patch({background:{...b.background,alt:e.target.value}})}/></label></>}

@@ -30,7 +30,9 @@
 | `skills/` | Codex 專案 skill 原件（`godot-games`） |
 | `research/`、`prototypes/`、`generated-*`、`HWG5/HWG7` 圖卡資料夾 | 研究、原型、AI 生成與單字圖卡來源，視為教學來源，不刪改 |
 
-## 目前狀態（截至 2026-11-19 部署）
+## 目前狀態（截至 2026-11-24 部署）
+
+- 2026-11-24：拖放／下拉題正解與干擾可只差大小寫（Street／street）已上線（liveV2 `livev2-00027-nux`、Hosting `0da483dc7c8e9fae`），見 `rdq/DEPLOYMENT-drag-case-20261124.md`。
 
 - 2026-11-19：分配作答頁母音題結束後回饋框顯示字母組合顏色已上線（liveV2 `livev2-00026-xat`、Hosting `34412addf3b034e1`），見 `rdq/DEPLOYMENT-vowel-assignment-combo-20261119.md`。
 

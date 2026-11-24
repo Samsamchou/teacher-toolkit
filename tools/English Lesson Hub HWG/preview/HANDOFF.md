@@ -1,5 +1,9 @@
 # English Lesson Hub V03 — Results 通行碼部署交接
 
+<!-- lesson-hub-drag-case-20261124:handoff -->
+> 最新狀態（2026-11-24，**已正式部署**：liveV2 `livev2-00027-nux`、Hosting `0da483dc7c8e9fae`，LIVE_* 保留，讀回 209/209；見 `rdq/DEPLOYMENT-drag-case-20261124.md`；教師正式站實測待驗收）：拖放與下拉選單題的正解和干擾可以只差大小寫（Street／street），課程能通過檢查並開始 Teacher-led；學生要選到大小寫完全一樣的卡才算對；打字填空仍不分大小寫；完全相同（Street／Street）仍擋。`src/live/parity.mjs` 新增 `exact`／`sameAnswer`／`caseOnlyDistractors`，判分 details 對「只差大小寫」加 `caseOnly`（學生端快照本來就不含 details）。分配作答頁題目結束後（測驗交卷、練習用完）回饋框顯示「🔠 注意大小寫」（`feedbackFor` 的 `caseHint`）；編輯頁干擾答案下方顯示「只差大小寫」提示。課堂 Teacher-led 的拖放題需全對才結束（mastery），所以課堂不會出現「注意大小寫」。**部署需 Hosting＋liveV2**（共用 `functions/generated/parity.mjs`、`assignment-domain.mjs` 已同步）。規格 `rdq/RDQ-spec-drag-case-sensitive-20261124.md`；證據 `qa/drag-case-20261124/`（Node 335/335、Functions 10/10、2 張本機截圖）。未 commit。
+<!-- /lesson-hub-drag-case-20261124:handoff -->
+
 <!-- lesson-hub-vowel-assignment-20261119:handoff -->
 > 最新狀態（2026-11-19，**已正式部署**：liveV2 `livev2-00026-xat`、Hosting `34412addf3b034e1`，LIVE_* 保留，讀回 209/209；見 `rdq/DEPLOYMENT-vowel-assignment-combo-20261119.md`；iPad 實作待教師驗收）：分配作答頁的母音題也有字母組合顏色。題目「結束」後（全對或用完 4 次／測驗交卷），回饋框顯示學生選對的字母（綠）與完整找到的組合（綠底紅字＋紅括線＋ur／a_e 標籤）；還能再試時不顯示，避免洩漏答案。伺服器 `assignment-domain.mjs` 的 `feedbackFor` 加 `vowel: vowelResult(...)`（只回報學生有選的字母）；前端 `VowelResult`（`src/live/VowelQuestion.jsx`）；有組合時自動開遊戲頁延到 4 秒。tile 樣式改 `:is(.lh-lab, .lh-vowel-result)`。重新整理後只看到分數（回饋框不含組合，因為 restoredFeedback 沒有 vowel）。**部署需 Hosting＋liveV2**。證據 `qa/vowel-assignment-combo-20261119/`（Node 331/331、Functions 10/10、建置、1024×768 截圖）。未 commit。
 <!-- /lesson-hub-vowel-assignment-20261119:handoff -->

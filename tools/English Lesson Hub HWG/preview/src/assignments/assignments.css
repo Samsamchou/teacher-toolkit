@@ -199,3 +199,4 @@
 .as-answer-watch{display:contents}
 .as-student button.as-switch-student,.as-result button.as-switch-student,.as-game-page button.as-switch-student{min-height:32px;padding:3px 12px;font-size:.85em;border-radius:999px;background:#fff7e0;border:1px solid #e0b84a;color:#6b4a00}
 .as-join-help{margin:12px 0 0;color:#5b5870;font-size:15px}
+.as-case-hint{margin:10px auto;max-width:640px;padding:10px 16px;border-radius:12px;background:#fff4d6;border:1px solid #f2c94c;color:#6b4a00;font-weight:bold}
