@@ -108,6 +108,38 @@ def min_gap(positions):
     return best
 
 
+def planted_slide(foot_vels, body_vel, planted=2):
+    """foot_vels: per frame, a list of foot velocities (vx, vy) in the BODY's frame; body_vel: (vx, vy) of the body over the
+    ground. A walking quadruped always has at least `planted` feet on the ground: the `planted` slowest feet (in the world)
+    of each frame are the planted ones. Returns their mean ground speed (0 = no sliding)."""
+    tot = 0.0; n = 0
+    for vs in foot_vels:
+        w = sorted(math.hypot(v[0] + body_vel[0], v[1] + body_vel[1]) for v in vs)
+        tot += sum(w[:planted]); n += planted
+    return tot / max(n, 1)
+
+
+def fit_ground_speed(foot_tracks, fps, fwd, planted=2, vmax=None):
+    """Body speed along fwd (x, y) that makes the planted feet slide least (11/25 bear: the foot tips only rise ~2 mm, so
+    'lowest = planted' did not work). foot_tracks: {foot: [(x, y, z) per frame]} in the body's own frame."""
+    names = list(foot_tracks)
+    n = min(len(t) for t in foot_tracks.values())
+    vels = [[((foot_tracks[f][i + 1][0] - foot_tracks[f][i][0]) * fps, (foot_tracks[f][i + 1][1] - foot_tracks[f][i][1]) * fps) for f in names]
+            for i in range(n - 1)]
+    top = vmax or max(math.hypot(*v) for vs in vels for v in vs) or 1.0
+    best = (float('inf'), 0.0)
+    for k in range(201):
+        sp = top * k / 200
+        e = planted_slide(vels, (fwd[0] * sp, fwd[1] * sp), planted)
+        if e < best[0]: best = (e, sp)
+    lo = max(0.0, best[1] - top / 200); hi = best[1] + top / 200
+    for k in range(101):
+        sp = lo + (hi - lo) * k / 100
+        e = planted_slide(vels, (fwd[0] * sp, fwd[1] * sp), planted)
+        if e < best[0]: best = (e, sp)
+    return best[1], best[0]
+
+
 if __name__ == '__main__':
     # self-test on this computer:  python tabletop/src/animal_path.py
     P = Path([(0, 0), (1, 0), (2, 1)])
@@ -123,4 +155,15 @@ if __name__ == '__main__':
     k, cl = playback_scale(0.48, v); assert abs(k - 0.8) < 1e-9 and not cl
     H = herd(8, 0.02, rows=2); assert len(H) == 8 and len({round(x[2], 3) for x in H}) == 8
     assert min_gap([(a, s) for a, s, _, _ in H]) > 0.005, min_gap([(a, s) for a, s, _, _ in H])
+    # planted-feet fit: 4 feet, two in stance moving backwards at 0.04, two swinging forward; must find 0.04 along -y
+    fps = 24; tr = {}
+    for j in range(4):
+        x = 0.0; y = 0.0; pts = []
+        for i in range(49):
+            ph = ((i / 48) + j * 0.25) % 1.0
+            vy = 0.04 if ph < 0.75 else -0.12           # stance 3/4 of the cycle (+y = backwards when fwd is -y)
+            y += vy / fps; pts.append((x, y, 0.0))
+        tr[j] = pts
+    v_fit, err = fit_ground_speed(tr, fps, (0.0, -1.0))
+    assert abs(v_fit - 0.04) < 0.002 and err < 1e-3, (v_fit, err)
     print('animal_path self-test OK  (path length %.3f, walk speed %.2f)' % (P.length, v))
