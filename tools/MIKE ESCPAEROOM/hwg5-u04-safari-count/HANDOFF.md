@@ -230,3 +230,7 @@
 - 比對線上：最後發布是 11/25 20:16（World Routines），之後無人發布、函式沒被動；public 差異只有 84 個 Safari 新檔。
 - 部署：7 個 Safari 函式＋monsterPortal；hosting「Safari Count: open Kenya, India, Singapore, Australia」，主程式仍是 index-CGl_MjTV.js（前端程式沒變）。
 - 正式站驗證：84 個新檔 HTTP 200 且大小與本機相同；線上 safariState 的題庫與本機逐位元組相同、無 comingSoon。沒有用測試學號登入（不留紀錄）→ 正式站四站實際點過一遍、真 AI 口說、iPad 都還沒驗。未 commit。
+
+### 11/26 ✅ 首頁入口上線
+- 老師：首頁只看得到 I 版 → Class Activities 首頁加 👫 World Routines Trip: He/She、🦒 Safari Count 卡片（兩張一排、年級標籤），卡片下方三個老師頁按鈕，/teacher 也補連結。RDQ 規格卡 monster-in-my-mind-site/rdq/RDQ-spec-home-tiles-safari-hs-teacher-links-20261126.md。
+- 只部署 hosting（上傳 3 檔），部署前線上＝改動前建置；正式站讀回 9 個連結正確、無錯誤。commit 2cc319d 已 push。
