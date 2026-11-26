@@ -1,0 +1,13 @@
+/* Teacher "delete this pupil" dialog and log (2026-11-26) */
+.sd-id{cursor:context-menu;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.sd-backdrop{position:fixed;inset:0;background:#1d1a3a66;display:flex;align-items:center;justify-content:center;padding:1rem;z-index:2000}
+.sd-dialog{background:#fff;border-radius:20px;border:3px solid #c0392b;max-width:520px;width:100%;padding:1.5rem;box-shadow:0 20px 60px #0004;color:#29344e}
+.sd-dialog h2{margin:0 0 .8rem;color:#a12a1f}
+.sd-dialog p{line-height:1.7;margin:.5rem 0}
+.sd-dialog label{display:block;margin:1rem 0}
+.sd-dialog input{display:block;width:100%;box-sizing:border-box;min-height:48px;margin-top:.4rem;font-size:1.3rem;padding:.5rem .8rem;border:2px solid #b8add9;border-radius:12px}
+.sd-actions{display:flex;justify-content:flex-end;gap:.8rem;flex-wrap:wrap}
+.sd-danger{background:#c0392b!important;border-color:#c0392b!important;color:#fff!important}
+.sd-danger:disabled{opacity:.45;cursor:not-allowed}
+.sd-log ul{padding-left:1.2rem;line-height:1.9}
+.sd-notice{background:#eafaf1;border:2px solid #3b9666;border-radius:12px;padding:.6rem 1rem;color:#194b33}

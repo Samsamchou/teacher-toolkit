@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { portal } from '../services/firebase'
 import { TRIPS, tripData, type Station, type Variant } from './content'
+import { DeleteDialog, DeleteLog, downloadCsv, useStudentMenu, type DeleteEntry } from '../components/StudentDelete'
 import './routines.css'
 
-type Cell = { mode: 'drag' | 'speak'; answered: boolean; score: number | null; gameDone: boolean; stars: number; gameScore?: number; minutes?: number | null }
+type Cell = { mode: 'drag' | 'speak'; answered: boolean; score: number | null; gameDone: boolean; stars: number; gameScore?: number; minutes?: number | null; hints?: number | null }
 type Row = { studentId: string; updatedAt: number; stations: Record<string, Cell> }
 type Rec = { kind: 'prev' | 'pass'; targetText: string; transcript: string; total_score: number; accuracy: number; fluency: number; completeness: number; timeCorrect: boolean; passed: boolean; createdAt: number }
 const CLASSES = ['501', '502', '601', '602']
@@ -14,15 +15,15 @@ const stamps = (STATIONS: Station[], r: Row) => STATIONS.filter(s => r.stations[
 function cellText(c: Cell | undefined) {
   if (!c?.answered) return ''
   const ans = c.mode === 'speak' ? `${c.score ?? '✓'}` : '✓'
-  return c.gameDone ? `${ans} ${'★'.repeat(Math.max(1, c.stars))}${c.minutes != null ? ` · ${Math.round(c.minutes)}分` : ''}` : ans
+  return c.gameDone ? `${ans} ${'★'.repeat(Math.max(1, c.stars))}${c.minutes != null ? ` · ${Math.round(c.minutes)}分` : ''}${c.hints != null ? ` · 💡${c.hints}` : ''}` : ans
 }
 
 function toCsv(STATIONS: Station[], rows: Row[]) {
-  const head = ['學號', '護照章數', ...STATIONS.map(s => `${s.order}.${s.country}(${s.mode === 'speak' ? '口說分數' : '拖放'})`), ...STATIONS.map(s => `${s.country} 遊戲星數`), ...STATIONS.map(s => `${s.country} 分鐘`), '最後更新']
+  const head = ['學號', '護照章數', ...STATIONS.map(s => `${s.order}.${s.country}(${s.mode === 'speak' ? '口說分數' : '拖放'})`), ...STATIONS.map(s => `${s.country} 遊戲星數`), ...STATIONS.map(s => `${s.country} 分鐘`), ...STATIONS.map(s => `${s.country} 提示數`), '最後更新']
   const body = rows.map(r => [r.studentId, stamps(STATIONS, r),
     ...STATIONS.map(s => { const c = r.stations[s.id]; return !c?.answered ? '' : c.mode === 'speak' ? (c.score ?? '') : '過關' }),
     ...STATIONS.map(s => r.stations[s.id]?.gameDone ? r.stations[s.id].stars : ''),
-    ...STATIONS.map(s => r.stations[s.id]?.minutes ?? ''), when(r.updatedAt)])
+    ...STATIONS.map(s => r.stations[s.id]?.minutes ?? ''), ...STATIONS.map(s => r.stations[s.id]?.hints ?? ''), when(r.updatedAt)])
   return '﻿' + [head, ...body].map(line => line.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n')
 }
 
@@ -33,14 +34,26 @@ export default function RoutinesTeacher({ variant = 'i' }: { variant?: Variant }
   const [classId, setClassId] = useState(''), [rows, setRows] = useState<Row[] | null>(null)
   const [pick, setPick] = useState<{ studentId: string; station: string } | null>(null), [records, setRecords] = useState<Rec[] | null>(null)
   const [clip, setClip] = useState<{ kind: string; url: string } | null>(null)
+  const [target, setTarget] = useState<string | null>(null), [log, setLog] = useState<DeleteEntry[] | null>(null), [notice, setNotice] = useState('')
   const lock = useRef(false), panel = useRef<HTMLElement>(null)
+  const menu = useStudentMenu(id => { setNotice(''); setTarget(id) })
   useEffect(() => { if (pick) panel.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, [pick])
   useEffect(() => { portal('session').then(() => setSignedIn(true)).catch(() => {}) }, [])
+  useEffect(() => { if (signedIn) portal<{ log: DeleteEntry[] }>('routineDeleteLog', tripData(trip, {})).then(d => setLog(d.log)).catch(() => {}) }, [signedIn, trip])
   useEffect(() => () => { if (clip) URL.revokeObjectURL(clip.url) }, [clip])
   async function run(action: () => Promise<void>) {
     if (lock.current) return
     lock.current = true; setBusy(true); setError('')
     try { await action() } catch (e) { setError(e instanceof Error ? e.message : '操作失敗。') } finally { lock.current = false; setBusy(false) }
+  }
+  // Teacher 11/26: back up this pupil's row as CSV, then delete their progress in this trip only (recordings stay).
+  async function remove(studentId: string) {
+    const row = rows?.find(r => r.studentId === studentId)
+    if (row) downloadCsv(toCsv(STATIONS, [row]), `world-routines${hs ? '-he-she' : ''}-${studentId}-刪除前備份.csv`)
+    const data = await portal<{ summary: string }>('routineDelete', tripData(trip, { studentId, confirm: studentId }))
+    setTarget(null); setNotice(`已刪除 ${studentId} 的紀錄（${data.summary}）。`)
+    await loadClass(classId)
+    setLog((await portal<{ log: DeleteEntry[] }>('routineDeleteLog', tripData(trip, {}))).log)
   }
   async function loadClass(id: string) {
     setClassId(id); setPick(null); setRecords(null); setClip(null)
@@ -71,19 +84,21 @@ export default function RoutinesTeacher({ variant = 'i' }: { variant?: Variant }
       <label>六碼通行碼（和教師後台相同）<input type="password" inputMode="numeric" autoComplete="current-password" maxLength={6} value={pin} onChange={e => setPin(e.target.value)} /></label>
       <button className="primary-button" disabled={busy || !/^\d{6}$/.test(pin)}>登入</button>
     </form> : <>
-      <p>拖放站顯示 ✓（單字和密碼都對）；口說站顯示通過那次的 AI 分數（85 分以上而且時間說對）；★ 是遊戲星數，有星星代表已蓋護照章。
-        點口說站的格子可以看「通過那次」和「通過前一次」的聽寫並播放錄音（保存七個月）。</p>
+      <p>拖放站顯示 ✓（單字和密碼都對）；口說站顯示通過那次的 AI 分數（85 分以上而且時間說對）；★ 是遊戲星數，有星星代表已蓋護照章；「分」是這站花的分鐘數，💡 是用了幾個提示（0–2，11/25 起才有紀錄）。
+        點口說站的格子可以看「通過那次」和「通過前一次」的聽寫並播放錄音（保存七個月）。
+        在學號上<b>按右鍵（iPad 長按）</b>可以刪除那位學生在這個活動的進度。</p>
       <div className="teacher-toolbar" role="group" aria-label="班級">
         {CLASSES.map(id => <button key={id} className="student-row wr-class" aria-pressed={classId === id} disabled={busy} onClick={() => void run(() => loadClass(id))}>{id} 班</button>)}
         {rows && <button className="secondary-button" disabled={busy || !rows.length} onClick={download}>下載 CSV</button>}
       </div>
+      {notice && <p className="sd-notice" role="status">{notice}</p>}
       {rows && <p role="status">{classId} 班：{rows.length} 位學生開始旅程，{done} 位完成 10 站。</p>}
       {rows && rows.length > 0 && <div className="wr-table-wrap"><table className="wr-table">
         <thead><tr><th scope="col">學號</th><th scope="col">章</th>
           {STATIONS.map(s => <th scope="col" key={s.id}>{s.order}. {s.country}<small>{s.mode === 'speak' ? '🎙 口說' : '🧩 拖放'}</small></th>)}
           <th scope="col">最後更新</th></tr></thead>
         <tbody>{rows.map(r => <tr key={r.studentId}>
-          <th scope="row">{r.studentId}</th><td>{stamps(STATIONS, r)}</td>
+          <th scope="row" {...menu(r.studentId)}>{r.studentId}</th><td>{stamps(STATIONS, r)}</td>
           {STATIONS.map(s => { const c = r.stations[s.id], speak = s.mode === 'speak'
             const on = pick?.studentId === r.studentId && pick.station === s.id
             return <td key={s.id} className={`${c?.answered ? 'ok' : ''}${c?.gameDone ? ' stamped' : ''}${on ? ' on' : ''}`}>
@@ -103,7 +118,10 @@ export default function RoutinesTeacher({ variant = 'i' }: { variant?: Variant }
           {clip?.kind === x.kind && <audio controls autoPlay src={clip.url} aria-label="學生錄音" />}
         </article>)}
       </section>}
-      <button className="secondary-button" disabled={busy} onClick={() => void run(async () => { await portal('logout'); setSignedIn(false); setRows(null); setPick(null); setClip(null) })}>登出</button>
+      <DeleteLog log={log} />
+      {target && <DeleteDialog studentId={target} activity={hs ? 'World Routines Trip he/she 版' : 'World Routines Trip（I 版）'} busy={busy}
+        onCancel={() => setTarget(null)} onConfirm={() => void run(() => remove(target))} />}
+      <button className="secondary-button" disabled={busy} onClick={() => void run(async () => { await portal('logout'); setSignedIn(false); setRows(null); setPick(null); setClip(null); setLog(null); setNotice('') })}>登出</button>
     </>}
     {error && <p role="alert">{error}</p>}
   </main>

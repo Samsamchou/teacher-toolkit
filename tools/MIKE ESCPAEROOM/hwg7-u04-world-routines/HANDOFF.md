@@ -550,3 +550,18 @@ Tripo：老師 11/19 說已儲值（分批），新餘額還沒讀，下一批�
 - 11/24 18:05 埃及 he/she 正式渲染（老師同意）：qa/1124-173543（EG1 90 格，0.64）、1124-175357（EG2 49＋EG3 42，0.48）、1124-180319（EG4 46，0.33），共 1.45 單位。hs_compose.py 加 egypt → `tabletop/out/hs_egypt.mp4`（18.6 秒、−16 LUFS、5.6 MB）＋`web/video/hs/egypt.mp4`（720p，**未部署**）。抽格 qa/eg_film_check/film_sheet.jpg。試片 v1 已給老師，待定案。注意：EG2 走路距離短（2 秒約走 6 cm）、EG3 字幕蓋到時鐘下緣。
 - ✅ 11/24 老師：**埃及 he/she 試片 v1 定案**（`tabletop/out/hs_egypt.mp4`、網站 `web/video/hs/egypt.mp4`）。he/she 十站動畫全部定案。網站埃及站目前顯示「製作中」，要 publish_to_site＋比對線上＋老師同意才部署 hosting。
 - ✅ 11/24 18:44 **埃及影片部署完成**（老師說「要把埃及影片部署到網站」）：publish_to_site → C 槽副本 build（index-D3Fp-jST.js 與線上相同）→ 比對線上（最後發布 11/24 09:51 自己部署，1,306 檔全同，只差新增 video/hs/egypt.mp4）→ 只部署 hosting（release 65b1e82d900eeb03）→ verify_live_hs.py 81/81 逐位元組相同、三個網址 200。he/she 十站動畫全部上線；首頁仍無 he/she 入口。
+
+## 2026-11-25 晚：拿掉「看答案」＋網址藏答案＋老師頁提示數（✅ 20:16 已上正式站，未 commit）
+- 規格卡 `../rdq/RDQ-spec-world-routines-remove-answer-button-20261125.md`（confirmed：1A 卡住就問老師、2A 本機先看；建議①②採納）。
+- `app/routines/RoutinesApp.tsx`：謎題下方只剩 Hint 1、Hint 2、I got it!（I 版與 he/she 版同一支程式）。
+- 謎題卡網址 `ans=0645` 改成 `c=G3hFJg`（`content.ts` cardCode，XOR＋base64url）；`public/world-routines/cards.html` 解回來，舊 `ans=` 仍可用。只擋看網址，擋不住開發者工具（題庫答句仍在程式裡，完整版要伺服器答對後才給，約半天，本次不做）。
+- 提示數：每站按到 Hint 幾存在瀏覽器（`wr-hints-<站>`／`wrhs-hints-<站>`），隨 `routinesGameDone` 送 `hints`，`functions/routines.mjs` 第一次蓋章時存；老師頁格子「💡2」、CSV 多「提示數」欄；舊紀錄空白。本機預覽 `scripts/local-preview.ts` 同步。
+- 驗證：tsc、lint、函式測試 51/51；`web/qa_no_answer_walk.mjs`（在建置副本跑）10 站 × 4 階段卡片新舊網址像素相同 40/40、台灣走到蓋章、老師頁 💡2；截圖 `web/qa_1125_no_answer/`。
+- 部署要：hosting＋`routinesGameDone` 與老師頁用的函式（`monsterPortal`），部署前照慣例比對線上。
+- ✅ 部署（老師 11/25 說 Deploy）：部署前比對＝線上仍是 Safari 日本版、G 槽之後只有這 6 個檔改過、函式線上原始碼只差 hints；`routinesGameDone`＋`monsterPortal`，hosting `index-CGl_MjTV.js`（public 只差 cards.html）。正式站 cards.html 用 c= 解出 06:45 正常、主程式沒有「看答案」。真學生蓋章後的 💡 尚未在正式站看到。
+
+### 11/26 ✅ 教師後台右鍵／長按刪除學生進度（I 版、he/she 版、Safari 三個後台）
+- RDQ：monster-in-my-mind-site/rdq/RDQ-spec-teacher-delete-student-20261126.md（confirmed）。只刪該活動進度文件，錄音保留；要輸入相同學號；刪前下載該生 CSV；刪除紀錄 teacher_delete_log（7 個月，列表時順手清過期）。
+- 程式：functions/portal-delete.mjs（共用）、routines.mjs（routineDelete／routineDeleteLog）、safari.mjs（safariDelete／safariDeleteLog）、app/components/StudentDelete.tsx。測試 60/60。
+- 部署：比對線上 monsterPortal 原始碼只差本次改動 → functions:monsterPortal＋hosting（cleanup policy 舊錯誤讓 hosting 沒發布，再單獨部署 hosting 一次）。
+- 待老師：正式站親手刪測試學號 50199（Safari 501 班）驗收；iPad 長按實機未試。

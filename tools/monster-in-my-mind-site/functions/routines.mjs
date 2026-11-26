@@ -4,6 +4,7 @@
 import { hash, taipeiDay, expiryDate, validateAudio, parseResult } from './core.mjs'
 import { diagnostic } from './assessment-provider.mjs'
 import { studentIdentity, CLASSES } from './portal-core.mjs'
+import { createStudentDelete } from './portal-delete.mjs'
 import { BANKS, SPEAK_DAILY_LIMIT, variantFor, stationFor, routineRecordId, routineQuotaId, spokenTimeCorrect, speakingPassed,
   checkDragAnswer, routinesScoringPrompt, parseRoutineResult } from './routines-core.mjs'
 
@@ -18,6 +19,7 @@ const STORE = {
 export function createRoutines({db, bucket, Timestamp, HttpsError, member, safeInput, assess}) {
   const tripOf = data => safeInput(() => variantFor(data?.variant))
   const progressRef = (v, studentKey) => db.doc(`${STORE[v].progress}/` + studentKey)
+  const removal = createStudentDelete({db, Timestamp})
   const view = (v, data) => Object.fromEntries(BANKS[v].map(station => {
     const x = data?.stations?.[station.id] ?? {}
     return [station.id, {answered: Boolean(x.answeredAt), gameDone: Boolean(x.gameDoneAt), stars: x.stars ?? 0, score: x.score ?? null}]
@@ -101,11 +103,13 @@ export function createRoutines({db, bucket, Timestamp, HttpsError, member, safeI
     const gameScore = Number.isFinite(data.score) ? Math.max(0, Math.min(1000000, Math.round(data.score))) : 0
     // Minutes from entering the station to the stamp, measured on the pupil's device: a rough guide for lesson planning only.
     const minutes = Number.isFinite(data.minutes) ? Math.max(0, Math.min(600, Math.round(data.minutes * 10) / 10)) : null
+    // Highest hint the pupil opened (0-2) before the first stamp, for the teacher's 💡 column (teacher 11/25).
+    const hints = Number.isInteger(data.hints) ? Math.max(0, Math.min(2, data.hints)) : null
     const ref = progressRef(v, m.studentKey)
     await db.runTransaction(async tx => {
       const doc = await tx.get(ref), stations = {...(doc.data()?.stations ?? {})}, current = stations[station.id]
       if (!current?.answeredAt) throw new HttpsError('failed-precondition', '請先完成這一站的解謎與作答。')
-      stations[station.id] = {...current, gameDoneAt: current.gameDoneAt ?? Date.now(), stars: Math.max(current.stars ?? 0, stars), gameScore: Math.max(current.gameScore ?? 0, gameScore), minutes: current.minutes ?? minutes}
+      stations[station.id] = {...current, gameDoneAt: current.gameDoneAt ?? Date.now(), stars: Math.max(current.stars ?? 0, stars), gameScore: Math.max(current.gameScore ?? 0, gameScore), minutes: current.minutes ?? minutes, hints: current.hints ?? hints}
       tx.set(ref, {...doc.data(), stations, updatedAt: Date.now()})
     })
     return {stations: view(v, (await ref.get()).data())}
@@ -113,15 +117,21 @@ export function createRoutines({db, bucket, Timestamp, HttpsError, member, safeI
 
   // Teacher portal actions (already behind the six-digit PIN session). Returns undefined for other actions.
   async function teacherAction(action, body, fail) {
-    if (!['routines', 'routineRecords', 'routineRecording'].includes(action)) return undefined
+    if (!['routines', 'routineRecords', 'routineRecording', 'routineDelete', 'routineDeleteLog'].includes(action)) return undefined
     let v; try { v = variantFor(body.variant) } catch { fail(400, '活動版本不正確。') }
     const STATIONS = BANKS[v]
+    // Delete one pupil's progress in this trip only (recordings stay); the log lists earlier deletions (teacher 11/26).
+    if (action === 'routineDelete') return removal.remove(`routines-${v}`, STORE[v].progress, body, fail, x => {
+      const s = x.stations ?? {}
+      return `完成 ${STATIONS.filter(st => s[st.id]?.gameDoneAt).length} 站、作答 ${STATIONS.filter(st => s[st.id]?.answeredAt).length} 站`
+    })
+    if (action === 'routineDeleteLog') return removal.list(`routines-${v}`, fail)
     if (action === 'routines') {
       if (!CLASSES.includes(body.classId)) fail(400, '請選擇班級。')
       const docs = await db.collection(STORE[v].progress).where('classId', '==', body.classId).get()
       return {students: docs.docs.map(doc => { const x = doc.data(); return {studentId: x.studentId, updatedAt: x.updatedAt,
         stations: Object.fromEntries(STATIONS.map(station => { const s = x.stations?.[station.id] ?? {}
-          return [station.id, {mode: station.mode, answered: Boolean(s.answeredAt), score: s.score ?? null, gameDone: Boolean(s.gameDoneAt), stars: s.stars ?? 0, gameScore: s.gameScore ?? 0, minutes: s.minutes ?? null}] }))} })
+          return [station.id, {mode: station.mode, answered: Boolean(s.answeredAt), score: s.score ?? null, gameDone: Boolean(s.gameDoneAt), stars: s.stars ?? 0, gameScore: s.gameScore ?? 0, minutes: s.minutes ?? null, hints: s.hints ?? null}] }))} })
         .sort((a, b) => String(a.studentId).localeCompare(String(b.studentId))), stations: STATIONS.map(s => ({id: s.id, country: s.country, mode: s.mode}))}
     }
     if (action === 'routineRecords') {

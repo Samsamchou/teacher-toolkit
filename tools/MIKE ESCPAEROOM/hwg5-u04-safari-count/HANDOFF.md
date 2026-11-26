@@ -234,3 +234,9 @@
 ### 11/26 ✅ 首頁入口上線
 - 老師：首頁只看得到 I 版 → Class Activities 首頁加 👫 World Routines Trip: He/She、🦒 Safari Count 卡片（兩張一排、年級標籤），卡片下方三個老師頁按鈕，/teacher 也補連結。RDQ 規格卡 monster-in-my-mind-site/rdq/RDQ-spec-home-tiles-safari-hs-teacher-links-20261126.md。
 - 只部署 hosting（上傳 3 檔），部署前線上＝改動前建置；正式站讀回 9 個連結正確、無錯誤。commit 2cc319d 已 push。
+
+### 11/26 ✅ 教師後台右鍵／長按刪除學生進度（I 版、he/she 版、Safari 三個後台）
+- RDQ：monster-in-my-mind-site/rdq/RDQ-spec-teacher-delete-student-20261126.md（confirmed）。只刪該活動進度文件，錄音保留；要輸入相同學號；刪前下載該生 CSV；刪除紀錄 teacher_delete_log（7 個月，列表時順手清過期）。
+- 程式：functions/portal-delete.mjs（共用）、routines.mjs（routineDelete／routineDeleteLog）、safari.mjs（safariDelete／safariDeleteLog）、app/components/StudentDelete.tsx。測試 60/60。
+- 部署：比對線上 monsterPortal 原始碼只差本次改動 → functions:monsterPortal＋hosting（cleanup policy 舊錯誤讓 hosting 沒發布，再單獨部署 hosting 一次）。
+- 待老師：正式站親手刪測試學號 50199（Safari 501 班）驗收；iPad 長按實機未試。
