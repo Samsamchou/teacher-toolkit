@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create ONE square image (1024x1024): a sticker sheet of 4 separate cute, colourful cartoon icons for children, arranged in a neat grid of 2 columns x 2 rows, each icon centred in its quarter and well separated by wide pure white space, on a pure flat white (#FFFFFF) background, no text, no numbers, no letters, no labels, no writing of any kind.
+The 4 icons in this order (left-to-right, top-to-bottom):
+1. one cute round honey bee flying, yellow and black stripes, small clear wings
+2. three small colourful toy cars in a row (red, blue, green), side view, all facing right
+3. a blank wooden jungle signboard on one post, a wide empty light-wood board with a few leaves at the corners, the board is completely empty
+4. a friendly cartoon Bengal tiger face, orange with black stripes, smiling
+Style: bright, thick clean outlines, flat colours with soft highlights, sticker style, friendly for 11-year-old students.
+Save the PNG as props3.png in the current directory. Reply with the saved file path only.

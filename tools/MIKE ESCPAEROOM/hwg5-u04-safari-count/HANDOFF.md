@@ -217,3 +217,16 @@
   試片 out/singapore_elephants（−16.0）、singapore_turtles（−15.5）、australia_koalas（−15.6）、australia_lion（−16.2 LUFS），＋_720；抽格 out/sg_au_sheet.png。等老師定案（12 段全部到齊）。
 - ✅ 11/26 老師：「四段都定案」→ 新加坡＋澳洲四段定案。**Safari Count 12 段桌上微縮動畫全部定案**（out/ 下 12 支＋_720：taiwan_panda、taiwan_bears、japan_lions、japan_horses、kenya_zebras、kenya_rhino、india_tigers、india_monkeys、singapore_elephants、singapore_turtles、australia_koalas、australia_lion）。
   - 影片尚未放上網站；要放上 /safari-count（含新加坡、澳洲、肯亞、印度四站開放）需老師另外授權部署。
+- 11/26 老師：「這個網站的所有前置工作都完成了嗎？ 那麼，可以部署到正式站。」→ 補齊四站前置：
+  - content/stations.json 四站完整內容（v1 對話稿；主角＝World Routines he/she：Amani 女、Arjun 男、Ling 女、Jack 男）。
+  - web/audio 四站 60 個 MP3（make_audio.py）；web/count 8 張數數圖（final 結尾畫格 f0160，檢查圖 four_count_check.jpg）。
+  - 線索卡 kenya_rhino／india_monkeys／singapore_turtles／australia_lion 的 _clue_g／_clue_b（檢查圖 tabletop/qa/four_clue_cards.jpg）。
+  - 網站端（publish_to_site.py、建置、測試、比對線上、部署）交給「Safari Count：學號登入、紀錄、口說評分、老師頁」工作階段，附老師原話。
+
+### 11/26 ✅ 肯亞、印度、新加坡、澳洲四站開放並上正式站（老師在網站工作階段說「部署」）
+- publish_to_site.py：四站 60 個 MP3、8 張數數圖、16 支影片（8 段＋8 支線索卡版）；題庫 functions/safari-content.json。
+- 測試：safari.test.mjs 原本假設肯亞未開放（3 項失敗）→ 改成六站全開（READY＝6、未知站用 mars 測、加印度 No/doesn't/likes 與肯亞 Yes/does 拖放檢查）；函式測試 51/51、tsc、lint 乾淨。
+- 本機 `web/qa_site_walk_all.mjs`（讀 stations.json，同一學號依序走六站：解謎→數數圖→拖放／口說→影片→線索卡→like→拍照遊戲→蓋章），六站全 ★★★、0 錯誤，80 張截圖 `web/qa_site_1126_all/`，總表 `web/safari_site_walk_all_1126.jpg`。
+- 比對線上：最後發布是 11/25 20:16（World Routines），之後無人發布、函式沒被動；public 差異只有 84 個 Safari 新檔。
+- 部署：7 個 Safari 函式＋monsterPortal；hosting「Safari Count: open Kenya, India, Singapore, Australia」，主程式仍是 index-CGl_MjTV.js（前端程式沒變）。
+- 正式站驗證：84 個新檔 HTTP 200 且大小與本機相同；線上 safariState 的題庫與本機逐位元組相同、無 comingSoon。沒有用測試學號登入（不留紀錄）→ 正式站四站實際點過一遍、真 AI 口說、iPad 都還沒驗。未 commit。

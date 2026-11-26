@@ -1,0 +1,9 @@
+Use your built-in image generation tool to create ONE square image (1024x1024): a sticker sheet of 4 separate cute, colourful cartoon icons for children, arranged in a neat grid of 2 columns x 2 rows, each icon centred in its quarter and well separated by wide pure white space, on a pure flat white (#FFFFFF) background, no text, no numbers, no letters, no labels, no writing of any kind.
+The 4 icons in this order (left-to-right, top-to-bottom):
+1. one cat paw print: a small rounded triangle main pad with four small oval toe beans above it, no claw marks, solid dark chocolate brown
+2. one chicken footprint: three long thin forward toes and one short back toe, like an arrow, solid dark chocolate brown
+3. one goat hoof print: two narrow pointed halves side by side with a clear gap between them, slimmer than a deer print, solid dark chocolate brown
+4. one frog footprint: four thin fingers with small round tips, spread like a star, webbed feeling but no webbing drawn, solid dark chocolate brown
+All four are flat footprint silhouettes seen from directly above, the same brown colour, same size, no animals shown.
+Style: bright, thick clean outlines, flat colours with soft highlights, sticker style, friendly for 11-year-old students.
+Save the PNG as prints3.png in the current directory. Reply with the saved file path only.

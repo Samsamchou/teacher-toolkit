@@ -1,0 +1,8 @@
+Use your built-in image generation tool to create ONE square image (1024x1024): a sticker sheet of 4 separate cute, colourful cartoon icons for children, arranged in a neat grid of 2 columns x 2 rows, each icon centred in its quarter and well separated by wide pure white space, on a pure flat white (#FFFFFF) background, no text, no numbers, no letters, no labels, no writing of any kind.
+The 4 icons in this order (left-to-right, top-to-bottom):
+1. a big fluffy golden-brown lion mane shaped like a thick ring with a completely empty hole in the middle (only the mane, no face, no animal), like a costume mane
+2. a shiny golden king crown with red and blue jewels
+3. an empty orange-yellow spiky comic shout speech bubble (jagged explosion shape), with nothing written inside
+4. a small open-air green safari tram (little train with a roof and open sides) seen from the side, headlights on, no people
+Style: bright, thick clean outlines, flat colours with soft highlights, sticker style, friendly for 11-year-old students.
+Save the PNG as props2.png in the current directory. Reply with the saved file path only.
