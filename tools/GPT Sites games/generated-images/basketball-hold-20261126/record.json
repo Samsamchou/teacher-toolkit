@@ -1,0 +1,36 @@
+{
+ "date": "2026-11-26",
+ "tool": "Codex CLI 0.164.0 (codex exec, built-in image generation; ChatGPT plan, no API key)",
+ "approvedBy": "teacher, 2026-11-26 (方案甲)",
+ "generations": 3,
+ "spec": "rdq/RDQ-spec-basketball-hold-ball-20261126.md",
+ "images": [
+  {
+   "file": "hold-cat-dog.png",
+   "reference": "public/basketball/cat-dog.png",
+   "prompt": "prompt-cat-dog.txt",
+   "size": "1536x1024",
+   "sha256": "5770881f435d47a918f2e686bf890dc062d4f8940de368dce1f6f61cff658d63"
+  },
+  {
+   "file": "hold-rabbit-panda.png",
+   "reference": "public/basketball/rabbit-panda.png",
+   "prompt": "prompt-rabbit-panda.txt",
+   "size": "1536x1024",
+   "sha256": "309811539d7598239afb45fc21360fda5820a285098f12352febcae5db3b088d"
+  },
+  {
+   "file": "hold-fox-penguin.png",
+   "reference": "public/basketball/fox-penguin.png",
+   "prompt": "prompt-fox-penguin.txt",
+   "size": "1536x1024",
+   "sha256": "92956011aa564901588d4a5528c06d82b03e38573c025f7e131ee3bf7a7c2370"
+  }
+ ],
+ "output": {
+  "file": "public/basketball/hold.png",
+  "script": "scripts/prepare-basketball-hold.py",
+  "sha256": "d2db82517f87cadfea04af7ce9eb63ada8de2bd700f960c046d46ca1b873d7d4"
+ },
+ "notes": "Background keyed from flat magenta; each animal scaled to its empty-pawed ready pose. Ball positions in src/basket3d/hold.mjs."
+}

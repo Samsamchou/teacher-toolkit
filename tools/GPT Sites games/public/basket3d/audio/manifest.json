@@ -1,0 +1,233 @@
+{
+ "generated": "scripts/prepare-bowling3d-audio.mjs",
+ "note": "Court recordings are CC0. Announcer: Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz. Crowd, card and replay clips are shared with /bowling3d/audio.",
+ "sources": {
+  "fs-505628-bounce.mp3": {
+   "page": "https://freesound.org/people/Blankened/sounds/505628/",
+   "url": "https://cdn.freesound.org/previews/505/505628_6512859-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "2b18481308966a44ef146771426f9989f5ebfe784fc3a0b6fc920d8fa63f6c0b"
+  },
+  "fs-518048-net-swish.mp3": {
+   "page": "https://freesound.org/people/Hann90/sounds/518048/",
+   "url": "https://cdn.freesound.org/previews/518/518048_3663300-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "51ac2dec09693da63c5eec6232b053a176e9664f1f5f72975e48b8618ccce71a"
+  },
+  "fs-716930-swish.mp3": {
+   "page": "https://freesound.org/people/vhschool2019/sounds/716930/",
+   "url": "https://cdn.freesound.org/previews/716/716930_9589340-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "used": false,
+   "sha256": "5b479a054556f6f98984d2cab3311088cbfe3fdc3afc5dcf5501c02742f5d310"
+  },
+  "fs-244348-rim.mp3": {
+   "page": "https://freesound.org/people/reedhos/sounds/244348/",
+   "url": "https://cdn.freesound.org/previews/244/244348_4468535-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "e3f625eb01b97f50b246f168fd9ac599e465786a8d2bb33058f956b331f51ec6"
+  },
+  "fs-788259-hit-basket.mp3": {
+   "page": "https://freesound.org/people/amsaenz03/sounds/788259/",
+   "url": "https://cdn.freesound.org/previews/788/788259_16382061-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "used": false,
+   "sha256": "cc8feeef7e93723b413b7bc31c3bc45934e5c6f7841517828cec3914c53c0a66"
+  },
+  "fs-324247-backboard.mp3": {
+   "page": "https://freesound.org/people/PerMagnusLindborg/sounds/324247/",
+   "url": "https://cdn.freesound.org/previews/324/324247_4157407-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "420db5da4808d2f6a8b0b60c2ca7f6b5559694e62ba02914749ffa02a0b1f1bd"
+  },
+  "fs-412162-arena-cheer.mp3": {
+   "page": "https://freesound.org/people/phillyfan972/sounds/412162/",
+   "url": "https://cdn.freesound.org/previews/412/412162_2383873-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "d6cd77e471504f7ccd0bd5f6ca71260c330e673d560bbb0ca37aefbe7e1059c8"
+  },
+  "bsb-0938-sneakers.mp3": {
+   "page": "https://bigsoundbank.com/gnashing-basketball-s0938.html",
+   "url": "https://bigsoundbank.com/UPLOAD/mp3/0938.mp3",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "64bda68cd42608f3723489604773c2be8cecef662cb87c1287d1b9b567338f98"
+  },
+  "bsb-1587-buzzer-5.mp3": {
+   "page": "https://bigsoundbank.com/buzzer-5-s1587.html",
+   "url": "https://bigsoundbank.com/UPLOAD/mp3/1587.mp3",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "c60e42ca82133eb2c12374a1f739a41c94aa45d7d2a7c1ac22172cf588e5655b"
+  }
+ },
+ "clips": {
+  "bb_bounce": {
+   "file": "bb-bounce.wav",
+   "bytes": 18842,
+   "sha256": "924919e23f50123bd83d028fa9e697aaf806371427251eb661d2bd3e8ba4c62c",
+   "source": "fs-505628-bounce.mp3",
+   "processing": "0–0.25 s, mono, peak -2 dB"
+  },
+  "bb_swish_1": {
+   "file": "bb-swish-1.wav",
+   "bytes": 35324,
+   "sha256": "e9598dfac67fa6793bffab95fb3b07e57a7503d780bf678fec3c5d6c8a72aa6a",
+   "source": "fs-518048-net-swish.mp3",
+   "processing": "1.72–2.12 s, mono, peak -3 dB"
+  },
+  "bb_swish_2": {
+   "file": "bb-swish-2.wav",
+   "bytes": 47672,
+   "sha256": "9bffc6b8bac0af3be5235e6520ccfe6825067151db81f2dd72fde5e868933472",
+   "source": "fs-518048-net-swish.mp3",
+   "processing": "4.24–4.78 s, mono, peak -3 dB"
+  },
+  "bb_swish_3": {
+   "file": "bb-swish-3.wav",
+   "bytes": 47672,
+   "sha256": "036a843b1997673ab3b429e062a288b32e1d95f85601285fe0bec67a1253bf68",
+   "source": "fs-518048-net-swish.mp3",
+   "processing": "5.12–5.66 s, mono, peak -3 dB"
+  },
+  "bb_rim_1": {
+   "file": "bb-rim-1.wav",
+   "bytes": 69426,
+   "sha256": "7b684b9e79bd5c09f1667bc484d972f855ad58eb766e48df34231cdbe1a595b1",
+   "source": "fs-244348-rim.mp3",
+   "processing": "1.66–2.5 s, mono, peak -2 dB"
+  },
+  "bb_rim_2": {
+   "file": "bb-rim-2.wav",
+   "bytes": 65924,
+   "sha256": "dccd4e604e609c2b98e594187fd97251932a390b8fcf25c9c90ba1788a9484be",
+   "source": "fs-244348-rim.mp3",
+   "processing": "4.46–5.3 s, mono, peak -2 dB"
+  },
+  "bb_rim_3": {
+   "file": "bb-rim-3.wav",
+   "bytes": 77462,
+   "sha256": "006b6ee8994f928ddba0cbfb051de4f938c2d2b527cc2615b7f3bae85bb1481c",
+   "source": "fs-244348-rim.mp3",
+   "processing": "5.86–6.8 s, mono, peak -2 dB"
+  },
+  "bb_board": {
+   "file": "bb-board.wav",
+   "bytes": 50918,
+   "sha256": "d601a35fc693f0fb1a82b34becd14e384d6642182ef2378372083596e91fe278",
+   "source": "fs-324247-backboard.mp3",
+   "processing": "0–0.6 s, mono, peak -2 dB"
+  },
+  "bb_squeak_1": {
+   "file": "bb-squeak-1.wav",
+   "bytes": 29476,
+   "sha256": "3969c8a74fdd24ce7b38bc5ee9c5b6b446a27410508e02e4407386e193df5e57",
+   "source": "bsb-0938-sneakers.mp3",
+   "processing": "0.22–0.62 s, mono, peak -6 dB"
+  },
+  "bb_squeak_2": {
+   "file": "bb-squeak-2.wav",
+   "bytes": 35324,
+   "sha256": "4affd3a01016248dc0e786c6ac1e7a000565b5ce1f2e0412154421632182f840",
+   "source": "bsb-0938-sneakers.mp3",
+   "processing": "1.82–2.22 s, mono, peak -6 dB"
+  },
+  "bb_squeak_3": {
+   "file": "bb-squeak-3.wav",
+   "bytes": 35324,
+   "sha256": "0e3fd82c44d3f301b2a3d8eed43d2e505abf8a84b94fadaf31cf3ec5bac5156f",
+   "source": "bsb-0938-sneakers.mp3",
+   "processing": "5.02–5.42 s, mono, peak -6 dB"
+  },
+  "bb_squeak_4": {
+   "file": "bb-squeak-4.wav",
+   "bytes": 35324,
+   "sha256": "965dac86baef26840e6489a6d686bc000d6726918392e1e2a17655a9476aa01e",
+   "source": "bsb-0938-sneakers.mp3",
+   "processing": "6.62–7.02 s, mono, peak -6 dB"
+  },
+  "bb_buzzer": {
+   "file": "bb-buzzer.wav",
+   "bytes": 123524,
+   "sha256": "44de234e2edbbc020b491d71f88f892932ec90d70f5700dfcba0a2c737da9087",
+   "source": "bsb-1587-buzzer-5.mp3",
+   "processing": "0.05–1.45 s, mono, peak -6 dB"
+  },
+  "bb_cheer_big": {
+   "file": "bb-cheer-big.mp3",
+   "bytes": 67753,
+   "sha256": "0083d0e2546b363c17686fb0775649a2028c41528bdd03b0744d55ec864a2738",
+   "source": "fs-412162-arena-cheer.mp3",
+   "processing": "12.4–16.6 s, fades, MP3 128 kbps"
+  },
+  "bb_cheer": {
+   "file": "bb-cheer.mp3",
+   "bytes": 48527,
+   "sha256": "f90da6fed8bfc9c6bf0119fe6b72ec6d7c91c0adafab1227a461bbbe0d2ee918",
+   "source": "fs-412162-arena-cheer.mp3",
+   "processing": "3.4–6.4 s, fades, MP3 128 kbps"
+  },
+  "voice_one_point": {
+   "file": "voice-one-point.mp3",
+   "text": "One point!",
+   "bytes": 17912,
+   "sha256": "62999251cbfb705ef72635d05bea3b6468b3a1aef21cefff72c88c691ed95e7d",
+   "source": "tts-bb-one_point.mp3",
+   "sourceSha256": "9d70bf9958bd8dc2018145f428c3809be5a129d7d42f622470e4135999fa6fc0"
+  },
+  "voice_two_points": {
+   "file": "voice-two-points.mp3",
+   "text": "Two points!",
+   "bytes": 17912,
+   "sha256": "d967da22cc72d411de11abd55b34b28d6b9a3c3075829d6e8434fc281c223654",
+   "source": "tts-bb-two_points.mp3",
+   "sourceSha256": "c9a99d7fa2ce5d138aa99faf290b95633ac1887cb6aa7df9251caf9db766c31b"
+  },
+  "voice_three_points": {
+   "file": "voice-three-points.mp3",
+   "text": "Three points!",
+   "bytes": 17912,
+   "sha256": "661096da33f9170250e340109434ca675984fc3c78003d01602168696f1b5f75",
+   "source": "tts-bb-three_points.mp3",
+   "sourceSha256": "21382b4c05e547c9e0150e1acd9ced5c2d154901f0b89a6e712f64f87a5e1e2b"
+  },
+  "voice_four_points": {
+   "file": "voice-four-points.mp3",
+   "text": "Four points!",
+   "bytes": 17912,
+   "sha256": "94760cdfd902be336d20a3d941d4aa25953af675a8bbb405214c49842b461296",
+   "source": "tts-bb-four_points.mp3",
+   "sourceSha256": "abd0ba57440a0f5f095ddde5c8dec1cac55f8a16afbd734cbe83a058b678bb93"
+  },
+  "voice_slam_dunk": {
+   "file": "voice-slam-dunk.mp3",
+   "text": "Slam dunk!",
+   "bytes": 17912,
+   "sha256": "41ca1507db1b0ba0cd3fe179ee94a78ce052d610dfad201d318afb9a1680e22f",
+   "source": "tts-bb-slam_dunk.mp3",
+   "sourceSha256": "229ec01cf9e1e209c5994cb0136fe0d1e3c9addf0e18c3a1e9b86639462e2ce3"
+  },
+  "voice_steal": {
+   "file": "voice-steal.mp3",
+   "text": "Steal!",
+   "bytes": 17912,
+   "sha256": "c9bd1303f3d8c1ec10ba35618abf711cb4be10b33c1195d639b391533fe2d262",
+   "source": "tts-bb-steal.mp3",
+   "sourceSha256": "5faa2652a5eeb79c4acec3fbeb50431523d02146b710de4511ba448f48a58448"
+  },
+  "voice_on_fire": {
+   "file": "voice-on-fire.mp3",
+   "text": "On fire!",
+   "bytes": 17912,
+   "sha256": "e8cab36a442f1ea47d8528993c3e99118f4a7abd145685149ae6b88dbe12e16f",
+   "source": "tts-bb-on_fire.mp3",
+   "sourceSha256": "d8c5a52130e406b60db4a3820eb9c3ec8f9c57e01bb5f22dd9f3740e2202955b"
+  },
+  "voice_so_close": {
+   "file": "voice-so-close.mp3",
+   "text": "So close!",
+   "bytes": 17912,
+   "sha256": "a510198839aa7e0d6ae3d5fa9fd19902a51cdf5c99835b8cd39cc71e0e7ed390",
+   "source": "tts-bb-so_close.mp3",
+   "sourceSha256": "20ded85cb3789ee8b72af50bb771c95b5fb530447c8f7290197e5fcb3c7572e7"
+  }
+ }
+}

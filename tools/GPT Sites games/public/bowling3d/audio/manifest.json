@@ -1,0 +1,596 @@
+{
+ "generated": "scripts/prepare-bowling3d-audio.mjs",
+ "note": "All recordings are CC0 (public domain); announcer voices are synthetic. Gutter, pit and release sounds are synthesized in audio3d.js.",
+ "sources": {
+  "bsb-0236-cheer-teens-1.wav": {
+   "page": "https://bigsoundbank.com/shouts-and-applauses-of-teens-1-s0236.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/0236.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "13deb4e0731d149f9b2db3feca864e1a71351e4e3a74d797e8b1084f95315556"
+  },
+  "bsb-0237-cheer-teens-2.wav": {
+   "page": "https://bigsoundbank.com/shouts-and-applauses-of-teens-2-s0237.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/0237.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "7eb9866268b69348a96435ed33d0e922e790971f86c03abe789f39a46d3e0617"
+  },
+  "bsb-1796-whoosh-4.wav": {
+   "page": "https://bigsoundbank.com/whoosh-4-s1796.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/1796.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "e0f841b5f734daccbab4def7103872399c9ab59e21efda705e5465047229e6b5"
+  },
+  "bsb-1137-firecracker-1.wav": {
+   "page": "https://bigsoundbank.com/firecracker-with-wick-1-s1137.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/1137.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "aba4b462849799a6441c24131d1027bb9e95fddbf30aca5ba973ddd3a4339cd4"
+  },
+  "bsb-0550-bang-snaps.wav": {
+   "page": "https://bigsoundbank.com/bang-snaps-s0550.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/0550.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "eae39cd83786bbc7fa06ebb6493a6dd5367e64de870eb89d1e55c92294e172a7"
+  },
+  "oga-funked-up.mp3": {
+   "page": "https://opengameart.org/content/funked-up",
+   "url": "https://opengameart.org/sites/default/files/Funked%20Up.mp3",
+   "licence": "CC0 1.0 (OpenGameArt, Joth)",
+   "sha256": "57cd81254a0f4e068535c5421f93b586514332ad2377f81aea190dd91659fff3"
+  },
+  "fs-128969-roll.mp3": {
+   "page": "https://freesound.org/people/driftworks/sounds/128969/",
+   "url": "https://cdn.freesound.org/previews/128/128969_2354545-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "c15957d39488ce0167ee9d92d8c61b24b8683ebfa2b8ad5aa0cec15c4dc99578"
+  },
+  "fs-514385-strike.mp3": {
+   "page": "https://freesound.org/people/SieuAmThanh/sounds/514385/",
+   "url": "https://cdn.freesound.org/previews/514/514385_7554526-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "646a798d0db2f88187e7e9ceb16a2f50561a1c3cf4f9f4f99b9f8b797890709f"
+  },
+  "fs-766871-strike-hard.mp3": {
+   "page": "https://freesound.org/people/ZusIsKing/sounds/766871/",
+   "url": "https://cdn.freesound.org/previews/766/766871_15681094-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "85f2e27b68cbb2b547defd619c9ded895a41ccabe6f34b3ba46825156b0c99d9"
+  },
+  "fs-151204-pins.mp3": {
+   "page": "https://freesound.org/people/Bruce%20Burbank/sounds/151204/",
+   "url": "https://cdn.freesound.org/previews/151/151204_2115643-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "edfa6104783ab019739fdf7d986c0121b4b729760276790422e22349e6381514"
+  },
+  "fs-430977-big-impact.mp3": {
+   "page": "https://freesound.org/people/AudioPapkin/sounds/430977/",
+   "url": "https://cdn.freesound.org/previews/430/430977_8698658-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "76b8435cf9f536ed689c774e111341b3e89ed0bcf8f75394757055844642aa42"
+  },
+  "fs-619007-crowd-oh.mp3": {
+   "page": "https://freesound.org/people/mrrap4food/sounds/619007/",
+   "url": "https://cdn.freesound.org/previews/619/619007_781461-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "ab4324ebc6b6f96846df7da0ef6c15471207f353d0621d039a0e77e30d512357"
+  },
+  "fs-571577-card-deal.mp3": {
+   "page": "https://freesound.org/people/el_boss/sounds/571577/",
+   "url": "https://cdn.freesound.org/previews/571/571577_9129912-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "d50fa67b0bdc84e241ceb543ca334e61afe62445ca68552dcaf0f63fa2283f58"
+  },
+  "fs-77305-buzz-roll.mp3": {
+   "page": "https://freesound.org/people/bigjoedrummer/sounds/77305/",
+   "url": "https://cdn.freesound.org/previews/77/77305_1105584-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "2f3d571bccfaf26cbdf2d08ebb3a18fdbdde21315042d9fa9d819d1d99721fa3"
+  },
+  "fs-648462-wrong-answer.mp3": {
+   "page": "https://freesound.org/people/-Andreas/sounds/648462/",
+   "url": "https://cdn.freesound.org/previews/648/648462_11771918-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "673cedd626d3010432e9846ff433afc64c1cdfa90ab463c2bb1cf0cdff661f47"
+  },
+  "fs-326756-balloon-deflate.mp3": {
+   "page": "https://freesound.org/people/hareball101/sounds/326756/",
+   "url": "https://cdn.freesound.org/previews/326/326756_2436596-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "b68bc9332536c251281380e7353b87483bd25db3acbe40e5c104bb1c9ecdd810"
+  },
+  "fs-497093-whistle-down.mp3": {
+   "page": "https://freesound.org/people/v0idation/sounds/497093/",
+   "url": "https://cdn.freesound.org/previews/497/497093_942821-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "5cb111e0f006336d86030173ffc670b171352fe376255b4d90004a4cee2ede2f"
+  },
+  "fs-609395-vortex.mp3": {
+   "page": "https://freesound.org/people/Soonaekoo1-5/sounds/609395/",
+   "url": "https://cdn.freesound.org/previews/609/609395_10479559-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "afb400cbcfeeed6bc881f4b32c0c5018847e08b0f29977b3e3f8a7a8fe24b5d3"
+  },
+  "fs-232263-gasp.mp3": {
+   "page": "https://freesound.org/people/ZerOcarina/sounds/232263/",
+   "url": "https://cdn.freesound.org/previews/232/232263_4134750-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "5a4cc876e540dd878908f27553e0ee42b3e0f1eb4d3f0f9d228be0bc7bb22af2"
+  },
+  "fs-430815-kids-laugh.mp3": {
+   "page": "https://freesound.org/people/Ben%20Keaton/sounds/430815/",
+   "url": "https://cdn.freesound.org/previews/430/430815_1875039-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "407b6acb53d3c86c01a806901a87f90baa2d03ebbeb5ff2ff018a81b19fbc919"
+  },
+  "fs-388833-hammer-wood.mp3": {
+   "page": "https://freesound.org/people/odditonic/sounds/388833/",
+   "url": "https://cdn.freesound.org/previews/388/388833_55755-hq.mp3",
+   "licence": "CC0 1.0 (Freesound; HQ preview MP3)",
+   "sha256": "165fe95d917d55c046a78332cad6aaaf46842eeb0e081024bc8de4e68ea39f9b"
+  },
+  "bsb-2079-chimes-dream-1.wav": {
+   "page": "https://bigsoundbank.com/chimes-dream-1-s2079.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/2079.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "8e4c65ccbec1cb677b0b95fdaeab51e12ee293f28cb9b1d0b7cf20b3e90a8971"
+  },
+  "bsb-1631-microwave-bell.wav": {
+   "page": "https://bigsoundbank.com/microwave-bell-s1631.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/1631.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "27676be27d9e5991173a8ae3d4c6d7ebb2dfea115843e0d672a833cdc9041ece"
+  },
+  "bsb-2284-boing-cartoon-8.wav": {
+   "page": "https://bigsoundbank.com/boing-cartoon-8-s2284.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/2284.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "563d1cb0dd3f519f4c6a7dd75003e7478fc0de118bb538c18c7cdc40b3492c2f"
+  },
+  "bsb-1121-broken-ball-1.wav": {
+   "page": "https://bigsoundbank.com/broken-christmas-ball-1-s1121.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/1121.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "f8ebf19fdf14315e1a1227e2ddd855f01b19a4fb328ca6559a6fa71e8bb72a00"
+  },
+  "bsb-0339-coin-in-cup-1.wav": {
+   "page": "https://bigsoundbank.com/coin-in-cup-1-s0339.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/0339.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "6a7f4f1acf7ee74d4a703ce7766c803c9fc554aefa9eee2893e3ed9309db17ff"
+  },
+  "bsb-1841-wooden-thump.wav": {
+   "page": "https://bigsoundbank.com/jumping-on-wooden-pontoon-1-s1841.html",
+   "url": "https://bigsoundbank.com/UPLOAD/bwf-en/1841.wav",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "c2d31a189daa0f79c4d2dec55b612849c2074bd445d026d529093282598b2cd2"
+  },
+  "bsb-0194-coins-2.mp3": {
+   "page": "https://bigsoundbank.com/coins-2-s0194.html",
+   "url": "https://bigsoundbank.com/UPLOAD/mp3/0194.mp3",
+   "licence": "CC0 1.0 (BigSoundBank, Joseph Sardin)",
+   "sha256": "ec90ca4d5625c1bb984ea21f155774880ff8def0473fce08894d820a8ccda1eb"
+  },
+  "tts-strike.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Strike!",
+   "sha256": "a561834072b8b7a1e64e755d6691eae7167e60aa9a59a35f7e6d8859bf6facd2"
+  },
+  "tts-spare.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Spare!",
+   "sha256": "5b33130a20b31f20b029f58fd8c0e0cd3a87127b43311700cc88b94398147502"
+  },
+  "tts-double.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Double!",
+   "sha256": "386fe86da82b022f2cec011d9f6a08894d9cb2a3caed16636a8ce3c845ba4929"
+  },
+  "tts-turkey.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Turkey!",
+   "sha256": "ecb38f50856cd03fe14d1320a79a2cafe3e3b55846d58b3667f36d750b697c21"
+  },
+  "tts-gutter_ball.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Gutter ball!",
+   "sha256": "e0ffa6afa397b694ec1736e2077e5c90ce5ba7145954e954ee1242e3cec67e7f"
+  },
+  "tts-nice_shot.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Nice shot!",
+   "sha256": "8a0ab227ad6680a00d26f15e6a4f539c7a57e41097350f4ebad24ab815eef3c2"
+  },
+  "tts-hit_or_miss.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Hit or miss!",
+   "sha256": "9c85fe082e95c9dec70cc4f1c4d43ec08010e25a4365f101849989542931b849"
+  },
+  "tts-extra_shot.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Extra shot!",
+   "sha256": "0576cb80932956150f6e50587eb0517a2b117308b44797b68ddecbf5b3ebe806"
+  },
+  "tts-no_shot.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "No shot!",
+   "sha256": "6c41feb54d7c3c5d32c0a79acd22a739a1b641bd4c2b59c46a509d2eb6dd5f5a"
+  },
+  "tts-lose_points.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Lose points!",
+   "sha256": "6c7f1756ac1c0d825cd885d31edb9cb830fa321fc9fa4d623ffe38b1499fda46"
+  },
+  "tts-double_points.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Double points!",
+   "sha256": "8126213ad4d428c64c74da5da5167953dfec61fb709889656c6c7334e7186d50"
+  },
+  "tts-swap_points.mp3": {
+   "page": null,
+   "url": null,
+   "licence": "Generated with edge-tts 7.3.1, voice en-US-GuyNeural, rate +6%, pitch +8Hz",
+   "text": "Swap points!",
+   "sha256": "9175b6e94fd148f38cfdf5da918a3f4cc78c01043d014c66d364dc73d0c36098"
+  }
+ },
+ "clips": {
+  "roll": {
+   "file": "roll.wav",
+   "bytes": 269054,
+   "sha256": "02072da8e687f181054475aca675ee458de1dd2e8993607bf8ab144428790572",
+   "source": "fs-128969-roll.mp3",
+   "processing": "0.9–4.3 s, mono, 0.35 s cross-faded loop, peak −7 dB"
+  },
+  "strike": {
+   "file": "strike.wav",
+   "bytes": 110230,
+   "sha256": "cb08eda5bbd4b4986057c7acbbce6a7f7afe36be9a9ec82c4c3f2455701d8400",
+   "source": "fs-514385-strike.mp3",
+   "processing": "silence trimmed, mono, peak −1 dB"
+  },
+  "pins": {
+   "file": "pins.wav",
+   "bytes": 114704,
+   "sha256": "5606488f49612b081f7114b808023bd2838eeddf770b2d5a4cece1aa89a30071",
+   "source": "fs-766871-strike-hard.mp3",
+   "processing": "0–1.3 s, mono, peak −3 dB"
+  },
+  "pin_hit_1": {
+   "file": "pin-hit-1.wav",
+   "bytes": 25002,
+   "sha256": "64f43213f347aee09823ec773951005907f77314b6eb9b94066f2ec30efef712",
+   "source": "fs-151204-pins.mp3",
+   "processing": "0.17–0.5 s, mono, peak −2 dB"
+  },
+  "pin_hit_2": {
+   "file": "pin-hit-2.wav",
+   "bytes": 26032,
+   "sha256": "7e3cc6e96d3b3c60458c6706575f0446c94ba2c3132139d33eb408d6f036d93d",
+   "source": "fs-151204-pins.mp3",
+   "processing": "0.85–1.2 s, mono, peak −2 dB"
+  },
+  "pin_hit_3": {
+   "file": "pin-hit-3.wav",
+   "bytes": 25062,
+   "sha256": "fac3b91d6f9a8bdf512aa350668431fb971b0d9b8c495d3cb9c9673d929247bb",
+   "source": "fs-151204-pins.mp3",
+   "processing": "1.45–1.8 s, mono, peak −2 dB"
+  },
+  "pin_hit_4": {
+   "file": "pin-hit-4.wav",
+   "bytes": 25382,
+   "sha256": "261a4db378d6e539bf523fe9c16b074e0b6a41a14e844429a84d762fa962a13e",
+   "source": "fs-151204-pins.mp3",
+   "processing": "2.1–2.45 s, mono, peak −2 dB"
+  },
+  "pin_hit_5": {
+   "file": "pin-hit-5.wav",
+   "bytes": 25334,
+   "sha256": "76685eef46dc2dd1d485c1c40512d3993f49123e2433c37d7831ebaaae0efae5",
+   "source": "fs-151204-pins.mp3",
+   "processing": "2.65–3 s, mono, peak −2 dB"
+  },
+  "pin_hit_6": {
+   "file": "pin-hit-6.wav",
+   "bytes": 24744,
+   "sha256": "13401db57d4e6074184ac2816801950af5daae1cec3ed6a94d8ad696bf148fb6",
+   "source": "fs-151204-pins.mp3",
+   "processing": "3.2–3.55 s, mono, peak −2 dB"
+  },
+  "cheer_big": {
+   "file": "cheer-big.mp3",
+   "bytes": 59812,
+   "sha256": "4e6a88a5711d7b544e685ffe6f3a17b13b4ebc87ea960ac3abbb75a2194b261d",
+   "source": "bsb-0236-cheer-teens-1.wav",
+   "processing": "0–3.7 s, fade-out, MP3 128 kbps"
+  },
+  "cheer": {
+   "file": "cheer.mp3",
+   "bytes": 51870,
+   "sha256": "b1ef1636360668538b395986a0864cd1329a9f0c0a65ee6a2a85a9004f961925",
+   "source": "bsb-0237-cheer-teens-2.wav",
+   "processing": "0–3.2 s, fade-out, MP3 128 kbps"
+  },
+  "aww": {
+   "file": "aww.mp3",
+   "bytes": 28883,
+   "sha256": "6a1ae862e761e6c21fbcab53c26b0b3a1e816cfcbcc440226ebd5fbb4f9ab280",
+   "source": "fs-619007-crowd-oh.mp3",
+   "processing": "0.28–2.05 s, MP3 128 kbps"
+  },
+  "swoosh": {
+   "file": "swoosh.wav",
+   "bytes": 52964,
+   "sha256": "f96b6ed4c55ff602ef1828911672d93455e759d304380c184b0e09f29fce70d9",
+   "source": "bsb-1796-whoosh-4.wav",
+   "processing": "0.12–0.72 s, mono, peak −3 dB"
+  },
+  "boom": {
+   "file": "boom.mp3",
+   "bytes": 42257,
+   "sha256": "70da732dbe8df6e6c2dfc2c17a795bc04a113e01be52a0ef89e0b784329fdc16",
+   "source": "fs-430977-big-impact.mp3",
+   "processing": "0–2.6 s, fade-out, MP3 128 kbps"
+  },
+  "firework": {
+   "file": "firework.wav",
+   "bytes": 66194,
+   "sha256": "c1434efd809709048e90b17727b2eedd34612efcce928400c0e9d78a377f31f8",
+   "source": "bsb-1137-firecracker-1.wav",
+   "processing": "0–0.75 s, mono, peak −2 dB"
+  },
+  "crackle_1": {
+   "file": "crackle-1.wav",
+   "bytes": 19448,
+   "sha256": "f3bcea6d540312d64ea4e73fc73490e78be26f08c6af84032adaaef5910431f1",
+   "source": "bsb-0550-bang-snaps.wav",
+   "processing": "0–0.22 s, mono, peak −4 dB"
+  },
+  "crackle_2": {
+   "file": "crackle-2.wav",
+   "bytes": 21212,
+   "sha256": "309ff8b1c6ba0a6eb2ad0494ee047740a0a18f5e6d09756ae218c1d912ebdcd0",
+   "source": "bsb-0550-bang-snaps.wav",
+   "processing": "0.48–0.72 s, mono, peak −4 dB"
+  },
+  "crackle_3": {
+   "file": "crackle-3.wav",
+   "bytes": 24740,
+   "sha256": "41b0eab0e3fe306947ab3f54a0cbad74dfbdaa39fdb5ed166dd7a1ddbdc1d4a5",
+   "source": "bsb-0550-bang-snaps.wav",
+   "processing": "1.02–1.3 s, mono, peak −4 dB"
+  },
+  "crackle_4": {
+   "file": "crackle-4.wav",
+   "bytes": 12392,
+   "sha256": "dcff6eaec7be953e86916d114a07bba4f82e0f22d2d6652ecdc6c15d3459731e",
+   "source": "bsb-0550-bang-snaps.wav",
+   "processing": "1.83–1.97 s, mono, peak −4 dB"
+  },
+  "music": {
+   "file": "music.mp3",
+   "bytes": 1329549,
+   "sha256": "57cd81254a0f4e068535c5421f93b586514332ad2377f81aea190dd91659fff3",
+   "source": "oga-funked-up.mp3",
+   "processing": "unchanged copy"
+  },
+  "voice_strike": {
+   "file": "voice-strike.mp3",
+   "bytes": 17912,
+   "sha256": "0028e0c289e00df0929b14537083722cde6678528ae90e6874ef366ff5c76c25",
+   "source": "tts-strike.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_spare": {
+   "file": "voice-spare.mp3",
+   "bytes": 17912,
+   "sha256": "6a55ed17fa148e930b5abd6201e46e6f39d2e685b034f03f8353ed88e9336197",
+   "source": "tts-spare.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_double": {
+   "file": "voice-double.mp3",
+   "bytes": 17912,
+   "sha256": "a7ed8ff9e6992682db9f236845cb9bc6c1b1ddd234784a943f6642d241700aa5",
+   "source": "tts-double.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_turkey": {
+   "file": "voice-turkey.mp3",
+   "bytes": 17912,
+   "sha256": "582b0d1209c17666f8b801050a7827d76b842d45d10e6cd8cd784268b40d4d1a",
+   "source": "tts-turkey.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_gutter_ball": {
+   "file": "voice-gutter-ball.mp3",
+   "bytes": 17912,
+   "sha256": "9146fd6cfee53d5128b4396be5f1744a7ca352d76bd862185aee6aa31207fbd2",
+   "source": "tts-gutter_ball.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_nice_shot": {
+   "file": "voice-nice-shot.mp3",
+   "bytes": 17912,
+   "sha256": "62139e378b97e7f5b4aa5ab0e186f23cf67ad881a121fa824eab1cc5804b9a1c",
+   "source": "tts-nice_shot.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_hit_or_miss": {
+   "file": "voice-hit-or-miss.mp3",
+   "bytes": 17912,
+   "sha256": "c05e3c21aed56c5765a53f4cfccaff55078965db611f0e434eebb0cd3afd6bad",
+   "source": "tts-hit_or_miss.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_extra_shot": {
+   "file": "voice-extra-shot.mp3",
+   "bytes": 17912,
+   "sha256": "5fb5f3a647fbb845ff1597a3f8b67603de37d8197650834277048deb532a6987",
+   "source": "tts-extra_shot.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_no_shot": {
+   "file": "voice-no-shot.mp3",
+   "bytes": 17912,
+   "sha256": "401cbd5baa763c51e7976ef0a7fb34155bbf55407e27a83f17360650b15bf542",
+   "source": "tts-no_shot.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_lose_points": {
+   "file": "voice-lose-points.mp3",
+   "bytes": 17912,
+   "sha256": "73915780d0e3285fa347d191352f8331dfe01e25e6b860a16158692798132a12",
+   "source": "tts-lose_points.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_double_points": {
+   "file": "voice-double-points.mp3",
+   "bytes": 17912,
+   "sha256": "fe6de58f763e167ed6239fb224d50a7a3511065db89350311eb47eba8cb0737c",
+   "source": "tts-double_points.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "voice_swap_points": {
+   "file": "voice-swap-points.mp3",
+   "bytes": 17912,
+   "sha256": "cb7c454b73d0515faaaf111a1c45e5625fdb5e41313fb3faa2020e8ee3d592af",
+   "source": "tts-swap_points.mp3",
+   "processing": "silence trimmed, mono, MP3 96 kbps"
+  },
+  "fx_card_flip": {
+   "file": "fx-card-flip.wav",
+   "bytes": 29364,
+   "sha256": "ef45ee6e1e6e37edd02eca0a857948ae4bbd84260d0fe11376f6169bf2cf4f1e",
+   "source": "fs-571577-card-deal.mp3",
+   "processing": "0.15–0.55 s, mono, peak -2 dB"
+  },
+  "fx_card_in": {
+   "file": "fx-card-in.wav",
+   "bytes": 194084,
+   "sha256": "af45cf78a0ed4c9d1d79e3aeb8fd69f29a47147365734a7f03a9cb43db1fbf83",
+   "source": "bsb-2079-chimes-dream-1.wav",
+   "processing": "0.05–2.25 s, mono, peak -3 dB"
+  },
+  "fx_chime": {
+   "file": "fx-chime.wav",
+   "bytes": 97064,
+   "sha256": "51b06a2c200b7ba2c63b95f6cd78e9c07428623be14e5dac27a0f32e2671838d",
+   "source": "bsb-2079-chimes-dream-1.wav",
+   "processing": "0.35–1.45 s, mono, peak -4 dB"
+  },
+  "fx_drumroll": {
+   "file": "fx-drumroll.wav",
+   "bytes": 119114,
+   "sha256": "47f0b57c9455ae796d55ccfb2326ff3c3dc4309ff63bb3af2774a9af3e147cf7",
+   "source": "fs-77305-buzz-roll.mp3",
+   "processing": "0.05–1.65 s, mono, 0.25 s cross-faded loop, peak −5 dB"
+  },
+  "fx_rimshot": {
+   "file": "fx-rimshot.wav",
+   "bytes": 52964,
+   "sha256": "36fb1b879ebef5c48e8687b6f18b64e3a67fb90ddd207ee8cb0ec28a00c952d9",
+   "source": "fs-77305-buzz-roll.mp3",
+   "processing": "3.8–4.4 s, mono, peak -2 dB"
+  },
+  "fx_ding": {
+   "file": "fx-ding.wav",
+   "bytes": 112294,
+   "sha256": "8ab06bb5b89aec1a2abc401cbebc00d3d5aa928cbeebc2bbfdc6d92a2df18ef0",
+   "source": "bsb-1631-microwave-bell.wav",
+   "processing": "0–1.3 s, mono, peak -2 dB"
+  },
+  "fx_buzzer": {
+   "file": "fx-buzzer.wav",
+   "bytes": 91772,
+   "sha256": "e3587d7f273994563846a125482c319aef0e94ae400e502cad900c3a2e0e9aa4",
+   "source": "fs-648462-wrong-answer.mp3",
+   "processing": "0–1.04 s, mono, peak -5 dB"
+  },
+  "fx_bonk": {
+   "file": "fx-bonk.wav",
+   "bytes": 88244,
+   "sha256": "85dd5cfaacd5a5a7786c8101ecab888242d00a3abd5c22ff2626e13e79ce081c",
+   "source": "bsb-2284-boing-cartoon-8.wav",
+   "processing": "0–1 s, mono, peak -2 dB"
+  },
+  "fx_deflate": {
+   "file": "fx-deflate.wav",
+   "bytes": 158804,
+   "sha256": "ec1b6572af7bd1321d8f855f36e08afd33389f5c0e4440822557d1a3f06196b4",
+   "source": "fs-326756-balloon-deflate.mp3",
+   "processing": "0.15–1.95 s, mono, peak -4 dB"
+  },
+  "fx_whistle_down": {
+   "file": "fx-whistle-down.wav",
+   "bytes": 101474,
+   "sha256": "b39562ca0cd0309ac9e281740bee293bc57b604cb96577ee582f201bc8e2327e",
+   "source": "fs-497093-whistle-down.mp3",
+   "processing": "0–1.15 s, mono, peak -5 dB"
+  },
+  "fx_shatter": {
+   "file": "fx-shatter.wav",
+   "bytes": 74140,
+   "sha256": "5ddf5fed1ea05d82c61c0fdec4f1aef5a827f2a430abfb2080ea3f522b852a06",
+   "source": "bsb-1121-broken-ball-1.wav",
+   "processing": "0.08–0.95 s, mono, peak -2 dB"
+  },
+  "fx_vortex": {
+   "file": "fx-vortex.wav",
+   "bytes": 220544,
+   "sha256": "439511d078381544d8c294cd533b9c3a7d27baa09477e9403e4c397bc015e6b1",
+   "source": "fs-609395-vortex.mp3",
+   "processing": "0–2.5 s, mono, peak -5 dB"
+  },
+  "fx_gasp": {
+   "file": "fx-gasp.wav",
+   "bytes": 83834,
+   "sha256": "5b4f5a40804b070391a4027b5cf63717990afbcdb6c4ff041fab09dce600c740",
+   "source": "fs-232263-gasp.mp3",
+   "processing": "0.3–1.25 s, mono, peak -3 dB"
+  },
+  "fx_laugh": {
+   "file": "fx-laugh.wav",
+   "bytes": 141164,
+   "sha256": "ed3eabe5ac94d5d3d6e450ade789de3fbdf38119e2ccc3cb00b6ae41963b9bf0",
+   "source": "fs-430815-kids-laugh.mp3",
+   "processing": "0.25–1.85 s, mono, peak -3 dB"
+  },
+  "fx_thud": {
+   "file": "fx-thud.wav",
+   "bytes": 44144,
+   "sha256": "13106eec085fe835b31b00dec1f01137acca6cd1c73f8a3700a280eacc4aa7c0",
+   "source": "fs-388833-hammer-wood.mp3 + bsb-1841-wooden-thump.wav",
+   "processing": "hammer 0–0.5 s mixed with wooden thump 0.5–0.9 s, mono, peak −1 dB"
+  },
+  "fx_coins": {
+   "file": "fx-coins.wav",
+   "bytes": 222308,
+   "sha256": "c088137e107330701bf98bd81db3cde6c93d8a768ad19e8764f6567c96c2a48c",
+   "source": "bsb-0194-coins-2.mp3 + bsb-0339-coin-in-cup-1.wav",
+   "processing": "seven 2.1 s stretches layered 0.07 s apart plus one coin-in-cup, mono, peak −2 dB"
+  }
+ }
+}

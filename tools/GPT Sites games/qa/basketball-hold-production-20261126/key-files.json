@@ -1,0 +1,60 @@
+{
+ "version": "2026.11.26-basketball-hold.1",
+ "keyFiles": [
+  {
+   "path": "/assets/Basket3DLane-CuI9M3Ox.js",
+   "bytes": 36634,
+   "sha256": "90cacfcf08da2b898e0592c6af338a468bdf4989e3076df9389bad0be4b5292c"
+  },
+  {
+   "path": "/assets/bowling3d-CLIDxTdE.js",
+   "bytes": 564984,
+   "sha256": "c56a8dc57b327c246e9852ac0317a6b6636fdbdda8ab93baeced3888fc655ca1"
+  },
+  {
+   "path": "/assets/bowling3d-QU1HV_Iq.css",
+   "bytes": 7942,
+   "sha256": "9f2192316788256d4aba179f77e0c52af0bd9621567ebc48c440b54c7d43373d"
+  },
+  {
+   "path": "/assets/BowlingGame-BKsqzf8M.js",
+   "bytes": 83755,
+   "sha256": "5fd57ceafed858ca672eee9b47a5ee6e33bda605bc92d740c56a1b289f0b9408"
+  },
+  {
+   "path": "/assets/index-EwiJx6W0.css",
+   "bytes": 159522,
+   "sha256": "c8fad6d1a63fb81d5f8977ca6612573095edb0b607c25a3cabdfdcbfa8b015f8"
+  },
+  {
+   "path": "/assets/index-S3dZYuUx.js",
+   "bytes": 1202842,
+   "sha256": "aafeeee49fe0023198110cc4ceac202c4fe8df3589b17bf3b16c03e9a4a57120"
+  },
+  {
+   "path": "/assets/plan-worker-P7KuSlOO.js",
+   "bytes": 2248822,
+   "sha256": "aaf5772a6cd3229ca728753c8131ac64197415fe1ef4f76c4a9453c009f9691c"
+  },
+  {
+   "path": "/basket3d/audio/manifest.json",
+   "bytes": 9148,
+   "sha256": "198645154497f377244a007c71e39c4b36d1cb69926f7ee95bcfbf6f4203660d"
+  },
+  {
+   "path": "/bowling3d/audio/manifest.json",
+   "bytes": 23726,
+   "sha256": "7c192be061f53b6d3df16b827293d56b7e1a14b3f522c39aa2a9a64b960747d1"
+  },
+  {
+   "path": "/index.html",
+   "bytes": 731,
+   "sha256": "452e52b9517211333a5339b08f27f73f6d852c3787267db996becf807e9af512"
+  },
+  {
+   "path": "/release.json",
+   "bytes": 31494,
+   "sha256": "03015f5973da6aad6e053ad9054ff55ad05c0fe58c1481d7d8d5d59a250b45b8"
+  }
+ ]
+}

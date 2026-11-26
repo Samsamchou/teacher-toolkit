@@ -1,0 +1,2509 @@
+{
+ "builtAt": "2026-11-26T11:18:10.852Z",
+ "version": "2026.11.26-bowling-3d.1",
+ "baseVersion": "2026.10.14-game-entry.1",
+ "files": 500,
+ "bytes": 182113018,
+ "list": [
+  {
+   "path": "/assets/arrow-left-BUUMBtGJ.js",
+   "bytes": 1492,
+   "sha256": "d52a3f389f51d85774a3dbc55bdc352f39a65b42e400788b33f9de7ccbce3dbc"
+  },
+  {
+   "path": "/assets/BasketballReward-DfiSHdsM.js",
+   "bytes": 363,
+   "sha256": "23d0eda23964efdfa1b6c8272068ed9eac0c0bb2b5290da91a7a49e27ac18168"
+  },
+  {
+   "path": "/assets/BeachGame-BurA_NhB.js",
+   "bytes": 29303,
+   "sha256": "2fc921dee0bf4e407e0b6803678e341a829fad0740a2731af6a5593c2fa41351"
+  },
+  {
+   "path": "/assets/BeachGame-DmDshABA.css",
+   "bytes": 23631,
+   "sha256": "3cb4202bb6def3cf88106310efc7ec1cbbb5dd5efd6b9d79f29719b7cf01c978"
+  },
+  {
+   "path": "/assets/BowlingGame-BbPutFmu.js",
+   "bytes": 653318,
+   "sha256": "b1fb990bf3e0b949f602248ff0bdb7aa4e566780b27afec3a61f8e992f7219f9"
+  },
+  {
+   "path": "/assets/BowlingGame-RfnuukPN.css",
+   "bytes": 7847,
+   "sha256": "46cf152ce16940777be18535475c2096d2c13423039a5f78525741a3053b53c0"
+  },
+  {
+   "path": "/assets/BowlingReward-DRHl6NNx.js",
+   "bytes": 360,
+   "sha256": "3086745e173f204c654944b530860b1b1c3958378b8e8f1501bddac16685731f"
+  },
+  {
+   "path": "/assets/check-Cq4vv7UH.js",
+   "bytes": 118,
+   "sha256": "19e1d7345fc9ea4302887808c728bba8c8563bfdaec44a8ea54d703d79969745"
+  },
+  {
+   "path": "/assets/download-eWwLuWDl.js",
+   "bytes": 226,
+   "sha256": "433b1b98e09f00b7af9903c1190c10a520287a43a69dff7a695a3db90afeeb51"
+  },
+  {
+   "path": "/assets/HW5SlotMachineGame-BsXcjmEi.css",
+   "bytes": 8414,
+   "sha256": "aa89683caf968533ba12f25f740eca1b3d7b6f0933423beccefa76350c831d1b"
+  },
+  {
+   "path": "/assets/HW5SlotMachineGame-dYZZZaDA.js",
+   "bytes": 37545,
+   "sha256": "f26e0d2847913a9509aa108694daac0b7c5a55d5a48c7ae530b9167f5f935da2"
+  },
+  {
+   "path": "/assets/index-C2u_6SOn.css",
+   "bytes": 155797,
+   "sha256": "8c53de2f93f2aa641c5448fa9da836a3b564a96dd19e4b239b539837c2bce396"
+  },
+  {
+   "path": "/assets/index-CXpHqc6S.js",
+   "bytes": 1177633,
+   "sha256": "af37ef13fbaaf4b7f865ed5dd0a083a89f75e1f25fb6ceef8b2d1aabe50b819d"
+  },
+  {
+   "path": "/assets/jsx-runtime-CfuWmoMz.js",
+   "bytes": 8947,
+   "sha256": "7df31f76df489cefea1b2bdf9dee5c402c2367e8f311cf2a612e24c79e064754"
+  },
+  {
+   "path": "/assets/PhonicsApp-CZ08uRDV.js",
+   "bytes": 22582,
+   "sha256": "9b347dbac74352db06f9bc741e539bd278d62a60bc063045f20bf6a79d7d7f33"
+  },
+  {
+   "path": "/assets/PhonicsApp-DnTadzzX.css",
+   "bytes": 8376,
+   "sha256": "a7c549b47144f423a703afcbac9456de2ee548e5b6ccee4bf443ed3835c38dab"
+  },
+  {
+   "path": "/assets/plan-worker-P7KuSlOO.js",
+   "bytes": 2248822,
+   "sha256": "aaf5772a6cd3229ca728753c8131ac64197415fe1ef4f76c4a9453c009f9691c"
+  },
+  {
+   "path": "/assets/ScratchGame-BpL__Oe6.js",
+   "bytes": 13194,
+   "sha256": "d8e20e051f477522e43bc9dad3dbb5b7e9878bc7ad9d7149eb7d4e3af6076423"
+  },
+  {
+   "path": "/assets/SlotMachineGame-cu7RL9Iq.js",
+   "bytes": 18770,
+   "sha256": "e065fa23b4ef9e55b4ad37ebd73bb18cdecde94a45962bc648f921fb75d687c0"
+  },
+  {
+   "path": "/assets/SlotMachineReward-BunBW-hj.js",
+   "bytes": 368,
+   "sha256": "582fea766c61a33a47d13105c9cc04adc0007d9c5e3cac19fbd7c9014913a27a"
+  },
+  {
+   "path": "/assets/SlotWinnerCelebration-ESD-ZaLL.css",
+   "bytes": 18200,
+   "sha256": "e65223463a7fa5cd7d112ef9a16dd41710088225587f30c5e515faef6319481d"
+  },
+  {
+   "path": "/assets/SlotWinnerCelebration-q8o3dIEM.js",
+   "bytes": 5775,
+   "sha256": "892edf48e1e4424b1ef915dd91588f0bd4adc1f7fa07df38e4f26a7384aa7989"
+  },
+  {
+   "path": "/assets/SoccerReward-BtxLGPAD.js",
+   "bytes": 366,
+   "sha256": "0b20a082724fc7cf216e8712f6af0676ed9678a6b343ee80ed3657637b83207f"
+  },
+  {
+   "path": "/assets/SpinGame-BzGjHRWr.css",
+   "bytes": 19965,
+   "sha256": "398e2f9ff4c76c1aee226ab0b6edc5b31cc638af061cb785bac8d5e79459a3ad"
+  },
+  {
+   "path": "/assets/SpinGame-E4Ng23ie.js",
+   "bytes": 25017,
+   "sha256": "c16d53c799e668ea75a76ad43bd7a226168027210fef52a9406e8df068d8ca62"
+  },
+  {
+   "path": "/assets/undo-2-FjiqXsPo.js",
+   "bytes": 1321,
+   "sha256": "e696c45a11a81cbe50367e65feacbb9f084a712e02b9c7e613f90dbd219584bc"
+  },
+  {
+   "path": "/assets/unscramble-solo-CxvBvAvg.js",
+   "bytes": 1376,
+   "sha256": "54fb2b129423395467534dac17e8f50f5f1572b11e497a2456e6814c62c6e3f4"
+  },
+  {
+   "path": "/assets/WorldPupSoccerGame-CshE1AmB.css",
+   "bytes": 65677,
+   "sha256": "febe66d2bc90f86adf9396885da9f6b10946b44d90e127258349dcc8790c6efb"
+  },
+  {
+   "path": "/assets/WorldPupSoccerGame-nT7j8tls.js",
+   "bytes": 74878,
+   "sha256": "e3daa71d5f3635da71a0e0174abd3985bf4e17ff6e67a62e3fb8e775228d0582"
+  },
+  {
+   "path": "/basketball/cat-dog.json",
+   "bytes": 2097,
+   "sha256": "8b1d9d8ea256467f4b791fa9be7885d6dd22511d27530304b6cf2dcc973732e3"
+  },
+  {
+   "path": "/basketball/cat-dog.png",
+   "bytes": 2475954,
+   "sha256": "f7c41fdb579ec1b6ffdac426ce46032b145f6fc013018e1631330c5d8830c46d"
+  },
+  {
+   "path": "/basketball/court.json",
+   "bytes": 1822,
+   "sha256": "69001a4da715b6d99d35b0758ccfd01344bf1e4c095efaf56d942f9598595612"
+  },
+  {
+   "path": "/basketball/court.png",
+   "bytes": 3183724,
+   "sha256": "75988f6077ad976a25d15b1b78aaafc654e9a5389c0e510e8709d96fce64f2d4"
+  },
+  {
+   "path": "/basketball/fox-penguin.json",
+   "bytes": 2191,
+   "sha256": "046ccb7078fa77e974042d0ff43af93270c3d6aab5bb295ebf540efed0a610b9"
+  },
+  {
+   "path": "/basketball/fox-penguin.png",
+   "bytes": 2404380,
+   "sha256": "8ffd81c987adcd6bacfa1374ec991ad8d6a3a570ee47144a70bdd3f82d97f4f8"
+  },
+  {
+   "path": "/basketball/rabbit-panda.json",
+   "bytes": 1854,
+   "sha256": "d66277972a143dac7a58dd05de1eb9daea32faa5b1416a529d5c7670358239c0"
+  },
+  {
+   "path": "/basketball/rabbit-panda.png",
+   "bytes": 2451808,
+   "sha256": "ab2c0bc8b1d3e76740733bd28ff65a2513462d07188606c02a41d5358e697d83"
+  },
+  {
+   "path": "/beach/east-coast.png",
+   "bytes": 2258930,
+   "sha256": "838722005fbb0fc24a7b40f003f5533f363550038012d6c1f56167c8db7fab60"
+  },
+  {
+   "path": "/beach/east-coast.png.json",
+   "bytes": 1964,
+   "sha256": "e61c5ce2e0a602acfc2d6bd2456d4e70c2210f08cc01ea59a303032788f52e38"
+  },
+  {
+   "path": "/beach/plastic-bag-draft.svg",
+   "bytes": 932,
+   "sha256": "2bd5d6745875e6b15fcd3e2406f8cec9c854cba28ec2d29612839f3177008066"
+  },
+  {
+   "path": "/beach/plastic-bag-v2.png",
+   "bytes": 1068120,
+   "sha256": "d8e6280b54ee43a7dd9c1d7a97b9865645bb669afba890c3f37607130a23a084"
+  },
+  {
+   "path": "/beach/plastic-bag-v2.png.json",
+   "bytes": 2158,
+   "sha256": "d54e08aedd637ed45daa6efb0d67b389559ae2fa52fb4e99b79d1f14c5f91838"
+  },
+  {
+   "path": "/bowling/art-v2/baseball.json",
+   "bytes": 1142,
+   "sha256": "4a7cfd40ebab7742698e571a0c4470c3170a08750d18928925e14ae70991e7dc"
+  },
+  {
+   "path": "/bowling/art-v2/baseball.png",
+   "bytes": 2005465,
+   "sha256": "4278107827e09b808cffe180b505b11251c32a44bfe11304986b95aea9d92be6"
+  },
+  {
+   "path": "/bowling/art-v2/basketball.json",
+   "bytes": 1160,
+   "sha256": "d1b89077aeda00c0dc8ce14a005ee22650879850620dd792887a06eef5daa216"
+  },
+  {
+   "path": "/bowling/art-v2/basketball.png",
+   "bytes": 2060753,
+   "sha256": "d75344e5ebe746e8a684da0138c62e0852d4789212bd5ec05fa7aba8442a5769"
+  },
+  {
+   "path": "/bowling/art-v2/camouflage.json",
+   "bytes": 1144,
+   "sha256": "ba124ad8d427ca6d1c61c79d033a3355837306ef78d02b518dbf12721b0d4ce9"
+  },
+  {
+   "path": "/bowling/art-v2/camouflage.png",
+   "bytes": 1346333,
+   "sha256": "acf2813be9cd1ded77f3baf65c91be00b6dbd0bd54b26aa4a16f0ee7eb845a18"
+  },
+  {
+   "path": "/bowling/art-v2/donut.json",
+   "bytes": 1211,
+   "sha256": "6708e721ec4050f99d3a3e3ba9e15e56151d895baff7fd7240f4b37f3967c538"
+  },
+  {
+   "path": "/bowling/art-v2/donut.png",
+   "bytes": 1712990,
+   "sha256": "bd8876a6ecacb8bdfea4813ca50d88c6bcb47271b4a0108bef8233c55e3ff093"
+  },
+  {
+   "path": "/bowling/art-v2/dragon-eye.json",
+   "bytes": 1200,
+   "sha256": "6988591c42bdf7288309e4de0fb55d5756ee287c23047922cd8a275be87f2fcc"
+  },
+  {
+   "path": "/bowling/art-v2/dragon-eye.png",
+   "bytes": 2778579,
+   "sha256": "05bcd3c09f6ea9b8f5e3a2863e57af62602b06bf9a0929f0d3bbf70f693975c1"
+  },
+  {
+   "path": "/bowling/art-v2/eight-ball.json",
+   "bytes": 1181,
+   "sha256": "e4ce0f197c569b5229cb7b7966907f57f9665e8446f595d6e3dec74b941e1d6a"
+  },
+  {
+   "path": "/bowling/art-v2/eight-ball.png",
+   "bytes": 1281889,
+   "sha256": "7b5db8ec495b7b76de2bc4fdc5500b383b0c6c650446cd790d0eeb8ffa906b49"
+  },
+  {
+   "path": "/bowling/art-v2/fire.json",
+   "bytes": 1140,
+   "sha256": "4e480804bd9237e3bc2bfca165205502b25cc3a8a606da2bb229261e10e03bcc"
+  },
+  {
+   "path": "/bowling/art-v2/fire.png",
+   "bytes": 1472626,
+   "sha256": "3679487cbb8a68bff82e512dec947c2eba25e988c6e27b7ae8e1c1581317e92f"
+  },
+  {
+   "path": "/bowling/art-v2/flowers.json",
+   "bytes": 1167,
+   "sha256": "92b29abb3f4251d0b7a0cb788480fc430036a2d91840797e072ab60a8d19fc95"
+  },
+  {
+   "path": "/bowling/art-v2/flowers.png",
+   "bytes": 2064855,
+   "sha256": "53d28aa24d75270c1ec359ef20d2da314aeaca114c0ce8dfac59e071f69fcd0d"
+  },
+  {
+   "path": "/bowling/art-v2/lightning.json",
+   "bytes": 1170,
+   "sha256": "3fd456879a961e2228316fd98c4cc9f179d54884c66b1b653e1da5604f424c57"
+  },
+  {
+   "path": "/bowling/art-v2/lightning.png",
+   "bytes": 1973527,
+   "sha256": "8889ac3f2b0249a1ec8c8f40598a5ae8918eba9f1d48a57e515e7281d156b644"
+  },
+  {
+   "path": "/bowling/art-v2/manifest.json",
+   "bytes": 23062,
+   "sha256": "6a0fc75b7a130c38c75487486c1dc86df99938cfa7e2acd61abf787345434454"
+  },
+  {
+   "path": "/bowling/art-v2/pin-prone.json",
+   "bytes": 1343,
+   "sha256": "68468a2807f63903bd0c86060375f2739b608e0720ad890fe3f2d8efaa8b61aa"
+  },
+  {
+   "path": "/bowling/art-v2/pin-prone.png",
+   "bytes": 419216,
+   "sha256": "937316ce3c93b1d83d965716a7e873ef469b1096b24bcc26a7af45488471afa6"
+  },
+  {
+   "path": "/bowling/art-v2/pin-tipping.json",
+   "bytes": 1356,
+   "sha256": "03091688d810cf9ce8de8f1b81b33b98720d65959c937673712f15887bf599f7"
+  },
+  {
+   "path": "/bowling/art-v2/pin-tipping.png",
+   "bytes": 508402,
+   "sha256": "90a37141819aa6196f0234335e0121746f05ab2ebd0d0f719a4b0da95a28fa38"
+  },
+  {
+   "path": "/bowling/art-v2/pin-upright.json",
+   "bytes": 1314,
+   "sha256": "54dbda8e0335efb8baec1db939ea03061df18d66eef7432838bc94d1a6e84298"
+  },
+  {
+   "path": "/bowling/art-v2/pin-upright.png",
+   "bytes": 396523,
+   "sha256": "693070a89dcff428f785c915f5cab83d48eadd9a576d73633cc69b67fefdad75"
+  },
+  {
+   "path": "/bowling/art-v2/pizza.json",
+   "bytes": 1211,
+   "sha256": "1f454568245222038c43d62e42b2b3ddd8630d1011123094a7d57f1f20992007"
+  },
+  {
+   "path": "/bowling/art-v2/pizza.png",
+   "bytes": 2487534,
+   "sha256": "1d0959bfae34985b4c72126ca9c94fb733072aa68c6b1b129c41d204396b5261"
+  },
+  {
+   "path": "/bowling/art-v2/soccer.json",
+   "bytes": 1116,
+   "sha256": "54dcad0c215e1bf3194ffb167d2a5704fee64826d12ad3d55b79ea2f353fcb1a"
+  },
+  {
+   "path": "/bowling/art-v2/soccer.png",
+   "bytes": 1406116,
+   "sha256": "b02969f9c138e5ae29c6cb48ae8672e5875c1c885f839a0362649e1e02ac4a0e"
+  },
+  {
+   "path": "/bowling/art-v2/stars.json",
+   "bytes": 1131,
+   "sha256": "d7d84d8dae108f01156971e48d82dcb5c7f492a027b8e4ba3930d86b8cf4a0dd"
+  },
+  {
+   "path": "/bowling/art-v2/stars.png",
+   "bytes": 1263712,
+   "sha256": "5838fa27133de93d977dc763c1bc343bca54a0debaa0c92102237c79be3e5ca3"
+  },
+  {
+   "path": "/bowling/art-v2/swirl-candy.json",
+   "bytes": 1150,
+   "sha256": "853720505c302afba57721ffb028d948de0b5ea0ffadb3234e04ebd8067ed449"
+  },
+  {
+   "path": "/bowling/art-v2/swirl-candy.png",
+   "bytes": 1413312,
+   "sha256": "beddeba3088ac420c29268088f80015082d4fe1160c9a296195dffa7cbf17dd1"
+  },
+  {
+   "path": "/bowling/art-v2/watermelon.json",
+   "bytes": 1158,
+   "sha256": "5d76cb6b431d41323424bb264524ae670ff570ad6a18d41604edce5113e7afd2"
+  },
+  {
+   "path": "/bowling/art-v2/watermelon.png",
+   "bytes": 2099449,
+   "sha256": "41db20ada3ee3cb5262ede761c2fdd4813c69c6bf68bb9b5ecbe60271b6408ce"
+  },
+  {
+   "path": "/bowling/art-v2/zebra.json",
+   "bytes": 1125,
+   "sha256": "e1f4123b3bf7ab5c9a4756ce8d0fb2040c81e0918bf8490a7fc41ea0ec0a9aae"
+  },
+  {
+   "path": "/bowling/art-v2/zebra.png",
+   "bytes": 1466700,
+   "sha256": "0f7a7d686cf61dbbc91e2d88bc9122f23475b496917dc47566a2002c2e058024"
+  },
+  {
+   "path": "/bowling/audio/aim_tick.wav",
+   "bytes": 24364,
+   "sha256": "1acef69c10c62e11dac83ff540dd0fff255641d730f651af00bc822d80f3746d"
+  },
+  {
+   "path": "/bowling/audio/card_double_points.wav",
+   "bytes": 92844,
+   "sha256": "b5fad1b89a913cc4c678fb7530e90a6db1ec1a223eb241a6c355bb560681de1a"
+  },
+  {
+   "path": "/bowling/audio/card_extra_shot.wav",
+   "bytes": 83244,
+   "sha256": "7e583bd9c0e642e19dccacc97da60a8ee98f6f89a1c55ce272b1eaad6b2e3bc2"
+  },
+  {
+   "path": "/bowling/audio/card_hit_or_miss.wav",
+   "bytes": 92844,
+   "sha256": "2f0d532499fc8da1a0b7ddad08c281d5507d858285b837348a44b31c69fea25e"
+  },
+  {
+   "path": "/bowling/audio/card_lose_points.wav",
+   "bytes": 92844,
+   "sha256": "924dc1efa7b9ea8dd6b110b01d4be1f0ccab7031ab0f797ff37905180d143a30"
+  },
+  {
+   "path": "/bowling/audio/card_no_shot.wav",
+   "bytes": 76844,
+   "sha256": "308428d08817975a35c58b240b085253336dae101aa6f8f4697d3c8c2d4e8438"
+  },
+  {
+   "path": "/bowling/audio/card_swap_points.wav",
+   "bytes": 105644,
+   "sha256": "afc570c2dc299ef239aea2dcc388bbf1caaf5a9635ad25a78daf0de53fe994d9"
+  },
+  {
+   "path": "/bowling/audio/gutter.wav",
+   "bytes": 70444,
+   "sha256": "9cc293a110a9a94e8ee6d801cda48903ac27ddd621214de3e7641e5e714507ad"
+  },
+  {
+   "path": "/bowling/audio/manifest.json",
+   "bytes": 7733,
+   "sha256": "66be07786763e2f9290898082e3b9e1d29659103bc00084677b8a09575c3b303"
+  },
+  {
+   "path": "/bowling/audio/miss.mp3",
+   "bytes": 104844,
+   "sha256": "e8f7cd025f72226467578b43cf0ff1a86b83b53f8235cc59b4fc7bbf6be86b48"
+  },
+  {
+   "path": "/bowling/audio/miss.wav",
+   "bytes": 67244,
+   "sha256": "9c198ddd8fcf3b556cf8d8e3a4f484eea36890a14683fb89c201e46914922c04"
+  },
+  {
+   "path": "/bowling/audio/music.wav",
+   "bytes": 1024044,
+   "sha256": "f16a5d3242c802cd55e4e418c770e890aef07dad27a288d883aca898c2875b36"
+  },
+  {
+   "path": "/bowling/audio/pins_1.wav",
+   "bytes": 41644,
+   "sha256": "9e4f860066d338484e86366b9a3e5dd101484102fcbc4170b9efe72502c1a4ee"
+  },
+  {
+   "path": "/bowling/audio/pins_2.wav",
+   "bytes": 48044,
+   "sha256": "a0cd0d2ff92d04239bdb0d593e0a61057f4353bcf602e30831b4529545086a0b"
+  },
+  {
+   "path": "/bowling/audio/pins_3.wav",
+   "bytes": 51244,
+   "sha256": "bcf7e4931aed0f32cb820afc443559214fc5faefb4e824b2717d4d6cc11ea6e1"
+  },
+  {
+   "path": "/bowling/audio/pins_4.wav",
+   "bytes": 57644,
+   "sha256": "9e81ef4a44ead9f245defb6e1fa5353ce65ccbfb3f5ab35b59dad60ea2f73d0e"
+  },
+  {
+   "path": "/bowling/audio/pins_5.wav",
+   "bytes": 64044,
+   "sha256": "56bd272fd291c5ce3a77ef0f25e4916e414e277b1f7bcaf28ac570a891b87020"
+  },
+  {
+   "path": "/bowling/audio/pins_6.wav",
+   "bytes": 69164,
+   "sha256": "28a83fd7f682d4d32981cb38374f62fbd4ed5268d0825578af07ea12861fd526"
+  },
+  {
+   "path": "/bowling/audio/pins_7.wav",
+   "bytes": 74284,
+   "sha256": "8f1070270e32f05653a8e9517546d4a4a612f8693f32aac0e48fcb9cab25229f"
+  },
+  {
+   "path": "/bowling/audio/pins_8_score.mp3",
+   "bytes": 66601,
+   "sha256": "a56ec2488bfbbcb3c90f8c9017338a799ff1ab156fcdd36c6000445c2e4164ea"
+  },
+  {
+   "path": "/bowling/audio/pins_8.wav",
+   "bytes": 80044,
+   "sha256": "e0fbe750ae47976d54f7e5f0cd1492261218ed45f9dde3eb079c6e40321b237f"
+  },
+  {
+   "path": "/bowling/audio/pins_9.wav",
+   "bytes": 85804,
+   "sha256": "4a8306006c75acd615855c505f534c66955a6dd18fb2844783ac5d9c32bceaaf"
+  },
+  {
+   "path": "/bowling/audio/power_collect.wav",
+   "bytes": 60844,
+   "sha256": "608bf1c3b24cae616f8c2582c9d5d56e9fcfc5b786e3682637e5d07867aeaa1d"
+  },
+  {
+   "path": "/bowling/audio/power_reveal.wav",
+   "bytes": 86444,
+   "sha256": "670aa334238ceb5688df742bbecb673b8c730edc0f7928d435c713de3683ba12"
+  },
+  {
+   "path": "/bowling/audio/roll.mp3",
+   "bytes": 57824,
+   "sha256": "04814417dc68af0195f05863ac25afc2a312b1909f25257ecc7f9b0f9cd1ee42"
+  },
+  {
+   "path": "/bowling/audio/roll.wav",
+   "bytes": 115244,
+   "sha256": "70972d17fd8d94d1d967aa143bd779e016cfb7a534c9a99fa81a7a0f71411eda"
+  },
+  {
+   "path": "/bowling/audio/score.wav",
+   "bytes": 54444,
+   "sha256": "2c5c7c6e30a4c3f75694c320f59102fd69718df53ace58a7aa7ec47df2c931c8"
+  },
+  {
+   "path": "/bowling/audio/spare.mp3",
+   "bytes": 90425,
+   "sha256": "1283bb90df6961be65bdc76bf0e30dcc42200da381d8c0d39fa6e9567ebf36f5"
+  },
+  {
+   "path": "/bowling/audio/spare.wav",
+   "bytes": 80044,
+   "sha256": "a9b1de95af7cef03eb8eafbe9dd34ba2e60c5f18c5746d6b44607534d68c5059"
+  },
+  {
+   "path": "/bowling/audio/strike.wav",
+   "bytes": 105644,
+   "sha256": "cccef11547014c2c78584fcc305487aab7319229fb8462bf9944b5e67616c0c2"
+  },
+  {
+   "path": "/bowling/audio/swap_points.mp3",
+   "bytes": 284776,
+   "sha256": "991150b1d5f30591e192e46c38ced728eecf4fd6df64bd1475015048424fd217"
+  },
+  {
+   "path": "/bowling/audio/ui_click.wav",
+   "bytes": 22444,
+   "sha256": "6b4a73dbee27a28d7aa7280cedc86e9f94d0859914c9c05b53c6737d2aa4f493"
+  },
+  {
+   "path": "/bowling/audio/winner.wav",
+   "bytes": 320044,
+   "sha256": "ed96a2c266c4639754952baa34973718f224e60ce88286c5f3755672fc6d9576"
+  },
+  {
+   "path": "/bowling/optimized/aim_tick.1acef69c10c62e11.wav",
+   "bytes": 24364,
+   "sha256": "1acef69c10c62e11dac83ff540dd0fff255641d730f651af00bc822d80f3746d"
+  },
+  {
+   "path": "/bowling/optimized/baseball.118d842e0051b51a.webp",
+   "bytes": 35562,
+   "sha256": "118d842e0051b51a36a1cd2a06f0781cc712f52f310714d985ed04e4a82a471b"
+  },
+  {
+   "path": "/bowling/optimized/basketball.bf76308b76786dc1.webp",
+   "bytes": 47600,
+   "sha256": "bf76308b76786dc1d657648a5fe9bfe3a6826f8c3e40e0feb49a5f1af8dac013"
+  },
+  {
+   "path": "/bowling/optimized/camouflage.08b3a51bd0a25b3b.webp",
+   "bytes": 27776,
+   "sha256": "08b3a51bd0a25b3bc5af41b823f8b613abb410f452b810f7ff57d9723c3487e6"
+  },
+  {
+   "path": "/bowling/optimized/card_double_points.b5fad1b89a913cc4.wav",
+   "bytes": 92844,
+   "sha256": "b5fad1b89a913cc4c678fb7530e90a6db1ec1a223eb241a6c355bb560681de1a"
+  },
+  {
+   "path": "/bowling/optimized/card_extra_shot.7e583bd9c0e642e1.wav",
+   "bytes": 83244,
+   "sha256": "7e583bd9c0e642e19dccacc97da60a8ee98f6f89a1c55ce272b1eaad6b2e3bc2"
+  },
+  {
+   "path": "/bowling/optimized/card_hit_or_miss.2f0d532499fc8da1.wav",
+   "bytes": 92844,
+   "sha256": "2f0d532499fc8da1a0b7ddad08c281d5507d858285b837348a44b31c69fea25e"
+  },
+  {
+   "path": "/bowling/optimized/card_lose_points.924dc1efa7b9ea8d.wav",
+   "bytes": 92844,
+   "sha256": "924dc1efa7b9ea8dd6b110b01d4be1f0ccab7031ab0f797ff37905180d143a30"
+  },
+  {
+   "path": "/bowling/optimized/card_no_shot.308428d08817975a.wav",
+   "bytes": 76844,
+   "sha256": "308428d08817975a35c58b240b085253336dae101aa6f8f4697d3c8c2d4e8438"
+  },
+  {
+   "path": "/bowling/optimized/card_swap_points.afc570c2dc299ef2.wav",
+   "bytes": 105644,
+   "sha256": "afc570c2dc299ef239aea2dcc388bbf1caaf5a9635ad25a78daf0de53fe994d9"
+  },
+  {
+   "path": "/bowling/optimized/donut.6e98eec3d7900311.webp",
+   "bytes": 37634,
+   "sha256": "6e98eec3d79003117d75e57cd8cb9033bacf75420c572c6df9f66891f04792cc"
+  },
+  {
+   "path": "/bowling/optimized/dragon-eye.f85cee3e68487367.webp",
+   "bytes": 64412,
+   "sha256": "f85cee3e6848736701ae7e157a3193857392ec4df9afe5f2df23f5dc816d606a"
+  },
+  {
+   "path": "/bowling/optimized/eight-ball.c7a4c039c3c78dd4.webp",
+   "bytes": 23132,
+   "sha256": "c7a4c039c3c78dd4ebfa0fa196444c72f214fce7828a3a9a245d3912e26dbb1f"
+  },
+  {
+   "path": "/bowling/optimized/fire.4aae27e3a39fcee2.webp",
+   "bytes": 33734,
+   "sha256": "4aae27e3a39fcee2d72a878930b1687c5a731b8d6147b479aa611212892950fc"
+  },
+  {
+   "path": "/bowling/optimized/flowers.fb5568740403f409.webp",
+   "bytes": 38388,
+   "sha256": "fb5568740403f4095ceb3bcdc24d2d4f8e93f6e66f98c366df77a8d7da396d9c"
+  },
+  {
+   "path": "/bowling/optimized/gutter.9cc293a110a9a94e.wav",
+   "bytes": 70444,
+   "sha256": "9cc293a110a9a94e8ee6d801cda48903ac27ddd621214de3e7641e5e714507ad"
+  },
+  {
+   "path": "/bowling/optimized/lightning.8462d58a839d5063.webp",
+   "bytes": 46216,
+   "sha256": "8462d58a839d5063a3846f1012e13702e825ff0a01d843c70272f25ba089c195"
+  },
+  {
+   "path": "/bowling/optimized/miss.9c198ddd8fcf3b55.wav",
+   "bytes": 67244,
+   "sha256": "9c198ddd8fcf3b556cf8d8e3a4f484eea36890a14683fb89c201e46914922c04"
+  },
+  {
+   "path": "/bowling/optimized/miss.e8f7cd025f722264.mp3",
+   "bytes": 104844,
+   "sha256": "e8f7cd025f72226467578b43cf0ff1a86b83b53f8235cc59b4fc7bbf6be86b48"
+  },
+  {
+   "path": "/bowling/optimized/music.f16a5d3242c802cd.wav",
+   "bytes": 1024044,
+   "sha256": "f16a5d3242c802cd55e4e418c770e890aef07dad27a288d883aca898c2875b36"
+  },
+  {
+   "path": "/bowling/optimized/pin-prone.5060c7cc1bdac1a5.webp",
+   "bytes": 11202,
+   "sha256": "5060c7cc1bdac1a5c4523b8a94247c7fa94bff157961b3cad69d5dbc674091bb"
+  },
+  {
+   "path": "/bowling/optimized/pin-tipping.519ca58e3be21aab.webp",
+   "bytes": 13030,
+   "sha256": "519ca58e3be21aab9b86d1699d17e2578c7a3ddf431b3337d917954077a5936f"
+  },
+  {
+   "path": "/bowling/optimized/pin-upright.4545522eba0acb65.webp",
+   "bytes": 11354,
+   "sha256": "4545522eba0acb65ae8c93c92b790787c5dfa3d25fc1120070c02cfcb72b0650"
+  },
+  {
+   "path": "/bowling/optimized/pins_1.9e4f860066d33848.wav",
+   "bytes": 41644,
+   "sha256": "9e4f860066d338484e86366b9a3e5dd101484102fcbc4170b9efe72502c1a4ee"
+  },
+  {
+   "path": "/bowling/optimized/pins_2.a0cd0d2ff92d0423.wav",
+   "bytes": 48044,
+   "sha256": "a0cd0d2ff92d04239bdb0d593e0a61057f4353bcf602e30831b4529545086a0b"
+  },
+  {
+   "path": "/bowling/optimized/pins_3.bcf7e4931aed0f32.wav",
+   "bytes": 51244,
+   "sha256": "bcf7e4931aed0f32cb820afc443559214fc5faefb4e824b2717d4d6cc11ea6e1"
+  },
+  {
+   "path": "/bowling/optimized/pins_4.9e81ef4a44ead9f2.wav",
+   "bytes": 57644,
+   "sha256": "9e81ef4a44ead9f245defb6e1fa5353ce65ccbfb3f5ab35b59dad60ea2f73d0e"
+  },
+  {
+   "path": "/bowling/optimized/pins_5.56bd272fd291c5ce.wav",
+   "bytes": 64044,
+   "sha256": "56bd272fd291c5ce3a77ef0f25e4916e414e277b1f7bcaf28ac570a891b87020"
+  },
+  {
+   "path": "/bowling/optimized/pins_6.28a83fd7f682d4d3.wav",
+   "bytes": 69164,
+   "sha256": "28a83fd7f682d4d32981cb38374f62fbd4ed5268d0825578af07ea12861fd526"
+  },
+  {
+   "path": "/bowling/optimized/pins_7.8f1070270e32f056.wav",
+   "bytes": 74284,
+   "sha256": "8f1070270e32f05653a8e9517546d4a4a612f8693f32aac0e48fcb9cab25229f"
+  },
+  {
+   "path": "/bowling/optimized/pins_8_score.a56ec2488bfbbcb3.mp3",
+   "bytes": 66601,
+   "sha256": "a56ec2488bfbbcb3c90f8c9017338a799ff1ab156fcdd36c6000445c2e4164ea"
+  },
+  {
+   "path": "/bowling/optimized/pins_8.e0fbe750ae47976d.wav",
+   "bytes": 80044,
+   "sha256": "e0fbe750ae47976d54f7e5f0cd1492261218ed45f9dde3eb079c6e40321b237f"
+  },
+  {
+   "path": "/bowling/optimized/pins_9.4a8306006c75acd6.wav",
+   "bytes": 85804,
+   "sha256": "4a8306006c75acd615855c505f534c66955a6dd18fb2844783ac5d9c32bceaaf"
+  },
+  {
+   "path": "/bowling/optimized/pizza.2be3ce38bf134a7d.webp",
+   "bytes": 55754,
+   "sha256": "2be3ce38bf134a7dd6cae26a313d7650a48d9a9270899e3a98cd9702bb8a65bb"
+  },
+  {
+   "path": "/bowling/optimized/power_collect.608bf1c3b24cae61.wav",
+   "bytes": 60844,
+   "sha256": "608bf1c3b24cae616f8c2582c9d5d56e9fcfc5b786e3682637e5d07867aeaa1d"
+  },
+  {
+   "path": "/bowling/optimized/power_reveal.670aa334238ceb56.wav",
+   "bytes": 86444,
+   "sha256": "670aa334238ceb5688df742bbecb673b8c730edc0f7928d435c713de3683ba12"
+  },
+  {
+   "path": "/bowling/optimized/roll.04814417dc68af01.mp3",
+   "bytes": 57824,
+   "sha256": "04814417dc68af0195f05863ac25afc2a312b1909f25257ecc7f9b0f9cd1ee42"
+  },
+  {
+   "path": "/bowling/optimized/roll.70972d17fd8d94d1.wav",
+   "bytes": 115244,
+   "sha256": "70972d17fd8d94d1d967aa143bd779e016cfb7a534c9a99fa81a7a0f71411eda"
+  },
+  {
+   "path": "/bowling/optimized/score.2c5c7c6e30a4c3f7.wav",
+   "bytes": 54444,
+   "sha256": "2c5c7c6e30a4c3f75694c320f59102fd69718df53ace58a7aa7ec47df2c931c8"
+  },
+  {
+   "path": "/bowling/optimized/soccer.8e1516d6ab56d88c.webp",
+   "bytes": 25834,
+   "sha256": "8e1516d6ab56d88ce4ba724af4de0ca1d915f2c04eee4b2e6b2b0f0875157f57"
+  },
+  {
+   "path": "/bowling/optimized/spare.1283bb90df6961be.mp3",
+   "bytes": 90425,
+   "sha256": "1283bb90df6961be65bdc76bf0e30dcc42200da381d8c0d39fa6e9567ebf36f5"
+  },
+  {
+   "path": "/bowling/optimized/spare.a9b1de95af7cef03.wav",
+   "bytes": 80044,
+   "sha256": "a9b1de95af7cef03eb8eafbe9dd34ba2e60c5f18c5746d6b44607534d68c5059"
+  },
+  {
+   "path": "/bowling/optimized/stars.500a475021f6e9b2.webp",
+   "bytes": 28290,
+   "sha256": "500a475021f6e9b2e63077399d0b0a98627ab0ed0d1c6be6bb6dac359267db5b"
+  },
+  {
+   "path": "/bowling/optimized/strike.cccef11547014c2c.wav",
+   "bytes": 105644,
+   "sha256": "cccef11547014c2c78584fcc305487aab7319229fb8462bf9944b5e67616c0c2"
+  },
+  {
+   "path": "/bowling/optimized/swap_points.991150b1d5f30591.mp3",
+   "bytes": 284776,
+   "sha256": "991150b1d5f30591e192e46c38ced728eecf4fd6df64bd1475015048424fd217"
+  },
+  {
+   "path": "/bowling/optimized/swirl-candy.b97c78a4c0cd6cf2.webp",
+   "bytes": 33504,
+   "sha256": "b97c78a4c0cd6cf231463ee7b1b36d41844582883cdd85860b670239c8b4e677"
+  },
+  {
+   "path": "/bowling/optimized/ui_click.6b4a73dbee27a28d.wav",
+   "bytes": 22444,
+   "sha256": "6b4a73dbee27a28d7aa7280cedc86e9f94d0859914c9c05b53c6737d2aa4f493"
+  },
+  {
+   "path": "/bowling/optimized/watermelon.3d37efd2706c06b6.webp",
+   "bytes": 50250,
+   "sha256": "3d37efd2706c06b6d4db13d03cad8234974e28eb0ac06d939070f0acf4855d09"
+  },
+  {
+   "path": "/bowling/optimized/winner.ed96a2c266c46397.wav",
+   "bytes": 320044,
+   "sha256": "ed96a2c266c4639754952baa34973718f224e60ce88286c5f3755672fc6d9576"
+  },
+  {
+   "path": "/bowling/optimized/zebra.fc19d2dcb82f442e.webp",
+   "bytes": 34588,
+   "sha256": "fc19d2dcb82f442e481725a75a81d7bb0ef7057761a77eb341d73cf556a63ac1"
+  },
+  {
+   "path": "/bowling3d/audio/aww.mp3",
+   "bytes": 28883,
+   "sha256": "6a1ae862e761e6c21fbcab53c26b0b3a1e816cfcbcc440226ebd5fbb4f9ab280"
+  },
+  {
+   "path": "/bowling3d/audio/boom.mp3",
+   "bytes": 42257,
+   "sha256": "70da732dbe8df6e6c2dfc2c17a795bc04a113e01be52a0ef89e0b784329fdc16"
+  },
+  {
+   "path": "/bowling3d/audio/cheer-big.mp3",
+   "bytes": 59812,
+   "sha256": "4e6a88a5711d7b544e685ffe6f3a17b13b4ebc87ea960ac3abbb75a2194b261d"
+  },
+  {
+   "path": "/bowling3d/audio/cheer.mp3",
+   "bytes": 51870,
+   "sha256": "b1ef1636360668538b395986a0864cd1329a9f0c0a65ee6a2a85a9004f961925"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-1.wav",
+   "bytes": 19448,
+   "sha256": "f3bcea6d540312d64ea4e73fc73490e78be26f08c6af84032adaaef5910431f1"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-2.wav",
+   "bytes": 21212,
+   "sha256": "309ff8b1c6ba0a6eb2ad0494ee047740a0a18f5e6d09756ae218c1d912ebdcd0"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-3.wav",
+   "bytes": 24740,
+   "sha256": "41b0eab0e3fe306947ab3f54a0cbad74dfbdaa39fdb5ed166dd7a1ddbdc1d4a5"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-4.wav",
+   "bytes": 12392,
+   "sha256": "dcff6eaec7be953e86916d114a07bba4f82e0f22d2d6652ecdc6c15d3459731e"
+  },
+  {
+   "path": "/bowling3d/audio/firework.wav",
+   "bytes": 66194,
+   "sha256": "c1434efd809709048e90b17727b2eedd34612efcce928400c0e9d78a377f31f8"
+  },
+  {
+   "path": "/bowling3d/audio/fx-bonk.wav",
+   "bytes": 88244,
+   "sha256": "85dd5cfaacd5a5a7786c8101ecab888242d00a3abd5c22ff2626e13e79ce081c"
+  },
+  {
+   "path": "/bowling3d/audio/fx-buzzer.wav",
+   "bytes": 91772,
+   "sha256": "e3587d7f273994563846a125482c319aef0e94ae400e502cad900c3a2e0e9aa4"
+  },
+  {
+   "path": "/bowling3d/audio/fx-card-flip.wav",
+   "bytes": 29364,
+   "sha256": "ef45ee6e1e6e37edd02eca0a857948ae4bbd84260d0fe11376f6169bf2cf4f1e"
+  },
+  {
+   "path": "/bowling3d/audio/fx-card-in.wav",
+   "bytes": 194084,
+   "sha256": "af45cf78a0ed4c9d1d79e3aeb8fd69f29a47147365734a7f03a9cb43db1fbf83"
+  },
+  {
+   "path": "/bowling3d/audio/fx-chime.wav",
+   "bytes": 97064,
+   "sha256": "51b06a2c200b7ba2c63b95f6cd78e9c07428623be14e5dac27a0f32e2671838d"
+  },
+  {
+   "path": "/bowling3d/audio/fx-coins.wav",
+   "bytes": 222308,
+   "sha256": "c088137e107330701bf98bd81db3cde6c93d8a768ad19e8764f6567c96c2a48c"
+  },
+  {
+   "path": "/bowling3d/audio/fx-deflate.wav",
+   "bytes": 158804,
+   "sha256": "ec1b6572af7bd1321d8f855f36e08afd33389f5c0e4440822557d1a3f06196b4"
+  },
+  {
+   "path": "/bowling3d/audio/fx-ding.wav",
+   "bytes": 112294,
+   "sha256": "8ab06bb5b89aec1a2abc401cbebc00d3d5aa928cbeebc2bbfdc6d92a2df18ef0"
+  },
+  {
+   "path": "/bowling3d/audio/fx-drumroll.wav",
+   "bytes": 119114,
+   "sha256": "47f0b57c9455ae796d55ccfb2326ff3c3dc4309ff63bb3af2774a9af3e147cf7"
+  },
+  {
+   "path": "/bowling3d/audio/fx-gasp.wav",
+   "bytes": 83834,
+   "sha256": "5b4f5a40804b070391a4027b5cf63717990afbcdb6c4ff041fab09dce600c740"
+  },
+  {
+   "path": "/bowling3d/audio/fx-laugh.wav",
+   "bytes": 141164,
+   "sha256": "ed3eabe5ac94d5d3d6e450ade789de3fbdf38119e2ccc3cb00b6ae41963b9bf0"
+  },
+  {
+   "path": "/bowling3d/audio/fx-rimshot.wav",
+   "bytes": 52964,
+   "sha256": "36fb1b879ebef5c48e8687b6f18b64e3a67fb90ddd207ee8cb0ec28a00c952d9"
+  },
+  {
+   "path": "/bowling3d/audio/fx-shatter.wav",
+   "bytes": 74140,
+   "sha256": "5ddf5fed1ea05d82c61c0fdec4f1aef5a827f2a430abfb2080ea3f522b852a06"
+  },
+  {
+   "path": "/bowling3d/audio/fx-thud.wav",
+   "bytes": 44144,
+   "sha256": "13106eec085fe835b31b00dec1f01137acca6cd1c73f8a3700a280eacc4aa7c0"
+  },
+  {
+   "path": "/bowling3d/audio/fx-vortex.wav",
+   "bytes": 220544,
+   "sha256": "439511d078381544d8c294cd533b9c3a7d27baa09477e9403e4c397bc015e6b1"
+  },
+  {
+   "path": "/bowling3d/audio/fx-whistle-down.wav",
+   "bytes": 101474,
+   "sha256": "b39562ca0cd0309ac9e281740bee293bc57b604cb96577ee582f201bc8e2327e"
+  },
+  {
+   "path": "/bowling3d/audio/manifest.json",
+   "bytes": 23726,
+   "sha256": "7c192be061f53b6d3df16b827293d56b7e1a14b3f522c39aa2a9a64b960747d1"
+  },
+  {
+   "path": "/bowling3d/audio/music.mp3",
+   "bytes": 1329549,
+   "sha256": "57cd81254a0f4e068535c5421f93b586514332ad2377f81aea190dd91659fff3"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-1.wav",
+   "bytes": 25002,
+   "sha256": "64f43213f347aee09823ec773951005907f77314b6eb9b94066f2ec30efef712"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-2.wav",
+   "bytes": 26032,
+   "sha256": "7e3cc6e96d3b3c60458c6706575f0446c94ba2c3132139d33eb408d6f036d93d"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-3.wav",
+   "bytes": 25062,
+   "sha256": "fac3b91d6f9a8bdf512aa350668431fb971b0d9b8c495d3cb9c9673d929247bb"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-4.wav",
+   "bytes": 25382,
+   "sha256": "261a4db378d6e539bf523fe9c16b074e0b6a41a14e844429a84d762fa962a13e"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-5.wav",
+   "bytes": 25334,
+   "sha256": "76685eef46dc2dd1d485c1c40512d3993f49123e2433c37d7831ebaaae0efae5"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-6.wav",
+   "bytes": 24744,
+   "sha256": "13401db57d4e6074184ac2816801950af5daae1cec3ed6a94d8ad696bf148fb6"
+  },
+  {
+   "path": "/bowling3d/audio/pins.wav",
+   "bytes": 114704,
+   "sha256": "5606488f49612b081f7114b808023bd2838eeddf770b2d5a4cece1aa89a30071"
+  },
+  {
+   "path": "/bowling3d/audio/roll.wav",
+   "bytes": 269054,
+   "sha256": "02072da8e687f181054475aca675ee458de1dd2e8993607bf8ab144428790572"
+  },
+  {
+   "path": "/bowling3d/audio/strike.wav",
+   "bytes": 110230,
+   "sha256": "cb08eda5bbd4b4986057c7acbbce6a7f7afe36be9a9ec82c4c3f2455701d8400"
+  },
+  {
+   "path": "/bowling3d/audio/swoosh.wav",
+   "bytes": 52964,
+   "sha256": "f96b6ed4c55ff602ef1828911672d93455e759d304380c184b0e09f29fce70d9"
+  },
+  {
+   "path": "/bowling3d/audio/voice-double-points.mp3",
+   "bytes": 17912,
+   "sha256": "fe6de58f763e167ed6239fb224d50a7a3511065db89350311eb47eba8cb0737c"
+  },
+  {
+   "path": "/bowling3d/audio/voice-double.mp3",
+   "bytes": 17912,
+   "sha256": "a7ed8ff9e6992682db9f236845cb9bc6c1b1ddd234784a943f6642d241700aa5"
+  },
+  {
+   "path": "/bowling3d/audio/voice-extra-shot.mp3",
+   "bytes": 17912,
+   "sha256": "5fb5f3a647fbb845ff1597a3f8b67603de37d8197650834277048deb532a6987"
+  },
+  {
+   "path": "/bowling3d/audio/voice-gutter-ball.mp3",
+   "bytes": 17912,
+   "sha256": "9146fd6cfee53d5128b4396be5f1744a7ca352d76bd862185aee6aa31207fbd2"
+  },
+  {
+   "path": "/bowling3d/audio/voice-hit-or-miss.mp3",
+   "bytes": 17912,
+   "sha256": "c05e3c21aed56c5765a53f4cfccaff55078965db611f0e434eebb0cd3afd6bad"
+  },
+  {
+   "path": "/bowling3d/audio/voice-lose-points.mp3",
+   "bytes": 17912,
+   "sha256": "73915780d0e3285fa347d191352f8331dfe01e25e6b860a16158692798132a12"
+  },
+  {
+   "path": "/bowling3d/audio/voice-nice-shot.mp3",
+   "bytes": 17912,
+   "sha256": "62139e378b97e7f5b4aa5ab0e186f23cf67ad881a121fa824eab1cc5804b9a1c"
+  },
+  {
+   "path": "/bowling3d/audio/voice-no-shot.mp3",
+   "bytes": 17912,
+   "sha256": "401cbd5baa763c51e7976ef0a7fb34155bbf55407e27a83f17360650b15bf542"
+  },
+  {
+   "path": "/bowling3d/audio/voice-spare.mp3",
+   "bytes": 17912,
+   "sha256": "6a55ed17fa148e930b5abd6201e46e6f39d2e685b034f03f8353ed88e9336197"
+  },
+  {
+   "path": "/bowling3d/audio/voice-strike.mp3",
+   "bytes": 17912,
+   "sha256": "0028e0c289e00df0929b14537083722cde6678528ae90e6874ef366ff5c76c25"
+  },
+  {
+   "path": "/bowling3d/audio/voice-swap-points.mp3",
+   "bytes": 17912,
+   "sha256": "cb7c454b73d0515faaaf111a1c45e5625fdb5e41313fb3faa2020e8ee3d592af"
+  },
+  {
+   "path": "/bowling3d/audio/voice-turkey.mp3",
+   "bytes": 17912,
+   "sha256": "582b0d1209c17666f8b801050a7827d76b842d45d10e6cd8cd784268b40d4d1a"
+  },
+  {
+   "path": "/celebration/monster.json",
+   "bytes": 1296,
+   "sha256": "0e1abd3205309d01522a5804b21d7b3d7687739b7b33d2dd2719af1caec3a423"
+  },
+  {
+   "path": "/celebration/monster.png",
+   "bytes": 1201123,
+   "sha256": "0357936c107c73ec19d34dd66a56b1a9534ef5b6295f9fb4bbd76f918ced7633"
+  },
+  {
+   "path": "/celebration/rainbow.json",
+   "bytes": 1269,
+   "sha256": "735dd5bc310fe7b0e7a44e0db5cf6dcd650ee7de8f18bf93b3710e11e8cf3277"
+  },
+  {
+   "path": "/celebration/rainbow.png",
+   "bytes": 1108455,
+   "sha256": "77e3068c2daa485eb1a1b803622efb5dbb20c7eb0bd35f54cd131ba8b1c96ef0"
+  },
+  {
+   "path": "/celebration/star.json",
+   "bytes": 1267,
+   "sha256": "eb5fa32ab8bc48e937de18baabd6eadd40d06dec5766a933a355b74083f0ee76"
+  },
+  {
+   "path": "/celebration/star.png",
+   "bytes": 979951,
+   "sha256": "c3e2d9309220e3c85a4c6a3f03934b3cc9d2ab89b3b9f54419d042d2bbd41ed7"
+  },
+  {
+   "path": "/celebration/trophy.json",
+   "bytes": 1265,
+   "sha256": "1cfce6f36c592bd8cbb57204e80c26b6d7366c0b49fa3a6f8c3f3a0e58b7a986"
+  },
+  {
+   "path": "/celebration/trophy.png",
+   "bytes": 1029354,
+   "sha256": "c4f5c237571f6eaec1d4f0ad116a58268abd4e6d0b90702b29caf9018154e5cf"
+  },
+  {
+   "path": "/hw5u02-slot/music-wednesday.jpg",
+   "bytes": 2062948,
+   "sha256": "f92e1c86b0943247140a40ff7545b071f35576b450c023c618e849fedec63dfe"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/music-wednesday-3a7ff21c2995.webp",
+   "bytes": 135584,
+   "sha256": "3a7ff21c29955d5cd91d9837b471aa4c50c4fdc544e77be762518b2a6cdf7c1e"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/pe-friday-4cc77eadbf48.webp",
+   "bytes": 92812,
+   "sha256": "4cc77eadbf484f2a270edebd1b29f4ae83a5fd931e583f5777029a81f44c5a2a"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-01-170b4124b042.webp",
+   "bytes": 126040,
+   "sha256": "170b4124b042825e13c6d57afe425c67a081cebe09cbf2ecee36453a2fbbbaa4"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-02-b1285c7d3acf.webp",
+   "bytes": 118178,
+   "sha256": "b1285c7d3acffc2bd781cc414d8f9e6f63d52f55e2f98dbb38285218aecf8d49"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-03-mon-233ee9a5907e.webp",
+   "bytes": 75198,
+   "sha256": "233ee9a5907e1d716f935089fe1c8ab4227eeacd6e9b6d377286c6ed2d437391"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-04-eefe29143424.webp",
+   "bytes": 80050,
+   "sha256": "eefe291434241cd1251c08e4120341d46089a9e8c8974e6a80e23df9704baa05"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-05-f61b9195a2b6.webp",
+   "bytes": 106122,
+   "sha256": "f61b9195a2b65fc2f1aeece00129d99773e56e64ce61f03860514864d750dd85"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-07-8bfee987c065.webp",
+   "bytes": 151040,
+   "sha256": "8bfee987c065a009a45018a02d3b38dd2f2ca9d0d7a7605a2f2a68f36d863afd"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-08-35f47b0aa2bd.webp",
+   "bytes": 132758,
+   "sha256": "35f47b0aa2bd23b6227304d544ec7557a30ec2e962c77104144cf85db9fb29a8"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-09-aaf3d37bf418.webp",
+   "bytes": 85256,
+   "sha256": "aaf3d37bf4181a706e12656ca2d10bba6134805d23f0ff0ff20aa18c2261805f"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-10-4369c11fe2e7.webp",
+   "bytes": 81902,
+   "sha256": "4369c11fe2e7363f220b4fc8bfad219bf3cb00e74e6cb8ab77675938d2e6358e"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-11-527eb4cf9295.webp",
+   "bytes": 71956,
+   "sha256": "527eb4cf92952dac1a29d69295a63f1c3746888becae400a7f7bee31e897746c"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-12-6b57829d5fca.webp",
+   "bytes": 85904,
+   "sha256": "6b57829d5fcacfbce801b655a2f66e247b59b2e5aff505a0884ebc0bcad87066"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-13-c94e1d26632c.webp",
+   "bytes": 76438,
+   "sha256": "c94e1d26632c1990fa552749f1c5fa3be2012755723786f37a5ab70c165af8d1"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-14-7cd46b8ecc89.webp",
+   "bytes": 48924,
+   "sha256": "7cd46b8ecc899f13eac97e6d57c9a70974381a52aad13ee58b4b549d845b4ff4"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-15-4b2db4090dbb.webp",
+   "bytes": 103574,
+   "sha256": "4b2db4090dbb1f322f8dc1b6f1ebe345619f2500d178054cbb356ed2e840bf33"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-16-035a5fd6c80e.webp",
+   "bytes": 102446,
+   "sha256": "035a5fd6c80e53ce48fb5db7fd8babf02b4280b2046621ae735d4b9448d61f0e"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-18-b43eb5c2172e.webp",
+   "bytes": 104566,
+   "sha256": "b43eb5c2172ea67c755b2d7fdd50533b93f4c861620e9cbece9da7cd5212418e"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-19-e3d0eaa6c0d9.webp",
+   "bytes": 113468,
+   "sha256": "e3d0eaa6c0d94f2ee5c7cc5e2ba2ad988635ca12b7c724896cd88e9b338319c5"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/subject-20-3b9a82b2020e.webp",
+   "bytes": 122338,
+   "sha256": "3b9a82b2020ee75375850ed26c90527f0b0566ba1b90ca7d51bec8b243c1e96b"
+  },
+  {
+   "path": "/hw5u02-slot/optimized/try-again-astronaut-e0b04aae1157.webp",
+   "bytes": 34954,
+   "sha256": "e0b04aae11577e97383d15bbafffad11494e54b9ae857d84408eafc2c9ba332b"
+  },
+  {
+   "path": "/hw5u02-slot/pe-friday.jpg",
+   "bytes": 1723518,
+   "sha256": "f63804d69aeec1265dd5a782212e4b8b8d2bc9bd8b41e5869c64d85f6b667796"
+  },
+  {
+   "path": "/hw5u02-slot/subject-01.jpg",
+   "bytes": 2073710,
+   "sha256": "1baa174c368ad1ae29830983efd9951f8a7a9510c1df604a9ce6e964acb4eb1c"
+  },
+  {
+   "path": "/hw5u02-slot/subject-02.jpg",
+   "bytes": 1861608,
+   "sha256": "dbdf22e988f65958cfaf1f8f82f6ec4c4505e5680f4965eed52698b36016a51a"
+  },
+  {
+   "path": "/hw5u02-slot/subject-03-mon.png",
+   "bytes": 1462928,
+   "sha256": "bf69a1b7a2ab284615cb3b1b096029c67d33d825c7a90ff666af795a197f0ab5"
+  },
+  {
+   "path": "/hw5u02-slot/subject-04.jpg",
+   "bytes": 1601901,
+   "sha256": "a0d8eb232d16b099979b9f911924ac7ff060a026f9f386332259b55e6bcb7663"
+  },
+  {
+   "path": "/hw5u02-slot/subject-05.jpg",
+   "bytes": 1846813,
+   "sha256": "3c18b96a09fe96157e3d3694d695a5c3ae6db59013c3b1f5e946085c4edb67e9"
+  },
+  {
+   "path": "/hw5u02-slot/subject-07.jpg",
+   "bytes": 2311212,
+   "sha256": "221c3a7910c31d00abf4ece8ac0471d6d5613d8a9b2cb1c746db6a0a99b4a7bc"
+  },
+  {
+   "path": "/hw5u02-slot/subject-08.jpg",
+   "bytes": 1994749,
+   "sha256": "03e80a307d24c2dff9588857b3b3aa8e6b4b4c374af53e28ca919df2eca3705f"
+  },
+  {
+   "path": "/hw5u02-slot/subject-09.jpg",
+   "bytes": 1629000,
+   "sha256": "a8b4c100c4033b219d74c2aeafb64c35ef634fb93fa076ee4d23a7807affc837"
+  },
+  {
+   "path": "/hw5u02-slot/subject-10.jpg",
+   "bytes": 1726774,
+   "sha256": "f58ee22386663e3a533c61c182fff98f0b89f5bb40fa62220a915f347be69d5f"
+  },
+  {
+   "path": "/hw5u02-slot/subject-11.jpg",
+   "bytes": 1564353,
+   "sha256": "d344480a667715df43c747e3b3bf4d10fb28d92f9a38b593ba8c8faf15a6850e"
+  },
+  {
+   "path": "/hw5u02-slot/subject-12.jpg",
+   "bytes": 1597821,
+   "sha256": "8885f7eadd67a58fd302d9a5706a47c744964b0c66db1c37925fd72524b5dca2"
+  },
+  {
+   "path": "/hw5u02-slot/subject-13.jpg",
+   "bytes": 1676701,
+   "sha256": "72be68d4335b50a919dcf7a7a315a26dd25fcfa33ead68ff96cf65ebb269d895"
+  },
+  {
+   "path": "/hw5u02-slot/subject-14.jpg",
+   "bytes": 1217034,
+   "sha256": "f70d4bd314be3c2b7e916c9afb2a21ef894a5dbb26d2509cc688dfa0cf017a68"
+  },
+  {
+   "path": "/hw5u02-slot/subject-15.jpg",
+   "bytes": 1846410,
+   "sha256": "7f87bf9f8155cf3280220b2e25bcf381daa1c9940f85bad0016d06915bb04a9b"
+  },
+  {
+   "path": "/hw5u02-slot/subject-16.jpg",
+   "bytes": 1859389,
+   "sha256": "74fe0267292ebf6c43e0e1274beccb32750da4f70f782bac6ba8c824515f3a46"
+  },
+  {
+   "path": "/hw5u02-slot/subject-18.jpg",
+   "bytes": 1663296,
+   "sha256": "7e15ffd31a8637dfc983638c512a92db9431275b741ad430f3511b696d94f9e6"
+  },
+  {
+   "path": "/hw5u02-slot/subject-19.jpg",
+   "bytes": 2028775,
+   "sha256": "e9e8f2cbdd7bd6ea77fb98e60a0177ff1264a30b6d4d24f696e69ba508bdb7e8"
+  },
+  {
+   "path": "/hw5u02-slot/subject-20.jpg",
+   "bytes": 2049545,
+   "sha256": "e722d2997ee2c057547724a780b5445a70cc2648f36d5d22447350a9c1de6eec"
+  },
+  {
+   "path": "/hw5u02-slot/try-again-astronaut.png",
+   "bytes": 1092896,
+   "sha256": "3bc38103769c1273948bd718b863300214b1f4ef9e5a38950b0237a47030ce5f"
+  },
+  {
+   "path": "/hw5u02-slot/try-again-encouragement.wav",
+   "bytes": 493892,
+   "sha256": "651080b1592459ecdbf90c59a218ae6af005051349f22c238a33a25a4edb5544"
+  },
+  {
+   "path": "/index.html",
+   "bytes": 731,
+   "sha256": "cf5f442bdf55b0db22fc6c2ab9b457403bdad6f2a44b30fd63de8fe9662f9363"
+  },
+  {
+   "path": "/phonics/audio/generation-ledger-rimes23.json",
+   "bytes": 2282,
+   "sha256": "da13748f8705548be2f22df7725b3f7e948b218d08b3ab5f8f183127b24df13d"
+  },
+  {
+   "path": "/phonics/audio/generation-ledger.json",
+   "bytes": 2019,
+   "sha256": "8d3219f8cdda59f51baaf9394fd164447aa758ecba38b584a70232d7e1ee7d4d"
+  },
+  {
+   "path": "/phonics/audio/rime-ack.mp3",
+   "bytes": 24576,
+   "sha256": "37fa9db2d4e7b399654c9d60b04782d76ac47d21dc7dabed5e2d564cae44e753"
+  },
+  {
+   "path": "/phonics/audio/rime-ack.mp3.json",
+   "bytes": 885,
+   "sha256": "b6901a3d6d98dee57c13217b53e692bfb04a6a32ccfdcc781d76064518d99016"
+  },
+  {
+   "path": "/phonics/audio/rime-ad.mp3",
+   "bytes": 19968,
+   "sha256": "2530b17511a63f341553f9aee88669607256fcdca201e157b6ed5a1c95327a33"
+  },
+  {
+   "path": "/phonics/audio/rime-ad.mp3.json",
+   "bytes": 880,
+   "sha256": "41831d9311f90fb5a1482efd2564596fc0911840a7d036520bdd4ed6c53430b5"
+  },
+  {
+   "path": "/phonics/audio/rime-ag.mp3",
+   "bytes": 23808,
+   "sha256": "47f876e6497b5fd51b5c0e144bffeb7871c3977413d9586f3817296f2a42e892"
+  },
+  {
+   "path": "/phonics/audio/rime-ag.mp3.json",
+   "bytes": 882,
+   "sha256": "f671354de7d01e6f2561c0875f49a985cdcae5686f11da305b2b2ca4ccf44db7"
+  },
+  {
+   "path": "/phonics/audio/rime-an.mp3",
+   "bytes": 18816,
+   "sha256": "c0ff5123f7ff1186b7305ca8b278be45a7820c61c6e23990e8d6275fd239f2d6"
+  },
+  {
+   "path": "/phonics/audio/rime-an.mp3.json",
+   "bytes": 880,
+   "sha256": "35cda786381f5728d0ce1acc17953ffb9e732e0b8cd94200696682af16632b0a"
+  },
+  {
+   "path": "/phonics/audio/rime-ap.mp3",
+   "bytes": 30720,
+   "sha256": "475f340e22452406ec2d3bc43a23d7a9cdf42c0a868cebae5695fbdea1c49180"
+  },
+  {
+   "path": "/phonics/audio/rime-ap.mp3.json",
+   "bytes": 880,
+   "sha256": "a61faf16efc976a5e7500b2745662c0ee3ffe335bc7a28f2040f6a37e0f8138b"
+  },
+  {
+   "path": "/phonics/audio/rime-as.mp3",
+   "bytes": 20736,
+   "sha256": "a01fbcbeade6b03bd815380e412912466f50ee5aad134234d9792fa72061ef31"
+  },
+  {
+   "path": "/phonics/audio/rime-as.mp3.json",
+   "bytes": 880,
+   "sha256": "ed1b1d860f64d8c3637958c9e61311d7258aec7b630a76cd06b8d55e0b554a69"
+  },
+  {
+   "path": "/phonics/audio/rime-at.mp3",
+   "bytes": 47616,
+   "sha256": "1fc824c5eaf6ddd694d50cf1d3237b196ea52a7f842de7d10bdf29d8bb3ca5c0"
+  },
+  {
+   "path": "/phonics/audio/rime-at.mp3.json",
+   "bytes": 880,
+   "sha256": "cb6f4655600782965440fb1c4075be37a86a84409bc237bd2063120f8513ece9"
+  },
+  {
+   "path": "/phonics/audio/rime-ed.mp3",
+   "bytes": 27648,
+   "sha256": "6d4a67085c9033891329ad685a6bf4d527b8edf3ef0058d36366325c92c57f74"
+  },
+  {
+   "path": "/phonics/audio/rime-ed.mp3.json",
+   "bytes": 880,
+   "sha256": "95142a00b4c5b65fdf38f562837c1b6c1f456efb40e013aeca3b23d993290c8a"
+  },
+  {
+   "path": "/phonics/audio/rime-en.mp3",
+   "bytes": 26880,
+   "sha256": "fa66b1d9d2938d1fa9c45298d021dcfd662f5e84c704cec64452dbd26696994f"
+  },
+  {
+   "path": "/phonics/audio/rime-en.mp3.json",
+   "bytes": 880,
+   "sha256": "2fd0d7768d0ff54690c5de79d2a1159f192c83c80f660f21f7b4fee0ca79499e"
+  },
+  {
+   "path": "/phonics/audio/rime-est.mp3",
+   "bytes": 48768,
+   "sha256": "e12cf85aadf4ca9b98c5297866eae9bcf90c1bf5ff5d9dfd9e08a2308fd282c2"
+  },
+  {
+   "path": "/phonics/audio/rime-est.mp3.json",
+   "bytes": 887,
+   "sha256": "1630b464244c4025713cffea94f96933fb0f00c3b1a077c0cb51a429bbcfb191"
+  },
+  {
+   "path": "/phonics/audio/rime-et.mp3",
+   "bytes": 32640,
+   "sha256": "79863bd7ec8988b47b2fe289135b4541efd79bd551629a8a85b68ca4fe5dd285"
+  },
+  {
+   "path": "/phonics/audio/rime-et.mp3.json",
+   "bytes": 880,
+   "sha256": "fdacd063d5b5da658e5f4cef89929354003342745ffba0d15baa696b6f3facb4"
+  },
+  {
+   "path": "/phonics/audio/rime-ig.mp3",
+   "bytes": 22656,
+   "sha256": "f927240370b1692e3ee1182f9e625a8b5646d10d6b41207981b23812d67f1cff"
+  },
+  {
+   "path": "/phonics/audio/rime-ig.mp3.json",
+   "bytes": 882,
+   "sha256": "4f86144753c1e99d94c871d876d3eb525a3cc54f489eb74f789930cd9dc68d76"
+  },
+  {
+   "path": "/phonics/audio/rime-ip.mp3",
+   "bytes": 44928,
+   "sha256": "070ba60c87277c16455f96c9c7a270d0c2d964f270d95fbe3a221a5f42c03b28"
+  },
+  {
+   "path": "/phonics/audio/rime-ip.mp3.json",
+   "bytes": 880,
+   "sha256": "eb7e5dc1959f5e4ce60d9990c0cc726816aed189545376f05d351086cb7506c3"
+  },
+  {
+   "path": "/phonics/audio/rime-it.mp3",
+   "bytes": 30720,
+   "sha256": "ad651015bc835b7bf109d10fd10034dc11bf32e14fa1bd573b1e67a534329cd9"
+  },
+  {
+   "path": "/phonics/audio/rime-it.mp3.json",
+   "bytes": 880,
+   "sha256": "22eddc49e907df3a42cfebae2fde8b145fd8544af2393d752cf0fc5d4f841e56"
+  },
+  {
+   "path": "/phonics/audio/rime-op.mp3",
+   "bytes": 42624,
+   "sha256": "355bba570cab6b6b9699063c4fba0b1be1f97ba656327a07a3032609fdd6e2b4"
+  },
+  {
+   "path": "/phonics/audio/rime-op.mp3.json",
+   "bytes": 880,
+   "sha256": "6e60ba9fd49389bb5a28fd780ac21b4f797127ed0efaa2f829fae00c41557c86"
+  },
+  {
+   "path": "/phonics/audio/rime-ot.mp3",
+   "bytes": 34944,
+   "sha256": "1b5a7383dc88e1ea618ebd4578acf893afe10780f0bfc2c168feaee7afde47f6"
+  },
+  {
+   "path": "/phonics/audio/rime-ot.mp3.json",
+   "bytes": 880,
+   "sha256": "1da48beaf306b439af8d95c0bf6481b00f4f6d110d556ec27a1b553b3d933954"
+  },
+  {
+   "path": "/phonics/audio/rime-ox.mp3",
+   "bytes": 20736,
+   "sha256": "ed8c66cbf1bc4d2ff92bc311d4d61bf1a35c872276e144853585398dc067c341"
+  },
+  {
+   "path": "/phonics/audio/rime-ox.mp3.json",
+   "bytes": 882,
+   "sha256": "e05085457960b6a3692a683eb3ee5c61d93dcfb004f1656f8a120ead6dde593e"
+  },
+  {
+   "path": "/phonics/audio/rime-ub.mp3",
+   "bytes": 17664,
+   "sha256": "ee53401fb1a8ef62ddd2711a878ff036a844ff80a7dd5140933c62413d74fd26"
+  },
+  {
+   "path": "/phonics/audio/rime-ub.mp3.json",
+   "bytes": 880,
+   "sha256": "ef8ea70c4fd905fc0b1e71922d83c6961d9519cf4763e4736b1befc66a831efa"
+  },
+  {
+   "path": "/phonics/audio/rime-uck.mp3",
+   "bytes": 24576,
+   "sha256": "6be1bd598cabd7411d5d1c2be4d25b493a6ce35d38be6cb470845910da0320e7"
+  },
+  {
+   "path": "/phonics/audio/rime-uck.mp3.json",
+   "bytes": 885,
+   "sha256": "4dd4a3181044badbc86e98db08977917d36407e0d4c8339237b9aa412abd7524"
+  },
+  {
+   "path": "/phonics/audio/rime-um.mp3",
+   "bytes": 40704,
+   "sha256": "28cf626fe16f0cd19897a8fd2c38b10a22467c6eff097d8bed298c93593e10a8"
+  },
+  {
+   "path": "/phonics/audio/rime-um.mp3.json",
+   "bytes": 880,
+   "sha256": "0def5bb45c24f8cf82d7201384aee4d72630479b4643452aa4bb49361e652617"
+  },
+  {
+   "path": "/phonics/audio/rime-un.mp3",
+   "bytes": 25728,
+   "sha256": "fa710c1554b4224bb522bff8d83f3f6ed85d312a0d368567206b5484dd5fa944"
+  },
+  {
+   "path": "/phonics/audio/rime-un.mp3.json",
+   "bytes": 880,
+   "sha256": "f267ad5a1c54093ebbaf0b19e5e2c0ffccc14657235779206729422a91f0179f"
+  },
+  {
+   "path": "/phonics/audio/rime-us.mp3",
+   "bytes": 24576,
+   "sha256": "b47cfe9fef8ae7263b72e8c867e375dde31d2407faa60d95028ad863e5da967a"
+  },
+  {
+   "path": "/phonics/audio/rime-us.mp3.json",
+   "bytes": 880,
+   "sha256": "3e37d82d0431cb8aeeca7c994bc33539ce6e59962e3aae3f03885bc4a6759a5f"
+  },
+  {
+   "path": "/phonics/audio/rime-ut.mp3",
+   "bytes": 32640,
+   "sha256": "525cdc96a3c9e92d00be4311a514260abe7e686be4b33846951db2d96cd302a3"
+  },
+  {
+   "path": "/phonics/audio/rime-ut.mp3.json",
+   "bytes": 880,
+   "sha256": "51c4f407b726e10f27cbf7aac7f614302616031cd15d3b69913d73df6f593632"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-bat.mp3",
+   "bytes": 28273,
+   "sha256": "6dfdd2945e17c11b63d30ce79f71f30d9d444cb802d5d01237aa542f727f6646"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-bed.mp3",
+   "bytes": 27439,
+   "sha256": "013614ab7c020c2596b46c4c5b96a7fcfa04070606e4d9e5bb74f2d9bf218ba8"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-big.mp3",
+   "bytes": 27856,
+   "sha256": "3721ca5a47decea3016768ec5cb7996ba5f0dc10eddae35f30dfe130a5c65075"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-bus.mp3",
+   "bytes": 27856,
+   "sha256": "3f0e71b0fb48e1faed5600302233ca215eb6dbf1e733827b6065f3246e282f94"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-cap.mp3",
+   "bytes": 29524,
+   "sha256": "986dbc64de05c0c9c776269ee8389f18f247848259b25d2bf3f586adbc726d06"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-cat.mp3",
+   "bytes": 29524,
+   "sha256": "35e38498f790e783527d84ea206e1dc260821b0ab68f337f30aafbcced55b6e7"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-cop.mp3",
+   "bytes": 28690,
+   "sha256": "215f531824480ec5d01c47088d3aa746d3a44960bcca9d5ff62ba06a865e9352"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-cut.mp3",
+   "bytes": 29107,
+   "sha256": "5c35b43aa0bc99671ebccf2e83acb90ab84a7156e6dc4f12b5ffa40b9506087f"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-dad.mp3",
+   "bytes": 29107,
+   "sha256": "86283e4840b1f2b171365e2f66771095a58087ec8cf299681122a33a79273897"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-den.mp3",
+   "bytes": 28273,
+   "sha256": "159c35417bd646b22461bdd1d4a56cbcaa843daa6bdb91a52f3388e2bf173033"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-dig.mp3",
+   "bytes": 2880,
+   "sha256": "c6d1b2a6a706f86f31d4c2a3f99712de769e282164f70c4ae187f1b52df10abe"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-dip.mp3",
+   "bytes": 29524,
+   "sha256": "c4d27fe0cb631b6b542177e618d27625e0adb8b0db4324ac6fe270002a6ff0cd"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-dot.mp3",
+   "bytes": 3360,
+   "sha256": "496321031cfe780ea9b751e3db6b949abf244a9330c6dfa1eddd1d3e1e06cf93"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-duck.mp3",
+   "bytes": 27022,
+   "sha256": "dfb210c2e2660abea57e492ecdda3c6f1ebcd505b00f75cd9d4d2842b8f191be"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-fan.mp3",
+   "bytes": 31609,
+   "sha256": "0997249732fd615765f899ce779613ac07d14bd2e7b315184ff3a8c163a240b1"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-fat.mp3",
+   "bytes": 30358,
+   "sha256": "2cbb54826b98a54975954488c1c56b3345688125d037b4cf57f9734244aa5dd5"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-fest.mp3",
+   "bytes": 30775,
+   "sha256": "ff2ac5ab390ad6b6d6dc2d407eb20db2bfaaa7de5ed63cc084979fe5752a8bc5"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-fox.mp3",
+   "bytes": 32026,
+   "sha256": "69dd82dbb275c85f1446f4fc0d343b1d4ad692ded1a79be0def88e3cdba05465"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-gap.mp3",
+   "bytes": 29107,
+   "sha256": "e5701a188047f3337753f3745df00d24e018c97921d3816a22b698c50ddf3ad1"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-gas.mp3",
+   "bytes": 29107,
+   "sha256": "b4a8a488133681b3e3a8019a3360fd6a5f1baa1fbd89d8b9a87164940c274925"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-gum.mp3",
+   "bytes": 28273,
+   "sha256": "e473dbe87587ed00441f97d6227451665bc740c4e7fb6aaf7a9975e3df51a336"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-gut.mp3",
+   "bytes": 28273,
+   "sha256": "43325543a1cbf16111f396ea42895ef2c500c81708b7fcb8cafa70727428e266"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-pat.mp3",
+   "bytes": 29941,
+   "sha256": "286f6c1ebc8f6c0205bccc70f1c5fab6fd05955d9bdfab0bdaf03a59396d8944"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-pig.mp3",
+   "bytes": 29524,
+   "sha256": "69a526204a6e29539c1f711e1b3f1ea636c91ceade7fdf1065a10e69583ef1fa"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-pin.mp3",
+   "bytes": 29107,
+   "sha256": "96ed15a9effd24abe248dc5f92850a4b1a035e6aa2096ecec394d50944968f39"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-pot.mp3",
+   "bytes": 28690,
+   "sha256": "f6da4a6d38cad7dfb36c201cd3fac418a95012d5e4b88e9462abf41bf5334f45"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-sack.mp3",
+   "bytes": 30775,
+   "sha256": "c5fd1666d576a516904b65a32c7e20a906840ca3413b6778b05dae31ae58fd67"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-sip.mp3",
+   "bytes": 30358,
+   "sha256": "ce42829bcf2e6767179892cf9ad5d1cdf6a55df546cb6c296e5454d89df5733e"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-sit.mp3",
+   "bytes": 30775,
+   "sha256": "ab20e8d3953303981f14b7efd4eec300fc6c4f18769968677bac4cb603acfe24"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-sun.mp3",
+   "bytes": 29941,
+   "sha256": "1fa027f7426b1fe2c42b3b5ef0be10d93d3fe080d009c65ce0792b1a8e2d59e4"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-tad.mp3",
+   "bytes": 3360,
+   "sha256": "6c29cf4a9e44e5d70a1488b5dca8055e469a10bae58b186d699521fa8b2d81c6"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-ten.mp3",
+   "bytes": 30775,
+   "sha256": "22dba5dc30b5cf7e7b392e063d6e0e8f5da73c45869a2ef650972a7f83b04b89"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-tig.mp3",
+   "bytes": 3264,
+   "sha256": "f52b97785fe0ad91843dfdd8d89940d0aef1ab281cab6f22e8940a5c4fad79c8"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-tip.mp3",
+   "bytes": 28273,
+   "sha256": "fe45b381dcd939df8124228b6cf60b5678bfdc352aeadce0a51c325315763422"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-top.mp3",
+   "bytes": 29107,
+   "sha256": "af4264099a97d75f7a770b9b940e70f7ea0f0168ef4d48ddb049770bd6f5712b"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-tub.mp3",
+   "bytes": 28690,
+   "sha256": "98668939ee836e87d429b90da6005e29aa54d0c3659c96f0d9aa8efdfa9d25b6"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-tuck.mp3",
+   "bytes": 3072,
+   "sha256": "87b4849481910f1fda836a452577e0831bbc7d48a5933b28586bd144e08c3abd"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-van.mp3",
+   "bytes": 32026,
+   "sha256": "af54f8676f1699dd3c98d2e2eb9321641672110d2da11b4291392db2327ebbaa"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-vat.mp3",
+   "bytes": 29107,
+   "sha256": "0573418ff2f3b4edfc781e688730278d39277ebef9369cf4ec68c98ce1e597ac"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-vest.mp3",
+   "bytes": 30358,
+   "sha256": "509234b483264db7f93204f379a802d2d9fd50ed23b9c28f235bd5bb40f2c620"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-vet.mp3",
+   "bytes": 29524,
+   "sha256": "c9fe21a50802c33f15b50e2bc11aec24e53000c3d209f972be5be875aae8e0a7"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-zack.mp3",
+   "bytes": 30358,
+   "sha256": "226733eac53dacef185df4c36614422e5e204893ce1b6c9e3d03d830ad5b4334"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-zag.mp3",
+   "bytes": 30775,
+   "sha256": "dcd803a0707fe671830a930e3174d33813c7cd445952e54da716299aa4d519d5"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-zip.mp3",
+   "bytes": 29941,
+   "sha256": "e558ab25532ac8c136cdf24866cd3298d69dd88f34f4e99f9f54657d3d228a62"
+  },
+  {
+   "path": "/phonics/audio/sf3-word-zit.mp3",
+   "bytes": 30358,
+   "sha256": "2a386f8b4dcec317dc268a133f80a289238491afa8157715dc2c094f46999da8"
+  },
+  {
+   "path": "/phonics/audio/word-dad.mp3",
+   "bytes": 24576,
+   "sha256": "f50cd4bb0980a7d9ebf9e0ce19f9caf1f767bbdcf28a013a51811657e3fc95ce"
+  },
+  {
+   "path": "/phonics/audio/word-dad.mp3.json",
+   "bytes": 725,
+   "sha256": "89600eb25d449f16b476756488e08c578bba4695e327252f21ce75dbe8943ff4"
+  },
+  {
+   "path": "/phonics/audio/word-den.mp3",
+   "bytes": 18816,
+   "sha256": "7fcbdc1a3a5f941da6c137bb731d4267532a52ac8667d9e20dac0a76e0ae375f"
+  },
+  {
+   "path": "/phonics/audio/word-den.mp3.json",
+   "bytes": 725,
+   "sha256": "191e84ea2e0c4ec32a7dc14e91d7dd7e74922362fdea417ee2a364bc5924213a"
+  },
+  {
+   "path": "/phonics/audio/word-dip.mp3",
+   "bytes": 22656,
+   "sha256": "7407b1c28794f34fca15223b0f47d02b4a0971b243d55afe14b885e67242946c"
+  },
+  {
+   "path": "/phonics/audio/word-dip.mp3.json",
+   "bytes": 725,
+   "sha256": "bb8020e5e5af9096e4ad2020b3bf496c237b8344e1a3c141a61ae18353e3245e"
+  },
+  {
+   "path": "/phonics/audio/word-duck.mp3",
+   "bytes": 27648,
+   "sha256": "c032ea4e34e75dcd8a574b403e333a7cb5fdc870a65f681105baf449a93c2b07"
+  },
+  {
+   "path": "/phonics/audio/word-duck.mp3.json",
+   "bytes": 728,
+   "sha256": "ca6bd76b3d137f00129005dbfb42e7949e0e9f3d1ae657b671dbd620413f4490"
+  },
+  {
+   "path": "/phonics/audio/word-ten.mp3",
+   "bytes": 30720,
+   "sha256": "a8e62854a9a2fecb1b2799f529e79e425327eb17f7dc62cf07957334cf8de15e"
+  },
+  {
+   "path": "/phonics/audio/word-ten.mp3.json",
+   "bytes": 725,
+   "sha256": "b83f61f970ae9f1baf1dfd80ae9f3414676bc670820975d60b4183fee52a40fe"
+  },
+  {
+   "path": "/phonics/audio/word-tip.mp3",
+   "bytes": 41856,
+   "sha256": "b325de75c8be1b471164e04bd39b4e0cc9573d016ee00c6651b535e7e6faf744"
+  },
+  {
+   "path": "/phonics/audio/word-tip.mp3.json",
+   "bytes": 725,
+   "sha256": "0b1e5ac2b8b8676fefacd9a8e1abe7e5bfb6fdddb9feeac6d0efe0ce22f27ce8"
+  },
+  {
+   "path": "/phonics/audio/word-top.mp3",
+   "bytes": 28800,
+   "sha256": "3c92a50545aca1f42e4734b6f35d52fc19c158fb4666d6016bce7229a5fb7b59"
+  },
+  {
+   "path": "/phonics/audio/word-top.mp3.json",
+   "bytes": 725,
+   "sha256": "ec68ac92853c50475370811edc9a854cbc25aad1087e7ef2381460ff6f6dc629"
+  },
+  {
+   "path": "/phonics/audio/word-tub.mp3",
+   "bytes": 36864,
+   "sha256": "d7dd46e611d27bf56502ccf9405163b2dc4cbe0a2a108fb9aae83b487eef5a07"
+  },
+  {
+   "path": "/phonics/audio/word-tub.mp3.json",
+   "bytes": 725,
+   "sha256": "2c3ff6580885ad218b705f48d209b4259a8e183856bf27cd69aca68db9ef0a6d"
+  },
+  {
+   "path": "/phonics/audition.html",
+   "bytes": 2252,
+   "sha256": "d93900ca57c1b3cf49f44b7e0b0be181ce56230aa0e8a68740bf7d5322175468"
+  },
+  {
+   "path": "/phonics/letters/a.mp3",
+   "bytes": 41794,
+   "sha256": "81b0bdf70997b0c0bf0a1450ee990468ef08b4d0b6a5d2032dd4017947e2b8ef"
+  },
+  {
+   "path": "/phonics/letters/b.mp3",
+   "bytes": 39705,
+   "sha256": "d881207fe3745952751b74629ef7244f4ee79ac930ddbbfefd1e42199421b2be"
+  },
+  {
+   "path": "/phonics/letters/c.mp3",
+   "bytes": 37197,
+   "sha256": "2fe09afae0eb2c1649eaac72fb6794e66492c5923524d08fe87e5010e756cfec"
+  },
+  {
+   "path": "/phonics/letters/d.mp3",
+   "bytes": 37197,
+   "sha256": "204996f066fb77c25aa4ab029a079676bf98319f725f45fdacb795726897ab76"
+  },
+  {
+   "path": "/phonics/letters/e.mp3",
+   "bytes": 38033,
+   "sha256": "288e31111bc248d908b81599768625302f4ac715e6b204b523c72b74ffe0a5f4"
+  },
+  {
+   "path": "/phonics/letters/f.mp3",
+   "bytes": 43466,
+   "sha256": "ac95b592604973f0934c6e599f319e21ef0cb0f110cd15a21a631a4e4e859ffd"
+  },
+  {
+   "path": "/phonics/letters/g.mp3",
+   "bytes": 40123,
+   "sha256": "516fafab191691ef32a32e5d2ae16669402ea1aaf278897b6eda574ce7664942"
+  },
+  {
+   "path": "/phonics/letters/h.mp3",
+   "bytes": 33435,
+   "sha256": "7bb9162474a73088dfdbd11026fbfead8af6214d77adb79c1001d5bf0ae2cdbf"
+  },
+  {
+   "path": "/phonics/letters/i.mp3",
+   "bytes": 40959,
+   "sha256": "ee915121e6fa92ca462ddab46c79ea5bca2162157f0f3e43c9b4ed2f0549e306"
+  },
+  {
+   "path": "/phonics/letters/j.mp3",
+   "bytes": 42630,
+   "sha256": "0addc04b55f9b0b29654a3d63f51a72f992538cef476ceaf8a9943b548bd098e"
+  },
+  {
+   "path": "/phonics/letters/k.mp3",
+   "bytes": 34689,
+   "sha256": "def2fb9ba9d1073fceed4ccf94f946ca2220efda87404cc33ead0ffdedfe28e4"
+  },
+  {
+   "path": "/phonics/letters/l.mp3",
+   "bytes": 41377,
+   "sha256": "71c0049034bd50d372b19cbff45b5d756bfbbd48ea1bc4602e5b0ccef4e6f73e"
+  },
+  {
+   "path": "/phonics/letters/m.mp3",
+   "bytes": 40541,
+   "sha256": "450ea558032affecc457ddb60822ae2af13292efa767c3cce829331437e2ea28"
+  },
+  {
+   "path": "/phonics/letters/n.mp3",
+   "bytes": 43466,
+   "sha256": "cb6bf65b5f5f9fce529db73072402f5461517d8119dcb3383cc126992885ea19"
+  },
+  {
+   "path": "/phonics/letters/o.mp3",
+   "bytes": 41794,
+   "sha256": "3005a0329809ba423f7e5d8ac97980faaec59d5c839b1dfa7a4f0ccfd756d4d9"
+  },
+  {
+   "path": "/phonics/letters/p.mp3",
+   "bytes": 31346,
+   "sha256": "4e74950bd1506c97d6a669b6b81b3af491d867c2b6b8e22326a262433d81ae08"
+  },
+  {
+   "path": "/phonics/letters/q.mp3",
+   "bytes": 40123,
+   "sha256": "f0b5e6c5d2988c5d259284810eac8a7b995138590e7f82c17c8f60878f52e8e2"
+  },
+  {
+   "path": "/phonics/letters/r.mp3",
+   "bytes": 42212,
+   "sha256": "208245618048af2a7c761cdb62c3607a57debc0da878eebb4c32b8b008f45588"
+  },
+  {
+   "path": "/phonics/letters/s.mp3",
+   "bytes": 43884,
+   "sha256": "1b1067dd5e23efcd853dc2ce811e57b6a162ab564ef777b0affb23dafccd1e78"
+  },
+  {
+   "path": "/phonics/letters/t.mp3",
+   "bytes": 33853,
+   "sha256": "5920454a2f4617935f6d89085d7493be256e1d1f88cbab9863279a4ecc1f7615"
+  },
+  {
+   "path": "/phonics/letters/u.mp3",
+   "bytes": 40123,
+   "sha256": "56fd1e57f5cc3f4b5daf84fc5c4b37044433887769ea1de73c435074504c94f6"
+  },
+  {
+   "path": "/phonics/letters/v.mp3",
+   "bytes": 45138,
+   "sha256": "f1eb983c2c2619244de17a5a686ca69b5f2757929b7a44d2911a18452bdd46b2"
+  },
+  {
+   "path": "/phonics/letters/w.mp3",
+   "bytes": 39705,
+   "sha256": "764bd4ac4b1fa951a8265ead9dad8f35c19b5d3372851a4c1f621e7f91f4fb5e"
+  },
+  {
+   "path": "/phonics/letters/x.mp3",
+   "bytes": 38451,
+   "sha256": "ec2cfb2e8431598f45023f08a7efa67e25b2c4c4cc4a2e2bd2c677cf8882bef4"
+  },
+  {
+   "path": "/phonics/letters/y.mp3",
+   "bytes": 38033,
+   "sha256": "58b5b6f3236ea5100831006e81acfc8919df8916da2677bbb5cf6ebb711c5085"
+  },
+  {
+   "path": "/phonics/letters/z.mp3",
+   "bytes": 46392,
+   "sha256": "8509fd3cbe9c18e3cb1467db6b42c3dc2f11a859677e8e3268569f2fe9150c57"
+  },
+  {
+   "path": "/phonics/library.html",
+   "bytes": 3329,
+   "sha256": "d6b8a8d2f3973acc217996a883e5039fbc615f3c4e1bf9a0bc0143a00bbe662e"
+  },
+  {
+   "path": "/phonics/library.json",
+   "bytes": 42582,
+   "sha256": "02bb71a176b046ea9df664fcaf5bbb2d864a77ab59a81bab75962b282b4ae545"
+  },
+  {
+   "path": "/phonics/manifest.json",
+   "bytes": 29571,
+   "sha256": "658778aa4633430d34dc43ef8e3fbfc18b424af56212c0964995eaa51ef60384"
+  },
+  {
+   "path": "/phonics/puzzle.webp",
+   "bytes": 4540,
+   "sha256": "4e376465dd40153f3e47c1fe6414920ccba18a828b051cc27ef870add60c9466"
+  },
+  {
+   "path": "/phonics/sf3-words.json",
+   "bytes": 17688,
+   "sha256": "90b5de6483e6a2a219c54394cebad19d5d8bd4bf030acd0ed8cc9a468c3bc0f9"
+  },
+  {
+   "path": "/plinkoh/audio/manifest.json",
+   "bytes": 10640,
+   "sha256": "00f1931367b9c1bdf96710fd7c49cb1133b149de62022162fe06d04f2b20bf3e"
+  },
+  {
+   "path": "/plinkoh/audio/music.wav",
+   "bytes": 384044,
+   "sha256": "92a5f0e26ba2d024b35598e3b339c5b95c00ed1588675b2585b2973fae34ab72"
+  },
+  {
+   "path": "/plinkoh/audio/peg.wav",
+   "bytes": 30764,
+   "sha256": "27ea11e26d12a0d6ae8a6fd0ee6212ac32e5b839e8c8cb74f88fe9a5d01a199a"
+  },
+  {
+   "path": "/plinkoh/audio/pink.wav",
+   "bytes": 30762,
+   "sha256": "b5bd1411d4ed3411be8ac1566633d8d55e541e73e25d95efa3df74f77bf5d335"
+  },
+  {
+   "path": "/plinkoh/audio/reveal.wav",
+   "bytes": 65324,
+   "sha256": "2721382e1dfdfdcb147310d0593797883c06cdba75a9636b6e75965a43da5756"
+  },
+  {
+   "path": "/plinkoh/audio/round.wav",
+   "bytes": 86444,
+   "sha256": "e58f5cadb9ba78bed2707d06d211d506d911c7df0a792de205d70ad7d3ab4ff8"
+  },
+  {
+   "path": "/plinkoh/audio/team.wav",
+   "bytes": 57642,
+   "sha256": "7474c8bbc80e3192e2490dd481fdae993cc5833512265a65416bca129626659a"
+  },
+  {
+   "path": "/plinkoh/audio/transfer.wav",
+   "bytes": 38444,
+   "sha256": "23ec0fb8d159aa58838025f4061431b66794fcd777b9357af1f0ff0e51b464ce"
+  },
+  {
+   "path": "/plinkoh/audio/ui.wav",
+   "bytes": 18284,
+   "sha256": "4cd3f978aed739a6bc292c8297a4281edd2580183f5f039ab853e4b2ef44601c"
+  },
+  {
+   "path": "/plinkoh/audio/win.json",
+   "bytes": 655,
+   "sha256": "fa3a361226b5fd9709a92c998217d5cf628dade7025dacaf3759184115e29849"
+  },
+  {
+   "path": "/plinkoh/audio/win.wav",
+   "bytes": 960044,
+   "sha256": "e73cbc40f847e3112f17140b3c52711c0c1305cacc0b902fd66448e064c63eb5"
+  },
+  {
+   "path": "/plinkoh/cards/big-ball.svg",
+   "bytes": 2566,
+   "sha256": "a7c843062e606df418c834426b1bbb8c07a7b17f8a876a7de878fbcd2ade4242"
+  },
+  {
+   "path": "/plinkoh/cards/bonus-10.svg",
+   "bytes": 2413,
+   "sha256": "c27e98ee53261ec51e3edb659a0b8ab2baddf24b1a860bccc01fa249f3eba962"
+  },
+  {
+   "path": "/plinkoh/cards/double-pegs.svg",
+   "bytes": 2987,
+   "sha256": "ff0a9c1802fb50776c035d44931c327874ac564fdb9a04921b305b0dcb0fb864"
+  },
+  {
+   "path": "/plinkoh/cards/double-slot.svg",
+   "bytes": 2973,
+   "sha256": "d2431c3a3ced8f6262aa46bcb63b2e0c4b2beebbfc4267131b02cadba58f2365"
+  },
+  {
+   "path": "/plinkoh/cards/manifest.json",
+   "bytes": 1521,
+   "sha256": "dd339e630326f9ed4d9ad6100a34483a3841a621bf46fea3b20b4390bc3474dd"
+  },
+  {
+   "path": "/plinkoh/cards/safe-landing.svg",
+   "bytes": 2293,
+   "sha256": "c016f0d6e2617d556057bb3c89464642162f28a46a684db3f8796f5ecfc20ff9"
+  },
+  {
+   "path": "/plinkoh/cards/second-chance.svg",
+   "bytes": 3064,
+   "sha256": "cafc49b81323695cf1921aed0074a74c0b70f49a273ca9b03fd19adf57496bc2"
+  },
+  {
+   "path": "/release.json",
+   "bytes": 29236,
+   "sha256": "6d650766b3c2b5ea9e885ab48ab7c5d0bb216a0b389f09feab7562b3156b98c9"
+  },
+  {
+   "path": "/slot/celebration/astronaut-20260927.png",
+   "bytes": 1458328,
+   "sha256": "9d882494821c85a7c18732e7d2cbd65f3bba3fecc768ab01776e67bff60862e5"
+  },
+  {
+   "path": "/slot/celebration/astronaut-20260927.png.json",
+   "bytes": 1592,
+   "sha256": "d6b2c60fa851746009892dca7d7f193faf848bc7a04f60769c80abd38a49237a"
+  },
+  {
+   "path": "/slot/celebration/astronaut-prompt.txt",
+   "bytes": 601,
+   "sha256": "c8efc3deb65bb582fa813733affac71e1c291fc6a3c9df644e0a416499e8cc13"
+  },
+  {
+   "path": "/slot/celebration/planet-20260927.png",
+   "bytes": 1492598,
+   "sha256": "785e0039bcfc02f9a8476378e423944dbca2b0be0f06dc05a0178ac53f22ecf4"
+  },
+  {
+   "path": "/slot/celebration/planet-20260927.png.json",
+   "bytes": 1554,
+   "sha256": "956f7d43b71b45413af2d45bd0e02959131adbb3a0f90dbfd256eebb98601a04"
+  },
+  {
+   "path": "/slot/celebration/planet-prompt.txt",
+   "bytes": 566,
+   "sha256": "16abc19305fd74014119a7175d55fe2dea2c4ff6ec087044e55c15f2f9e567eb"
+  },
+  {
+   "path": "/slot/celebration/rocket-20260927.png",
+   "bytes": 1325707,
+   "sha256": "17a771268ad836fef7019a4ef4fd5470b58517804f35bc3089905dcc4184befa"
+  },
+  {
+   "path": "/slot/celebration/rocket-20260927.png.json",
+   "bytes": 1590,
+   "sha256": "cc31b2eba649e6c1ddf19371993d707185f12ec70bef62dff720583851a09a02"
+  },
+  {
+   "path": "/slot/celebration/rocket-prompt.txt",
+   "bytes": 602,
+   "sha256": "11e0be5a73b5d381f22d9e749ebbb86e9999060426d90c2a677549373fde977b"
+  },
+  {
+   "path": "/slot/celebration/trophy-20260927.png",
+   "bytes": 1630135,
+   "sha256": "cadda59dcd844d2b5512b4a0d41cebade38f654712ec17dbfd0be003463fba67"
+  },
+  {
+   "path": "/slot/celebration/trophy-20260927.png.json",
+   "bytes": 1597,
+   "sha256": "2db8d1219b5ce5705153d7c1505917350ffb1b5a0e6e515a2dc2a258b49cd50f"
+  },
+  {
+   "path": "/slot/celebration/trophy-prompt.txt",
+   "bytes": 609,
+   "sha256": "55f504b46b651131cb41a16e439f44ac5f5e44e55a6dbdd096fae1eb07cd65b8"
+  },
+  {
+   "path": "/slot/celebration/winner-fanfare-10s.wav",
+   "bytes": 1764078,
+   "sha256": "e09053d1a0d17bc52b8f97c08d1f71f8ed34c46151c8bf3024e8650e605db87d"
+  },
+  {
+   "path": "/slot/celebration/winner-fanfare-10s.wav.json",
+   "bytes": 685,
+   "sha256": "e13273266b44c55d6f492ddae3176e65d83c2a3aa9c6dddeef578391878dea15"
+  },
+  {
+   "path": "/slot/mixkit-slot-machine-wheel-1932.wav",
+   "bytes": 1077396,
+   "sha256": "7ac70e8b0d97126c6ea6d0be20a9e7082e27ef4ff4a549322798a57eaa40b69d"
+  },
+  {
+   "path": "/slot/mixkit-slot-machine-wheel-1932.wav.json",
+   "bytes": 740,
+   "sha256": "ab81da363f89e025060af2b24965bed716d27ec10ca8e2d4f6ebe04cd14fe982"
+  },
+  {
+   "path": "/slot/optimized/astronaut-20260927-9feff517e739.webp",
+   "bytes": 81478,
+   "sha256": "9feff517e739885befbc3b29bc66fce1b2189abd7058df0a4a834006e6320db4"
+  },
+  {
+   "path": "/slot/optimized/planet-20260927-a76652e63f17.webp",
+   "bytes": 77942,
+   "sha256": "a76652e63f17843bdddfb04643edb7bc3d877be6ab2e3b6191cb963ddca19247"
+  },
+  {
+   "path": "/slot/optimized/rocket-20260927-02d5fc17ad58.webp",
+   "bytes": 74398,
+   "sha256": "02d5fc17ad58ba57a3166e081c80ee89c2e686416bd184515f972feed1d893f4"
+  },
+  {
+   "path": "/slot/optimized/space-slot-hero-20260927-84e1a1d89fac.webp",
+   "bytes": 119548,
+   "sha256": "84e1a1d89fac022181e1721ddece71569ea8061e6a830179272798f1f685b3c9"
+  },
+  {
+   "path": "/slot/optimized/space-slot-hero-20260927-card-fc05b12245b0.webp",
+   "bytes": 48156,
+   "sha256": "fc05b12245b0bac22e034f0806f7512147b0bac4a8c0d39398264e12925b96e8"
+  },
+  {
+   "path": "/slot/optimized/space-slot-symbols-20260927-264c00bc2f86.webp",
+   "bytes": 304194,
+   "sha256": "264c00bc2f86fe585c4b67e0bbe6b71a512e97d576090554fa658e90c975cdf4"
+  },
+  {
+   "path": "/slot/optimized/trophy-20260927-52563d56d9b3.webp",
+   "bytes": 97994,
+   "sha256": "52563d56d9b39fdae649241415c5002f2ce8aa16a1b355ca2c53a60337a08b8d"
+  },
+  {
+   "path": "/slot/space-slot-hero-20260927.png",
+   "bytes": 2140641,
+   "sha256": "f239c6894d92150036b614678d915d8b98a0ca917c1903e742fa69200c84146b"
+  },
+  {
+   "path": "/slot/space-slot-hero-20260927.png.json",
+   "bytes": 1578,
+   "sha256": "94dafd7040b8b5168458eb4d0890f1a6db7a80f9f8a4702509e20ba0b978eb79"
+  },
+  {
+   "path": "/slot/space-slot-symbols-20260927.png",
+   "bytes": 1424845,
+   "sha256": "03039f6ac88265aae78a59b582ffbb3f744691ce35f3d580db79e633a09064aa"
+  },
+  {
+   "path": "/slot/space-slot-symbols-20260927.png.json",
+   "bytes": 1750,
+   "sha256": "5ad42f1f92d26d0cab20700c28e7b2f71da73c9446a5889e7eda3658c5669fcc"
+  },
+  {
+   "path": "/spin/audio/answer-no-3.wav",
+   "bytes": 160532,
+   "sha256": "8fe7a89541a960c77b7bf45951e54947ca10904cdee3b8c171c25eda4a0c250a"
+  },
+  {
+   "path": "/spin/audio/answer-no-stem.wav",
+   "bytes": 148630,
+   "sha256": "dadbd22054e87156817ba8eb485ca6e5005a25a796dcc3e2d6af8d2e5f62645b"
+  },
+  {
+   "path": "/spin/audio/answer-yes.wav",
+   "bytes": 94390,
+   "sha256": "a65f7e13194c39ba658d333521e4608898595531ebcd87a3330e483074ca0d1f"
+  },
+  {
+   "path": "/spin/audio/manifest.json",
+   "bytes": 1745,
+   "sha256": "cf6760017d4292a18f32716ee0dfe644e2db79cba4aa38f03ff73c082ef438a0"
+  },
+  {
+   "path": "/spin/audio/question-0.wav",
+   "bytes": 86228,
+   "sha256": "df465dd81f0f9210b4cf0a8d3707079fb63b0e260dfb85190370231ba735da21"
+  },
+  {
+   "path": "/spin/audio/question-1.wav",
+   "bytes": 85126,
+   "sha256": "289d62e79b5a98876f8dca37ccdbd95d39514d7ca88089636593781da551a269"
+  },
+  {
+   "path": "/spin/audio/question-2.wav",
+   "bytes": 89974,
+   "sha256": "4cd2f1442a4bc0fccc82f782a3bd23f9cdf616f02ac0d51f8f9173dad2bc98b8"
+  },
+  {
+   "path": "/spin/audio/question-3.wav",
+   "bytes": 89090,
+   "sha256": "c894876e625794d293e16cb8dccefc0dfe69ec72a214f76d9d66f5f90cbe7738"
+  },
+  {
+   "path": "/spin/audio/question-4.wav",
+   "bytes": 90418,
+   "sha256": "19ea3f4bc2107c7ebc0d5757ac3fc5b3a1e9dc022becb7ca897ebc092327512b"
+  },
+  {
+   "path": "/spin/audio/question-5.wav",
+   "bytes": 88210,
+   "sha256": "d026578ec35df6633ef6486504b49634a8fdb0c9b5c7e4f22616de11af2f1389"
+  },
+  {
+   "path": "/spin/audio/question-6.wav",
+   "bytes": 90856,
+   "sha256": "9084e52d312310148d809fd5191fe12e6f3929e1f52117e62073259989384024"
+  },
+  {
+   "path": "/spin/dice-faces.json",
+   "bytes": 1529,
+   "sha256": "850d44920c58c2bcc1c12bc251a15ea48876650a883b13929b65aeb3ae1b23e7"
+  },
+  {
+   "path": "/spin/dice-faces.png",
+   "bytes": 1629606,
+   "sha256": "53bb35b7e6f4214340f538876f37746d9d4f1edfec53e596bb2e5a8f9d724e76"
+  },
+  {
+   "path": "/spin/fonts/ComicRelief-Bold.ttf",
+   "bytes": 94684,
+   "sha256": "33aee007212b696afd57d50c901135cd723cd188f7ad98f3a1c572ea64e8f0d5"
+  },
+  {
+   "path": "/spin/fonts/ComicRelief-Regular.ttf",
+   "bytes": 80324,
+   "sha256": "9ef4958ab06385d91f635f83a15569786b243f9d010cfb3f9a5cdda593c7bc22"
+  },
+  {
+   "path": "/spin/fonts/manifest.json",
+   "bytes": 485,
+   "sha256": "4513bad3720dcb80d589a97555925ff4f82df40cee1e7a073ac3029885c81f42"
+  },
+  {
+   "path": "/spin/fonts/OFL.txt",
+   "bytes": 4396,
+   "sha256": "009b3056cef5c9bcaff872bfb0e27fa4a0f8cc6f6984cc490caf5618748d766b"
+  },
+  {
+   "path": "/spin/mascot.json",
+   "bytes": 1372,
+   "sha256": "7d98ce05a0faf49ac94af5a5a4a62da8980c97722ac10ab18ae7176c14e1185c"
+  },
+  {
+   "path": "/spin/mascot.png",
+   "bytes": 1021501,
+   "sha256": "61ef3b60f8728a7efe2b680b91b12acbdecd6618beca9da434577ece24545c11"
+  },
+  {
+   "path": "/spin/optimized/dice-faces.webp",
+   "bytes": 987700,
+   "sha256": "facce34665b34fc8bb878ef2fbddaae6c15584bb4fc9502a9eb52b6310a52cb7"
+  },
+  {
+   "path": "/spin/optimized/manifest.json",
+   "bytes": 4545,
+   "sha256": "5009b62408f98baaac7660e6a9e731d96e65a5646d6f1cc613704d196bed6a01"
+  },
+  {
+   "path": "/spin/optimized/mascot.webp",
+   "bytes": 703760,
+   "sha256": "144e39563e3af8e1be599ebd1bcacc1b5b2882b3a9b9547ad3afba40e921c123"
+  },
+  {
+   "path": "/spin/optimized/pointer.webp",
+   "bytes": 127314,
+   "sha256": "d85843b864885473f7ab70a8c459b6e8306921e44f3f93401a564cb5e0fbb123"
+  },
+  {
+   "path": "/spin/optimized/task-1.mp4",
+   "bytes": 942969,
+   "sha256": "63c4e9d377b75af874ac47a9311a17dad9f121e1265917b3c5256681f1b3f357"
+  },
+  {
+   "path": "/spin/optimized/task-2.mp4",
+   "bytes": 583117,
+   "sha256": "5438c93c9230afa6f12c1674dabadbfcd34d45f44e7e6dfccf1a572a541c98fa"
+  },
+  {
+   "path": "/spin/optimized/task-3.mp4",
+   "bytes": 940859,
+   "sha256": "14f67a29dbd5fc5cbcb2b9330a82afa8bc68a750623cd77dd90bf6fc3a952ff3"
+  },
+  {
+   "path": "/spin/optimized/task-4.mp4",
+   "bytes": 1904902,
+   "sha256": "dd0ae482bbd0ec88baa1041def67a9649edbb868efa56e2842e8c7f0794f137d"
+  },
+  {
+   "path": "/spin/optimized/task-5.mp4",
+   "bytes": 1577635,
+   "sha256": "8bf160743ebddc4a1a03d31110be73680ccac2cf6ce95bf5679ba1440f46b774"
+  },
+  {
+   "path": "/spin/optimized/task-6.mp4",
+   "bytes": 3719698,
+   "sha256": "7aafce9def60f9047ab0224e321058e3ccddff0723e4bf381590bd2217ba12c9"
+  },
+  {
+   "path": "/spin/optimized/task-7.mp4",
+   "bytes": 444440,
+   "sha256": "75ddb9a68f9594100fd44f307e3c7bedf378a46e986dedaccc192db770179e4e"
+  },
+  {
+   "path": "/spin/optimized/task-8.mp4",
+   "bytes": 633200,
+   "sha256": "e4253f427ecb9dc63c62ba015243b6dd6a700490c7bf40173852b594775eb299"
+  },
+  {
+   "path": "/spin/optimized/wheel.webp",
+   "bytes": 789728,
+   "sha256": "eedfbf2618e33aebfb16c7003435909b7a4591c07ce18782989a3d30ce6b484a"
+  },
+  {
+   "path": "/spin/pointer.json",
+   "bytes": 1465,
+   "sha256": "c1cac47161769c6adae6c38489d0e82157717b98d205f78c590c84fc45aac06d"
+  },
+  {
+   "path": "/spin/pointer.png",
+   "bytes": 204891,
+   "sha256": "6b0402d5b9289bfd2a81536ba3ff6f6a64df259b66e04628929d5f2c78be4221"
+  },
+  {
+   "path": "/spin/tasks/1.gif",
+   "bytes": 2903443,
+   "sha256": "d71ffbab8110d313fa273c4194661625f9680bc6563d79e5cd74beb041cc943e"
+  },
+  {
+   "path": "/spin/tasks/2.gif",
+   "bytes": 2510792,
+   "sha256": "dc011008c502c065b4350e231e488496be77e5d5a0bbffe66cd0ae3c491bc394"
+  },
+  {
+   "path": "/spin/tasks/3.gif",
+   "bytes": 4892694,
+   "sha256": "765acdf7949b941dbe1ee49aca482a9bd1dc27d7273874456f6c63e07a82f31a"
+  },
+  {
+   "path": "/spin/tasks/4.gif",
+   "bytes": 7156134,
+   "sha256": "ce4502b798772bb272c62c89fae14cf1a2e0b088ade8a20b06a486e40c8ebb7b"
+  },
+  {
+   "path": "/spin/tasks/5.gif",
+   "bytes": 6777092,
+   "sha256": "1ec85a85c805e4381ceddccb1f43260cf96420096cf7844a2d3d9b200c23baa7"
+  },
+  {
+   "path": "/spin/tasks/6.gif",
+   "bytes": 14040959,
+   "sha256": "945fef54af8d8f5311a6fc49164e904a0ca844e4380ceb17197be9bedcb78cfc"
+  },
+  {
+   "path": "/spin/tasks/7.gif",
+   "bytes": 2298318,
+   "sha256": "c359abc012668c1585352e047e94502658e004e3fe1f9cd03dc51a8371e409cc"
+  },
+  {
+   "path": "/spin/tasks/8.gif",
+   "bytes": 1575578,
+   "sha256": "2f948f3721eeb731d080bb2fd1be834a55e57ee65a4e4e9ac606a09fea056454"
+  },
+  {
+   "path": "/spin/tasks/animation-metadata.json",
+   "bytes": 733,
+   "sha256": "f6ec022a7a554c8f8c37a1bb1dc06fa0d93585fa2ba1e7f50a2f2bad5b463ffb"
+  },
+  {
+   "path": "/spin/tasks/source-manifest.json",
+   "bytes": 1911,
+   "sha256": "7c8272f63f88efd79eb643d17d8bdc63cb1a5bb076b02ad0290508677ec1d2d8"
+  },
+  {
+   "path": "/spin/wheel.json",
+   "bytes": 1635,
+   "sha256": "c6bc068b1b1fa779b0189e4932284029fd5a9a820413f0ffe285e3af4dc1c395"
+  },
+  {
+   "path": "/spin/wheel.png",
+   "bytes": 1117005,
+   "sha256": "733bb290a98588869d44eecb7669f9a2120668471bf270502c24703b402fb5e7"
+  },
+  {
+   "path": "/worldpup/audio/ambience.mp3",
+   "bytes": 200924,
+   "sha256": "66ac27b5b484c070733b3535b81991e04e731c1f8fbe009cdf06ff751ac1de46"
+  },
+  {
+   "path": "/worldpup/audio/goal.mp3",
+   "bytes": 50084,
+   "sha256": "c30f8a2b7a556709c015155cb6cf26cf59e1795760f25acf162ac7ddabfeac39"
+  },
+  {
+   "path": "/worldpup/audio/manifest.json",
+   "bytes": 1561,
+   "sha256": "79fb817c95ab9eb5670b51c98f341c7b8372bdf949eac51b68816ba1fa05a969"
+  },
+  {
+   "path": "/worldpup/audio/miss.mp3",
+   "bytes": 16964,
+   "sha256": "aad829c1156e5f6da0148d09848731ef7ba5f0f0779405456b7b88893ce071a9"
+  }
+ ]
+}

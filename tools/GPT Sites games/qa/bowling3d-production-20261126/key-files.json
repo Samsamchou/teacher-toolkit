@@ -1,0 +1,45 @@
+{
+ "version": "2026.11.26-bowling-3d.1",
+ "keyFiles": [
+  {
+   "path": "/assets/BowlingGame-BbPutFmu.js",
+   "bytes": 653318,
+   "sha256": "b1fb990bf3e0b949f602248ff0bdb7aa4e566780b27afec3a61f8e992f7219f9"
+  },
+  {
+   "path": "/assets/BowlingGame-RfnuukPN.css",
+   "bytes": 7847,
+   "sha256": "46cf152ce16940777be18535475c2096d2c13423039a5f78525741a3053b53c0"
+  },
+  {
+   "path": "/assets/index-C2u_6SOn.css",
+   "bytes": 155797,
+   "sha256": "8c53de2f93f2aa641c5448fa9da836a3b564a96dd19e4b239b539837c2bce396"
+  },
+  {
+   "path": "/assets/index-CXpHqc6S.js",
+   "bytes": 1177633,
+   "sha256": "af37ef13fbaaf4b7f865ed5dd0a083a89f75e1f25fb6ceef8b2d1aabe50b819d"
+  },
+  {
+   "path": "/assets/plan-worker-P7KuSlOO.js",
+   "bytes": 2248822,
+   "sha256": "aaf5772a6cd3229ca728753c8131ac64197415fe1ef4f76c4a9453c009f9691c"
+  },
+  {
+   "path": "/bowling3d/audio/manifest.json",
+   "bytes": 23726,
+   "sha256": "7c192be061f53b6d3df16b827293d56b7e1a14b3f522c39aa2a9a64b960747d1"
+  },
+  {
+   "path": "/index.html",
+   "bytes": 731,
+   "sha256": "cf5f442bdf55b0db22fc6c2ab9b457403bdad6f2a44b30fd63de8fe9662f9363"
+  },
+  {
+   "path": "/release.json",
+   "bytes": 29236,
+   "sha256": "6d650766b3c2b5ea9e885ab48ab7c5d0bb216a0b389f09feab7562b3156b98c9"
+  }
+ ]
+}

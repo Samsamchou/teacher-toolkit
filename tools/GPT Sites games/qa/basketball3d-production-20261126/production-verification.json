@@ -1,0 +1,664 @@
+{
+ "verifiedAt": "2026-11-26T13:09:29.792Z",
+ "origin": "https://gamesinclass-5d9d1.web.app",
+ "liveVersion": "2026.11.26-basketball-3d.1",
+ "expectedVersion": "2026.11.26-basketball-3d.1",
+ "files": {
+  "checked": 87,
+  "matched": 87,
+  "mismatched": []
+ },
+ "routes": [
+  {
+   "route": "/",
+   "status": 200,
+   "isIndex": true,
+   "nosniff": "nosniff",
+   "frame": "DENY",
+   "lastModified": "Thu, 26 Nov 2026 13:08:50 GMT"
+  },
+  {
+   "route": "/bowling",
+   "status": 200,
+   "isIndex": true,
+   "nosniff": "nosniff",
+   "frame": "DENY",
+   "lastModified": "Thu, 26 Nov 2026 13:08:50 GMT"
+  },
+  {
+   "route": "/unscramble",
+   "status": 200,
+   "isIndex": true,
+   "nosniff": "nosniff",
+   "frame": "DENY",
+   "lastModified": "Thu, 26 Nov 2026 13:08:50 GMT"
+  },
+  {
+   "route": "/phonics",
+   "status": 200,
+   "isIndex": true,
+   "nosniff": "nosniff",
+   "frame": "DENY",
+   "lastModified": "Thu, 26 Nov 2026 13:08:50 GMT"
+  },
+  {
+   "route": "/worldpup",
+   "status": 200,
+   "isIndex": true,
+   "nosniff": "nosniff",
+   "frame": "DENY",
+   "lastModified": "Thu, 26 Nov 2026 13:08:50 GMT"
+  }
+ ],
+ "results": [
+  {
+   "path": "/assets/Basket3DLane-CjcXM4Jm.js",
+   "status": 200,
+   "bytes": 34921,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/bowling3d-Dfc161Q_.js",
+   "status": 200,
+   "bytes": 564984,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/bowling3d-QU1HV_Iq.css",
+   "status": 200,
+   "bytes": 7942,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/BowlingGame-BexkNTvy.js",
+   "status": 200,
+   "bytes": 83755,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/index-_iaWjJqh.js",
+   "status": 200,
+   "bytes": 1202831,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/index-EwiJx6W0.css",
+   "status": 200,
+   "bytes": 159522,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/jsx-runtime-CfuWmoMz.js",
+   "status": 200,
+   "bytes": 8947,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/assets/plan-worker-P7KuSlOO.js",
+   "status": 200,
+   "bytes": 2248822,
+   "match": true,
+   "cache": "public, max-age=31536000, immutable"
+  },
+  {
+   "path": "/basket3d/audio/bb-board.wav",
+   "status": 200,
+   "bytes": 50918,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-bounce.wav",
+   "status": 200,
+   "bytes": 18842,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-buzzer.wav",
+   "status": 200,
+   "bytes": 123524,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-cheer-big.mp3",
+   "status": 200,
+   "bytes": 67753,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-cheer.mp3",
+   "status": 200,
+   "bytes": 48527,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-rim-1.wav",
+   "status": 200,
+   "bytes": 69426,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-rim-2.wav",
+   "status": 200,
+   "bytes": 65924,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-rim-3.wav",
+   "status": 200,
+   "bytes": 77462,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-squeak-1.wav",
+   "status": 200,
+   "bytes": 29476,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-squeak-2.wav",
+   "status": 200,
+   "bytes": 35324,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-squeak-3.wav",
+   "status": 200,
+   "bytes": 35324,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-squeak-4.wav",
+   "status": 200,
+   "bytes": 35324,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-swish-1.wav",
+   "status": 200,
+   "bytes": 35324,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-swish-2.wav",
+   "status": 200,
+   "bytes": 47672,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/bb-swish-3.wav",
+   "status": 200,
+   "bytes": 47672,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/manifest.json",
+   "status": 200,
+   "bytes": 9148,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-four-points.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-on-fire.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-one-point.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-slam-dunk.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-so-close.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-steal.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-three-points.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/basket3d/audio/voice-two-points.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/aww.mp3",
+   "status": 200,
+   "bytes": 28883,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/boom.mp3",
+   "status": 200,
+   "bytes": 42257,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/cheer-big.mp3",
+   "status": 200,
+   "bytes": 59812,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/cheer.mp3",
+   "status": 200,
+   "bytes": 51870,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-1.wav",
+   "status": 200,
+   "bytes": 19448,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-2.wav",
+   "status": 200,
+   "bytes": 21212,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-3.wav",
+   "status": 200,
+   "bytes": 24740,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/crackle-4.wav",
+   "status": 200,
+   "bytes": 12392,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/firework.wav",
+   "status": 200,
+   "bytes": 66194,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-bonk.wav",
+   "status": 200,
+   "bytes": 88244,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-buzzer.wav",
+   "status": 200,
+   "bytes": 91772,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-card-flip.wav",
+   "status": 200,
+   "bytes": 29364,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-card-in.wav",
+   "status": 200,
+   "bytes": 194084,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-chime.wav",
+   "status": 200,
+   "bytes": 97064,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-coins.wav",
+   "status": 200,
+   "bytes": 222308,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-deflate.wav",
+   "status": 200,
+   "bytes": 158804,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-ding.wav",
+   "status": 200,
+   "bytes": 112294,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-drumroll.wav",
+   "status": 200,
+   "bytes": 119114,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-gasp.wav",
+   "status": 200,
+   "bytes": 83834,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-laugh.wav",
+   "status": 200,
+   "bytes": 141164,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-rimshot.wav",
+   "status": 200,
+   "bytes": 52964,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-shatter.wav",
+   "status": 200,
+   "bytes": 74140,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-thud.wav",
+   "status": 200,
+   "bytes": 44144,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-vortex.wav",
+   "status": 200,
+   "bytes": 220544,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/fx-whistle-down.wav",
+   "status": 200,
+   "bytes": 101474,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/manifest.json",
+   "status": 200,
+   "bytes": 23726,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/music.mp3",
+   "status": 200,
+   "bytes": 1329549,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-1.wav",
+   "status": 200,
+   "bytes": 25002,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-2.wav",
+   "status": 200,
+   "bytes": 26032,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-3.wav",
+   "status": 200,
+   "bytes": 25062,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-4.wav",
+   "status": 200,
+   "bytes": 25382,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-5.wav",
+   "status": 200,
+   "bytes": 25334,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pin-hit-6.wav",
+   "status": 200,
+   "bytes": 24744,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/pins.wav",
+   "status": 200,
+   "bytes": 114704,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/roll.wav",
+   "status": 200,
+   "bytes": 269054,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/strike.wav",
+   "status": 200,
+   "bytes": 110230,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/swoosh.wav",
+   "status": 200,
+   "bytes": 52964,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-double-points.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-double.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-extra-shot.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-gutter-ball.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-hit-or-miss.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-lose-points.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-nice-shot.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-no-shot.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-spare.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-strike.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-swap-points.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/bowling3d/audio/voice-turkey.mp3",
+   "status": 200,
+   "bytes": 17912,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/index.html",
+   "status": 200,
+   "bytes": 731,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/release.json",
+   "status": 200,
+   "bytes": 31087,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/spin/fonts/ComicRelief-Bold.ttf",
+   "status": 200,
+   "bytes": 94684,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/spin/fonts/ComicRelief-Regular.ttf",
+   "status": 200,
+   "bytes": 80324,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/spin/fonts/manifest.json",
+   "status": 200,
+   "bytes": 485,
+   "match": true,
+   "cache": "no-cache"
+  },
+  {
+   "path": "/spin/fonts/OFL.txt",
+   "status": 200,
+   "bytes": 4396,
+   "match": true,
+   "cache": "no-cache"
+  }
+ ]
+}

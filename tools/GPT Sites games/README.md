@@ -1,5 +1,83 @@
 # Classroom Club / 上課互動遊戲大集合
 
+<!-- basketball-hold-20261126 -->
+## 2026-11-26 Animal Basketball 等待時雙手拿球（已正式部署）
+
+版本 `2026.11.26-basketball-hold.1`／production，只發布 Hosting（21:35）。教師回報還沒投籃前球浮在半空；改為六隻動物各一張新畫的「雙手捧球」預備姿勢圖（Codex CLI 生成，`public/basketball/hold.png`），出手時 3D 球從手上那顆球的位置升起；站立姿勢的鞋底也改成貼著球場。測試 127／127、3D 籃球 9／9（含球位置與腳線自動檢查）；正式站讀回 88／88 檔一致。登入後畫面、投影與 iPad 待教師驗收。
+
+[部署紀錄](DEPLOYMENT-BASKETBALL-HOLD-20261126.md)、[規格](rdq/RDQ-spec-basketball-hold-ball-20261126.md)。
+<!-- /basketball-hold-20261126 -->
+
+<!-- basketball-3d-20261126 -->
+## 2026-11-26 Animal Basketball 3D 與六張功能卡（已正式部署）
+
+正式入口：<https://gamesinclass-5d9d1.web.app/?v=20261126basketball3d>（登入後點 Animal Basketball）。版本 `2026.11.26-basketball-3d.1`／production，只發布 Hosting。Animal Basketball 的球場改為 3D（投籃、慢動作重播、觀眾、英文播報、真實錄音音效），取消 Focus／Long shot，改成抽卡式功能卡：Extra Shot、Double Points、Swap Points、Slam Dunk、Steal、Hit or Miss。投有「+1」的分值拿卡（每組最多 2 張），按 POWER UP 抽卡；設定頁可逐張開關與調整比例。Unscramble 的籃球獎勵同步換成 3D（沒有卡片）。沒有 WebGL 2 時退回原本的 2D 球場。舊版未打完的籃球存檔不能續玩。
+
+測試 127／127、Bowling 15／15、兩款 3D 測試 8／8 與 6／6；正式站讀回 87／87 個關鍵檔案雜湊一致、五個路由 HTTP 200。3D 流程只在本機逐格驗證；登入後的正式畫面、即時流暢度、聲音聽感、教室電腦、投影、iPad 與 Phonics 接入版仍待教師驗收。Git 未 stage／commit。
+
+[部署紀錄](DEPLOYMENT-BASKETBALL-3D-20261126.md)、[實作與驗證](BASKETBALL3D-PILOT-20261126.md)、[功能卡規格](rdq/RDQ-spec-basketball-power-cards-20261126.md)。下方紀錄保留為歷史。
+<!-- /basketball-3d-20261126 -->
+
+<!-- bowling-3d-20261126 -->
+## 2026-11-26 Bowling 3D 與功能卡演出（已正式部署）
+
+正式入口：<https://gamesinclass-5d9d1.web.app/bowling?v=20261126bowling3d>。版本 `2026.11.26-bowling-3d.1`／production，只發布 Hosting。Bowling 的投球、撞瓶與六張功能卡改為 3D 物理演出（慢動作重播、鏡頭、粒子、觀眾、英文播報），音效換成 48 個 CC0 錄音與新背景音樂；首頁 Bowling、Unscramble 的 Bowling 單次獎勵、Phonics 接 Bowling 一起更新。Extra Shot 由多 5 次改為多 2 次。沒有 WebGL 2 的裝置自動使用原 2D 畫面。
+
+測試 116／116、Bowling 規則 15／15、3D 測試 8／8；正式站讀回 61／61 個關鍵檔案雜湊一致、五個路由 HTTP 200。3D 流程只在本機逐格驗證；登入後的正式畫面、即時流暢度、聲音聽感、教室電腦、投影與 iPad 仍待教師驗收。Git 未 stage／commit／push。Basketball 的 3D 與功能卡尚未開始（規格已確認）。
+
+[部署紀錄](DEPLOYMENT-BOWLING-3D-20261126.md)、[實作與驗證](BOWLING3D-PILOT-20261126.md)、[規格](rdq/RDQ-spec-basketball-bowling-spectacle-20261126.md)、[功能卡規格](rdq/RDQ-spec-bowling3d-power-cards-20261126.md)。下方紀錄保留為歷史。
+<!-- /bowling-3d-20261126 -->
+
+<!-- game-entry-closeout-20261014 -->
+## 2026-10-14 Soccer／Bowling 入口修復（已正式部署）
+
+正式入口：<https://gamesinclass-5d9d1.web.app/?v=20261014entry1>。版本2026.10.14-game-entry.1／production，已完成Hosting發布。從總覽圖示點選Soccer／Bowling先顯示設定頁，舊比賽可另選繼續／看結果；刷新比賽保留進度。Bowling設定與結果頁可返回遊戲總覽，首頁圖示改為保齡球、球瓶與球道。
+
+相關測試45／45、完整回歸116／116、本機23項瀏覽器流程及15種版面通過。正式37／37關鍵檔案SHA-256一致、四路由HTTP200、匿名登入頁無pageerror；實體iPad／Safari、投影與音效仍需教師驗收。GDrive及Obsidian工作筆記收工保存；Git未stage／commit／push。
+
+[收工交接](CLOSEOUT-GAME-ENTRY-20261014.md)、[部署紀錄](DEPLOYMENT-GAME-ENTRY-20261014.md)、[修復交接](GAME-ENTRY-REPAIR-20261014.md)。下方紀錄保留為歷史。
+<!-- /game-entry-closeout-20261014 -->
+
+
+
+## 2026-10-12 Unscramble 原版單次獎勵（已正式部署）
+
+正式入口：<https://gamesinclass-5d9d1.web.app/unscramble?v=20261012original1>。版本 2026.10.12-unscramble-original-solo.1，僅 Hosting 已發布。四款共用本站原版畫面、角色、動畫及音效，每題只完成一次操作，保留原版隨機結果、瞄準、靜音與略過。請重新整理教師與學生頁面以載入新前端。
+
+新部署副本 116 項單元測試與建置通過；正式 95／95 檔（含 64 個原版素材／音效）雜湊一致，匿名師生入口六種尺寸通過，五個後端函式雜湊未變。未修改正式班級資料或 Git 提交。實體平板同步、保存、投影與教室音量仍待現場驗收。詳 [部署紀錄](DEPLOYMENT-UNSCRAMBLE-ORIGINAL-SOLO-20261012.md) 與 [正式 QA](qa/unscramble-original-production-20261012/)。下方本機段落保留為部署前歷史。
+
+
+## 2026-10-12 Unscramble 原版單次獎勵（本機通過，尚未部署）
+
+四款獎勵直接共用 Animal Basketball、Bowling、World Pup Soccer、Space Slot Machine 的原版場景、角色、動畫與音效；每題只完成一次操作，保留原版隨機結果，遊戲分數不計入英語紀錄。原版多人入口、學生重登、五次上限、CSV 與題句遮蔽均已回歸驗證。正式站尚未更新。
+
+本機試玩：<http://127.0.0.1:5184/qa/unscramble-original-solo-20261012/preview.html>；[實作與驗證](UNSCRAMBLE-ORIGINAL-SOLO-20261012.md)、[QA 對照](qa/unscramble-original-solo-20261012/index.html)、[確認規格](rdq/RDQ-spec-unscramble-original-solo-games-20261012.md)。
+
+
+## 2026-10-10 Unscramble 題句預覽與單人獎勵（已正式部署）
+
+正式入口：<https://gamesinclass-5d9d1.web.app/unscramble?v=20261010reward1>。版本 `2026.10.10-unscramble-reward.1`，Hosting 與 `classroom-games:liveActivity` 已發布。教師展示題目時顯示圖片與既有問句／答句，開放作答後遮蔽正確句子。建立新場次可選籃球、保齡球、足球、Slot Machine 或關閉，全場使用同一款；答對每題可領取一次並可略過，舊場次維持關閉獎勵。
+
+發布前 111 項單元測試與正式建置通過；正式 30 個 JS／CSS、版本、HTML 與字型檔雜湊一致，六種匿名師生頁面尺寸及 API 權限限制通過。其餘四個函式雜湊未變；未修改正式班級資料、規則、教師通行碼或 Git 提交。正式教師登入後的跨實體平板同步、作答保存與教室音量仍待驗收。詳 [部署紀錄](DEPLOYMENT-UNSCRAMBLE-REWARDS-20261010.md) 與 [正式 QA](qa/unscramble-rewards-production-20261010/)。下方 10 月 9 日段落保留為部署前歷史。
+
+## 2026-10-09 Unscramble 題句預覽與單人獎勵（本機驗證，尚未部署）
+
+教師建立場次時可為整場選擇籃球、保齡球、足球、Slot Machine 或關閉獎勵；舊場次預設關閉。題目預覽會在圖片上顯示該題問句與答句，開放作答後正確句子會從投影 DOM 移除，圖片仍保留。學生答對後每題只能領取一次所選遊戲，完整回合可略過，教師切題會立即關閉；重登、重新整理與競態請求都不能重播已領取的獎勵。
+
+本機 Firebase 模擬器已驗證五種設定、四款遊戲、8–11 秒一般回合、減少動畫、載入失敗可略過、2–15 組相容、答案不洩漏及既有完整遊戲回歸。正式站與正式資料均未變更。詳 [RDQ 規格](rdq/RDQ-spec-unscramble-sentence-preview-solo-reward-20261009.md) 與 [QA 證據](qa/unscramble-rewards-20261009/)。
+
+<!-- bowling-closeout-20260927 -->
+## 2026-09-27 Bowling 已部署並完成載入優化
+
+正式入口：https://gamesinclass-5d9d1.web.app/bowling 。18 張圖片由 28.2 MB 降至 0.62 MB；預載、完整後顯示、重試及快取完成。收工時最新正式整合版為 `2026.09.27-hw5u02-shuffle.1`，仍完整保留 Bowling。詳 [收工交接](CLOSEOUT-BOWLING-20260927.md) 與 [部署紀錄](DEPLOYMENT-BOWLING-20260927.md)。GitHub 尚未同步；實機音效與操作待教師驗收。
+
+
+## 2026-09-21 VOCABULARY 教師批改註記（已正式部署）
+
+正式版本 `2026.09.21-vocabulary-annotations.1`：教師左側五色筆／橡皮擦／復原只修改教師圖層，批改與分數回傳學生原作答區；可補註記但不重複加分，歷史可切換原稿與批改圖。學生 Submit 固定右上角。
+
+正式入口：https://gamesinclass-5d9d1.web.app/vocabulary 。本機與正式驗證通過；實體平板及正式登入後同步仍待教師確認。本次尚未提交／推送 Git。詳 [部署證據](DEPLOYMENT-VOCABULARY-ANNOTATIONS-20260921.md)、[改版紀錄](VOCABULARY-ANNOTATIONS-20260921.md)、[收工交接](CLOSEOUT-VOCABULARY-ANNOTATIONS-20260921.md)。
+
 ## 2026-09-20 VOCABULARY LIVE（已正式部署）
 
 正式入口：https://gamesinclass-5d9d1.web.app/vocabulary 。版本 `2026.09.20-vocabulary.1`，Hosting 與新後端 `vocabularyActivity` 已發布。五題 SF1 U01：Mike、Ken、Emma、Wendy、Alan；Comic Relief 三選項、五色手寫與橡皮擦、即時縮圖、筆跡重播、教師 1–5 分、累積總分、10 秒結算慶祝及歷史最終截圖。
@@ -131,3 +209,7 @@ RDQ 兩輪 8 題已確認，規格位於 rdq/RDQ-spec-classroom-games-20260905.m
 
 ## 2026-09-19 Plink-oh! 六卡插畫已正式發布
 版本 `2026.09.19-plinkoh-cards.1` 已依明確授權發布至 [正式站](https://gamesinclass-5d9d1.web.app/)。六張 SVG 改為具體遊戲動作與得分結果插畫；包含先前完成的卡牌功能及五秒 Winner。詳見 [發布紀錄](DEPLOYMENT-PLINKOH-CARDS-20260919.md) 與 [六卡圖像總覽](qa/plinkoh-card-art-20260919/index.html)。
+
+## 2026-09-27 Bowling Game（本機試玩）
+
+首頁已加入歡樂保齡球，支援 2–8 組、預設 6 回合、老師自由選組、逐瓶計分、六張 Power-up、同裝置恢復與五秒 Winner。已依教師選擇，以影片處理音效 B 為主，其餘使用補製版 C。執行 `powershell -NoProfile -File scripts/bowling-preview.ps1` 後開啟 <http://127.0.0.1:5197/bowling>。規則、來源差異、音效對照和測試結果見 [保齡球本機交付](BOWLING-IMPLEMENTATION-20260927.md)。尚未正式部署。

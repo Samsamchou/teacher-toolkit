@@ -21,3 +21,36 @@
 .bb-app .bb-player.is-shooting .bb-sprite{animation:bb-shoot 2.5s both}
 .bb-round-picker button:disabled .bb-idle{animation:none}
 @media(prefers-reduced-motion:reduce){.bb-app .bb-idle{animation:none}}
+/* 3D court and power cards (2026-11-26) */
+.bb-court3d{background:#0d0620}
+.bb-court3d .bb-shot-strip{left:20%;right:20%;bottom:3%;gap:3%}
+.bb-court3d .bb-shot-strip button{min-width:24%;padding:.5cqw 1cqw .7cqw;background:#261239e0;border:.28cqw solid #ffd961;border-radius:1.6cqw;box-shadow:0 .5cqw 0 #140c24}
+.bb-court3d .bb-shot-strip button:hover{transform:translateY(-.4cqw)}
+.bb-court3d .bb-shot-strip button.has-token{border-color:#7dff6b;box-shadow:0 .5cqw 0 #140c24,0 0 2cqw #7dff6b99}
+.bb-court3d .bb-result-call{top:auto;bottom:6%}
+.bb-court3d[data-card] .bb-turn-pill{display:none}
+.bb-app .b3-okay,.bb-app .b3-okay:hover:not(:disabled),.bb-app .b3-okay:active:not(:disabled){min-width:5.5em;padding:.25em 1em;font-weight:900;font-size:clamp(22px,4vw,64px);border-radius:.45em;border:.1em solid #fff;background:linear-gradient(#7dff6b,#19b951);color:#06351b;transform:translateX(-50%)}
+.bb-token{position:absolute;top:-1.4cqw;right:-1.2cqw;min-width:3.6cqw;padding:.1cqw .6cqw;border:.25cqw solid #fff;border-radius:99px;background:linear-gradient(#7dff6b,#19b951);color:#06351b;font:900 2cqw/1.25 'Comic Relief',system-ui,sans-serif;text-shadow:none;box-shadow:0 0 1.4cqw #7dff6b;animation:bb-token .7s ease-in-out infinite alternate}
+@keyframes bb-token{to{transform:translateY(-.5cqw) scale(1.14)}}
+.bb-held{margin-left:auto;flex-shrink:0;font-style:normal;font-weight:900;font-size:1.5cqw;color:#ffe45c;white-space:nowrap}
+.bb-held+strong{margin-left:0}
+.bb-bonus{align-self:flex-start;margin-top:6px;padding:3px 12px;border-radius:8px;background:#30a9e8;color:#fff;font-style:normal;font-weight:900;font-size:1.9cqw;box-shadow:3px 3px 0 #075c9a;animation:bb-bonus .35s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes bb-bonus{from{transform:scale(.4)}}
+.bb-token-got{display:block;width:max-content;margin:6px auto 0;padding:2px 14px;border-radius:99px;background:linear-gradient(#7dff6b,#19b951);color:#06351b;font-style:normal;font-weight:900;font-size:1.5cqw}
+.bb-card-call{position:absolute;z-index:7;left:50%;top:34%;transform:translateX(-50%) rotate(-3deg);display:flex;align-items:center;gap:1cqw;padding:.6cqw 2cqw;border:.3cqw solid #fff;border-radius:1.4cqw;background:var(--card);color:#fff;font-weight:900;font-size:3.2cqw;white-space:nowrap;text-shadow:2px 2px #241235;box-shadow:0 .6cqw 0 #140c24;pointer-events:none}
+.bb-card-call b{font-size:1.25em}
+.bb-card-settings{display:grid;gap:8px}
+.bb-card-setting{display:grid;grid-template-columns:64px minmax(0,1fr) 24px minmax(90px,170px) 62px;align-items:center;gap:12px;padding:8px 12px;border-radius:14px;background:#ffffff0d;border:1px solid #ffffff1c}
+.bb-card-setting.off{opacity:.5}
+.bb-card-setting>b{display:grid;place-items:center;height:40px;border-radius:10px;border:2px solid #fff;background:linear-gradient(var(--card),var(--card-dark));color:#fff;font-size:15px;font-weight:900;white-space:nowrap}
+.bb-card-setting>span{font-weight:900;line-height:1.2}
+.bb-card-setting>span small{display:block;font-weight:500;font-size:12px;opacity:.8}
+.bb-card-setting input[type=checkbox]{width:22px;height:22px}
+.bb-card-setting input[type=range]{width:100%}
+.bb-card-setting output{text-align:right;font-weight:900;font-size:20px;color:var(--yellow)}
+.bb-target-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:8px 0 18px}
+.bb-target-picker button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 10px;border-color:var(--team-color);background:#3d2456}
+.bb-target-picker .bb-sprite{width:96px}
+.bb-target-picker strong{font-size:20px;overflow-wrap:anywhere}
+.bb-target-picker span{font-weight:900;color:var(--yellow)}
+@media(max-width:640px){.bb-card-setting{grid-template-columns:52px minmax(0,1fr) 24px 46px}.bb-card-setting input[type=range]{grid-column:1/-1;grid-row:2}}

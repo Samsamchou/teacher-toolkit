@@ -1,0 +1,62 @@
+@font-face{font-family:'Comic Relief';src:url('/spin/fonts/ComicRelief-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Comic Relief';src:url('/spin/fonts/ComicRelief-Bold.ttf') format('truetype');font-style:normal;font-weight:700 900;font-display:swap}
+.b3-page{display:grid;grid-template-columns:minmax(260px,320px) 1fr;height:100dvh;background:#12041f;color:#fff8e6;font-family:'Comic Relief','Noto Sans TC',system-ui,sans-serif}
+.b3-panel{display:flex;flex-direction:column;gap:10px;padding:16px;overflow:auto;background:#22093d;border-right:3px solid #ff3fd0}
+.b3-panel h1{margin:0;font-size:24px;letter-spacing:1px}.b3-panel h1 em{color:#ffe21f;font-style:normal}.b3-panel header p{margin:2px 0 0;font-size:13px;opacity:.85}
+.b3-b{display:flex;flex-direction:column;line-height:1.2}.b3-b b{font-size:15px}.b3-b small{font-size:12px;opacity:.8;font-weight:400}
+.b3-panel label,.b3-field{display:flex;flex-direction:column;gap:5px}
+.b3-panel select{font:inherit;font-size:15px;padding:7px 8px;border-radius:10px;border:2px solid #7b4bd1;background:#fff;color:#22093d}
+.b3-check{flex-direction:row!important;align-items:center;gap:9px!important}.b3-check input{width:20px;height:20px;accent-color:#ff3fd0}
+.b3-counts{display:flex;flex-wrap:wrap;gap:6px}
+.b3-counts button{min-width:42px;min-height:40px;padding:4px 9px;font:inherit;font-weight:700;font-size:15px;border-radius:10px;border:2px solid #7b4bd1;background:#34125e;color:#fff;cursor:pointer}
+.b3-counts button[aria-pressed=true]{background:#ffe21f;color:#2a0850;border-color:#fff}
+.b3-roll{min-height:60px;font:inherit;font-size:27px;font-weight:900;border-radius:16px;border:4px solid #fff;background:linear-gradient(#ff5fd8,#c41fb0);color:#fff;cursor:pointer;box-shadow:0 5px 0 #6d0f62}
+.b3-roll:disabled,.b3-demo:disabled,.b3-counts button:disabled{opacity:.55;cursor:default}
+.b3-demo{padding:9px;font:inherit;border-radius:12px;border:2px solid #27e0ff;background:#0d2c4a;color:#fff;cursor:pointer}
+.b3-info{font-size:13px;line-height:1.4;padding:8px;border-radius:10px;background:#12041f}
+.b3-note{margin:0;font-size:12px;color:#ffe9a8}.b3-error{margin:0;padding:8px;border-radius:10px;background:#7a1030;font-size:14px}
+.b3-stage{position:relative;overflow:hidden;background:#000;min-height:0}
+.b3-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.b3-flash{position:absolute;inset:0;background:#fff;pointer-events:none;transition:opacity .22s ease-out}
+.b3-bars i{position:absolute;left:0;right:0;height:0;background:#000;transition:height .22s ease}
+.b3-bars i:first-child{top:0}.b3-bars i:last-child{bottom:0}.b3-bars.on i{height:9%}
+.b3-replay{position:absolute;top:11%;left:3%;padding:6px 16px;border-radius:10px;background:#e3122f;color:#fff;font-weight:900;font-size:clamp(18px,2.6vw,38px);letter-spacing:2px;animation:b3-blink 1s steps(2) infinite}
+.b3-replay small{font-size:.5em;opacity:.9;margin-left:8px}
+.b3-label{position:absolute;left:50%;top:24%;transform:translate(-50%,-50%);pointer-events:none;animation:b3-pop 1.7s cubic-bezier(.2,1.5,.4,1) both}
+.b3-label strong{display:block;font-size:clamp(48px,9.5vw,180px);font-weight:900;line-height:1;white-space:nowrap;color:#ffe21f;-webkit-text-stroke:.055em #2a0850;paint-order:stroke fill;text-shadow:0 .05em 0 #2a0850,0 .1em .22em #000a,0 0 .5em #ff3fd0}
+.b3-strike strong{background:linear-gradient(#fff36b,#ff9a1f 55%,#ff3fd0);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.045em #fff;filter:drop-shadow(0 .05em 0 #2a0850) drop-shadow(0 0 .25em #ff3fd0)}
+.b3-spare strong{color:#27e0ff}.b3-miss strong{color:#fff;-webkit-text-stroke-color:#7a1030}
+.b3-ok strong,.b3-good strong{font-size:clamp(60px,12vw,220px)}
+.b3-banner{position:absolute;left:50%;top:44%;transform:translateX(-50%);padding:.2em .7em;border-radius:.5em;background:#ff5a1f;border:.12em solid #fff;color:#fff;font-weight:900;font-size:clamp(16px,2.6vw,44px);white-space:nowrap;animation:b3-pop 1.2s .25s cubic-bezier(.2,1.5,.4,1) both;box-shadow:0 0 1em #ff9a1f}
+@keyframes b3-pop{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(-8deg)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.18) rotate(3deg)}30%{transform:translate(-50%,-50%) scale(1) rotate(-1deg)}100%{opacity:1;transform:translate(-50%,-50%) scale(1.04) rotate(0)}}
+.b3-banner{animation-name:b3-pop-x}
+@keyframes b3-pop-x{0%{opacity:0;transform:translateX(-50%) scale(.2)}30%{opacity:1;transform:translateX(-50%) scale(1.15)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+@keyframes b3-blink{50%{opacity:.55}}
+@media (max-width:820px){.b3-page{grid-template-columns:1fr;grid-template-rows:auto 56vh}.b3-panel{border-right:0;border-bottom:3px solid #ff3fd0;order:2}.b3-stage{order:1}}
+
+.b3-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.b3-cards button{min-height:40px;padding:5px 6px;font:inherit;font-weight:700;font-size:12.5px;border-radius:10px;border:2px solid #fff;background:linear-gradient(var(--card),var(--card-dark));color:#fff;cursor:pointer;text-shadow:0 1px 2px #0008}
+.b3-cards button:disabled{opacity:.55;cursor:default}
+.b3-hud{position:absolute;top:2.5%;right:2%;display:flex;gap:.5em;font-weight:900;font-size:clamp(11px,1.5vw,24px);pointer-events:none}
+.b3-hud span{padding:.25em .7em;border-radius:.7em;background:#190a3acc;border:.12em solid #ffffff99;color:#fff;animation:b3-bump .45s ease-out}
+.b3-hud b{font-size:1.35em;color:#ffe21f;margin-left:.25em}.b3-hud .b3-hud-active{border-color:#ffe21f;background:#5a1fb0cc}
+@keyframes b3-bump{0%{transform:scale(1.5);filter:brightness(2)}100%{transform:scale(1)}}
+.b3-okay{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);min-width:5.5em;padding:.25em 1em;font:inherit;font-weight:900;font-size:clamp(22px,4vw,64px);border-radius:.45em;border:.1em solid #fff;background:linear-gradient(#7dff6b,#19b951);color:#06351b;cursor:pointer;box-shadow:0 .12em 0 #065f32,0 0 1em #7dff6b;animation:b3-okay 1s ease-in-out infinite alternate}
+@keyframes b3-okay{to{transform:translateX(-50%) scale(1.07)}}
+.b3-card strong{color:#fff;-webkit-text-stroke:.05em #190a3a;text-shadow:0 .05em 0 #190a3a,0 0 .5em #27e0ff}
+.b3-lose strong{color:#d9f56b;-webkit-text-stroke:.05em #3e1010;animation:b3-drop 1.6s cubic-bezier(.3,0,.8,.4) .5s forwards}
+.b3-double strong{background:linear-gradient(#fff6b0,#f7b42e 60%,#c9650a);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:.04em #fff;filter:drop-shadow(0 .05em 0 #7a3d05) drop-shadow(0 0 .3em #ffcf2e)}
+.b3-swap strong{color:#e3c2ff;-webkit-text-stroke:.05em #3a0f66;text-shadow:0 0 .5em #a865ea}
+@keyframes b3-drop{0%{transform:none;opacity:1}60%{transform:translateY(1.1em) rotate(9deg) scale(.95);opacity:1}100%{transform:translateY(1.5em) rotate(24deg) scale(.5);opacity:0;letter-spacing:.5em;filter:blur(3px)}}
+.b3-scorefx{position:absolute;left:50%;top:50%;transform:translateX(-50%);display:flex;align-items:center;gap:.4em;padding:.1em .7em;border-radius:.5em;background:#190a3add;border:.08em solid #fff;color:#fff;font-weight:900;font-size:clamp(20px,4.2vw,72px);white-space:nowrap;pointer-events:none;animation:b3-pop-x .7s cubic-bezier(.2,1.5,.4,1) both}
+.b3-scorefx i{font-style:normal;opacity:.8}.b3-scorefx b:last-child{color:#ffe21f;animation:b3-bump .6s .45s both}
+.b3-fx-lose b:last-child{color:#ff8aa3}.b3-fx-swap b{color:#27e0ff}
+
+/* Lane embedded in the real game (BowlingGame.jsx): fills the lane box; game controls are laid over it. */
+.b3-lane{position:absolute;inset:0;font-family:'Comic Relief','Noto Sans TC',system-ui,sans-serif}
+/* The aim zones are painted on the 3D lane; these large buttons below it choose one. */
+.bw-lane-3d .bw-aim-row3d{position:absolute;left:50%;bottom:2.5%;transform:translateX(-50%);display:flex;gap:clamp(5px,.8vw,12px);z-index:9}
+.bw-lane-3d .bw-aim-row3d .bw-aim-zone{flex:none;width:clamp(50px,6vw,100px);height:clamp(44px,4.6vw,76px);border:4px solid #fff;border-radius:16px;cursor:pointer}
+.bw-lane-3d .bw-aim-row3d .bw-aim-zone.selected{transform:translateY(-8px) scale(1.08);box-shadow:0 8px 0 #3b125d,0 0 0 4px #ffe21f,0 0 22px #ffe21f}
+
+.b3-counts .b3-hit{background:linear-gradient(#7dff6b,#19b951);color:#06351b;border-color:#fff}

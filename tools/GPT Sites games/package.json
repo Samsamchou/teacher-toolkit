@@ -7,29 +7,47 @@
     "dev": "vite --host 127.0.0.1 --mode demo",
     "build": "node scripts/check-unified-release.mjs && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs tests/unscramble.test.mjs tests/spin-download.test.mjs tests/unscramble-api-timeout.test.mjs tests/plinkoh.test.mjs tests/plinkoh-audio.test.mjs tests/plinkoh-powerups.test.mjs",
+    "test": "node --test tests/model.test.mjs tests/sound.test.mjs tests/beach.test.mjs tests/beach-audio.test.mjs tests/spin.test.mjs tests/spin-audio.test.mjs tests/basketball.test.mjs tests/basketball-audio.test.mjs tests/unscramble.test.mjs tests/spin-download.test.mjs tests/unscramble-api-timeout.test.mjs tests/plinkoh.test.mjs tests/plinkoh-audio.test.mjs tests/plinkoh-powerups.test.mjs tests/slot-machine.test.mjs tests/slot-winner-audio.test.mjs tests/hw5u02-slot.test.mjs tests/hw5u02-shuffle.test.mjs tests/unscramble-solo.test.mjs",
     "test:rules": "firebase emulators:exec --only firestore,storage --project demo-classroom-games \"node --test tests/rules.test.mjs\"",
     "test:live": "node tests/unscramble-integration.mjs",
     "test:vocabulary": "node tests/vocabulary-integration.mjs",
     "test:vocabulary:browser": "node tests/vocabulary-browser.mjs",
     "test:vocabulary:rules": "node --test tests/vocabulary-rules.test.mjs",
     "test:plinkoh": "node --test tests/plinkoh.test.mjs tests/plinkoh-audio.test.mjs tests/plinkoh-powerups.test.mjs",
-    "test:plinkoh:browser": "node tests/plinkoh-browser.mjs"
+    "test:plinkoh:browser": "node tests/plinkoh-browser.mjs",
+    "test:slot": "node --test tests/slot-machine.test.mjs tests/slot-winner-audio.test.mjs",
+    "test:slot:browser": "node tests/slot-machine-browser.mjs",
+    "test:slot:winner": "node --test tests/slot-winner-audio.test.mjs",
+    "test:slot:winner:browser": "node tests/slot-winner-browser.mjs",
+    "test:bowling": "node --test tests/bowling.test.mjs tests/bowling-motion.test.mjs tests/bowling-fastload.test.mjs",
+    "test:bowling3d": "node --test tests/bowling3d.test.mjs",
+    "test:basket3d": "node --test tests/basket3d.test.mjs",
+    "test:hw5u02": "node --test tests/hw5u02-slot.test.mjs tests/hw5u02-shuffle.test.mjs tests/hw5-speech.test.mjs",
+    "test:hw5u02:browser": "node tests/hw5u02-slot-browser.mjs",
+    "test:hw5u02:rules": "firebase emulators:exec --only firestore --project demo-classroom-games \"node --test tests/hw5u02-rules.test.mjs\"",
+    "test:phonics": "node --test tests/phonics.test.mjs tests/phonics-speech.test.mjs tests/phonics-library.test.mjs tests/phonics-word-library.test.mjs",
+    "test:phonics:browser": "node tests/phonics-browser.mjs && node tests/phonics-games-browser.mjs && node tests/phonics-media-browser.mjs",
+    "test:phonics:rules": "firebase emulators:exec --only firestore,storage --project demo-classroom-games \"node --test tests/phonics-rules.test.mjs\"",
+    "test:worldpup": "node --test tests/worldpup.test.mjs tests/worldpup-audio.test.mjs tests/worldpup-integration.test.mjs tests/worldpup-layouts.test.mjs",
+    "test:worldpup:browser": "node tests/worldpup-browser.mjs",
+    "dev:worldpup": "vite --config vite.worldpup.config.mjs --host 127.0.0.1 --mode demo"
   },
   "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.19.3",
     "firebase": "^12.18.0",
     "idb": "^8.0.3",
     "jszip": "^3.10.1",
     "lucide-react": "^1.41.0",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.2",
     "@playwright/test": "^1.63.0",
     "@vitejs/plugin-react": "^6.1.1",
-    "vite": "^8.2.2",
-    "firebase-admin": "^14.4.0"
+    "firebase-admin": "^14.4.0",
+    "vite": "^8.2.2"
   }
 }

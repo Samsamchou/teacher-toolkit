@@ -1,0 +1,11 @@
+The attached image is an existing game sprite sheet: the TOP ROW is a cute orange tabby CAT in a teal jersey basketball mascot and the BOTTOM ROW is a cute golden floppy-eared DOG in a coral red jersey basketball mascot, each shown in four poses. The first column is their "ready" pose with empty paws.
+
+Use your built-in image generation tool (use the attached image as the character reference) to create ONE new landscape 1536x1024 PNG containing exactly TWO isolated full-body sprites side by side: on the LEFT the same cute orange tabby CAT in a teal jersey, on the RIGHT the same cute golden floppy-eared DOG in a coral red jersey. Each character is centered in its own half with ample empty margin, no overlap.
+
+New pose for both: the same ready stance as column 1 (knees bent, body facing three-quarter LEFT), but now HOLDING ONE ORANGE BASKETBALL WITH BOTH PAWS in front of the chest, both paws clearly wrapped around the sides of the ball, the whole ball fully visible and not cropped, eyes looking up-left toward a hoop, confident happy expression. Exactly one basketball per character, classic orange ball with dark seams.
+
+Keep each character's identity IDENTICAL to the reference: same face, fur colours and markings, same jersey colour and trim, same shorts, same sneakers, same proportions and size, same tail. Same art style: premium children's animated feature concept art, rich hand-painted fur and fabric, crisp bold ink contour, generous clean white sticker border around each character (the border also wraps the ball).
+
+Background: one perfectly flat solid pure magenta colour (#FF00FF) everywhere, no gradient, no shadow, no glow, no ground, no hoop, no text, no numbers, no logos. Complete feet and ears and tail visible.
+
+Save the PNG as hold-cat-dog.png in the current directory. Reply with the saved file path only.
