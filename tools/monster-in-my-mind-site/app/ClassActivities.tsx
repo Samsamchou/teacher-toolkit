@@ -3,6 +3,7 @@ import MonsterApp from './MonsterApp'
 import RoutinesApp from './routines/RoutinesApp'
 import RoutinesTeacher from './routines/RoutinesTeacher'
 import SafariApp from './safari/SafariApp'
+import SafariTeacher from './safari/SafariTeacher'
 import { TeacherPortal } from './components/TeacherPortal'
 import { Gallery } from './components/Gallery'
 import { localPreview } from './services/firebase'
@@ -18,7 +19,8 @@ export function ClassActivities() {
   // he/she trip (2026-11-24): own progress and teacher records; same games, art and cards as /world-routines.
   if (path === '/world-routines-he-she/teacher' || path === '/world-routines-he-she/teacher/') return <>{banner}<RoutinesTeacher variant="hs" /></>
   if (path === '/world-routines-he-she' || path === '/world-routines-he-she/') return <>{banner}<RoutinesApp variant="hs" /></>
-  // Safari Count (HWG5 U4, 2026-11-24): skeleton, no home tile yet.
+  // Safari Count (HWG5 U4, 2026-11-24): home tile since 2026-11-26. 11/25: student ID login, server checks, teacher records at /safari-count/teacher.
+  if (path === '/safari-count/teacher' || path === '/safari-count/teacher/') return <>{banner}<SafariTeacher /></>
   if (path === '/safari-count' || path === '/safari-count/') return <>{banner}<SafariApp /></>
   if (path === '/teacher') return <>{banner}<SpeechProvider><TeacherPortal /></SpeechProvider></>
   if (path === '/gallery') return <>{banner}<SpeechProvider><Gallery /></SpeechProvider></>
@@ -44,6 +46,22 @@ export function ClassActivities() {
           <span aria-hidden="true">🌍</span>
           <strong>World Routines Trip</strong>
           <small>What time do you …? / 世界作息之旅</small>
+          <em className="tile-grade">六年級 HWG7 U04</em>
+          <b aria-hidden="true">→</b>
+        </a>}
+        {/* 2026-11-26 teacher (RDQ home-tiles): he/she trip and Safari Count get home tiles. */}
+        {!path.startsWith('/festivals') && <a className="activity-tile" href="/world-routines-he-she">
+          <span aria-hidden="true">👫</span>
+          <strong>World Routines Trip: He/She</strong>
+          <small>What time does he/she …? / 世界作息之旅 he/she 版</small>
+          <em className="tile-grade">六年級 HWG7 U04</em>
+          <b aria-hidden="true">→</b>
+        </a>}
+        {!path.startsWith('/festivals') && <a className="activity-tile" href="/safari-count">
+          <span aria-hidden="true">🦒</span>
+          <strong>Safari Count</strong>
+          <small>How many … are there? / 數數動物園</small>
+          <em className="tile-grade">五年級 HWG5 U4</em>
           <b aria-hidden="true">→</b>
         </a>}
         {path.startsWith('/festivals') && <a className="activity-tile" href="/festivals/write-a-thankful-card/">
@@ -53,6 +71,12 @@ export function ClassActivities() {
           <b aria-hidden="true">→</b>
         </a>}
       </div>
+      {!path.startsWith('/festivals') && <nav className="teacher-links" aria-label="Teacher pages / 老師頁">
+        <span>Teacher / 老師頁</span>
+        <a href="/world-routines/teacher">🌍 World Routines（I 版）</a>
+        <a href="/world-routines-he-she/teacher">👫 World Routines（he/she 版）</a>
+        <a href="/safari-count/teacher">🦒 Safari Count</a>
+      </nav>}
     </main>}
   </>
 }
