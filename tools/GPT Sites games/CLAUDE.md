@@ -48,4 +48,4 @@
 
 1. 教師在正式站登入後驗收 Bowling 3D 與 Basketball 3D：流暢度、聲音、六張功能卡、Unscramble 獎勵、Phonics 接入版；教室電腦、投影、iPad／Safari。
 2. Animal Basketball：等待時雙手捧球已部署（`2026.11.26-basketball-hold.1`，21:35；新圖 `public/basketball/hold.png`，球位置與腳線在 `src/basket3d/hold.mjs`）。換角色圖要重跑 `scripts/prepare-basketball-hold.py` 並重新量球位置。Phonics 接入版還沒在瀏覽器走過；Slam Dunk 專屬灌籃圖要先報價。
-3. Git 尚未 stage／commit／push；工作區有大量既有變更，提交前先與教師確認範圍。
+3. Git：2026-11-26 的 3D 工作已 commit＋push（`b5e1cdc`，只收當天改動的 211 個檔）。資料夾內 9–10 月累積的約 2,450 個舊檔（參考影片、測試截圖、其他遊戲）仍未提交，要提交前先與教師確認範圍。
