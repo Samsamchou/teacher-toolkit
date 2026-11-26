@@ -26,9 +26,10 @@ T = DUR[SHOT]
 HOLD = 1.0
 FLOOR = 0.012
 ROAD_T = 0.003
-KOALA_A_H = 0.050             # pose A height, hands up -> feet (GUESS)
-KOALA_B_H = 0.035             # pose B is compact: 0.70 x pose A in the refs
-KOALA_GAP = 0.019             # half the koala width (A 0.55, B 0.66 of its height) + trunk radius 0.009
+KOALA_A_H = 0.064             # pose A height, hands up -> feet (check 1: 0.050 tiny)
+KOALA_B_H = 0.045             # pose B is compact: 0.70 x pose A in the refs
+KOALA_GAP = 0.021             # pose A: half its width + trunk radius
+KOALA_GAP_B = 0.015           # check 1: pose B floated off the trunk -> closer
 STEP = 0.015                  # body rise per climbing step (hands stay, feet come up)
 LION_L = 0.11                 # lying lion, nose -> tail tip (GUESS)
 BUS_L = 0.17                  # safari bus length (GUESS)
@@ -76,11 +77,11 @@ if SHOT == "AU1":
     fill.data.energy = 0.5; fill.data.color = (0.5, 0.6, 1.0); fill.data.size = 0.6; fill.rotation_euler = (math.radians(60), 0, math.radians(35))
     # boardwalk with lanterns in front of the trees
     plank = E.felt("plank", (0.40, 0.29, 0.20))
-    E.box((0.0, -0.13, FLOOR + 0.004), (0.70, 0.06, 0.008), plank, "boardwalk")
-    for x in (-0.24, -0.08, 0.08, 0.24):
-        E.cyl((x, -0.10, FLOOR + 0.03), 0.0018, 0.05, E.mat("post", (0.12, 0.10, 0.08), 0.6), verts=8, name="post")
-        E.ball((x, -0.10, FLOOR + 0.058), 0.006, E.emission("lantern", (1.0, 0.72, 0.35), 8.0), "lantern")
-        bpy.ops.object.light_add(type="POINT", location=(x, -0.09, FLOOR + 0.06)); pl = bpy.context.object
+    E.box((0.0, -0.03, FLOOR + 0.004), (0.70, 0.05, 0.008), plank, "boardwalk")
+    for x in (-0.20, -0.065, 0.065, 0.20):                   # check 1: big glowing balls in the foreground -> small, between the trees
+        E.cyl((x, -0.01, FLOOR + 0.02), 0.0015, 0.03, E.mat("post", (0.12, 0.10, 0.08), 0.6), verts=8, name="post")
+        E.ball((x, -0.01, FLOOR + 0.037), 0.004, E.emission("lantern", (1.0, 0.72, 0.35), 6.0), "lantern")
+        bpy.ops.object.light_add(type="POINT", location=(x, -0.005, FLOOR + 0.04)); pl = bpy.context.object
         pl.data.energy = 0.5; pl.data.color = (1.0, 0.75, 0.45); pl.data.shadow_soft_size = 0.01
     # three pale eucalyptus trunks; leaves only near the top (above the koalas)
     bark = E.felt("gum_bark", (0.70, 0.68, 0.62)); leaves = E.felt("gum_leaves", (0.30, 0.42, 0.34))
@@ -90,29 +91,30 @@ if SHOT == "AU1":
         for dx, dz, rr in ((0.0, 0.27, 0.05), (0.04, 0.25, 0.035), (-0.035, 0.255, 0.035)):
             E.ball((tx + dx, ty + 0.01, FLOOR + dz), rr, leaves, "gum_crown").scale = (1.0, 0.7, 0.6)
     # koalas: staggered climbing, A (reach) / B (pulled up) swaps every half second
-    for i, ((tx, ty), z0, t0) in enumerate(zip(TREES, (0.035, 0.075, 0.050), (0.0, 0.4, 0.8))):
+    for i, ((tx, ty), z0, t0) in enumerate(zip(TREES, (0.030, 0.060, 0.042), (0.0, 0.4, 0.8))):
         x = tx + KOALA_GAP
         a = E.place(f"{PROPS}/australia_koala_a.glb", KOALA_A_H, (x, ty, FLOOR + z0), rot_z=0.0); a.name = "koala%d_a" % (i + 1)
-        b = E.place(f"{PROPS}/australia_koala_b.glb", KOALA_B_H, (x, ty, FLOOR + z0), rot_z=0.0); b.name = "koala%d_b" % (i + 1)
+        xb = tx + KOALA_GAP_B
+        b = E.place(f"{PROPS}/australia_koala_b.glb", KOALA_B_H, (xb, ty, FLOOR + z0), rot_z=0.0); b.name = "koala%d_b" % (i + 1)
         va, vb, la, lb = [(0.0, True)], [(0.0, False)], [], []
         z, t, k = FLOOR + z0, t0, 0
         la.append((0.0, (x, ty, z)))
         while t + 1.0 <= T - HOLD + 1e-6:
             # pose B: hands stay where pose A's were, the feet come up
             zb = z + (KOALA_A_H - KOALA_B_H)
-            va.append((t + 0.5, False)); vb.append((t + 0.5, True)); lb.append((t + 0.5, (x, ty, zb)))
+            va.append((t + 0.5, False)); vb.append((t + 0.5, True)); lb.append((t + 0.5, (xb, ty, zb)))
             # next pose A: feet stay where pose B's were, the arms reach up again
             z = zb
             va.append((t + 1.0, True)); vb.append((t + 1.0, False)); la.append((t + 1.0, (x, ty, z)))
             t += 1.0; k += 1
-        if not lb: lb.append((0.0, (x, ty, z)))
+        if not lb: lb.append((0.0, (xb, ty, z)))
         vis_keys(a, va); vis_keys(b, vb); loc_keys(a, la); loc_keys(b, lb)
         print("DESK KOALA %d trunk %.2f start z %.3f end z %.3f steps %d" % (i + 1, tx, FLOOR + z0, z, k), flush=True)
-    aim = Vector((0.0, 0.06, FLOOR + 0.10))
+    aim = Vector((0.0, 0.06, FLOOR + 0.125))                 # check 1: koalas tiny, crowns cut -> closer, aimed at the koalas
     if CAMSUB == "S":
-        cam_move(40, aim + Vector((0.0, -0.30, -0.02)), aim, aim + Vector((0.0, -0.30, -0.02)), aim)
+        cam_move(40, aim + Vector((0.0, -0.24, -0.02)), aim, aim + Vector((0.0, -0.24, -0.02)), aim)
     else:
-        cam_move(30, aim + Vector((0.02, -0.44, 0.04)), aim, aim + Vector((0.01, -0.40, 0.03)), aim, t_end=T - HOLD)
+        cam_move(30, aim + Vector((0.02, -0.33, 0.03)), aim, aim + Vector((0.01, -0.30, 0.02)), aim, t_end=T - HOLD)
     print("DESK CAM AU1 %s" % CAMSUB, flush=True)
 
 else:
@@ -129,9 +131,8 @@ else:
         E.ball((x, y, FLOOR + h), 0.05, E.felt("leaves", (0.32, 0.44, 0.30)), "canopy").scale = (1.0, 0.7, 0.8)
     # big flat-topped rock; the lion lies on it
     RX, RY, RR, RH = -0.02, 0.04, 0.085, 0.040
-    rock = E.ball((RX, RY, FLOOR), RR, E.felt("rock", (0.50, 0.44, 0.38)), "rock"); rock.scale = (1.0, 0.75, RH / RR)
-    E.box((RX, RY, FLOOR + RH - 0.004), (RR * 1.1, RR * 0.8, 0.008), E.felt("rock_top", (0.52, 0.46, 0.40)), "rock_top", bevel=0.004)
-    top = FLOOR + RH + 0.000
+    rock = E.ball((RX, RY, FLOOR), RR, E.felt("rock", (0.40, 0.34, 0.28)), "rock"); rock.scale = (1.0, 0.75, RH / RR)   # check 1: no flat slab (looked like a table)
+    top = FLOOR + RH - 0.006                                  # the lion sinks a little into the rounded top
     # dirt track behind, the safari bus parked on it beside the rock
     E.box((0.0, 0.17, FLOOR + ROAD_T / 2), (0.70, 0.07, ROAD_T), E.felt("road", (0.56, 0.44, 0.30)), "road", bevel=0)
     E.place(f"{PROPS}/australia_safari_bus.glb", BUS_L, (0.13, 0.17, FLOOR + ROAD_T), rot_z=0.0, axis="long")

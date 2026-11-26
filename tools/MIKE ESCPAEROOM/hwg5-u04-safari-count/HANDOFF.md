@@ -205,3 +205,15 @@
 - colab_run.py 修正：新 Colab 機器的 pid 會重複 → 上傳快取沒清、engine.py 沒上傳（ModuleNotFoundError）。token 改用隨機數。
 - 今日 Colab 約 9.5 單位。全部未 commit 的影音、圖片、glb 不入庫。
 - 收工 11/25 22:3x：git 的 .git/index.lock 一直被應用程式背景 git 程序佔住，沒有 commit／push。下次要 commit 的範圍：tabletop/src/*.py（含新的 kenya/india/singapore_safari.py、walk_dir_check.py、colab_run.py 等）、HANDOFF.md、tools/動畫共用踩坑規則.md、hwg7-u04-world-routines/tabletop/tripo-ledger.json。影音、圖片、glb、qa、out、models、refs 不入庫。
+
+### 11/26 新加坡第 2 輪＋澳洲批
+- 老師同意刪 11/24 的舊 .git/index.lock → commit 1c7acd7 已 push（程式＋文件 20 檔）。另有 AUTO_MERGE.lock（10/25）、next-index-*.lock 三個舊鎖沒刪。
+- 新加坡第 2 輪 qa/singapore_check2.jpg 已傳：SG1 曝光 −0.8、地面變暗、大象整排左移；SG2 河岸／石頭變深、曝光 −0.4、烏龜 0.022、石頭上的烏龜貼石頭表面（top(i,x,y)）、鏡頭 32 mm。等老師核准正式渲染。
+- 澳洲（Tripo 275 點，餘額 1,650）：Tripo AI 動作只支援人形 → 停格替換。
+  無尾熊 australia_koala_a（手往上伸）／koala_b（Codex 從 A 編輯成往上拉）每 0.5 秒交替、每步升 A_H−B_H；獅子 australia_lion_rest／lion_yawn（Codex 從 rest 編輯）2.0–4.2 秒打哈欠；巴士 australia_safari_bus。
+  場景 src/australia_safari.py。第 1 輪：無尾熊太小、B 姿勢離開樹幹、石頭上的平板像桌子 → 修。第 2 輪 qa/australia_check2.jpg 已傳，等老師看。
+- 旁白 australia_koalas_a 1.56 秒、australia_lion_a 1.31 秒；safari_compose 已加 AU1／AU2。
+- 11/26 老師：「四段都正式渲染」→ 新加坡 qa/1126-083603（1.16 單位）、澳洲 qa/1126-090525（1.17 單位），各 85 格。
+  試片 out/singapore_elephants（−16.0）、singapore_turtles（−15.5）、australia_koalas（−15.6）、australia_lion（−16.2 LUFS），＋_720；抽格 out/sg_au_sheet.png。等老師定案（12 段全部到齊）。
+- ✅ 11/26 老師：「四段都定案」→ 新加坡＋澳洲四段定案。**Safari Count 12 段桌上微縮動畫全部定案**（out/ 下 12 支＋_720：taiwan_panda、taiwan_bears、japan_lions、japan_horses、kenya_zebras、kenya_rhino、india_tigers、india_monkeys、singapore_elephants、singapore_turtles、australia_koalas、australia_lion）。
+  - 影片尚未放上網站；要放上 /safari-count（含新加坡、澳洲、肯亞、印度四站開放）需老師另外授權部署。
