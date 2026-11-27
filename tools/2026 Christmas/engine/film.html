@@ -1,0 +1,85 @@
+<!doctype html><meta charset="utf-8"><title>Style K film player</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#wrap{position:relative;width:1920px;height:1080px}#gl,#ov{position:absolute;left:0;top:0;width:1920px;height:1080px}</style>
+<div id="wrap"><canvas id="gl" width="1920" height="1080"></canvas><canvas id="ov" width="1920" height="1080"></canvas></div>
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
+<script type="module">
+// film.html?scene=s01[&nosub=1]：載入 scenes/sXX.js＋timeline/sXX.json＋audio/lines/manifest.json
+// 字幕版：卡拉 OK＋單字卡＋慢動作特效包；聽力版 nosub=1：只拿掉卡拉 OK。
+// timeline.beats：[{t, dur, label, card}] 慢動作特寫；場景用 beatObj(label) 回傳要框的物件。
+import { makeStage, loadFont, karaokeAt, wordCard, wordTime, W, H, CARD_SLOTS, cardOverlap, projectFaces, spotlightFX, screenBox } from './kit.js';
+const boxAsCircle = (b) => ({ x: b.x + b.w / 2, y: b.y + b.h / 2, r: Math.max(b.w, b.h) / 2 + 30 });
+const q = new URLSearchParams(location.search), name = q.get('scene') || 's01', nosub = q.get('nosub') === '1';
+await loadFont();
+const tl = await (await fetch(`../timeline/${name}.json`)).json();
+const man = Object.fromEntries((await (await fetch('../audio/lines/manifest.json')).json()).map(m => [m.id, m]));
+const S = makeStage(document.getElementById('gl'));
+const ov = document.getElementById('ov').getContext('2d');
+const mod = await import(`../scenes/${name}.js`);
+const sc = await mod.setup({ S, tl, man });
+const cues = tl.cues.map(c => ({ ...c, m: man[c.id] }));
+const beats = tl.beats || [];
+// timeline.clips：[{t, dur, file, from}] 這段時間改播 Seedance 影片（檔案不存在就照常顯示本機畫面當佔位）
+// clips: play a Seedance video over this window; if the file is missing the 3D render stays as a placeholder
+const clips = [];
+for (const c of tl.clips || []) {
+  const ok = await fetch('../' + c.file, { method: 'HEAD' }).then(r => r.ok).catch(() => false);
+  if (!ok) continue;
+  const v = document.createElement('video'); v.src = '../' + c.file; v.muted = true; v.preload = 'auto';
+  await new Promise(r => { v.onloadeddata = r; v.onerror = r; });
+  clips.push({ ...c, v });
+}
+const seek = (v, t) => new Promise(r => { if (Math.abs(v.currentTime - t) < 0.001) return r(); v.onseeked = () => r(); v.currentTime = t; });
+const clamp = (x) => Math.max(0, Math.min(1, x));
+
+// 單字卡出現的時間窗 / card windows: at the target word until 1.4 s after the line, plus beats with card
+const cards = [];
+for (const c of cues) { const m = c.m; if (m.target && sc.cards?.[m.target]) { const first = m.target.split(' ').slice(-1)[0]; cards.push({ word: m.target, t0: c.start + wordTime(m.words, first) - 0.15, t1: c.start + m.dur + 1.4 }); } }
+/* 同一個字的卡片接得上就合併成一張 / merge a beat card into the line card of the same word */
+for (const b of beats) if (b.card && sc.cards?.[b.card]) { const same = cards.find(c => c.word === b.card && c.t1 >= b.t - 0.5); if (same) same.t1 = Math.max(same.t1, b.t + b.dur); else cards.push({ word: b.card, t0: b.t + 0.2, t1: b.t + b.dur }); }
+// 每個時間窗先試算，挑整段都不擋臉的角落 / choose the slot with the least face overlap over the whole window
+for (const cw of cards) {
+  let best = 0, bestS = Infinity;
+  CARD_SLOTS.forEach((slot, i) => {
+    let s = 0;
+    for (let t = cw.t0; t < cw.t1; t += 0.25) { sc.frame(t); const f = sc.faces ? projectFaces(S.camera, sc.faces()) : []; s += cardOverlap(slot, f); if (sc.avoidObjs) for (const o of sc.avoidObjs(t)) if (o.visible) s += cardOverlap(slot, [boxAsCircle(screenBox(S.camera, o))]);
+      for (const b of beats) if (t >= b.t && t < b.t + b.dur && sc.beatObj) { const o = sc.beatObj(b.label); if (o) s += cardOverlap(slot, [boxAsCircle(screenBox(S.camera, o))]); } }
+    if (s < bestS - 1) { bestS = s; best = i; }
+  });
+  cw.slot = CARD_SLOTS[best];
+}
+
+async function drawClip(t) {
+  for (const c of clips) {
+    if (t < c.t || t >= c.t + c.dur) continue;
+    await seek(c.v, Math.min(c.v.duration - 0.02, (c.from || 0) + (t - c.t)));
+    const vw = c.v.videoWidth, vh = c.v.videoHeight, k = Math.max(W / vw, H / vh);
+    ov.drawImage(c.v, (W - vw * k) / 2, (H - vh * k) / 2, vw * k, vh * k); return true;
+  }
+  return false;
+}
+function overlay(t, keep) {
+  if (!keep) ov.clearRect(0, 0, W, H);
+  if (sc.title) sc.title(ov, t);
+  if (sc.overlay && !keep) sc.overlay(ov, t, S.camera);   /* 播影片時不畫 3D 對位的箭頭 / no 3D-anchored arrows over a clip */
+  if (!keep) for (const b of beats) {
+    const k = clamp((t - b.t) / 0.35) * clamp((b.t + b.dur - t) / 0.35);
+    if (k > 0 && sc.beatObj) { const o = sc.beatObj(b.label); if (o) spotlightFX(ov, screenBox(S.camera, o), k, t, b.label); }
+  }
+  for (const cw of cards) {
+    if (t < cw.t0 || t >= cw.t1) continue;
+    const a = clamp((t - cw.t0) / 0.3) * clamp((cw.t1 - t) / 0.4);
+    wordCard(ov, cw.word, sc.cards[cw.word], a, { x: cw.slot.x, y: cw.slot.y });
+  }
+  for (const c of cues) { const tl0 = t - c.start; if (!nosub && tl0 >= -0.25 && tl0 < c.m.dur + 0.6) karaokeAt(ov, c.m.text, c.m.words, tl0, { target: c.m.target }); }
+}
+window.DUR = sc.dur; window.SC = sc; window.STAGE = S;   /* 檢查程式用 / for the checker */
+// &clean=1：不畫任何疊字（做 Seedance 首幀用）；&cam=x,y,z,lx,ly,lz：指定鏡頭 / clean=1 draws no overlays; cam= overrides the camera
+const clean = q.get('clean') === '1', camQ = q.get('cam') ? q.get('cam').split(',').map(Number) : null;
+window.renderFrame = async (t) => {
+  sc.frame(t);
+  if (camQ) { S.camera.position.set(camQ[0], camQ[1], camQ[2]); S.camera.lookAt(camQ[3], camQ[4], camQ[5]); S.camera.updateProjectionMatrix(); }
+  S.render(); ov.clearRect(0, 0, W, H); if (clean) return;
+  const inClip = await drawClip(t); overlay(t, inClip);
+};
+window.READY = true;
+</script>

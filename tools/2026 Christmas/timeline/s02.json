@@ -1,0 +1,81 @@
+{
+  "scene": "s02",
+  "title": "Scene 2 · Get Ready",
+  "dur": 26.9,
+  "cues": [
+    {
+      "id": "L04",
+      "start": 0.8
+    },
+    {
+      "id": "L05",
+      "start": 10.3
+    },
+    {
+      "id": "L06",
+      "start": 20.3
+    }
+  ],
+  "beats": [
+    {
+      "t": 5.0,
+      "dur": 2.5,
+      "label": "map"
+    },
+    {
+      "t": 7.5,
+      "dur": 2.3,
+      "label": "warm coat"
+    },
+    {
+      "t": 14.7,
+      "dur": 2.6,
+      "label": "a candy cane",
+      "card": "a candy cane"
+    },
+    {
+      "t": 17.3,
+      "dur": 2.1,
+      "label": "backpack"
+    }
+  ],
+  "music": {
+    "vol_db": -18,
+    "mood": "musicbox"
+  },
+  "sfx": [
+    {
+      "t": 1.0,
+      "type": "paper",
+      "db": -24
+    },
+    {
+      "t": 3.0,
+      "type": "paper",
+      "db": -20
+    },
+    {
+      "t": 4.5,
+      "type": "whoosh",
+      "db": -30
+    },
+    {
+      "t": 13.6,
+      "type": "sparkle",
+      "db": -20
+    },
+    {
+      "t": 23.1,
+      "type": "whoosh",
+      "db": -26
+    }
+  ],
+  "clips": [
+    {
+      "t": 20.1,
+      "dur": 3.4,
+      "file": "h3/L06/seedance_720p_1.mp4",
+      "from": 0.1
+    }
+  ]
+}

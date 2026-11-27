@@ -1,0 +1,72 @@
+{
+  "scene": "s04",
+  "title": "Scene 4 · The Tunnel",
+  "dur": 22.0,
+  "cues": [
+    {
+      "id": "L10",
+      "start": 0.5
+    },
+    {
+      "id": "L11",
+      "start": 7.7
+    },
+    {
+      "id": "L12",
+      "start": 13.5
+    }
+  ],
+  "beats": [
+    {
+      "t": 4.8,
+      "dur": 2.6,
+      "label": "tunnel"
+    },
+    {
+      "t": 19.2,
+      "dur": 2.6,
+      "label": "a snowman",
+      "card": "a snowman"
+    }
+  ],
+  "music": {
+    "vol_db": -18,
+    "mood": "musicbox"
+  },
+  "sfx": [
+    {
+      "t": 0.0,
+      "type": "wind",
+      "dur": 13.0,
+      "db": -26
+    },
+    {
+      "t": 10.0,
+      "type": "sparkle",
+      "db": -24
+    },
+    {
+      "t": 13.15,
+      "type": "whoosh",
+      "db": -16
+    },
+    {
+      "t": 13.62,
+      "type": "paper",
+      "db": -12
+    },
+    {
+      "t": 17.35,
+      "type": "sparkle",
+      "db": -20
+    }
+  ],
+  "clips": [
+    {
+      "t": 7.5,
+      "dur": 2.4,
+      "file": "h3/L11/seedance_720p_1.mp4",
+      "from": 0.1
+    }
+  ]
+}

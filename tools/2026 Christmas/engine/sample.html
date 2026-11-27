@@ -1,0 +1,88 @@
+<!doctype html><meta charset="utf-8"><title>Style K sample</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}#wrap{position:relative;width:1920px;height:1080px}#gl,#ov{position:absolute;left:0;top:0;width:1920px;height:1080px}</style>
+<div id="wrap"><canvas id="gl" width="1920" height="1080"></canvas><canvas id="ov" width="1920" height="1080"></canvas></div>
+<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
+<script type="module">
+// 畫風 K 樣張：?shot=lineup | forest | cabin ；renderFrame(t)
+import { THREE, makeStage, nightSky, aurora, snow, loadFont, karaoke, wordCard, iconOf, W, H } from './kit.js';
+import { makeKen, makeShuiling, makeSanta, makeReindeer, makeSnowman, pose, idle } from './chars.js';
+import { terrain, pine, moon, lantern, cabinRoom, fireplace, stocking, gift, xmasTree } from './props.js';
+const q = new URLSearchParams(location.search), shot = q.get('shot') || 'forest', nosub = q.get('nosub') === '1';
+await loadFont();
+const S = makeStage(document.getElementById('gl'), { ao: q.get('ao') !== '0' });
+const { scene, camera, renderer } = S; const ov = document.getElementById('ov').getContext('2d');
+const ken = makeKen(), sl = makeShuiling(), santa = makeSanta(), deer = makeReindeer(), sm = makeSnowman();
+let frame = () => {}, overlay = () => {};
+
+if (shot === 'lineup') {
+  scene.background = new THREE.Color('#9fc4ef');
+  scene.add(new THREE.HemisphereLight('#dfeaff', '#8b9bb8', 1.3));
+  const sun = new THREE.DirectionalLight('#fff4e0', 2.6); sun.position.set(4, 8, 6); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6 }); scene.add(sun);
+  terrain(scene, { size: 30, flat: 20 });
+  const row = [[sm.root, -3.1, 0], [ken.root, -1.35, 0], [sl.root, 0.05, 0], [santa.root, 1.55, 0], [deer.root, 3.4, -0.3]];
+  row.forEach(([o, x, ry]) => { o.position.set(x, 0, 0); o.rotation.y = ry; scene.add(o); });
+  deer.root.rotation.y = -0.75;
+  ken.setFace({ mouth: 'grin' }); sl.setFace({ eyes: 'happy', mouth: 'open' }); santa.setFace({ eyes: 'happy' });
+  pose(ken, { armRz: 150, armRx: -10, headZ: -6 }); pose(sl, { armLz: -20, armRz: 20, headZ: 6 }); pose(santa, { armLz: -35, armRz: 35 });
+  camera.position.set(0, 1.55, 7.6); camera.lookAt(0.1, 1.05, 0); camera.fov = 36; camera.updateProjectionMatrix();
+  overlay = () => { ov.save(); ov.font = 'bold 44px "Comic Relief"'; ov.textAlign = 'center'; ov.lineWidth = 9; ov.strokeStyle = '#1f2a5a'; ov.fillStyle = '#fff';
+    [['Snowman', -3.1], ['Ken', -1.35], ['Shuiling', 0.05], ['Santa', 1.55], ['Reindeer', 3.4]].forEach(([n, x]) => { const v = new THREE.Vector3(x, -0.25, 0).project(camera); const sx = (v.x + 1) / 2 * W; ov.strokeText(n, sx, 1000); ov.fillText(n, sx, 1000); }); ov.restore(); };
+}
+
+if (shot === 'forest') {
+  scene.fog = new THREE.FogExp2('#3b5a95', 0.022);
+  nightSky(scene); const au = aurora(scene); moon(scene, { pos: [-55, 62, -150] });
+  scene.add(new THREE.HemisphereLight('#8fb0ef', '#2c3a5e', 1.05));
+  const mn = new THREE.DirectionalLight('#bcd0ff', 1.9); mn.position.set(-6, 10, -4); mn.castShadow = true; mn.shadow.mapSize.set(2048, 2048); Object.assign(mn.shadow.camera, { left: -12, right: 12, top: 12, bottom: -12 }); mn.shadow.bias = -0.0008; scene.add(mn);
+  const rim = new THREE.DirectionalLight('#7fa8ff', 1.2); rim.position.set(2, 4, -8); scene.add(rim);
+  terrain(scene, { size: 64, flat: 9 });
+  pine(scene, -3, -1.6, { h: 10 }); pine(scene, 4, -7, { h: 12 }); pine(scene, -10, -8, { h: 13 }); pine(scene, 9, -3, { h: 8 }); pine(scene, -8, 3, { h: 7 }); pine(scene, 13, -11, { h: 14 }); pine(scene, -16, -3, { h: 11 }); pine(scene, 2, -16, { h: 15 });
+  const lan = lantern(scene, [3.2, 0, 1.2]);
+  sm.root.position.set(-9.5, 0, -1.5); sm.root.rotation.y = 0.5; sm.root.scale.setScalar(0.9); scene.add(sm.root);
+  deer.root.position.set(-2.4, 0, 0.6); deer.root.rotation.y = 0.75; scene.add(deer.root); deer.setFace({ eyes: 'worried' });
+  ken.root.position.set(0.5, 0, 1.3); ken.root.rotation.y = -0.85; scene.add(ken.root);
+  sl.root.position.set(1.65, 0, 1.9); sl.root.rotation.y = -0.55; scene.add(sl.root);
+  ken.setFace({ eyes: 'wide', mouth: 'o' }); sl.setFace({ eyes: 'worried', mouth: 'frown' });
+  const sn = snow(scene, { count: 3500, box: [30, 16, 24], center: [0, 0, 0], wind: 1.4, size: 0.06 });
+  const sn2 = snow(scene, { count: 600, box: [8, 5, 4], center: [0, 0, 6.5], wind: 1.2, size: 0.075, speed: 1.3 });
+  camera.fov = 34; camera.updateProjectionMatrix();
+  frame = (t) => {
+    au.update(t + 3); sn.update(t + 10); sn2.update(t + 10); deer.shiver(t);
+    pose(ken, { armLz: -10, armRz: 12, armRx: -50, headY: 4, headX: 6, bob: 0 }); pose(sl, { armLx: -70, armRx: -70, armLz: 8, armRz: -8, headZ: -8, headX: 8 });
+    camera.position.set(1.4 + t * 0.06, 2.3, 10.8 - t * 0.12); camera.lookAt(-0.6, 1.75, 0);
+  };
+  const icon = iconOf(renderer, deer.root, { yaw: 1.1, pitch: 0.15, dist: 2.2 });
+  overlay = (t) => { if (nosub) return; wordCard(ov, 'a reindeer', icon, 1); karaoke(ov, 'Under a pine tree, they find a reindeer.', 0.82, { target: 'a reindeer' }); };
+}
+
+if (shot === 'cabin') {
+  scene.background = new THREE.Color('#120c0a'); scene.fog = new THREE.Fog('#1a0f0a', 14, 30);
+  cabinRoom(scene);
+  scene.add(new THREE.HemisphereLight('#ffd9b0', '#3a2216', 0.55));
+  const winL = new THREE.SpotLight('#7fa0ff', 3, 14, 0.5, 0.6); winL.position.set(2.5, 3.2, -6); winL.target.position.set(1, 0, 0); scene.add(winL, winL.target);
+  const fp = fireplace(scene, -3, -6);
+  const st1 = stocking('#d22f2f'); st1.position.set(-3.6, 3.95, -5.0); scene.add(st1);
+  const st2 = stocking('#2f8a46'); st2.position.set(-2.4, 3.95, -5.0); scene.add(st2);
+  const tree = xmasTree(scene, 2.6, -3.2, { h: 7 }); tree.group.scale.setScalar(0.55);
+  [[2.1, -2.2, 9, '#2f7fd2'], [3.4, -1.9, 7, '#d23a3a'], [4.2, -2.6, 8, '#e8b030'], [2.8, -1.6, 6, '#7b4bd6']].forEach(([x, z, s, c], i) => { const gf = gift(s, c, i % 2 ? '#f2f2f2' : '#f2d04a', i + 3); gf.position.set(x, 0, z); gf.rotation.y = i * 0.4; scene.add(gf); });
+  ken.root.position.set(0.0, 0, 0.2); ken.root.rotation.y = 0.45; scene.add(ken.root);
+  sl.root.position.set(1.3, 0, 0.9); sl.root.rotation.y = 0.05; scene.add(sl.root);
+  santa.root.position.set(4.0, 0, 1.6); santa.root.rotation.y = -0.75; scene.add(santa.root);
+  ken.setFace({ eyes: 'happy', mouth: 'grin' }); sl.setFace({ eyes: 'wide', mouth: 'open' }); santa.setFace({ eyes: 'happy' });
+  camera.fov = 36; camera.updateProjectionMatrix();
+  frame = (t) => {
+    fp.update(t); tree.setOn(1, t);
+    pose(ken, { armLz: -150, armRz: 150, armLx: -10, armRx: -10, bob: 1.2, headX: -10 });
+    pose(sl, { armLz: -40, armRz: 120, armRx: -20, headX: -14, headY: 10 });
+    pose(santa, { armRz: 70, armRx: -30, armLz: -10, headY: -10 });
+    camera.position.set(0.4 + t * 0.08, 2.4, 9.6 - t * 0.1); camera.lookAt(0.7, 1.75, -2.4);
+  };
+  const tIcon = xmasTree(new THREE.Scene(), 0, 0, { h: 6 }); tIcon.setOn(1, 0.5);
+  const icon = iconOf(renderer, tIcon.group, { yaw: 0.4, pitch: 0.2, dist: 2.0 });
+  overlay = () => { if (nosub) return; wordCard(ov, 'Christmas tree', icon, 1); karaoke(ov, 'Look! The Christmas tree shines with bright lights!', 0.88, { target: 'Christmas tree' }); };
+}
+
+window.DUR = 4;
+window.renderFrame = (t) => { frame(t); S.render(); ov.clearRect(0, 0, W, H); overlay(t); };
+window.READY = true;
+</script>

@@ -1,0 +1,48 @@
+{
+  "title": "Ken and Shuiling Save Christmas",
+  "version": "v1",
+  "date": "2026-11-27",
+  "targets": ["Christmas tree", "a star", "a stocking", "a reindeer", "a snowman", "a candy cane", "a gift", "Santa"],
+  "scenes": [
+    {"n": 1, "title": "The Letter", "zh": "聖誕老公公的信", "web": "序曲：台灣冬日校園", "lines": [
+      {"id": 1, "who": "narrator", "en": "It is a cold winter morning at Ershui School.", "zh": "二水國小一個寒冷的冬天早晨。"},
+      {"id": 2, "who": "narrator", "en": "Ken and Shuiling find a letter from Santa!", "zh": "Ken 和水鈴發現一封聖誕老公公寄來的信！", "target": "Santa"},
+      {"id": 3, "who": "letter", "en": "\"Help! A big snowstorm blew my Christmas things away!\"", "zh": "「救命！一場大暴風雪把我的聖誕節東西都吹走了！」"}
+    ]},
+    {"n": 2, "title": "Get Ready", "zh": "整理背包", "web": "啟程：冒險背包整備", "lines": [
+      {"id": 4, "who": "narrator", "en": "Ken packs a map and a warm coat.", "zh": "Ken 帶了一張地圖和一件保暖外套。"},
+      {"id": 5, "who": "narrator", "en": "Shuiling puts a candy cane in her backpack.", "zh": "水鈴把一根拐杖糖放進背包。", "target": "a candy cane"},
+      {"id": 6, "who": "ken", "en": "\"Now we are ready. Let's go!\"", "zh": "「我們準備好了，出發吧！」"}
+    ]},
+    {"n": 3, "title": "The Magic Door", "zh": "魔法冰門", "web": "密室：點亮傳送門", "lines": [
+      {"id": 7, "who": "narrator", "en": "Behind the school, they find a big door made of ice.", "zh": "在學校後面，他們發現一扇冰做的大門。"},
+      {"id": 8, "who": "narrator", "en": "Ken puts a star on the top of the door.", "zh": "Ken 把一顆星星放在門的最上面。", "target": "a star"},
+      {"id": 9, "who": "narrator", "en": "Whoosh! The door opens with a bright purple light.", "zh": "咻！大門打開，發出明亮的紫色光芒。"}
+    ]},
+    {"n": 4, "title": "The Tunnel", "zh": "彩色隧道", "web": "傳送：穿越時空蟲洞", "lines": [
+      {"id": 10, "who": "narrator", "en": "They fly through a long and colorful tunnel.", "zh": "他們飛過一條又長又五彩繽紛的隧道。"},
+      {"id": 11, "who": "shuiling", "en": "\"Hold on tight! It's getting cold!\"", "zh": "「抓緊！越來越冷了！」"},
+      {"id": 12, "who": "narrator", "en": "Bump! They land in the snow next to a snowman.", "zh": "砰！他們掉進雪地，就在一個雪人旁邊。", "target": "a snowman"}
+    ]},
+    {"n": 5, "title": "The Snowstorm", "zh": "暴風雪", "web": "風雪：松林與失蹤方塊", "lines": [
+      {"id": 13, "who": "narrator", "en": "The wind is loud, and the snow is very deep.", "zh": "風好大聲，雪好深。"},
+      {"id": 14, "who": "narrator", "en": "The Christmas things are lost everywhere in the snow.", "zh": "聖誕節的東西散落在雪地各處。"},
+      {"id": 15, "who": "narrator", "en": "Ken digs and finds a gift with a red ribbon.", "zh": "Ken 挖呀挖，找到一個綁著紅緞帶的禮物。", "target": "a gift"}
+    ]},
+    {"n": 6, "title": "The Little Reindeer", "zh": "小馴鹿", "web": "馴鹿：尋找避風松林", "lines": [
+      {"id": 16, "who": "narrator", "en": "Under a pine tree, they find a reindeer.", "zh": "在一棵松樹下，他們發現一隻馴鹿。", "target": "a reindeer"},
+      {"id": 17, "who": "narrator", "en": "He is cold, and he is shaking in the wind.", "zh": "牠好冷，在風中發抖。"},
+      {"id": 18, "who": "narrator", "en": "Shuiling gives him a sweet treat, and he takes them to a little cabin.", "zh": "水鈴給牠一顆糖，牠就帶他們到一間小木屋。"}
+    ]},
+    {"n": 7, "title": "The Warm Fire", "zh": "溫暖的壁爐", "web": "木屋：點燃溫暖壁爐", "lines": [
+      {"id": 19, "who": "narrator", "en": "The cabin is dark and very cold.", "zh": "小木屋又暗又冷。"},
+      {"id": 20, "who": "narrator", "en": "Ken lights the fireplace, and the room is warm again.", "zh": "Ken 點燃壁爐，房間又溫暖起來。"},
+      {"id": 21, "who": "narrator", "en": "Shuiling hangs a stocking above the fireplace.", "zh": "水鈴把一隻聖誕襪掛在壁爐上方。", "target": "a stocking"}
+    ]},
+    {"n": 8, "title": "Merry Christmas", "zh": "聖誕快樂", "web": "慶典：聖誕大派對", "lines": [
+      {"id": 22, "who": "narrator", "en": "Knock, knock! A big man in a red coat comes in. Ho, ho, ho!", "zh": "叩叩！一位穿紅外套的大個子走進來。呵呵呵！"},
+      {"id": 23, "who": "santa", "en": "\"Thank you, kids! Now everyone can have a merry Christmas!\"", "zh": "「謝謝你們，孩子們！現在大家都能過個快樂的聖誕節了！」"},
+      {"id": 24, "who": "narrator", "en": "Look! The Christmas tree shines with bright lights!", "zh": "看！聖誕樹閃著明亮的燈光！", "target": "Christmas tree"}
+    ]}
+  ]
+}

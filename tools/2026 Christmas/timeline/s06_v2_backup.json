@@ -1,0 +1,26 @@
+{
+  "scene": "s06",
+  "title": "Scene 6 · The Little Reindeer",
+  "dur": 37.8,
+  "cues": [
+    {"id": "L16", "start": 0.5},
+    {"id": "L17", "start": 10.2},
+    {"id": "L18", "start": 21.0}
+  ],
+  "beats": [
+    {"t": 4.7, "dur": 2.5, "label": "pine tree"},
+    {"t": 7.2, "dur": 2.6, "label": "a reindeer", "card": "a reindeer"},
+    {"t": 34.8, "dur": 2.6, "label": "cabin"}
+  ],
+  "clips": [
+    {"t": 14.6, "dur": 6.0, "file": "h3/L17/act_720p.mp4"},
+    {"t": 26.8, "dur": 8.0, "file": "h3/L18/act_720p.mp4"}
+  ],
+  "music": {"vol_db": -18, "mood": "musicbox"},
+  "sfx": [
+    {"t": 0.0, "type": "wind", "dur": 21.0, "db": -26},
+    {"t": 21.9, "type": "sparkle", "db": -20},
+    {"t": 22.9, "type": "paper", "db": -24},
+    {"t": 23.4, "type": "paper", "db": -24}
+  ]
+}

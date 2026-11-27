@@ -1,0 +1,104 @@
+{
+  "scene": "s01",
+  "title": "Scene 1 · The Letter",
+  "dur": 30.4,
+  "cues": [
+    {
+      "id": "L01",
+      "start": 3.4
+    },
+    {
+      "id": "L02",
+      "start": 11.0
+    },
+    {
+      "id": "L03",
+      "start": 18.9
+    }
+  ],
+  "beats": [
+    {
+      "t": 7.9,
+      "dur": 2.6,
+      "label": "Ershui School"
+    },
+    {
+      "t": 15.8,
+      "dur": 1.4,
+      "label": "a letter"
+    },
+    {
+      "t": 17.2,
+      "dur": 1.4,
+      "label": "Santa",
+      "card": "Santa"
+    },
+    {
+      "t": 25.3,
+      "dur": 2.8,
+      "label": "a big snowstorm"
+    }
+  ],
+  "music": {
+    "vol_db": -18,
+    "mood": "musicbox"
+  },
+  "sfx": [
+    {
+      "t": 0.0,
+      "type": "wind",
+      "dur": 7.8,
+      "db": -30
+    },
+    {
+      "t": 11.5,
+      "type": "whoosh",
+      "db": -22
+    },
+    {
+      "t": 12.45,
+      "type": "sparkle",
+      "db": -20
+    },
+    {
+      "t": 17.15,
+      "type": "sparkle",
+      "db": -18
+    },
+    {
+      "t": 18.55,
+      "type": "paper",
+      "db": -18
+    },
+    {
+      "t": 19.15,
+      "type": "sparkle",
+      "db": -20
+    },
+    {
+      "t": 19.3,
+      "type": "wind",
+      "dur": 1.4,
+      "db": -26
+    },
+    {
+      "t": 20.4,
+      "type": "storm",
+      "dur": 7.7,
+      "db": -20
+    },
+    {
+      "t": 23.4,
+      "type": "whoosh",
+      "db": -18
+    }
+  ],
+  "clips": [
+    {
+      "t": 19.3,
+      "dur": 1.25,
+      "file": "h3/L03/seedance_720p_1.mp4",
+      "from": 0.7
+    }
+  ]
+}

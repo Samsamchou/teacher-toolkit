@@ -1,0 +1,12 @@
+# 影音、圖片、渲染、第三方套件不入庫 / no media, renders or vendored libraries
+renders/
+audio/
+vendor/
+fonts/
+參考/
+h3/*
+!h3/kie_ledger.json
+*.mp4
+*.wav
+*.png
+*.jpg

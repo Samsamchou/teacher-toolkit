@@ -1,0 +1,82 @@
+{
+  "scene": "s05",
+  "title": "Scene 5 · The Snowstorm",
+  "dur": 36.0,
+  "cues": [
+    {
+      "id": "L13",
+      "start": 0.5
+    },
+    {
+      "id": "L14",
+      "start": 13.9
+    },
+    {
+      "id": "L15",
+      "start": 18.5
+    }
+  ],
+  "beats": [
+    {
+      "t": 11.0,
+      "dur": 2.6,
+      "label": "deep snow"
+    },
+    {
+      "t": 30.8,
+      "dur": 2.6,
+      "label": "a gift",
+      "card": "a gift"
+    },
+    {
+      "t": 33.4,
+      "dur": 2.4,
+      "label": "red ribbon"
+    }
+  ],
+  "clips": [
+    {
+      "t": 5.0,
+      "dur": 6.0,
+      "file": "h3/L13/act_720p.mp4"
+    },
+    {
+      "t": 22.8,
+      "dur": 5.4,
+      "file": "h3/L15/act_720p.mp4"
+    }
+  ],
+  "music": {
+    "vol_db": -18,
+    "mood": "musicbox"
+  },
+  "sfx": [
+    {
+      "t": 0.0,
+      "type": "storm",
+      "dur": 13.8,
+      "db": -20
+    },
+    {
+      "t": 13.8,
+      "type": "wind",
+      "dur": 4.6,
+      "db": -26
+    },
+    {
+      "t": 18.7,
+      "type": "paper",
+      "db": -20
+    },
+    {
+      "t": 19.6,
+      "type": "paper",
+      "db": -20
+    },
+    {
+      "t": 21.6,
+      "type": "sparkle",
+      "db": -16
+    }
+  ]
+}
