@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { portal, type Artwork } from '../services/firebase'
 import { ArtworkCard } from './ArtworkCard'
+import { SHOW_SAFARI2 } from '../safari/flags'
 type Recording = {id:string;sentence:string;seat?:number;prompt?:string;result:{total_score:number;transcript:string;feedback:string};createdAt:number}
 const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())
 export function TeacherPortal() {
@@ -45,6 +46,7 @@ export function TeacherPortal() {
     <p><a href="/world-routines/teacher">🌍 World Routines Trip 作息之旅：全班進度與口說錄音 →</a></p>
     <p><a href="/world-routines-he-she/teacher">👫 World Routines Trip: He/She 作息之旅 he/she 版：全班進度與口說錄音 →</a></p>
     <p><a href="/safari-count/teacher">🦒 Safari Count 數數動物園：全班進度與口說錄音 →</a></p>
+    {SHOW_SAFARI2 && <p><a href="/safari-count-2/teacher">🐨 Safari Count 2 數數動物園第 2 版：全班進度與口說錄音 →</a></p>}
     {!signedIn?<form onSubmit={e=>{e.preventDefault();void run(async()=>{try{await portal('login',{pin});setSignedIn(true)}finally{setPin('')}})}}>
       <label>六碼通行碼<input type="password" inputMode="numeric" autoComplete="current-password" maxLength={6} value={pin} onChange={e=>setPin(e.target.value)}/></label>
       <button className="primary-button" disabled={busy||!/^\d{6}$/.test(pin)}>登入</button>

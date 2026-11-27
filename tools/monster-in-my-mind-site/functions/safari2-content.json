@@ -1,0 +1,479 @@
+{
+ "note": "Safari Count VERSION 2 (HWG5 U4) station bank, teacher 11/27 (rdq/RDQ-spec-safari-count-v2-20261127.md, v2/分配表_v2_核准_20261127.md): same 12 animals in new stations, counts 1-9 with three singular answers (koala, tiger, bear), every answer uses a different puzzle type than in version 1. Same pupils, vehicles and rules as version 1; picture = count picture v2-<station>-<key>.jpg (web/count/).",
+ "stations": [
+  {
+   "id": "taiwan",
+   "order": 1,
+   "country": "Taiwan",
+   "pupil": "Mei",
+   "pupilVoice": "girl",
+   "place": "Taipei Zoo",
+   "vehicle": "zoo train",
+   "welcome": "Welcome to Taipei Zoo! Let's get on the zoo train.",
+   "items": [
+    {
+     "key": "koala",
+     "answer": "KOALA",
+     "word": "koala",
+     "plural": "koalas",
+     "emoji": "🐨",
+     "count": 1,
+     "puzzle": "mirror",
+     "mode": "drag",
+     "question": "Look! How many koalas are there?",
+     "spoken": "There is one koala.",
+     "drag": [
+      {
+       "sentence": "How ___ ___ ___ there?",
+       "slots": [
+        "many",
+        "koalas",
+        "are"
+       ]
+      },
+      {
+       "sentence": "There ___ ___ koala.",
+       "slots": [
+        "is",
+        "one"
+       ]
+      }
+     ],
+     "distractors": [
+      "much",
+      "koala",
+      "'s",
+      "two"
+     ],
+     "picture": "v2-taiwan-koala.jpg"
+    },
+    {
+     "key": "elephants",
+     "answer": "ELEPHANTS",
+     "word": "elephant",
+     "plural": "elephants",
+     "emoji": "🐘",
+     "count": 3,
+     "puzzle": "morse",
+     "mode": "speak",
+     "question": "How many elephants are there?",
+     "spoken": "There are three elephants.",
+     "picture": "v2-taiwan-elephants.jpg"
+    }
+   ],
+   "like": {
+    "animal": "koalas",
+    "yes": true,
+    "clue": "I love koalas!",
+    "drag": {
+     "sentence": "___, PRONOUN ___.",
+     "slots": [
+      "Yes",
+      "does"
+     ]
+    },
+    "distractors": [
+     "No",
+     "do",
+     "doesn't"
+    ]
+   }
+  },
+  {
+   "id": "japan",
+   "order": 2,
+   "country": "Japan",
+   "pupil": "Haruto",
+   "pupilVoice": "boy",
+   "place": "Fuji Safari Park",
+   "vehicle": "jungle bus",
+   "welcome": "Welcome to Fuji Safari Park! Let's get on the jungle bus.",
+   "items": [
+    {
+     "key": "rhinos",
+     "answer": "RHINOS",
+     "word": "rhino",
+     "plural": "rhinos",
+     "emoji": "🦏",
+     "count": 2,
+     "puzzle": "grid",
+     "mode": "drag",
+     "question": "How many rhinos are there?",
+     "spoken": "There are two rhinos.",
+     "drag": [
+      {
+       "sentence": "How ___ ___ ___ there?",
+       "slots": [
+        "many",
+        "rhinos",
+        "are"
+       ]
+      },
+      {
+       "sentence": "There ___ ___ rhinos.",
+       "slots": [
+        "are",
+        "two"
+       ]
+      }
+     ],
+     "distractors": [
+      "much",
+      "rhino",
+      "is",
+      "three"
+     ],
+     "picture": "v2-japan-rhinos.jpg"
+    },
+    {
+     "key": "tiger",
+     "answer": "TIGER",
+     "word": "tiger",
+     "plural": "tigers",
+     "emoji": "🐯",
+     "count": 1,
+     "puzzle": "prints",
+     "mode": "speak",
+     "question": "How many tigers are there?",
+     "spoken": "There is one tiger.",
+     "picture": "v2-japan-tiger.jpg"
+    }
+   ],
+   "like": {
+    "animal": "tigers",
+    "yes": false,
+    "likes": "rhinos",
+    "clue": "I like rhinos!",
+    "drag": {
+     "sentence": "___, PRONOUN ___. Pronoun ___ rhinos.",
+     "slots": [
+      "No",
+      "doesn't",
+      "likes"
+     ]
+    },
+    "distractors": [
+     "Yes",
+     "does",
+     "like"
+    ]
+   }
+  },
+  {
+   "id": "kenya",
+   "order": 3,
+   "country": "Kenya",
+   "pupil": "Amani",
+   "pupilVoice": "girl",
+   "place": "Nairobi National Park",
+   "vehicle": "jeep",
+   "welcome": "Welcome to Nairobi National Park! Let's get in the jeep.",
+   "items": [
+    {
+     "key": "lions",
+     "answer": "LIONS",
+     "word": "lion",
+     "plural": "lions",
+     "emoji": "🦁",
+     "count": 6,
+     "puzzle": "algebra",
+     "mode": "drag",
+     "question": "How many lions are there?",
+     "spoken": "There are six lions.",
+     "drag": [
+      {
+       "sentence": "How ___ ___ ___ there?",
+       "slots": [
+        "many",
+        "lions",
+        "are"
+       ]
+      },
+      {
+       "sentence": "There ___ ___ lions.",
+       "slots": [
+        "are",
+        "six"
+       ]
+      }
+     ],
+     "distractors": [
+      "much",
+      "lion",
+      "is",
+      "seven"
+     ],
+     "picture": "v2-kenya-lions.jpg"
+    },
+    {
+     "key": "monkeys",
+     "answer": "MONKEYS",
+     "word": "monkey",
+     "plural": "monkeys",
+     "emoji": "🐒",
+     "count": 9,
+     "puzzle": "clues",
+     "mode": "speak",
+     "question": "How many monkeys are there?",
+     "spoken": "There are nine monkeys.",
+     "picture": "v2-kenya-monkeys.jpg"
+    }
+   ],
+   "like": {
+    "animal": "lions",
+    "yes": true,
+    "clue": "I love lions!",
+    "drag": {
+     "sentence": "___, PRONOUN ___.",
+     "slots": [
+      "Yes",
+      "does"
+     ]
+    },
+    "distractors": [
+     "No",
+     "do",
+     "doesn't"
+    ]
+   }
+  },
+  {
+   "id": "india",
+   "order": 4,
+   "country": "India",
+   "pupil": "Arjun",
+   "pupilVoice": "boy",
+   "place": "Ranthambore",
+   "vehicle": "jeep",
+   "welcome": "Welcome to Ranthambore! Let's get in the jeep.",
+   "items": [
+    {
+     "key": "turtles",
+     "answer": "TURTLES",
+     "word": "turtle",
+     "plural": "turtles",
+     "emoji": "🐢",
+     "count": 7,
+     "puzzle": "addsub",
+     "mode": "drag",
+     "question": "How many turtles are there?",
+     "spoken": "There are seven turtles.",
+     "drag": [
+      {
+       "sentence": "How ___ ___ ___ there?",
+       "slots": [
+        "many",
+        "turtles",
+        "are"
+       ]
+      },
+      {
+       "sentence": "There ___ ___ turtles.",
+       "slots": [
+        "are",
+        "seven"
+       ]
+      }
+     ],
+     "distractors": [
+      "much",
+      "turtle",
+      "is",
+      "eight"
+     ],
+     "picture": "v2-india-turtles.jpg"
+    },
+    {
+     "key": "bear",
+     "answer": "BEAR",
+     "word": "bear",
+     "plural": "bears",
+     "emoji": "🐻",
+     "count": 1,
+     "puzzle": "shift",
+     "mode": "speak",
+     "question": "How many bears are there?",
+     "spoken": "There is one bear.",
+     "picture": "v2-india-bear.jpg"
+    }
+   ],
+   "like": {
+    "animal": "bears",
+    "yes": false,
+    "likes": "turtles",
+    "clue": "I like turtles!",
+    "drag": {
+     "sentence": "___, PRONOUN ___. Pronoun ___ turtles.",
+     "slots": [
+      "No",
+      "doesn't",
+      "likes"
+     ]
+    },
+    "distractors": [
+     "Yes",
+     "does",
+     "like"
+    ]
+   }
+  },
+  {
+   "id": "singapore",
+   "order": 5,
+   "country": "Singapore",
+   "pupil": "Ling",
+   "pupilVoice": "girl",
+   "place": "Mandai",
+   "vehicle": "tram",
+   "welcome": "Welcome to Mandai! Let's get on the tram.",
+   "items": [
+    {
+     "key": "pandas",
+     "answer": "PANDAS",
+     "word": "panda",
+     "plural": "pandas",
+     "emoji": "🐼",
+     "count": 2,
+     "puzzle": "prints",
+     "mode": "drag",
+     "question": "How many pandas are there?",
+     "spoken": "There are two pandas.",
+     "drag": [
+      {
+       "sentence": "How ___ ___ ___ there?",
+       "slots": [
+        "many",
+        "pandas",
+        "are"
+       ]
+      },
+      {
+       "sentence": "There ___ ___ pandas.",
+       "slots": [
+        "are",
+        "two"
+       ]
+      }
+     ],
+     "distractors": [
+      "much",
+      "panda",
+      "is",
+      "three"
+     ],
+     "picture": "v2-singapore-pandas.jpg"
+    },
+    {
+     "key": "tigers",
+     "answer": "TIGERS",
+     "word": "tiger",
+     "plural": "tigers",
+     "emoji": "🐯",
+     "count": 4,
+     "puzzle": "mirror",
+     "mode": "speak",
+     "question": "How many tigers are there?",
+     "spoken": "There are four tigers.",
+     "picture": "v2-singapore-tigers.jpg"
+    }
+   ],
+   "like": {
+    "animal": "pandas",
+    "yes": true,
+    "clue": "I love pandas!",
+    "drag": {
+     "sentence": "___, PRONOUN ___.",
+     "slots": [
+      "Yes",
+      "does"
+     ]
+    },
+    "distractors": [
+     "No",
+     "do",
+     "doesn't"
+    ]
+   }
+  },
+  {
+   "id": "australia",
+   "order": 6,
+   "country": "Australia",
+   "pupil": "Jack",
+   "pupilVoice": "boy",
+   "place": "Werribee Open Range Zoo",
+   "vehicle": "safari bus",
+   "welcome": "Welcome to Werribee Open Range Zoo! Let's get on the safari bus.",
+   "items": [
+    {
+     "key": "zebras",
+     "answer": "ZEBRAS",
+     "word": "zebra",
+     "plural": "zebras",
+     "emoji": "🦓",
+     "count": 8,
+     "puzzle": "addsub",
+     "mode": "drag",
+     "question": "How many zebras are there?",
+     "spoken": "There are eight zebras.",
+     "drag": [
+      {
+       "sentence": "How ___ ___ ___ there?",
+       "slots": [
+        "many",
+        "zebras",
+        "are"
+       ]
+      },
+      {
+       "sentence": "There ___ ___ zebras.",
+       "slots": [
+        "are",
+        "eight"
+       ]
+      }
+     ],
+     "distractors": [
+      "much",
+      "zebra",
+      "is",
+      "nine"
+     ],
+     "picture": "v2-australia-zebras.jpg"
+    },
+    {
+     "key": "horses",
+     "answer": "HORSES",
+     "word": "horse",
+     "plural": "horses",
+     "emoji": "🐴",
+     "count": 5,
+     "puzzle": "morse",
+     "mode": "speak",
+     "question": "How many horses are there?",
+     "spoken": "There are five horses.",
+     "picture": "v2-australia-horses.jpg"
+    }
+   ],
+   "like": {
+    "animal": "zebras",
+    "yes": false,
+    "likes": "horses",
+    "clue": "I like horses!",
+    "drag": {
+     "sentence": "___, PRONOUN ___. Pronoun ___ horses.",
+     "slots": [
+      "No",
+      "doesn't",
+      "likes"
+     ]
+    },
+    "distractors": [
+     "Yes",
+     "does",
+     "like"
+    ]
+   }
+  }
+ ]
+}

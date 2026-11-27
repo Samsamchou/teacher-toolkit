@@ -5,7 +5,7 @@ import { expiryDate } from './core.mjs'
 import { studentIdentity } from './portal-core.mjs'
 
 export const DELETE_LOG = 'teacher_delete_log'
-export const ACTIVITIES = ['routines-i', 'routines-hs', 'safari']
+export const ACTIVITIES = ['routines-i', 'routines-hs', 'safari', 'safari2']
 
 export function createStudentDelete({db, Timestamp}) {
   // body.confirm must repeat the student ID: the page asks the teacher to type it, and the server checks it again.

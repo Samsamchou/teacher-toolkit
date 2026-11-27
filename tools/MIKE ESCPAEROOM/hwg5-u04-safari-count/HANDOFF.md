@@ -240,3 +240,24 @@
 - 程式：functions/portal-delete.mjs（共用）、routines.mjs（routineDelete／routineDeleteLog）、safari.mjs（safariDelete／safariDeleteLog）、app/components/StudentDelete.tsx。測試 60/60。
 - 部署：比對線上 monsterPortal 原始碼只差本次改動 → functions:monsterPortal＋hosting（cleanup policy 舊錯誤讓 hosting 沒發布，再單獨部署 hosting 一次）。
 - 待老師：正式站親手刪測試學號 50199（Safari 501 班）驗收；iPad 長按實機未試。
+
+### 11/27 第 2 版開工（RDQ rdq/RDQ-spec-safari-count-v2-20261127.md confirmed）
+- 分配表 v2/分配表_v2_核准_20261127.md：老師改新加坡口說題為 tigers×4、地點改 Mandai、肯亞做狒狒模型（Tripo 約 75 點，尚未做）。
+- 謎題卡 v2：cards.html ?v=2（PUZ2）、render.py --v2 → puzzles/out2/、contact_sheets.py --v2；新圖示 Codex v2a（turkey、tables、banana、tree）、v2b（cobras＋備用 buoy、kite、rubberduck）。12 張 0 錯誤，總表已傳老師待核准。
+- 下一步：謎題卡核准 → Music 3 背景音樂 → 狒狒模型 → 動畫分批（先台灣、日本）。
+
+### 11/27 第 2 版第一批（台灣、日本）
+- 謎題卡 12 張老師全部核准。狒狒 kenya_baboon_walk（Tripo 75 點，餘額 1,575）。
+- 場景 src/v2_taiwan.py（TV1 koala×1 爬樹、TV2 elephants×3）、v2_japan.py（JV1 rhinos×2、JV2 tiger×1）；檢查圖 qa/v2_check1_taiwan.jpg、v2_check2_japan.jpg（犀牛被切、老虎出畫面已修）。
+- 老師「四段可以正式渲染」→ qa/1127-190924（TV，1.36 單位）、1127-194242（JV，1.17 單位；G4 不給改 L4）。試片 out/v2_*（−15.8～−15.9 LUFS）＋_720、線索卡 v2_taiwan_elephants_clue_g/b、v2_japan_tiger_clue_g/b；數數圖 web/count/v2-*.jpg。等老師定案。
+- 第二批肯亞、印度場景 v2_kenya.py、v2_india.py 已寫，檢查圖排在渲染機器上；之後停機跑 Music 3（music/run_music.py；G4 同帳號同時只能一台，第一次 8 次都 503）。
+- 網站：functions safari-core bankApi(V1/V2)、safari.mjs version 2（safari2_* 集合、safari2... callables、teacher 動作 safari2...）、index.mjs 7 個 safari2 函式、SafariApp 依網址 /safari-count-2、登入頁音樂按鈕（/safari-count/audio/bgm.mp3）、SafariTeacher version、flags.ts SHOW_SAFARI2=false、local-preview v2；測試 62/62。publish_to_site.py 支援 v2（public/safari-count-2/）。web/audio_v2 90 個語音。全部未部署、未 commit。
+- ✅ 11/27 老師：「台灣、日本這四段可以定案」→ out/v2_taiwan_koala、v2_taiwan_elephants、v2_japan_rhinos、v2_japan_tiger（＋_720、線索卡版）定案。
+
+### 11/27 第 2 版第二批（肯亞、印度）＋收工
+- 場景 src/v2_kenya.py（KV1 lions×6：3 休息＋3 走；KV2 baboons×9 兩排過紅土路）、v2_india.py（IV1 turtles×7：4 曬＋3 爬進湖；IV2 bear×1 從高草走出、聞左右）。檢查圖 qa/v2_check1_kenya.jpg、v2_check1_india.jpg、v2_check2_kenya_india.jpg。老師「四段正式渲染」。
+- 正式渲染 qa/1127-223832（KV，1.46 單位）、1127-231220（IV，1.36 單位），都在 L4（G4 整晚要不到；第一次連 L4 都不給、IndexError 在 colab_run ensure_session 沒拿到 TOKEN，沒扣點）。試片 out/v2_kenya_lions、v2_kenya_monkeys、v2_india_turtles、v2_india_bear（−15.8～−15.9 LUFS）＋_720、線索卡 v2_kenya_monkeys_clue_g/b、v2_india_bear_clue_g/b；數數圖 web/count/v2-kenya-*、v2-india-*。已傳老師，**待定案**。
+- **我自己看到還要改**（下次開工先跟老師說）：KV2 最左一隻狒狒結尾仍貼左邊（ends 再右移或 lens 26）；IV2 草和地面仍偏白（exposure −0.5 好像沒生效，查 E.init／E.lights 是否覆寫 view_settings）。
+- 第三批新加坡、澳洲場景 src/v2_singapore.py（SV1 pandas×2 白天竹林＋遊園車；SV2 tigers×4 夜間）、v2_australia.py（AV1 zebras×8 reverse_clip；AV2 horses×5 普氏野馬走後吃草）已寫，**還沒跑檢查圖**。普氏野馬 models/australia_przewalski_walk.glb＝japan_whitehorse_walk 用 make_recolor.py 0-360 整張染 0.66,0.47,0.28（0 Tripo 點）。
+- 背景音樂 music/run_music.py（Music 3 完整安裝，G4）整天 3 輪共 24 次都 503 要不到 G4，沒開機沒扣點；下次再試或問老師改 A100（較貴）。
+- 今日 Colab：檢查圖約 0.9 單位＋正式渲染 5.35 單位（TV 1.36、JV 1.17、KV 1.46、IV 1.36）≈ 6.3 單位；餘額約 85。Tripo 75 點（狒狒），餘額 1,575。

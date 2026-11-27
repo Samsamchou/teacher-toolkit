@@ -8,8 +8,8 @@ import { getSentencePreview } from '../app/utils/content'
 import type { FormState } from '../app/types'
 import type { Artwork } from '../app/services/firebase'
 // Safari Count: the preview runs the real server rules (answers, counts, step order, grammar check); only the AI score is a stub.
-import { READY as SAFARI, stationFor as safariStation, itemFor as safariItem, publicStations, checkPuzzle, checkCount, checkDrag, sceneOf, spokenCountCheck, speakingPassed,
-  progressView, stationView, stepAllowed, teacherCells, teacherStations } from '../functions/safari-core.mjs'
+import { itemFor as safariItem, checkPuzzle, checkCount, checkDrag, sceneOf, spokenCountCheck, speakingPassed,
+  stationView, stepAllowed, teacherCells, V1, V2 } from '../functions/safari-core.mjs'
 type Session={studentId:string;teacher:boolean;works:Artwork[];passed:Set<string>}
 // Safari Count preview: one saved speaking attempt, and a demo recording (half a second of a soft beep, base64 WAV).
 type SafariRec={kind:'prev'|'pass';item:string;station:string;targetText:string;transcript:string;total_score:number;accuracy:number;fluency:number;completeness:number;numberOk:boolean;verbOk:boolean;nounOk:boolean;passed:boolean;createdAt:number;audio:string}
@@ -34,7 +34,11 @@ export function localPreview():Plugin {
     try {
       const chunks:Buffer[]=[];for await(const chunk of req)chunks.push(Buffer.from(chunk))
       const body=JSON.parse(Buffer.concat(chunks).toString()||'{}')
-      const action=url.pathname.split('/').at(-1)
+      let action=url.pathname.split('/').at(-1)
+      // Safari Count 2 (11/27): safari2... / scoreSafari2Speaking use the version 2 bank and their own demo progress in this session.
+      const sv2=/^(safari2|scoreSafari2)/.test(action??'')
+      if(sv2)action=action!.replace('safari2','safari').replace('Safari2','Safari')
+      const SA=sv2?V2:V1
       const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())
       if(action==='joinStudent') {if(!/^(501|502|601|602)[0-9]{1,9}$/.test(body.studentId??''))return send({error:'學號格式不正確'},400);session.studentId=body.studentId;return send({joined:true})}
       if(action==='practiceStatus')return send({remaining:8})
@@ -62,12 +66,12 @@ export function localPreview():Plugin {
       // Safari Count: in-memory demo of the six callables. The AI score is a fixed 90 (nothing is sent anywhere).
       if(['safariState','safariPuzzle','safariCount','safariAnswer','scoreSafariSpeaking','safariStamp'].includes(action??'')) {
         type SP={items?:Record<string,Record<string,number>>;likeAt?:number;stampAt?:number;minutes?:number|null;stars?:number;gameScore?:number}
-        const box=session as Session&{safari?:Record<string,SP>;safariRecs?:SafariRec[];safariLeft?:number}
+        const box=(sv2?((session as Session&{v2box?:object}).v2box ??= {}):session) as Session&{safari?:Record<string,SP>;safariRecs?:SafariRec[];safariLeft?:number}
         const saved=(box.safari ??= {}), left=()=>box.safariLeft ??= 30
-        if(action==='safariState')return send({stations:publicStations(),progress:progressView({stations:saved}),remaining:left(),studentId:session.studentId})
+        if(action==='safariState')return send({stations:SA.publicStations(),progress:SA.progressView({stations:saved}),remaining:left(),studentId:session.studentId})
         const refuse=(text:string)=>send({error:text},400)
         try{
-          const station=safariStation(body.station),item=action==='safariStamp'?null:safariItem(station,body.item)
+          const station=SA.stationFor(body.station),item=action==='safariStamp'?null:safariItem(station,body.item)
           const x:SP=(saved[station.id] ??= {}), mine=(key:string)=>((x.items ??= {})[key] ??= {})
           if(action==='safariPuzzle'){if(!item)return refuse('Invalid question');const passed=checkPuzzle(item,body.guess),p=mine(item.key);if(!p.puzzleAt){if(passed)p.puzzleAt=Date.now();else p.puzzleTries=(p.puzzleTries??0)+1}return send({passed,...(p.puzzleAt?{scene:sceneOf(item)}:{})})}
           if(action==='safariCount'){if(!item)return refuse('Invalid question');if(!stepAllowed('count',station,item,x))return refuse('請先解開謎題。');const passed=checkCount(item,body.count),p=mine(item.key);if(!p.countAt){if(passed)p.countAt=Date.now();else p.countTries=(p.countTries??0)+1}return send({passed})}
@@ -117,7 +121,7 @@ export function localPreview():Plugin {
       if(action==='session')return send({signedIn:true})
       // Teacher "delete this pupil" (11/26): demo students are hidden per activity for this preview session; nothing real is deleted.
       const gone=session as Session&{deleted?:Record<string,string[]>;deleteLog?:{activity:string;studentId:string;classId:string;summary:string;deletedAt:number}[]}
-      const activityOf=(a:string)=>a.startsWith('safari')?'safari':`routines-${body.variant==='hs'?'hs':'i'}`
+      const activityOf=(a:string)=>a.startsWith('safari')?(sv2?'safari2':'safari'):`routines-${body.variant==='hs'?'hs':'i'}`
       const hidden=(a:string)=>(gone.deleted ??= {})[a] ??= []
       if(action==='safariDelete'||action==='routineDelete') {
         const a=activityOf(action),id=String(body.studentId??'').trim()
@@ -125,24 +129,24 @@ export function localPreview():Plugin {
         if(String(body.confirm??'').trim()!==id)return send({error:'請輸入相同的學號才能刪除。'},400)
         if(hidden(a).includes(id))return send({error:'找不到這位學生在這個活動的紀錄。'},404)
         hidden(a).push(id)
-        if(id===session.studentId){const own=session as Session&{safari?:object;routines?:object;routinesHs?:object};if(a==='safari')own.safari={};else if(a==='routines-hs')own.routinesHs={};else own.routines={}}
+        if(id===session.studentId){const own=session as Session&{safari?:object;routines?:object;routinesHs?:object;v2box?:{safari?:object}};if(a==='safari')own.safari={};else if(a==='safari2')(own.v2box ??= {}).safari={};else if(a==='routines-hs')own.routinesHs={};else own.routines={}}
         const summary='本機示範資料';(gone.deleteLog ??= []).push({activity:a,studentId:id,classId:id.slice(0,3),summary,deletedAt:Date.now()})
         return send({deleted:true,studentId:id,summary})
       }
       if(action==='safariDeleteLog'||action==='routineDeleteLog'){const a=activityOf(action);return send({log:(gone.deleteLog??[]).filter(x=>x.activity===a).sort((x,y)=>y.deletedAt-x.deletedAt)})}
       // Safari Count teacher view: this preview session's own progress and recordings plus three demo students (no real data).
       if(action==='safari'||action==='safariRecords'||action==='safariRecording') {
-        const box=session as Session&{safari?:Record<string,Parameters<typeof teacherCells>[1]>;safariRecs?:SafariRec[]}
+        const box=(sv2?((session as Session&{v2box?:object}).v2box ??= {}):session) as Session&{safari?:Record<string,Parameters<typeof teacherCells>[1]>;safariRecs?:SafariRec[]}
         if(action==='safari') {
           const cls=String(body.classId??'')
           if(!['501','502','601','602'].includes(cls))return send({error:'請選擇班級。'},400)
-          const demo=(n:number)=>Object.fromEntries(SAFARI.map(s=>{const items=Object.fromEntries(s.items.map((it,i)=>[it.key,i<n?{puzzleAt:1,countAt:1,answeredAt:1,score:it.mode==='speak'?86+n*3:null,puzzleTries:n%3,countTries:i}:i===n?{puzzleAt:1,puzzleTries:2}:{}]))
+          const demo=(n:number)=>Object.fromEntries(SA.READY.map(s=>{const items=Object.fromEntries(s.items.map((it,i)=>[it.key,i<n?{puzzleAt:1,countAt:1,answeredAt:1,score:it.mode==='speak'?86+n*3:null,puzzleTries:n%3,countTries:i}:i===n?{puzzleAt:1,puzzleTries:2}:{}]))
             return [s.id,teacherCells(s,{items,...(n>=2?{likeAt:1}:{}),...(n>=3?{stampAt:1,minutes:9+n}:{})})]}))
           const students=[{studentId:cls+'03',updatedAt:Date.now()-5400e3,stations:demo(3)},{studentId:cls+'12',updatedAt:Date.now()-1800e3,stations:demo(1)},{studentId:cls+'21',updatedAt:Date.now()-120e3,stations:demo(0)}]
-          if(session.studentId.startsWith(cls))students.push({studentId:session.studentId,updatedAt:Date.now(),stations:Object.fromEntries(SAFARI.map(s=>[s.id,teacherCells(s,box.safari?.[s.id])]))})
-          return send({students:students.filter(x=>!hidden('safari').includes(x.studentId)).sort((a,b)=>a.studentId.localeCompare(b.studentId)),stations:teacherStations()})
+          if(session.studentId.startsWith(cls))students.push({studentId:session.studentId,updatedAt:Date.now(),stations:Object.fromEntries(SA.READY.map(s=>[s.id,teacherCells(s,box.safari?.[s.id])]))})
+          return send({students:students.filter(x=>!hidden(sv2?'safari2':'safari').includes(x.studentId)).sort((a,b)=>a.studentId.localeCompare(b.studentId)),stations:SA.teacherStations()})
         }
-        const st=SAFARI.find(s=>s.id===body.station),it=st?.items.find(x=>x.key===body.item&&x.mode==='speak')
+        const st=SA.READY.find(s=>s.id===body.station),it=st?.items.find(x=>x.key===body.item&&x.mode==='speak')
         if(!st||!it)return send({error:'題目不正確。'},400)
         const own=body.studentId===session.studentId?(box.safariRecs??[]).filter(r=>r.station===st.id&&r.item===it.key):null
         if(action==='safariRecords')return send({records:own?own.map(r=>({...r,audio:undefined})):[

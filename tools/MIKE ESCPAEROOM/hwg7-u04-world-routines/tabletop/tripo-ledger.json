@@ -619,5 +619,19 @@
    "balance_before": 1705,
    "balance_after": 1650
   }
+ ],
+ "2026-11-27 Safari Count v2 Kenya baboon (teacher approved ~75)": [
+  {
+   "item": "olive baboon: Image to Model H3.1 from Codex refs/baboon_ref.png",
+   "points": 55,
+   "balance_before": 1650,
+   "balance_after": 1595
+  },
+  {
+   "item": "baboon Auto Rig Other + Walk preset -> models/kenya_baboon_walk.glb (gltf_fk 4 feet move; walk_dir ok)",
+   "points": 20,
+   "balance_before": 1595,
+   "balance_after": 1575
+  }
  ]
 }

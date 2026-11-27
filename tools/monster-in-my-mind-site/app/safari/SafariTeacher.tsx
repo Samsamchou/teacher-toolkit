@@ -33,7 +33,9 @@ function toCsv(stations: Station[], rows: Row[]) {
   return '﻿' + [head, ...body].map(line => line.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n')
 }
 
-export default function SafariTeacher() {
+export default function SafariTeacher({ version = 1 }: { version?: 1 | 2 }) {
+  // Version 2 (/safari-count-2/teacher, 11/27): the same page on its own records (portal actions safari2...).
+  const v2 = version === 2, act = (name: string) => v2 ? name.replace(/^safari/, 'safari2') : name, slug = v2 ? 'safari-count-2' : 'safari-count'
   const [signedIn, setSignedIn] = useState(false), [pin, setPin] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('')
   const [classId, setClassId] = useState(''), [rows, setRows] = useState<Row[] | null>(null), [stations, setStations] = useState<Station[]>([])
   const [pick, setPick] = useState<{ studentId: string; station: string; item: string } | null>(null), [records, setRecords] = useState<Rec[] | null>(null)
@@ -43,7 +45,7 @@ export default function SafariTeacher() {
   const menu = useStudentMenu(id => { setNotice(''); setTarget(id) })
   useEffect(() => { if (pick) panel.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, [pick])
   useEffect(() => { portal('session').then(() => setSignedIn(true)).catch(() => {}) }, [])
-  useEffect(() => { if (signedIn) portal<{ log: DeleteEntry[] }>('safariDeleteLog').then(d => setLog(d.log)).catch(() => {}) }, [signedIn])
+  useEffect(() => { if (signedIn) portal<{ log: DeleteEntry[] }>(v2 ? 'safari2DeleteLog' : 'safariDeleteLog').then(d => setLog(d.log)).catch(() => {}) }, [signedIn, v2])
   useEffect(() => () => { if (clip) URL.revokeObjectURL(clip.url) }, [clip])
   async function run(action: () => Promise<void>) {
     if (lock.current) return
@@ -53,37 +55,37 @@ export default function SafariTeacher() {
   // Teacher 11/26: back up this pupil's row as CSV, then delete their Safari progress (recordings stay).
   async function remove(studentId: string) {
     const row = rows?.find(r => r.studentId === studentId)
-    if (row) downloadCsv(toCsv(stations, [row]), `safari-count-${studentId}-刪除前備份.csv`)
-    const data = await portal<{ summary: string }>('safariDelete', { studentId, confirm: studentId })
+    if (row) downloadCsv(toCsv(stations, [row]), `${slug}-${studentId}-刪除前備份.csv`)
+    const data = await portal<{ summary: string }>(act('safariDelete'), { studentId, confirm: studentId })
     setTarget(null); setNotice(`已刪除 ${studentId} 的紀錄（${data.summary}）。`)
     await loadClass(classId)
-    setLog((await portal<{ log: DeleteEntry[] }>('safariDeleteLog')).log)
+    setLog((await portal<{ log: DeleteEntry[] }>(act('safariDeleteLog'))).log)
   }
   async function loadClass(id: string) {
     setClassId(id); setPick(null); setRecords(null); setClip(null)
-    const data = await portal<{ students: Row[]; stations: Station[] }>('safari', { classId: id })
+    const data = await portal<{ students: Row[]; stations: Station[] }>(act('safari'), { classId: id })
     setRows(data.students); setStations(data.stations)
   }
   async function openRecords(studentId: string, station: string, item: string) {
     setPick({ studentId, station, item }); setRecords(null); setClip(null)
-    const data = await portal<{ records: Rec[] }>('safariRecords', { studentId, station, item })
+    const data = await portal<{ records: Rec[] }>(act('safariRecords'), { studentId, station, item })
     setRecords(data.records.sort((a, b) => a.createdAt - b.createdAt))
   }
   async function play(kind: string) {
-    const data = await portal<{ audio: string }>('safariRecording', { ...pick!, kind })
+    const data = await portal<{ audio: string }>(act('safariRecording'), { ...pick!, kind })
     const bytes = Uint8Array.from(atob(data.audio), c => c.charCodeAt(0))
     setClip({ kind, url: URL.createObjectURL(new Blob([bytes], { type: 'audio/wav' })) })
   }
   function download() {
     const url = URL.createObjectURL(new Blob([toCsv(stations, rows ?? [])], { type: 'text/csv;charset=utf-8' }))
-    const a = document.createElement('a'); a.href = url; a.download = `safari-count-${classId}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
+    const a = document.createElement('a'); a.href = url; a.download = `${slug}-${classId}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
   const station = pick ? stations.find(s => s.id === pick.station) : null, item = station?.items.find(x => x.key === pick?.item)
   const done = rows ? rows.filter(r => stamps(stations, r) === stations.length).length : 0
 
   return <main className="teacher-page wr-teacher sc-teacher">
-    <a href="/teacher">← 教師後台</a> · <a href="/safari-count">Safari Count 學生頁</a>
-    <h1>🦓 Safari Count · 野生動物數數紀錄</h1>
+    <a href="/teacher">← 教師後台</a> · <a href={`/${slug}`}>Safari Count{v2 ? ' 2' : ''} 學生頁</a> · <a href={v2 ? '/safari-count/teacher' : '/safari-count-2/teacher'}>{v2 ? '看第 1 版紀錄' : '看第 2 版紀錄'}</a>
+    <h1>🦓 Safari Count{v2 ? ' 2' : ''} · 野生動物數數紀錄{v2 ? '（第 2 版）' : ''}</h1>
     {!signedIn ? <form onSubmit={e => { e.preventDefault(); void run(async () => { try { await portal('login', { pin }); setSignedIn(true) } finally { setPin('') } }) }}>
       <label>六碼通行碼（和教師後台相同）<input type="password" inputMode="numeric" autoComplete="current-password" maxLength={6} value={pin} onChange={e => setPin(e.target.value)} /></label>
       <button className="primary-button" disabled={busy || !/^\d{6}$/.test(pin)}>登入</button>
@@ -127,7 +129,7 @@ export default function SafariTeacher() {
         </article>)}
       </section>}
       <DeleteLog log={log} />
-      {target && <DeleteDialog studentId={target} activity="Safari Count" busy={busy} onCancel={() => setTarget(null)} onConfirm={() => void run(() => remove(target))} />}
+      {target && <DeleteDialog studentId={target} activity={v2 ? 'Safari Count 2（第 2 版）' : 'Safari Count'} busy={busy} onCancel={() => setTarget(null)} onConfirm={() => void run(() => remove(target))} />}
       <button className="secondary-button" disabled={busy} onClick={() => void run(async () => { await portal('logout'); setSignedIn(false); setRows(null); setPick(null); setClip(null); setLog(null); setNotice('') })}>登出</button>
     </>}
     {error && <p role="alert">{error}</p>}

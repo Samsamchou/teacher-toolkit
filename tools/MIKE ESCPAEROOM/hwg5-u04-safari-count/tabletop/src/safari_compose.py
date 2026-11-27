@@ -17,7 +17,14 @@ CLIPS = {'TW1': ('taiwan', 'panda', 6.0, 'Taiwan'), 'TW2': ('taiwan', 'bears', 7
          'KE1': ('kenya', 'zebras', 7.0, 'Kenya'), 'KE2': ('kenya', 'rhino', 7.0, 'Kenya'),
          'IN1': ('india', 'tigers', 7.0, 'India'), 'IN2': ('india', 'monkeys', 7.0, 'India'),
          'SG1': ('singapore', 'elephants', 7.0, 'Singapore'), 'SG2': ('singapore', 'turtles', 7.0, 'Singapore'),
-         'AU1': ('australia', 'koalas', 7.0, 'Australia'), 'AU2': ('australia', 'lion', 7.0, 'Australia')}
+         'AU1': ('australia', 'koalas', 7.0, 'Australia'), 'AU2': ('australia', 'lion', 7.0, 'Australia'),
+         # version 2 (teacher 11/27): station 'v2_<country>' -> voice v2_<country>_<key>_a, output out/v2_<country>_<key>.mp4
+         'TV1': ('v2_taiwan', 'koala', 7.0, 'Taiwan'), 'TV2': ('v2_taiwan', 'elephants', 7.0, 'Taiwan'),
+         'JV1': ('v2_japan', 'rhinos', 7.0, 'Japan'), 'JV2': ('v2_japan', 'tiger', 7.0, 'Japan'),
+         'KV1': ('v2_kenya', 'lions', 7.0, 'Kenya'), 'KV2': ('v2_kenya', 'monkeys', 7.0, 'Kenya'),
+         'IV1': ('v2_india', 'turtles', 7.0, 'India'), 'IV2': ('v2_india', 'bear', 7.0, 'India'),
+         'SV1': ('v2_singapore', 'pandas', 7.0, 'Singapore'), 'SV2': ('v2_singapore', 'tigers', 7.0, 'Singapore'),
+         'AV1': ('v2_australia', 'zebras', 7.0, 'Australia'), 'AV2': ('v2_australia', 'horses', 7.0, 'Australia')}
 RED = '&H003C3CE6&'; GOLD = '&H0000D7FF&'
 NUM = {'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'}
 

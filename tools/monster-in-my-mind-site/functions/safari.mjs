@@ -6,17 +6,21 @@ import { diagnostic } from './assessment-provider.mjs'
 import { studentIdentity, CLASSES } from './portal-core.mjs'
 import { createStudentDelete } from './portal-delete.mjs'
 import { SPEAK_DAILY_LIMIT, routineQuotaId } from './routines-core.mjs'
-import { READY, stationFor, itemFor, publicStations, checkPuzzle, checkCount, checkDrag, sceneOf, spokenCountCheck, speakingPassed,
-  safariScoringPrompt, SPEAK_SCHEMA, progressView, stationView, stepAllowed, safariRecordId, teacherCells, teacherStations } from './safari-core.mjs'
+import { V1, V2, itemFor, checkPuzzle, checkCount, checkDrag, sceneOf, spokenCountCheck, speakingPassed,
+  safariScoringPrompt, SPEAK_SCHEMA, stationView, stepAllowed, safariRecordId, teacherCells } from './safari-core.mjs'
 
 export const STORE = {progress: 'safari_progress', records: 'safari_records', audio: 'safari-recordings', quotas: 'routines_quotas'}
+// Version 2 (/safari-count-2, teacher 11/27): own bank, collections, storage folder and teacher actions (safari2...); same daily allowance.
+export const STORE2 = {progress: 'safari2_progress', records: 'safari2_records', audio: 'safari2-recordings', quotas: 'routines_quotas'}
 
-export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInput, assess}) {
-  const progressRef = studentKey => db.doc(`${STORE.progress}/` + studentKey)
+export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInput, assess, version = 1}) {
+  const v2 = version === 2, STORE_ = v2 ? STORE2 : STORE, ACT = v2 ? 'safari2' : 'safari', ACTIVITY = v2 ? 'safari2' : 'safari'
+  const {READY, stationFor, publicStations, progressView, teacherStations} = v2 ? V2 : V1
+  const progressRef = studentKey => db.doc(`${STORE_.progress}/` + studentKey)
   const removal = createStudentDelete({db, Timestamp})
   const identityFields = m => ({studentKey: m.studentKey, studentId: m.studentId ?? null, classId: m.classId ?? null})
   async function remaining(studentKey) {
-    const quota = (await db.doc(`${STORE.quotas}/` + routineQuotaId(studentKey, taipeiDay())).get()).data()
+    const quota = (await db.doc(`${STORE_.quotas}/` + routineQuotaId(studentKey, taipeiDay())).get()).data()
     return Math.max(0, SPEAK_DAILY_LIMIT - (quota?.used ?? 0))
   }
   const target = data => {
@@ -82,7 +86,7 @@ export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInp
     const audio = safeInput(() => validateAudio(data.audio))
     const before = (await progressRef(m.studentKey).get()).data()?.stations?.[station.id]
     order(stepAllowed('answer', station, item, before), '請先數一數動物。')
-    const day = taipeiDay(), quotaRef = db.doc(`${STORE.quotas}/` + routineQuotaId(m.studentKey, day))
+    const day = taipeiDay(), quotaRef = db.doc(`${STORE_.quotas}/` + routineQuotaId(m.studentKey, day))
     // Reserve one of today's assessments before calling the model; give it back if the call fails.
     await db.runTransaction(async tx => {
       const used = (await tx.get(quotaRef)).data()?.used ?? 0
@@ -105,9 +109,9 @@ export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInp
     // Keep two recordings per question, like World Routines: the passing attempt and the attempt just before it.
     const kind = passed ? 'pass' : 'prev', already = Boolean(before?.items?.[item.key]?.answeredAt)
     if (!already) {
-      const expiresAt = expiryDate(), audioPath = `${STORE.audio}/${m.studentKey}/${station.id}-${item.key}-${kind}.wav`
+      const expiresAt = expiryDate(), audioPath = `${STORE_.audio}/${m.studentKey}/${station.id}-${item.key}-${kind}.wav`
       await bucket().file(audioPath).save(audio, {resumable: false, contentType: 'audio/wav', metadata: {metadata: {expiresAt: expiresAt.toISOString()}}})
-      await db.doc(`${STORE.records}/` + safariRecordId(m.studentKey, station.id, item.key, kind)).set({...identityFields(m), station: station.id, item: item.key, kind,
+      await db.doc(`${STORE_.records}/` + safariRecordId(m.studentKey, station.id, item.key, kind)).set({...identityFields(m), station: station.id, item: item.key, kind,
         targetText: item.spoken, audioPath, audioHash: hash(audio), transcript: result.transcript, accuracy: result.accuracy, fluency: result.fluency,
         completeness: result.completeness, total_score: result.total_score, feedback: result.feedback, ...check, passed, day, createdAt: Date.now(),
         expiresAt: Timestamp.fromDate(expiresAt)})
@@ -134,16 +138,18 @@ export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInp
 
   // Teacher portal actions (already behind the six-digit PIN session). Returns undefined for other actions.
   async function teacherAction(action, body, fail) {
+    if (!action.startsWith(ACT) || (v2 === false && action.startsWith('safari2'))) return undefined
+    action = 'safari' + action.slice(ACT.length)          // safari2Records -> safariRecords (version 2 uses its own names)
     if (!['safari', 'safariRecords', 'safariRecording', 'safariDelete', 'safariDeleteLog'].includes(action)) return undefined
     // Delete one pupil's Safari progress (recordings stay); the log lists earlier deletions (teacher 11/26).
-    if (action === 'safariDelete') return removal.remove('safari', STORE.progress, body, fail, x => {
+    if (action === 'safariDelete') return removal.remove(ACTIVITY, STORE_.progress, body, fail, x => {
       const s = x.stations ?? {}, items = READY.flatMap(st => st.items.map(it => s[st.id]?.items?.[it.key]?.answeredAt))
       return `蓋章 ${READY.filter(st => s[st.id]?.stampAt).length} 國、作答 ${items.filter(Boolean).length} 題`
     })
-    if (action === 'safariDeleteLog') return removal.list('safari', fail)
+    if (action === 'safariDeleteLog') return removal.list(ACTIVITY, fail)
     if (action === 'safari') {
       if (!CLASSES.includes(body.classId)) fail(400, '請選擇班級。')
-      const docs = await db.collection(STORE.progress).where('classId', '==', body.classId).get()
+      const docs = await db.collection(STORE_.progress).where('classId', '==', body.classId).get()
       return {students: docs.docs.map(doc => { const x = doc.data()
         return {studentId: x.studentId, updatedAt: x.updatedAt, stations: Object.fromEntries(READY.map(s => [s.id, teacherCells(s, x.stations?.[s.id])]))} })
         .sort((a, b) => String(a.studentId).localeCompare(String(b.studentId))), stations: teacherStations()}
@@ -152,13 +158,13 @@ export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInp
     const station = READY.find(x => x.id === body.station) ?? fail(400, '站別不正確。')
     const item = station.items.find(x => x.key === body.item && x.mode === 'speak') ?? fail(400, '題目不正確。')
     if (action === 'safariRecords') {
-      const docs = await Promise.all(['prev', 'pass'].map(kind => db.doc(`${STORE.records}/` + safariRecordId(id.studentKey, station.id, item.key, kind)).get()))
+      const docs = await Promise.all(['prev', 'pass'].map(kind => db.doc(`${STORE_.records}/` + safariRecordId(id.studentKey, station.id, item.key, kind)).get()))
       return {records: docs.filter(d => d.exists && d.data().expiresAt.toMillis() > Date.now()).map(d => { const x = d.data()
         return {kind: x.kind, targetText: x.targetText, transcript: x.transcript, total_score: x.total_score, accuracy: x.accuracy, fluency: x.fluency,
           completeness: x.completeness, numberOk: x.numberOk, verbOk: x.verbOk, nounOk: x.nounOk, passed: x.passed, createdAt: x.createdAt} })}
     }
     if (!['prev', 'pass'].includes(body.kind)) fail(400, '錄音類別不正確。')
-    const doc = await db.doc(`${STORE.records}/` + safariRecordId(id.studentKey, station.id, item.key, body.kind)).get()
+    const doc = await db.doc(`${STORE_.records}/` + safariRecordId(id.studentKey, station.id, item.key, body.kind)).get()
     if (!doc.exists || doc.data().expiresAt.toMillis() <= Date.now()) fail(404, '錄音不存在或已到期。')
     const [audio] = await bucket().file(doc.data().audioPath).download()
     return {audio: audio.toString('base64')}
@@ -167,11 +173,11 @@ export function createSafari({db, bucket, Timestamp, HttpsError, member, safeInp
   // Seven-month expiry, like World Routines (routines_quotas are purged by World Routines).
   async function purge() {
     for (let page = 0; page < 20; page++) {
-      const batch = await db.collection(STORE.records).where('expiresAt', '<=', Timestamp.now()).limit(100).get()
+      const batch = await db.collection(STORE_.records).where('expiresAt', '<=', Timestamp.now()).limit(100).get()
       if (batch.empty) break
       for (const doc of batch.docs) { await bucket().file(doc.data().audioPath).delete({ignoreNotFound: true}); await doc.ref.delete() }
     }
-    const expired = await db.collection(STORE.progress).where('expiresAt', '<=', Timestamp.now()).limit(400).get()
+    const expired = await db.collection(STORE_.progress).where('expiresAt', '<=', Timestamp.now()).limit(400).get()
     if (!expired.empty) { const write = db.batch(); expired.docs.forEach(doc => write.delete(doc.ref)); await write.commit() }
   }
   return {state, puzzle, count, answer, speak, stamp, teacherAction, purge}

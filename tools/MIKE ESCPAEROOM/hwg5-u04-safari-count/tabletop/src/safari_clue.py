@@ -1,6 +1,6 @@
 """Like-question clue at the end of a station's last film (teacher 11/25, RDQ question-fixes 2C): the travel buddy says what
 they like ("I love pandas!") so the pupil has evidence for "Yes, she does." / "No, he doesn't. He likes ___."
-  python tabletop/src/safari_clue.py <station> <film key>        e.g. taiwan bears
+  python tabletop/src/safari_clue.py <station> <film key>        e.g. taiwan bears   (version 2: v2_taiwan elephants)
 Reads tabletop/out/<station>_<key>.mp4 (from safari_compose.py), the bank's like.clue, the buddy voices web/audio/<station>-like-clue-<g|b>.mp3
 and the buddy pictures (World Routines hero_boy / hero_girl). Writes tabletop/out/<station>_<key>_clue_<g|b>.mp4 (+ _720):
 g = the pupil chose the girl, so the buddy is the boy; b = the buddy is the girl. Card = 3.2 s: the clean picture of the animal the clue names (else the last frame) dimmed, buddy on the left,
@@ -32,8 +32,10 @@ def card(last, buddy_png, text, dst):
 
 
 def build(station, key):
-    bank = json.loads((PROJ / 'content' / 'stations.json').read_text(encoding='utf-8'))
-    st = next(s for s in bank['stations'] if s['id'] == station); text = st['like']['clue']
+    # version 2 (teacher 11/27): station 'v2_<country>' -> content/stations_v2.json, web/audio_v2/, out/v2_<country>_<key>...
+    v2 = station.startswith('v2_'); sid = station[3:] if v2 else station
+    bank = json.loads((PROJ / 'content' / ('stations_v2.json' if v2 else 'stations.json')).read_text(encoding='utf-8'))
+    st = next(s for s in bank['stations'] if s['id'] == sid); text = st['like']['clue']
     film = OUT / f'{station}_{key}.mp4'
     work = Path(tempfile.gettempdir()) / f'sct_clue_{station}'; shutil.rmtree(work, ignore_errors=True); work.mkdir()
     dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', str(film)],
@@ -46,7 +48,7 @@ def build(station, key):
     else: run(['ffmpeg', '-y', '-sseof', '-0.1', '-i', str(film), '-frames:v', '1', str(work / 'last.png')])
     for h, buddy in (('g', 'boy'), ('b', 'girl')):
         card(work / 'last.png', ART / f'hero_{buddy}.png', text, work / f'card_{h}.png')
-        voice = PROJ / 'web' / 'audio' / f'{station}-like-clue-{h}.mp3'
+        voice = PROJ / 'web' / ('audio_v2' if v2 else 'audio') / f'{sid}-like-clue-{h}.mp3'
         gv = -16.3 - lufs(voice); gm = -34.3 - lufs(MUSIC, ('-ss', '0.3', '-t', '6'))
         flt = [f'[1:a]adelay=400|400,aresample=48000,apad,atrim=0:{CARD},volume={gv:.2f}dB[v]',
                f'[2:a]atrim=0:{CARD},asetpts=PTS-STARTPTS,aresample=48000,volume={gm:.2f}dB,afade=t=in:d=0.4,afade=t=out:st={CARD - 0.8}:d=0.8[m]',

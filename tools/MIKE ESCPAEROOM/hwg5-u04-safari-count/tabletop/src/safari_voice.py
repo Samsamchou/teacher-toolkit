@@ -19,9 +19,22 @@ EXTRA = {'japan': [('lions', 'There are five lions.'), ('horses', 'There are six
          'australia': [('koalas', 'There are three koalas.'), ('lion', 'There is one lion.')]}
 
 
+# Version 2 (teacher 11/27, v2/分配表_v2_核准_20261127.md): keys v2_<station>_<key>_a.   python tabletop/src/safari_voice.py --v2
+V2 = {'taiwan': [('koala', 'There is one koala.'), ('elephants', 'There are three elephants.')],
+      'japan': [('rhinos', 'There are two rhinos.'), ('tiger', 'There is one tiger.')],
+      'kenya': [('lions', 'There are six lions.'), ('monkeys', 'There are nine monkeys.')],
+      'india': [('turtles', 'There are seven turtles.'), ('bear', 'There is one bear.')],
+      'singapore': [('pandas', 'There are two pandas.'), ('tigers', 'There are four tigers.')],
+      'australia': [('zebras', 'There are eight zebras.'), ('horses', 'There are five horses.')]}
+
+
 async def main():
     words = json.loads(WJ.read_text(encoding='utf-8')) if WJ.exists() else {}
     want = sys.argv[1:]
+    if '--v2' in want:
+        global bank
+        bank = [{'id': 'v2_' + sid, 'items': [{'key': k, 'spoken': t} for k, t in items]} for sid, items in V2.items()]
+        want = ['v2_' + w for w in want if w != '--v2']
     for s in bank:
         if want and s['id'] not in want: continue
         items = [(it['key'], it['spoken']) for it in s.get('items', [])] or EXTRA.get(s['id'], [])

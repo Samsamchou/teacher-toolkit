@@ -1,18 +1,20 @@
 """Safari Count voices with edge-tts (same voices as World Routines web/make_audio.py):
 country pupil = Ana (girl) / Christopher +50Hz (boy); the traveller (hero) = Jenny when the hero is a girl, Christopher +50Hz when a boy.
 The buddy question has two versions: hero girl -> buddy boy (he), hero boy -> buddy girl (she).
-  python web/make_audio.py [--force]   -> web/audio/<station>-*.mp3
+  python web/make_audio.py [--force] [--v2]   -> web/audio/<station>-*.mp3 (version 2: web/audio_v2/)
 <station>-like-clue-<g|b>.mp3 = the buddy's clue ("I love pandas!"); <station>-<animal>-qm.mp3 = the question with the animal hidden (played before the puzzle is solved)."""
 import asyncio, json, sys
 from pathlib import Path
 import edge_tts
 root = Path(__file__).resolve().parent
-bank = json.loads((root.parent / 'content' / 'stations.json').read_text(encoding='utf-8'))['stations']
+# --v2: Safari Count version 2 (teacher 11/27) -> content/stations_v2.json, web/audio_v2/ (same file names, served from /safari-count-2/audio)
+V2 = '--v2' in sys.argv
+bank = json.loads((root.parent / 'content' / ('stations_v2.json' if V2 else 'stations.json')).read_text(encoding='utf-8'))['stations']
 BOY = dict(voice='en-US-ChristopherNeural', pitch='+50Hz', rate='-12%')
 GIRL = dict(voice='en-US-AnaNeural', pitch='+0Hz', rate='-12%')
 BUDDY_GIRL = dict(voice='en-GB-MaisieNeural', pitch='+0Hz', rate='-8%')
 HERO = {'g': dict(voice='en-US-JennyNeural', pitch='+0Hz', rate='-12%'), 'b': BOY}
-out = root / 'audio'; out.mkdir(exist_ok=True)
+out = root / ('audio_v2' if V2 else 'audio'); out.mkdir(exist_ok=True)
 
 
 async def say(text, name, v):

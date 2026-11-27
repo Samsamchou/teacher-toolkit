@@ -4,6 +4,7 @@ import RoutinesApp from './routines/RoutinesApp'
 import RoutinesTeacher from './routines/RoutinesTeacher'
 import SafariApp from './safari/SafariApp'
 import SafariTeacher from './safari/SafariTeacher'
+import { SHOW_SAFARI2 } from './safari/flags'
 import { TeacherPortal } from './components/TeacherPortal'
 import { Gallery } from './components/Gallery'
 import { localPreview } from './services/firebase'
@@ -22,6 +23,9 @@ export function ClassActivities() {
   // Safari Count (HWG5 U4, 2026-11-24): home tile since 2026-11-26. 11/25: student ID login, server checks, teacher records at /safari-count/teacher.
   if (path === '/safari-count/teacher' || path === '/safari-count/teacher/') return <>{banner}<SafariTeacher /></>
   if (path === '/safari-count' || path === '/safari-count/') return <>{banner}<SafariApp /></>
+  // Safari Count version 2 (2026-11-27): same animals in new stations, its own records and teacher page.
+  if (path === '/safari-count-2/teacher' || path === '/safari-count-2/teacher/') return <>{banner}<SafariTeacher version={2} /></>
+  if (path === '/safari-count-2' || path === '/safari-count-2/') return <>{banner}<SafariApp /></>
   if (path === '/teacher') return <>{banner}<SpeechProvider><TeacherPortal /></SpeechProvider></>
   if (path === '/gallery') return <>{banner}<SpeechProvider><Gallery /></SpeechProvider></>
   return <>
@@ -64,6 +68,13 @@ export function ClassActivities() {
           <em className="tile-grade">五年級 HWG5 U4</em>
           <b aria-hidden="true">→</b>
         </a>}
+        {SHOW_SAFARI2 && !path.startsWith('/festivals') && <a className="activity-tile" href="/safari-count-2">
+          <span aria-hidden="true">🐨</span>
+          <strong>Safari Count 2</strong>
+          <small>How many … are there? / 數數動物園 第 2 版</small>
+          <em className="tile-grade">五年級 HWG5 U4</em>
+          <b aria-hidden="true">→</b>
+        </a>}
         {path.startsWith('/festivals') && <a className="activity-tile" href="/festivals/write-a-thankful-card/">
           <span aria-hidden="true">🦃</span>
           <strong>Write a Thankful Card</strong>
@@ -76,6 +87,7 @@ export function ClassActivities() {
         <a href="/world-routines/teacher">🌍 World Routines（I 版）</a>
         <a href="/world-routines-he-she/teacher">👫 World Routines（he/she 版）</a>
         <a href="/safari-count/teacher">🦒 Safari Count</a>
+        {SHOW_SAFARI2 && <a href="/safari-count-2/teacher">🐨 Safari Count 2</a>}
       </nav>}
     </main>}
   </>

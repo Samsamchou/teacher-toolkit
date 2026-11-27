@@ -2,8 +2,8 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { READY, STATIONS, stationFor, itemFor, publicStations, checkPuzzle, checkCount, checkDrag, spokenCountCheck, speakingPassed,
-  safariScoringPrompt, stepAllowed, safariRecordId } from '../safari-core.mjs'
-import { createSafari, STORE } from '../safari.mjs'
+  safariScoringPrompt, stepAllowed, safariRecordId, V2 } from '../safari-core.mjs'
+import { createSafari, STORE, STORE2 } from '../safari.mjs'
 import { routineQuotaId } from '../routines-core.mjs'
 import { taipeiDay } from '../core.mjs'
 import { studentIdentity } from '../portal-core.mjs'
@@ -187,4 +187,44 @@ test('Taiwan flow end to end: order enforced, speaking scored and recorded, teac
   const log = await safari.teacherAction('safariDeleteLog', {}, fail)
   assert.deepEqual(log.log.map(x => [x.studentId, x.classId, x.summary]), [['50107', '501', '蓋章 1 國、作答 2 題']])
   assert.equal((await call('state', {})).progress.taiwan.items.panda.puzzle, false) // the pupil starts again
+})
+
+// ---- Version 2 (/safari-count-2, teacher 11/27) ----
+test('version 2 bank: same animals in new stations, counts 1-9, three singulars, puzzle types differ from version 1', () => {
+  assert.equal(V2.READY.length, 6)
+  const items = V2.READY.flatMap(s => s.items), v1 = READY.flatMap(s => s.items)
+  assert.equal(items.length, 12)
+  assert.deepEqual(items.filter(it => it.count === 1).map(it => it.key).sort(), ['bear', 'koala', 'tiger'])
+  for (const it of items) {
+    assert.ok(it.count >= 1 && it.count <= 9)
+    assert.equal(it.answer, (it.count === 1 ? it.word : it.plural).toUpperCase())
+    for (const old of v1.filter(o => o.word === it.word)) assert.notEqual(it.puzzle, old.puzzle, `${it.key}: same puzzle type as version 1 ${old.key}`)
+  }
+  for (const s of V2.READY) assert.notEqual(s.items[0].puzzle, s.items[1].puzzle, s.id)
+  // every animal moved to another station
+  for (const s of V2.READY) for (const it of s.items) assert.ok(!READY.find(o => o.id === s.id).items.some(o => o.word === it.word), `${s.id} ${it.key}`)
+  assert.equal(V2.stationFor('singapore').place, 'Mandai')
+})
+
+test('version 2 flow uses its own callables data and collections', async () => {
+  const cloud = fakeCloud()
+  const m = studentIdentity('50108'), K = m.studentKey
+  const s2 = createSafari({...cloud, member: async () => m, safeInput: fn => { try { return fn() } catch (e) { throw new cloud.HttpsError('invalid-argument', e.message) } },
+    assess: async (_p, _a, _s, parse) => parse({transcript: 'There are three elephants.', accuracy: 92, fluency: 90, completeness: 95, feedback: '很好！'}), version: 2})
+  const call = (fn, data) => s2[fn]({data})
+  const st = await call('state', {})
+  assert.deepEqual(st.stations[0].items.map(x => x.card), ['KOALA', 'ELEPHANTS'])
+  assert.equal((await call('puzzle', {station: 'taiwan', item: 'koala', guess: 'koala'})).passed, true)
+  assert.equal((await call('count', {station: 'taiwan', item: 'koala', count: 1})).passed, true)
+  assert.equal((await call('answer', {station: 'taiwan', item: 'koala', slots: ['many', 'koalas', 'are', 'is', 'one']})).passed, true)
+  await call('puzzle', {station: 'taiwan', item: 'elephants', guess: 'ELEPHANTS'}); await call('count', {station: 'taiwan', item: 'elephants', count: 3})
+  assert.equal((await call('speak', {station: 'taiwan', item: 'elephants', attemptId: 'c'.repeat(20), audio: wav()})).passed, true)
+  assert.ok(cloud.docs.has(`${STORE2.progress}/` + K)); assert.equal(cloud.docs.has(`${STORE.progress}/` + K), false)
+  assert.ok(cloud.files.has(`safari2-recordings/${K}/taiwan-elephants-pass.wav`))
+  const fail = (status, text) => { throw new Error(`${status} ${text}`) }
+  assert.equal(await s2.teacherAction('safari', {classId: '501'}, fail), undefined)          // version 1 names are not version 2's
+  assert.equal((await s2.teacherAction('safari2', {classId: '501'}, fail)).students.length, 1)
+  const del = await s2.teacherAction('safari2Delete', {studentId: '50108', confirm: '50108'}, fail)
+  assert.equal(del.summary, '蓋章 0 國、作答 2 題')
+  assert.equal((await s2.teacherAction('safari2DeleteLog', {}, fail)).log[0].studentId, '50108')
 })

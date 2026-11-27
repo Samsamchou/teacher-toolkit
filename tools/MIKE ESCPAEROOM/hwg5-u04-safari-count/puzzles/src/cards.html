@@ -111,7 +111,9 @@ const P = new URLSearchParams(location.search);
 const ANS = (P.get('ans')||'PANDA').toUpperCase(), STAGE = P.get('stage') || 'puzzle';
 const ICON = n => `../assets/icons/${n}.png`;
 const img = (n, cls='') => `<img class="${cls}" src="${ICON(n)}">`;
-const MORSE = {A:'.-',E:'.',L:'.-..',N:'-.',O:'---',R:'.-.',S:'...',T:'-',U:'..-'};
+const MORSE = {A:'.-',E:'.',L:'.-..',N:'-.',O:'---',R:'.-.',S:'...',T:'-',U:'..-',H:'....',P:'.--.',I:'..',D:'-..',G:'--.',K:'-.-'};
+// ?v=2 = Safari Count version 2 (teacher 11/27): same animals in new stations; every answer uses a different puzzle type than in version 1.
+const V2 = P.get('v') === '2';
 const PUZ = {
   PANDA: {type:'clues', n:1, items:[['bamboo','bamboo','竹子'],['blackwhite','black and white','黑和白'],['bear','bear','熊']],
           h1:'看看每張圖的英文。', h1en:'Look at the English for each picture.',
@@ -159,6 +161,53 @@ const PUZ = {
           h1:'看看每張圖的英文：mane、king、roar。', h1en:'Mane, king, roar. Which animal is it?',
           h2:'有鬃毛、是百獸之王、會大吼的只有一種動物。第一個字母是 L。', h2en:'It has a mane. It is the king. It says ROAR! It starts with L.'},
 };
+// Version 2 (v2/分配表_v2_核准_20261127.md): Taiwan koala/elephants, Japan rhinos/tiger, Kenya lions/monkeys,
+// India turtles/bear, Singapore (Mandai) pandas/tigers, Australia zebras/horses. Types differ from v1 for the same answer word.
+const PUZ2 = {
+  KOALA: {type:'mirror', n:1, inst:['動物園遊園列車的車窗上，字反過來了！用鏡子讀讀看。','The words on the zoo train window are backwards. Read them in a mirror!'],
+          h1:'這是車窗上的倒影：從右往左讀，每個字母翻回來。', h1en:'It is a reflection. Read from right to left and flip each letter.',
+          h2:'第一個字母是 K（把它翻回來就是 K）。', h2en:'Flip it back: the first letter is K.'},
+  ELEPHANTS:{type:'morse', n:2, keys:['A','E','H','L','N','O','P','S','T'],
+          inst:['動物園保育員用手電筒打暗號：長光＝—，短光＝・，用對照表換成字母。','A zookeeper flashes a code. Long light = dash, short light = dot.'],
+          h1:'第一組只有一個短光「・」，對照表是 E。', h1en:'The first flash is one short light: E.',
+          h2:'第一個字母是 E。', h2en:'It starts with E.'},
+  RHINOS:{type:'grid', n:3, mode:'arrows', grid:['TAR','NIH','OSE'], path:[[0,2],[1,2],[1,1],[1,0],[2,0],[2,1]],
+          h1:'前兩步已經畫好：從 ★ 的 R 往下走到 H。', h1en:'The first two steps are done: R → H.',
+          h2:'第一個字母是 R。', h2en:'It starts with R.'},
+  TIGER: {type:'prints', n:4, key:[['fp_paw','T'],['fp_cat','S'],['fp_bird','I'],['fp_chicken','O'],['fp_deer','G'],['fp_goat','N'],
+                                   ['fp_elephant','E'],['fp_horse','R'],['fp_frog','A'],['fp_gecko','L'],['fp_duck','K'],['fp_human','B']],
+          inst:['泥土上有 5 個腳印，用對照表把腳印換成字母。','Five footprints in the mud. Use the key to change them into letters.'],
+          h1:'前兩個腳印已經翻成字母了。', h1en:'The first two footprints are done for you.',
+          h2:'第一個字母是 T。', h2en:'It starts with T.'},
+  LIONS: {type:'algebra', n:5,
+          eqs:[['sun','+','sun','=','24'],['leaf','=','sun','−','3'],['moon','=','leaf','+','6'],['star','=','moon','−','1'],['drop','=','star','+','5']],
+          order:['sun','leaf','moon','star','drop'], val:{sun:12,leaf:9,moon:15,star:14,drop:19}, s1:['sun','leaf'], s2:['moon'],
+          h1:'太陽＝12（12＋12＝24），葉子＝12−3＝9。', h1en:'Sun = 12 and leaf = 9.',
+          h2:'月亮＝9＋6＝15。第 12 個字母是 L，所以第一個字母是 L。', h2en:'Moon = 15. Letter 12 is L. It starts with L.'},
+  MONKEYS:{type:'clues', n:6, items:[['banana','banana','香蕉'],['tree','climb trees','爬樹'],['shout','ooh ooh ah ah','吱吱叫']], over:{shout:'OOH AAH!'},
+          h1:'看看每張圖的英文：banana、climb trees、ooh ooh ah ah。', h1en:'Banana, climb trees, ooh ooh ah ah. Which animal is it?',
+          h2:'愛吃香蕉、會爬樹、會吱吱叫，7 個字母。第一個字母是 M。', h2en:'It eats bananas, climbs trees and says ooh ooh ah ah! It starts with M.'},
+  TURTLES:{type:'addsub', n:7, terms:[{img:'turkey',word:'TURKEY'},{op:'−'},{tile:'KEY',minus:1},{op:'+'},{img:'tables',word:'TABLES',wide:1.9},{op:'−'},{tile:'AB',minus:1}], partial:'TUR????', small:0.6,
+          h1:'火雞是 TURKEY，桌子是 TABLES。', h1en:'The pictures are TURKEY and TABLES.',
+          h2:'TURKEY − KEY ＝ TUR，第一個字母是 T。', h2en:'TURKEY - KEY = TUR. It starts with T.'},
+  BEAR:  {type:'shift', n:8, pic:'bear',
+          h1:'牠全身黑毛、愛吃蜂蜜，4 個字母。每個字母在字母條上往左一格。', h1en:'It has black fur and loves honey. 4 letters. Move each letter one step left.',
+          h2:'第一個字母是 B（C 的前一個）。', h2en:'C - 1 = B. It starts with B.'},
+  PANDAS:{type:'prints', n:9, key:[['fp_human','P'],['fp_frog','A'],['fp_goat','N'],['fp_duck','D'],['fp_paw','S'],['fp_gecko','O'],
+                                   ['fp_cat','Z'],['fp_deer','R'],['fp_chicken','E'],['fp_bird','T'],['fp_horse','K'],['fp_elephant','L']],
+          h1:'前兩個腳印已經翻成字母了。', h1en:'The first two footprints are done for you.',
+          h2:'第一個字母是 P。', h2en:'It starts with P.'},
+  TIGERS:{type:'mirror', n:10, night:1, inst:['夜間遊園車的車窗上，字反過來了！用鏡子讀讀看。','The words on the night tram window are backwards. Read them in a mirror!'],
+          h1:'這是車窗上的倒影：從右往左讀，每個字母翻回來。', h1en:'It is a reflection. Read from right to left and flip each letter.',
+          h2:'第一個字母是 T（把它翻回來就是 T）。', h2en:'Flip it back: the first letter is T.'},
+  ZEBRAS:{type:'addsub', n:11, terms:[{num:'0',word:'ZERO'},{op:'−'},{tile:'RO',minus:1},{op:'+'},{img:'cobras',word:'COBRAS'},{op:'−'},{tile:'CO',minus:1}], partial:'ZE????', small:0.62,
+          h1:'這個數字是 ZERO，兩條眼鏡蛇是 COBRAS。', h1en:'The pictures are ZERO and COBRAS.',
+          h2:'ZERO − RO ＝ ZE，第一個字母是 Z。', h2en:'ZERO - RO = ZE. It starts with Z.'},
+  HORSES:{type:'morse', n:12, keys:['A','E','H','L','N','O','R','S','T'],
+          inst:['Safari 巴士司機用手電筒打暗號：長光＝—，短光＝・，用對照表換成字母。','The bus driver flashes a code. Long light = dash, short light = dot.'],
+          h1:'第一組是四個短光「・・・・」，對照表是 H。', h1en:'The first flash is four short lights: H.',
+          h2:'第一個字母是 H。', h2en:'It starts with H.'},
+};
 const TYPES = {
   clues:  {title:'Three Clues', zh:'三個線索', inst:'三個線索都指向同一種動物，牠是誰？', en:'Three clues, one animal. What is it?'},
   addsub: {title:'Picture Math', zh:'圖像加減', inst:'說出圖片的英文，照算式拿掉、加上字母。', en:'Say the picture in English. Take away and add letters.'},
@@ -172,7 +221,7 @@ const TYPES = {
 const GRID_INST = {
   arrows:['從 ★ 出發，照箭頭一格一格走，把字母連起來。','Start at the star. Follow the arrows one square at a time.'],
 };
-const C = PUZ[ANS], T = TYPES[C.type];
+const C = (V2 ? PUZ2 : PUZ)[ANS], T = TYPES[C.type];
 const H = STAGE==='hint1' ? 1 : STAGE==='hint2' ? 2 : 0, DONE = STAGE==='answer';
 const LV = DONE ? 3 : H;      // reveal level: 0 puzzle, 1 hint1, 2 hint2, 3 answer
 document.getElementById('ribbon').innerHTML = `Puzzle ${C.n} · ${T.title}<small>${T.zh}</small>`;
@@ -192,7 +241,7 @@ if (DONE){
 
 let html = '', after = null;
 if (C.type==='clues'){
-  html = C.items.map(([f,en,zh],i)=>`<div class="item">${img(f)}${C.over&&C.over[f]?`<div class="over">${C.over[f]}</div>`:''}${LV?`<div class="lab">${en}<br><small>${zh}</small></div>`:''}</div>${i<2?'<span class="plus">+</span>':''}`).join('');
+  html = C.items.map(([f,en,zh],i)=>`<div class="item">${img(f)}${C.over&&C.over[f]?`<div class="over"${C.over[f].length>6?' style="font-size:30px;letter-spacing:0"':''}>${C.over[f]}</div>`:''}${LV?`<div class="lab">${en}<br><small>${zh}</small></div>`:''}</div>${i<2?'<span class="plus">+</span>':''}`).join('');
 }
 if (C.type==='addsub'){
   const sz = C.small || 1;
@@ -205,6 +254,8 @@ if (C.type==='addsub'){
   const term = t => {
     if (t.op) return `<span class="plus" style="font-size:${110*sz}px;margin:0 ${14*sz}px">${t.op}</span>`;
     if (t.tile) return `<span class="tile${t.minus?' minus':''}" style="font-size:${96*sz}px">${t.tile}</span>`;
+    // a picture of a number (v2 ZEBRAS: 0 = ZERO), drawn here because the Codex icons have no digits
+    if (t.num) return `<div class="item" style="margin:0 6px"><div style="width:${250*sz}px;height:${250*sz}px;border-radius:50%;background:#fff3c4;border:${10*sz}px solid #f4b73a;box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-family:CR;font-weight:700;font-size:${190*sz}px;color:#2b2140">${t.num}</div>${LV?`<div class="word">${t.word}</div>`:''}</div>`;
     return `<div class="item" style="margin:0 6px"><div style="position:relative;width:${250*sz*(t.wide||1)}px;height:${250*sz}px">${img(t.img).replace('<img','<img style="width:100%;height:100%"')}${t.cal?calFace:''}</div>${LV?`<div class="word">${t.word}</div>`:''}</div>`;
   };
   const res = DONE ? `<span class="tile gold" style="font-size:${96*sz}px">${ANS}</span>` : `<span class="qbox" style="font-size:${110*sz}px">${H===2?C.partial:'?'}</span>`;
@@ -212,8 +263,10 @@ if (C.type==='addsub'){
 }
 if (C.type==='mirror'){
   const right = DONE ? `<span class="plus">=</span><span class="tile gold">${ANS}</span>`
-    : `<div class="item" style="margin-left:40px">${img('mirror').replace('<img','<img style="width:210px;height:210px"')}${H===2?`<div class="demo"><span class="flipL">L</span><span style="font-size:56px;color:#6b4f9a">→</span><span style="color:#e2483d">L</span></div>`:''}</div>`;
-  html = `<div style="display:flex;flex-direction:column;align-items:center"><div class="bus"><div class="win"><span class="mir">${ANS}</span></div></div>${LV===1||LV===2?`<div class="readarrow">⟵ 從右往左讀 Read from right to left</div>`:''}</div>${right}`;
+    : `<div class="item" style="margin-left:40px">${img('mirror').replace('<img','<img style="width:210px;height:210px"')}${H===2?`<div class="demo"><span class="flipL">${ANS[0]}</span><span style="font-size:56px;color:#6b4f9a">→</span><span style="color:#e2483d">${ANS[0]}</span></div>`:''}</div>`;
+  const bus = C.night ? ' style="background:#2c3466;box-shadow:0 8px 0 #1b2045"' : '', win = C.night ? ' style="border-color:#1b2045;background:linear-gradient(165deg,#3d4a8a 0%,#26305f 60%,#1b2045 100%)"' : '';
+  const mir = ` style="${C.night ? 'color:rgba(255,246,210,.85);' : ''}${ANS.length > 5 ? 'font-size:128px;letter-spacing:6px' : ''}"`;
+  html = `<div style="display:flex;flex-direction:column;align-items:center"><div class="bus"${bus}><div class="win"${win}><span class="mir"${mir}>${ANS}</span></div></div>${LV===1||LV===2?`<div class="readarrow">⟵ 從右往左讀 Read from right to left</div>`:''}</div>${right}`;
 }
 if (C.type==='grid'){
   const g = C.grid, cs = 112, pad = 22, N = 3, W = cs*N + pad*2;
@@ -282,7 +335,7 @@ if (C.type==='shift'){
   const cells = code.map((ch,i)=>`<div class="cc"><div class="cl">${ch}</div><div class="ca">↓</div><div class="sbox" style="border-color:#8b5a2b">${shownAt(i)?ANS[i]:''}</div></div>`).join('');
   const demo = LV>=1 && LV<3 ? `<div class="sdemo"><span class="zh" style="font-size:24px">例 e.g.</span> C <span style="color:#e2483d">→</span> B</div>` : '';
   html = `<div style="display:flex;flex-direction:column;align-items:center;gap:16px">
-    <div style="display:flex;align-items:center;gap:26px">${LV===3?img('tiger').replace('<img','<img style="width:170px;height:170px"'):''}<div class="board">${cells}</div>${demo}</div>
+    <div style="display:flex;align-items:center;gap:26px">${LV===3?img(C.pic||'tiger').replace('<img','<img style="width:170px;height:170px"'):''}<div class="board">${cells}</div>${demo}</div>
     <div class="frame astrip"><span class="zh" style="font-size:22px;margin-right:8px;line-height:1.1">字母條<br>A–Z</span>${strip}</div></div>`;
 }
 body.innerHTML = html;
