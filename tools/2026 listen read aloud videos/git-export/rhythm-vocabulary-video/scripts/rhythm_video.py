@@ -62,6 +62,28 @@ def follow_anchor_beat(anchor,dur,beat):
         if k*beat>=anchor and k*beat-anchor+dur<=4*beat+.12:return float(k)
     raise ValueError('Speech longer than a 4-beat slot; trim silences first.')
 
+def layout_superfun(rounds,voices,samples,cfg):
+    """Super Fun 節奏模式（2026-11-28，參考 Super Fun 單字韻文）：每張卡 2 小節，老師、兒童各唸一次，對齊小節第 1 拍。"""
+    sf_=cfg['superfun'];beat=60/float(sf_.get('bpm',128));bar=4*beat;t0=float(sf_.get('t0',.5));intro=int(sf_.get('intro_bars',4))
+    lead=float(sf_.get('card_lead',.15));items=[i for g in rounds for i in g];B=lambda k:t0+k*bar
+    cues=[];scenes=[{'kind':'intro','round':1,'start':0.,'end':B(intro)-lead,'items':[]}]
+    for n,i in enumerate(items):
+        k=intro+2*n
+        for role,kb in(('teacher',k),('child',k+1)):
+            rec=voices[(i['spoken_text'],role)];x=samples[(i['spoken_text'],role)];target=B(kb);start=round(target*SR)-rec['anchor_sample']
+            cues.append({'item_id':i['id'],'word':i['word'],'spoken_text':i['spoken_text'],'role':role,'round':1,'start_sample':start,'start':start/SR,
+                         'end':(start+len(x))/SR,'audible_end':start/SR+rec['audible_last_sec'],'anchor_sample':rec['anchor_sample'],
+                         'target_drum_sec':target,'target_beat_index':kb*4,'bar_start':B(kb),'bar_end':B(kb+1),'voice_sha256':rec['sha256']})
+        end=B(k+2)-lead;last=cues[-1]['audible_end']
+        scenes.append({'kind':'word','round':1,'item':i,'start':B(k)-lead,'end':end,'exit_duration':max(.05,min(.35,end-last-.01)),'beats':8})
+    ov=B(intro+2*len(items));hold=int(sf_.get('outro_bars',4))
+    end=ov+len(items)*beat+hold*bar;frames=math.ceil(end*FPS)
+    scenes.append({'kind':'overview','round':1,'start':ov,'end':frames/FPS,'items':items,'pop_beat':beat})
+    if any(c['start_sample']<0 for c in cues):raise ValueError('Speech begins before timeline.')
+    return {'schema_version':1,'fps':FPS,'width':W,'height':H,'frames':frames,'duration_sec':frames/FPS,
+            'speech_speed':cfg.get('speech_speed',1.0),'bpm':60/beat,'beat_sec':beat,'drum_hits':[t0+k*beat for k in range(4)],
+            'rounds':1,'utterances':len(cues),'scenes':scenes,'cues':cues,'superfun':sf_,'beat0_sec':t0,'teacher_acceptance':'pending'}
+
 def layout_follow(rounds,voices,samples,cfg):
     """跟讀模式（2026-11-14）：每個字 16 拍＝老師→學生→兒童→學生；no_teacher_rounds 改成學生→兒童→學生→空。伴奏本機合成。"""
     fa=cfg['follow_along'];beat=60/cfg.get('bpm',93.6734693877551);t0=float(fa.get('t0',.6))
@@ -103,6 +125,7 @@ def layout_follow(rounds,voices,samples,cfg):
             'follow_along':fa,'beat0_sec':t0,'total_beats':cursor,'teacher_acceptance':'pending'}
 
 def layout(rounds,voices,samples,bar,cfg):
+    if cfg.get('superfun'):return layout_superfun(rounds,voices,samples,cfg)
     if cfg.get('follow_along'):return layout_follow(rounds,voices,samples,cfg)
     beat=60/cfg.get('bpm',93.6734693877551);hits=drum_hits(bar,beat)
     hit=lambda k:(k//4)*len(bar)/SR+hits[k%4]
@@ -163,7 +186,7 @@ def soft_limit(x,ceiling=10**(-3/20),knee=.5):
 
 def loud_to(mix,target,part):
     """整片響度拉到 target LUFS（兩次量測修正限幅造成的差）。"""
-    tmp=part/'_loudness_probe.wav';y=mix
+    tmp=part/'_loudness_probe.wav';y=(mix*min(1.,.98/max(1e-9,float(np.abs(mix).max())))).astype(np.float32)
     for _ in range(3):
         cur=measure_lufs(y,tmp);
         if abs(cur-target)<.3:break
@@ -204,7 +227,33 @@ def plan(project,config,pilot=False):
             a,b=max(0,start-round(.08*SR)),min(n,start+len(x)+round(.08*SR));r=min(round(.06*SR),(b-a)//2)
             duck[a:a+r]=np.minimum(duck[a:a+r],np.linspace(1,.5,r));duck[a+r:b-r]=.5
             duck[b-r:b]=np.minimum(duck[b-r:b],np.linspace(.5,1,r))
-        if t.get('follow_along'):
+        if t.get('superfun'):
+            import backing as bk
+            sf_=t['superfun'];nb=math.ceil(t['duration_sec']/t['beat_sec'])+4
+            ov_bar=int(round((next(s_['start'] for s_ in t['scenes'] if s_['kind']=='overview')-t['beat0_sec'])/(4*t['beat_sec'])))
+            if sf_.get('backing_file'):
+                ext=audio(verified_asset(root,sf_['backing_file']));a0=round(t['beat0_sec']*SR)
+                bg=np.zeros(n,np.float32);m_=min(n-a0,len(ext));bg[a0:a0+m_]=ext[:m_];ref=bg.copy()
+                if m_<n-a0:raise ValueError('Backing file shorter than the film.')
+                fi=round(.25*SR);bg[a0:a0+fi]*=np.linspace(0,1,fi).astype(np.float32)
+            else:
+                mk=lambda dg:bk.backing(nb,t['beat0_sec'],int(sf_.get('style',5)),beat=t['beat_sec'],drum_gain=dg,intro_bars=int(sf_.get('intro_bars',4)),outro_bar=ov_bar)
+                ref=mk(1.0);bg=mk(float(sf_.get('drum_gain',1.8)))
+                ref=np.pad(ref,(0,max(0,n-len(ref))))[:n];bg=np.pad(bg,(0,max(0,n-len(bg))))[:n].astype(np.float32)
+            if float(sf_.get('duck_db',0)):   # 人聲出現時把伴奏壓低（前後 60 ms 斜坡）
+                g=np.ones(n,np.float32);lo=10**(-abs(float(sf_['duck_db']))/20);r_=round(.06*SR)
+                for c_ in t['cues']:
+                    a_,b_=max(0,c_['start_sample']),min(n,round(c_['audible_end']*SR));g[a_:b_]=np.minimum(g[a_:b_],lo)
+                    g[max(0,a_-r_):a_]=np.minimum(g[max(0,a_-r_):a_],np.linspace(1,lo,a_-max(0,a_-r_)));g[b_:b_+r_]=np.minimum(g[b_:b_+r_],np.linspace(lo,1,len(g[b_:b_+r_])))
+                bg*=g
+            vr=float(np.sqrt(np.mean(voice[np.abs(voice)>1e-4]**2)));bg*=vr*10**(float(sf_.get('backing_db',-6))/20)/float(np.sqrt(np.mean(ref**2)))
+            if sf_.get('card_sfx'):   # 換卡音效：每張卡跳入的時候
+                w_=bk.whoosh().astype(np.float32);w_*=float(np.sqrt(np.mean(bg**2)))*float(sf_.get('sfx_gain',2.5))/float(np.sqrt(np.mean(w_[np.abs(w_)>1e-4]**2)))
+                for s_ in t['scenes']:
+                    if s_['kind']=='word':
+                        a_=max(0,round((s_['start']-.12)*SR));m_=min(len(w_),n-a_);bg[a_:a_+m_]+=w_[:m_]
+            fade=round(2.0*SR);bg[-fade:]*=np.linspace(1,0,fade);background=bg
+        elif t.get('follow_along'):
             import backing as bk
             fa=t['follow_along'];sb=[w['beat_index']+j for w in t['student_windows'] if w['kind']=='student' for j in range(4)]
             mk=lambda dg:np.pad(bk.backing(math.ceil(t['duration_sec']/t['beat_sec'])+1,t['beat0_sec'],int(fa.get('style',4)),set(sb),beat=t['beat_sec'],ding_gain=float(fa.get('ding_gain',1.0)),drum_gain=dg)[:n],(0,0)).astype(np.float32)
@@ -221,10 +270,11 @@ def plan(project,config,pilot=False):
             tt=np.arange(length)/SR;accent=k%4==0
             click[start:start+length]+=(.23 if accent else .14)*np.sin(2*np.pi*(1500 if accent else 1000)*tt)*np.exp(-tt/.006)
         mix=voice+background;listening=voice+click;gain=min(1.,10**(-1/20)/max(abs(mix).max(),abs(listening).max()))
-        if t.get('follow_along') and t['follow_along'].get('target_lufs') is not None:
-            mix=loud_to(mix,float(t['follow_along']['target_lufs']),part);gain=1.
+        _fa=t.get('follow_along') or t.get('superfun')
+        if _fa and _fa.get('target_lufs') is not None:
+            mix=loud_to(mix,float(_fa['target_lufs']),part);gain=1.
             listening*=min(1.,10**(-1/20)/max(1e-9,abs(listening).max()))
-        for name,data in [('speech',voice),('background',background),('click',click),('mix',mix*gain),('click-listening',listening*gain)]:
+        for name,data in [('speech',voice),('background',background*min(1.,.98/max(1e-9,float(abs(background).max())))),('click',click),('mix',mix*gain),('click-listening',listening*gain)]:
             wav(part/(name+'.wav'),data)
         audio_identity={'speed':t['speech_speed'],'bpm':t['bpm'],'duration':t['duration_sec'],
                         'cues':[{k:c[k] for k in ['spoken_text','role','start_sample','voice_sha256']} for c in t['cues']],
@@ -251,18 +301,26 @@ def mic_icon():
 
 def renderer(root,cfg,t):
     bg=Image.open(verified_asset(root,cfg['board'])).convert('RGBA').resize((W,H),Image.Resampling.LANCZOS)
-    all_items={i['id']:i for s in t['scenes'] for i in ([s['item']] if s['kind']=='word' else s['items'])}
+    all_items={i['id']:i for s in t['scenes'] for i in ([s['item']] if s['kind']=='word' else s.get('items',[]))}
     large={k:card(verified_asset(root,i['image']),596) for k,i in all_items.items()}
     sizes={overview_layout(len(s['items']))['side'] for s in t['scenes'] if s['kind']=='overview'}
     small={(side,k):card(verified_asset(root,i['image']),side) for side in sizes for k,i in all_items.items()};font=font_path(cfg)
     def frame(n):
         time=n/FPS;canvas=bg.copy();s=next((s for s in t['scenes'] if s['start']<=time<s['end']),t['scenes'][-1])
-        if s['kind']=='overview':
+        if s['kind']=='intro':pass
+        elif s['kind']=='overview':
             grid=overview_layout(len(s['items']))
             for j,i in enumerate(s['items']):
                 cx,cy=grid['centers'][j]
+                if s.get('pop_beat'):
+                    age=time-(s['start']+j*s['pop_beat'])
+                    if age<0:continue
+                    k=min(1,age/.22);sc=1+.18*math.sin(math.pi*k)*(1-k)+(k-1)*.0
+                    place(canvas,small[(grid['side'],i['id'])],(cx,cy),2*math.sin(2.1*time+j*.5),max(.05,k*sc))
+                    if k>=.6:label(ImageDraw.Draw(canvas),(cx,cy+grid['label_offset']),i['word'],grid['font_size'],font,shadow=True,red=i.get('red_spans'))
+                    continue
                 place(canvas,small[(grid['side'],i['id'])],(cx,cy),2*math.sin(2.1*time*t['speech_speed']+j*.5))
-                label(ImageDraw.Draw(canvas),(cx,cy+grid['label_offset']),i['word'],grid['font_size'],font,shadow=True)
+                label(ImageDraw.Draw(canvas),(cx,cy+grid['label_offset']),i['word'],grid['font_size'],font,shadow=True,red=i.get('red_spans'))
         else:
             local=time-s['start'];remain=s['end']-time;speed=t['speech_speed']
             enter=min(1,max(0,local/(.32/speed)));eased=1-(1-enter)**3;cy=-520+976*eased
@@ -276,7 +334,7 @@ def renderer(root,cfg,t):
                 ph=((time-win['start'])/t['beat_sec'])%1;k=min(1,(time-win['start'])/.18,(win['end']-time)/.18)
                 place(canvas,mic_icon(),(1395,450),0,(.92+.10*math.exp(-ph*5))*max(.01,k))
             alpha=min(1,max(0,(local-.1)/.15),max(0,remain/.25));layer=Image.new('RGBA',(W,H),(0,0,0,0))
-            word=s['item']['word'];label(ImageDraw.Draw(layer),(960,865+40*(1-alpha)),word,90 if len(word)>12 else 103,font,(255,255,251,round(alpha*255)))
+            word=s['item']['word'];label(ImageDraw.Draw(layer),(960,865+40*(1-alpha)),word,90 if len(word)>12 else 103,font,(255,255,251,round(alpha*255)),red=s['item'].get('red_spans'))
             canvas.alpha_composite(layer)
         return canvas.convert('RGB')
     return frame
@@ -355,7 +413,7 @@ def verify(project,config,segment=1):
     for cue in cues:
         reference=samples[(cue['spoken_text'],cue['role'])]
         recovered,voice_corr=locate_clip(reference,speech,cue['start_sample'])
-        actual=(recovered+cue['anchor_sample'])/SR;drum=cue['target_drum_sec'] if t.get('follow_along') else local_drum_attack(background,cue['target_drum_sec'])
+        actual=(recovered+cue['anchor_sample'])/SR;drum=cue['target_drum_sec'] if (t.get('follow_along') or t.get('superfun')) else local_drum_attack(background,cue['target_drum_sec'])
         a=max(0,round((actual-.10)*SR));found,aac_corr=locate_clip(mix[a:a+round(.3*SR)],encoded,a)
         audio_rows.append({'word':cue['word'],'round':cue['round'],'role':cue['role'],'voice_correlation':voice_corr,
                            'voice_offset_ms':1000*(recovered-cue['start_sample'])/SR,'anchor_minus_drum_ms':1000*(actual-drum),
@@ -403,6 +461,11 @@ def verify(project,config,segment=1):
         'five_card_overview_three_plus_two':all(v['columns']==3 and v['rows']==2 for v in overviews if v['count']==5),
         'six_card_overview_three_columns_two_rows':all(v['columns']==3 and v['rows']==2 for v in overviews if v['count']==6),
         'display_case_checked':all(i['word']==display_word(i['word'],cfg.get('display_case_exceptions')) for i in cfg['items'])}
+    if t.get('superfun'):
+        checks['anchors_on_bar_downbeats']=all(abs((c['start_sample']+c['anchor_sample'])/SR-c['bar_start'])<=1/SR for c in cues) and all(abs(r_['voice_offset_ms'])<=1 for r_ in audio_rows)
+        checks['no_overlap']=all(b_['start']-a_['end']>=.03 for a_,b_ in zip(cues,cues[1:]))   # 128 BPM 一句接一句：音檔已裁邊，間隔 ≥30 ms 即不重疊
+        checks['speech_inside_own_bar']=all(c['audible_end']<=c['bar_end']-.05 for c in cues)
+        checks['eleven_card_overview_four_four_three']=all(v['columns']==4 and v['rows']==3 for v in overviews if v['count']==11)
     if t.get('follow_along'):   # 跟讀模式：伴奏是程式合成在拍格上；改查拍格、格子、學生拍無人聲、每個字的角色
         fa=t['follow_along'];no_t=set(fa.get('no_teacher_rounds',[]));B=t['beat_sec'];b0=t['beat0_sec']
         def rms_db(a,b):

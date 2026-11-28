@@ -82,6 +82,7 @@ def routes(items,mode='auto'):
     if mode=='two-rounds-six' and n==12: return [[items[:6],items[6:]]]
     if mode=='four-rounds-six-five' and n==22: return [[items[:6],items[6:11],items[11:17],items[17:22]]]
     if mode=='four-rounds-six' and n==24: return [[items[:6],items[6:12],items[12:18],items[18:24]]]
+    if mode=='one-round' and 1<=n<=12: return [[items]]   # Super Fun 節奏模式：一支一輪
     if mode=='repeat' and n in (8,9): return [[items,items]]
     if mode=='two-rounds' and n in (16,18): return [[items[:n//2],items[n//2:]]]
     if mode=='two-segments' and n==32: return [[items[:8],items[8:16]],[items[16:24],items[24:]]]
@@ -105,7 +106,10 @@ def overview_layout(count):
     if count==10:
         return {'columns':5,'rows':2,'side':252,'label_offset':174,'font_size':36,
                 'centers':[(x,y) for y in (302,766) for x in (210,585,960,1335,1710)]}
-    if not 1<=count<=9:raise ValueError('Overview supports one to ten cards.')
+    if count==11:   # 2026-11-28：4＋4＋3，第三列置中
+        return {'columns':4,'rows':3,'side':200,'label_offset':140,'font_size':34,
+                'centers':[(x,y) for y in (205,515) for x in (300,740,1180,1620)]+[(520,825),(960,825),(1400,825)]}
+    if not 1<=count<=9:raise ValueError('Overview supports 1-10 and 11 cards.')
     if count==5:   # 2026-11-14：上 3 下 2 置中，卡片和 6 張同大小
         return {'columns':3,'rows':2,'side':290,'label_offset':196,'font_size':42,
                 'centers':[(460,302),(960,302),(1460,302),(710,766),(1210,766)]}
@@ -157,9 +161,15 @@ def place(canvas,im,center,angle=0,scale=1):
     if abs(angle)>.02: im=im.rotate(angle,resample=Image.Resampling.BICUBIC,expand=True)
     canvas.alpha_composite(im,(round(center[0]-im.width/2),round(center[1]-im.height/2)))
 
-def label(draw,xy,text,size,font,fill='white',shadow=False):
+RED=(255,96,84)
+def label(draw,xy,text,size,font,fill='white',shadow=False,red=None):
+    """red＝[[起,迄],…] 字元範圍用紅字（2026-11-28：第三人稱 -s／-es／-ies）。"""
     face=ImageFont.truetype(font,size)
     while draw.textbbox((0,0),text,font=face)[2]>1700 and size>40:
         size-=2;face=ImageFont.truetype(font,size)
     if shadow: draw.text((xy[0]+3,xy[1]+4),text,font=face,fill=(15,25,29),anchor='mm')
     draw.text(xy,text,font=face,fill=fill,anchor='mm')
+    if red:   # 在同一位置把紅字範圍重畫一次（用前綴寬度定位，字距與整句一致）
+        x0=xy[0]-draw.textlength(text,font=face)/2;a=fill[3] if isinstance(fill,tuple) and len(fill)==4 else 255
+        for lo,hi in red:
+            draw.text((x0+draw.textlength(text[:lo],font=face),xy[1]),text[lo:hi],font=face,fill=RED+(a,),anchor='lm')

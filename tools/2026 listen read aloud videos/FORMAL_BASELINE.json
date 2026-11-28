@@ -132,9 +132,50 @@
       "duration_sec": 239.33333333333334,
       "utterances": 39,
       "follow_along": true,
-      "acceptance_record": "productions/freetime-activities/v02-follow-along/full/segment-01/TEACHER_ACCEPTANCE.json"
+      "acceptance_record": "productions/freetime-activities/v02-follow-along/full/segment-01/TEACHER_ACCEPTANCE.json",
+      "note_20261128": "Teacher: follow-along effect not good; replaced for classroom use by the two Super Fun rhythm films. File kept."
+    },
+    "superfun_rhythm_freetime_ken3d": {
+      "video": "productions/freetime-activities/v03-superfun/ken-v2/segment-01/video.mp4",
+      "sha256": "6dc3b7ae23d43865f72b6f59e77cb732b379f720d8ec121cfe063b1e4e40357f",
+      "bytes": 13103243,
+      "status": "teacher_accepted_formal",
+      "overview": "11 cards 4+4+3, pop-in per beat",
+      "source_image_count": 11,
+      "rounds": 1,
+      "duration_sec": 61.93333333333333,
+      "utterances": 22,
+      "superfun": true,
+      "acceptance_record": "productions/freetime-activities/v03-superfun/ken-v2/segment-01/TEACHER_ACCEPTANCE.json"
+    },
+    "superfun_rhythm_freetime_icons": {
+      "video": "productions/freetime-activities/v03-superfun/icons-v2/segment-01/video.mp4",
+      "sha256": "dedc70b8924c235ce01062f0790b89b2aae5f95e0182cd1b3747e75b93687ef4",
+      "bytes": 7634710,
+      "status": "teacher_accepted_formal",
+      "overview": "11 cards 4+4+3, pop-in per beat",
+      "source_image_count": 11,
+      "rounds": 1,
+      "duration_sec": 61.93333333333333,
+      "utterances": 22,
+      "superfun": true,
+      "acceptance_record": "productions/freetime-activities/v03-superfun/icons-v2/segment-01/TEACHER_ACCEPTANCE.json"
+    },
+    "superfun_rhythm_freetime_heshe_icons": {
+      "video": "productions/freetime-activities/v04-heshe-icons/full/segment-01/video.mp4",
+      "sha256": "261d2a6da2e83f3f1fbff985be0d18ccb8fa64a33cf10382f0a7c12fed2b02d5",
+      "bytes": 12195531,
+      "status": "teacher_accepted_formal",
+      "overview": "11 cards 4+4+3",
+      "source_image_count": 11,
+      "rounds": 1,
+      "duration_sec": 61.93333333333333,
+      "utterances": 22,
+      "superfun": true,
+      "red_suffix": true,
+      "acceptance_record": "productions/freetime-activities/v04-heshe-icons/full/segment-01/TEACHER_ACCEPTANCE.json"
     }
   },
-  "latest_accepted_variant_record": "productions/freetime-activities/v02-follow-along/full/segment-01/TEACHER_ACCEPTANCE.json",
+  "latest_accepted_variant_record": "productions/freetime-activities/v04-heshe-icons/full/segment-01/TEACHER_ACCEPTANCE.json",
   "variant_note": "Original top-level nine-card reference and accepted eight-card variant remain unchanged. The 502 eighteen-image 9+9 production has separate explicit teacher acceptance. HWG7 U02 reuses the same ten images across three rounds with a 5x2 overview and separate explicit teacher acceptance."
 }
