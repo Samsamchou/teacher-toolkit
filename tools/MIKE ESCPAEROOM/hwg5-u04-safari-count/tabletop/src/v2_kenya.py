@@ -2,8 +2,8 @@
 # Spec: rdq/RDQ-spec-safari-count-v2-20261127.md, allocation table v2/ (teacher-approved 11/27).
 #   KV1 (7.0 s) "There are six lions." A pride: three lionesses rest under the acacias, three lions walk slowly across
 #       the front, left -> right; the jeep waits on the road. Last 1 s: all six still, apart, in view.
-#   KV2 (7.0 s) "There are nine monkeys." A troop of nine olive baboons walks across the red dirt road in two loose rows,
-#       left -> right; the jeep has stopped. Last 1 s: all nine still, apart, in view.
+#   KV2 (7.0 s) "There are nine monkeys." 11/28: nine olive baboons in three acacias (8 sit on branches, 1 hangs and swings),
+#       the jeep parked by the trees. Last 1 s: all nine still, apart, in view.
 #   Check cameras: <SHOT>S low side.
 # Models: japan_lion_walk2, japan_lion_lying (v1), kenya_baboon_walk (new 11/27: Codex side view -> Tripo H3.1 + Rig Other
 #   + Walk; gltf_fk 4 feet move, walk_dir ok), kenya_jeep. ASCII only.
@@ -29,6 +29,12 @@ LYING_H = 0.030               # from JP1
 BABOON_H = 0.040              # check 1: 0.034 looked tiny
 JEEP_L = 0.10
 SPEED_H = 0.44
+# 11/28 baboons in the trees (static Tripo models from Codex edits of the walking baboon's side view):
+BAB_SIT_H = 0.050             # sitting baboon incl. the hanging tail (GUESS: check the close-up)
+BAB_SEAT = 0.34               # seat (bottom on the branch) height / model height, from the reference picture
+BAB_SIT_YAW = 30.0            # GUESS: turn the 3/4 view toward the camera
+BAB_HANG_H = 0.060            # hanging baboon, raised hand -> feet
+BAB_HANG_YAW = 0.0            # side view in the reference (faces -x)
 
 
 def ground():
@@ -96,19 +102,65 @@ if SHOT == "KV1":
     print("DESK CAM KV1 %s" % CAMSUB, flush=True)
 
 else:
-    # red-brown dirt road running away from the camera; the troop crosses it along x
-    E.box((0.04, 0.03, FLOOR + ROAD_T / 2), (0.10, 0.46, ROAD_T), E.felt("road", (0.62, 0.40, 0.26)), "road", bevel=0)
-    for x, y, h in ((-0.27, 0.22, 0.10), (0.25, 0.24, 0.09)): acacia(x, y, h)
-    for x, y, s in ((-0.24, -0.11, 0.012), (0.25, -0.08, 0.010)): bush(x, y, s)
-    jeep((0.04, 0.19), math.radians(0))                      # check 1: big in the foreground -> waits behind the troop
-    ends = [-0.14, -0.10, -0.06, -0.02, 0.02, 0.06, 0.10, 0.14, 0.18]   # check 1-2: the first one ended at the left edge
-    troop = line_walk("kenya_baboon_walk", BABOON_H, ends, lambda i: 0.06 if i % 2 else 0.015, [0.0, 0.2, 0.1, 0.4, 0.3, 0.5, 0.2, 0.6, 0.4], "baboon")
-    A.report(troop, 0.0, T - HOLD)
-    aim = Vector((0.015, 0.035, FLOOR + 0.015))
+    # Teacher 11/28 (RDQ v2-baboons-trees-turtle-fix): no baboons on the road. Three acacias with low branches, three
+    # baboons in each (8 sit on branches, 1 in the middle tree hangs by one arm and swings); the jeep is parked beside the trees.
+    # check 3-4: the jeep was cut off at the bottom right -> on the road behind the trees, like KV1
+    E.box((0.0, 0.20, FLOOR + ROAD_T / 2), (0.70, 0.06, ROAD_T), E.felt("road", (0.62, 0.40, 0.26)), "road", bevel=0)
+    jeep((-0.08, 0.20), math.radians(-90))                  # check 5: at x 0.08 it sat right behind the swinging baboon
+    for x, y, s in ((-0.27, -0.02, 0.012), (0.27, 0.02, 0.010)): bush(x, y, s)
+    bark = E.felt("trunk", (0.38, 0.28, 0.20))
+    TY = 0.08
+
+    def branch(x0, z, ln, side):
+        """Horizontal branch from the trunk at x0, height z (top surface = z + r), toward side (+1 right, -1 left)."""
+        r = 0.0032
+        E.cyl((x0 + side * ln / 2, TY, FLOOR + z), r, ln, bark, rot=(0, math.radians(90), 0), verts=10, name="branch")
+        return FLOOR + z + r
+
+    def tree(x, h):
+        E.cyl((x, TY, FLOOR + h * 0.45), 0.0045, h * 0.9, bark, verts=12, name="trunk")
+        # check 3: three crowns 0.075 wide joined into one flat roof -> smaller, separate
+        top = E.cyl((x, TY, FLOOR + h * 0.93), 1.0, h * 0.10, E.felt("acacia", (0.30, 0.42, 0.18)), verts=24, name="crown")
+        top.scale = (0.055, 0.042, 1.0)
+
+    SIT = []                                                 # (x, branch top z, yaw)
+    # close-up check 1: the swinging baboon hung in front of the one sitting below it -> in the middle tree both sitters
+    # are on the left (low + high branch) and the right side under the swing branch stays empty.
+    LAYOUT = {-0.16: ((0.040, 0.050, -1, "sit"), (0.065, 0.045, 1, "sit"), (0.090, 0.045, -1, "sit")),
+              0.0: ((0.040, 0.050, -1, "sit"), (0.090, 0.050, -1, "sit"), (0.100, 0.060, 1, "hang")),
+              0.16: ((0.040, 0.050, 1, "sit"), (0.065, 0.045, -1, "sit"), (0.090, 0.045, 1, "sit"))}
+    for tx, rows in LAYOUT.items():
+        tree(tx, 0.155)
+        for z, ln, side, kind in rows:
+            zt = branch(tx, z, ln, side)
+            if kind == "hang":
+                HANG = (tx + side * 0.044, zt - 0.0064); continue   # check 3: further out, clear of the trunk   # the hand grips the branch's underside
+            SIT.append((tx + side * 0.030, zt, 25.0 if side > 0 else -25.0))
+    for i, (x, zt, yaw) in enumerate(SIT):
+        b = E.place(f"{PROPS}/kenya_baboon_sit.glb", BAB_SIT_H * (1.0 - 0.03 * (i % 3)), (x, TY - 0.004, zt - BAB_SEAT * BAB_SIT_H), rot_z=math.radians(BAB_SIT_YAW + yaw))
+        b.name = "baboon_sit%d" % (i + 1)
+    # the swinging baboon: an empty at its hand on the branch; the model hangs below it and the empty swings +-35 deg about y
+    hx, hz = HANG
+    bpy.ops.object.empty_add(location=(hx, TY, hz)); pivot = bpy.context.object; pivot.name = "swing_pivot"
+    hb = E.place(f"{PROPS}/kenya_baboon_hang.glb", BAB_HANG_H, (hx, TY, hz - BAB_HANG_H + 0.002), rot_z=math.radians(BAB_HANG_YAW))
+    hb.name = "baboon_hang"
+    bpy.context.view_layer.update()
+    mw = hb.matrix_world.copy(); hb.parent = pivot; hb.matrix_parent_inverse = pivot.matrix_world.inverted(); hb.matrix_world = mw
+    for k in range(int((T - HOLD) * 12) + 1):               # 12 keys per second, 2 s per swing, eases to still for the hold
+        t = k / 12.0
+        amp = math.radians(25.0) * (1.0 if t < T - HOLD - 1.0 else max(0.0, (T - HOLD - t)))   # check 3: 35 deg hit the trunk
+        pivot.rotation_euler = (0.0, amp * math.sin(2 * math.pi * t / 2.0), 0.0)
+        pivot.keyframe_insert("rotation_euler", frame=E.f(t))
+    pivot.rotation_euler = (0.0, 0.0, 0.0); pivot.keyframe_insert("rotation_euler", frame=E.f(T))
+    print("DESK BABOONS sitting %d + 1 hanging at x %.3f z %.3f" % (len(SIT), hx, hz), flush=True)
+    aim = Vector((0.0, TY, FLOOR + 0.065))
     if CAMSUB == "S":
-        cam_move(45, aim + Vector((0.0, -0.32, 0.0)), aim, aim + Vector((0.0, -0.32, 0.0)), aim)
+        cam_move(45, aim + Vector((0.0, -0.36, -0.02)), aim, aim + Vector((0.0, -0.36, -0.02)), aim)
+    elif CAMSUB == "C":                                      # close-up of the middle tree (sitting poses + the swing)
+        c = Vector((0.0, TY, FLOOR + 0.07))
+        cam_move(50, c + Vector((0.02, -0.20, 0.01)), c, c + Vector((0.02, -0.20, 0.01)), c)
     else:
-        cam_move(30, aim + Vector((0.02, -0.38, 0.20)), aim, aim + Vector((0.01, -0.33, 0.17)), aim, t_end=T - HOLD)
+        cam_move(34, aim + Vector((0.02, -0.43, 0.07)), aim, aim + Vector((0.01, -0.41, 0.06)), aim, t_end=T - HOLD)   # check 3-4: small at 30 mm; 0.36 cut the outer trees
     print("DESK CAM KV2 %s" % CAMSUB, flush=True)
 E.sc.frame_set(0)
 E.run(ARGS[3:])

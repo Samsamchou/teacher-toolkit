@@ -1,10 +1,10 @@
 // Safari Count local-preview walk: all six stations in map order with one student (Taiwan -> Australia),
 // each: puzzle -> count picture -> drag -> film -> puzzle -> count -> speak (stub score) -> clue film -> like -> photo game -> stamp.
 // Data comes from content/stations.json. Run from the C: build copy (needs @playwright/test):
-//   node qa_site_walk_all.mjs <outDir> <stations.json>
+//   node qa_site_walk_all.mjs <outDir> <stations.json> [/safari-count-2]   (version 2: content/stations_v2.json; PREVIEW_URL overrides the server)
 import { chromium } from '@playwright/test'
 import { mkdirSync, readFileSync } from 'node:fs'
-const OUT = process.argv[2], BASE = 'http://127.0.0.1:3011'
+const OUT = process.argv[2], BASE = process.env.PREVIEW_URL || 'http://127.0.0.1:3011', PAGE = process.argv[4] || '/safari-count'
 const bank = JSON.parse(readFileSync(process.argv[3], 'utf8')); const STATIONS = bank.stations || bank
 mkdirSync(OUT, { recursive: true })
 const browser = await chromium.launch({ args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', '--autoplay-policy=no-user-gesture-required'] })
@@ -59,7 +59,7 @@ async function playGame(tag) {
   Object.assign(game, { stars: s.stars, score: s.score }); console.log(tag, 'game', JSON.stringify({ photos: s.photos, score: s.score, stars: s.stars }))
 }
 
-await page.goto(`${BASE}/safari-count`)
+await page.goto(`${BASE}${PAGE}`)
 await page.getByRole('button', { name: /Girl/ }).click()
 await page.getByLabel(/Student ID/).fill('50197'); await btn(/Start the safari/).click(); await page.locator('.wr-map').waitFor()
 await shot('map_start')
@@ -74,7 +74,7 @@ for (const S of STATIONS) {
     if (i === 0) await shot(`${tag}_meet`)
     await btn(/Open the puzzle/).click(); await page.frameLocator('iframe[title="Puzzle"]').locator('#ribbon').first().waitFor(); await shot(`${tag}_puzzle_${it.key}`)
     await page.getByLabel(/Answer/).fill(it.answer.toLowerCase()); await btn(/Check/).click(); await btn(/Count them/).click()
-    await countPicture(`${tag}-${it.key}.jpg`); await shot(`${tag}_count_${it.key}`)
+    await countPicture(it.picture || `${tag}-${it.key}.jpg`); await shot(`${tag}_count_${it.key}`)
     await page.getByRole('button', { name: String(it.count), exact: true }).click()
     if (it.mode === 'drag') {
       await expectText('Tap the words')

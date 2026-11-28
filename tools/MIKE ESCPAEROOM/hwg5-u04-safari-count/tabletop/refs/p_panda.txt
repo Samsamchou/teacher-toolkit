@@ -1,0 +1,3 @@
+Use your built-in image generation tool to create ONE image (1024x1024): a single realistic giant panda sitting upright on the ground, holding a green bamboo stalk with leaves in both front paws near its mouth, eating. Three-quarter front view, whole body visible from head to feet with space around it, natural black and white fur, calm. Plain pure white (#FFFFFF) background, soft even studio lighting, no shadow, no ground, no other objects, no text.
+Purpose: reference image for an image-to-3D model, so the silhouette must be clear and the paws, legs and bamboo fully visible.
+Save the PNG as panda_ref.png in the current directory. Reply with the saved file path only.

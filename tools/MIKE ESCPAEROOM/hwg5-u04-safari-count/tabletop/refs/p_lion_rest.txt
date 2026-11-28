@@ -1,0 +1,3 @@
+Use your built-in image generation tool to create ONE image (1024x1024): a single realistic adult male African lion lying down resting (sphinx pose) on its belly, front legs stretched forward, head up and looking forward, mouth CLOSED, calm eyes, full golden-brown mane, tail lying along the ground. Three-quarter view from the front-left, slightly above. Whole animal visible with space around it. Plain pure white (#FFFFFF) background, soft even studio lighting, no shadow, no rock, no ground, no other objects, no text.
+Purpose: pose A (mouth closed) of a two-pose stop-motion yawn for a static image-to-3D model that will lie on a rock.
+Save the PNG as lion_rest_ref.png in the current directory. Reply with the saved file path only.

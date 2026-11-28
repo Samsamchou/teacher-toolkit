@@ -1,0 +1,2 @@
+Use your built-in image generation tool to EDIT the attached image lion_rest_ref.png and create ONE image (1024x1024): the SAME lion (same mane, colours, body, lying pose, legs, tail, same camera angle and size, same plain white background), but now it is YAWNING: head tilted slightly up, mouth opened very wide showing the pink tongue and teeth, eyes squeezed shut. Everything else unchanged. No shadow, no rock, no ground, no other objects, no text.
+Save the PNG as lion_yawn_ref.png in the current directory. Reply with the saved file path only.

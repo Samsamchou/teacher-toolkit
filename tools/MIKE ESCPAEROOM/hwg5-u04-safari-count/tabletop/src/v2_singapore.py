@@ -47,8 +47,14 @@ def rock(x, y, s):
 
 
 def tram(t_keys, y):
+    """check 1: E.constant on 2-3 keys made the tram stand still and then jump (the panda shot never showed it) ->
+    one key every 1/12 s (stop-motion steps), linear between the given (t, x) points."""
     tr = E.place(f"{PROPS}/singapore_night_tram.glb", TRAM_L, (t_keys[0][1], y, FLOOR + ROAD_T), rot_z=math.radians(TRAM_YAW), axis="long")
-    for t, x in t_keys:
+    for k in range(int(T * 12) + 1):
+        t = k / 12.0
+        for (ta, xa), (tb, xb) in zip(t_keys, t_keys[1:]):
+            if ta <= t <= tb: x = xa + (xb - xa) * (t - ta) / max(1e-6, tb - ta); break
+        else: x = t_keys[-1][1]
         tr.location.x = x; tr.keyframe_insert("location", frame=E.f(t))
     E.constant(tr); return tr
 
@@ -72,7 +78,7 @@ if SHOT == "SV1":
     for k in range(-6, 7):
         E.ball((k * 0.065, 0.38, FLOOR + 0.02), 0.075, E.felt("hill", (0.20, 0.36, 0.20)), "hill").scale = (1.0, 0.5, 0.8)
     E.box((0.0, 0.22, FLOOR + ROAD_T / 2), (0.70, 0.05, ROAD_T), E.felt("road", (0.40, 0.38, 0.34)), "road", bevel=0)
-    tram([(0.0, -0.45), (T - HOLD, 0.45)], 0.22)
+    tram([(0.0, -0.40), (T - HOLD, 0.40), (T, 0.40)], 0.22)
     E.cyl((-0.06, 0.06, FLOOR + 0.005), 0.05, 0.010, E.felt("platform", (0.50, 0.46, 0.40)), verts=40, name="platform1")
     E.cyl((0.07, 0.05, FLOOR + 0.005), 0.045, 0.010, E.felt("platform", (0.50, 0.46, 0.40)), verts=40, name="platform2")
     for x, y, s in ((-0.15, 0.10, 0.02), (0.15, 0.11, 0.018), (0.0, 0.13, 0.014)): rock(x, y, s)
@@ -109,9 +115,9 @@ else:
         pl.data.energy = 0.35; pl.data.color = (1.0, 0.75, 0.45); pl.data.shadow_soft_size = 0.01
     E.box((0.0, 0.20, FLOOR + ROAD_T / 2), (0.70, 0.06, ROAD_T), E.felt("road", (0.26, 0.24, 0.22)), "road", bevel=0)
     tram([(0.0, -0.30), (T - HOLD, 0.05), (T, 0.05)], 0.20)
-    # four tigers: two rows, left -> right, ending apart; tiger 3 stops early and looks around
+    # four tigers: two rows, left -> right, ending apart; tiger 3 stops early and looks around (check 1: the last one ended at the left edge)
     tigers = []
-    for i, (xe, y, t0) in enumerate(((0.16, 0.0, 0.0), (0.05, 0.05, 0.3), (-0.06, -0.01, 0.1), (-0.16, 0.06, 0.5))):
+    for i, (xe, y, t0) in enumerate(((0.17, 0.0, 0.0), (0.07, 0.05, 0.3), (-0.03, -0.01, 0.1), (-0.12, 0.06, 0.5))):
         tg = A.Animal("india_tiger_walk", TIGER_H * (1.0 - 0.03 * (i % 3)), fwd_fix=None, label="tiger%d" % (i + 1), clip_speed_h=SPEED_H)
         v = 0.8 * tg.cycle("walk")[1]
         t1 = 3.6 if i == 2 else T - HOLD

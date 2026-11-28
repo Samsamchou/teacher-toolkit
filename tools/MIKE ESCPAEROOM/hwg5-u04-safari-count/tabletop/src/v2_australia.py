@@ -2,7 +2,7 @@
 # Spec: rdq/RDQ-spec-safari-count-v2-20261127.md, allocation table v2/ (teacher-approved 11/27).
 #   AV1 (7.0 s) "There are eight zebras." Open savannah: eight zebras walk across the grass in two loose rows,
 #       left -> right; the safari bus is parked on the track behind. Last 1 s: all eight still, apart, in view.
-#   AV2 (7.0 s) "There are five horses." Five Przewalski's horses walk a little, then stop to graze; the safari bus
+#   AV2 (7.0 s) "There are five horses." Five Przewalski's horses walk a little, then stop and stand; the safari bus
 #       is parked behind. Last 1 s: all five still, apart, in view.
 #   Check cameras: <SHOT>S low side.
 # Models: kenya_zebra_walk (reverse_clip: the rig is back to front), australia_przewalski_walk (11/27: the v1 white horse
@@ -54,7 +54,7 @@ E.place(f"{PROPS}/australia_safari_bus.glb", BUS_L, (0.14 if SHOT == "AV1" else 
         rot_z=0.0 if SHOT == "AV1" else math.pi, axis="long")
 
 if SHOT == "AV1":
-    ends = [-0.18, -0.13, -0.07, -0.02, 0.03, 0.08, 0.13, 0.19]
+    ends = [-0.13, -0.085, -0.04, 0.005, 0.05, 0.095, 0.14, 0.185]   # check 1: the last zebra ended cut at the left edge
     zs = []
     for i, xe in enumerate(ends):
         z = A.Animal("kenya_zebra_walk", ZEBRA_H * (1.0 - 0.03 * (i % 3)), fwd_fix=None, label="zebra%d" % (i + 1),
@@ -64,11 +64,11 @@ if SHOT == "AV1":
         z.walk("walk", A.Path([(xe - travel - 0.05, y), (xe + 0.05, y)]), t0, T - HOLD, None, start_d=0.0, phase=(i * 0.618) % 1.0)
         z.finish(); zs.append(z)
     A.report(zs, 0.0, T - HOLD)
-    aim = Vector((0.0, 0.04, FLOOR + 0.02))
+    aim = Vector((0.02, 0.04, FLOOR + 0.02))
     if CAMSUB == "S":
         cam_move(45, aim + Vector((0.0, -0.34, 0.0)), aim, aim + Vector((0.0, -0.34, 0.0)), aim)
     else:
-        cam_move(28, aim + Vector((0.02, -0.40, 0.21)), aim, aim + Vector((0.0, -0.35, 0.18)), aim, t_end=T - HOLD)
+        cam_move(28, aim + Vector((0.02, -0.41, 0.21)), aim, aim + Vector((0.01, -0.39, 0.20)), aim, t_end=T - HOLD)   # check 2: push-in cut the last zebra
     print("DESK CAM AV1 %s" % CAMSUB, flush=True)
 
 else:
@@ -87,7 +87,7 @@ else:
                      clip_speed_h=SPEED_H, fix_legs=HORSE_FIX)
         path = A.Path(list(pts))
         h.walk("walk", path, t0, t_stop, None, start_d=0.0, phase=(i * 0.37) % 1.0)
-        h.graze(t_stop + 0.05, T + 1.0, down_deg=60.0)
+        # check 2: graze() moved this gallery rig's head tip only 7 mm (heads looked up) -> they stop and stand
         v = h.cycle("walk")[1]; p, hd = path.at(v * (t_stop - t0))
         h.ch.at(t_stop, loc=(p[0], p[1]), face_deg=A.heading_deg(hd) + h.facing_fix())
         h.finish(); hs.append(h)
@@ -96,7 +96,7 @@ else:
     if CAMSUB == "S":
         cam_move(45, aim + Vector((0.0, -0.34, 0.0)), aim, aim + Vector((0.0, -0.34, 0.0)), aim)
     else:
-        cam_move(30, aim + Vector((0.02, -0.40, 0.19)), aim, aim + Vector((0.0, -0.35, 0.16)), aim, t_end=T - HOLD)
+        cam_move(34, aim + Vector((0.02, -0.40, 0.18)), aim, aim + Vector((0.0, -0.36, 0.15)), aim, t_end=T - HOLD)   # check 1: horses small
     print("DESK CAM AV2 %s" % CAMSUB, flush=True)
 E.sc.frame_set(0)
 E.run(ARGS[3:])

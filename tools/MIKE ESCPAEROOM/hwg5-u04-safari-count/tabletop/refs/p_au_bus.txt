@@ -1,0 +1,3 @@
+Use your built-in image generation tool to create ONE image (1024x1024): a toy-like but realistic open-range zoo safari bus, pure side view facing left: a single long off-road tour bus with big tyres, sand-beige body with a dark green stripe along the side, large open windows (no glass) along the whole side, a short bonnet at the LEFT front end, empty seats inside (no people). Whole vehicle visible end to end with space around it. Plain pure white (#FFFFFF) background, soft even studio lighting, no shadow, no ground, no text, no logo.
+Purpose: reference image for a static image-to-3D model of a safari bus parked next to a rock where a lion rests.
+Save the PNG as au_bus_ref.png in the current directory. Reply with the saved file path only.

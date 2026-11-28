@@ -1,0 +1,3 @@
+Use your built-in image generation tool to create ONE image (1024x1024): a single realistic Indian gray langur (Hanuman langur) monkey sitting upright, three-quarter side view facing left, black face, light gray fur, long tail hanging straight down, hands resting on its knees. The sitting pose is compact so it can sit on a tree branch. Whole animal visible with space around it, including the full tail. Plain pure white (#FFFFFF) background, soft even studio lighting, no shadow, no branch, no ground, no other objects, no text.
+Purpose: reference image for a static image-to-3D model (no skeleton) of a langur sitting on a branch.
+Save the PNG as langur_sit_ref.png in the current directory. Reply with the saved file path only.

@@ -261,3 +261,31 @@
 - 第三批新加坡、澳洲場景 src/v2_singapore.py（SV1 pandas×2 白天竹林＋遊園車；SV2 tigers×4 夜間）、v2_australia.py（AV1 zebras×8 reverse_clip；AV2 horses×5 普氏野馬走後吃草）已寫，**還沒跑檢查圖**。普氏野馬 models/australia_przewalski_walk.glb＝japan_whitehorse_walk 用 make_recolor.py 0-360 整張染 0.66,0.47,0.28（0 Tripo 點）。
 - 背景音樂 music/run_music.py（Music 3 完整安裝，G4）整天 3 輪共 24 次都 503 要不到 G4，沒開機沒扣點；下次再試或問老師改 A100（較貴）。
 - 今日 Colab：檢查圖約 0.9 單位＋正式渲染 5.35 單位（TV 1.36、JV 1.17、KV 1.46、IV 1.36）≈ 6.3 單位；餘額約 85。Tripo 75 點（狒狒），餘額 1,575。
+
+### 11/28 肯亞狒狒上樹＋印度新烏龜＋懶熊調暗（RDQ rdq/RDQ-spec-v2-baboons-trees-turtle-fix-20261128.md）
+- 新模型（Tripo 185 點，餘額 1,390）：kenya_baboon_sit、kenya_baboon_hang（Codex 從 baboon_ref 改姿勢、H3.1 靜態）、india_turtle_walk（腳收殼下、Rig Other＋Walk；walk_dir_check 說 BACKWARDS 是殼最高造成的誤判，頭端 −x、走向 −x，不反轉）。
+- KV2：3 棵金合歡（低橫枝）各 3 隻：8 坐＋中間樹 1 隻吊著擺 ±25°（35° 碰樹幹）、2 秒一來回、最後 1 秒停；吉普車在樹後路上 x −0.08。IV1：新烏龜、爬速＝步速。IV2：exposure −0.7、地面與草調深。
+- 檢查圖 qa/v2_closeup_baboon_turtle.jpg、v2_check3…5_kenya_india.jpg；正式 qa/1128-092846（KV2 0.58 單位）、1128-100011（IV 1.35 單位）。試片 out/v2_kenya_monkeys、v2_india_turtles、v2_india_bear＋_720＋線索卡；數數圖更新。已傳老師，待定案。
+- ✅ 11/28 老師：「四段都定案」→ v2_kenya_lions、v2_kenya_monkeys、v2_india_turtles、v2_india_bear（＋_720、線索卡、數數圖）定案。第 2 版 8 段定案（台灣、日本、肯亞、印度）；剩新加坡、澳洲 4 段（場景已寫未渲染）＋背景音樂＋網站 v2 實走、部署。
+
+### 11/28 新加坡、澳洲第 2 版
+- 場景 v2_singapore.py（SV1 pandas×2 白天竹林＋遊園車；SV2 tigers×4 夜間）、v2_australia.py（AV1 zebras×8；AV2 普氏野馬×5 走後站著——graze 在這副圖庫馬骨架只低 7 mm，取消）。遊園車原本 E.constant＋2–3 個 key 會停住再跳，改每 1/12 秒一個 key（v1 SG1 同問題，已上線未改）。
+- 檢查圖 qa/v2_check1_singapore、v2_check1_australia、v2_check2_sg_au、v2_check3_au_end.jpg；正式 qa/1128-121641（SV 1.17）、1128-125222（AV 1.35）。試片 out/v2_singapore_*、v2_australia_*（−15.6～−16.0 LUFS）＋_720、線索卡、數數圖。已傳老師，待定案。
+- ✅ 11/28 老師：「四段都定案」→ 新加坡、澳洲定案。**第 2 版 12 段動畫全部定案**。剩：背景音樂（Music 3 要 G4）、網站 /safari-count-2 本機實走、部署（要老師授權）。
+
+### 11/28 網站第 2 版本機實走
+- publish_to_site.py：v2 語音 90、數數圖 12、影片 24 → public/safari-count-2/；bank → functions/safari2-content.json；cards.html（含 ?v=2）。C 槽副本 tsc／lint 乾淨、測試 62/62。
+- 本機預覽 web/qa_site_walk_all.mjs <out> content/stations_v2.json /safari-count-2（PREVIEW_URL=http://127.0.0.1:3001）：六站全 ★★★、console 0 錯、壞回應 0；截圖 web/qa_site_1128_v2/、總表 web/safari2_site_walk_1128.jpg。v1 仍用自己的卡（無 ?v=2）、v2 老師頁正常、首頁 v2 卡片隱藏（SHOW_SAFARI2=false）。
+- 未部署。部署時要：新函式 7 個 safari2…＋purgeExpiredSafari2＋monsterPortal＋hosting；背景音樂 bgm.mp3 還沒有（登入頁音樂按鈕按了沒聲音），要先生成或先把按鈕藏起來。
+
+### 11/28 背景音樂（Music 3）
+- G4 要不到 → 老師指定 A100（run_music.py --gpu A100）：第 2 次要到（新加坡機房），完整安裝 795 秒，3 個 seed 每個約 8 分鐘；s7 只有 51 秒、人聲 0.74，s23 選中（90 秒、人聲殘留 0.0012）。music/takes/ 三首原檔、music/bgm.mp3（−18 LUFS、淡入 1 秒淡出 2.5 秒、128k）待老師試聽。
+- **A100 這次用了 12.24 單位**（79.52 → 67.28），遠高於預估；之後 Music 3 盡量等 G4 或只跑 1–2 個 seed。
+- ✅ 11/28 老師：背景音樂「可以用」→ publish_to_site 已放到 public/safari-count/audio/bgm.mp3（兩版登入頁共用）。下一步：部署（需老師授權）。
+
+### 11/28 ✅ 第 2 版上正式站＋首頁卡片打開（老師：「部署並打開卡片」）
+- flags.ts `SHOW_SAFARI2 = true`（首頁 🐨 Safari Count 2 卡片＋老師頁按鈕）。
+- 部署前：C 槽副本 tsc、lint、測試 62/62、建置都過；線上 hosting 最後發布 11/26 14:20（＝右鍵刪除那次）、函式最新 11/26，沒有別人部署過。
+- 部署：7 個 v1 Safari 函式（共用程式有改，一起更新）＋7 個新函式（safari2State、safari2Puzzle、safari2Count、safari2Answer、scoreSafari2Speaking、safari2Stamp、purgeExpiredSafari2）＋monsterPortal＋hosting，一次成功（這次沒遇到 cleanup policy 錯誤）。
+- 讀回：線上主程式 index-DvfctOzt.js＝本機建置；/safari-count-2 的 126 個檔全部 200；bgm.mp3、/safari-count-2、/safari-count-2/teacher 200；首頁看得到兩張 Safari 卡片和四個老師頁按鈕；v2 登入頁有音樂按鈕、主控台 0 錯誤。
+- 沒用測試學號登入正式站（不留紀錄）→ 正式站實際作答、真 AI 口說、iPad 都待老師課堂驗收。

@@ -7,4 +7,16 @@
 .sc-guess input{font:inherit;font-size:1.8rem;letter-spacing:.15em;text-transform:uppercase;width:9em;padding:.2em .5em;border:3px solid #8b7bb0;border-radius:14px;text-align:center}
 .sc-scene{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;font-size:clamp(3rem,9vw,6rem);margin:1rem 0;padding:1rem;border-radius:20px;background:linear-gradient(#bfe8ff,#d8f2c4)}
 .sc-stamp{font-size:3rem;font-weight:700;color:#e2483d}
+.sc-stars{font-size:2.6rem;color:#f2b705;margin:.2rem 0 1rem;letter-spacing:.2em}
 .wr-row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;align-items:center}
+.sc-checks{list-style:none;padding:0;margin:.4rem 0;display:grid;gap:.2rem;font-weight:700}
+.sc-checks .no{color:#b3261e}
+/* Teacher page (/safari-count/teacher) */
+.sc-teacher .wr-table td small{display:block;font-size:.75em;color:#6a5a2a}
+.sc-teacher .wr-table th small{display:block;font-weight:400}
+.sc-tip{display:block;font-size:.8em;color:#6b5f86;margin-top:.3rem}
+
+/* Count picture (a clean frame of the story film) and the buddy's like clue (teacher 11/25) */
+.sc-count-pic{display:block;width:100%;max-height:52vh;object-fit:contain;border-radius:20px;margin:1rem 0;background:#cfe9c8}
+.sc-clue{display:flex;align-items:center;gap:.8rem;font-size:1.5rem;font-weight:700}
+.sc-clue img{height:84px;width:auto;flex:none}

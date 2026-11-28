@@ -28,7 +28,11 @@ TURT_H = 0.022                # from SG2
 BEAR_H = 0.050                # from TW2
 JEEP_L = 0.10
 SPEED_H = 0.44
-LEGFIX = {"singapore_turtle_walk": [("0_Right_Limb_3", "0_Left_Limb_4")]}   # from SG2
+LEGFIX = {"singapore_turtle_walk": [("0_Right_Limb_3", "0_Left_Limb_4")]}   # from SG2 (v1 model, no longer used here)
+# 11/28 teacher: the v1 turtle legs looked odd (body faster than the steps, legs splayed) -> new model, legs under the shell,
+# crawling at its own step speed. walk_dir_check says BACKWARDS only because the shell is the highest point: the head end
+# (-x, raised) is the walking end -> no reverse_clip (check the close-up).
+TURTLE = "india_turtle_walk"
 
 
 def ground(col):
@@ -52,7 +56,7 @@ def tall_grass(x0, x1, y0, y1, h, n, seed=3):
     """Dry tall grass (thin leaning cones), from v1 IN1. check 1: round bushes looked like eggs."""
     import random
     rnd = random.Random(seed)
-    mats = [E.felt("grass_a", (0.62, 0.58, 0.28)), E.felt("grass_b", (0.48, 0.52, 0.22)), E.felt("grass_c", (0.70, 0.62, 0.34))]
+    mats = [E.felt("grass_a", (0.55, 0.47, 0.20)), E.felt("grass_b", (0.42, 0.44, 0.17)), E.felt("grass_c", (0.62, 0.50, 0.24))]   # 11/28 darker
     for i in range(n):
         x = rnd.uniform(x0, x1); y = rnd.uniform(y0, y1); hh = h * rnd.uniform(0.7, 1.15)
         c = E.cone((x, y, FLOOR + hh / 2), 0.0016, 0.0002, hh, mats[i % 3], verts=5, name="grass")
@@ -86,7 +90,7 @@ if SHOT == "IV1":
         rx, ry, r, fl = ROCKS[i]
         q = 1.0 - ((x - rx) / r) ** 2 - ((y - ry) / (0.8 * r)) ** 2
         return FLOOR + fl * r * math.sqrt(max(0.0, q))
-    M = "singapore_turtle_walk"; kw = dict(clip_speed_h=SPEED_H, fix_legs=LEGFIX[M])
+    M = TURTLE; kw = dict(clip_speed_h=SPEED_H)
     bask = []                                                # four still turtles on the rocks (x, y, rock, face)
     for x, y, ri, face in ((-0.155, 0.03, 0, 200), (-0.105, 0.055, 0, 150), (-0.03, 0.115, 1, 190), (-0.08, -0.08, 2, 210)):
         tt = A.Animal(M, TURT_H, fwd_fix=None, label="bask%d" % (len(bask) + 1), **kw)
@@ -94,22 +98,26 @@ if SHOT == "IV1":
         tt.ch.at(0.0, loc=(x, y, top(ri, x, y) - 0.002), face_deg=face + tt.facing_fix())
         tt.finish(); bask.append(tt)
     crawl = []                                               # three crawl down the bank into the lake
-    for i, (y, x0, x1, t0) in enumerate(((-0.04, 0.02, 0.125, 0.0), (0.04, 0.035, 0.135, 0.6), (0.13, 0.015, 0.115, 1.2))):
+    for i, (y, x1, t0) in enumerate(((-0.04, 0.125, 0.0), (0.04, 0.135, 0.6), (0.13, 0.115, 1.2))):
         tt = A.Animal(M, TURT_H, fwd_fix=None, label="crawl%d" % (i + 1), **kw)
-        tt.cycle("walk")
-        tt.walk("walk", A.Path([(x0, y), (x1, y)]), t0, T - HOLD, (x1 - x0) / (T - HOLD - t0), start_d=0.0, phase=i * 0.3)
+        v = tt.cycle("walk")[1]                                 # 11/28: the clip's own speed, so the feet do not slide
+        x0 = x1 - v * (T - HOLD - t0)
+        tt.walk("walk", A.Path([(x0 - 0.01, y), (x1 + 0.01, y)]), t0, T - HOLD, None, start_d=0.01, phase=i * 0.3)
         tt.finish(); crawl.append(tt)
     A.report(bask + crawl, 0.0, T - HOLD)
     aim = Vector((0.0, 0.03, FLOOR + 0.012))
     if CAMSUB == "S":
         cam_move(40, aim + Vector((0.0, -0.20, 0.01)), aim, aim + Vector((0.0, -0.20, 0.01)), aim)
+    elif CAMSUB == "C":                                      # close-up of a crawling turtle's legs (11/28)
+        c = Vector((0.10, -0.04, FLOOR + 0.008))
+        cam_move(60, c + Vector((0.0, -0.14, 0.03)), c, c + Vector((0.0, -0.14, 0.03)), c)
     else:
         cam_move(32, aim + Vector((-0.03, -0.38, 0.21)), aim, aim + Vector((-0.01, -0.34, 0.19)), aim, t_end=T - HOLD)
     print("DESK CAM IV1 %s" % CAMSUB, flush=True)
 
 else:
-    E.sc.view_settings.exposure = -0.5                       # check 2: the dry grass and the ground looked white
-    ground((0.52, 0.50, 0.30))
+    E.sc.view_settings.exposure = -0.7                       # check 2 / 11/28: -0.5 was only 10 % darker, still white
+    ground((0.42, 0.37, 0.22))
     E.box((0.18, 0.10, FLOOR + ROAD_T / 2), (0.08, 0.40, ROAD_T), E.felt("road", (0.60, 0.46, 0.32)), "road", bevel=0)
     jeep((0.18, 0.18), math.radians(180))
     for x, y in ((-0.26, 0.26), (0.02, 0.30)): tree(x, y, 0.12)
